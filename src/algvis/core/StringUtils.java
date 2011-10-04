@@ -1,5 +1,9 @@
 package algvis.core;
 
+/**
+ * The Class StringUtils.
+ * Contains basic string methods.
+ */
 public class StringUtils {
 	// substitute values param for parameters in the string s
 	// parameters are denoted #1, #2, #3, ...

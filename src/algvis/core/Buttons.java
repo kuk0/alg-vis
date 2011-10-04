@@ -17,6 +17,13 @@ import algvis.internationalization.IButton;
 import algvis.internationalization.ICheckBox;
 import algvis.internationalization.InputField;
 
+/**
+ * The Class Buttons.
+ * This is a panel with standard buttons such as input field, the "Next", "Clear", and "Random" buttons,
+ * "Pause" checkbox, label with statistics, and "Zoom in/Zoom out" buttons.
+ * Panels with data structure-specific buttons (such "Insert" or "Delete") are created by
+ * extending this class (see for example classes DictButtons, PQButtons). 
+ */
 abstract public class Buttons extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1417759004124906334L;
 	public VisPanel M;

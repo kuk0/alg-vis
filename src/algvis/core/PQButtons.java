@@ -11,6 +11,11 @@ import algvis.bst.BSTNode;
 import algvis.internationalization.IButton;
 import algvis.internationalization.IRadioButton;
 
+/**
+ * The Class PQButtons.
+ * All priority queues need buttons "Insert", "Delete max/min", and "Increase/Decrease key".
+ * Furthermore, the user may choose whether he wants a "min" or "max" version of the priority queue.
+ */
 public class PQButtons extends Buttons {
 	private static final long serialVersionUID = 5632185496171660196L;
 	IButton insertB, deleteB, incrKeyB;

@@ -29,6 +29,11 @@ import algvis.splaytree.SplayPanel;
 import algvis.treap.Treap;
 import algvis.treap.TreapPanel;
 
+/**
+ * The Class DataStructures.
+ * Contains list of all visualized data structures.
+ * This is the base for "Data Structures" menu.
+ */
 public class DataStructures {
 	static final int N = 14;
 	static final Class[] PANEL = { BSTPanel.class, RotPanel.class,

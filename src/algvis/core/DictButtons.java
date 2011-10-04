@@ -8,6 +8,10 @@ import javax.swing.JPanel;
 
 import algvis.internationalization.IButton;
 
+/**
+ * The Class DictButtons.
+ * All dictionary data structures need buttons "Insert", "Find", and "Delete".
+ */
 public class DictButtons extends Buttons {
 	private static final long serialVersionUID = 8331529914377645715L;
 	IButton insertB, findB, deleteB;

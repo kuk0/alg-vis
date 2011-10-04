@@ -1,6 +1,15 @@
 package algvis.core;
 
-public class Algorithm extends Thread {
+/**
+ * The Class Algorithm.
+ * Each visualized data structure consists of data and algorithms (such as insert, delete)
+ * that update the data. All such algorithms are descendants of the class Algorithm.
+ * 
+ * A visualized algorithm has its own thread which can be suspended (e.g., after each step
+ * of the algorithm; see method mysuspend) and is automatically resumed (method myresume)
+ * after pressing the "Next" button.   
+ */
+abstract public class Algorithm extends Thread {
 	VisPanel M;
 	boolean suspended = false;
 
@@ -8,6 +17,9 @@ public class Algorithm extends Thread {
 		this.M = M;
 	}
 
+	/**
+	 * Mysuspend.
+	 */
 	public void mysuspend() {
 		if (M.pause) {
 			suspended = true;
@@ -22,6 +34,9 @@ public class Algorithm extends Thread {
 		}
 	}
 
+	/**
+	 * Myresume.
+	 */
 	public void myresume() {
 		// if (suspended)
 		synchronized (this) {
