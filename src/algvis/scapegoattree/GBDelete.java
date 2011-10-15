@@ -1,12 +1,12 @@
 package algvis.scapegoattree;
 
 import algvis.bst.BSTNode;
-import algvis.core.Node;
+import algvis.core.Colors;
 
 public class GBDelete extends GBAlg {
 	public GBDelete(GBTree T, int x) {
 		super(T, x);
-		v.bgColor(Node.DELETE);
+		v.bgColor(Colors.DELETE);
 		setHeader("deletion");
 	}
 
@@ -37,7 +37,7 @@ public class GBDelete extends GBAlg {
 			setText("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Node.NOTFOUND);
+			v.bgColor(Colors.NOTFOUND);
 			setText("notfound");
 		} else {
 			BSTNode w = T.root;
@@ -48,7 +48,7 @@ public class GBDelete extends GBAlg {
 				if (w.key == K) {
 					if (((GBNode) w).deleted) {
 						setText("gbdeletedeleted");
-						v.bgColor(Node.NOTFOUND);
+						v.bgColor(Colors.NOTFOUND);
 						v.goDown();
 					} else {
 						setText("gbdeletemark");
@@ -65,7 +65,7 @@ public class GBDelete extends GBAlg {
 						v.goTo(w);
 					} else { // notfound
 						setText("notfound");
-						v.bgColor(Node.NOTFOUND);
+						v.bgColor(Colors.NOTFOUND);
 						v.goRight();
 						break;
 					}
@@ -76,7 +76,7 @@ public class GBDelete extends GBAlg {
 						v.goTo(w);
 					} else { // notfound
 						setText("notfound");
-						v.bgColor(Node.NOTFOUND);
+						v.bgColor(Colors.NOTFOUND);
 						v.goLeft();
 						break;
 					}

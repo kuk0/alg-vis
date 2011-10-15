@@ -1,7 +1,7 @@
 package algvis.btree;
 
 import algvis.core.Algorithm;
-import algvis.core.Node;
+import algvis.core.Colors;
 
 public class BFind extends Algorithm {
 	BTree T;
@@ -11,7 +11,7 @@ public class BFind extends Algorithm {
 		super(T.M);
 		this.T = T;
 		v = T.v = new BNode(T, x);
-		v.bgColor(Node.FIND);
+		v.bgColor(Colors.FIND);
 		setHeader("search");
 	}
 
@@ -22,7 +22,7 @@ public class BFind extends Algorithm {
 			setText("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Node.NOTFOUND);
+			v.bgColor(Colors.NOTFOUND);
 			setText("notfound");
 		} else {
 			BNode w = T.root;
@@ -34,12 +34,12 @@ public class BFind extends Algorithm {
 				if (w.isIn(v.key[0])) {
 					setText("found");
 					v.goDown();
-					v.bgColor(Node.FOUND);
+					v.bgColor(Colors.FOUND);
 					break;
 				}
 				if (w.isLeaf()) {
 					setText("notfound");
-					v.bgColor(Node.NOTFOUND);
+					v.bgColor(Colors.NOTFOUND);
 					v.goDown();
 					break;
 				}

@@ -2,6 +2,7 @@ package algvis.aatree;
 
 import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
+import algvis.core.Colors;
 import algvis.core.Node;
 
 public class AADelete extends Algorithm {
@@ -13,7 +14,7 @@ public class AADelete extends Algorithm {
 		super(T.M);
 		this.T = T;
 		v = T.v = new BSTNode(T, K = x);
-		v.bgColor(Node.DELETE);
+		v.bgColor(Colors.DELETE);
 		setHeader("deletion");
 	}
 
@@ -24,7 +25,7 @@ public class AADelete extends Algorithm {
 			setText("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Node.NOTFOUND);
+			v.bgColor(Colors.NOTFOUND);
 			setText("notfound");
 			return;
 		} else {
@@ -35,7 +36,7 @@ public class AADelete extends Algorithm {
 
 			while (true) {
 				if (d.key == K) { // found
-					v.bgColor(Node.FOUND);
+					v.bgColor(Colors.FOUND);
 					break;
 				} else if (d.key < K) { // right
 					setText("bstfindright", K, d.key);
@@ -65,7 +66,7 @@ public class AADelete extends Algorithm {
 			}
 
 			BSTNode w = d.parent;
-			d.bgColor(Node.FOUND);
+			d.bgColor(Colors.FOUND);
 			if (d.isLeaf()) { // case I - list
 				setText("bstdeletecase1");
 				mysuspend();
@@ -100,7 +101,7 @@ public class AADelete extends Algorithm {
 				int lev = ((AANode) d).level;
 				BSTNode s = d.right;
 				v = T.v = new AANode(T, -Node.INF);
-				v.bgColor(Node.FIND);
+				v.bgColor(Colors.FIND);
 				v.goTo(s);
 				mysuspend();
 				while (s.left != null) {
@@ -113,7 +114,7 @@ public class AADelete extends Algorithm {
 					w = v;
 				}
 				v.key = s.key;
-				v.bgColor(Node.NORMAL);
+				v.bgColor(Colors.NORMAL);
 				if (s.right != null) {
 					s.right.parent = s.parent;
 				}

@@ -1,7 +1,7 @@
 package algvis.bst;
 
 import algvis.core.Algorithm;
-import algvis.core.Node;
+import algvis.core.Colors;
 
 public class BSTFind extends Algorithm {
 	BST T;
@@ -12,7 +12,7 @@ public class BSTFind extends Algorithm {
 		super(T.M);
 		this.T = T;
 		v = T.v = new BSTNode(T, K = x);
-		v.bgColor(Node.FIND);
+		v.bgColor(Colors.FIND);
 		setHeader("search");
 	}
 
@@ -23,7 +23,7 @@ public class BSTFind extends Algorithm {
 			setText("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Node.NOTFOUND);
+			v.bgColor(Colors.NOTFOUND);
 			setText("notfound");
 		} else {
 			BSTNode w = T.root;
@@ -34,7 +34,7 @@ public class BSTFind extends Algorithm {
 				if (w.key == K) {
 					v.goTo(w);
 					setText("found");
-					v.bgColor(Node.FOUND);
+					v.bgColor(Colors.FOUND);
 					break;
 				} else if (w.key < K) {
 					if (w.right == null) {
@@ -50,7 +50,7 @@ public class BSTFind extends Algorithm {
 						v.goAbove(w);
 					} else { // not found
 						setText("notfound");
-						v.bgColor(Node.NOTFOUND);
+						v.bgColor(Colors.NOTFOUND);
 						v.goRight();
 						break;
 					}
@@ -68,7 +68,7 @@ public class BSTFind extends Algorithm {
 						v.goAbove(w);
 					} else { // notfound
 						setText("notfound");
-						v.bgColor(Node.NOTFOUND);
+						v.bgColor(Colors.NOTFOUND);
 						v.goLeft();
 						break;
 					}

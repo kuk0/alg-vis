@@ -2,7 +2,7 @@ package algvis.avltree;
 
 import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
-import algvis.core.Node;
+import algvis.core.Colors;
 
 public class AVLInsert extends Algorithm {
 	AVL T;
@@ -13,7 +13,7 @@ public class AVLInsert extends Algorithm {
 		super(T.M);
 		this.T = T;
 		T.v = v = new BSTNode(T, K = x);
-		v.bgColor(Node.INSERT);
+		v.bgColor(Colors.INSERT);
 		setHeader("insertion");
 	}
 
@@ -34,7 +34,7 @@ public class AVLInsert extends Algorithm {
 				if (w.key == K) {
 					setText("alreadythere");
 					v.goDown();
-					v.bgColor(Node.NOTFOUND);
+					v.bgColor(Colors.NOTFOUND);
 					return;
 				} else if (w.key < K) {
 					setText("bstinsertright", K, w.key);

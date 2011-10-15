@@ -1,13 +1,13 @@
 package algvis.splaytree;
 
 import algvis.bst.BSTNode;
-import algvis.core.Node;
+import algvis.core.Colors;
 
 public class SplayFind extends SplayAlg {
 	public SplayFind(Splay T, int x) {
 		super(T, x);
 		T.vv = v = new SplayNode(T, x);
-		v.bgColor(Node.FIND);
+		v.bgColor(Colors.FIND);
 	}
 
 	@Override
@@ -17,7 +17,7 @@ public class SplayFind extends SplayAlg {
 			setText("bstfindempty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Node.NOTFOUND);
+			v.bgColor(Colors.NOTFOUND);
 			setHeader("search");
 			setText("bstfindnotfound");
 		} else {
@@ -29,14 +29,14 @@ public class SplayFind extends SplayAlg {
 			mysuspend();
 
 			setHeader("search");
-			w.bgColor(Node.NORMAL);
+			w.bgColor(Colors.NORMAL);
 			v.goToRoot();
 			if (w.key == v.key) {
 				setText("found");
-				v.bgColor(Node.FOUND);
+				v.bgColor(Colors.FOUND);
 			} else {
 				setText("notfound");
-				v.bgColor(Node.NOTFOUND);
+				v.bgColor(Colors.NOTFOUND);
 				v.goDown();
 			}
 			mysuspend();

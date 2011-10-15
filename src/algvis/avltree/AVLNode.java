@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import algvis.bst.BSTNode;
+import algvis.core.Colors;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.View;
@@ -49,7 +50,7 @@ public class AVLNode extends BSTNode {
 
 		int xx = x - D.radius, yy = y - D.radius, dx = 2 * D.radius, dy = 2 * D.radius;
 		String b = "";
-		if (bgcolor == Node.NORMAL) {
+		if (bgcolor == Colors.NORMAL) {
 			G.setColor(Color.ORANGE);
 			switch (bal) {
 			case +2:

@@ -2,6 +2,7 @@ package algvis.skiplist;
 
 import java.util.Random;
 
+import algvis.core.Colors;
 import algvis.core.Node;
 
 public class SkipInsert extends SkipAlg {
@@ -9,7 +10,7 @@ public class SkipInsert extends SkipAlg {
 	
 	public SkipInsert(SkipList L, int x) { // Buttons B,
 		super(L, x);
-		v.bgColor(Node.INSERT);
+		v.bgColor(Colors.INSERT);
 		p = new SkipNode[L.height];
 		setHeader("insertion");
 		R = new Random();		
@@ -68,7 +69,7 @@ public class SkipInsert extends SkipAlg {
 		mysuspend();
 
 		setText("done");
-		L.v.bgColor(Node.NORMAL);
+		L.v.bgColor(Colors.NORMAL);
 		L.v = null;
 	}
 }

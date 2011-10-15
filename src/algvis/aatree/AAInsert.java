@@ -2,7 +2,7 @@ package algvis.aatree;
 
 import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
-import algvis.core.Node;
+import algvis.core.Colors;
 
 public class AAInsert extends Algorithm {
 	AA T;
@@ -13,7 +13,7 @@ public class AAInsert extends Algorithm {
 		super(T.M);
 		this.T = T;
 		T.v = v = new AANode(T, K = x);
-		v.bgColor(Node.INSERT);
+		v.bgColor(Colors.INSERT);
 		setHeader("insertion");
 	}
 
@@ -25,7 +25,7 @@ public class AAInsert extends Algorithm {
 			v.goToRoot();
 			setText("newroot");
 			mysuspend();
-			v.bgColor(Node.NORMAL);
+			v.bgColor(Colors.NORMAL);
 			T.v = null;
 		} else {
 			v.goAboveRoot();
@@ -36,7 +36,7 @@ public class AAInsert extends Algorithm {
 				if (w.key == K) {
 					setText("alreadythere");
 					v.goDown();
-					v.bgColor(Node.NOTFOUND);
+					v.bgColor(Colors.NOTFOUND);
 					return;
 				} else if (w.key < K) {
 					setText("bstinsertright", K, w.key);
@@ -62,7 +62,7 @@ public class AAInsert extends Algorithm {
 			T.reposition();
 			mysuspend();
 
-			v.bgColor(Node.NORMAL);
+			v.bgColor(Colors.NORMAL);
 			T.v = null;
 			// bubleme nahor
 			while (w != null) {

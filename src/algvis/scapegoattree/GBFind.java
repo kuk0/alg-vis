@@ -1,12 +1,12 @@
 package algvis.scapegoattree;
 
 import algvis.bst.BSTNode;
-import algvis.core.Node;
+import algvis.core.Colors;
 
 public class GBFind extends GBAlg {
 	public GBFind(GBTree T, int x) {
 		super(T, x);
-		v.bgColor(Node.FIND);
+		v.bgColor(Colors.FIND);
 		setHeader("search");
 	}
 
@@ -17,7 +17,7 @@ public class GBFind extends GBAlg {
 			setText("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Node.NOTFOUND);
+			v.bgColor(Colors.NOTFOUND);
 			setText("notfound");
 		} else {
 			BSTNode w = T.root;
@@ -28,11 +28,11 @@ public class GBFind extends GBAlg {
 				if (w.key == K) {
 					if (((GBNode) w).deleted) {
 						setText("gbfinddeleted");
-						v.bgColor(Node.NOTFOUND);
+						v.bgColor(Colors.NOTFOUND);
 						v.goDown();
 					} else {
 						setText("found");
-						v.bgColor(Node.FOUND);
+						v.bgColor(Colors.FOUND);
 					}
 					break;
 				} else if (w.key < K) {
@@ -42,7 +42,7 @@ public class GBFind extends GBAlg {
 						v.goTo(w);
 					} else { // notfound
 						setText("notfound");
-						v.bgColor(Node.NOTFOUND);
+						v.bgColor(Colors.NOTFOUND);
 						v.goRight();
 						break;
 					}
@@ -53,7 +53,7 @@ public class GBFind extends GBAlg {
 						v.goTo(w);
 					} else { // notfound
 						setText("notfound");
-						v.bgColor(Node.NOTFOUND);
+						v.bgColor(Colors.NOTFOUND);
 						v.goLeft();
 						break;
 					}

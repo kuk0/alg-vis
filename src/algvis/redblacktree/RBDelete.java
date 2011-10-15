@@ -2,6 +2,7 @@ package algvis.redblacktree;
 
 import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
+import algvis.core.Colors;
 import algvis.core.Node;
 
 public class RBDelete extends Algorithm {
@@ -13,7 +14,7 @@ public class RBDelete extends Algorithm {
 		super(T.M);
 		this.T = T;
 		v = T.v = new BSTNode(T, K = x);
-		v.bgColor(Node.DELETE);
+		v.bgColor(Colors.DELETE);
 		setHeader("deletion");
 	}
 
@@ -24,7 +25,7 @@ public class RBDelete extends Algorithm {
 			setText("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Node.NOTFOUND);
+			v.bgColor(Colors.NOTFOUND);
 			setText("notfound");
 			return;
 		} else {
@@ -35,7 +36,7 @@ public class RBDelete extends Algorithm {
 
 			while (true) {
 				if (d.key == K) { // found
-					v.bgColor(Node.FOUND);
+					v.bgColor(Colors.FOUND);
 					break;
 				} else if (d.key < K) { // right
 					setText("bstfindright", K, d.key);
@@ -66,7 +67,7 @@ public class RBDelete extends Algorithm {
 
 			BSTNode u = d, w = (u.left != T.NULL) ? u.left : u.right;
 			T.NULL.parent = u.parent;
-			d.bgColor(Node.FOUND);
+			d.bgColor(Colors.FOUND);
 			if (d.isLeaf()) { // case I - list
 				setText("bstdeletecase1");
 				mysuspend();
@@ -101,7 +102,7 @@ public class RBDelete extends Algorithm {
 				setText("bstdeletecase3");
 				BSTNode s = d.right;
 				v = T.v = new RBNode(T, -Node.INF);
-				v.bgColor(Node.FIND);
+				v.bgColor(Colors.FIND);
 				v.goTo(s);
 				mysuspend();
 				while (s.left != T.NULL) {

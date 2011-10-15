@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
 
+import algvis.core.Colors;
 import algvis.core.DataStructure;
 import algvis.core.Fonts;
 import algvis.core.Node;
@@ -31,7 +32,7 @@ public class BNode extends Node {
 		this.x = tox = x;
 		this.y = toy = y;
 		steps = 0;
-		setColor(Color.black, NORMAL);
+		setColor(Color.black, Colors.NORMAL);
 		width = _width();
 	}
 

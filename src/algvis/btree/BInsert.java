@@ -1,7 +1,7 @@
 package algvis.btree;
 
 import algvis.core.Algorithm;
-import algvis.core.Node;
+import algvis.core.Colors;
 
 public class BInsert extends Algorithm {
 	BTree T;
@@ -12,7 +12,7 @@ public class BInsert extends Algorithm {
 		super(T.M);
 		this.T = T;
 		v = T.v = new BNode(T, K = x);
-		v.bgColor(Node.INSERT);
+		v.bgColor(Colors.INSERT);
 		setHeader("insertion");
 	}
 
@@ -23,7 +23,7 @@ public class BInsert extends Algorithm {
 			v.goAboveRoot();
 			setText("newroot");
 			mysuspend();
-			v.bgColor(Node.NORMAL);
+			v.bgColor(Colors.NORMAL);
 		} else {
 			BNode w = T.root;
 			v.goAbove(w);
@@ -55,7 +55,7 @@ public class BInsert extends Algorithm {
 			setText("binsertleaf");
 			w.addLeaf(K);
 			if (w.numKeys >= T.order) {
-				w.bgColor(Node.NOTFOUND);
+				w.bgColor(Colors.NOTFOUND);
 			}
 			T.v = null;
 			mysuspend();
@@ -74,7 +74,7 @@ public class BInsert extends Algorithm {
 				w.parent.add(o, w);
 				w = w.parent;
 				if (w.numKeys >= T.order) {
-					w.bgColor(Node.NOTFOUND);
+					w.bgColor(Colors.NOTFOUND);
 				}
 				T.reposition();
 				mysuspend();

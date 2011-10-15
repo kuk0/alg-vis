@@ -1,13 +1,13 @@
 package algvis.splaytree;
 
 import algvis.bst.BSTNode;
-import algvis.core.Node;
+import algvis.core.Colors;
 
 public class SplayInsert extends SplayAlg {
 	public SplayInsert(Splay T, int x) {
 		super(T, x);
 		T.vv = v = new SplayNode(T, x);
-		v.bgColor(Node.INSERT);
+		v.bgColor(Colors.INSERT);
 	}
 
 	@Override
@@ -23,11 +23,11 @@ public class SplayInsert extends SplayAlg {
 			splay(w);
 
 			setHeader("insertion");
-			w.bgColor(Node.NORMAL);
+			w.bgColor(Colors.NORMAL);
 			if (w.key == K) {
 				setText("alreadythere");
 				v.goDown();
-				v.bgColor(Node.NOTFOUND);
+				v.bgColor(Colors.NOTFOUND);
 				return;
 			} else if (w.key < K) {
 				setText("splayinsertleft");
@@ -47,7 +47,7 @@ public class SplayInsert extends SplayAlg {
 			mysuspend();
 		}
 		setText("done");
-		v.bgColor(Node.NORMAL);
+		v.bgColor(Colors.NORMAL);
 		T.vv = null;
 	}
 }

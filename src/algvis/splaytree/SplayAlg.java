@@ -2,7 +2,7 @@ package algvis.splaytree;
 
 import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
-import algvis.core.Node;
+import algvis.core.Colors;
 
 public class SplayAlg extends Algorithm {
 	Splay T;
@@ -13,7 +13,7 @@ public class SplayAlg extends Algorithm {
 		super(T.M);
 		this.T = T;
 		T.v = s = new SplayNode(T, K = x);
-		s.bgColor(Node.FIND);
+		s.bgColor(Colors.FIND);
 		setHeader("splay");
 	}
 	
@@ -41,7 +41,7 @@ public class SplayAlg extends Algorithm {
 			s.goTo(w);
 			mysuspend();
 		}
-		w.bgColor(Node.FIND);
+		w.bgColor(Colors.FIND);
 		T.v = null;
 		setText("splayfound");
 		mysuspend();
