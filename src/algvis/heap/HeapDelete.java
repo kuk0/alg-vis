@@ -57,10 +57,10 @@ public class HeapDelete extends HeapAlg {
 			if (v.left != null) {
 				w = v.left;
 			}
-			if (v.right != null && ((HeapNode) v.right).less(w)) {
+			if (v.right != null && ((HeapNode) v.right).prec(w)) {
 				w = v.right;
 			}
-			if (w == null || ((HeapNode) v).less(w)) {
+			if (w == null || ((HeapNode) v).prec(w)) {
 				break;
 			}
 			H.v = new HeapNode((HeapNode) v);

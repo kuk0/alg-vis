@@ -27,8 +27,10 @@ public class Heap extends PriorityQueue {
 	}
 
 	@Override
-	public void increaseKey(Node v, int delta) {
-		start(new HeapIncrKey(this, (BSTNode)v, delta));
+	public void decreaseKey(Node v, int delta) {
+		if (v == null) {
+			// TODO: vypindat
+		} else start(new HeapDecrKey(this, (BSTNode)v, delta));
 	}
 	
 	@Override

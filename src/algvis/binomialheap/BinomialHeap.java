@@ -32,8 +32,8 @@ public class BinomialHeap extends MeldablePQ {
 	}
 
 	@Override
-	public void increaseKey(Node v, int delta) {
-		start(new BinHeapIncrKey(this, (BinHeapNode)v, delta));
+	public void decreaseKey(Node v, int delta) {
+		start(new BinHeapDecrKey(this, (BinHeapNode)v, delta));
 	}
 
 	protected Pair chooseHeaps(int i, int j) {

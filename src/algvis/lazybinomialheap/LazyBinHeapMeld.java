@@ -30,7 +30,7 @@ public class LazyBinHeapMeld extends Algorithm {
 			// heap #2 is empty; done;
 		} else {
 			H.root[i].linkAll(H.root[j]);
-			if (H.min[j].less(H.min[i])) {
+			if (H.min[j].prec(H.min[i])) {
 				H.min[i] = H.min[j];
 			}
 			H.root[j] = H.min[j] = null;

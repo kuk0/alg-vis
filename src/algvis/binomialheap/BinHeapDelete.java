@@ -30,7 +30,7 @@ public class BinHeapDelete extends BinHeapAlg {
 		v = w = H.min[i] = H.root[i];
 		if (H.root[i] != null) {
 			do {
-				if (w.less(H.min[i])) {
+				if (w.prec(H.min[i])) {
 					H.min[i] = w;
 				}
 				w = w.right;
@@ -49,7 +49,7 @@ public class BinHeapDelete extends BinHeapAlg {
 		H.min[0] = w;
 		do {
 			w.parent = null;
-			if (w.less(H.min[0])) {
+			if (w.prec(H.min[0])) {
 				H.min[0] = w;
 			}
 			BinHeapNode tl = w.left, tr = w.right;

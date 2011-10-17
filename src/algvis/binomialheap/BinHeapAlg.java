@@ -13,7 +13,7 @@ public class BinHeapAlg extends Algorithm {
 	public void meld(int i) {
 		BinHeapNode v = H.root[i];
 		v.mark();
-		if ((H.min[0]).less(H.min[i])) {
+		if ((H.min[0]).prec(H.min[i])) {
 			H.min[i] = H.min[0];
 			// text: nove minimum
 		} else {
@@ -52,7 +52,7 @@ public class BinHeapAlg extends Algorithm {
 					&& (v.right == H.root[i] || v.size < v.right.size)) {
 				// spojime 2 rovnakej velkosti
 				BinHeapNode u = v.left;
-				if (u.less(v)) { // napojime v pod u
+				if (u.prec(v)) { // napojime v pod u
 					v.unlink();
 					u.linkChild(v);
 					v.unmark();

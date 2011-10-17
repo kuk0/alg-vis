@@ -211,7 +211,7 @@ public class BinHeapNode extends Node {
 		}
 	}
 
-	public boolean less(Node v) {
+	public boolean prec(Node v) {
 		if (((MeldablePQ) D).minHeap) {
 			return this.key < v.key;
 		} else {
@@ -219,7 +219,7 @@ public class BinHeapNode extends Node {
 		}
 	}
 
-	public boolean leq(Node v) {
+	public boolean preceq(Node v) {
 		if (((MeldablePQ) D).minHeap) {
 			return this.key <= v.key;
 		} else {

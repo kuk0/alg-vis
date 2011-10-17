@@ -81,7 +81,7 @@ public class LazyBinHeapDelete extends Algorithm {
 						H.root[i] = w.right; 
 					}
 					w.unlink();
-					if (v.less(w)) {
+					if (v.prec(w)) {
 						v.linkChild(w);
 						w = v;
 					} else {
@@ -111,7 +111,7 @@ public class LazyBinHeapDelete extends Algorithm {
 		v = w = H.min[i] = H.root[i];
 		if (H.root[i] != null) {
 			do {
-				if (w.less(H.min[i])) {
+				if (w.prec(H.min[i])) {
 					H.min[i] = w;
 				}
 				w = w.right;

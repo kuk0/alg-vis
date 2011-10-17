@@ -21,7 +21,7 @@ public class LazyBinHeapInsert extends Algorithm {
 			H.root[i] = H.min[i] = v;
 		} else {
 			H.root[i].linkLeft(v);
-			if (v.less(H.min[i])) {
+			if (v.prec(H.min[i])) {
 				H.min[i] = v;
 			}
 		}

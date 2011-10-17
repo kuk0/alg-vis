@@ -16,5 +16,5 @@ abstract public class MeldablePQ extends DataStructure {
 
 	abstract public void meld(int i, int j);
 	
-	abstract public void increaseKey(Node v, int delta);
+	abstract public void decreaseKey(Node v, int delta);
 }

@@ -19,7 +19,7 @@ import algvis.internationalization.IRadioButton;
 
 public class MeldablePQButtons extends Buttons implements ChangeListener {
 	private static final long serialVersionUID = 1242711038059609653L;
-	IButton insertB, deleteB, incrKeyB, meldB;
+	IButton insertB, deleteB, decrKeyB, meldB;
 	public JSpinner activeHeap;
 	ILabel activeLabel;
 	IRadioButton minB, maxB;
@@ -39,9 +39,13 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 		deleteB.setMnemonic(KeyEvent.VK_D);
 		deleteB.addActionListener(this);
 
-		incrKeyB = new IButton(M.a, "button-increasekey");
-		incrKeyB.setMnemonic(KeyEvent.VK_K);
-		incrKeyB.addActionListener(this);
+		if (((MeldablePQ)D).minHeap) {
+			decrKeyB = new IButton(M.a, "button-decreasekey");
+		} else {
+			decrKeyB = new IButton(M.a, "button-increasekey");
+		}
+		decrKeyB.setMnemonic(KeyEvent.VK_K);
+		decrKeyB.addActionListener(this);
 
 		meldB = new IButton(M.a, "button-meld");
 		deleteB.setMnemonic(KeyEvent.VK_M);
@@ -49,7 +53,7 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 
 		P.add(insertB);
 		P.add(deleteB);
-		P.add(incrKeyB);
+		P.add(decrKeyB);
 		P.add(meldB);
 	}
 
@@ -94,12 +98,12 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 				}
 			});
 			t.start();
-		} else if (evt.getSource() == incrKeyB) {
+		} else if (evt.getSource() == decrKeyB) {
 			final int delta = Math.abs(I.getInt(1));
 			final Node w = ((MeldablePQ)D).chosen;
 			Thread t = new Thread(new Runnable() {
 				public void run() {
-					((MeldablePQ) D).increaseKey(w, delta);
+					((MeldablePQ) D).decreaseKey(w, delta);
 				}
 			});
 			t.start();
@@ -115,20 +119,16 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 				}
 			});
 			t.start();
-		} else if (evt.getSource() == minB) {
-			if (!((MeldablePQ) D).minHeap) {
-				D.clear();
-				deleteB.setT("button-deletemin");
-				incrKeyB.setT("button-decreasekey");
-				((MeldablePQ) D).minHeap = true;
-			}
-		} else if (evt.getSource() == maxB) {
-			if (((MeldablePQ) D).minHeap) {
-				D.clear();
-				deleteB.setT("button-deletemax");
-				incrKeyB.setT("button-increasekey");
-				((MeldablePQ) D).minHeap = false;
-			}
+		} else if (evt.getSource() == minB && !((MeldablePQ) D).minHeap) {
+			D.clear();
+			deleteB.setT("button-deletemin");
+			decrKeyB.setT("button-decreasekey");
+			((MeldablePQ) D).minHeap = true;
+		} else if (evt.getSource() == maxB && ((MeldablePQ) D).minHeap) {
+			D.clear();
+			deleteB.setT("button-deletemax");
+			decrKeyB.setT("button-increasekey");
+			((MeldablePQ) D).minHeap = false;
 		}
 	}
 
@@ -137,7 +137,7 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 		super.enableNext();
 		insertB.setEnabled(false);
 		deleteB.setEnabled(false);
-		incrKeyB.setEnabled(false);
+		decrKeyB.setEnabled(false);
 		meldB.setEnabled(false);
 	}
 
@@ -146,7 +146,7 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 		super.disableNext();
 		insertB.setEnabled(true);
 		deleteB.setEnabled(true);
-		incrKeyB.setEnabled(true);
+		decrKeyB.setEnabled(true);
 		meldB.setEnabled(true);
 		next.setEnabled(false);
 	}
@@ -156,7 +156,7 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 		super.refresh();
 		insertB.refresh();
 		deleteB.refresh();
-		incrKeyB.refresh();
+		decrKeyB.refresh();
 		meldB.refresh();
 		activeLabel.refresh();
 	}

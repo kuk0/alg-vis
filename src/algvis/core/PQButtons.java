@@ -18,7 +18,7 @@ import algvis.internationalization.IRadioButton;
  */
 public class PQButtons extends Buttons {
 	private static final long serialVersionUID = 5632185496171660196L;
-	IButton insertB, deleteB, incrKeyB;
+	IButton insertB, deleteB, decrKeyB;
 	IRadioButton minB, maxB;
 	ButtonGroup minMaxGroup;
 
@@ -36,13 +36,17 @@ public class PQButtons extends Buttons {
 		deleteB.setMnemonic(KeyEvent.VK_D);
 		deleteB.addActionListener(this);
 
-		incrKeyB = new IButton(M.a, "button-increasekey");
-		incrKeyB.setMnemonic(KeyEvent.VK_K);
-		incrKeyB.addActionListener(this);
+		if (((PriorityQueue)D).minHeap) {
+			decrKeyB = new IButton(M.a, "button-decreasekey");
+		} else {
+			decrKeyB = new IButton(M.a, "button-increasekey");
+		}
+		decrKeyB.setMnemonic(KeyEvent.VK_K);
+		decrKeyB.addActionListener(this);
 
 		P.add(insertB);
 		P.add(deleteB);
-		P.add(incrKeyB);
+		P.add(decrKeyB);
 	}
 
 	@Override
@@ -80,29 +84,25 @@ public class PQButtons extends Buttons {
 				}
 			});
 			t.start();
-		} else if (evt.getSource() == incrKeyB) {
+		} else if (evt.getSource() == decrKeyB) {
 			final int delta = Math.abs(I.getInt(1));
 			final BSTNode w = ((BSTNode)((PriorityQueue)D).chosen);
 			Thread t = new Thread(new Runnable() {
 				public void run() {
-					((PriorityQueue) D).increaseKey(w, delta);
+					((PriorityQueue) D).decreaseKey(w, delta);
 				}
 			});
 			t.start();
-		} else if (evt.getSource() == minB) {
-			if (!((PriorityQueue) D).minHeap) {
-				D.clear();
-				deleteB.setT("button-deletemin");
-				incrKeyB.setT("button-decreasekey");
-				((PriorityQueue) D).minHeap = true;
-			}
-		} else if (evt.getSource() == maxB) {
-			if (((PriorityQueue) D).minHeap) {
-				D.clear();
-				deleteB.setT("button-deletemax");
-				incrKeyB.setT("button-increasekey");
-				((PriorityQueue) D).minHeap = false;
-			}
+		} else if (evt.getSource() == minB && !((PriorityQueue) D).minHeap) {
+			D.clear();
+			deleteB.setT("button-deletemin");
+			decrKeyB.setT("button-decreasekey");
+			((PriorityQueue) D).minHeap = true;
+		} else if (evt.getSource() == maxB && ((PriorityQueue) D).minHeap) {
+			D.clear();
+			deleteB.setT("button-deletemax");
+			decrKeyB.setT("button-increasekey");
+			((PriorityQueue) D).minHeap = false;
 		}
 	}
 
@@ -111,7 +111,7 @@ public class PQButtons extends Buttons {
 		super.enableNext();
 		insertB.setEnabled(false);
 		deleteB.setEnabled(false);
-		incrKeyB.setEnabled(false);
+		decrKeyB.setEnabled(false);
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class PQButtons extends Buttons {
 		super.disableNext();
 		insertB.setEnabled(true);
 		deleteB.setEnabled(true);
-		incrKeyB.setEnabled(true);
+		decrKeyB.setEnabled(true);
 		next.setEnabled(false);
 	}
 
@@ -128,6 +128,6 @@ public class PQButtons extends Buttons {
 		super.refresh();
 		insertB.refresh();
 		deleteB.refresh();
-		incrKeyB.refresh();
+		decrKeyB.refresh();
 	}
 }

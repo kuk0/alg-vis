@@ -15,7 +15,7 @@ public class HeapAlg extends Algorithm {
 	
 	public void bubbleup(BSTNode v) {
 		BSTNode w = v.parent;
-		while (((HeapNode) v).less(w)) {
+		while (w != null && ((HeapNode) v).prec(w)) {
 			H.v = new HeapNode((HeapNode) v);
 			H.v2 = new HeapNode((HeapNode) w);
 			v.key = Node.NOKEY;
@@ -30,9 +30,7 @@ public class HeapAlg extends Algorithm {
 			H.v = null;
 			H.v2 = null;
 			v = w;
-			if (w.parent != null) {
-				w = w.parent;
-			}
+			w = w.parent;
 		}
 	}
 }

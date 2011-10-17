@@ -12,5 +12,5 @@ abstract public class PriorityQueue extends DataStructure {
 
 	abstract public void delete();
 	
-	abstract public void increaseKey(Node v, int delta);
+	abstract public void decreaseKey(Node v, int delta);
 }
