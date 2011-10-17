@@ -1,7 +1,7 @@
 package algvis.heap;
 
 import algvis.bst.BSTNode;
-import algvis.internationalization.InputField;
+import algvis.core.InputField;
 
 public class HeapDecrKey extends HeapAlg {
 	int delta;

@@ -6,9 +6,9 @@ import java.util.Random;
 import algvis.bst.BST;
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
+import algvis.core.InputField;
 import algvis.core.View;
 import algvis.core.VisPanel;
-import algvis.internationalization.InputField;
 
 public class Rotations extends DataStructure {
 	BST T;

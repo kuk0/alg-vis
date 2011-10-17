@@ -3,7 +3,7 @@ package algvis.fibonacciheap;
 import algvis.binomialheap.BinHeapNode;
 import algvis.binomialheap.BinomialHeap;
 import algvis.core.Algorithm;
-import algvis.internationalization.InputField;
+import algvis.core.InputField;
 
 public class FibHeapDecrKey extends Algorithm {
 	int delta, i;

@@ -3,7 +3,6 @@ package algvis.core;
 import java.awt.Graphics;
 import java.util.Random;
 
-import algvis.internationalization.InputField;
 
 abstract public class DataStructure {
 	// datova struktura musi vediet gombikom povedat, kolko ich potrebuje,

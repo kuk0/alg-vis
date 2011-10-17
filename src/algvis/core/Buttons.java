@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import algvis.internationalization.ChLabel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ICheckBox;
-import algvis.internationalization.InputField;
 
 /**
  * The Class Buttons.
