@@ -11,6 +11,7 @@ import algvis.core.View;
 import algvis.core.VisPanel;
 
 public class BinomialHeap extends MeldablePQ {
+	public static String dsName = "binheap";
 	public BinHeapNode[] root; // root[0] je pomocny, prave meldujuci
 	public BinHeapNode[] min;
 	public BinHeapNode d, v, v2;

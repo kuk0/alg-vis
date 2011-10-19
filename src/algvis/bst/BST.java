@@ -8,6 +8,7 @@ import algvis.core.View;
 import algvis.core.VisPanel;
 
 public class BST extends Dictionary {
+	public static String dsName = "bst";
 	public BSTNode root = null, v = null;
 
 	public BST(VisPanel M) {

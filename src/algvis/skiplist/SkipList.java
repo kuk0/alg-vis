@@ -8,6 +8,7 @@ import algvis.core.View;
 import algvis.core.VisPanel;
 
 public class SkipList extends Dictionary {
+	public static String dsName = "skiplist";
 	SkipNode root, sent, v = null;
 	int height = 1, n = 0, e = 0;
 

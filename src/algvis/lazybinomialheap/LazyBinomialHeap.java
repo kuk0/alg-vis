@@ -11,6 +11,7 @@ import algvis.core.VisPanel;
 
 
 public class LazyBinomialHeap extends BinomialHeap {
+	public static String dsName = "lazybinheap";
 	BinHeapNode[] cleanup;
 
 	public LazyBinomialHeap(VisPanel M) {

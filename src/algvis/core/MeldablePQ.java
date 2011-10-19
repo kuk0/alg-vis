@@ -1,12 +1,18 @@
 package algvis.core;
 
 abstract public class MeldablePQ extends DataStructure {
-	public static final int numHeaps = 10;
+	public static String adtName = "meldable-pq";
+
+    public static final int numHeaps = 10;
 	public boolean minHeap = false;
 	public int active = 1;
 
 	public MeldablePQ(VisPanel M) {
 		super(M);
+	}
+
+	public static String adtName() {
+		return "meldable-pq";
 	}
 
 	@Override

@@ -5,6 +5,8 @@ import algvis.bst.BSTFind;
 import algvis.core.VisPanel;
 
 public class Treap extends BST {
+	public static String dsName = "treap";
+	
 	public Treap(VisPanel M) {
 		super(M);
 	}

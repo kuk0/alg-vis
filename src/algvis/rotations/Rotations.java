@@ -11,6 +11,8 @@ import algvis.core.View;
 import algvis.core.VisPanel;
 
 public class Rotations extends DataStructure {
+	public static String adtName = "dictionary";
+	public static String dsName = "rotations";
 	BST T;
 
 	public Rotations(VisPanel M) {

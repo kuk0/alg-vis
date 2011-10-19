@@ -9,6 +9,7 @@ import algvis.core.View;
 import algvis.core.VisPanel;
 
 public class Heap extends PriorityQueue {
+	public static String dsName = "heap";
 	int n = 0;
 	BSTNode root = null, v = null, v2 = null;
 

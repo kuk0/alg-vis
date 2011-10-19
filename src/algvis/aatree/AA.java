@@ -6,6 +6,7 @@ import algvis.bst.BSTNode;
 import algvis.core.VisPanel;
 
 public class AA extends BST {
+	public static String dsName = "aatree";
 	boolean mode23 = false;
 
 	public AA(VisPanel M) {

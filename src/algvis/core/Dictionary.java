@@ -1,6 +1,8 @@
 package algvis.core;
 
 abstract public class Dictionary extends DataStructure {
+	public static String adtName = "dictionary";
+	
 	public Dictionary(VisPanel M) {
 		super(M);
 	}

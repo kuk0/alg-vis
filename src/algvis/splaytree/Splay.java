@@ -8,6 +8,7 @@ import algvis.core.View;
 import algvis.core.VisPanel;
 
 public class Splay extends BST {
+	public static String dsName = "splaytree";
 	BSTNode root2 = null, vv = null;
 
 	public Splay(VisPanel M) {

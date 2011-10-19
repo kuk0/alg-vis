@@ -4,8 +4,11 @@ import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.lang.reflect.Constructor;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
@@ -29,9 +32,9 @@ public class AlgVis extends JPanel implements ActionListener {
 	JPanel cards;
 	JRootPane P;
 
-	IMenu dictItem, pqItem;
+	Map<String, IMenu> adtItems = new HashMap<String, IMenu>();
 	IMenuItem[] dsItems;
-	DataStructures DS;
+//	DataStructures DS;
 
 	public AlgVis(JRootPane P) {
 		this.P = P;
@@ -73,21 +76,29 @@ public class AlgVis extends JPanel implements ActionListener {
 
 		// Data structures menu
 		// Dictionaries
-		dictItem = new IMenu(this, "dict");
-		pqItem = new IMenu(this, "pq");
+		/**
+		 * Create a submenu (IMenu) for each abstract data type listed in the class ADTs.
+		 */
+		for (int i = 0; i < ADTs.N; ++i) {
+			String adtName = ADTs.getName(i);
+			adtItems.put(adtName, new IMenu(this, adtName));
+		}
+		/**
+		 * Create menu items for each data structure listed in the class DataStructures.
+		 */
 		dsItems = new IMenuItem[DataStructures.N];
 		for (int i = 0; i < DataStructures.N; ++i) {
-			dsItems[i] = new IMenuItem(this, DataStructures.NAME[i]);
-			if (DataStructures.TYPE[i].equals("pq")) {
-				pqItem.add(dsItems[i]);
-			} else {
-				dictItem.add(dsItems[i]);
-			}
-			dsItems[i].setActionCommand("ds-" + DataStructures.NAME[i]);
+			dsItems[i] = new IMenuItem(this, DataStructures.getName(i));
+			adtItems.get(DataStructures.getADT(i)).add(dsItems[i]);
+			dsItems[i].setActionCommand("ds-" + DataStructures.getName(i));
 			dsItems[i].addActionListener(this);
 		}
-		dsMenu.add(dictItem);
-		dsMenu.add(pqItem);
+		/**
+		 * Put all the ADT submenus under the all data structures menu.
+		 */
+		for (int i = 0; i < ADTs.N; ++i) {
+			dsMenu.add(adtItems.get(ADTs.getName(i)));
+		}
 		menuBar.add(dsMenu);
 
 		// Language menu
@@ -105,13 +116,8 @@ public class AlgVis extends JPanel implements ActionListener {
 		// Cards with data structures
 		cards = new JPanel(new CardLayout());
 		for (int i = 0; i < DataStructures.N; ++i) {
-			try {
-				Constructor ct = DataStructures.PANEL[i]
-						.getConstructor(AlgVis.class);
-				cards.add((VisPanel) ct.newInstance(this),
-						DataStructures.NAME[i]);
-			} catch (Exception e) {
-			}
+			VisPanel P = DataStructures.getPanel(i, this);
+			if (P != null) cards.add(P, DataStructures.getName(i));
 		}
 
 		add(menuBar);
@@ -122,8 +128,13 @@ public class AlgVis extends JPanel implements ActionListener {
 	}
 
 	public void refresh() {
-		dictItem.refresh();
-		pqItem.refresh();
+		Collection<IMenu> c = adtItems.values();
+		for (Iterator<IMenu> it = c.iterator(); it.hasNext();) {
+			it.next().refresh();
+		}
+		/*for (Iterator it = adtItems.entrySet().iterator(); it.hasNext();) {
+			((Map.Entry<String, IMenu>) it.next()).getValue().refresh();
+		}*/
 		for (int i = 0; i < DataStructures.N; ++i) {
 			dsItems[i].refresh();
 			((VisPanel)(cards.getComponent(i))).refresh();
@@ -141,15 +152,15 @@ public class AlgVis extends JPanel implements ActionListener {
 			locale = all_locales[current_lang];
 			msg = all_msgs[current_lang];
 			refresh();
-			System.out.println("akcia: " + cmd[1]);
+			// DEBUG: System.out.println("akcia: " + cmd[1]);
 		}
 		if ("ds".equals(cmd[0])) {
-			System.out.println("akcia: " + cmd[1]);
+			// DEBUG: System.out.println("akcia: " + cmd[1]);
 			for (int i = 0; i < DataStructures.N; ++i) {
-				if (DataStructures.NAME[i].equals(cmd[1])) {
+				if (DataStructures.getName(i).equals(cmd[1])) {
 					// nastav i-ty panel
 					CardLayout cl = (CardLayout) (cards.getLayout());
-					cl.show(cards, DataStructures.NAME[i]);
+					cl.show(cards, DataStructures.getName(i));
 					break;
 				}
 			}

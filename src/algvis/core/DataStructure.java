@@ -13,13 +13,11 @@ abstract public class DataStructure {
 			sheight = 600, swidth = 400;
 	public int x1, x2, y1 = -50, y2;
 	public Node chosen = null;
+	public static String adtName = "";
+	public static String dsName = "";
 
 	public DataStructure(VisPanel M) {
 		this.M = M;
-	}
-
-	public void next() {
-		A.myresume();
 	}
 
 	abstract public String stats();
@@ -31,6 +29,10 @@ abstract public class DataStructure {
 	abstract public void clean();
 
 	abstract public void draw(Graphics g, View v);
+
+	public void next() {
+		A.myresume();
+	}
 
 	protected void start(Algorithm a) {
 		unmark();

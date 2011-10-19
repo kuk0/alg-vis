@@ -5,6 +5,8 @@ import algvis.bst.BSTFind;
 import algvis.core.VisPanel;
 
 public class AVL extends BST {
+	public static String dsName = "avltree";
+	
 	public AVL(VisPanel M) {
 		super(M);
 	}

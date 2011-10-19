@@ -8,6 +8,7 @@ import algvis.core.View;
 import algvis.core.VisPanel;
 
 public class GBTree extends BST {
+	public static String dsName = "scapegoat";
 	double alpha = 1.01;
 	int del = 0;
 

@@ -10,6 +10,7 @@ import algvis.core.View;
 import algvis.core.VisPanel;
 
 public class RB extends BST {
+	public static String dsName = "redblack";
 	RBNode NULL = new RBNode(this, Node.NULL);
 	boolean mode24 = false;
 
