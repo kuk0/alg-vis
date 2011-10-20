@@ -38,11 +38,6 @@ public class BTree extends Dictionary {
 	}
 
 	@Override
-	public void clean() {
-		v = null;
-	}
-
-	@Override
 	public String stats() {
 		if (root == null) {
 			return "#" + M.a.getString("nodes") + ": 0;   #"

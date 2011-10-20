@@ -77,10 +77,6 @@ public class BinomialHeap extends MeldablePQ {
 		setStats();
 	}
 
-	@Override
-	public void clean() {
-	}
-
 	// number of nodes in the i-th heap
 	public int size(int i) {
 		int s = 0;

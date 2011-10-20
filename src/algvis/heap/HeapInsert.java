@@ -13,7 +13,7 @@ public class HeapInsert extends HeapAlg {
 	public void run() {
 		if (H.n == 1000) {
 			setText("heapfull");
-			H.clean();
+			H.v = null;
 			return;
 		}
 		BSTNode w;

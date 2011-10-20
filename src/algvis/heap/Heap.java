@@ -42,11 +42,6 @@ public class Heap extends PriorityQueue {
 	}
 
 	@Override
-	public void clean() {
-		v = v2 = null;
-	}
-
-	@Override
 	public String stats() {
 		if (n == 0) {
 			return M.a.getString("size") + ": 0 (" + M.a.getString("emptyheap")
@@ -77,7 +72,7 @@ public class Heap extends PriorityQueue {
 
 	public void reposition() {
 		if (root != null) {
-			root._reposition();
+			root.reposition();
 			M.S.V.setBounds(x1, y1, x2, y2);
 		}
 	}

@@ -37,11 +37,6 @@ public class BST extends Dictionary {
 	}
 
 	@Override
-	public void clean() {
-		v = null;
-	}
-
-	@Override
 	public String stats() {
 		if (root == null) {
 			return M.a.getString("size") + ": 0;   " + M.a.getString("height")
@@ -64,6 +59,9 @@ public class BST extends Dictionary {
 		}
 	}
 
+	/**
+	 * Move and draw all the objects on the scene (in this case the BST and one auxilliary node v).
+	 */
 	@Override
 	public void draw(Graphics G, View V) {
 		if (root != null) {
@@ -116,6 +114,11 @@ public class BST extends Dictionary {
 		v.linkright(u);
 	}
 
+	/**
+	 * Rotation is specified by a single vertex v; if v is a left child of its parent,
+	 * rotate right, if it is a right child, rotate left.
+	 * This method also recalculates positions of all nodes and their statistics.
+	 */
 	public void rotate(BSTNode v) {
 		if (v.isLeft()) {
 			rightrot(v);
@@ -132,9 +135,12 @@ public class BST extends Dictionary {
 		v.calc();
 	}
 
+	/**
+	 * Recalculate positions of all nodes in the tree.
+	 */
 	public void reposition() {
 		if (root != null) {
-			root._reposition();
+			root.reposition();
 			M.S.V.setBounds(x1, y1, x2, y2);
 			//System.out.println(x1+" "+y1+" "+x2+" "+y2);
 		}

@@ -56,10 +56,6 @@ public class Rotations extends DataStructure {
 	}
 
 	@Override
-	public void clean() {
-	}
-
-	@Override
 	public void clear() {
 		T.root = null;
 	}

@@ -39,11 +39,6 @@ public class GBTree extends BST {
 	}
 
 	@Override
-	public void clean() {
-		v = null;
-	}
-
-	@Override
 	public void draw(Graphics G, View V) {
 		if (root != null) {
 			root.moveTree();

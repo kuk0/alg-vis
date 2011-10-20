@@ -89,7 +89,7 @@ public class AANode extends BSTNode {
 	}
 
 	@Override
-	public void _reposition() {
+	public void reposition() {
 		reboxTree();
 		repos();
 	}

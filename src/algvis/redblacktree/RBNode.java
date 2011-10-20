@@ -180,7 +180,7 @@ public class RBNode extends BSTNode {
 	}
 
 	@Override
-	public void _reposition() {
+	public void reposition() {
 		if (key != NULL) {
 			reboxTree();
 			repos();

@@ -45,11 +45,6 @@ public class SkipList extends Dictionary {
 	}
 
 	@Override
-	public void clean() {
-		v = null;
-	}
-
-	@Override
 	public String stats() {
 		if (root == null) {
 			return M.a.getString("size") + ": 0;   " + M.a.getString("height")

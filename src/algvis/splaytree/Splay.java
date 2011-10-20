@@ -37,11 +37,6 @@ public class Splay extends BST {
 	}
 
 	@Override
-	public void clean() {
-		root2 = v = vv = null;
-	}
-
-	@Override
 	public void draw(Graphics G, View V) {
 		if (root != null) {
 			root.moveTree();
@@ -72,7 +67,7 @@ public class Splay extends BST {
 		} else {
 			leftrot(v);
 		}
-		v._reposition();
+		v.reposition();
 		if (v.left != null) {
 			v.left.calc();
 		}

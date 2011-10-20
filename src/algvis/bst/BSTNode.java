@@ -52,6 +52,10 @@ public class BSTNode extends Node {
 		left = right = parent = null;
 	}
 
+	/**
+	 * Calculate the height, size, and sum of heights of this node,
+	 * assuming that this was already calculated for its children.
+	 */
 	public void calc() {
 		int ls = 0, rs = 0, lh = 0, rh = 0, lsh = 0, rsh = 0;
 		if (left != null) {
@@ -69,6 +73,10 @@ public class BSTNode extends Node {
 		sumh = lsh + rsh + size;
 	}
 
+	/**
+	 * Calculate the height, size, and sum of heights for all the nodes in this subtree
+	 * (recursively bottom-up).
+	 */
 	public void calcTree() {
 		if (left != null) {
 			left.calcTree();
@@ -107,12 +115,25 @@ public class BSTNode extends Node {
 		move();
 	}
 
+	/**
+	 * Create an (imaginary) box around the subtree rooted at this node.
+	 * Calculate the width from the node to the left side (leftw)
+	 * and the width from the node to the right side (rightw).
+	 * Assumption: this box has already been created for both children. 
+	 */
 	public void rebox() {
+		// if there is a left child, leftw = width of the box enclosing the whole left subtree,
+		// i.e., leftw+rightw; otherwise the width is the node radius plus some additional
+		// space called xspan
 		leftw = (left == null) ? D.xspan + D.radius : left.leftw + left.rightw;
+		// rightw is computed analogically
 		rightw = (right == null) ? D.xspan + D.radius : right.leftw
 				+ right.rightw;
 	}
 
+	/**
+	 * Rebox the whole subtree calculating the widths recursively bottom-up.
+	 */
 	public void reboxTree() {
 		if (left != null) {
 			left.reboxTree();
@@ -123,6 +144,10 @@ public class BSTNode extends Node {
 		rebox();
 	}
 
+	/**
+	 * Calculate the coordinates of each node from the widths of boxes
+	 * around them and direct the nodes to their new positions. 
+	 */
 	private void repos() {
 		if (isRoot()) {
 			goToRoot();
@@ -146,18 +171,15 @@ public class BSTNode extends Node {
 		}
 	}
 
-	/*
-	 * void rerepos() { if (left!=null) left.rerepos(); if (right!=null)
-	 * right.rerepos(); if (left!=null && right!=null) goTo
-	 * ((left.tox+right.tox)/2, this.toy); }
-	 */
-
-	public void _reposition() {
+	public void reposition() {
 		reboxTree();
 		repos();
-		// rerepos();
 	}
 	
+	/**
+	 * Find the node at coordinates (x,y).
+	 * This is used to identify the node that has been clicked by user.
+	 */
 	public BSTNode find(int x, int y) {
 		if (inside(x,y)) return this;
 		if (left != null) {

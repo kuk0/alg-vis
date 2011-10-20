@@ -26,8 +26,6 @@ abstract public class DataStructure {
 
 	abstract public void clear();
 
-	abstract public void clean();
-
 	abstract public void draw(Graphics g, View v);
 
 	public void next() {
