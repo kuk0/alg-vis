@@ -1,5 +1,7 @@
 package algvis.core;
 
+import algvis.example.ExampleDS;
+
 /**
  * The Class ADTs.
  * This class contains the list of all abstract data types (ADTs).
@@ -14,7 +16,11 @@ public class ADTs {
 	static final Class[] ADT = {
 		Dictionary.class,    // insert, find, delete
 		PriorityQueue.class, // insert, decrease-key, delete-min
-		MeldablePQ.class     // insert, decrease-key, delete-min, meld
+		MeldablePQ.class,    // insert, decrease-key, delete-min, meld
+		// we should register our new ADT here... in this special case
+		// we have the same class for ADT and for the DS...
+		// we should also document, which methods are supported by this ADT:
+		ExampleDS.class      // move
 	};
 	static final int N = ADT.length;
 

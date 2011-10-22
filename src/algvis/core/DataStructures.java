@@ -12,6 +12,8 @@ import algvis.bst.BST;
 import algvis.bst.BSTPanel;
 import algvis.btree.BPanel;
 import algvis.btree.BTree;
+import algvis.example.ExampleDS;
+import algvis.example.ExamplePanel;
 import algvis.fibonacciheap.FibHeapPanel;
 import algvis.fibonacciheap.FibonacciHeap;
 import algvis.heap.Heap;
@@ -41,18 +43,20 @@ import algvis.treap.TreapPanel;
  * The data structure can then be found in "Data structures -> adtName -> dsName". 
  */
 public class DataStructures {
-	static final int N = 14;
+	static final int N = 15;
 	@SuppressWarnings("unchecked")
 	static final Class[] PANEL = { BSTPanel.class, RotPanel.class,
 			AVLPanel.class, BPanel.class, RBPanel.class, AAPanel.class,
 			TreapPanel.class, SkipListPanel.class, GBPanel.class,
 			SplayPanel.class, HeapPanel.class, BinHeapPanel.class,
-			LazyBinHeapPanel.class, FibHeapPanel.class };
+			LazyBinHeapPanel.class, FibHeapPanel.class,
+			ExamplePanel.class }; // we should "register our new DS here
 	@SuppressWarnings("unchecked")
 	static final Class[] DS = { BST.class, Rotations.class, AVL.class,
 			BTree.class, RB.class, AA.class, Treap.class, SkipList.class,
 			GBTree.class, Splay.class, Heap.class, BinomialHeap.class,
-			LazyBinomialHeap.class, FibonacciHeap.class };
+			LazyBinomialHeap.class, FibonacciHeap.class,
+			ExampleDS.class }; // ... and here 
 
 	private static boolean check_range(int i) {
     	if (i < 0 || i >= N) {
