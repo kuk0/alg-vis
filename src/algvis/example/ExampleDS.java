@@ -3,6 +3,7 @@ package algvis.example;
 import java.awt.Graphics;
 
 import algvis.core.DataStructure;
+import algvis.core.Node;
 import algvis.core.View;
 import algvis.core.VisPanel;
 
@@ -17,9 +18,14 @@ public class ExampleDS extends DataStructure {
 	// and for the concrete data structure
 	public static String adtName = "example";
 	public static String dsName = "example";
+	
+	// this is the node we're going to move
+	public Node v;
 
 	public ExampleDS(VisPanel M) {
 		super(M);
+		// key = 47, position = (0,0)
+		v = new Node(this, 47, 0, 0);
 	}
 
 
@@ -34,19 +40,21 @@ public class ExampleDS extends DataStructure {
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		// in this case; lets just reposition
+		// the node back to the origin
+		v = new Node(this, 47, 0, 0);
 	}
 
 	@Override
-	public void draw(Graphics g, View v) {
-		// TODO Auto-generated method stub
-		
+	public void draw(Graphics G, View V) {
+		v.move();
+		v.draw(G, V);		
 	}
 
 	@Override
 	public String stats() {
-		// TODO Auto-generated method stub
-		return null;
+		// the exact string that stats returns is displayed
+		// so we should ask the getString method for the message in the correct language
+		return M.a.getString("eok") + v.key;
 	}
 }
