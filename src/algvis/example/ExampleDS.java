@@ -36,6 +36,7 @@ public class ExampleDS extends DataStructure {
 	}
 	
 	public void move(int x, int y) {
+		start(new ExampleMove(this, x, y));
 	}
 
 	@Override
