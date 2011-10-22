@@ -18,6 +18,8 @@ import algvis.heap.Heap;
 import algvis.heap.HeapPanel;
 import algvis.lazybinomialheap.LazyBinHeapPanel;
 import algvis.lazybinomialheap.LazyBinomialHeap;
+import algvis.leftistheap.LeftHeap;
+import algvis.leftistheap.LeftHeapPanel;
 import algvis.redblacktree.RB;
 import algvis.redblacktree.RBPanel;
 import algvis.rotations.RotPanel;
@@ -41,18 +43,18 @@ import algvis.treap.TreapPanel;
  * The data structure can then be found in "Data structures -> adtName -> dsName". 
  */
 public class DataStructures {
-	static final int N = 14;
+	static final int N = 15;
 	@SuppressWarnings("unchecked")
 	static final Class[] PANEL = { BSTPanel.class, RotPanel.class,
 			AVLPanel.class, BPanel.class, RBPanel.class, AAPanel.class,
 			TreapPanel.class, SkipListPanel.class, GBPanel.class,
 			SplayPanel.class, HeapPanel.class, BinHeapPanel.class,
-			LazyBinHeapPanel.class, FibHeapPanel.class };
+			LazyBinHeapPanel.class, FibHeapPanel.class, LeftHeapPanel.class };
 	@SuppressWarnings("unchecked")
 	static final Class[] DS = { BST.class, Rotations.class, AVL.class,
 			BTree.class, RB.class, AA.class, Treap.class, SkipList.class,
 			GBTree.class, Splay.class, Heap.class, BinomialHeap.class,
-			LazyBinomialHeap.class, FibonacciHeap.class };
+			LazyBinomialHeap.class, FibonacciHeap.class, LeftHeap.class };
 
 	private static boolean check_range(int i) {
     	if (i < 0 || i >= N) {
