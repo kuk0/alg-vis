@@ -1,8 +1,6 @@
 package algvis.binomialheap;
 
 import java.awt.Color;
-import java.awt.Graphics;
-
 import algvis.core.DataStructure;
 import algvis.core.MeldablePQ;
 import algvis.core.Node;
@@ -143,22 +141,22 @@ public class BinHeapNode extends Node {
 		repos(x, y, this);
 	}
 
-	public void drawTree(Graphics g, View v, BinHeapNode first,
+	public void drawTree(View v, BinHeapNode first,
 			BinHeapNode parent) {
 		if (!isLeaf()) {
-			child.drawTree(g, v, child, this);
+			child.drawTree(v, child, this);
 		}
 		if (right != first) {
-			right.drawTree(g, v, first, parent);
+			right.drawTree(v, first, parent);
 		}
 		if (parent != null) { // edge to parent
-			g.setColor(Color.black);
-			v.drawLine(g, x, y, parent.x, parent.y);
+			v.setColor(Color.black);
+			v.drawLine(x, y, parent.x, parent.y);
 		} else if (this != first) { // edge to left
-			g.setColor(Color.black);
-			v.drawLine(g, x, y, left.x, left.y);
+			v.setColor(Color.black);
+			v.drawLine(x, y, left.x, left.y);
 		}
-		draw(g, v);
+		draw(v);
 	}
 
 	public void moveTree() {
@@ -228,15 +226,15 @@ public class BinHeapNode extends Node {
 	}
 
 	@Override
-	public void draw(Graphics g, View v) {
+	public void draw(View v) {
 		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
 			return;
 		}
-		drawBg(g, v);
-		drawKey(g, v);
+		drawBg(v);
+		drawKey(v);
 		//if (parent == null) {
-			g.setColor(Color.black);
-			v.drawString(g, "" + rank, x + D.radius, y - D.radius, 8);
+			v.setColor(Color.black);
+			v.drawString("" + rank, x + D.radius, y - D.radius, 8);
 		//}
 	}
 

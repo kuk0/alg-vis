@@ -2,22 +2,20 @@ package algvis.internationalization;
 
 import javax.swing.JMenuItem;
 
-import algvis.core.AlgVis;
-
 public class IMenuItem extends JMenuItem {
 	private static final long serialVersionUID = -6522159616479156702L;
-	AlgVis a;
+	Languages L;
 	String t;
 
-	public IMenuItem(AlgVis a, String text) {
-		super(a.getString(text));
-		this.a = a;
+	public IMenuItem(Languages L, String text) {
+		super(L.getString(text));
+		this.L = L;
 		this.t = text;
 	}
 
-	public IMenuItem(AlgVis a, String text, int K) {
-		super(a.getString(text), K);
-		this.a = a;
+	public IMenuItem(Languages L, String text, int K) {
+		super(L.getString(text), K);
+		this.L = L;
 		this.t = text;
 	}
 
@@ -27,7 +25,7 @@ public class IMenuItem extends JMenuItem {
 	}
 
 	public void refresh() {
-		setText(a.getString(t));
+		setText(L.getString(t));
 		//super.refresh();
 	}
 }

@@ -1,15 +1,15 @@
 package algvis.redblacktree;
 
-import algvis.core.AlgVis;
 import algvis.core.DataStructure;
 import algvis.core.VisPanel;
+import algvis.internationalization.Languages;
 
 public class RBPanel extends VisPanel {
 	private static final long serialVersionUID = 8641701120532396725L;
 	public static Class<? extends DataStructure> DS = RB.class;
 
-	public RBPanel(AlgVis a) {
-		super(a);
+	public RBPanel(Languages L) {
+		super(L);
 	}
 
 	@Override

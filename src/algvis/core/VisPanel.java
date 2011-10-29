@@ -14,6 +14,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import algvis.internationalization.ILabel;
+import algvis.internationalization.Languages;
 
 public abstract class VisPanel extends JPanel implements ChangeListener {
 	private static final long serialVersionUID = 5104769085118210624L;
@@ -28,13 +29,13 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 
 	JSlider vSlider, hSlider;
 
-	public AlgVis a;
+	public Languages L;
 
 	int STEPS = 10;
 	public boolean pause = true, small = false;
 
-	public VisPanel(AlgVis a) {
-		this.a = a;
+	public VisPanel(Languages L) {
+		this.L = L;
 		init();
 	}
 
@@ -51,7 +52,7 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 		this.setLayout(new GridBagLayout());
 		JPanel screen = initScreen();
 		JScrollPane commentary = initCommentary();
-		statusBar = new ILabel(a, "EMPTYSTR");
+		statusBar = new ILabel(L, "EMPTYSTR");
 		initDS();
 		
 		GridBagConstraints cs = new GridBagConstraints();
@@ -116,7 +117,7 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 		screen.add(hSlider, BorderLayout.SOUTH);
 
 		screen.setBorder(BorderFactory.createCompoundBorder(BorderFactory
-				.createTitledBorder(a.getString("display")), BorderFactory
+				.createTitledBorder(L.getString("display")), BorderFactory
 				.createEmptyBorder(5, 5, 5, 5)));
 		return screen;
 		// left.add(screen, BorderLayout.CENTER);
@@ -142,12 +143,12 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 				return new Dimension(200, 530);
 			}
 		};
-		C = new Commentary(a, SP);
+		C = new Commentary(L, SP);
 		SP.setViewportView(C);
 		JPanel CP = new JPanel();
 		CP.add(SP);
 		SP.setBorder(BorderFactory.createCompoundBorder(BorderFactory
-				.createTitledBorder(a.getString("text")), BorderFactory
+				.createTitledBorder(L.getString("text")), BorderFactory
 				.createEmptyBorder(5, 5, 5, 5)));
 		return SP;
 	}

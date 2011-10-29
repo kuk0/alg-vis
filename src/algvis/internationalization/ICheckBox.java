@@ -2,20 +2,18 @@ package algvis.internationalization;
 
 import javax.swing.JCheckBox;
 
-import algvis.core.AlgVis;
-
 public class ICheckBox extends JCheckBox {
 	private static final long serialVersionUID = -8231264680063436446L;
-	AlgVis a;
+	Languages L;
 	String t;
 
-	public ICheckBox(AlgVis a, String title, boolean on) {
-		super(a.getString(title), on);
-		this.a = a;
+	public ICheckBox(Languages L, String title, boolean on) {
+		super(L.getString(title), on);
+		this.L = L;
 		this.t = title;
 	}
 
 	public void refresh() {
-		setText(a.getString(t));
+		setText(L.getString(t));
 	}
 }
