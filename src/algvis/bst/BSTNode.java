@@ -99,25 +99,15 @@ public class BSTNode extends Node {
 	public void drawTree(Graphics g, View v) {
 		if (this.state != INVISIBLE) {
 			if (thread) {
-				if ((left != null) && (left.state != INVISIBLE)) {
-					g.setColor(Color.red);
-					v.drawLine(g, x, y, left.x, left.y);
-					g.setColor(Color.black);
-				}
-				if ((right != null) && (right.state != INVISIBLE)) {
-					g.setColor(Color.red);
-					v.drawLine(g, x, y, right.x, right.y);
-					g.setColor(Color.black);
-				}
+				g.setColor(Color.red);
 			} else {
-				if ((left != null) && (left.state != INVISIBLE)) {
-					g.setColor(Color.black);
-					v.drawLine(g, x, y, left.x, left.y);
-				}
-				if ((right != null) && (right.state != INVISIBLE)) {
-					g.setColor(Color.black);
-					v.drawLine(g, x, y, right.x, right.y);
-				}
+				g.setColor(Color.black);
+			}
+			if ((left != null) && (left.state != INVISIBLE)) {
+				v.drawLine(g, x, y, left.x, left.y);
+			}
+			if ((right != null) && (right.state != INVISIBLE)) {
+				v.drawLine(g, x, y, right.x, right.y);
 			}
 		}
 		if (left != null) {

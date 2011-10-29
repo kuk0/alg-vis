@@ -27,7 +27,7 @@ import algvis.treap.TreapPanel;
  * The data structure can then be found in "Data structures -> adtName -> dsName". 
  */
 public class DataStructures {
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	static final Class[] PANEL = { BSTPanel.class, RotPanel.class,
 			AVLPanel.class, BPanel.class, RBPanel.class, AAPanel.class,
 			TreapPanel.class, SkipListPanel.class, GBPanel.class,
@@ -86,7 +86,7 @@ public class DataStructures {
 		}
     }
     
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
 	public static VisPanel getPanel(int i, AlgVis a) {
     	if (!check_range(i)) return null;
     	try {
