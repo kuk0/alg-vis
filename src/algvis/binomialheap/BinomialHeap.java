@@ -106,15 +106,15 @@ public class BinomialHeap extends MeldablePQ {
 				root[i].drawTree(V, root[i], null);
 				if (i > 0) {
 					V.setColor(Color.black);
-					V.drawStringLeft(M.a.getString("heap") + " #" + i + ":",
+					V.drawStringLeft(M.L.getString("heap") + " #" + i + ":",
 							root[i].x - radius - 5, root[i].y, 9);
 				}
 				if (min[i] != null) {
 					if (minHeap) {
-						V.drawStringTop(M.a.getString("min"), min[i].x,
+						V.drawStringTop(M.L.getString("min"), min[i].x,
 								min[i].y - radius - 2, 9);
 					} else {
-						V.drawStringTop(M.a.getString("max"), min[i].x,
+						V.drawStringTop(M.L.getString("max"), min[i].x,
 								min[i].y - radius - 2, 9);
 					}
 				}

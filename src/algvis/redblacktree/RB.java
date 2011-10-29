@@ -43,22 +43,22 @@ public class RB extends BST {
 	@Override
 	public String stats() {
 		if (root == NULL) {
-			return M.a.getString("size") + ": 0;   " + M.a.getString("height")
-					+ ": 0 =  1.00\u00b7" + M.a.getString("opt") + ";   "
-					+ M.a.getString("avedepth") + ": 0";
+			return M.L.getString("size") + ": 0;   " + M.L.getString("height")
+					+ ": 0 =  1.00\u00b7" + M.L.getString("opt") + ";   "
+					+ M.L.getString("avedepth") + ": 0";
 		} else {
 			root.calcTree();
-			return M.a.getString("size")
+			return M.L.getString("size")
 					+ ": "
 					+ root.size
 					+ ";   "
-					+ M.a.getString("height")
+					+ M.L.getString("height")
 					+ ": "
 					+ root.height
 					+ " = "
 					+ StringUtils.format(root.height / (Math.floor(lg(root.size)) + 1), 2,
-							5) + "\u00b7" + M.a.getString("opt") + ";   "
-					+ M.a.getString("avedepth") + ": "
+							5) + "\u00b7" + M.L.getString("opt") + ";   "
+					+ M.L.getString("avedepth") + ": "
 					+ StringUtils.format(root.sumh / (double) root.size, 2, -5);
 		}
 	}

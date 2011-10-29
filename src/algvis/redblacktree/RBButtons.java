@@ -20,7 +20,7 @@ public class RBButtons extends DictButtons implements ActionListener {
 
 	@Override
 	public void otherButtons(JPanel P) {
-		B24 = new ICheckBox(M.a, "mode234", false);
+		B24 = new ICheckBox(M.L, "mode234", false);
 		B24.setMnemonic(KeyEvent.VK_2);
 		B24.addActionListener(this);
 		P.add(B24);

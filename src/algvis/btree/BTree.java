@@ -38,16 +38,16 @@ public class BTree extends Dictionary {
 	@Override
 	public String stats() {
 		if (root == null) {
-			return "#" + M.a.getString("nodes") + ": 0;   #"
-					+ M.a.getString("keys") + ": 0 = 0% "
-					+ M.a.getString("full") + ";   " + M.a.getString("height")
+			return "#" + M.L.getString("nodes") + ": 0;   #"
+					+ M.L.getString("keys") + ": 0 = 0% "
+					+ M.L.getString("full") + ";   " + M.L.getString("height")
 					+ ": 0";
 		} else {
 			root.calcTree();
-			return "#" + M.a.getString("nodes") + ": " + root.nnodes + ";   "
-					+ "#" + M.a.getString("keys") + ": " + root.nkeys + " = "
+			return "#" + M.L.getString("nodes") + ": " + root.nnodes + ";   "
+					+ "#" + M.L.getString("keys") + ": " + root.nkeys + " = "
 					+ (100 * root.nkeys) / (root.nnodes * (order - 1)) + "% "
-					+ M.a.getString("full") + ";   " + M.a.getString("height")
+					+ M.L.getString("full") + ";   " + M.L.getString("height")
 					+ ": " + root.height;
 		}
 	}

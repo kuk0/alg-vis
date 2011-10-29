@@ -42,13 +42,13 @@ public class Heap extends PriorityQueue {
 	@Override
 	public String stats() {
 		if (n == 0) {
-			return M.a.getString("size") + ": 0 (" + M.a.getString("emptyheap")
+			return M.L.getString("size") + ": 0 (" + M.L.getString("emptyheap")
 					+ ")";
 		} else if (n == 1000) {
-			return M.a.getString("size") + ": 1000 ("
-					+ M.a.getString("fullheap") + ")";
+			return M.L.getString("size") + ": 1000 ("
+					+ M.L.getString("fullheap") + ")";
 		} else {
-			return M.a.getString("size") + ": " + n;
+			return M.L.getString("size") + ": " + n;
 		}
 	}
 
