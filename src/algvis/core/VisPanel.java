@@ -17,6 +17,7 @@ import algvis.internationalization.ILabel;
 
 public abstract class VisPanel extends JPanel implements ChangeListener {
 	private static final long serialVersionUID = 5104769085118210624L;
+	public static Class<? extends DataStructure> DS;
 
 	// aplet pozostava z piatich zakladnych veci:
 	public Buttons B; // gombikov (dolu)
@@ -37,7 +38,14 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 		init();
 	}
 
-	abstract public String getTitle();
+	public String getTitle() {
+		try {
+			return (String)(DS.getDeclaredField("dsName").get(null));
+		} catch (Exception e) {
+			System.out.println ("VisPanel is unable to get field dsName - name of data structure: " + DS);
+		}
+		return "";
+	}
 
 	public void init() {
 		this.setLayout(new GridBagLayout());
