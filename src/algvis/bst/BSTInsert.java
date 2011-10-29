@@ -24,6 +24,7 @@ public class BSTInsert extends Algorithm {
 			setText("newroot");
 		} else {
 			BSTNode w = T.root;
+			w.deleteThreads();
 			v.goAboveRoot();
 			setText("bstinsertstart");
 			mysuspend();

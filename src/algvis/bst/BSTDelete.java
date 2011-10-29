@@ -29,6 +29,7 @@ public class BSTDelete extends Algorithm {
 			return;
 		} else {
 			BSTNode d = T.root;
+			d.deleteThreads();
 			v.goTo(d);
 			setText("bstdeletestart");
 			mysuspend();
