@@ -1,7 +1,5 @@
 package algvis.scapegoattree;
 
-import java.awt.Graphics;
-
 import algvis.bst.BST;
 import algvis.core.StringUtils;
 import algvis.core.View;
@@ -39,14 +37,14 @@ public class GBTree extends BST {
 	}
 
 	@Override
-	public void draw(Graphics G, View V) {
+	public void draw(View V) {
 		if (root != null) {
 			root.moveTree();
-			root.drawTree(G, V);
+			root.drawTree(V);
 		}
 		if (v != null) {
 			v.move();
-			v.draw(G, V);
+			v.draw(V);
 		}
 	}
 

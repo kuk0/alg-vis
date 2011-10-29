@@ -44,6 +44,7 @@ public class Screen extends JPanel implements Runnable, MouseListener,
 			I = createImage(d.width, d.height);
 			G = I.getGraphics();
 			V.setWH(d.width, d.height);
+			V.setGraphics(G);
 			size = d;
 		}
 	}
@@ -58,7 +59,7 @@ public class Screen extends JPanel implements Runnable, MouseListener,
 		check_size();
 		clear();
 		if (D != null) {
-			D.draw(G, V);
+			D.draw(V);
 		} else {
 			System.out.println("[DS null !]");
 		}

@@ -1,7 +1,5 @@
 package algvis.redblacktree;
 
-import java.awt.Graphics;
-
 import algvis.bst.BST;
 import algvis.bst.BSTNode;
 import algvis.core.Node;
@@ -66,14 +64,14 @@ public class RB extends BST {
 	}
 
 	@Override
-	public void draw(Graphics G, View V) {
+	public void draw(View V) {
 		if (root != NULL) {
 			root.moveTree();
-			root.drawTree(G, V);
+			root.drawTree(V);
 		}
 		if (v != null) {
 			v.move();
-			v.draw(G, V);
+			v.draw(V);
 		}
 	}
 

@@ -1,8 +1,6 @@
 package algvis.binomialheap;
 
 import java.awt.Color;
-import java.awt.Graphics;
-
 import algvis.core.MeldablePQ;
 import algvis.core.MeldablePQButtons;
 import algvis.core.Node;
@@ -97,26 +95,26 @@ public class BinomialHeap extends MeldablePQ {
 	}
 
 	@Override
-	public void draw(Graphics G, View V) {
+	public void draw(View V) {
 		if (d != null) {
 			d.move();
-			d.draw(G, V);
+			d.draw(V);
 		}
 		for (int i = 0; i <= numHeaps; ++i) {
 			if (root[i] != null) {
 				root[i].moveTree();
-				root[i].drawTree(G, V, root[i], null);
+				root[i].drawTree(V, root[i], null);
 				if (i > 0) {
-					G.setColor(Color.black);
-					V.drawStringLeft(G, M.a.getString("heap") + " #" + i + ":",
+					V.setColor(Color.black);
+					V.drawStringLeft(M.a.getString("heap") + " #" + i + ":",
 							root[i].x - radius - 5, root[i].y, 9);
 				}
 				if (min[i] != null) {
 					if (minHeap) {
-						V.drawStringTop(G, M.a.getString("min"), min[i].x,
+						V.drawStringTop(M.a.getString("min"), min[i].x,
 								min[i].y - radius - 2, 9);
 					} else {
-						V.drawStringTop(G, M.a.getString("max"), min[i].x,
+						V.drawStringTop(M.a.getString("max"), min[i].x,
 								min[i].y - radius - 2, 9);
 					}
 				}
@@ -124,11 +122,11 @@ public class BinomialHeap extends MeldablePQ {
 		}
 		if (v != null) {
 			v.move();
-			v.draw(G, V);
+			v.draw(V);
 		}
 		if (v2 != null) {
 			v2.move();
-			v2.draw(G, V);
+			v2.draw(V);
 		}		
 	}
 

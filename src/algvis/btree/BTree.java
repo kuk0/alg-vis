@@ -1,7 +1,5 @@
 package algvis.btree;
 
-import java.awt.Graphics;
-
 import algvis.core.Dictionary;
 import algvis.core.View;
 import algvis.core.VisPanel;
@@ -55,14 +53,14 @@ public class BTree extends Dictionary {
 	}
 
 	@Override
-	public void draw(Graphics G, View V) {
+	public void draw(View V) {
 		if (root != null) {
 			root.moveTree();
-			root.drawTree(G, V);
+			root.drawTree(V);
 		}
 		if (v != null) {
 			v.move();
-			v.draw(G, V);
+			v.draw(V);
 		}
 	}
 

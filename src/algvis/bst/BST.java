@@ -1,7 +1,5 @@
 package algvis.bst;
 
-import java.awt.Graphics;
-
 import algvis.core.Dictionary;
 import algvis.core.StringUtils;
 import algvis.core.View;
@@ -63,14 +61,14 @@ public class BST extends Dictionary {
 	 * Move and draw all the objects on the scene (in this case the BST and one auxilliary node v).
 	 */
 	@Override
-	public void draw(Graphics G, View V) {
+	public void draw(View V) {
 		if (root != null) {
 			root.moveTree();
-			root.drawTree(G, V);
+			root.drawTree(V);
 		}
 		if (v != null) {
 			v.move();
-			v.draw(G, V);
+			v.draw(V);
 		}
 	}
 
