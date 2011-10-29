@@ -1,16 +1,16 @@
 package algvis.heap;
 
-import algvis.core.AlgVis;
 import algvis.core.DataStructure;
 import algvis.core.PQButtons;
 import algvis.core.VisPanel;
+import algvis.internationalization.Languages;
 
 public class HeapPanel extends VisPanel {
 	private static final long serialVersionUID = -2488725769022251713L;
 	public static Class<? extends DataStructure> DS = Heap.class;
 
-	public HeapPanel(AlgVis a) {
-		super(a);
+	public HeapPanel(Languages L) {
+		super(L);
 	}
 
 	@Override

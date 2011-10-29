@@ -1,7 +1,6 @@
 package algvis.bst;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -58,8 +57,8 @@ public class BSTNode extends Node {
 	}
 
 	/**
-	 * Calculate the height, size, and sum of heights of this node, assuming
-	 * that this was already calculated for its children.
+	 * Calculate the height, size, and sum of heights of this node,
+	 * assuming that this was already calculated for its children.
 	 */
 	public void calc() {
 		int ls = 0, rs = 0, lh = 0, rh = 0, lsh = 0, rsh = 0;
@@ -96,27 +95,27 @@ public class BSTNode extends Node {
 		setArc(parent);
 	}
 
-	public void drawTree(Graphics g, View v) {
+	public void drawTree(View v) {
 		if (this.state != INVISIBLE) {
 			if (thread) {
-				g.setColor(Color.red);
+				v.setColor(Color.red);
 			} else {
-				g.setColor(Color.black);
+				v.setColor(Color.black);
 			}
 			if ((left != null) && (left.state != INVISIBLE)) {
-				v.drawLine(g, x, y, left.x, left.y);
+				v.drawLine(x, y, left.x, left.y);
 			}
 			if ((right != null) && (right.state != INVISIBLE)) {
-				v.drawLine(g, x, y, right.x, right.y);
+				v.drawLine(x, y, right.x, right.y);
 			}
 		}
 		if (left != null) {
-			left.drawTree(g, v);
+			left.drawTree(v);
 		}
 		if (right != null) {
-			right.drawTree(g, v);
+			right.drawTree(v);
 		}
-		draw(g, v);
+		draw(v);
 	}
 
 	public void moveTree() {
@@ -131,9 +130,9 @@ public class BSTNode extends Node {
 
 	/**
 	 * Create an (imaginary) box around the subtree rooted at this node.
-	 * Calculate the width from the node to the left side (leftw) and the width
-	 * from the node to the right side (rightw). Assumption: this box has
-	 * already been created for both children.
+	 * Calculate the width from the node to the left side (leftw)
+	 * and the width from the node to the right side (rightw).
+	 * Assumption: this box has already been created for both children. 
 	 */
 	public void rebox() {
 		// if there is a left child, leftw = width of the box enclosing the

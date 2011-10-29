@@ -80,31 +80,31 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		add(second);
 		add(third);
 		setBorder(BorderFactory.createCompoundBorder(BorderFactory
-				.createTitledBorder(M.a.getString("control")), BorderFactory
+				.createTitledBorder(M.L.getString("control")), BorderFactory
 				.createEmptyBorder(5, 5, 5, 5)));
 	}
 
 	public void initNext() {
-		next = new IButton(M.a, "next");
+		next = new IButton(M.L, "next");
 		next.setMnemonic(KeyEvent.VK_N);
 		next.setEnabled(false);
 		next.addActionListener(this);
 	}
 
 	public void initPause() {
-		pause = new ICheckBox(M.a, "button-pause", true);
+		pause = new ICheckBox(M.L, "button-pause", true);
 		pause.setMnemonic(KeyEvent.VK_P);
 		pause.addActionListener(this);
 	}
 
 	public void initClear() {
-		clear = new IButton(M.a, "button-clear");
+		clear = new IButton(M.L, "button-clear");
 		clear.setMnemonic(KeyEvent.VK_C);
 		clear.addActionListener(this);
 	}
 
 	public void initRandom() {
-		random = new IButton(M.a, "button-random");
+		random = new IButton(M.L, "button-random");
 		random.setMnemonic(KeyEvent.VK_R);
 		random.addActionListener(this);
 	}
@@ -120,7 +120,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	public void initZoom() {
-		// zoomLabel = new ILabel(M.a, "zoomio");
+		// zoomLabel = new ILabel(M.L, "zoomio");
 		zoomIn = createButton("+", "../images/zoom_in.gif");
 		zoomOut = createButton("-", "../images/zoom_out.gif");
 		zoomIn.addActionListener(this);

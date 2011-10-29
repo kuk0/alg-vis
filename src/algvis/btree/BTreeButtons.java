@@ -23,7 +23,7 @@ public class BTreeButtons extends DictButtons implements ChangeListener {
 	public void otherButtons(JPanel P) {
 		OS = new JSpinner(new SpinnerNumberModel(5, 3, 20, 1));
 		OS.addChangeListener(this);
-		orderLabel = new ILabel(M.a, "btreeorder");
+		orderLabel = new ILabel(M.L, "btreeorder");
 		P.add(orderLabel);
 		P.add(OS);
 	}

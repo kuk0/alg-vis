@@ -1,7 +1,5 @@
 package algvis.heap;
 
-import java.awt.Graphics;
-
 import algvis.bst.BSTNode;
 import algvis.core.Node;
 import algvis.core.PriorityQueue;
@@ -44,29 +42,29 @@ public class Heap extends PriorityQueue {
 	@Override
 	public String stats() {
 		if (n == 0) {
-			return M.a.getString("size") + ": 0 (" + M.a.getString("emptyheap")
+			return M.L.getString("size") + ": 0 (" + M.L.getString("emptyheap")
 					+ ")";
 		} else if (n == 1000) {
-			return M.a.getString("size") + ": 1000 ("
-					+ M.a.getString("fullheap") + ")";
+			return M.L.getString("size") + ": 1000 ("
+					+ M.L.getString("fullheap") + ")";
 		} else {
-			return M.a.getString("size") + ": " + n;
+			return M.L.getString("size") + ": " + n;
 		}
 	}
 
 	@Override
-	public void draw(Graphics G, View V) {
+	public void draw(View V) {
 		if (root != null) {
 			root.moveTree();
-			root.drawTree(G, V);
+			root.drawTree(V);
 		}
 		if (v != null) {
 			v.move();
-			v.draw(G, V);
+			v.draw(V);
 		}
 		if (v2 != null) {
 			v2.move();
-			v2.draw(G, V);
+			v2.draw(V);
 		}
 	}
 

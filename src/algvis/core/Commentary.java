@@ -10,9 +10,11 @@ import javax.swing.JEditorPane;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
+import algvis.internationalization.Languages;
+
 public class Commentary extends JEditorPane {
 	private static final long serialVersionUID = 9023200331860482960L;
-	AlgVis a;
+	Languages L;
 	JScrollPane sp;
 	int k = 0;
 	String text;
@@ -21,11 +23,11 @@ public class Commentary extends JEditorPane {
 	          post = new ArrayList<String> ();
 	ArrayList<String[]> param = new ArrayList<String[]> ();
 
-	public Commentary(AlgVis a, JScrollPane sp) {
+	public Commentary(Languages L, JScrollPane sp) {
 		super();
 		setContentType("text/html; charset=iso-8859-2");
 		setEditable(false);
-		this.a = a;
+		this.L = L;
 		this.sp = sp;
 	}
 	
@@ -41,7 +43,7 @@ public class Commentary extends JEditorPane {
 	private String str(int i) {
 		//if (i < 0) i = s.size() + i;
 		assert (0 <= i && i < s.size()); 
-		return pre.get(i) + StringUtils.subst(a.getString(s.get(i)), param.get(i)) + post.get(i);
+		return pre.get(i) + StringUtils.subst(L.getString(s.get(i)), param.get(i)) + post.get(i);
 	}
 	
 	private void scrollDown() {

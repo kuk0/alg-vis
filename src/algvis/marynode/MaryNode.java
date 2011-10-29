@@ -83,19 +83,19 @@ public class MaryNode extends Node {
 		if (this.state != INVISIBLE) {
 			if (thread) {
 				g.setColor(Color.red);
-				v.drawLine(g, x, y, child.x, child.y);
+				v.drawLine(x, y, child.x, child.y);
 				g.setColor(Color.black);
 			} else {
 				MaryNode M = child;
 				while (M != null) {
 					g.setColor(Color.black);
-					v.drawLine(g, x, y, M.x, M.y);
+					v.drawLine(x, y, M.x, M.y);
 					M.drawTree(g, v);
 					M = M.right;
 				}
 			}
 		}
-		draw(g, v);
+		draw(v);
 	}
 
 	public void movetTree() {

@@ -1,7 +1,6 @@
 package algvis.core;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 /**
  * The Class Node.
@@ -159,13 +158,13 @@ public class Node {
 	 * @param g where to draw
 	 * @param v view
 	 */
-	protected void drawBg(Graphics g, View v) {
-		g.setColor(bgcolor);
-		v.fillCircle(g, x, y, D.radius);
-		g.setColor(Color.BLACK); // fgcolor);
-		v.drawCircle(g, x, y, D.radius);
+	protected void drawBg(View v) {
+		v.setColor(bgcolor);
+		v.fillCircle(x, y, D.radius);
+		v.setColor(Color.BLACK); // fgcolor);
+		v.drawCircle(x, y, D.radius);
 		if (marked) {
-			v.drawCircle(g, x, y, D.radius + 2);
+			v.drawCircle(x, y, D.radius + 2);
 		}
 	}
 
@@ -184,14 +183,14 @@ public class Node {
 		}
 	}
 
-	public void drawKey(Graphics g, View v) {
-		g.setColor(fgcolor);
+	public void drawKey(View v) {
+		v.setColor(fgcolor);
 		if (key != NOKEY) {
-			v.drawString(g, toString(), x, y, 9);
+			v.drawString(toString(), x, y, 9);
 		}
 	}
 
-	public void drawArrow(Graphics g, View v) {
+	public void drawArrow(View v) {
 		if (arrow == Node.NOARROW || (arrow < 0 && dir == null)) {
 			return;
 		}
@@ -223,31 +222,31 @@ public class Node {
 			x2 = x1 + 2 * D.radius * dx;
 			y2 = y1 + 2 * D.radius * dy;
 		}
-		v.drawArrow(g, (int) x1, (int) y1, (int) x2, (int) y2);
+		v.drawArrow((int) x1, (int) y1, (int) x2, (int) y2);
 	}
 
 	// Assumption: dir (the node we are pointing to) is above this node
-	public void drawArc(Graphics g, View v) {
+	public void drawArc(View v) {
 		if (!arc || dir == null) {
 			return;
 		}
 		int x = dir.x, y = this.y - D.radius - D.yspan, a = Math.abs(this.x
 				- dir.x), b = Math.abs(this.y - dir.y);
 		if (this.x > dir.x) {
-			v.drawArcArrow(g, x - a, y - b, 2 * a, 2 * b, 0, 90);
+			v.drawArcArrow(x - a, y - b, 2 * a, 2 * b, 0, 90);
 		} else {
-			v.drawArcArrow(g, x - a, y - b, 2 * a, 2 * b, 180, 90);
+			v.drawArcArrow(x - a, y - b, 2 * a, 2 * b, 180, 90);
 		}
 	}
 
-	public void draw(Graphics g, View v) {
+	public void draw(View v) {
 		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
 			return;
 		}
-		drawBg(g, v);
-		drawKey(g, v);
-		drawArrow(g, v);
-		drawArc(g, v);
+		drawBg(v);
+		drawKey(v);
+		drawArrow(v);
+		drawArc(v);
 	}
 
 	/**

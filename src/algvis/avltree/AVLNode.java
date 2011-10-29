@@ -1,7 +1,6 @@
 package algvis.avltree;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 import algvis.bst.BSTNode;
 import algvis.core.Colors;
@@ -40,50 +39,50 @@ public class AVLNode extends BSTNode {
 	}
 
 	@Override
-	public void draw(Graphics G, View V) {
+	public void draw(View V) {
 		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
 			return;
 		}
-		drawBg(G, V);
-		drawArrow(G, V);
-		drawArc(G, V);
+		drawBg(V);
+		drawArrow(V);
+		drawArc(V);
 
 		int xx = x - D.radius, yy = y - D.radius, dx = 2 * D.radius, dy = 2 * D.radius;
 		String b = "";
 		if (bgcolor == Colors.NORMAL) {
-			G.setColor(Color.ORANGE);
+			V.setColor(Color.ORANGE);
 			switch (bal) {
 			case +2:
 				b = "++";
-				V.fillArc(G, xx, yy, dx, dy, 270, 180);
+				V.fillArc(xx, yy, dx, dy, 270, 180);
 				break;
 			case +1:
 				b = "+";
-				V.fillArc(G, xx, yy, dx, dy, 210, 180);
+				V.fillArc(xx, yy, dx, dy, 210, 180);
 				break;
 			case 0:
 				b = "\u00b7";
-				V.fillArc(G, xx, yy, dx, dy, 180, 180);
+				V.fillArc(xx, yy, dx, dy, 180, 180);
 				break;
 			case -1:
 				b = "\u2013";
-				V.fillArc(G, xx, yy, dx, dy, 150, 180);
+				V.fillArc(xx, yy, dx, dy, 150, 180);
 				break;
 			case -2:
 				b = "\u2013\u2013";
-				V.fillArc(G, xx, yy, dx, dy, 90, 180);
+				V.fillArc(xx, yy, dx, dy, 90, 180);
 				break;
 			}
-			G.setColor(fgcolor);
-			V.drawOval(G, x - D.radius, y - D.radius, 2 * D.radius,
+			V.setColor(fgcolor);
+			V.drawOval(x - D.radius, y - D.radius, 2 * D.radius,
 					2 * D.radius);
 		}
 
-		drawKey(G, V);
+		drawKey(V);
 		if (parent != null && parent.left == this) {
-			V.drawString(G, b, x - D.radius - 1, y - D.radius - 1, 10);
+			V.drawString(b, x - D.radius - 1, y - D.radius - 1, 10);
 		} else {
-			V.drawString(G, b, x + D.radius + 1, y - D.radius - 1, 10);
+			V.drawString(b, x + D.radius + 1, y - D.radius - 1, 10);
 		}
 	}
 }

@@ -1,16 +1,16 @@
 package algvis.fibonacciheap;
 
-import algvis.core.AlgVis;
 import algvis.core.DataStructure;
 import algvis.core.MeldablePQButtons;
 import algvis.core.VisPanel;
+import algvis.internationalization.Languages;
 
 public class FibHeapPanel extends VisPanel {
 	private static final long serialVersionUID = 2755087791754509441L;
 	public static Class<? extends DataStructure> DS = FibonacciHeap.class;
 
-	public FibHeapPanel(AlgVis a) {
-		super(a);
+	public FibHeapPanel(Languages L) {
+		super(L);
 	}
 
 	@Override
