@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import algvis.core.DataStructure;
-import algvis.core.ExtremeBSTPair;
 import algvis.core.Node;
 import algvis.core.View;
 
@@ -98,28 +97,34 @@ public class BSTNode extends Node {
 	}
 
 	public void drawTree(Graphics g, View v) {
-		if (thread) {
-			if (left != null) {
-				g.setColor(Color.red);
-				v.drawLine(g, x, y, left.x, left.y);
-				g.setColor(Color.black);
+		if (this.state != INVISIBLE) {
+			if (thread) {
+				if ((left != null) && (left.state != INVISIBLE)) {
+					g.setColor(Color.red);
+					v.drawLine(g, x, y, left.x, left.y);
+					g.setColor(Color.black);
+				}
+				if ((right != null) && (right.state != INVISIBLE)) {
+					g.setColor(Color.red);
+					v.drawLine(g, x, y, right.x, right.y);
+					g.setColor(Color.black);
+				}
+			} else {
+				if ((left != null) && (left.state != INVISIBLE)) {
+					g.setColor(Color.black);
+					v.drawLine(g, x, y, left.x, left.y);
+				}
+				if ((right != null) && (right.state != INVISIBLE)) {
+					g.setColor(Color.black);
+					v.drawLine(g, x, y, right.x, right.y);
+				}
 			}
-			if (right != null) {
-				g.setColor(Color.red);
-				v.drawLine(g, x, y, right.x, right.y);
-				g.setColor(Color.black);
-			}
-		} else {
-			if (left != null) {
-				g.setColor(Color.black);
-				v.drawLine(g, x, y, left.x, left.y);
-				left.drawTree(g, v);
-			}
-			if (right != null) {
-				g.setColor(Color.black);
-				v.drawLine(g, x, y, right.x, right.y);
-				right.drawTree(g, v);
-			}
+		}
+		if (left != null) {
+			left.drawTree(g, v);
+		}
+		if (right != null) {
+			right.drawTree(g, v);
 		}
 		draw(g, v);
 	}
@@ -169,6 +174,7 @@ public class BSTNode extends Node {
 	 * Calculate the coordinates of each node from the widths of boxes around
 	 * them and direct the nodes to their new positions.
 	 */
+	@SuppressWarnings("unused")
 	private void repos() {
 		if (isRoot()) {
 			goToRoot();
@@ -227,6 +233,7 @@ public class BSTNode extends Node {
 	 *            current level in tree
 	 */
 	public void fTRFirst(int level) {
+		// this.state = INVISIBLE;
 		this.level = level;
 		this.offset = 0;
 		if (left != null)

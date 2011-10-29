@@ -1,6 +1,5 @@
-package algvis.core;
+package algvis.bst;
 
-import algvis.bst.BSTNode;
 
 public class ExtremeBSTPair {
 	public BSTNode a = new BSTNode(null, -47);
