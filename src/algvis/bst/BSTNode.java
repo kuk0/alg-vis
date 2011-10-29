@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import algvis.core.DataStructure;
-import algvis.core.ExtremeBSTPair;
 import algvis.core.Node;
 import algvis.core.View;
 
