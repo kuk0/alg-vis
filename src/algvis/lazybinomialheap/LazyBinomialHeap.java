@@ -1,7 +1,5 @@
 package algvis.lazybinomialheap;
 
-import java.awt.Graphics;
-
 import algvis.binomialheap.BinHeapNode;
 import algvis.binomialheap.BinomialHeap;
 import algvis.core.MeldablePQButtons;
@@ -38,15 +36,15 @@ public class LazyBinomialHeap extends BinomialHeap {
 	}
 
 	@Override
-	public void draw(Graphics G, View V) {
-		super.draw(G, V);
+	public void draw(View V) {
+		super.draw(V);
 		if (cleanup != null && root[active] != null) {
 			int x = root[active].x, y = -4*(radius+yspan);
 			for (int i=0; i<cleanup.length; ++i) {
-				V.drawSquare(G, x, y, radius);
-				V.drawStringTop(G, ""+(1<<i), x, y-radius+1, 9);
+				V.drawSquare(x, y, radius);
+				V.drawStringTop(""+(1<<i), x, y-radius+1, 9);
 				if (cleanup[i] != null) {
-					V.drawArrow(G, x, y, cleanup[i].x, cleanup[i].y-radius-yspan);
+					V.drawArrow(x, y, cleanup[i].x, cleanup[i].y-radius-yspan);
 				}
 				x += 2 * radius;
 			}	

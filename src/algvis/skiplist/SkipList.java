@@ -1,7 +1,5 @@
 package algvis.skiplist;
 
-import java.awt.Graphics;
-
 import algvis.core.Dictionary;
 import algvis.core.Node;
 import algvis.core.View;
@@ -47,24 +45,24 @@ public class SkipList extends Dictionary {
 	@Override
 	public String stats() {
 		if (root == null) {
-			return M.a.getString("size") + ": 0;   " + M.a.getString("height")
-					+ ": 0;   #" + M.a.getString("excess") + ": 0";
+			return M.L.getString("size") + ": 0;   " + M.L.getString("height")
+					+ ": 0;   #" + M.L.getString("excess") + ": 0";
 		} else {
-			return M.a.getString("size") + ": " + n + ";   "
-					+ M.a.getString("height") + ": " + height + ";   #"
-					+ M.a.getString("excess") + ": " + e;
+			return M.L.getString("size") + ": " + n + ";   "
+					+ M.L.getString("height") + ": " + height + ";   #"
+					+ M.L.getString("excess") + ": " + e;
 		}
 	}
 
 	@Override
-	public void draw(Graphics G, View V) {
+	public void draw(View V) {
 		if (root != null) {
 			root.moveSkipList();
-			root.drawSkipList(G, V);
+			root.drawSkipList(V);
 		}
 		if (v != null) {
 			v.move();
-			v.draw(G, V);
+			v.draw(V);
 		}
 	}
 

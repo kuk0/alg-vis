@@ -1,15 +1,15 @@
 package algvis.scapegoattree;
 
-import algvis.core.AlgVis;
 import algvis.core.DataStructure;
 import algvis.core.VisPanel;
+import algvis.internationalization.Languages;
 
 public class GBPanel extends VisPanel {
 	private static final long serialVersionUID = 5223738995380219622L;
 	public static Class<? extends DataStructure> DS = GBTree.class;
 
-	public GBPanel(AlgVis a) {
-		super(a);
+	public GBPanel(Languages L) {
+		super(L);
 	}
 
 	@Override

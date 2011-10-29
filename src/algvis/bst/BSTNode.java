@@ -1,7 +1,6 @@
 package algvis.bst;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -91,18 +90,18 @@ public class BSTNode extends Node {
 		setArc(parent);
 	}
 
-	public void drawTree(Graphics g, View v) {
+	public void drawTree(View v) {
 		if (left != null) {
-			g.setColor(Color.black);
-			v.drawLine(g, x, y, left.x, left.y);
-			left.drawTree(g, v);
+			v.setColor(Color.black);
+			v.drawLine(x, y, left.x, left.y);
+			left.drawTree(v);
 		}
 		if (right != null) {
-			g.setColor(Color.black);
-			v.drawLine(g, x, y, right.x, right.y);
-			right.drawTree(g, v);
+			v.setColor(Color.black);
+			v.drawLine(x, y, right.x, right.y);
+			right.drawTree(v);
 		}
-		draw(g, v);
+		draw(v);
 	}
 
 	public void moveTree() {

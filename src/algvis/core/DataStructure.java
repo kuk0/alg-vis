@@ -1,6 +1,5 @@
 package algvis.core;
 
-import java.awt.Graphics;
 import java.util.Random;
 
 
@@ -26,7 +25,7 @@ abstract public class DataStructure {
 
 	abstract public void clear();
 
-	abstract public void draw(Graphics g, View v);
+	abstract public void draw(View v);
 
 	public void next() {
 		A.myresume();

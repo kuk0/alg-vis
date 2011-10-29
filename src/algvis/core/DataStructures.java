@@ -9,6 +9,7 @@ import algvis.bst.BSTPanel;
 import algvis.btree.BPanel;
 import algvis.fibonacciheap.FibHeapPanel;
 import algvis.heap.HeapPanel;
+import algvis.internationalization.Languages;
 import algvis.lazybinomialheap.LazyBinHeapPanel;
 import algvis.redblacktree.RBPanel;
 import algvis.rotations.RotPanel;
@@ -87,12 +88,13 @@ public class DataStructures {
     }
     
     @SuppressWarnings("unchecked")
-	public static VisPanel getPanel(int i, AlgVis a) {
+	public static VisPanel getPanel(int i, Languages L) {
     	if (!check_range(i)) return null;
     	try {
-    		Constructor ct = DataStructures.PANEL[i].getConstructor(AlgVis.class);
-    		return (VisPanel) ct.newInstance(a);
+    		Constructor ct = DataStructures.PANEL[i].getConstructor(Languages.class);
+    		return (VisPanel) ct.newInstance(L);
     	} catch (Exception e) {
+    		System.out.println ("DataStructures is unable to get panel: " + i);
     		return null;
     	}
     }

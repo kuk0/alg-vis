@@ -1,8 +1,6 @@
 package algvis.redblacktree;
 
 import java.awt.Color;
-import java.awt.Graphics;
-
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -56,13 +54,13 @@ public class RBNode extends BSTNode {
 	}
 
 	@Override
-	public void draw(Graphics G, View V) {
+	public void draw(View v) {
 		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
 			return;
 		}
 		bgColor(red ? Color.red : Color.black);
 		fgColor(red ? Color.black : Color.white);
-		super.draw(G, V);
+		super.draw(v);
 	}
 
 	@Override
@@ -101,18 +99,18 @@ public class RBNode extends BSTNode {
 	}
 
 	@Override
-	public void drawTree(Graphics G, View V) {
+	public void drawTree(View v) {
 		if (left.key != Node.NULL) {
-			G.setColor(Color.black);
-			V.drawLine(G, x, y, left.x, left.y);
-			left.drawTree(G, V);
+			v.setColor(Color.black);
+			v.drawLine(x, y, left.x, left.y);
+			left.drawTree(v);
 		}
 		if (right.key != Node.NULL) {
-			G.setColor(Color.black);
-			V.drawLine(G, x, y, right.x, right.y);
-			right.drawTree(G, V);
+			v.setColor(Color.black);
+			v.drawLine(x, y, right.x, right.y);
+			right.drawTree(v);
 		}
-		draw(G, V);
+		draw(v);
 	}
 
 	@Override
