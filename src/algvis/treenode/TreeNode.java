@@ -191,6 +191,10 @@ public class TreeNode extends Node {
 		TreeNode subresults = new TreeNode(null, -47);
 		int minsep = D.xspan + 2 * D.radius;
 
+		TreeNode T = child;
+		while (T != null) {
+			T.fTRSecond();
+		}
 		return result;
 	}
 
