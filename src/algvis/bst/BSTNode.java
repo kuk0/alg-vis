@@ -57,8 +57,8 @@ public class BSTNode extends Node {
 	}
 
 	/**
-	 * Calculate the height, size, and sum of heights of this node,
-	 * assuming that this was already calculated for its children.
+	 * Calculate the height, size, and sum of heights of this node, assuming
+	 * that this was already calculated for its children.
 	 */
 	public void calc() {
 		int ls = 0, rs = 0, lh = 0, rh = 0, lsh = 0, rsh = 0;
@@ -130,9 +130,9 @@ public class BSTNode extends Node {
 
 	/**
 	 * Create an (imaginary) box around the subtree rooted at this node.
-	 * Calculate the width from the node to the left side (leftw)
-	 * and the width from the node to the right side (rightw).
-	 * Assumption: this box has already been created for both children. 
+	 * Calculate the width from the node to the left side (leftw) and the width
+	 * from the node to the right side (rightw). Assumption: this box has
+	 * already been created for both children.
 	 */
 	public void rebox() {
 		// if there is a left child, leftw = width of the box enclosing the
@@ -189,7 +189,7 @@ public class BSTNode extends Node {
 	public void reposition() {
 		// reboxTree();
 		// repos();
-		// System.out.print("New run.\n");
+		System.out.print("New run.\n");
 		fTRFirst(0);
 		fTRSecond();
 		fTRFourth(0);
@@ -301,14 +301,14 @@ public class BSTNode extends Node {
 			int roffset = 0;
 			BSTNode L = this.left;
 			BSTNode R = this.right;
-			// if (L == null) {
-			// System.out.print("L pointer of " + key
-			// + " is null and pointer exception will be raised!");
-			// }
-			// if (R == null) {
-			// System.out.print("R pointer of " + key
-			// + " is null and pointer exception will be raised!");
-			// }
+			if (L == null) {
+				System.out.print("L pointer of " + key
+						+ " is null and pointer exception will be raised!");
+			}
+			if (R == null) {
+				System.out.print("R pointer of " + key
+						+ " is null and pointer exception will be raised!");
+			}
 
 			/*
 			 * // Notice that offset could be a negative integer L.offset =
@@ -331,12 +331,11 @@ public class BSTNode extends Node {
 				 * pointer to "this" node
 				 */
 				int distance = (roffset - loffset);
-				// System.out.print("Distance at L: " + L.key + " R: " + R.key
-				// + " is " + distance + ".\n");
-				// System.out.print("right.offset: " + right.offset +
-				// " roffset: "
-				// + roffset + " left.offset: " + left.offset
-				// + " loffset: " + loffset + "\n");
+				System.out.print("Distance at L: " + L.key + " R: " + R.key
+						+ " is " + distance + ".\n");
+				System.out.print("right.offset: " + right.offset + " roffset: "
+						+ roffset + " left.offset: " + left.offset
+						+ " loffset: " + loffset + "\n");
 				if (distance < minsep) {
 					right.offset += (minsep - distance);
 					roffset += (minsep - distance);
@@ -402,26 +401,24 @@ public class BSTNode extends Node {
 			 * set properly.
 			 */
 
-			// if (fromLeftSubtree.a.left.level ==
-			// fromLeftSubtree.a.right.level) {
-			// System.out.print("Left extremes are even at " + this.key
-			// + " with left extreme: " + fromLeftSubtree.a.left.key
-			// + " and right extreme: " + fromLeftSubtree.a.right.key
-			// + "\n");
-			// } else {
-			// System.out.print("Left extremes are uneven at " + this.key
-			// + "!!!\n");
-			// }
-			// if (fromRightSubtree.a.left.level ==
-			// fromRightSubtree.a.right.level) {
-			// System.out.print("Right extremes are even at " + this.key
-			// + " with left extreme: " + fromRightSubtree.a.left.key
-			// + " and right extreme: " + fromRightSubtree.a.right.key
-			// + "\n");
-			// } else {
-			// System.out.print("Right extremes are uneven at " + this.key
-			// + "!!!\n");
-			// }
+			if (fromLeftSubtree.a.left.level == fromLeftSubtree.a.right.level) {
+				System.out.print("Left extremes are even at " + this.key
+						+ " with left extreme: " + fromLeftSubtree.a.left.key
+						+ " and right extreme: " + fromLeftSubtree.a.right.key
+						+ "\n");
+			} else {
+				System.out.print("Left extremes are uneven at " + this.key
+						+ "!!!\n");
+			}
+			if (fromRightSubtree.a.left.level == fromRightSubtree.a.right.level) {
+				System.out.print("Right extremes are even at " + this.key
+						+ " with left extreme: " + fromRightSubtree.a.left.key
+						+ " and right extreme: " + fromRightSubtree.a.right.key
+						+ "\n");
+			} else {
+				System.out.print("Right extremes are uneven at " + this.key
+						+ "!!!\n");
+			}
 
 			int left_height = fromLeftSubtree.a.left.level;
 			int right_height = fromRightSubtree.a.right.level;
