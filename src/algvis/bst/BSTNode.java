@@ -221,7 +221,7 @@ public class BSTNode extends Node {
 	 * @param level
 	 *            current level in tree
 	 */
-	public void fTRFirst(int level) {
+	private void fTRFirst(int level) {
 		// this.state = INVISIBLE;
 		this.level = level;
 		this.offset = 0;
@@ -244,7 +244,7 @@ public class BSTNode extends Node {
 	 * @return Leftmost and rightmost node on the deepest level of a tree rooted
 	 *         by this node
 	 */
-	public ExtremeBSTPair fTRSecond() {
+	private ExtremeBSTPair fTRSecond() {
 		ExtremeBSTPair result = new ExtremeBSTPair();
 		ExtremeBSTPair fromLeftSubtree = null, fromRightSubtree = null;
 		int minsep = D.xspan + 2 * D.radius;
@@ -464,7 +464,7 @@ public class BSTNode extends Node {
 	 * @param xcoordinate
 	 *            real x coordinate of parent node
 	 */
-	public void fTRFourth(int xcoordinate) {
+	private void fTRFourth(int xcoordinate) {
 		tox = xcoordinate + this.offset;
 		toy = this.level * (D.yspan + 2 * D.radius);
 		if (tox < D.x1) {
