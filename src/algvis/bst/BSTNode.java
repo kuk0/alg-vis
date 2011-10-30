@@ -10,9 +10,9 @@ public class BSTNode extends Node {
 	public int leftw, rightw;
 	public BSTNode left = null, right = null, parent = null;
 
-	// variables for TR, probably there will be some changes to offset variables
+	// variables for TR
 	public int offset = 0; // offset from parent node
-	public int level; // "height" from root
+	public int level; // distance to root
 	public boolean thread = false; // is this node threaded?
 
 	// statistics
@@ -135,11 +135,11 @@ public class BSTNode extends Node {
 	 * already been created for both children.
 	 */
 	public void rebox() {
-		// if there is a left child, leftw = width of the box enclosing the
-		// whole left subtree,
-		// i.e., leftw+rightw; otherwise the width is the node radius plus some
-		// additional
-		// space called xspan
+		/*
+		 * if there is a left child, leftw = width of the box enclosing the
+		 * whole left subtree, i.e., leftw+rightw; otherwise the width is the
+		 * node radius plus some additional space called xspan
+		 */
 		leftw = (left == null) ? D.xspan + D.radius : left.leftw + left.rightw;
 		// rightw is computed analogically
 		rightw = (right == null) ? D.xspan + D.radius : right.leftw
@@ -189,7 +189,6 @@ public class BSTNode extends Node {
 	public void reposition() {
 		// reboxTree();
 		// repos();
-		System.out.print("New run.\n");
 		fTRFirst(0);
 		fTRSecond();
 		fTRFourth(0);
@@ -216,13 +215,12 @@ public class BSTNode extends Node {
 	/**
 	 * First traverse of tree in fbtr
 	 * 
-	 * Sets a proper level to self and sons
+	 * Sets a proper level to self and children
 	 * 
 	 * @param level
 	 *            current level in tree
 	 */
 	public void fTRFirst(int level) {
-		// this.state = INVISIBLE;
 		this.level = level;
 		this.offset = 0;
 		if (left != null)
@@ -247,6 +245,7 @@ public class BSTNode extends Node {
 	public ExtremeBSTPair fTRSecond() {
 		ExtremeBSTPair result = new ExtremeBSTPair();
 		ExtremeBSTPair fromLeftSubtree = null, fromRightSubtree = null;
+		// minsep - minimal separation between two nodes on x-axis.
 		int minsep = D.xspan + 2 * D.radius;
 
 		// 1. & 2. work out left & right subtree
@@ -268,12 +267,10 @@ public class BSTNode extends Node {
 		} else {
 			/*
 			 * Is not a leaf! So at least one subtree must not be empty. In case
-			 * of one subtree is empty, it is not necessary to make a new thread
-			 */
-			/*
-			 * But wait! If there is only one son he will be hanging right below
-			 * his parent so make him stand his ground and decide - is he
-			 * smaller or greater than his parent.
+			 * of one subtree is empty, it is not necessary to make a new
+			 * thread.
+			 * 
+			 * There is only one son so proper offset have to be set.
 			 */
 			if (left == null) {
 				right.offset = minsep / 2;
@@ -293,27 +290,14 @@ public class BSTNode extends Node {
 			 * Separate left & right subtrees. loffset - offset of a current
 			 * node of the right contour of the left subtree. roffset - offset
 			 * of a current node of the left contour of the right subtree.
-			 * minsep - minimal separation between two nodes on x-axis.
-			 * Algorithm calculate offsets for left and right son.
+			 * 
+			 * Algorithm calculates offsets for left and right son.
 			 */
 
 			int loffset = 0;
 			int roffset = 0;
 			BSTNode L = this.left;
 			BSTNode R = this.right;
-			if (L == null) {
-				System.out.print("L pointer of " + key
-						+ " is null and pointer exception will be raised!");
-			}
-			if (R == null) {
-				System.out.print("R pointer of " + key
-						+ " is null and pointer exception will be raised!");
-			}
-
-			/*
-			 * // Notice that offset could be a negative integer L.offset =
-			 * -(minsep / 2); R.offset = minsep / 2;
-			 */
 			/*
 			 * A little change - left.offset will be 0 and only right.offset
 			 * accumulates. Offsets will be corrected after run. The reason is
@@ -323,28 +307,21 @@ public class BSTNode extends Node {
 			left.offset = 0;
 			right.offset = 0;
 
-			// while both pointers are not null
 			while ((L != null) && (R != null)) {
 				/*
 				 * left.offset + loffset is a distance from L pointer to "this"
-				 * node. similar - right.offset + roffset is a distance from R
+				 * node. Similar - right.offset + roffset is a distance from R
 				 * pointer to "this" node
 				 */
 				int distance = (roffset - loffset);
-				System.out.print("Distance at L: " + L.key + " R: " + R.key
-						+ " is " + distance + ".\n");
-				System.out.print("right.offset: " + right.offset + " roffset: "
-						+ roffset + " left.offset: " + left.offset
-						+ " loffset: " + loffset + "\n");
 				if (distance < minsep) {
 					right.offset += (minsep - distance);
 					roffset += (minsep - distance);
 				}
-				// (Goin') To da floooooor!
 				/*
-				 * But watch out! When you pass through thread there could be
-				 * and there will be for sure incorrect offset! And what if
-				 * there is another threaded node?
+				 * When passes through thread there will be for sure incorrect
+				 * offset! So Elevator calculate this new offset. In algorithm
+				 * TR published by Reingold this value is already calculated.
 				 */
 				boolean LwasThread = L.thread, RwasThread = R.thread;
 				if (L.right != null) {
@@ -371,8 +348,7 @@ public class BSTNode extends Node {
 					LwasThread = false;
 					loffset = 0;
 					Elevator = L;
-					// I am not very sure about references.. :-/
-					while (Elevator.key != this.key) {
+					while (Elevator != this) {
 						loffset += Elevator.offset;
 						Elevator = Elevator.parent;
 					}
@@ -380,7 +356,7 @@ public class BSTNode extends Node {
 				if (RwasThread) {
 					roffset = 0;
 					Elevator = R;
-					while (Elevator.key != this.key) {
+					while (Elevator != this) {
 						roffset += Elevator.offset;
 						Elevator = Elevator.parent;
 					}
@@ -396,39 +372,18 @@ public class BSTNode extends Node {
 			left.offset = -right.offset;
 
 			/*
-			 * General switch: we want to make a thread iff one pair of extremes
-			 * is deeper than others. We assume that threads from subtrees are
-			 * set properly.
+			 * General switch of making a new thread: we want to make a thread
+			 * iff one pair of extremes is deeper than others. We assume that
+			 * threads from subtrees are set properly.
 			 */
-
-			if (fromLeftSubtree.a.left.level == fromLeftSubtree.a.right.level) {
-				System.out.print("Left extremes are even at " + this.key
-						+ " with left extreme: " + fromLeftSubtree.a.left.key
-						+ " and right extreme: " + fromLeftSubtree.a.right.key
-						+ "\n");
-			} else {
-				System.out.print("Left extremes are uneven at " + this.key
-						+ "!!!\n");
-			}
-			if (fromRightSubtree.a.left.level == fromRightSubtree.a.right.level) {
-				System.out.print("Right extremes are even at " + this.key
-						+ " with left extreme: " + fromRightSubtree.a.left.key
-						+ " and right extreme: " + fromRightSubtree.a.right.key
-						+ "\n");
-			} else {
-				System.out.print("Right extremes are uneven at " + this.key
-						+ "!!!\n");
-			}
 
 			int left_height = fromLeftSubtree.a.left.level;
 			int right_height = fromRightSubtree.a.right.level;
 			/*
-			 * Guess what?! L & R pointers are set right there where we want it.
-			 * :)
-			 */
-			/*
 			 * Left subtree is more shallow than right subtree. Thus extreme for
 			 * this tree will be the same as for right subtree.
+			 * 
+			 * Notice that L & R pointers are set right there where we want it.
 			 */
 			if (right_height > left_height) {
 				fromLeftSubtree.a.left.thread = true;
@@ -462,6 +417,9 @@ public class BSTNode extends Node {
 	 *            real x coordinate of parent node
 	 */
 	public void fTRFourth(int xcoordinate) {
+		/*
+		 * Change coordinates
+		 */
 		tox = xcoordinate + this.offset;
 		toy = this.level * (D.yspan + 2 * D.radius);
 		if (tox < D.x1) {
@@ -470,7 +428,7 @@ public class BSTNode extends Node {
 		if (tox > D.x2) {
 			D.x2 = tox;
 		}
-		// this case should not happened
+		// this case should be always false
 		if (toy < D.y1) {
 			D.y1 = toy;
 		}
@@ -478,27 +436,21 @@ public class BSTNode extends Node {
 			D.y2 = toy;
 		}
 		this.goTo(tox, toy);
-		if (!thread) {
-			if (left != null) {
-				left.fTRFourth(tox);
-			}
-			if (right != null) {
-				right.fTRFourth(tox);
-			}
-		}
-	}
 
-	public void deleteThreads() {
+		/*
+		 * Dispose threads
+		 */
 		if (this.thread) {
 			this.thread = false;
 			this.left = null;
 			this.right = null;
 		}
+
 		if (left != null) {
-			left.deleteThreads();
+			left.fTRFourth(tox);
 		}
 		if (right != null) {
-			right.deleteThreads();
+			right.fTRFourth(tox);
 		}
 	}
 }
