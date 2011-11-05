@@ -10,7 +10,7 @@ public class ADTs {
 	/**
 	 * The list of all abstract data types.
 	 */
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings("unchecked")
 	static final Class[] ADT = {
 		Dictionary.class,    // insert, find, delete
 		PriorityQueue.class, // insert, decrease-key, delete-min

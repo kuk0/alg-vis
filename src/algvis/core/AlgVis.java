@@ -29,14 +29,16 @@ public class AlgVis extends JPanel implements ActionListener {
 	IMenuItem[] dsItems;
 
 	public AlgVis(JRootPane P) {
+		this(P, "en");
+	}
+
+	public AlgVis(JRootPane P, String s) {
 		this.P = P;
+		// Internationalization
+		L = new Languages(s);
 	}
 
 	public void init() {
-		// Internationalization
-		L = new Languages();
-		L.selectLanguage("en"); // getParameter("lang");
-
 		// Menu
 		JMenuBar menuBar;
 		menuBar = new JMenuBar();
