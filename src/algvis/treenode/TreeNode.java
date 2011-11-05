@@ -138,12 +138,12 @@ public class TreeNode extends Node {
 			child.addRight(T);
 		}
 	}
-	
-	public TreeNode LeftmostChild() {
+
+	public TreeNode leftmostChild() {
 		return child;
 	}
-	
-	public TreeNode RightmostChild() {
+
+	public TreeNode rightmostChild() {
 		TreeNode T = child;
 		if (T != null) {
 			while (T.right != null) {
@@ -157,7 +157,7 @@ public class TreeNode extends Node {
 		fTRFirst(0);
 		fTRSecond();
 		fTRThird();
-		fTRFourth();
+		fTRFourth(0);
 	}
 
 	/**
@@ -186,26 +186,193 @@ public class TreeNode extends Node {
 		 */
 		TreeNode result = new TreeNode(null, -47);
 		/*
-		 * Results from subtrees are stored as children
+		 * Results from subtrees are stored as children It seems this is not
+		 * necessary
 		 */
 		TreeNode subresults = new TreeNode(null, -47);
 		int minsep = D.xspan + 2 * D.radius;
 
+		if (isLeaf()) {
+			offset = 0;
+			result.right = this;
+			result.child = this;
+			return result;
+		}
+
+		/*
+		 * I think it is not necessary to do this if this is a leaf
+		 */
+
+		TreeNode S = subresults; // iterator for subresults
 		TreeNode T = child;
 		while (T != null) {
-			T.fTRSecond();
+			S.child = T.fTRSecond();
+			S.addRight(new TreeNode(null, -46));
+			T = T.right;
 		}
+
+		/*
+		 * Node has at least one child. Take their extremes as beginning
+		 * extremes.
+		 */
+		TreeNode LeftExtremes = S.child;
+
+		/*
+		 * Ok. Now it's time to separate subtrees..
+		 */
+
+		TreeNode LeftSubtree = this.child;
+		TreeNode RightSubtree = this.child;
+
+		/*
+		 * ..iff this node contains 2 and more vertices
+		 */
+		if (RightSubtree.right != null) {
+			RightSubtree = RightSubtree.right;
+			S = S.right;
+			TreeNode RightExtremes = S.child;
+			boolean firstrun = true;
+			while ((RightSubtree.right != null) || (firstrun)) {
+				if (firstrun)
+					firstrun = false;
+				TreeNode L = LeftSubtree;
+				TreeNode R = RightSubtree;
+
+				int loffset = L.offset;
+				int roffset = L.offset;
+
+				while ((L != null) && (R != null)) {
+					/*
+					 * LeftSubtree.offset + loffset is a distance from L pointer
+					 * to "this" node. similar - RightSubtree.offset + roffset
+					 * is a distance from R pointer to "this" node
+					 */
+					int distance = (roffset - loffset);
+					// System.out.print("Distance at L: " + L.key + " R: " +
+					// R.key
+					// + " is " + distance + ".\n");
+					// System.out.print("RightSubtree.offset: " +
+					// RightSubtree.offset +
+					// " roffset: "
+					// + roffset + " LeftSubtree.offset: " + LeftSubtree.offset
+					// + " loffset: " + loffset + "\n");
+					if (distance < minsep) {
+						RightSubtree.offset += (minsep - distance);
+						roffset += (minsep - distance);
+					}
+					// (Goin') To da floooooor!
+					/*
+					 * But watch out! When you pass through thread there could
+					 * be and there will be for sure incorrect offset! And what
+					 * if there is another threaded node?
+					 */
+					boolean LwasThread = L.thread, RwasThread = R.thread;
+					TreeNode LNext = L.rightmostChild();
+					if (LNext != null) {
+						loffset += LNext.offset;
+					}
+					L = LNext;
+
+					TreeNode RNext = R.leftmostChild();
+					if (RNext != null) {
+						roffset += RNext.offset;
+					}
+					R = RNext;
+
+					TreeNode Elevator = null;
+					if (LwasThread) {
+						LwasThread = false;
+						loffset = 0;
+						Elevator = L;
+						// I am not very sure about references.. :-/
+						while (Elevator.parent != this.parent) {
+							loffset += Elevator.offset;
+							Elevator = Elevator.parent;
+						}
+					}
+					if (RwasThread) {
+						roffset = 0;
+						Elevator = R;
+						while (Elevator != this) {
+							roffset += Elevator.offset;
+							Elevator = Elevator.parent;
+						}
+					}
+				}
+
+				/*
+				 * Some changing of distances should be made here
+				 */
+
+				if ((L == null) && (R == null)) {
+					LeftExtremes.child = LeftExtremes.child;
+					LeftExtremes.right = RightExtremes.right;
+				} else if ((L == null) && (R != null)) {
+					LeftExtremes.child.thread = true;
+					LeftExtremes.child.child = R;
+					
+					LeftExtremes.child = RightExtremes.child;
+					LeftExtremes.right = RightExtremes.right;
+				} else if ((L != null) && (R == null))  {
+					RightExtremes.right.thread = true;
+					RightExtremes.right.child = L;
+					
+					LeftExtremes.child = LeftExtremes.child;
+					LeftExtremes.right = LeftExtremes.right;
+				} else {
+					System.out.print("Shit happened...\n");
+				}
+
+			}
+		}
+
+		result = LeftExtremes;
 		return result;
 	}
 
+	/*
+	 * There will be corrections to bad layouts
+	 */
 	private void fTRThird() {
 		// TODO Auto-generated method stub
 
 	}
 
-	private void fTRFourth() {
-		// TODO Auto-generated method stub
 
+	private void fTRFourth(int xcoordinate) {
+		/*
+		 * Change coordinates
+		 */
+		tox = xcoordinate + this.offset;
+		toy = this.level * (D.yspan + 2 * D.radius);
+		if (tox < D.x1) {
+			D.x1 = tox;
+		}
+		if (tox > D.x2) {
+			D.x2 = tox;
+		}
+		// this case should be always false
+		if (toy < D.y1) {
+			D.y1 = toy;
+		}
+		if (toy > D.y2) {
+			D.y2 = toy;
+		}
+		this.goTo(tox, toy);
+
+		/*
+		 * Dispose threads
+		 */
+		if (this.thread) {
+			this.thread = false;
+			this.child = null;
+		}
+
+		TreeNode T = child;
+		while (T != null) {
+			T.fTRFourth(tox);
+			T = T.right;
+		}
 	}
 
 }
