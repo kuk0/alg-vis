@@ -1,0 +1,26 @@
+Dictionary
+Dictionary is a data structure that supports the operations insert, find, and delete.
+Many implementations of a dictionary are possible. The simplest are array or linked
+list which, however, need linear time for some operations.  
+
+Binary search tree
+
+AVL tree
+
+B tree
+
+Red-black tree
+
+AA-tee
+
+Skiplist
+
+Heap
+
+Treap
+
+Scapegoat tree
+
+Splay tree
+
+Binomial heap

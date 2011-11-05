@@ -1,0 +1,86 @@
+textarea sa este neposuva nadol, ked pribudne novy text
+miesto, kde sa hlasia chyby treba mazat/prepisovat, ked nie je ziadna chyba
+v PQButtons ak w je null, nespustit incrKey a vypapulovat
+komentar ku incrKey, resp. bubble up
+
+> tool-tip text  button.setToolTipText
+> Text:
+  * obrazky?
+> poloha korena; centralna poloha pre View 
+> pekne gulicky (obrazky)
+
+LazyBinHeapDelete:
+   oznacovanie (?)
+v heape je mozno zly text pre min/max
+
+reusovat procedury.. nechceme 100x find ...
+opravit statusy (tri bodky - to su tusim labely?)
+subpackage?
+
+
+
+stav:
+BST
+Rotations
+AVL
+B
+RB
+AA
+Treap
+Skiplist
+Scapegoat
+Splay
+Heap
+Binheap
+lazy
+
+co dalej:
+> Priority Queues
+  * Fibonacci heap
+  * Relaxed heap (a ine: Brodal - worst case efficient pq.s)
+  * Leftist heap (a mozno ine heapy; B-heap?)
+  * Lazy leftist heap
+> Union find
+> String DS
+  * Trie
+  * Suffix array
+  * Suffix tree
+> Interval trees
+  * Fenwick trees
+> Linking and cutting trees
+
+O(log log n)-competitive binary search trees:
+tango trees, multisplay trees, chain-splay trees,
+skip-splay trees, poketrees, zipper trees
+
+Dynamic forest maintenance:
+Link-cut trees; CUT, JOIN, and FINDROOT in O(log n) amortized time;
+path queries and updates in O(log n) amortized time via lazy propagation;
+Euler-tour trees; subtree queries and updates in O(log n) amortized time;
+sketches of topology trees, top trees, rake-compress trees, and
+self-adjusting top trees.
+
+Ordered dictionaries:
+van Emde Boas trees, x-fast tries, y-fast tries via indirection,
+fusion trees, exponential search trees
+
+Partial persistence:
+fat nodes, path copying, node copying, fractional cascading,
+planar point location
+
+Full persistence:
+Euler tours, ordered list maintenance, virtual scapegoat trees
+
+Retroactive data structures:
+changing the past, rollback, lower bounds, querying the past, dynamic vertical ray shooting
+
+
+
+Fun with Pointers
+Other balanced binary trees: AVL trees, balanced binary B-trees (aka half-balanced trees, aka red-black trees), AA-trees (aka left-leaving red-black trees), brother trees, (a,b)-trees, BB(α)-trees, rank-balanced trees, treaps, randomized binary search trees, skip lists, deterministic skip lists, ...
+Efficient heaps: Fibonacci heaps, leftist heaps, randomized meldable heaps, pairing heaps, rank-pairing heaps, queaps, soft heaps, fast minimum spanning trees, ...
+More dynamic graphs: dynamic minimum spanning trees, sparsification, ...
+Persistent data structures: semi-persistent data structures, retroactive data structures, ...
+Kinetic/parametric data structures: kinetic heaps/heaters/hangers/tournaments, convex hulls, Voronoi diagrams, BSP trees, bounding volume hierarchies, parametric shortest paths, ...
+Mergeable trees and mergeable dictionaries
+String data structures: KMP automata, PATRICIA trees, suffix trees/arrays/trays/trists, DAWGs, ropes (“Model-T enfilades”), ...

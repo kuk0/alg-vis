@@ -10,8 +10,7 @@ public class Fonts {
 	public static Font[] f;
 	public static FontMetrics[] fm;
 
-	public static void init(AlgVis a) {
-		Graphics g = a.getGraphics();
+	public static void init(Graphics g) {
 		f = new Font[MAX + 1];
 		fm = new FontMetrics[MAX + 1];
 		for (int i = MIN; i <= MAX; ++i) {

@@ -1,7 +1,5 @@
 package algvis.aatree;
 
-import java.awt.Graphics;
-
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -24,16 +22,16 @@ public class AANode extends BSTNode {
 	}
 
 	@Override
-	public void draw(Graphics g, View v) {
+	public void draw(View v) {
 		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
 			return;
 		}
-		drawBg(g, v);
-		drawKey(g, v);
-		drawArrow(g, v);
-		drawArc(g, v);
+		drawBg(v);
+		drawKey(v);
+		drawArrow(v);
+		drawArc(v);
 		String str = new String("" + level);
-		v.drawString(g, str, x + D.radius, y - D.radius, 7);
+		v.drawString(str, x + D.radius, y - D.radius, 7);
 	}
 
 	@Override

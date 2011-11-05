@@ -1,6 +1,5 @@
 package algvis.rotations;
 
-import java.awt.Graphics;
 import java.util.Random;
 
 import algvis.bst.BST;
@@ -61,10 +60,10 @@ public class Rotations extends DataStructure {
 	}
 
 	@Override
-	public void draw(Graphics G, View V) {
+	public void draw(View V) {
 		if (T.root != null) {
 			T.root.moveTree();
-			((RotNode) T.root).drawTree(G, V);
+			((RotNode) T.root).drawTree(V);
 		}
 	}
 

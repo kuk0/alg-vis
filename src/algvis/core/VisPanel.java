@@ -14,9 +14,11 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import algvis.internationalization.ILabel;
+import algvis.internationalization.Languages;
 
 public abstract class VisPanel extends JPanel implements ChangeListener {
 	private static final long serialVersionUID = 5104769085118210624L;
+	public static Class<? extends DataStructure> DS;
 
 	// aplet pozostava z piatich zakladnych veci:
 	public Buttons B; // gombikov (dolu)
@@ -27,23 +29,30 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 
 	JSlider vSlider, hSlider;
 
-	public AlgVis a;
+	public Languages L;
 
 	int STEPS = 10;
 	public boolean pause = true, small = false;
 
-	public VisPanel(AlgVis a) {
-		this.a = a;
+	public VisPanel(Languages L) {
+		this.L = L;
 		init();
 	}
 
-	abstract public String getTitle();
+	public String getTitle() {
+		try {
+			return (String)(DS.getDeclaredField("dsName").get(null));
+		} catch (Exception e) {
+			System.out.println ("VisPanel is unable to get field dsName - name of data structure: " + DS);
+		}
+		return "";
+	}
 
 	public void init() {
 		this.setLayout(new GridBagLayout());
 		JPanel screen = initScreen();
 		JScrollPane commentary = initCommentary();
-		statusBar = new ILabel(a, "EMPTYSTR");
+		statusBar = new ILabel(L, "EMPTYSTR");
 		initDS();
 		
 		GridBagConstraints cs = new GridBagConstraints();
@@ -93,7 +102,8 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 
 			@Override
 			public Dimension getMinimumSize() {
-				return new Dimension(300, 100);
+				return new Dimension(700, 400);
+//				return new Dimension(300, 100);
 			}
 		};
 		screen.add(S, BorderLayout.CENTER);
@@ -108,7 +118,7 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 		screen.add(hSlider, BorderLayout.SOUTH);
 
 		screen.setBorder(BorderFactory.createCompoundBorder(BorderFactory
-				.createTitledBorder(a.getString("display")), BorderFactory
+				.createTitledBorder(L.getString("display")), BorderFactory
 				.createEmptyBorder(5, 5, 5, 5)));
 		return screen;
 		// left.add(screen, BorderLayout.CENTER);
@@ -126,31 +136,26 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 
 			@Override
 			public Dimension getPreferredSize() {
-				return new Dimension(300, 530);
+				return new Dimension(300, 600);
 			}
 
 			@Override
 			public Dimension getMinimumSize() {
-				return new Dimension(200, 530);
+				return new Dimension(300, 600);
+				//return new Dimension(200, 530);
 			}
 		};
-		C = new Commentary(a, SP);
+		C = new Commentary(L, SP);
 		SP.setViewportView(C);
 		JPanel CP = new JPanel();
 		CP.add(SP);
 		SP.setBorder(BorderFactory.createCompoundBorder(BorderFactory
-				.createTitledBorder(a.getString("text")), BorderFactory
+				.createTitledBorder(L.getString("text")), BorderFactory
 				.createEmptyBorder(5, 5, 5, 5)));
 		return SP;
 	}
 
 	abstract public void initDS();
-
-	public void refresh() {
-		B.refresh();
-		C.refresh();
-		D.setStats();
-	}
 
 	public void stateChanged(ChangeEvent e) {
 		JSlider source = (JSlider) e.getSource();

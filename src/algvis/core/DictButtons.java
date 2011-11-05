@@ -22,15 +22,15 @@ public class DictButtons extends Buttons {
 
 	@Override
 	public void actionButtons(JPanel P) {
-		insertB = new IButton(M.a, "button-insert");
+		insertB = new IButton(M.L, "button-insert");
 		insertB.setMnemonic(KeyEvent.VK_I);
 		insertB.addActionListener(this);
 
-		findB = new IButton(M.a, "find");
+		findB = new IButton(M.L, "find");
 		findB.setMnemonic(KeyEvent.VK_F);
 		findB.addActionListener(this);
 
-		deleteB = new IButton(M.a, "button-delete");
+		deleteB = new IButton(M.L, "button-delete");
 		deleteB.setMnemonic(KeyEvent.VK_D);
 		deleteB.addActionListener(this);
 
@@ -93,13 +93,5 @@ public class DictButtons extends Buttons {
 		insertB.setEnabled(true);
 		findB.setEnabled(true);
 		deleteB.setEnabled(true);
-	}
-
-	@Override
-	public void refresh() {
-		super.refresh();
-		insertB.refresh();
-		findB.refresh();
-		deleteB.refresh();
 	}
 }
