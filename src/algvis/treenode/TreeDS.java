@@ -6,6 +6,8 @@ import algvis.core.VisPanel;
 
 public class TreeDS extends DataStructure {
 	public static String dsName = "bst";
+	public static String adtName = "dictionary";
+
 	public TreeNode root = new TreeNode(this, 1);
 	int N = 1;
 	
@@ -21,7 +23,11 @@ public class TreeDS extends DataStructure {
 	@Override
 	public void insert(int x) {
 		N++;
-		start(new TreeAppend(this, x, N));
+		//start(new TreeAppend(this, x, N));
+		this.root.append(x, N);
+		System.out.print("Skap1");
+		this.root.reposition();
+		System.out.print("Skap2");
 	}
 
 	@Override
@@ -40,6 +46,6 @@ public class TreeDS extends DataStructure {
 	public void reposition() {
 		x1 = x2 = y1 = y2 = 0;
 		root.reposition();
-		M.S.V.setBounds(x1, y1, x2, y2);
+		M.S.V.setBounds(x1-50, y1-50, x2+50, y2+50);
 	}
 }

@@ -16,6 +16,7 @@ public class TreeAppend extends Algorithm {
 	@Override
 	public void run() {
 		T.root.append(X, Y);
+		mysuspend();
 		T.reposition();
 	}
 	

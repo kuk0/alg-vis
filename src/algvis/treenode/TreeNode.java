@@ -1,7 +1,6 @@
 package algvis.treenode;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -134,6 +133,7 @@ public class TreeNode extends Node {
 		if (child == null) {
 			child = T;
 			T.parent = this;
+			T.D = this.D;
 		} else {
 			child.addRight(T);
 		}
