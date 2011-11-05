@@ -10,9 +10,10 @@ import javax.swing.JEditorPane;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
+import algvis.internationalization.LanguageListener;
 import algvis.internationalization.Languages;
 
-public class Commentary extends JEditorPane {
+public class Commentary extends JEditorPane implements LanguageListener {
 	private static final long serialVersionUID = 9023200331860482960L;
 	Languages L;
 	JScrollPane sp;
@@ -29,6 +30,7 @@ public class Commentary extends JEditorPane {
 		setEditable(false);
 		this.L = L;
 		this.sp = sp;
+		L.addListener(this);
 	}
 	
 	public void clear() {
@@ -66,9 +68,9 @@ public class Commentary extends JEditorPane {
 	}
     
 	
-	public void refresh() {
+	public void languageChanged() {
 		text = "";
-		for (int i=0; i<s.size(); ++i) text += str(i) + str(i) + str(i) + str(i) + str(i); 			
+		for (int i=0; i<s.size(); ++i) text += str(i); //+ str(i) + str(i) + str(i) + str(i); 			
 		super.setText(text);
 		scrollDown();
 	}

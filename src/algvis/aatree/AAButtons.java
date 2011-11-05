@@ -34,10 +34,4 @@ public class AAButtons extends DictButtons implements ActionListener {
 			((AA) M.D).reposition();
 		}
 	}
-
-	@Override
-	public void refresh() {
-		super.refresh();
-		B23.refresh();
-	}
 }

@@ -35,10 +35,4 @@ public class BTreeButtons extends DictButtons implements ChangeListener {
 			((BTree) D).reposition();
 		}
 	}
-
-	@Override
-	public void refresh() {
-		super.refresh();
-		orderLabel.refresh();
-	}
 }

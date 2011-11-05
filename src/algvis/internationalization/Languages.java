@@ -1,5 +1,7 @@
 package algvis.internationalization;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -11,6 +13,7 @@ public class Languages {
 	ResourceBundle[] all_msgs = new ResourceBundle[N];
 	Locale locale;
 	ResourceBundle msg;
+	List<LanguageListener> listeners = new LinkedList<LanguageListener>();
 
 	public Languages() {
 		all_locales[0] = new Locale("en");
@@ -29,6 +32,10 @@ public class Languages {
 		selectLanguage(s);
 	}
 
+	public void addListener(LanguageListener l) {
+		listeners.add(l);
+	}
+
 	public void selectLanguage(int i) {
 		if (i < 0 || i >= N) {
 			i = 0;
@@ -36,6 +43,10 @@ public class Languages {
 		current_lang = i;
 		locale = all_locales[current_lang];
 		msg = all_msgs[current_lang];
+		// notify all listeners
+		for (LanguageListener l : listeners) {
+			l.languageChanged();
+		}
 	}
 
 	public void selectLanguage(String s) {

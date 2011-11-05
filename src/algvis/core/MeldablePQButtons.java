@@ -151,16 +151,6 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 		next.setEnabled(false);
 	}
 
-	@Override
-	public void refresh() {
-		super.refresh();
-		insertB.refresh();
-		deleteB.refresh();
-		decrKeyB.refresh();
-		meldB.refresh();
-		activeLabel.refresh();
-	}
-
 	public void stateChanged(ChangeEvent evt) {
 		if (evt.getSource() == activeHeap) {
 			BinomialHeap H = ((BinomialHeap) D);

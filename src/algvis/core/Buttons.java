@@ -163,14 +163,6 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		stats.refresh();
 	}
 
-	public void refresh() {
-		next.refresh();
-		clear.refresh();
-		random.refresh();
-		pause.refresh();
-		// zoomLabel.refresh();
-	}
-
 	public void otherButtons(JPanel P) {
 	}
 	

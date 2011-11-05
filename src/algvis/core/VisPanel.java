@@ -157,12 +157,6 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 
 	abstract public void initDS();
 
-	public void refresh() {
-		B.refresh();
-		C.refresh();
-		D.setStats();
-	}
-
 	public void stateChanged(ChangeEvent e) {
 		JSlider source = (JSlider) e.getSource();
 		if (true) { // !source.getValueIsAdjusting()) {
