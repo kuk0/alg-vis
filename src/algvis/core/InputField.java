@@ -77,10 +77,7 @@ public class InputField extends JTextField {
 		for (String t : tokens) {
 			int x = min;
 			try {
-				x = Integer.parseInt(t); // st.nextToken());
-			} catch (Exception e) {
-				sb.setText("couldn't parse an integer");
-			} finally {
+				x = Integer.parseInt(t);
 				if (x < min) {
 					x = min;
 					sb.setText("value too small; using the minimum value instead");
@@ -90,6 +87,8 @@ public class InputField extends JTextField {
 					sb.setText("value too high; using the maximum value instead");
 				}
 				args.add(x);
+			} catch (Exception e) {
+				sb.setText("couldn't parse an integer");
 			}
 		}
 		return args;

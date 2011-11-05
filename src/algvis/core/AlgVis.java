@@ -95,7 +95,7 @@ public class AlgVis extends JPanel implements ActionListener {
 		P.setJMenuBar(menuBar);
 		add(cards);
 
-		Fonts.init(this);
+		Fonts.init(getGraphics());
 	}
 
 	public void refresh() {

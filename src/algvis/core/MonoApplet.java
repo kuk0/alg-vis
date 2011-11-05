@@ -4,7 +4,6 @@ import javax.swing.JApplet;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import algvis.bst.BSTPanel;
 import algvis.internationalization.Languages;
 
 public class MonoApplet extends JApplet {
@@ -24,13 +23,18 @@ public class MonoApplet extends JApplet {
 			// If Nimbus is not available, you can set the GUI to another look
 			// and feel.
 		}
-
+		setSize(WIDTH, HEIGHT+20);
+		
 		Languages L = new Languages();
+		// getParameter("lang");
 		L.selectLanguage(0);
+		
+		// getParameter("ds");
+		int i = 0;
+		VisPanel P = DataStructures.getPanel(i, L);
+		P.setSize(WIDTH, HEIGHT); // same size as defined in the HTML APPLET
+		if (P != null) add(P);
+
 		Fonts.init(getGraphics());
-		VisPanel A = new BSTPanel(L);
-		A.setSize(WIDTH, HEIGHT); // same size as defined in the HTML APPLET
-		this.getRootPane().add(A);		
-		A.init();
 	}
 }
