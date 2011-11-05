@@ -7,7 +7,6 @@ import java.util.Vector;
 import javax.swing.JPanel;
 
 import algvis.core.Buttons;
-import algvis.core.DictButtons;
 import algvis.core.VisPanel;
 import algvis.internationalization.IButton;
 
@@ -36,6 +35,7 @@ public class TreeButtons extends Buttons {
 				public void run() {
 					for (int x : args) {
 						((TreeDS) D).insert(x);
+						System.out.print(x+"\n");
 					}
 				}
 			});

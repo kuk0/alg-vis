@@ -30,11 +30,11 @@ import algvis.treenode.TreePanel;
  */
 public class DataStructures {
 	@SuppressWarnings("rawtypes")
-	static final Class[] PANEL = { TreePanel.class, BSTPanel.class, RotPanel.class,
+	static final Class[] PANEL = { BSTPanel.class, RotPanel.class,
 			AVLPanel.class, BPanel.class, RBPanel.class, AAPanel.class,
 			TreapPanel.class, SkipListPanel.class, GBPanel.class,
 			SplayPanel.class, HeapPanel.class, BinHeapPanel.class,
-			LazyBinHeapPanel.class, FibHeapPanel.class };
+			LazyBinHeapPanel.class, FibHeapPanel.class, TreePanel.class };
 	static final int N = PANEL.length;
 
 	private static boolean check_range(int i) {

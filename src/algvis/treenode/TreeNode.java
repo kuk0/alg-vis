@@ -100,6 +100,7 @@ public class TreeNode extends Node {
 		TreeNode T = child;
 		while (T != null) {
 			T.moveTree();
+			T = T.right;
 		}
 		move();
 	}
@@ -196,11 +197,6 @@ public class TreeNode extends Node {
 		 * form result.child for left and result.right for right
 		 */
 		TreeNode result = new TreeNode(null, -47);
-		/*
-		 * Results from subtrees are stored as children It seems this is not
-		 * necessary
-		 */
-		TreeNode subresults = new TreeNode(null, -47);
 		int minsep = D.xspan + 2 * D.radius;
 
 		if (isLeaf()) {
@@ -211,6 +207,12 @@ public class TreeNode extends Node {
 		}
 
 		/*
+		 * Results from subtrees are stored as children It seems this is not
+		 * necessary
+		 */
+		TreeNode subresults = new TreeNode(null, -47);
+
+		/*
 		 * I think it is not necessary to do this if this is a leaf
 		 */
 
@@ -218,7 +220,8 @@ public class TreeNode extends Node {
 		TreeNode T = child;
 		while (T != null) {
 			S.child = T.fTRSecond();
-			S.addRight(new TreeNode(null, -46));
+			S.right = new TreeNode(null, -46);
+			S = S.right;
 			T = T.right;
 		}
 
@@ -226,6 +229,7 @@ public class TreeNode extends Node {
 		 * Node has at least one child. Take their extremes as beginning
 		 * extremes.
 		 */
+		S = subresults;
 		TreeNode LeftExtremes = S.child;
 
 		/*
@@ -240,12 +244,14 @@ public class TreeNode extends Node {
 		 */
 		if (RightSubtree.right != null) {
 			RightSubtree = RightSubtree.right;
-			S = S.right;
-			TreeNode RightExtremes = S.child;
 			boolean firstrun = true;
 			while ((RightSubtree.right != null) || (firstrun)) {
 				if (firstrun)
 					firstrun = false;
+
+				S = S.right;
+				TreeNode RightExtremes = S.child;
+
 				TreeNode L = LeftSubtree;
 				TreeNode R = RightSubtree;
 
