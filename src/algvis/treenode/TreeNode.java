@@ -78,18 +78,18 @@ public class TreeNode extends Node {
 	 * Draw edges, then the node itself. Don't draw invisible nodes and edges
 	 * from and to them
 	 */
-	public void drawTree(Graphics g, View v) {
+	public void drawTree(View v) {
 		if (this.state != INVISIBLE) {
 			if (thread) {
-				g.setColor(Color.red);
+				v.setColor(Color.red);
 				v.drawLine(x, y, child.x, child.y);
-				g.setColor(Color.black);
+				v.setColor(Color.black);
 			} else {
 				TreeNode T = child;
 				while (T != null) {
-					g.setColor(Color.black);
+					v.setColor(Color.black);
 					v.drawLine(x, y, T.x, T.y);
-					T.drawTree(g, v);
+					T.drawTree(v);
 					T = T.right;
 				}
 			}
@@ -153,6 +153,17 @@ public class TreeNode extends Node {
 		return T;
 	}
 
+	public void append(int x, int j) {
+		if (key == x) {
+			addChild(new TreeNode(this.D, j));
+		} else {
+			TreeNode T = child;
+			while (T != null) {
+				T.append(x, j);
+				T = T.right;
+			}
+		}
+	}
 	public void reposition() {
 		fTRFirst(0);
 		fTRSecond();
