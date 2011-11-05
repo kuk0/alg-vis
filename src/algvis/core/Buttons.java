@@ -186,6 +186,6 @@ abstract public class Buttons extends JPanel implements ActionListener {
 
 	@Override
 	public Dimension getMinimumSize() {
-		return new Dimension(300, 100);
+		return new Dimension(300, 150);
 	}
 }
