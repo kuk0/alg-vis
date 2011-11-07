@@ -17,7 +17,7 @@ public class View {
 	}
 
 	public void setGraphics(Graphics2D g) {
-		this.g = g;
+		this.g = g;		
 	}
 
 	public void setWH(int w, int h) {
@@ -36,10 +36,12 @@ public class View {
 	}
 
 	public void setX(int x) {
+		//g.translate(x, g.getTransform().getTranslateY());
 		viewX = x;
 	}
 
 	public void setY(int y) {
+		//g.translate(g.getTransform().getTranslateX(),y);
 		viewY = y;
 	}
 
@@ -65,69 +67,79 @@ public class View {
 
 	// zmeni "virtualne" suradnice na "realne" (pixel na obrazovke)
 	public int v2rX(double x) {
-		return map(x, viewX - viewW, viewX + viewW, 0, W);
+		return (int)x;
+		//return map(x, viewX - viewW, viewX + viewW, 0, W);
 	}
 
 	public int v2rY(double y) {
-		return map(y, viewY - viewH, viewY + viewH, 0, H);
+		return (int)y;
+		//return map(y, viewY - viewH, viewY + viewH, 0, H);
 	}
 
 	public int v2rF(int fs) {
-		fs = (int) Math.round(f * fs);
+		/*fs = (int) Math.round(f * fs);
 		if (fs < Fonts.MIN) {
 			return 0;
 		}
 		if (fs > Fonts.MAX) {
 			fs = Fonts.MAX;
-		}
+		}*/
 		return fs;
 	}
 
 	// naopak
 	public int r2vX(double x) {
-		return map(x, 0, W, viewX - viewW, viewX + viewW);
+		return (int)x;
+		//return map(x, 0, W, viewX - viewW, viewX + viewW);
 	}
 
 	public int r2vY(double y) {
-		return map(y, 0, H, viewY - viewH, viewY + viewH);
+		return (int)y;
+		//return map(y, 0, H, viewY - viewH, viewY + viewH);
 	}
 
 	public void moveLeft() {
-		if (viewX - 1.1 * viewW >= minx) {
+		g.translate(-0.1*viewW, 0);
+/*		if (viewX - 1.1 * viewW >= minx) {
 			viewX -= 0.1 * viewW;
-		}
+		}*/
 	}
 
 	public void moveRight() {
-		if (viewX + 1.1 * viewW <= maxx) {
+		g.translate(0.1*viewW, 0);
+/*		if (viewX + 1.1 * viewW <= maxx) {
 			viewX += 0.1 * viewW;
-		}
+		}*/
 	}
 
 	public void moveUp() {
-		viewY -= 0.1 * viewH;
+		g.translate(0, -0.1*viewH);
+		//viewY -= 0.1 * viewH;
 	}
 
 	public void moveDown() {
-		viewY += 0.1 * viewH;
+		g.translate(0, 0.1*viewH);
+		//viewY += 0.1 * viewH;
 	}
 
 	public void zoomIn() {
-		if (f * SCALE_FACTOR <= MAX_ZOOM) {
+		g.scale(SCALE_FACTOR, SCALE_FACTOR);
+		/*if (f * SCALE_FACTOR <= MAX_ZOOM) {
 			f = f * SCALE_FACTOR;
 			viewW = viewW / SCALE_FACTOR;
 			viewH = viewH / SCALE_FACTOR;
 			// System.out.println(f);
-		}
+		}*/
 	}
 
 	public void zoomOut() {
-		if (f / SCALE_FACTOR >= MIN_ZOOM) {
+		g.scale(1/SCALE_FACTOR, 1/SCALE_FACTOR);
+/*		if (f / SCALE_FACTOR >= MIN_ZOOM) {
 			f = f / SCALE_FACTOR;
 			viewW = viewW * SCALE_FACTOR;
 			viewH = viewH * SCALE_FACTOR;
 			// System.out.println(f);
-		}
+		}*/
 	}
 
 	public boolean inside(int x, int y) {
@@ -135,10 +147,10 @@ public class View {
 				&& (viewY - viewH <= y) && (y <= viewY + viewH);
 	}
 
-	public void setColor(Color c) {
+	public void setColor (Color c) {
 		g.setColor(c);
 	}
-
+	
 	public void fillSqr(int x, int y, int a) {
 		a = (int) Math.round(f * a);
 		g.fillRect(v2rX(x) - a, v2rY(y) - a, 2 * a, 2 * a);
@@ -224,17 +236,16 @@ public class View {
 		g.fillArc(v2rX(x), v2rY(y), (int) Math.round(f * w), (int) Math.round(f
 				* h), a1, a2);
 	}
-
-	public void drawRoundRectangle(int x, int y, double w, double h,
-			double arcw, double arch) {
-		g.draw(new RoundRectangle2D.Double(v2rX(x) - f * w, v2rY(y) - f * h, 2
+	
+	public void drawRoundRectangle(int x, int y, double w,
+			double h, double arcw, double arch) {
+		((Graphics2D)g).draw(new RoundRectangle2D.Double(v2rX(x) - f * w, v2rY(y) - f * h, 2
 				* f * w, 2 * f * h, f * arcw, f * arch));
 	}
-
-	public void fillRoundRectangle(int x, int y, double w, double h,
-			double arcw, double arch) {
-		g.fill(new RoundRectangle2D.Double(v2rX(x) - f * w,
-				v2rY(y) - f * h, 2 * f * w, 2 * f * h, f * arcw, f * arch));
+	public void fillRoundRectangle(int x, int y, double w,
+			double h, double arcw, double arch) {
+		((Graphics2D)g).fill(new RoundRectangle2D.Double(v2rX(x) - f * w, v2rY(y) - f * h, 2
+				* f * w, 2 * f * h, f * arcw, f * arch));
 	}
 
 	private void arrowHead(int x, int y, int xx, int yy) {
@@ -280,7 +291,8 @@ public class View {
 		arrowHead(x1, y1, x2, y2);
 	}
 
-	public void drawArcArrow(int x, int y, int w, int h, int a1, int a2) {
+	public void drawArcArrow(int x, int y, int w, int h, int a1,
+			int a2) {
 		x = v2rX(x);
 		y = v2rY(y);
 		w = (int) Math.round(f * w);
