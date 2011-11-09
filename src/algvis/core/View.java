@@ -139,7 +139,7 @@ public class View {
 	public void setColor (Color c) {
 		g.setColor(c);
 	}
-	
+
 	public void fillSqr(int x, int y, int a) {
 		a = (int) Math.round(f * a);
 		g.fillRect(v2rX(x) - a, v2rY(y) - a, 2 * a, 2 * a);
@@ -225,7 +225,7 @@ public class View {
 		g.fillArc(v2rX(x), v2rY(y), (int) Math.round(f * w), (int) Math.round(f
 				* h), a1, a2);
 	}
-	
+
 	public void drawRoundRectangle(int x, int y, double w,
 			double h, double arcw, double arch) {
 		((Graphics2D)g).draw(new RoundRectangle2D.Double(v2rX(x) - f * w, v2rY(y) - f * h, 2

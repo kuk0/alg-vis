@@ -2,6 +2,8 @@ package algvis.bst;
 
 import algvis.core.Algorithm;
 import algvis.core.Colors;
+import algvis.scenario.PauseCommand;
+import algvis.scenario.SubScenario;
 
 public class BSTInsert extends Algorithm {
 	BST T;
@@ -11,6 +13,8 @@ public class BSTInsert extends Algorithm {
 	public BSTInsert(BST T, int x) {
 		super(T.M);
 		this.T = T;
+		T.subScen = new SubScenario("BSTInsert");
+		T.scenario.add(T.subScen);
 		v = T.v = new BSTNode(T, K = x);
 		v.bgColor(Colors.INSERT);
 		setHeader("insertion");
@@ -27,6 +31,7 @@ public class BSTInsert extends Algorithm {
 			v.goAboveRoot();
 			setText("bstinsertstart");
 			mysuspend();
+			T.subScen.add(new PauseCommand()); // maybe this will go to mysuspend()
 
 			while (true) {
 				if (w.key == K) {
@@ -57,6 +62,7 @@ public class BSTInsert extends Algorithm {
 					}
 					setText("bstinsertleft", K, w.key);
 					mysuspend();
+					T.subScen.add(new PauseCommand());
 					v.noArrow();
 					if (w.left != null) {
 						w = w.left;
@@ -67,12 +73,15 @@ public class BSTInsert extends Algorithm {
 				}
 				v.goAbove(w);
 				mysuspend();
+				T.subScen.add(new PauseCommand());
 			}
 		}
 		T.reposition();
 		mysuspend();
+		T.subScen.add(new PauseCommand());
 		setText("done");
 		v.bgColor(Colors.NORMAL);
 		T.v = null;
+		T.subScen = null;
 	}
 }

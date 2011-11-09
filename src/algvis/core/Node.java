@@ -2,6 +2,10 @@ package algvis.core;
 
 import java.awt.Color;
 
+import algvis.scenario.ChangeColorCommand;
+import algvis.scenario.ChangeStateCommand;
+import algvis.scenario.MoveCommand;
+
 /**
  * The Class Node.
  * This is a basic element of the visualization. Nodes can be drawn, they can move,
@@ -18,7 +22,7 @@ public class Node {
 	 */
 	public int x, y, tox, toy, steps;
 	/** the state of a node - either ALIVE, UP, DOWN, LEFT, or RIGHT. */
-	public int state;
+	public int state = -1;
 	public Color fgcolor, bgcolor;
 	public boolean marked = false;
 	Node dir = null;
@@ -41,7 +45,7 @@ public class Node {
 	 * of the screen, and then turns INVISIBLE)
 	 */
 	public static final int INVISIBLE = -1, ALIVE = 0, UP = 1, DOWN = 2,
-		LEFT = 3, RIGHT = 4;
+		LEFT = 3, RIGHT = 4, NOTLINKED = 5; // hack :)
 	public static final int NOARROW = -10000, DIRARROW = -10001, TOARROW = -10002;
 	
 	public Node() {
@@ -58,6 +62,8 @@ public class Node {
 
 	public Node(DataStructure D, int key) {
 		this(D, key, 0, 0);
+		// Here must be (D != null). Why? Someone is calling Node(null, key) somewhere?
+		if (D != null && D.subScen != null) D.subScen.add(new ChangeStateCommand(this, Node.UP));
 		setState(Node.UP);
 		x = 0;
 	}
@@ -80,6 +86,7 @@ public class Node {
 	}
 
 	public void bgColor(Color bg) {
+		if (D.subScen != null && bg != this.bgcolor) D.subScen.add(new ChangeColorCommand(this, bg));
 		bgcolor = bg;
 	}
 
@@ -262,6 +269,7 @@ public class Node {
 	 * Set new coordinates, where the node should go.
 	 */
 	public void goTo(int tox, int toy) {
+		if (D.subScen != null) D.subScen.add(new MoveCommand(this, tox, toy));
 		this.tox = tox;
 		this.toy = toy;
 		steps = D.M.STEPS;
@@ -334,6 +342,7 @@ public class Node {
 		switch (state) {
 		case Node.ALIVE:
 		case Node.INVISIBLE:
+		case Node.NOTLINKED:
 			if (steps > 0) {
 				x += (tox - x) / steps;
 				y += (toy - y) / steps;

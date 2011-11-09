@@ -5,6 +5,9 @@ import java.awt.Color;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.View;
+import algvis.scenario.ChangeStateCommand;
+import algvis.scenario.LinkLeftCommand;
+import algvis.scenario.LinkRightCommand;
 
 public class BSTNode extends Node {
 	public int leftw, rightw;
@@ -43,6 +46,7 @@ public class BSTNode extends Node {
 		if (v != null) {
 			v.parent = this;
 		}
+		if (D.subScen != null) D.subScen.add(new LinkLeftCommand(this, v));
 	}
 
 	public void linkright(BSTNode v) {
@@ -50,6 +54,7 @@ public class BSTNode extends Node {
 		if (v != null) {
 			v.parent = this;
 		}
+		if (D.subScen != null) D.subScen.add(new LinkRightCommand(this, v));
 	}
 
 	public void isolate() {
@@ -102,10 +107,10 @@ public class BSTNode extends Node {
 			} else {
 				v.setColor(Color.black);
 			}
-			if ((left != null) && (left.state != INVISIBLE)) {
+			if ((left != null) && (left.state != INVISIBLE) && (left.state != NOTLINKED)) {
 				v.drawLine(x, y, left.x, left.y);
 			}
-			if ((right != null) && (right.state != INVISIBLE)) {
+			if ((right != null) && (right.state != INVISIBLE) && (right.state != NOTLINKED)) {
 				v.drawLine(x, y, right.x, right.y);
 			}
 		}

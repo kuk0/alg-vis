@@ -28,7 +28,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	public VisPanel M;
 	public DataStructure D;
 	public InputField I;
-	IButton next, clear, random;
+	IButton previous, next, clear, random, save;
 	ICheckBox pause;
 	ChLabel stats;
 	JButton zoomIn, zoomOut;
@@ -48,6 +48,8 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		I = new InputField(5, M.statusBar);
 		first.add(I);
 		actionButtons(first);
+		initPrevious();
+		first.add(previous);
 		initNext();
 		first.add(next);
 
@@ -55,12 +57,14 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		initPause();
 		initClear();
 		initRandom();
+		initSave();
 		initZoom();
 		JPanel second = new JPanel();
 		second.setLayout(new FlowLayout());
 		second.add(pause);
 		second.add(clear);
 		second.add(random);
+	 	second.add(save);
 		// second.add(zoomLabel);
 		second.add(zoomIn);
 		second.add(zoomOut);
@@ -84,6 +88,13 @@ abstract public class Buttons extends JPanel implements ActionListener {
 				.createEmptyBorder(5, 5, 5, 5)));
 	}
 
+	public void initPrevious() {
+		previous = new IButton(M.L, "previous");
+		previous.setMnemonic(KeyEvent.VK_O);
+		previous.setEnabled(true);
+		previous.addActionListener(this);
+	}
+	
 	public void initNext() {
 		next = new IButton(M.L, "next");
 		next.setMnemonic(KeyEvent.VK_N);
@@ -108,6 +119,12 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		random.setMnemonic(KeyEvent.VK_R);
 		random.addActionListener(this);
 	}
+	
+	public void initSave() {
+		save = new IButton(M.L, "button-save");
+	 	save.setMnemonic(KeyEvent.VK_S);
+	 	save.addActionListener(this);
+	}
 
 	private JButton createButton(String alt, String path) {
 		java.net.URL imgURL = Buttons.class.getResource(path);
@@ -128,8 +145,16 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent evt) {
-		if (evt.getSource() == next) {
-			D.next();
+		if (evt.getSource() == previous) {
+			if (D.scenario != null) {
+				D.scenario.previous();
+				enableNext();
+			}
+		} else if (evt.getSource() == next) {
+			if (D.scenario.next() == false) {
+				if (D.A.suspended == true) D.next();
+				else disableNext();
+			}
 			// System.out.println("next");
 			// repaint();
 		} else if (evt.getSource() == clear) {
@@ -143,6 +168,8 @@ abstract public class Buttons extends JPanel implements ActionListener {
 			M.S.V.zoomIn();
 		} else if (evt.getSource() == zoomOut) {
 			M.S.V.zoomOut();
+		} else if (evt.getSource() == save) {
+		 	D.scenario.saveXML("test.xml");
 		}
 	}
 
