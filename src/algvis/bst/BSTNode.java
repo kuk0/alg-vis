@@ -5,7 +5,6 @@ import java.awt.Color;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.View;
-import algvis.scenario.ChangeStateCommand;
 import algvis.scenario.LinkLeftCommand;
 import algvis.scenario.LinkRightCommand;
 
