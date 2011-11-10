@@ -81,7 +81,7 @@ public class BSTInsert extends Algorithm {
 		T.subScen.add(new PauseCommand());
 		setText("done");
 		v.bgColor(Colors.NORMAL);
-		T.v = null;
+		// T.v = null;
 		T.subScen = null;
 	}
 }

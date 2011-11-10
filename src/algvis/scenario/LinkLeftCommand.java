@@ -3,7 +3,6 @@ package algvis.scenario;
 import org.jdom.Element;
 
 import algvis.bst.BSTNode;
-import algvis.core.Node;
 
 public class LinkLeftCommand extends Command {
 	private BSTNode n1, n2;
@@ -16,24 +15,14 @@ public class LinkLeftCommand extends Command {
 	
 	@Override
 	public void execute() {
-		// see LinkRightCommand comments
-		// n1.linkleft(n2);
-		
-		if (n2 != null && n2.state == Node.NOTLINKED) n2.state = Node.ALIVE;
+		n1.linkleft(n2);
 	}
 
 	@Override
 	public void unexecute() {
-		// see LinkRightCommand comments
-		/*
 		n1.left = null;
 		if (n2 != null) {
 			n2.parent = null;
-		}
-		*/
-		
-		if (n2 != null) {
-			n2.state = Node.NOTLINKED;
 		}
 	}
 

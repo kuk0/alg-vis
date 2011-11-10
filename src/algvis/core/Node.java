@@ -45,7 +45,7 @@ public class Node {
 	 * of the screen, and then turns INVISIBLE)
 	 */
 	public static final int INVISIBLE = -1, ALIVE = 0, UP = 1, DOWN = 2,
-		LEFT = 3, RIGHT = 4, NOTLINKED = 5; // hack :)
+		LEFT = 3, RIGHT = 4;
 	public static final int NOARROW = -10000, DIRARROW = -10001, TOARROW = -10002;
 	
 	public Node() {
@@ -342,7 +342,6 @@ public class Node {
 		switch (state) {
 		case Node.ALIVE:
 		case Node.INVISIBLE:
-		case Node.NOTLINKED:
 			if (steps > 0) {
 				x += (tox - x) / steps;
 				y += (toy - y) / steps;

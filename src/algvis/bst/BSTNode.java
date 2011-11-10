@@ -106,10 +106,10 @@ public class BSTNode extends Node {
 			} else {
 				v.setColor(Color.black);
 			}
-			if ((left != null) && (left.state != INVISIBLE) && (left.state != NOTLINKED)) {
+			if ((left != null) && (left.state != INVISIBLE)) {
 				v.drawLine(x, y, left.x, left.y);
 			}
-			if ((right != null) && (right.state != INVISIBLE) && (right.state != NOTLINKED)) {
+			if ((right != null) && (right.state != INVISIBLE)) {
 				v.drawLine(x, y, right.x, right.y);
 			}
 		}

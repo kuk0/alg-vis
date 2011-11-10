@@ -3,7 +3,6 @@ package algvis.scenario;
 import org.jdom.Element;
 
 import algvis.bst.BSTNode;
-import algvis.core.Node;
 
 public class LinkRightCommand extends Command {
 	private BSTNode n1, n2;
@@ -16,30 +15,14 @@ public class LinkRightCommand extends Command {
 	
 	@Override
 	public void execute() {
-		// see comment in unexecute()
-		// n1.linkright(n2);
-		
-		if (n2 != null && n2.state == Node.NOTLINKED) n2.state = Node.ALIVE;
-		/* actually, this hack don't work in one case:
-		 * When you traverse the history backwards and you call ChangeStateCommand.unexecute(),
-		 * the n2.state changes to other than NOTLINKED state. Consequently, if you click on "next" 
-		 * button, this node will be drown with edge with his parent.
-		 */
+		n1.linkright(n2);
 	}
 
 	@Override
 	public void unexecute() {
-		// this don't work, because n2 wouldn't be linked with his parent and (because of this) drown
-		/*
 		n1.right = null;
 		if (n2 != null) {
 			n2.parent = null;
-		}
-		*/
-		
-		// and the hack is coming...
-		if (n2 != null) {
-			n2.state = Node.NOTLINKED;
 		}
 	}
 
