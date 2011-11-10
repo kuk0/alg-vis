@@ -39,7 +39,7 @@ public class RBInsert extends Algorithm {
 					if (w.right != T.NULL) {
 						w = w.right;
 					} else {
-						w.linkright(v);
+						w.linkRight(v);
 						break;
 					}
 				} else {
@@ -47,7 +47,7 @@ public class RBInsert extends Algorithm {
 					if (w.left != T.NULL) {
 						w = w.left;
 					} else {
-						w.linkleft(v);
+						w.linkLeft(v);
 						break;
 					}
 				}

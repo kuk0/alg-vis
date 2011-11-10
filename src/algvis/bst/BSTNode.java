@@ -40,20 +40,34 @@ public class BSTNode extends Node {
 		return parent.left == this;
 	}
 
-	public void linkleft(BSTNode v) {
+	public void linkLeft(BSTNode v) {
 		left = v;
 		if (v != null) {
 			v.parent = this;
 		}
 		if (D.subScen != null) D.subScen.add(new LinkLeftCommand(this, v));
 	}
+	
+	public void unlinkLeft(BSTNode v) {
+		left = null;
+		if (v != null) {
+			v.parent = null;
+		}
+	}
 
-	public void linkright(BSTNode v) {
+	public void linkRight(BSTNode v) {
 		right = v;
 		if (v != null) {
 			v.parent = this;
 		}
 		if (D.subScen != null) D.subScen.add(new LinkRightCommand(this, v));
+	}
+	
+	public void unlinkRight(BSTNode v) {
+		right = null;
+		if (v != null) {
+			v.parent = null;
+		}
 	}
 
 	public void isolate() {

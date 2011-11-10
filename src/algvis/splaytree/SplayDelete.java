@@ -96,7 +96,7 @@ public class SplayDelete extends SplayAlg {
 			setText("splaydeletelink");
 			T.root = w;
 			w.bgColor(Colors.NORMAL);
-			w.linkleft(T.root2);
+			w.linkLeft(T.root2);
 			T.root2 = null;
 			T.reposition();
 			mysuspend();

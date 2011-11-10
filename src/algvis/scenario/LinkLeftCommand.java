@@ -15,15 +15,12 @@ public class LinkLeftCommand extends Command {
 	
 	@Override
 	public void execute() {
-		n1.linkleft(n2);
+		n1.linkLeft(n2);
 	}
 
 	@Override
 	public void unexecute() {
-		n1.left = null;
-		if (n2 != null) {
-			n2.parent = null;
-		}
+		n1.unlinkLeft(n2);
 	}
 
 	@Override

@@ -43,7 +43,7 @@ public class GBInsert extends GBAlg {
 					if (w.right != null) {
 						w = w.right;
 					} else {
-						w.linkright(v);
+						w.linkRight(v);
 						break;
 					}
 				} else {
@@ -51,7 +51,7 @@ public class GBInsert extends GBAlg {
 					if (w.left != null) {
 						w = w.left;
 					} else {
-						w.linkleft(v);
+						w.linkLeft(v);
 						break;
 					}
 				}
@@ -95,7 +95,7 @@ public class GBInsert extends GBAlg {
 									r.parent = null;
 								}
 							} else {
-								r.parent.linkright(r = r.right);
+								r.parent.linkRight(r = r.right);
 							}
 							T.v.goDown();
 						} else {
