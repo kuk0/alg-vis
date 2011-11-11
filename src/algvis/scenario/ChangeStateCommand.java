@@ -6,14 +6,14 @@ import algvis.core.Node;
 
 public class ChangeStateCommand extends Command {
 	private int from, to;
-	
+
 	public ChangeStateCommand(Node n, int to) {
 		super(n);
 		this.n = n;
 		this.from = n.state;
 		this.to = to;
 	}
-	
+
 	@Override
 	public void execute() {
 		n.setState(to);

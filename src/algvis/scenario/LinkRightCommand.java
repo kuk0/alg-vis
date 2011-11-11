@@ -31,12 +31,9 @@ public class LinkRightCommand extends Command {
 	public void unexecute() {
 		// this don't work, because n2 wouldn't be linked with his parent and (because of this) drown
 		/*
-		n1.right = null;
-		if (n2 != null) {
-			n2.parent = null;
-		}
-		*/
-		
+		 * n1.right = null; if (n2 != null) { n2.parent = null; }
+		 */
+
 		// and the hack is coming...
 		if (n2 != null) {
 			n2.state = Node.NOTLINKED;

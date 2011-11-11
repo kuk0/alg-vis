@@ -6,7 +6,7 @@ import algvis.core.Node;
 
 public class MoveCommand extends Command {
 	int fromX, fromY, toX, toY;
-	
+
 	public MoveCommand(Node n, int toX, int toY) {
 		super(n);
 		fromX = n.x;
@@ -14,7 +14,7 @@ public class MoveCommand extends Command {
 		this.toX = toX;
 		this.toY = toY;
 	}
-	
+
 	@Override
 	public void execute() {
 		n.goTo(toX, toY);

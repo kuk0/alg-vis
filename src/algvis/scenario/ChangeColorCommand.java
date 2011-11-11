@@ -14,7 +14,7 @@ public class ChangeColorCommand extends Command {
 		fromBgColor = n.bgcolor;
 		this.toBgColor = toBgColor;
 	}
-	
+
 	@Override
 	public void execute() {
 		n.bgColor(toBgColor);
