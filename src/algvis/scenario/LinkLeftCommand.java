@@ -6,13 +6,13 @@ import algvis.bst.BSTNode;
 
 public class LinkLeftCommand extends Command {
 	private BSTNode n1, n2;
-	
+
 	public LinkLeftCommand(BSTNode n1, BSTNode n2) {
 		super(null);
 		this.n1 = n1;
 		this.n2 = n2;
 	}
-	
+
 	@Override
 	public void execute() {
 		n1.linkLeft(n2);

@@ -7,7 +7,7 @@ public class PauseCommand extends Command {
 	public PauseCommand() {
 		super(null);
 	}
-	
+
 	@Override
 	public void execute() {
 	}

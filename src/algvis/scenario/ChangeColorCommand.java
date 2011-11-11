@@ -8,13 +8,13 @@ import algvis.core.Node;
 
 public class ChangeColorCommand extends Command {
 	Color fromBgColor, toBgColor;
-	
+
 	public ChangeColorCommand(Node n, Color toBgColor) {
 		super(n);
 		fromBgColor = n.bgcolor;
 		this.toBgColor = toBgColor;
 	}
-	
+
 	@Override
 	public void execute() {
 		n.bgColor(toBgColor);
