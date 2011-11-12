@@ -8,20 +8,16 @@ public class SubScenario implements IScenario<Command> {
 	protected Vector<Command> commands;
 	protected int position;
 	protected boolean canAdd;
-	protected String name;
+	protected String name = "subScenario";
 
-	// don't use this!
 	public SubScenario() {
 		commands = new Vector<Command>();
 		position = -1;
 		canAdd = true;
-		this.name = "subScenario";
 	}
 
 	public SubScenario(String name) {
-		commands = new Vector<Command>();
-		position = -1;
-		canAdd = true;
+		this();
 		this.name = name;
 	}
 
