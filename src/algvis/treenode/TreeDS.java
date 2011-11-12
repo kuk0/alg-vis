@@ -40,7 +40,7 @@ public class TreeDS extends DataStructure {
 	public void reposition() {
 		x1 = x2 = y1 = y2 = 0;
 		root.reposition();
-		M.S.V.setBounds(x1-50, y1-50, x2+50, y2+50);
-		System.out.print(x1 + " " + y1 + " " + x2 + " " + y2 + "\n");
+		M.S.V.setBounds(x1-=50, y1-=50, x2+=50, y2+=50);
+		// System.out.print(x1 + " " + y1 + " " + x2 + " " + y2 + "\n");
 	}
 }

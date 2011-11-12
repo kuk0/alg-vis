@@ -263,8 +263,8 @@ public class BSTNode extends Node {
 					offset = -(minsep / 2);
 				}
 			}
-			result.a.left = this;
-			result.a.right = this;
+			result.left = this;
+			result.right = this;
 		} else {
 			/*
 			 * Is not a leaf! So at least one subtree must not be empty. In case
@@ -277,15 +277,15 @@ public class BSTNode extends Node {
 			 */
 			if (left == null) {
 				right.offset = minsep / 2;
-				result.a.left = fromRightSubtree.a.left;
-				result.a.right = fromRightSubtree.a.right;
+				result.left = fromRightSubtree.left;
+				result.right = fromRightSubtree.right;
 				return result;
 			}
 
 			if (right == null) {
 				left.offset = -(minsep / 2);
-				result.a.left = fromLeftSubtree.a.left;
-				result.a.right = fromLeftSubtree.a.right;
+				result.left = fromLeftSubtree.left;
+				result.right = fromLeftSubtree.right;
 				return result;
 			}
 
@@ -402,29 +402,29 @@ public class BSTNode extends Node {
 			 * set properly.
 			 */
 
-			// if (fromLeftSubtree.a.left.level ==
-			// fromLeftSubtree.a.right.level) {
+			// if (fromLeftSubtree.left.level ==
+			// fromLeftSubtree.right.level) {
 			// System.out.print("Left extremes are even at " + this.key
-			// + " with left extreme: " + fromLeftSubtree.a.left.key
-			// + " and right extreme: " + fromLeftSubtree.a.right.key
+			// + " with left extreme: " + fromLeftSubtree.left.key
+			// + " and right extreme: " + fromLeftSubtree.right.key
 			// + "\n");
 			// } else {
 			// System.out.print("Left extremes are uneven at " + this.key
 			// + "!!!\n");
 			// }
-			// if (fromRightSubtree.a.left.level ==
-			// fromRightSubtree.a.right.level) {
+			// if (fromRightSubtree.left.level ==
+			// fromRightSubtree.right.level) {
 			// System.out.print("Right extremes are even at " + this.key
-			// + " with left extreme: " + fromRightSubtree.a.left.key
-			// + " and right extreme: " + fromRightSubtree.a.right.key
+			// + " with left extreme: " + fromRightSubtree.left.key
+			// + " and right extreme: " + fromRightSubtree.right.key
 			// + "\n");
 			// } else {
 			// System.out.print("Right extremes are uneven at " + this.key
 			// + "!!!\n");
 			// }
 
-			int left_height = fromLeftSubtree.a.left.level;
-			int right_height = fromRightSubtree.a.right.level;
+			int left_height = fromLeftSubtree.left.level;
+			int right_height = fromRightSubtree.right.level;
 			/*
 			 * Guess what?! L & R pointers are set right there where we want it.
 			 * :)
@@ -434,22 +434,25 @@ public class BSTNode extends Node {
 			 * this tree will be the same as for right subtree.
 			 */
 			if (right_height > left_height) {
-				fromLeftSubtree.a.left.thread = true;
-				fromLeftSubtree.a.left.right = R;
-				result.a.left = fromRightSubtree.a.left;
-				result.a.right = fromRightSubtree.a.right;
+				fromLeftSubtree.left.thread = true;
+				fromLeftSubtree.left.right = R;
+				result.left = fromRightSubtree.left;
+				result.right = fromRightSubtree.right;
 			} else
 			// right subtree is more shallow then left subtree
 			if (left_height > right_height) {
-				fromRightSubtree.a.right.thread = true;
-				fromRightSubtree.a.right.left = L;
-				result.a.left = fromLeftSubtree.a.left;
-				result.a.right = fromLeftSubtree.a.right;
+				fromRightSubtree.right.thread = true;
+				fromRightSubtree.right.left = L;
+				result.left = fromLeftSubtree.left;
+				result.right = fromLeftSubtree.right;
 			} else
 			// subtrees have the same height
+			if (left_height == right_height)
 			{
-				result.a.left = fromLeftSubtree.a.left;
-				result.a.right = fromRightSubtree.a.right;
+				result.left = fromLeftSubtree.left;
+				result.right = fromRightSubtree.right;
+			} else {
+				System.out.print("Error: unexpected finish in while loop at " + "L: " + left.key + " R: " + right.key + "\n");
 			}
 
 		}

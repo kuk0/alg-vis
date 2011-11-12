@@ -35,7 +35,7 @@ public class TreeButtons extends Buttons {
 				public void run() {
 					for (int x : args) {
 						((TreeDS) D).insert(x);
-						System.out.print(x+"\n");
+						// System.out.print(x+"\n");
 					}
 				}
 			});

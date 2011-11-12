@@ -11,6 +11,7 @@ public class TreeAppend extends Algorithm {
 		this.T = T;
 		X = i; // kam
 		Y = j; // co
+		setHeader("treeexample");
 	}
 
 	@Override
