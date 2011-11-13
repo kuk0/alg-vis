@@ -341,7 +341,7 @@ public class Node {
 			}
 			break;
 		case Node.UP:
-			y = (int) (D.M.S.V.viewY - D.M.S.V.viewH) - D.radius;
+			y = - D.radius;
 			setState(Node.ALIVE);
 			move();
 			break;

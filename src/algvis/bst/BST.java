@@ -140,6 +140,7 @@ public class BST extends Dictionary {
 		if (root != null) {
 			x1 = x2 = y1 = y2 = 0;
 			root.reposition();
+			//M.S.V.setBounds(-500, -500, 500, 500);
 			M.S.V.setBounds(x1, y1, x2, y2);
 			//System.out.println(x1+" "+y1+" "+x2+" "+y2);
 		}

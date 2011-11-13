@@ -26,7 +26,7 @@ abstract public class DataStructure {
 	abstract public void clear();
 
 	abstract public void draw(View v);
-
+	
 	public void next() {
 		A.myresume();
 	}
@@ -68,7 +68,7 @@ abstract public class DataStructure {
 		M.pause = p;
 	}
 	
-	public void mouseClicked(int x, int y) {}
+	public void mouseClicked(double x, double y) {}
 	
 	public void unmark() {
 		if (chosen != null) {

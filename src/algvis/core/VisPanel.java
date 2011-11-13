@@ -8,15 +8,11 @@ import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSlider;
-import javax.swing.SwingConstants;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import algvis.internationalization.ILabel;
 import algvis.internationalization.Languages;
 
-public abstract class VisPanel extends JPanel implements ChangeListener {
+public abstract class VisPanel extends JPanel {
 	private static final long serialVersionUID = 5104769085118210624L;
 	public static Class<? extends DataStructure> DS;
 
@@ -26,8 +22,6 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 	public DataStructure D; // datovej struktury
 	public Screen S; // obrazovky v strede
 	public ILabel statusBar; // a status baru
-
-	JSlider vSlider, hSlider;
 
 	public Languages L;
 
@@ -108,15 +102,6 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 		};
 		screen.add(S, BorderLayout.CENTER);
 
-		vSlider = new JSlider(SwingConstants.VERTICAL, 0, 100, 50);
-		vSlider.addChangeListener(this);
-		vSlider.setInverted(true);
-		screen.add(vSlider, BorderLayout.WEST);
-
-		hSlider = new JSlider(SwingConstants.HORIZONTAL, 0, 100, 50);
-		hSlider.addChangeListener(this);
-		screen.add(hSlider, BorderLayout.SOUTH);
-
 		screen.setBorder(BorderFactory.createCompoundBorder(BorderFactory
 				.createTitledBorder(L.getString("display")), BorderFactory
 				.createEmptyBorder(5, 5, 5, 5)));
@@ -157,19 +142,6 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 
 	abstract public void initDS();
 
-	public void stateChanged(ChangeEvent e) {
-		JSlider source = (JSlider) e.getSource();
-		if (true) { // !source.getValueIsAdjusting()) {
-			int val = source.getValue();
-			int or = source.getOrientation();
-			if (or == SwingConstants.VERTICAL) {
-				S.V.setY(val);
-			} else if (or == SwingConstants.HORIZONTAL) {
-				S.V.setX(val);
-			}
-		}
-	}
-	
 	/*public void showStatus (String t) {
 		statusBar.setT(t);
 	}*/
