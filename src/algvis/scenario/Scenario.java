@@ -11,7 +11,7 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 // TODO add some comments
-public class Scenario implements IScenario<SubScenario> {
+public class Scenario implements Scenariable<SubScenario> {
 	private Vector<SubScenario> scenario;
 	private int position;
 	public SubScenario current;

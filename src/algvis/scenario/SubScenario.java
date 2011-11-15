@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import org.jdom.Element;
 
-public class SubScenario implements IScenario<Command> {
+public class SubScenario implements Scenariable<Command> {
 	protected Vector<Command> commands;
 	protected int position;
 	protected boolean canAdd;
@@ -62,11 +62,6 @@ public class SubScenario implements IScenario<Command> {
 		canAdd = true;
 
 		return true;
-	}
-
-	@Override
-	public int getPosition() {
-		return position;
 	}
 
 	@Override
