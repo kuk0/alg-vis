@@ -2,8 +2,8 @@ package algvis.scenario;
 
 import org.jdom.Element;
 
-public interface IScenario<Type> {
-	public void add(Type t);
+public interface IScenario<T> {
+	public void add(T t);
 
 	public boolean previous();
 

@@ -4,11 +4,11 @@ import org.jdom.Element;
 
 import algvis.core.Node;
 
-public class ChangeStateCommand extends Command {
+public class ChangeStateCommand implements Command {
 	private int from, to;
+	private Node n;
 
 	public ChangeStateCommand(Node n, int to) {
-		super(n);
 		this.n = n;
 		this.from = n.state;
 		this.to = to;

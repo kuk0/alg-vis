@@ -4,11 +4,12 @@ import org.jdom.Element;
 
 import algvis.core.Node;
 
-public class MoveCommand extends Command {
-	int fromX, fromY, toX, toY;
+public class MoveCommand implements Command {
+	private int fromX, fromY, toX, toY;
+	private Node n;
 
 	public MoveCommand(Node n, int toX, int toY) {
-		super(n);
+		this.n = n;
 		fromX = n.x;
 		fromY = n.y;
 		this.toX = toX;

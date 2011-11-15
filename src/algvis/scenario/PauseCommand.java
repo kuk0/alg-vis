@@ -2,10 +2,9 @@ package algvis.scenario;
 
 import org.jdom.Element;
 
-public class PauseCommand extends Command {
+public class PauseCommand implements Command {
 
 	public PauseCommand() {
-		super(null);
 	}
 
 	@Override

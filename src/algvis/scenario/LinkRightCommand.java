@@ -4,15 +4,14 @@ import org.jdom.Element;
 
 import algvis.bst.BSTNode;
 
-public class LinkRightCommand extends Command {
+public class LinkRightCommand implements Command {
 	private BSTNode n1, n2;
-	
+
 	public LinkRightCommand(BSTNode n1, BSTNode n2) {
-		super(null);
 		this.n1 = n1;
 		this.n2 = n2;
 	}
-	
+
 	@Override
 	public void execute() {
 		n1.linkRight(n2);

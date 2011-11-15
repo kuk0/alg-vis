@@ -31,7 +31,7 @@ public class BSTInsert extends Algorithm {
 			v.goAboveRoot();
 			setText("bstinsertstart");
 			mysuspend();
-			T.subScen.add(new PauseCommand()); // maybe this will go to mysuspend()
+			T.subScen.add(new PauseCommand());
 
 			while (true) {
 				if (w.key == K) {

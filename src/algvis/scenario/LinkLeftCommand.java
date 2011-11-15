@@ -4,11 +4,10 @@ import org.jdom.Element;
 
 import algvis.bst.BSTNode;
 
-public class LinkLeftCommand extends Command {
+public class LinkLeftCommand implements Command {
 	private BSTNode n1, n2;
 
 	public LinkLeftCommand(BSTNode n1, BSTNode n2) {
-		super(null);
 		this.n1 = n1;
 		this.n2 = n2;
 	}
