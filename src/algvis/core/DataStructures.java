@@ -65,6 +65,14 @@ public class DataStructures {
 		return r;
     }
 
+    public static int getIndex(String s) {
+    	if (s == null) return -1;
+    	for (int i=0; i < N; ++i) {
+    		if (s.equals(getName(i))) return i;
+    	}
+		return -1;
+    }
+
 	@SuppressWarnings("unchecked")
 	public static String getADT(int i) {
     	if (!check_range(i)) return "";
