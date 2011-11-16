@@ -38,6 +38,9 @@ public class BSTInsert extends Algorithm {
 					setText("alreadythere");
 					v.goDown();
 					v.bgColor(Colors.NOTFOUND);
+					T.subScenario = null;
+					T.scenario.removeLast();
+					T.M.B.disablePrevious();
 					return;
 				} else if (w.key < K) {
 					if (w.right == null) {
@@ -47,6 +50,7 @@ public class BSTInsert extends Algorithm {
 					}
 					setText("bstinsertright", K, w.key);
 					mysuspend();
+					T.subScenario.add(new PauseCommand());
 					v.noArrow();
 					if (w.right != null) {
 						w = w.right;
@@ -62,6 +66,7 @@ public class BSTInsert extends Algorithm {
 					}
 					setText("bstinsertleft", K, w.key);
 					mysuspend();
+					T.subScenario.add(new PauseCommand());
 					v.noArrow();
 					if (w.left != null) {
 						w = w.left;

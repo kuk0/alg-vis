@@ -2,9 +2,11 @@ package algvis.core;
 
 import java.awt.Color;
 
+import algvis.scenario.ArrowCommand;
 import algvis.scenario.ChangeColorCommand;
 import algvis.scenario.ChangeStateCommand;
 import algvis.scenario.MoveCommand;
+import algvis.scenario.NoArrowCommand;
 
 /**
  * The Class Node.
@@ -25,8 +27,8 @@ public class Node {
 	public int state = -1;
 	public Color fgcolor, bgcolor;
 	public boolean marked = false;
-	Node dir = null;
-	int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S, 135=SW, 180=W)
+	public Node dir = null;
+	public int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S, 135=SW, 180=W)
 	boolean arc = false;
 
 	/**
@@ -87,8 +89,12 @@ public class Node {
 	}
 
 	public void bgColor(Color bg) {
-		if (D.subScenario != null && bg != this.bgcolor) D.subScenario.add(new ChangeColorCommand(this, bg));
-		bgcolor = bg;
+		if (bg != bgcolor) {
+			if (D.subScenario != null) {
+				D.subScenario.add(new ChangeColorCommand(this, bg));
+			}
+			bgcolor = bg;
+		}
 	}
 
 	/**
@@ -114,6 +120,7 @@ public class Node {
 	public void pointAbove(Node w) {
 		dir = w;
 		arrow = Node.DIRARROW;
+		D.subScenario.add(new ArrowCommand(this));
 	}
 
 	/**
@@ -134,12 +141,16 @@ public class Node {
 	public void pointInDir(int angle) {
 		dir = null;
 		arrow = angle;
+		D.subScenario.add(new ArrowCommand(this));
 	}
 
 	/**
 	 * Stop drawing an arrow.
 	 */
 	public void noArrow() {
+		if (D.subScenario != null) {
+			D.subScenario.add(new NoArrowCommand(this));
+		}
 		arrow = Node.NOARROW;
 	}
 

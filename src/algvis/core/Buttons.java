@@ -154,12 +154,12 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		} else if (evt.getSource() == next) {
 			if (D.scenario.hasNext()) {
 				D.scenario.next();
-				enablePrevious();
 			} else if (D.A.suspended) {
 				D.next();
 			} else {
 				disableNext();
 			}
+			enablePrevious();
 			// System.out.println("next");
 			// repaint();
 		} else if (evt.getSource() == clear) {
@@ -191,8 +191,8 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 	
 	public void enablePrevious() {
-		clear.setEnabled(false);
-		random.setEnabled(false);
+		// clear.setEnabled(false);
+		// random.setEnabled(false);
 		previous.setEnabled(true);
 	}
 

@@ -31,6 +31,7 @@ public class BST extends Dictionary {
 	@Override
 	public void clear() {
 		root = null;
+		v = null;
 		setStats();
 	}
 
