@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
+import algvis.core.NodePair;
 import algvis.core.View;
 
 public class BSTNode extends Node {
@@ -244,9 +245,9 @@ public class BSTNode extends Node {
 	 * @return Leftmost and rightmost node on the deepest level of a tree rooted
 	 *         by this node
 	 */
-	private ExtremeBSTPair fTRSecond() {
-		ExtremeBSTPair result = new ExtremeBSTPair();
-		ExtremeBSTPair fromLeftSubtree = null, fromRightSubtree = null;
+	private NodePair<BSTNode> fTRSecond() {
+		NodePair<BSTNode> result = new NodePair<BSTNode>();
+		NodePair<BSTNode> fromLeftSubtree = null, fromRightSubtree = null;
 		int minsep = D.xspan + 2 * D.radius;
 
 		// 1. & 2. work out left & right subtree

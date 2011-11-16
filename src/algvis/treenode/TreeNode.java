@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
+import algvis.core.NodePair;
 import algvis.core.View;
 
 public class TreeNode extends Node {
@@ -199,12 +200,12 @@ public class TreeNode extends Node {
 		}
 	}
 
-	private ExtremeTreePair fTRSecond() {
+	private NodePair<TreeNode> fTRSecond() {
 		/*
 		 * Notice that result contains leftmost and rightmost deepest node in
 		 * form result.child for left and result.right for right
 		 */
-		ExtremeTreePair result = new ExtremeTreePair();
+		NodePair<TreeNode> result = new NodePair<TreeNode>();
 		int minsep = D.xspan + 2 * D.radius;
 
 		if (isLeaf()) {
@@ -221,14 +222,14 @@ public class TreeNode extends Node {
 		 * So lets get result from first child
 		 */
 
-		ExtremeTreePair fromLeftSubtree = LeftSubtree.fTRSecond();
+		NodePair<TreeNode> fromLeftSubtree = LeftSubtree.fTRSecond();
 		result = fromLeftSubtree;
 
 		/*
 		 * let's the fun begin
 		 */
 		while (RightSubtree != null) {
-			ExtremeTreePair fromRightSubtree = RightSubtree.fTRSecond();
+			NodePair<TreeNode> fromRightSubtree = RightSubtree.fTRSecond();
 
 			TreeNode L = LeftSubtree;
 			TreeNode R = RightSubtree;
