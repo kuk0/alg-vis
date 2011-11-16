@@ -1,5 +1,6 @@
 package algvis.core;
 
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -43,10 +44,6 @@ public class InputField extends JTextField {
 		StringTokenizer st = new StringTokenizer(this.getText());
 		try {
 			n = Integer.parseInt(st.nextToken());
-			sb.setText("");
-		} catch (Exception e) {
-			sb.setText("couldn't parse an integer; using the default value " + def);
-		} finally {
 			if (n < min) {
 				n = min;
 				sb.setText("value too small; using the minimum value " + min + " instead");
@@ -55,6 +52,10 @@ public class InputField extends JTextField {
 				n = max;
 				sb.setText("value too high; using the maximum value " + max + " instead");
 			}
+			sb.setText("");
+		} catch (NoSuchElementException e) {
+		} catch (NumberFormatException e) {
+			sb.setText("couldn't parse an integer; using the default value " + def);
 		}
 		return n;
 	}
@@ -77,10 +78,7 @@ public class InputField extends JTextField {
 		for (String t : tokens) {
 			int x = min;
 			try {
-				x = Integer.parseInt(t); // st.nextToken());
-			} catch (Exception e) {
-				sb.setText("couldn't parse an integer");
-			} finally {
+				x = Integer.parseInt(t);
 				if (x < min) {
 					x = min;
 					sb.setText("value too small; using the minimum value instead");
@@ -90,6 +88,8 @@ public class InputField extends JTextField {
 					sb.setText("value too high; using the maximum value instead");
 				}
 				args.add(x);
+			} catch (NumberFormatException e) {
+				sb.setText("couldn't parse an integer");
 			}
 		}
 		return args;

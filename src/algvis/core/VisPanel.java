@@ -102,7 +102,8 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 
 			@Override
 			public Dimension getMinimumSize() {
-				return new Dimension(300, 100);
+				return new Dimension(700, 400);
+//				return new Dimension(300, 100);
 			}
 		};
 		screen.add(S, BorderLayout.CENTER);
@@ -135,12 +136,13 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 
 			@Override
 			public Dimension getPreferredSize() {
-				return new Dimension(300, 530);
+				return new Dimension(300, 600);
 			}
 
 			@Override
 			public Dimension getMinimumSize() {
-				return new Dimension(200, 530);
+				return new Dimension(300, 600);
+				//return new Dimension(200, 530);
 			}
 		};
 		C = new Commentary(L, SP);
@@ -154,12 +156,6 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 	}
 
 	abstract public void initDS();
-
-	public void refresh() {
-		B.refresh();
-		C.refresh();
-		D.setStats();
-	}
 
 	public void stateChanged(ChangeEvent e) {
 		JSlider source = (JSlider) e.getSource();

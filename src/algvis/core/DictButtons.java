@@ -94,12 +94,4 @@ public class DictButtons extends Buttons {
 		findB.setEnabled(true);
 		deleteB.setEnabled(true);
 	}
-
-	@Override
-	public void refresh() {
-		super.refresh();
-		insertB.refresh();
-		findB.refresh();
-		deleteB.refresh();
-	}
 }

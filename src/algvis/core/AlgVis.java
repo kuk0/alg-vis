@@ -4,9 +4,7 @@ import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.swing.JMenuBar;
@@ -29,14 +27,16 @@ public class AlgVis extends JPanel implements ActionListener {
 	IMenuItem[] dsItems;
 
 	public AlgVis(JRootPane P) {
+		this(P, "en");
+	}
+
+	public AlgVis(JRootPane P, String s) {
 		this.P = P;
+		// Internationalization
+		L = new Languages(s);
 	}
 
 	public void init() {
-		// Internationalization
-		L = new Languages();
-		L.selectLanguage("en"); // getParameter("lang");
-
 		// Menu
 		JMenuBar menuBar;
 		menuBar = new JMenuBar();
@@ -98,25 +98,10 @@ public class AlgVis extends JPanel implements ActionListener {
 		Fonts.init(getGraphics());
 	}
 
-	public void refresh() {
-		Collection<IMenu> c = adtItems.values();
-		for (Iterator<IMenu> it = c.iterator(); it.hasNext();) {
-			it.next().refresh();
-		}
-		/*for (Iterator it = adtItems.entrySet().iterator(); it.hasNext();) {
-			((Map.Entry<String, IMenu>) it.next()).getValue().refresh();
-		}*/
-		for (int i = 0; i < DataStructures.N; ++i) {
-			dsItems[i].refresh();
-			((VisPanel)(cards.getComponent(i))).refresh();
-		}
-	}
-
 	public void actionPerformed(ActionEvent e) {
 		String[] cmd = e.getActionCommand().split("-", 2);
 		if ("lang".equals(cmd[0])) {
 			L.selectLanguage(cmd[1]);
-			refresh();
 			// DEBUG: System.out.println("akcia: " + cmd[1]);
 		}
 		if ("ds".equals(cmd[0])) {

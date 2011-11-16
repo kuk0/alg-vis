@@ -29,7 +29,7 @@ import algvis.treenode.TreePanel;
  * The data structure can then be found in "Data structures -> adtName -> dsName". 
  */
 public class DataStructures {
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings("unchecked")
 	static final Class[] PANEL = { BSTPanel.class, RotPanel.class,
 			AVLPanel.class, BPanel.class, RBPanel.class, AAPanel.class,
 			TreapPanel.class, SkipListPanel.class, GBPanel.class,

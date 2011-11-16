@@ -55,10 +55,4 @@ public class TreeButtons extends Buttons {
 		appendB.setEnabled(true);
 	}
 
-	@Override
-	public void refresh() {
-		super.refresh();
-		appendB.refresh();
-	}
-
 }

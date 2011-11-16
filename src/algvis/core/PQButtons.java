@@ -122,12 +122,4 @@ public class PQButtons extends Buttons {
 		decrKeyB.setEnabled(true);
 		next.setEnabled(false);
 	}
-
-	@Override
-	public void refresh() {
-		super.refresh();
-		insertB.refresh();
-		deleteB.refresh();
-		decrKeyB.refresh();
-	}
 }

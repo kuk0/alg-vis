@@ -34,10 +34,4 @@ public class RBButtons extends DictButtons implements ActionListener {
 			((RB) M.D).reposition();
 		}
 	}
-
-	@Override
-	public void refresh() {
-		super.refresh();
-		B24.refresh();
-	}
 }

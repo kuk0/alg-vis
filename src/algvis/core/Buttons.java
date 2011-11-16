@@ -163,14 +163,6 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		stats.refresh();
 	}
 
-	public void refresh() {
-		next.refresh();
-		clear.refresh();
-		random.refresh();
-		pause.refresh();
-		// zoomLabel.refresh();
-	}
-
 	public void otherButtons(JPanel P) {
 	}
 	
@@ -186,6 +178,6 @@ abstract public class Buttons extends JPanel implements ActionListener {
 
 	@Override
 	public Dimension getMinimumSize() {
-		return new Dimension(300, 100);
+		return new Dimension(300, 150);
 	}
 }

@@ -2,7 +2,7 @@ package algvis.internationalization;
 
 import javax.swing.JMenu;
 
-public class IMenu extends JMenu {
+public class IMenu extends JMenu implements LanguageListener {
 	private static final long serialVersionUID = -6631532284442911505L;
 	Languages L;
 	String t;
@@ -11,15 +11,15 @@ public class IMenu extends JMenu {
 		super(L.getString(text));
 		this.L = L;
 		this.t = text;
+		L.addListener(this);
 	}
 
 	public void setT(String text) {
 		t = text;
-		refresh();
+		setText(L.getString(t));
 	}
 
-	public void refresh() {
+	public void languageChanged() {
 		setText(L.getString(t));
-		//super.refresh();
 	}
 }
