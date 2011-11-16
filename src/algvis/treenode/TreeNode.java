@@ -14,6 +14,8 @@ public class TreeNode extends Node {
 	public int offset = 0; // offset from parent node
 	public int level; // "height" from root
 	public boolean thread = false; // is this node threaded?
+	public int toExtremeSon = 0; // offset from leftest son
+	int fakex = 0, fakey = 0; // temporary coordinates of the node
 
 	// statistics
 	public int size = 1, height = 1;
@@ -168,9 +170,13 @@ public class TreeNode extends Node {
 
 	public void reposition() {
 		fTRFirst(0);
+		System.out.print("\n");
 		fTRSecond();
-		fTRThird();
-		fTRFourth(0);
+		fTRDisposeThreads();
+		fTRThird(0);
+		// fTRCentering();
+		fTRCorrecting(this.fakex);
+		System.out.print("\n");
 	}
 
 	/**
@@ -182,6 +188,7 @@ public class TreeNode extends Node {
 	 *            current level in tree
 	 */
 	private void fTRFirst(int level) {
+		// System.out.print(level);
 		this.level = level;
 		this.offset = 0;
 		TreeNode T = child;
@@ -295,14 +302,8 @@ public class TreeNode extends Node {
 					}
 				}
 
-				/*
-				 * Some changing of distances should be made here
-				 */
-
 			}
-			
-			int left_height = fromLeftSubtree.left.level;
-			int right_height = fromRightSubtree.right.level;
+
 			/*
 			 * Guess what?! L & R pointers are set right there where we want it.
 			 * :)
@@ -324,39 +325,93 @@ public class TreeNode extends Node {
 				fromRightSubtree.right.thread = true;
 				fromRightSubtree.right.child = L;
 			} else {
-				System.out.print("Shit happened! " + "L: " + LeftSubtree.key
-						+ " R: " + RightSubtree.key + "\n");
-				// System.out.print("Error: unexpected finish in while loop at "
-				// + "L: " + LeftSubtree.key + " R: " + RightSubtree.key +
-				// "\n");
+				System.out.print("Error: unexpected finish in while loop at "
+						+ "L: " + LeftSubtree.key + " R: " + RightSubtree.key
+						+ "\n");
 			}
 
 			LeftSubtree = LeftSubtree.right;
 			// it should be the same as RightSubtree
-			if (LeftSubtree.key != RightSubtree.key) {
+			if (LeftSubtree != RightSubtree) {
 				System.out.print("Error in while cycle.\n");
 			}
 			RightSubtree = RightSubtree.right;
 		}
 
-		result = null;
 		return fromLeftSubtree;
 	}
 
-	/*
-	 * There will be corrections to bad layouts
-	 */
-	private void fTRThird() {
-		// TODO Auto-generated method stub
+	private void fTRDisposeThreads() {
+		/*
+		 * Dispose threads
+		 */
+		if (this.thread) {
+			this.thread = false;
+			this.child = null;
+		}
 
+		TreeNode T = child;
+		while (T != null) {
+			T.fTRDisposeThreads();
+			T = T.right;
+		}
 	}
 
-	private void fTRFourth(int xcoordinate) {
+	/**
+	 * 
+	 * @param leftestx
+	 *            x-coordinate of leftmost sibling
+	 */
+	private void fTRThird(int leftestx) {
 		/*
 		 * Change coordinates
 		 */
-		tox = xcoordinate + this.offset;
-		toy = this.level * (D.yspan + 2 * D.radius);
+		fakex = leftestx + this.offset;
+		fakey = this.level * (D.yspan + 2 * D.radius);
+
+		TreeNode T = child;
+		while (T != null) {
+			T.fTRThird(fakex);
+			T = T.right;
+		}
+	}
+
+	/**
+	 * There will be corrections to bad layouts At a moment it is correcting
+	 * centering of parents
+	 */
+	// not working properly!
+	@SuppressWarnings("unused")
+	private void fTRCentering() {
+		if (isLeaf()) {
+			return;
+		}
+
+		TreeNode T = this.child;
+		while (T != null) {
+			T.fTRCentering();
+			T = T.right;
+		}
+
+		this.fakex += (this.rightmostChild().fakex - this.leftmostChild().fakex) / 2;
+		// System.out.print(key+" ");
+	}
+
+	private void fTRCorrecting(int rootx) {
+		TreeNode T = child;
+		while (T != null) {
+			T.fTRCorrecting(rootx);
+			T = T.right;
+		}
+
+		fakex -= rootx;
+		tox = fakex;
+		if (isRoot()) {
+			tox = 0;
+		}
+		toy = fakey;
+		// System.out.print(toy + " ");
+
 		if (tox < D.x1) {
 			D.x1 = tox;
 		}
@@ -371,20 +426,6 @@ public class TreeNode extends Node {
 			D.y2 = toy;
 		}
 		this.goTo(tox, toy);
-
-		/*
-		 * Dispose threads
-		 */
-		if (this.thread) {
-			this.thread = false;
-			this.child = null;
-		}
-
-		TreeNode T = child;
-		while (T != null) {
-			T.fTRFourth(tox);
-			T = T.right;
-		}
 	}
 
 }
