@@ -63,7 +63,7 @@ public class Node {
 	public Node(DataStructure D, int key) {
 		this(D, key, 0, 0);
 		// Here must be (D != null). Why? Someone is calling Node(null, key) somewhere?
-		if (D != null && D.subScen != null) D.subScen.add(new ChangeStateCommand(this, Node.UP));
+		if (D != null && D.subScenario != null) D.subScenario.add(new ChangeStateCommand(this, Node.UP));
 		setState(Node.UP);
 		x = 0;
 	}
@@ -86,7 +86,7 @@ public class Node {
 	}
 
 	public void bgColor(Color bg) {
-		if (D.subScen != null && bg != this.bgcolor) D.subScen.add(new ChangeColorCommand(this, bg));
+		if (D.subScenario != null && bg != this.bgcolor) D.subScenario.add(new ChangeColorCommand(this, bg));
 		bgcolor = bg;
 	}
 
@@ -269,7 +269,7 @@ public class Node {
 	 * Set new coordinates, where the node should go.
 	 */
 	public void goTo(int tox, int toy) {
-		if (D.subScen != null) D.subScen.add(new MoveCommand(this, tox, toy));
+		if (D.subScenario != null) D.subScenario.add(new MoveCommand(this, tox, toy));
 		this.tox = tox;
 		this.toy = toy;
 		steps = D.M.STEPS;

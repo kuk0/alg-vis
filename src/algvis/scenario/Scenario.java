@@ -10,44 +10,27 @@ import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
-// TODO add some comments
-public class Scenario implements Scenariable<SubScenario> {
-	private Vector<SubScenario> scenario;
-	private int position;
-	public SubScenario current;
-	private static final String name = "scenario"; // this will be (maybe) the
-													// name of the DS
+public abstract class Scenario<T extends XMLable> implements XMLable {
+	protected Vector<T> scenario;
+	protected int position;
+	protected String name;
+	protected boolean canAdd; // when traverse scenario backwards, scenario can
+								// call methods, which call scenario.add();
 
-	public Scenario() {
-		scenario = new Vector<SubScenario>();
+	public Scenario(String name) {
+		scenario = new Vector<T>();
 		position = -1;
+		this.name = name;
+		canAdd = true;
 	}
 
-	public void add(SubScenario ss) {
-		// if (scenario.size()-1 > position) scenario.setSize(position);
-		scenario.add(ss);
-		++position;
+	public void add(T item) {
+		if (canAdd) {
+			scenario.add(item);
+			++position;
+		}
 	}
 
-	public boolean previous() {
-		if (position == -1)
-			return false;
-		else
-			return scenario.elementAt(position).previous();
-	}
-
-	public boolean next() {
-		if (position == -1)
-			return false;
-		else
-			return scenario.elementAt(position).next();
-	}
-
-	public int getPosition() {
-		return position;
-	}
-
-	@Override
 	public int length() {
 		return scenario.size();
 	}
@@ -58,7 +41,6 @@ public class Scenario implements Scenariable<SubScenario> {
 		for (int i = 0; i < length(); ++i) {
 			root.addContent(scenario.elementAt(i).getXML());
 		}
-
 		return root;
 	}
 
@@ -75,9 +57,11 @@ public class Scenario implements Scenariable<SubScenario> {
 		}
 	}
 
-	@Override
-	public String name() {
-		return name;
-	}
+	public abstract void previous();
 
+	public abstract void next();
+
+	public abstract boolean hasPrevious();
+
+	public abstract boolean hasNext();
 }

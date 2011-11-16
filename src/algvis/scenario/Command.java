@@ -2,7 +2,7 @@ package algvis.scenario;
 
 import org.jdom.Element;
 
-public interface Command {
+public interface Command extends XMLable {
 
 	public abstract void execute();
 

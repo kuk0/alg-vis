@@ -146,14 +146,19 @@ abstract public class Buttons extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent evt) {
 		if (evt.getSource() == previous) {
-			if (D.scenario != null) {
-				D.scenario.previous();
-				enableNext();
+			D.scenario.previous();
+			enableNext();
+			if (D.scenario.hasPrevious() == false) {
+				disablePrevious();
 			}
 		} else if (evt.getSource() == next) {
-			if (D.scenario.next() == false) {
-				if (D.A.suspended == true) D.next();
-				else disableNext();
+			if (D.scenario.hasNext()) {
+				D.scenario.next();
+				enablePrevious();
+			} else if (D.A.suspended) {
+				D.next();
+			} else {
+				disableNext();
 			}
 			// System.out.println("next");
 			// repaint();
@@ -183,6 +188,18 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		clear.setEnabled(true);
 		random.setEnabled(true);
 		next.setEnabled(false);
+	}
+	
+	public void enablePrevious() {
+		clear.setEnabled(false);
+		random.setEnabled(false);
+		previous.setEnabled(true);
+	}
+
+	public void disablePrevious() {
+		// clear.setEnabled(true);
+		// random.setEnabled(true);
+		previous.setEnabled(false);
 	}
 
 	public void setStats(String s) {

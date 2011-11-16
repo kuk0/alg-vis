@@ -2,8 +2,8 @@ package algvis.core;
 
 import java.util.Random;
 
-import algvis.scenario.Scenario;
-import algvis.scenario.SubScenario;
+import algvis.scenario.DSScenario;
+import algvis.scenario.AlgorithmScenario;
 
 
 abstract public class DataStructure {
@@ -11,8 +11,8 @@ abstract public class DataStructure {
 	// kolko ma vstupov, ake to su a co treba robit
 	Algorithm A;
 	public VisPanel M;
-	public Scenario scenario;
-	public SubScenario subScen;
+	public DSScenario scenario;
+	public AlgorithmScenario subScenario;
 	public int radius = 10, xspan = 15, yspan = 5, rootx = 0, rooty = 0,
 			sheight = 600, swidth = 400;
 	public int x1, x2, y1 = -50, y2;
@@ -22,7 +22,7 @@ abstract public class DataStructure {
 
 	public DataStructure(VisPanel M) {
 		this.M = M;
-		scenario = new Scenario();
+		scenario = new DSScenario("DSName");
 	}
 
 	abstract public String stats();
@@ -74,8 +74,9 @@ abstract public class DataStructure {
 		M.pause = p;
 	}
 	
-	public void mouseClicked(int x, int y) {}
-	
+	public void mouseClicked(int x, int y) {
+	}
+
 	public void unmark() {
 		if (chosen != null) {
 			chosen.unmark();
