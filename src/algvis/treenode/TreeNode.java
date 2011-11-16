@@ -170,11 +170,10 @@ public class TreeNode extends Node {
 	}
 
 	public void reposition() {
-		fTRFirst(0);
-		System.out.print("\n");
-		fTRSecond();
+		fTRInitialization(0);
+		fTRPrePosition();
 		fTRDisposeThreads();
-		fTRThird(0);
+		fTRPetrification(0);
 		// fTRCentering();
 		fTRCorrecting(this.fakex);
 		System.out.print("\n");
@@ -188,19 +187,19 @@ public class TreeNode extends Node {
 	 * @param level
 	 *            current level in tree
 	 */
-	private void fTRFirst(int level) {
+	private void fTRInitialization(int level) {
 		// System.out.print(level);
 		this.level = level;
 		this.offset = 0;
 		TreeNode T = child;
 		level++;
 		while (T != null) {
-			T.fTRFirst(level);
+			T.fTRInitialization(level);
 			T = T.right;
 		}
 	}
 
-	private NodePair<TreeNode> fTRSecond() {
+	private NodePair<TreeNode> fTRPrePosition() {
 		/*
 		 * Notice that result contains leftmost and rightmost deepest node in
 		 * form result.child for left and result.right for right
@@ -222,14 +221,14 @@ public class TreeNode extends Node {
 		 * So lets get result from first child
 		 */
 
-		NodePair<TreeNode> fromLeftSubtree = LeftSubtree.fTRSecond();
+		NodePair<TreeNode> fromLeftSubtree = LeftSubtree.fTRPrePosition();
 		result = fromLeftSubtree;
 
 		/*
 		 * let's the fun begin
 		 */
 		while (RightSubtree != null) {
-			NodePair<TreeNode> fromRightSubtree = RightSubtree.fTRSecond();
+			NodePair<TreeNode> fromRightSubtree = RightSubtree.fTRPrePosition();
 
 			TreeNode L = LeftSubtree;
 			TreeNode R = RightSubtree;
@@ -363,7 +362,7 @@ public class TreeNode extends Node {
 	 * @param leftestx
 	 *            x-coordinate of leftmost sibling
 	 */
-	private void fTRThird(int leftestx) {
+	private void fTRPetrification(int leftestx) {
 		/*
 		 * Change coordinates
 		 */
@@ -372,7 +371,7 @@ public class TreeNode extends Node {
 
 		TreeNode T = child;
 		while (T != null) {
-			T.fTRThird(fakex);
+			T.fTRPetrification(fakex);
 			T = T.right;
 		}
 	}

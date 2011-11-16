@@ -27,7 +27,6 @@ public class BSTFind extends Algorithm {
 			setText("notfound");
 		} else {
 			BSTNode w = T.root;
-			w.deleteThreads();
 			v.goAbove(w);
 			setText("bstfindstart");
 			mysuspend();

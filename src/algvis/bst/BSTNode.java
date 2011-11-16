@@ -191,9 +191,10 @@ public class BSTNode extends Node {
 		// reboxTree();
 		// repos();
 		// System.out.print("New run.\n");
-		fTRFirst(0);
-		fTRSecond();
-		fTRFourth(0);
+		fTRInitialization(0);
+		fTRPrePosition();
+		fTRDisposeThreads();
+		fTRPetrification(0);
 	}
 
 	/**
@@ -222,14 +223,14 @@ public class BSTNode extends Node {
 	 * @param level
 	 *            current level in tree
 	 */
-	private void fTRFirst(int level) {
+	private void fTRInitialization(int level) {
 		// this.state = INVISIBLE;
 		this.level = level;
 		this.offset = 0;
 		if (left != null)
-			left.fTRFirst(level + 1);
+			left.fTRInitialization(level + 1);
 		if (right != null)
-			right.fTRFirst(level + 1);
+			right.fTRInitialization(level + 1);
 	}
 
 	/**
@@ -245,16 +246,16 @@ public class BSTNode extends Node {
 	 * @return Leftmost and rightmost node on the deepest level of a tree rooted
 	 *         by this node
 	 */
-	private NodePair<BSTNode> fTRSecond() {
+	private NodePair<BSTNode> fTRPrePosition() {
 		NodePair<BSTNode> result = new NodePair<BSTNode>();
 		NodePair<BSTNode> fromLeftSubtree = null, fromRightSubtree = null;
 		int minsep = D.xspan + 2 * D.radius;
 
 		// 1. & 2. work out left & right subtree
 		if (left != null)
-			fromLeftSubtree = left.fTRSecond();
+			fromLeftSubtree = left.fTRPrePosition();
 		if (right != null)
-			fromRightSubtree = right.fTRSecond();
+			fromRightSubtree = right.fTRPrePosition();
 		// 3. examine this node
 		if (isLeaf()) {
 			if (!isRoot()) {
@@ -460,6 +461,20 @@ public class BSTNode extends Node {
 		return result;
 	}
 
+	private void fTRDisposeThreads() {
+		if (this.thread) {
+			this.thread = false;
+			this.left = null;
+			this.right = null;
+		}
+		if (left != null) {
+			left.fTRDisposeThreads();
+		}
+		if (right != null) {
+			right.fTRDisposeThreads();
+		}
+	}
+
 	/**
 	 * Fourth traverse in fbtr
 	 * 
@@ -468,7 +483,7 @@ public class BSTNode extends Node {
 	 * @param xcoordinate
 	 *            real x coordinate of parent node
 	 */
-	private void fTRFourth(int xcoordinate) {
+	private void fTRPetrification(int xcoordinate) {
 		tox = xcoordinate + this.offset;
 		toy = this.level * (D.yspan + 2 * D.radius);
 		if (tox < D.x1) {
@@ -484,28 +499,15 @@ public class BSTNode extends Node {
 		if (toy > D.y2) {
 			D.y2 = toy;
 		}
+
 		this.goTo(tox, toy);
 		if (!thread) {
 			if (left != null) {
-				left.fTRFourth(tox);
+				left.fTRPetrification(tox);
 			}
 			if (right != null) {
-				right.fTRFourth(tox);
+				right.fTRPetrification(tox);
 			}
-		}
-	}
-
-	public void deleteThreads() {
-		if (this.thread) {
-			this.thread = false;
-			this.left = null;
-			this.right = null;
-		}
-		if (left != null) {
-			left.deleteThreads();
-		}
-		if (right != null) {
-			right.deleteThreads();
 		}
 	}
 }
