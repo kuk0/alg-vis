@@ -62,7 +62,6 @@ public class BSTInsert extends Algorithm {
 					}
 					setText("bstinsertleft", K, w.key);
 					mysuspend();
-					T.subScenario.add(new PauseCommand());
 					v.noArrow();
 					if (w.left != null) {
 						w = w.left;

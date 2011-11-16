@@ -37,7 +37,7 @@ public abstract class Scenario<T extends XMLable> implements XMLable {
 
 	@Override
 	public Element getXML() {
-		Element root = new Element("scenario");
+		Element root = new Element(name);
 		for (int i = 0; i < length(); ++i) {
 			root.addContent(scenario.elementAt(i).getXML());
 		}

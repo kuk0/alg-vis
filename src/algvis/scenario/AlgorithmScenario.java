@@ -9,7 +9,7 @@ public class AlgorithmScenario extends Scenario<Command> {
 	public void previous() {
 		canAdd = false;
 		scenario.elementAt(position).unexecute();
-		while (--position > 0
+		while (--position > -1
 				&& !(scenario.elementAt(position) instanceof PauseCommand)) {
 			scenario.elementAt(position).unexecute();
 		}
