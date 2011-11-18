@@ -6,11 +6,13 @@ import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.MeldablePQ;
+import algvis.core.View;
 
 public class LeftHeapNode extends BSTNode {
-	LeftHeapNode left, right, parent;
+	//LeftHeapNode left, right, parent;
 	Color color = Color.yellow;
 	int height = 1;
+	int rank = 1;
 	
 	public LeftHeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
@@ -50,5 +52,33 @@ public class LeftHeapNode extends BSTNode {
 		} else {
 			return this.key >= v.key;
 		}
-	}	
+	}
+	
+	//pripojit this ako noveho rodica v a v dat ako praveho syna 
+	public void linkup(LeftHeapNode v) {
+		if((this.parent != null) && (v != null) ){
+			BSTNode tmp = this.parent;
+			//this.parent = v;
+			v.right = this;
+			this.parent = v;		
+			v.parent = tmp;
+			v.parent.right = v;
+		}
+	}		
+	
+	//docasne a mozno aj navzdy skopirovane z AAtree koli vykreslovaniu ranku
+	@Override
+	public void draw(View v) {
+	
+	if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
+		return;
+	}
+	drawBg(v);
+	drawKey(v);
+	drawArrow(v);
+	drawArc(v);
+	String str = new String("" + rank);
+	v.drawString(str, x + D.radius, y - D.radius, 7);
+	}
+	
 }
