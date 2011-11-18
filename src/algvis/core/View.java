@@ -1,13 +1,12 @@
 package algvis.core;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
 
 public class View {
 	VisPanel P;
-	Graphics g;
+	Graphics2D g;
 	final static double SCALE_FACTOR = 1.2, MIN_ZOOM = 0.16, MAX_ZOOM = 5.5;
 	int W, H; // display width&height
 	int minx, miny, maxx, maxy;
@@ -17,8 +16,8 @@ public class View {
 		this.P = P;
 	}
 
-	public void setGraphics(Graphics g) {
-		this.g = g;		
+	public void setGraphics(Graphics2D g) {
+		this.g = g;
 	}
 
 	public void setWH(int w, int h) {
@@ -136,10 +135,10 @@ public class View {
 				&& (viewY - viewH <= y) && (y <= viewY + viewH);
 	}
 
-	public void setColor (Color c) {
+	public void setColor(Color c) {
 		g.setColor(c);
 	}
-	
+
 	public void fillSqr(int x, int y, int a) {
 		a = (int) Math.round(f * a);
 		g.fillRect(v2rX(x) - a, v2rY(y) - a, 2 * a, 2 * a);
@@ -225,16 +224,17 @@ public class View {
 		g.fillArc(v2rX(x), v2rY(y), (int) Math.round(f * w), (int) Math.round(f
 				* h), a1, a2);
 	}
-	
-	public void drawRoundRectangle(int x, int y, double w,
-			double h, double arcw, double arch) {
-		((Graphics2D)g).draw(new RoundRectangle2D.Double(v2rX(x) - f * w, v2rY(y) - f * h, 2
+
+	public void drawRoundRectangle(int x, int y, double w, double h,
+			double arcw, double arch) {
+		g.draw(new RoundRectangle2D.Double(v2rX(x) - f * w, v2rY(y) - f * h, 2
 				* f * w, 2 * f * h, f * arcw, f * arch));
 	}
-	public void fillRoundRectangle(int x, int y, double w,
-			double h, double arcw, double arch) {
-		((Graphics2D)g).fill(new RoundRectangle2D.Double(v2rX(x) - f * w, v2rY(y) - f * h, 2
-				* f * w, 2 * f * h, f * arcw, f * arch));
+
+	public void fillRoundRectangle(int x, int y, double w, double h,
+			double arcw, double arch) {
+		g.fill(new RoundRectangle2D.Double(v2rX(x) - f * w,
+				v2rY(y) - f * h, 2 * f * w, 2 * f * h, f * arcw, f * arch));
 	}
 
 	private void arrowHead(int x, int y, int xx, int yy) {
@@ -280,8 +280,7 @@ public class View {
 		arrowHead(x1, y1, x2, y2);
 	}
 
-	public void drawArcArrow(int x, int y, int w, int h, int a1,
-			int a2) {
+	public void drawArcArrow(int x, int y, int w, int h, int a1, int a2) {
 		x = v2rX(x);
 		y = v2rY(y);
 		w = (int) Math.round(f * w);
