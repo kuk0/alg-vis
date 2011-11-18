@@ -30,10 +30,6 @@ public abstract class Scenario<T extends XMLable> implements XMLable {
 		}
 	}
 
-	public void removeLast() {
-		scenario.setSize(position--);
-	}
-
 	public int length() {
 		return scenario.size();
 	}
