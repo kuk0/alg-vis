@@ -5,25 +5,26 @@ import org.jdom.Element;
 import algvis.core.Node;
 
 public class MoveCommand implements Command {
-	private int fromX, fromY, toX, toY;
+	private int fromX, fromY, toX, toY, steps;
 	private Node n;
 
-	public MoveCommand(Node n, int toX, int toY) {
+	public MoveCommand(Node n, int toX, int toY, int steps) {
 		this.n = n;
-		fromX = n.x;
-		fromY = n.y;
+		fromX = n.tox;
+		fromY = n.toy;
 		this.toX = toX;
 		this.toY = toY;
+		this.steps = steps;
 	}
 
 	@Override
 	public void execute() {
-		n.goTo(toX, toY);
+		n.goToS(toX, toY, steps);
 	}
 
 	@Override
 	public void unexecute() {
-		n.goTo(fromX, fromY);
+		n.goToS(fromX, fromY, steps);
 	}
 
 	@Override
@@ -33,6 +34,8 @@ public class MoveCommand implements Command {
 		e.setAttribute("key", Integer.toString(n.key));
 		e.setAttribute("posX", Integer.toString(toX));
 		e.setAttribute("posY", Integer.toString(toY));
+		e.setAttribute("fromPosX", Integer.toString(fromX));
+		e.setAttribute("fromPosY", Integer.toString(fromY));
 		return e;
 	}
 

@@ -1,5 +1,7 @@
 package algvis.core;
 
+import algvis.scenario.PauseCommand;
+
 /**
  * The Class Algorithm.
  * Each visualized data structure consists of data and algorithms (such as insert, delete)
@@ -10,18 +12,24 @@ package algvis.core;
  * after pressing the "Next" button.   
  */
 abstract public class Algorithm extends Thread {
-	VisPanel M;
+	DataStructure D;
 	boolean suspended = false;
 
-	public Algorithm(VisPanel M) {
-		this.M = M;
+	public Algorithm(DataStructure D) {
+		this.D = D;
 	}
 
 	/**
 	 * Mysuspend.
 	 */
 	public void mysuspend() {
-		if (M.pause) {
+		if (D.subScenario != null) {
+			D.subScenario.add(new PauseCommand());
+		}
+		if (D.M.pause) {
+			if (D.subScenario != null) {
+				D.subScenario.canAdd = false;
+			}
 			suspended = true;
 			synchronized (this) {
 				try {
@@ -29,6 +37,10 @@ abstract public class Algorithm extends Thread {
 						wait();
 					}
 				} catch (InterruptedException e) {
+				} finally {
+					if (D.subScenario != null) {
+						D.subScenario.canAdd = true;
+					}
 				}
 			}
 		}
@@ -46,26 +58,26 @@ abstract public class Algorithm extends Thread {
 	}
 
 	public void setHeader(String s) {
-		if (M.pause) {
-			M.C.setHeader(s);
+		if (D.M.pause) {
+			D.M.C.setHeader(s);
 		}
 	}
 
 	public void setText(String s) {
-		if (M.pause) {
-			M.C.setText(s);
+		if (D.M.pause) {
+			D.M.C.setText(s);
 		}
 	}
 
 	public void setText(String s, String... par) {
-		if (M.pause) {
-			M.C.setText(s, par);
+		if (D.M.pause) {
+			D.M.C.setText(s, par);
 		}
 	}
 
 	public void setText(String s, int... par) {
-		if (M.pause) {
-			M.C.setText(s, par);
+		if (D.M.pause) {
+			D.M.C.setText(s, par);
 		}
 	}
 

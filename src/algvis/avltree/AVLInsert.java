@@ -10,7 +10,7 @@ public class AVLInsert extends Algorithm {
 	int K;
 
 	public AVLInsert(AVL T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		T.v = v = new BSTNode(T, K = x);
 		v.bgColor(Colors.INSERT);

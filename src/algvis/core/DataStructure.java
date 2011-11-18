@@ -22,7 +22,11 @@ abstract public class DataStructure {
 
 	public DataStructure(VisPanel M) {
 		this.M = M;
-		scenario = new DSScenario("DSName");
+	}
+	
+	public DataStructure(VisPanel M, String dsName) {
+		this(M);
+		scenario = new DSScenario(dsName);
 	}
 
 	abstract public String stats();

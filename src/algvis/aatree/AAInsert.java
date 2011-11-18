@@ -10,7 +10,7 @@ public class AAInsert extends Algorithm {
 	int K;
 
 	public AAInsert(AA T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		T.v = v = new AANode(T, K = x);
 		v.bgColor(Colors.INSERT);

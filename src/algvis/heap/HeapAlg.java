@@ -9,7 +9,7 @@ public class HeapAlg extends Algorithm {
 	BSTNode v;
 
 	public HeapAlg(Heap H) {
-		super(H.M);
+		super(H);
 		this.H = H;
 	}
 	

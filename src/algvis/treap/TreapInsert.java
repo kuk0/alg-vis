@@ -9,7 +9,7 @@ public class TreapInsert extends Algorithm {
 	int K;
 
 	public TreapInsert(Treap T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		v = T.v = new TreapNode(T, K = x);
 		setHeader("insertion");

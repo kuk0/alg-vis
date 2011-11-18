@@ -7,18 +7,15 @@ public class AlgorithmScenario extends Scenario<Command> {
 
 	@Override
 	public void previous() {
-		canAdd = false;
 		scenario.elementAt(position).unexecute();
 		while (--position > -1
 				&& !(scenario.elementAt(position) instanceof PauseCommand)) {
 			scenario.elementAt(position).unexecute();
 		}
-		canAdd = true;
 	}
 
 	@Override
 	public void next() {
-		canAdd = false;
 		++position;
 		do {
 			scenario.elementAt(position).execute();
@@ -28,7 +25,6 @@ public class AlgorithmScenario extends Scenario<Command> {
 		if (position == length()) {
 			--position;
 		}
-		canAdd = true;
 	}
 
 	@Override

@@ -20,6 +20,8 @@ public class Node {
 	/**
 	 * x, y - node position
 	 * tox, toy - the position, where the node is heading
+	 *          - never change it other way than goto(tox, toy), because it 
+	 *            breakes MoveCommand
 	 * steps - the number of steps to reach the destination 
 	 */
 	public int x, y, tox, toy, steps;
@@ -64,9 +66,6 @@ public class Node {
 
 	public Node(DataStructure D, int key) {
 		this(D, key, 0, 0);
-		if (D != null && D.subScenario != null) {
-			D.subScenario.add(new ChangeStateCommand(this, Node.UP));
-		}
 		setState(Node.UP);
 		x = 0;
 	}
@@ -76,6 +75,9 @@ public class Node {
 	}
 
 	public void setState(int s) {
+		if (D != null && D.subScenario != null) {
+			D.subScenario.add(new ChangeStateCommand(this, s));
+		}
 		state = s;
 	}
 
@@ -120,7 +122,9 @@ public class Node {
 	public void pointAbove(Node w) {
 		dir = w;
 		arrow = Node.DIRARROW;
-		D.subScenario.add(new ArrowCommand(this));
+		if (D.subScenario != null) {
+			D.subScenario.add(new ArrowCommand(this));
+		}
 	}
 
 	/**
@@ -259,7 +263,7 @@ public class Node {
 	}
 
 	public void draw(View v) {
-		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
+		if (state == Node.INVISIBLE /*|| state == Node.UP*/ || key == NULL) {
 			return;
 		}
 		drawBg(v);
@@ -281,15 +285,19 @@ public class Node {
 	 * Set new coordinates, where the node should go.
 	 */
 	public void goTo(int tox, int toy) {
-		if (x == tox && y == toy) {
-			return;
-		}
+		goToS(tox, toy, D.M.STEPS);
+	}
+	
+	/**
+	 * Set steps ("speed") and new coordinates, where the node should go.
+	 */
+	public void goToS(int tox, int toy, int steps) {
 		if (D.subScenario != null) {
-			D.subScenario.add(new MoveCommand(this, tox, toy));
+			D.subScenario.add(new MoveCommand(this, tox, toy, steps));
 		}
 		this.tox = tox;
 		this.toy = toy;
-		steps = D.M.STEPS;
+		this.steps = steps;
 	}
 
 	/**
@@ -319,69 +327,78 @@ public class Node {
 	 * Go to the root position.
 	 */
 	public void goToRoot() {
-		goTo(D.rootx, D.rooty);
+		if (state == Node.UP) {
+			setState(Node.ALIVE);
+			this.toy = y = (int) (D.M.S.V.viewY - D.M.S.V.viewH) - D.radius;
+			goToS(D.rootx, D.rooty, (D.rooty - y) / 20);
+		} else {
+			goTo(D.rootx, D.rooty);
+		}
 	}
 
 	/**
 	 * Go above the root position.
 	 */
 	public void goAboveRoot() {
-		goTo(D.rootx, D.rooty - 2 * D.radius - D.yspan);
+		if (state == Node.UP) {
+			setState(Node.ALIVE);
+			this.toy = y = (int) (D.M.S.V.viewY - D.M.S.V.viewH) - D.radius;
+			int toy = D.rooty - 2 * D.radius - D.yspan;
+			goToS(D.rootx, toy, (toy - y) / 20);
+		} else {
+			goTo(D.rootx, D.rooty - 2 * D.radius - D.yspan);
+		}
 	}
 
 	/**
 	 * Go downwards out of the screen.
 	 */
 	public void goDown() {
-		state = Node.DOWN;
+		setState(Node.DOWN);
+		int down = (int) (D.M.S.V.viewY + D.M.S.V.viewH) + D.radius + 1;
+		goToS(x, down, (down - y) / 20);
 	}
 
 	/**
 	 * Go left downwards out of the screen.
 	 */
 	public void goLeft() {
-		state = Node.LEFT;
+		setState(Node.LEFT);
+		int down = (int) (D.M.S.V.viewY + D.M.S.V.viewH) + D.radius + 1;
+		goToS((int) (D.M.S.V.viewX - D.M.S.V.viewW) - D.radius, down,
+				(down - y) / 20);
 	}
 
 	/**
 	 * Go right downwards out of the screen.
 	 */
 	public void goRight() {
-		state = Node.RIGHT;
+		setState(Node.RIGHT);
+		int down = (int) (D.M.S.V.viewY + D.M.S.V.viewH) + D.radius + 1;
+		goToS((int) (D.M.S.V.viewX + D.M.S.V.viewW) + D.radius, down,
+				(down - y) / 20);
 	}
-
+	
 	/**
 	 * Make one step towards the destination (tox, toy).
-	 * In the special states DOWN, LEFT, or RIGHT, go downwards off the screen.
-	 * In the special state UP, the node starts moving from the top of the screen.
+	 * In the special states DOWN, LEFT, RIGHT, or UP, check whether node is 
+	 * already out of screen and set its state to INVISIBLE.
 	 */
 	public void move() {
 		switch (state) {
+		case Node.DOWN:
+		case Node.LEFT:
+		case Node.RIGHT:
+		case Node.UP:
+			if (!D.M.S.V.inside(x, y)) {
+				setState(Node.INVISIBLE);
+			}
 		case Node.ALIVE:
 		case Node.INVISIBLE:
 			if (steps > 0) {
 				x += (tox - x) / steps;
 				y += (toy - y) / steps;
 				--steps;
-			}
-			break;
-		case Node.UP:
-			y = (int) (D.M.S.V.viewY - D.M.S.V.viewH) - D.radius;
-			setState(Node.ALIVE);
-			move();
-			break;
-		case Node.DOWN:
-		case Node.LEFT:
-		case Node.RIGHT:
-			y += 20;
-			if (state == Node.LEFT) {
-				x -= 20;
-			}
-			if (state == Node.RIGHT) {
-				x += 20;
-			}
-			if (!D.M.S.V.inside(x, y - D.radius)) {
-				setState(Node.INVISIBLE);
 			}
 			break;
 		}

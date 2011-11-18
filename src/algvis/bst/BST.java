@@ -10,7 +10,7 @@ public class BST extends Dictionary {
 	public BSTNode root = null, v = null;
 
 	public BST(VisPanel M) {
-		super(M);
+		super(M, dsName);
 	}
 
 	@Override

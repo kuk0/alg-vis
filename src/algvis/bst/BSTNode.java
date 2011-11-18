@@ -438,8 +438,8 @@ public class BSTNode extends Node {
 		/*
 		 * Change coordinates
 		 */
-		tox = xcoordinate + this.offset;
-		toy = this.level * (D.yspan + 2 * D.radius);
+		int tox = xcoordinate + this.offset;
+		int toy = this.level * (D.yspan + 2 * D.radius);
 		if (tox < D.x1) {
 			D.x1 = tox;
 		}

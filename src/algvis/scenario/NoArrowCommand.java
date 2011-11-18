@@ -29,6 +29,7 @@ public class NoArrowCommand implements Command {
 	public Element getXML() {
 		Element e = new Element("node");
 		e.setAttribute("action", "noArrow");
+		e.setAttribute("key", Integer.toString(n.key));
 		return e;
 	}
 

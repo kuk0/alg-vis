@@ -9,7 +9,7 @@ public class BInsert extends Algorithm {
 	int K;
 
 	public BInsert(BTree T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		v = T.v = new BNode(T, K = x);
 		v.bgColor(Colors.INSERT);

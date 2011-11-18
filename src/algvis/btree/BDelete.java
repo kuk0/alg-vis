@@ -10,7 +10,7 @@ public class BDelete extends Algorithm {
 	int K;
 
 	public BDelete(BTree T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		K = x;
 		v = T.v = new BNode(T, x);

@@ -27,7 +27,7 @@ public class View {
 		viewW = w / 2.0;
 		viewH = h / 2.0;
 		viewX = 0;
-		viewY = viewH - 50;
+		viewY = 0; // viewH - 50;
 		P.hSlider.setValue((int) viewX);
 		P.vSlider.setMinimum((int) viewY);
 		P.vSlider.setMaximum((int) viewY);

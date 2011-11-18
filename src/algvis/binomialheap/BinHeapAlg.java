@@ -6,7 +6,7 @@ public class BinHeapAlg extends Algorithm {
 	BinomialHeap H;
 
 	public BinHeapAlg(BinomialHeap H) {
-		super(H.M);
+		super(H);
 		this.H = H;
 	}
 

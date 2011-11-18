@@ -2,7 +2,6 @@ package algvis.bst;
 
 import algvis.core.Algorithm;
 import algvis.core.Colors;
-import algvis.scenario.PauseCommand;
 import algvis.scenario.AlgorithmScenario;
 
 public class BSTInsert extends Algorithm {
@@ -11,7 +10,7 @@ public class BSTInsert extends Algorithm {
 	int K;
 
 	public BSTInsert(BST T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		T.subScenario = new AlgorithmScenario("BSTInsert");
 		T.scenario.add(T.subScenario);
@@ -31,16 +30,13 @@ public class BSTInsert extends Algorithm {
 			v.goAboveRoot();
 			setText("bstinsertstart");
 			mysuspend();
-			T.subScenario.add(new PauseCommand());
 
 			while (true) {
 				if (w.key == K) {
 					setText("alreadythere");
 					v.goDown();
 					v.bgColor(Colors.NOTFOUND);
-					T.subScenario = null;
-					T.scenario.removeLast();
-					T.M.B.disablePrevious();
+					T.subScenario.canAdd = false;
 					return;
 				} else if (w.key < K) {
 					if (w.right == null) {
@@ -50,7 +46,6 @@ public class BSTInsert extends Algorithm {
 					}
 					setText("bstinsertright", K, w.key);
 					mysuspend();
-					T.subScenario.add(new PauseCommand());
 					v.noArrow();
 					if (w.right != null) {
 						w = w.right;
@@ -66,7 +61,6 @@ public class BSTInsert extends Algorithm {
 					}
 					setText("bstinsertleft", K, w.key);
 					mysuspend();
-					T.subScenario.add(new PauseCommand());
 					v.noArrow();
 					if (w.left != null) {
 						w = w.left;
@@ -77,15 +71,14 @@ public class BSTInsert extends Algorithm {
 				}
 				v.goAbove(w);
 				mysuspend();
-				T.subScenario.add(new PauseCommand());
 			}
 		}
 		T.reposition();
 		mysuspend();
-		T.subScenario.add(new PauseCommand());
 		setText("done");
 		v.bgColor(Colors.NORMAL);
 		// T.v = null;
+		T.subScenario.canAdd = false;
 		T.subScenario = null;
 	}
 }

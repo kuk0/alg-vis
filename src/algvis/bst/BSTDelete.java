@@ -10,7 +10,7 @@ public class BSTDelete extends Algorithm {
 	int K;
 
 	public BSTDelete(BST T, int x) { // Buttons B,
-		super(T.M);
+		super(T);
 		this.T = T;
 		v = T.v = new BSTNode(T, K = x);
 		v.bgColor(Colors.DELETE);

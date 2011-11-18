@@ -14,8 +14,7 @@ public abstract class Scenario<T extends XMLable> implements XMLable {
 	protected Vector<T> scenario;
 	protected int position;
 	protected String name;
-	protected boolean canAdd; // when traverse scenario backwards, scenario can
-								// call methods, which call scenario.add();
+	public boolean canAdd;
 
 	public Scenario(String name) {
 		scenario = new Vector<T>();

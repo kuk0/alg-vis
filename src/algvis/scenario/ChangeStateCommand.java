@@ -21,7 +21,9 @@ public class ChangeStateCommand implements Command {
 
 	@Override
 	public void unexecute() {
-		n.setState(from);
+		if (from != Node.INVISIBLE) {
+			n.setState(from);
+		}
 	}
 
 	@Override
@@ -30,6 +32,7 @@ public class ChangeStateCommand implements Command {
 		e.setAttribute("action", "changeState");
 		e.setAttribute("key", Integer.toString(n.key));
 		e.setAttribute("state", Integer.toString(to));
+		e.setAttribute("fromState", Integer.toString(from));
 		return e;
 	}
 

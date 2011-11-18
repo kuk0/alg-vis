@@ -9,7 +9,7 @@ public class BSTFind extends Algorithm {
 	int K;
 
 	public BSTFind(BST T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		v = T.v = new BSTNode(T, K = x);
 		v.bgColor(Colors.FIND);

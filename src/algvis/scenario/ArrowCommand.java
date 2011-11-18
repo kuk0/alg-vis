@@ -30,6 +30,7 @@ public class ArrowCommand implements Command {
 	public Element getXML() {
 		Element e = new Element("node");
 		e.setAttribute("action", "arrow");
+		e.setAttribute("key", Integer.toString(n.key));
 		if (dir != null) {
 			e.setAttribute("toNode", Integer.toString(dir.key));
 		} else {

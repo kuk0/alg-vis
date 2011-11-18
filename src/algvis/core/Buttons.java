@@ -91,7 +91,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	public void initPrevious() {
 		previous = new IButton(M.L, "previous");
 		previous.setMnemonic(KeyEvent.VK_O);
-		previous.setEnabled(true);
+		previous.setEnabled(false);
 		previous.addActionListener(this);
 	}
 	
@@ -145,21 +145,31 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent evt) {
+		// TODO Better disabling/enabling "previous" and "next" buttons or
+		// adding subScenario to all Algorithms
 		if (evt.getSource() == previous) {
-			D.scenario.previous();
-			enableNext();
-			if (D.scenario.hasPrevious() == false) {
+			if (D.scenario != null) {
+				D.scenario.previous();
+				if (D.scenario.hasPrevious() == false) {
+					disablePrevious();
+				}
+				enableNext();
+			} else {
 				disablePrevious();
 			}
 		} else if (evt.getSource() == next) {
-			if (D.scenario.hasNext()) {
+			if (D.scenario != null && D.scenario.hasNext()) {
 				D.scenario.next();
 			} else if (D.A.suspended) {
 				D.next();
 			} else {
 				disableNext();
 			}
-			enablePrevious();
+			if (D.scenario != null) {
+				enablePrevious();
+			} else {
+				disablePrevious();
+			}
 			// System.out.println("next");
 			// repaint();
 		} else if (evt.getSource() == clear) {
