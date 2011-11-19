@@ -2,7 +2,6 @@ package algvis.bst;
 
 import algvis.core.Algorithm;
 import algvis.core.Colors;
-import algvis.scenario.AlgorithmScenario;
 
 public class BSTInsert extends Algorithm {
 	BST T;
@@ -10,10 +9,8 @@ public class BSTInsert extends Algorithm {
 	int K;
 
 	public BSTInsert(BST T, int x) {
-		super(T);
+		super(T, "BSTInsert");
 		this.T = T;
-		T.subScenario = new AlgorithmScenario("BSTInsert");
-		T.scenario.add(T.subScenario);
 		v = T.v = new BSTNode(T, K = x);
 		v.bgColor(Colors.INSERT);
 		setHeader("insertion");
@@ -34,9 +31,9 @@ public class BSTInsert extends Algorithm {
 			while (true) {
 				if (w.key == K) {
 					setText("alreadythere");
-					v.goDown();
 					v.bgColor(Colors.NOTFOUND);
-					T.subScenario.canAdd = false;
+					v.goDown();
+					finish();
 					return;
 				} else if (w.key < K) {
 					if (w.right == null) {
@@ -78,7 +75,6 @@ public class BSTInsert extends Algorithm {
 		setText("done");
 		v.bgColor(Colors.NORMAL);
 		// T.v = null;
-		T.subScenario.canAdd = false;
-		T.subScenario = null;
+		finish();
 	}
 }

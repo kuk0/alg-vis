@@ -1,5 +1,6 @@
 package algvis.core;
 
+import algvis.scenario.AlgorithmScenario;
 import algvis.scenario.PauseCommand;
 
 /**
@@ -12,11 +13,18 @@ import algvis.scenario.PauseCommand;
  * after pressing the "Next" button.   
  */
 abstract public class Algorithm extends Thread {
-	DataStructure D;
+	private DataStructure D;
 	boolean suspended = false;
 
+	// only for compatibility until scenario is added to all algorithms
 	public Algorithm(DataStructure D) {
 		this.D = D;
+	}
+	
+	public Algorithm(DataStructure D, String name) {
+		this(D);
+		D.subScenario = new AlgorithmScenario(name);
+		D.scenario.add(D.subScenario);
 	}
 
 	/**
@@ -57,6 +65,13 @@ abstract public class Algorithm extends Thread {
 		}
 	}
 
+	protected void finish() {
+		if (D.subScenario != null) {
+			D.subScenario.canAdd = false;
+			D.subScenario = null;
+		}
+	}
+	
 	public void setHeader(String s) {
 		if (D.M.pause) {
 			D.M.C.setHeader(s);
