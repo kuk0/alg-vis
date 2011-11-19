@@ -380,34 +380,32 @@ public class BSTNode extends Node {
 			 * threads from subtrees are set properly.
 			 */
 
-			int left_height = fromLeftSubtree.left.level;
-			int right_height = fromRightSubtree.right.level;
 			/*
 			 * Left subtree is more shallow than right subtree. Thus extreme for
 			 * this tree will be the same as for right subtree.
 			 * 
 			 * Notice that L & R pointers are set right there where we want it.
 			 */
-			if (right_height > left_height) {
+			if ((L == null) && (R != null)) {
 				fromLeftSubtree.left.thread = true;
 				fromLeftSubtree.left.right = R;
 				result.left = fromRightSubtree.left;
 				result.right = fromRightSubtree.right;
 			} else
 			// right subtree is more shallow then left subtree
-			if (left_height > right_height) {
+			if ((L != null) && (R == null)) {
 				fromRightSubtree.right.thread = true;
 				fromRightSubtree.right.left = L;
 				result.left = fromLeftSubtree.left;
 				result.right = fromLeftSubtree.right;
 			} else
 			// subtrees have the same height
-			if (left_height == right_height)
-			{
+			if ((L == null) && (R == null)) {
 				result.left = fromLeftSubtree.left;
 				result.right = fromRightSubtree.right;
 			} else {
-				System.out.print("Error: unexpected finish in while loop at " + "L: " + left.key + " R: " + right.key + "\n");
+				System.out.print("Error: unexpected finish in while loop at "
+						+ "L: " + left.key + " R: " + right.key + "\n");
 			}
 
 		}
