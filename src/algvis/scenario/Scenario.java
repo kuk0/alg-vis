@@ -10,6 +10,10 @@ import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
+/**
+ * Scenario (or history list) stores list of XMLable events, which are executed.
+ * It enables the world to traverse through the list and save it as XML file.
+ */
 public abstract class Scenario<T extends XMLable> implements XMLable {
 	protected Vector<T> scenario;
 	protected int position;

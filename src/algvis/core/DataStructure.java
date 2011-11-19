@@ -5,20 +5,21 @@ import java.util.Random;
 import algvis.scenario.DSScenario;
 import algvis.scenario.AlgorithmScenario;
 
-
 abstract public class DataStructure {
 	// datova struktura musi vediet gombikom povedat, kolko ich potrebuje,
 	// kolko ma vstupov, ake to su a co treba robit
 	Algorithm A;
 	public VisPanel M;
+	/** list of Algorithm-s, which user executes on this DS */
 	public DSScenario scenario;
+	/** is used as alias for current element of scenario */
 	public AlgorithmScenario subScenario;
 	public int radius = 10, xspan = 15, yspan = 5, rootx = 0, rooty = 0,
 			sheight = 600, swidth = 400;
 	public int x1, x2, y1 = -50, y2;
 	public Node chosen = null;
-	public static String adtName = "";
-	public static String dsName = "";
+	public static String adtName = ""; // unused field?
+	public static String dsName = ""; // also here? Subclasses of this also have static dsName...
 
 	public DataStructure(VisPanel M) {
 		this.M = M;

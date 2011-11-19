@@ -1,5 +1,8 @@
 package algvis.scenario;
 
+/**
+ * Scenario of Command-s, which are executed by some Algorithm. 
+ */
 public class AlgorithmScenario extends Scenario<Command> {
 	public AlgorithmScenario(String name) {
 		super(name);

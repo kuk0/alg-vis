@@ -1,5 +1,8 @@
 package algvis.scenario;
 
+/**
+ * Scenario of Algorithm-s, which are executed on some DataStructure.
+ */
 public class DSScenario extends Scenario<AlgorithmScenario> {
 
 	public DSScenario(String name) {
