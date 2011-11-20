@@ -1,7 +1,5 @@
 package algvis.bst;
 
-import java.awt.Graphics;
-
 import algvis.core.Dictionary;
 import algvis.core.StringUtils;
 import algvis.core.View;
@@ -39,22 +37,22 @@ public class BST extends Dictionary {
 	@Override
 	public String stats() {
 		if (root == null) {
-			return M.a.getString("size") + ": 0;   " + M.a.getString("height")
-					+ ": 0 =  1.00\u00b7" + M.a.getString("opt") + ";   "
-					+ M.a.getString("avedepth") + ": 0";
+			return M.L.getString("size") + ": 0;   " + M.L.getString("height")
+					+ ": 0 =  1.00\u00b7" + M.L.getString("opt") + ";   "
+					+ M.L.getString("avedepth") + ": 0";
 		} else {
 			root.calcTree();
-			return M.a.getString("size")
+			return M.L.getString("size")
 					+ ": "
 					+ root.size
 					+ ";   "
-					+ M.a.getString("height")
+					+ M.L.getString("height")
 					+ ": "
 					+ root.height
 					+ " = "
 					+ StringUtils.format(root.height / (Math.floor(lg(root.size)) + 1), 2,
-							5) + "\u00b7" + M.a.getString("opt") + ";   "
-					+ M.a.getString("avedepth") + ": "
+							5) + "\u00b7" + M.L.getString("opt") + ";   "
+					+ M.L.getString("avedepth") + ": "
 					+ StringUtils.format(root.sumh / (double) root.size, 2, -5);
 		}
 	}
@@ -63,14 +61,14 @@ public class BST extends Dictionary {
 	 * Move and draw all the objects on the scene (in this case the BST and one auxilliary node v).
 	 */
 	@Override
-	public void draw(Graphics G, View V) {
+	public void draw(View V) {
 		if (root != null) {
 			root.moveTree();
-			root.drawTree(G, V);
+			root.drawTree(V);
 		}
 		if (v != null) {
 			v.move();
-			v.draw(G, V);
+			v.draw(V);
 		}
 	}
 
@@ -140,6 +138,7 @@ public class BST extends Dictionary {
 	 */
 	public void reposition() {
 		if (root != null) {
+			x1 = x2 = y1 = y2 = 0;
 			root.reposition();
 			M.S.V.setBounds(x1, y1, x2, y2);
 			//System.out.println(x1+" "+y1+" "+x2+" "+y2);

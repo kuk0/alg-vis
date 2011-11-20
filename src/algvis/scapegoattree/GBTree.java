@@ -1,7 +1,5 @@
 package algvis.scapegoattree;
 
-import java.awt.Graphics;
-
 import algvis.bst.BST;
 import algvis.core.StringUtils;
 import algvis.core.View;
@@ -39,44 +37,44 @@ public class GBTree extends BST {
 	}
 
 	@Override
-	public void draw(Graphics G, View V) {
+	public void draw(View V) {
 		if (root != null) {
 			root.moveTree();
-			root.drawTree(G, V);
+			root.drawTree(V);
 		}
 		if (v != null) {
 			v.move();
-			v.draw(G, V);
+			v.draw(V);
 		}
 	}
 
 	@Override
 	public String stats() {
 		if (root == null) {
-			return "#" + M.a.getString("nodes") + ": 0;   #"
-					+ M.a.getString("deleted") + ": 0;   "
-					+ M.a.getString("height") + ": 0 =  1.00\u00b7"
-					+ M.a.getString("opt") + ";   " + M.a.getString("avedepth")
+			return "#" + M.L.getString("nodes") + ": 0;   #"
+					+ M.L.getString("deleted") + ": 0;   "
+					+ M.L.getString("height") + ": 0 =  1.00\u00b7"
+					+ M.L.getString("opt") + ";   " + M.L.getString("avedepth")
 					+ ": 0";
 		} else {
 			root.calcTree();
 			return "#"
-					+ M.a.getString("nodes")
+					+ M.L.getString("nodes")
 					+ ": "
 					+ root.size
 					+ ";   #"
-					+ M.a.getString("deleted")
+					+ M.L.getString("deleted")
 					+ ": "
 					+ del
 					+ ";   "
-					+ M.a.getString("height")
+					+ M.L.getString("height")
 					+ ": "
 					+ root.height
 					+ " = "
 					+ StringUtils.format(root.height
 							/ (Math.floor(lg(root.size - del)) + 1), 2, 5)
-					+ "\u00b7" + M.a.getString("opt") + ";   "
-					+ M.a.getString("avedepth") + ": "
+					+ "\u00b7" + M.L.getString("opt") + ";   "
+					+ M.L.getString("avedepth") + ": "
 					+ StringUtils.format(root.sumh / (double) root.size, 2, -5);
 		}
 	}

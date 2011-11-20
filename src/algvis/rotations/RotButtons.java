@@ -19,7 +19,7 @@ public class RotButtons extends Buttons {
 	}
 
 	public void actionButtons(JPanel P) {
-		rotB = new IButton(M.a, "rotate");
+		rotB = new IButton(M.L, "rotate");
 		rotB.setMnemonic(KeyEvent.VK_R);
 		rotB.addActionListener(this);
 		P.add(rotB);

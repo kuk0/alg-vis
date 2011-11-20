@@ -2,20 +2,19 @@ package algvis.internationalization;
 
 import javax.swing.JRadioButton;
 
-import algvis.core.AlgVis;
-
-public class IRadioButton extends JRadioButton {
+public class IRadioButton extends JRadioButton implements LanguageListener {
 	private static final long serialVersionUID = -8675513915804080311L;
-	AlgVis a;
+	Languages L;
 	String t;
 
-	public IRadioButton(AlgVis a, String text) {
-		super(a.getString(text));
-		this.a = a;
+	public IRadioButton(Languages L, String text) {
+		super(L.getString(text));
+		this.L = L;
 		this.t = text;
+		L.addListener(this);
 	}
 
-	public void refresh() {
-		setText(a.getString(t));
+	public void languageChanged() {
+		setText(L.getString(t));
 	}
 }

@@ -3,6 +3,7 @@ package algvis.core;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -44,6 +45,7 @@ public class Screen extends JPanel implements Runnable, MouseListener,
 			I = createImage(d.width, d.height);
 			G = I.getGraphics();
 			V.setWH(d.width, d.height);
+			V.setGraphics((Graphics2D)G);
 			size = d;
 		}
 	}
@@ -58,7 +60,7 @@ public class Screen extends JPanel implements Runnable, MouseListener,
 		check_size();
 		clear();
 		if (D != null) {
-			D.draw(G, V);
+			D.draw(V);
 		} else {
 			System.out.println("[DS null !]");
 		}

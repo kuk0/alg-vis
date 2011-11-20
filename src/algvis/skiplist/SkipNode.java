@@ -1,7 +1,6 @@
 package algvis.skiplist;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -43,40 +42,28 @@ public class SkipNode extends Node {
 		left = right = up = down = null;
 	}
 
-	/*
-	 * public void draw (Graphics g) { SkipList T = (SkipList)M.D;
-	 * g.setColor(color); g.fillOval(x-T.radius, y-T.radius, 2*T.radius,
-	 * 2*T.radius); g.setColor(Color.black); g.drawOval(x-T.radius, y-T.radius,
-	 * 2*T.radius, 2*T.radius);
-	 * 
-	 * Font font = new Font("Helvetica", Font.PLAIN, T.fontsize); FontMetrics fm
-	 * = g.getFontMetrics(font); String str = new String(""+key); if (key ==
-	 * 999) str = "\u221e"; if (key == -999) str = "-\u221e"; g.setFont(font);
-	 * g.drawString(str, x-fm.stringWidth(str)/2,
-	 * y-fm.getHeight()/2+fm.getAscent()); }
-	 */
-	public void drawBg(Graphics g, View v) {
-		g.setColor(bgcolor);
-		v.fillSqr(g, x, y, D.radius);
-		g.setColor(Color.BLACK); // fgcolor);
-		v.drawSqr(g, x, y, D.radius);
+	public void drawBg(View v) {
+		v.setColor(bgcolor);
+		v.fillSqr(x, y, D.radius);
+		v.setColor(Color.BLACK); // fgcolor);
+		v.drawSqr(x, y, D.radius);
 		if (marked) {
-			v.drawSqr(g, x, y, D.radius + 2);
+			v.drawSqr(x, y, D.radius + 2);
 		}
 	}
 
-	public void drawSkipList(Graphics G, View V) {
+	public void drawSkipList(View V) {
 		if (left == null && down != null) {
-			G.setColor(Color.black);
-			V.drawLine(G, x, y, down.x, down.y);
-			down.drawSkipList(G, V);
+			V.setColor(Color.black);
+			V.drawLine(x, y, down.x, down.y);
+			down.drawSkipList(V);
 		}
 		if (right != null) {
-			G.setColor(Color.black);
-			V.drawArrow(G, x, y, right.x-D.radius, right.y);
-			right.drawSkipList(G, V);
+			V.setColor(Color.black);
+			V.drawArrow(x, y, right.x - D.radius, right.y);
+			right.drawSkipList(V);
 		}
-		draw(G, V);
+		draw(V);
 	}
 
 	public void moveSkipList() {

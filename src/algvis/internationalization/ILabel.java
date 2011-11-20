@@ -1,25 +1,27 @@
 package algvis.internationalization;
 
-import algvis.core.AlgVis;
 
-public class ILabel extends ChLabel {
+public class ILabel extends ChLabel implements LanguageListener {
 	private static final long serialVersionUID = 8993404595330090194L;
-	AlgVis a;
+	Languages L;
 	String t;
 
-	public ILabel(AlgVis a, String text) {
-		super(a.getString(text));
-		this.a = a;
+	public ILabel(Languages L, String text) {
+		super(L.getString(text));
+		this.L = L;
 		this.t = text;
+		L.addListener(this);
 	}
 
+	// aaah... JLabel constructor calls setText but at that time L is null...
 	public void setT(String text) {
 		t = text;
+		setText(L.getString(t));
 		refresh();
 	}
 
-	public void refresh() {
-		setText(a.getString(t));
-		super.refresh();
+	public void languageChanged() {
+		setText(L.getString(t));
+		refresh();
 	}
 }

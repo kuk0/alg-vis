@@ -1,9 +1,6 @@
 package algvis.btree;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.RoundRectangle2D;
 
 import algvis.core.Colors;
 import algvis.core.DataStructure;
@@ -333,34 +330,34 @@ public class BNode extends Node {
 	}
 
 	@Override
-	public void drawBg(Graphics G, View V) {
-		G.setColor(bgcolor);
-		RoundRectangle2D.Double rr = V.roundRectangle(x, y, width / 2,
-				D.radius, 2 * D.radius, 2 * D.radius);
-		((Graphics2D) G).fill(rr);
-		G.setColor(fgcolor);
-		((Graphics2D) G).draw(rr);
+	public void drawBg(View V) {
+		V.setColor(bgcolor);
+		V.fillRoundRectangle(x, y, width / 2, D.radius, 2 * D.radius,
+				2 * D.radius);
+		V.setColor(fgcolor);
+		V.drawRoundRectangle(x, y, width / 2, D.radius, 2 * D.radius,
+				2 * D.radius);
 		// g.drawLine (x-leftw, y+2, x+rightw, y-2);
 	}
 
 	@Override
-	public void drawKey(Graphics G, View V) {
+	public void drawKey(View V) {
 		if (key[0] != Node.NOKEY && numKeys > 0) {
-			V.drawString(G, toString(), x, y, 9);
+			V.drawString(toString(), x, y, 9);
 		}
 	}
 
-	public void drawTree(Graphics g, View v) {
+	public void drawTree(View v) {
 		for (int i = 0; i < numChildren; ++i) {
-			g.setColor(Color.black);
+			v.setColor(Color.black);
 			/*
 			 * int xx, yy; if (i==0 || i==numChildren-1) { xx = x; yy = y; }
 			 * else { xx = (pos(i-1)+pos(i))/2; yy = y+D.radius; }
 			 */
-			v.drawLine(g, x, y, c[i].x, c[i].y - D.radius);
-			c[i].drawTree(g, v);
+			v.drawLine(x, y, c[i].x, c[i].y - D.radius);
+			c[i].drawTree(v);
 		}
-		draw(g, v);
+		draw(v);
 	}
 
 	public void moveTree() {

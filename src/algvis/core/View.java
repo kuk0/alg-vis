@@ -1,10 +1,12 @@
 package algvis.core;
 
-import java.awt.Graphics;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
 
 public class View {
 	VisPanel P;
+	Graphics2D g;
 	final static double SCALE_FACTOR = 1.2, MIN_ZOOM = 0.16, MAX_ZOOM = 5.5;
 	int W, H; // display width&height
 	int minx, miny, maxx, maxy;
@@ -12,6 +14,10 @@ public class View {
 
 	public View(VisPanel P) {
 		this.P = P;
+	}
+
+	public void setGraphics(Graphics2D g) {
+		this.g = g;
 	}
 
 	public void setWH(int w, int h) {
@@ -129,42 +135,46 @@ public class View {
 				&& (viewY - viewH <= y) && (y <= viewY + viewH);
 	}
 
-	public void fillSqr(Graphics g, int x, int y, int a) {
+	public void setColor(Color c) {
+		g.setColor(c);
+	}
+
+	public void fillSqr(int x, int y, int a) {
 		a = (int) Math.round(f * a);
 		g.fillRect(v2rX(x) - a, v2rY(y) - a, 2 * a, 2 * a);
 	}
 
-	public void drawSqr(Graphics g, int x, int y, int a) {
+	public void drawSqr(int x, int y, int a) {
 		a = (int) Math.round(f * a);
 		g.drawRect(v2rX(x) - a, v2rY(y) - a, 2 * a, 2 * a);
 	}
 
-	public void fillOval(Graphics g, int x, int y, int a, int b) {
+	public void fillOval(int x, int y, int a, int b) {
 		g.fillOval(v2rX(x), v2rY(y), (int) Math.round(f * a), (int) Math
 				.round(f * b));
 	}
 
-	public void drawOval(Graphics g, int x, int y, int a, int b) {
+	public void drawOval(int x, int y, int a, int b) {
 		g.drawOval(v2rX(x), v2rY(y), (int) Math.round(f * a), (int) Math
 				.round(f * b));
 	}
 
-	public void fillCircle(Graphics g, int x, int y, int r) {
+	public void fillCircle(int x, int y, int r) {
 		r = (int) Math.round(f * r);
 		g.fillOval(v2rX(x) - r, v2rY(y) - r, 2 * r, 2 * r);
 	}
 
-	public void drawCircle(Graphics g, int x, int y, int r) {
+	public void drawCircle(int x, int y, int r) {
 		r = (int) Math.round(f * r);
 		g.drawOval(v2rX(x) - r, v2rY(y) - r, 2 * r, 2 * r);
 	}
 
-	public void drawLine(Graphics g, int x1, int y1, int x2, int y2) {
+	public void drawLine(int x1, int y1, int x2, int y2) {
 		g.drawLine(v2rX(x1), v2rY(y1), v2rX(x2), v2rY(y2));
 	}
 
 	// square; x, y is the center
-	public void drawSquare(Graphics g, int x, int y, int a) {
+	public void drawSquare(int x, int y, int a) {
 		g.drawRect(v2rX(x - a), v2rY(y - a), (int) Math.round(f * 2 * a),
 				(int) Math.round(f * 2 * a));
 	}
@@ -177,7 +187,7 @@ public class View {
 		return Fonts.fm[fs].stringWidth(str);
 	}
 
-	public void drawString(Graphics g, String str, int x, int y, int fs) {
+	public void drawString(String str, int x, int y, int fs) {
 		fs = v2rF(fs);
 		if (fs == 0) {
 			return;
@@ -188,7 +198,7 @@ public class View {
 		g.drawString(str, x, y);
 	}
 
-	public void drawStringLeft(Graphics g, String str, int x, int y, int fs) {
+	public void drawStringLeft(String str, int x, int y, int fs) {
 		fs = v2rF(fs);
 		if (fs == 0) {
 			return;
@@ -199,7 +209,7 @@ public class View {
 		g.drawString(str, x, y);
 	}
 
-	public void drawStringTop(Graphics g, String str, int x, int y, int fs) {
+	public void drawStringTop(String str, int x, int y, int fs) {
 		fs = v2rF(fs);
 		if (fs == 0) {
 			return;
@@ -210,18 +220,24 @@ public class View {
 		g.drawString(str, x, y);
 	}
 
-	public void fillArc(Graphics g, int x, int y, int w, int h, int a1, int a2) {
+	public void fillArc(int x, int y, int w, int h, int a1, int a2) {
 		g.fillArc(v2rX(x), v2rY(y), (int) Math.round(f * w), (int) Math.round(f
 				* h), a1, a2);
 	}
 
-	public RoundRectangle2D.Double roundRectangle(int x, int y, double w,
-			double h, double arcw, double arch) {
-		return new RoundRectangle2D.Double(v2rX(x) - f * w, v2rY(y) - f * h, 2
-				* f * w, 2 * f * h, f * arcw, f * arch);
+	public void drawRoundRectangle(int x, int y, double w, double h,
+			double arcw, double arch) {
+		g.draw(new RoundRectangle2D.Double(v2rX(x) - f * w, v2rY(y) - f * h, 2
+				* f * w, 2 * f * h, f * arcw, f * arch));
 	}
 
-	private void arrowHead(Graphics g, int x, int y, int xx, int yy) {
+	public void fillRoundRectangle(int x, int y, double w, double h,
+			double arcw, double arch) {
+		g.fill(new RoundRectangle2D.Double(v2rX(x) - f * w,
+				v2rY(y) - f * h, 2 * f * w, 2 * f * h, f * arcw, f * arch));
+	}
+
+	private void arrowHead(int x, int y, int xx, int yy) {
 		double alpha = f * 6.0, beta = 0.93;
 		int[] xPoints = new int[3], yPoints = new int[3];
 		double vecX, vecY, normX, normY, d, th, ta, baseX, baseY;
@@ -255,17 +271,16 @@ public class View {
 		g.fillPolygon(xPoints, yPoints, 3);
 	}
 
-	public void drawArrow(Graphics g, int x1, int y1, int x2, int y2) {
+	public void drawArrow(int x1, int y1, int x2, int y2) {
 		x1 = v2rX(x1);
 		y1 = v2rY(y1);
 		x2 = v2rX(x2);
 		y2 = v2rY(y2);
 		g.drawLine(x1, y1, x2, y2);
-		arrowHead(g, x1, y1, x2, y2);
+		arrowHead(x1, y1, x2, y2);
 	}
 
-	public void drawArcArrow(Graphics g, int x, int y, int w, int h, int a1,
-			int a2) {
+	public void drawArcArrow(int x, int y, int w, int h, int a1, int a2) {
 		x = v2rX(x);
 		y = v2rY(y);
 		w = (int) Math.round(f * w);
@@ -285,7 +300,6 @@ public class View {
 			y = y2 - dy;
 		}
 		// g.drawLine(x, y, x2, y2);
-		arrowHead(g, x, y, x2, y2);
+		arrowHead(x, y, x2, y2);
 	}
-
 }

@@ -2,26 +2,24 @@ package algvis.internationalization;
 
 import javax.swing.JMenu;
 
-import algvis.core.AlgVis;
-
-public class IMenu extends JMenu {
+public class IMenu extends JMenu implements LanguageListener {
 	private static final long serialVersionUID = -6631532284442911505L;
-	AlgVis a;
+	Languages L;
 	String t;
 
-	public IMenu(AlgVis a, String text) {
-		super(a.getString(text));
-		this.a = a;
+	public IMenu(Languages L, String text) {
+		super(L.getString(text));
+		this.L = L;
 		this.t = text;
+		L.addListener(this);
 	}
 
 	public void setT(String text) {
 		t = text;
-		refresh();
+		setText(L.getString(t));
 	}
 
-	public void refresh() {
-		setText(a.getString(t));
-		//super.refresh();
+	public void languageChanged() {
+		setText(L.getString(t));
 	}
 }
