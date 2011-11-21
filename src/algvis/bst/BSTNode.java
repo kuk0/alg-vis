@@ -249,7 +249,6 @@ public class BSTNode extends Node {
 	private NodePair<BSTNode> fTRPrePosition() {
 		NodePair<BSTNode> result = new NodePair<BSTNode>();
 		NodePair<BSTNode> fromLeftSubtree = null, fromRightSubtree = null;
-		int minsep = D.xspan + 2 * D.radius;
 
 		// 1. & 2. work out left & right subtree
 		if (left != null)
@@ -260,9 +259,9 @@ public class BSTNode extends Node {
 		if (isLeaf()) {
 			if (!isRoot()) {
 				if (parent.key < key) {
-					offset = minsep / 2;
+					offset = D.minsepx / 2;
 				} else {
-					offset = -(minsep / 2);
+					offset = -(D.minsepx / 2);
 				}
 			}
 			result.left = this;
@@ -276,14 +275,14 @@ public class BSTNode extends Node {
 			 * There is only one son so proper offset have to be set.
 			 */
 			if (left == null) {
-				right.offset = minsep / 2;
+				right.offset = D.minsepx / 2;
 				result.left = fromRightSubtree.left;
 				result.right = fromRightSubtree.right;
 				return result;
 			}
 
 			if (right == null) {
-				left.offset = -(minsep / 2);
+				left.offset = -(D.minsepx / 2);
 				result.left = fromLeftSubtree.left;
 				result.right = fromLeftSubtree.right;
 				return result;
@@ -317,9 +316,9 @@ public class BSTNode extends Node {
 				 * pointer to "this" node
 				 */
 				int distance = (roffset - loffset);
-				if (distance < minsep) {
-					right.offset += (minsep - distance);
-					roffset += (minsep - distance);
+				if (distance < D.minsepx) {
+					right.offset += (D.minsepx - distance);
+					roffset += (D.minsepx - distance);
 				}
 				/*
 				 * When passes through thread there will be for sure incorrect
@@ -436,7 +435,7 @@ public class BSTNode extends Node {
 	 */
 	private void fTRPetrification(int xcoordinate) {
 		tox = xcoordinate + this.offset;
-		toy = this.level * (D.yspan + 2 * D.radius);
+		toy = this.level * D.minsepy;
 		if (tox < D.x1) {
 			D.x1 = tox;
 		}

@@ -1,6 +1,7 @@
 package algvis.treenode;
 
 import java.awt.Color;
+import java.util.Stack;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -16,7 +17,15 @@ public class TreeNode extends Node {
 	public int level; // "height" from root
 	public boolean thread = false; // is this node threaded?
 	public int toExtremeSon = 0; // offset from leftest son
-	int fakex = 0, fakey = 0; // temporary coordinates of the node
+
+	// another variables for fAL
+	public int fakex = 0, fakey = 0; // temporary coordinates of the node
+	public int modifier = 0;
+	public int prelim = 0;
+	// public int sigma = 0;
+	public int change = 0;
+	public int shift = 0;
+	public TreeNode ancestor = this;
 
 	// statistics
 	public int size = 1, height = 1;
@@ -170,13 +179,216 @@ public class TreeNode extends Node {
 	}
 
 	public void reposition() {
-		fTRInitialization(0);
-		fTRPrePosition();
-		fTRDisposeThreads();
-		fTRPetrification(0);
+		// fTRInitialization(0);
+		// fTRPrePosition();
+		// fTRDisposeThreads();
+		// fTRPetrification(0);
 		// fTRCentering();
-		fTRCorrecting(this.fakex);
-		System.out.print("\n");
+		// fTRCorrecting(this.fakex);
+		// System.out.print("\n");
+		fALInitialization(0);
+		fALPrePosition(0);
+		fALPetrification(0, -prelim);
+	}
+
+	private void fALInitialization(int level) {
+		// System.out.print(level);
+		this.level = level;
+		this.modifier = 0;
+		this.prelim = 0;
+		TreeNode T = child;
+		level++;
+		while (T != null) {
+			T.fALInitialization(level);
+			T = T.right;
+		}
+	}
+
+	private void fALPrePosition(int leftprelim) {
+		if (isLeaf()) {
+			prelim = 0;
+			if (!isRoot()) {
+				if (parent.leftmostChild() != this) {
+					prelim = leftprelim + D.minsepx;
+				}
+			}
+		} else {
+			TreeNode T = child;
+			TreeNode U = child;
+			boolean firstrun = true;
+			while (T != null) {
+				T.fALGetInfo(1);
+				T.fALPrePosition(U.prelim);
+				T.fALGetInfo(2);
+				NodePair<TreeNode> subtree = new NodePair<TreeNode>();
+				subtree.left = U;
+				subtree.right = T;
+				this.fALApportion(subtree);
+				if (firstrun) {
+					firstrun = false;
+				} else {
+					U = U.right;
+				}
+				T = T.right;
+			}
+			fALExecuteShifts();
+			int midpoint = (this.leftmostChild().prelim + this.rightmostChild().prelim) / 2;
+			if (leftprelim != 0) {
+				prelim = leftprelim + D.minsepx;
+				modifier = prelim - midpoint;
+			} else {
+				prelim = midpoint;
+			}
+		}
+	}
+
+	private void fALExecuteShifts() {
+		int sigma = 0;
+		int change = 0;
+		TreeNode T = child;
+		Stack<TreeNode> S = new Stack<TreeNode>();
+		while (T != null) {
+			S.push(T);
+			T = T.right;
+		}
+		while (!S.empty()) {
+			T = S.pop();
+			T.prelim += sigma;
+			T.modifier += sigma;
+			change += T.change;
+			sigma += T.shift + change;
+		}
+	}
+
+	private void fALMoveSubtree(TreeNode left, int sigma) {
+		System.out.print(left.key + ", " + this.key + "\n");
+		fALGetInfo(3);
+		
+		TreeNode P = left.parent;
+		if (P != this.parent) {
+			System.out.print("bumbac\n");
+			return;
+		}
+		int leftnumber = 1;
+		int rightnumber = 1;
+		TreeNode T = P.child;
+		while (T != left) {
+			leftnumber++;
+			T = T.right;
+		}
+		T = P.child;
+		while (T != this) {
+			rightnumber++;
+			T = T.right;
+		}
+
+		int theta = leftnumber - rightnumber;
+		this.change -= sigma / theta;
+		this.shift += sigma;
+		left.change += sigma / theta;
+		this.prelim += sigma;
+		this.modifier += sigma;
+		fALGetInfo(4);
+	}
+
+	private void fALApportion(NodePair<TreeNode> subtree) {
+		if (subtree.left.parent != subtree.right.parent) {
+			System.out.print("Error in fALApportion().\n");
+			return;
+		}
+		if (subtree.left == subtree.right) {
+			return;
+		}
+		TreeNode vor;
+		TreeNode vfr = vor = subtree.right;
+		TreeNode vfl = subtree.left;
+		TreeNode vol = subtree.left.parent.child;
+		int sfr = vfr.modifier;
+		int sor = vor.modifier;
+		int sfl = vfl.modifier;
+		int sol = vol.modifier;
+
+		// not sure about references
+		while ((vfl.rightmostChild() != null) && (vfr.leftmostChild() != null)) {
+			vfl = vfl.rightmostChild();
+			vfr = vfr.leftmostChild();
+			vol = vol.leftmostChild();
+			vor = vor.rightmostChild();
+			vor.ancestor = subtree.right;
+			int sigma = ((vfl.prelim + sfl) - (vfr.prelim + sfr)) + D.minsepx;
+			System.out.print(sigma + ": ");
+			if (sigma > 0) {
+				TreeNode elevator = vfl;
+				while (elevator.parent != subtree.right.parent) {
+					elevator = elevator.parent;
+				}
+
+				subtree.right.fALMoveSubtree(elevator, sigma);
+				sfr += sigma;
+				sor += sigma;
+			}
+			sfl += vfl.modifier;
+			sfr += vfr.modifier;
+			sol += vol.modifier;
+			sor += vor.modifier;
+		}
+		if ((vfl.rightmostChild() != null) && (vor.rightmostChild()) == null) {
+			vor.thread = true;
+			vor.child = vfl.rightmostChild();
+			vor.modifier += sfl - sor;
+		} else if ((vfr.leftmostChild() != null)
+				&& (vol.leftmostChild() == null)) {
+			vol.thread = true;
+			vol.child = vfr.leftmostChild();
+			vol.modifier += sfr - sol;
+		}
+	}
+
+	private void fALPetrification(int modsum, int correction) {
+		fALGetInfo(47, modsum);
+		tox = prelim + correction + modsum + shift;
+		toy = this.level * D.minsepy;
+		if (tox < D.x1) {
+			D.x1 = tox;
+		}
+		if (tox > D.x2) {
+			D.x2 = tox;
+		}
+		// this case should be always false
+		if (toy < D.y1) {
+			D.y1 = toy;
+		}
+		if (toy > D.y2) {
+			D.y2 = toy;
+		}
+		this.goTo(tox, toy);
+
+		/*
+		 * Dispose threads
+		 */
+		if (this.thread) {
+			this.thread = false;
+			this.child = null;
+		}
+
+		modsum += this.modifier;
+		TreeNode T = child;
+		while (T != null) {
+			T.fALPetrification(modsum, correction);
+			T = T.right;
+		}
+	}
+
+	private void fALGetInfo(int phase) {
+		System.out.print("Node: " + key + " prelim: " + prelim + " mod: "
+				+ modifier + " change: " + change + " shift: " + shift + " ("
+				+ phase + ")" + "\n");
+	}
+
+	private void fALGetInfo(int phase, int modsum) {
+		System.out.print("Node: " + key + " prelim: " + prelim + " mod: "
+				+ modifier + " modsum: " + modsum + " change: " + change
+				+ " shift: " + shift + " (" + phase + ")" + "\n");
 	}
 
 	/**
@@ -205,9 +417,12 @@ public class TreeNode extends Node {
 		 * form result.child for left and result.right for right
 		 */
 		NodePair<TreeNode> result = new NodePair<TreeNode>();
-		int minsep = D.xspan + 2 * D.radius;
 
 		if (isLeaf()) {
+			/*
+			 * if(!isRoot()) if (this.parent.leftmostChild() == this) { offset =
+			 * 0; } else { offset = D.minsepx; }
+			 */
 			offset = 0;
 			result.left = this;
 			result.right = this;
@@ -251,9 +466,9 @@ public class TreeNode extends Node {
 				// " roffset: "
 				// + roffset + " LeftSubtree.offset: " + LeftSubtree.offset
 				// + " loffset: " + loffset + "\n");
-				if (distance < minsep) {
-					RightSubtree.offset += (minsep - distance);
-					roffset += (minsep - distance);
+				if (distance < D.minsepx) {
+					RightSubtree.offset += (D.minsepx - distance);
+					roffset += (D.minsepx - distance);
 				}
 				// (Goin') To da floooooor!
 				// System.out.print("New distance at L: " + L.key + " R: " +
@@ -367,7 +582,7 @@ public class TreeNode extends Node {
 		 * Change coordinates
 		 */
 		fakex = leftestx + this.offset;
-		fakey = this.level * (D.yspan + 2 * D.radius);
+		fakey = this.level * (D.minsepy);
 
 		TreeNode T = child;
 		while (T != null) {
