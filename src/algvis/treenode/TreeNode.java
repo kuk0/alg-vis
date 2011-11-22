@@ -1,6 +1,7 @@
 package algvis.treenode;
 
 import java.awt.Color;
+import java.util.Stack;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -44,7 +45,7 @@ public class TreeNode extends Node {
 	}
 
 	public boolean isLeaf() {
-		return child == null;
+		return (child == null) || (thread);
 	}
 
 	// calc() and calcTree() methods analogous to BSTNode ones
@@ -179,14 +180,15 @@ public class TreeNode extends Node {
 	}
 
 	public void reposition() {
+		fTRDisposeThreads();
 		fTRInitialization(0);
 		fTRPrePosition();
 		fTRPetrification(0);
-		// fTRCentering();
-		// fTRCorrection();
-		// fTRCorrection2(0);
+		fTRCentering();
+//		fTRDisposeThreads();
+//		fTRCorrection();
+//		fTRCorrection2(0);
 		fTRBounding(-fakex);
-		fTRDisposeThreads();
 		System.out.print("\n");
 	}
 
@@ -203,6 +205,7 @@ public class TreeNode extends Node {
 		this.level = level;
 		this.offset = 0;
 		this.modifier = 0;
+		this.toExtremeSon = 0;
 		TreeNode T = child;
 		level++;
 		while (T != null) {
@@ -356,8 +359,9 @@ public class TreeNode extends Node {
 		fakex = leftestx + this.offset;
 		fakey = this.level * (D.minsepy);
 
-		if (thread)
+		if (isLeaf()) {
 			return;
+		}
 		TreeNode T = child;
 		while (T != null) {
 			T.fTRPetrification(fakex);
@@ -370,7 +374,7 @@ public class TreeNode extends Node {
 	 * fakex attribute.
 	 */
 	private void fTRCentering() {
-		if (isLeaf() || thread) {
+		if (isLeaf()) {
 			return;
 		}
 
@@ -380,66 +384,134 @@ public class TreeNode extends Node {
 			T = T.right;
 		}
 
+		// allmighty references! :-/
 		T = this.child;
-		TreeNode U = child;
-		boolean firstrun = true;
+		Stack<TreeNode> stack = new Stack<TreeNode>();
+		while (T != null) {
+			NodePair<TreeNode> N = new NodePair<TreeNode>();
+			N.left = T;
+			stack.push(T);
+			T = T.right;
+		}
+
+		TreeNode U = stack.pop();
+		while (!stack.empty()) {
+			T = stack.pop();
+			// System.out.print(T.key+ ", " + U.key+ " ");
+			if (T.isLeaf()) {
+				T.fakex = U.fakex - D.minsepx;
+			}
+			U = T;
+		}
+		// uff.. it's working correctly
+		// but something does not :-/
+
+		T = this.child.right;
+		U = child;
 		while (T != null) {
 			if (T.isLeaf()) {
 				T.fakex = U.fakex + D.minsepx;
 			}
 
-			if (firstrun) {
-				firstrun = false;
-			} else {
-				U = U.right;
-			}
+			U = U.right;
 			T = T.right;
 		}
 
-		int toExtreme = (this.rightmostChild().fakex - this.leftmostChild().fakex) / 2;
-		this.fakex = leftmostChild().fakex + toExtreme;
+		this.toExtremeSon = (this.rightmostChild().fakex - this.leftmostChild().fakex) / 2;
+		this.fakex = leftmostChild().fakex + toExtremeSon;
 	}
 
-	private void fTRCorrection() {
+	public void fTRDisposeThreads() {
+		/*
+		 * Dispose threads
+		 */
+		if (this.thread) {
+			this.thread = false;
+			this.child = null;
+		}
+
+		TreeNode T = child;
+		while (T != null) {
+			T.fTRDisposeThreads();
+			T = T.right;
+		}
+	}
+
+	private NodePair<TreeNode> fTRCorrection() {
+		NodePair<TreeNode> result = new NodePair<TreeNode>();
+
 		// nothing to correct
-		if (isLeaf() || thread) {
-			return;
+		if (isLeaf()) {
+			result.left = this;
+			result.right = this;
+			return result;
 		}
 
 		TreeNode LeftSubtree = this.child;
 		TreeNode RightSubtree = this.child.right;
 
-		LeftSubtree.fTRCorrection();
+		NodePair<TreeNode> fromLeftSubtree = LeftSubtree.fTRCorrection();
 
 		while (RightSubtree != null) {
 			TreeNode L = LeftSubtree;
 			TreeNode R = RightSubtree;
-			int pull = LeftSubtree.fakex + D.minsepx - RightSubtree.fakex;
-			int correction = -999999;
+			int leftx = LeftSubtree.fakex;
+			int rightx = RightSubtree.fakex;
+			int correction = 0;
+			NodePair<TreeNode> fromRightSubtree = RightSubtree.fTRCorrection();
 
 			while ((L != null) && (R != null)) {
-				L.fTRGetInfo(2);
-				R.fTRGetInfo(3);
-				int distance = L.fakex - R.fakex + D.minsepx;
-				if (distance > correction) {
-					correction = distance;
+				int distance = -(rightx - leftx - D.minsepx);
+				System.out.print(L.key + "-" + leftx + "," + R.key + "-"
+						+ rightx + "; " + distance + "\n");
+				if (distance > 0) {
+					correction += distance;
+					rightx += distance;
 				}
+
+				leftx += L.toExtremeSon;
+				rightx -= R.toExtremeSon;
 				L = L.rightmostChild();
 				R = R.leftmostChild();
 			}
 
-			RightSubtree.modifier = correction;
+			if ((L == null) && (R == null)) {
+				fromLeftSubtree.left = fromLeftSubtree.left;
+				fromLeftSubtree.right = fromRightSubtree.right;
+			} else if ((L == null) && (R != null)) {
+				fromLeftSubtree.left.thread = true;
+				fromLeftSubtree.left.child = R;
+
+				fromLeftSubtree.left = fromRightSubtree.left;
+				fromLeftSubtree.right = fromRightSubtree.right;
+			} else if ((L != null) && (R == null)) {
+				fromRightSubtree.right.thread = true;
+				fromRightSubtree.right.child = L;
+			} else {
+				System.out.print("Error: unexpected finish in while loop at "
+						+ "L: " + LeftSubtree.key + " R: " + RightSubtree.key
+						+ "\n");
+			}
+
+			RightSubtree.modifier = -correction;
+
 			LeftSubtree = LeftSubtree.right;
+			if (LeftSubtree != RightSubtree) {
+				System.out.print("Error in while cycle.\n");
+			}
 			RightSubtree = RightSubtree.right;
 		}
+
+		return fromLeftSubtree;
 	}
 
 	private void fTRCorrection2(int modsum) {
 		modsum += modifier;
-		fakex += modsum;
+		// fakex += modsum;
 
-		if (thread)
+		if (isLeaf()) {
 			return;
+		}
 		TreeNode T = child;
 		while (T != null) {
 			T.fTRCorrection2(modsum);
@@ -452,7 +524,7 @@ public class TreeNode extends Node {
 		fakex += correction;
 		tox = fakex;
 		toy = fakey;
-		this.fTRGetInfo(3);
+		// this.fTRGetInfo(3);
 
 		if (tox < D.x1) {
 			D.x1 = tox;
@@ -469,8 +541,9 @@ public class TreeNode extends Node {
 		}
 		this.goTo(tox, toy);
 
-		if (thread)
+		if (isLeaf()) {
 			return;
+		}
 		TreeNode T = child;
 		while (T != null) {
 			T.fTRBounding(correction);
@@ -478,22 +551,16 @@ public class TreeNode extends Node {
 		}
 	}
 
-	private void fTRDisposeThreads() {
-		/*
-		 * Dispose threads
-		 */
-		if (this.thread) {
-			this.thread = false;
-			this.child = null;
-		}
-
-		TreeNode T = child;
-		while (T != null) {
-			T.fTRDisposeThreads();
-			T = T.right;
+	@SuppressWarnings("unused")
+	private int fTRLeftestx() {
+		if (child == null) {
+			return fakex;
+		} else {
+			return leftmostChild().fTRLeftestx();
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void fTRGetInfo(int phase) {
 		System.out.print("Node: " + key + " fakex: " + fakex + " mod: "
 				+ modifier + " change: " + change + " shift: " + shift + " ("

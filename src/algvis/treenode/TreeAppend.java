@@ -16,6 +16,7 @@ public class TreeAppend extends Algorithm {
 
 	@Override
 	public void run() {
+		T.root.fTRDisposeThreads();
 		T.root.append(X, Y);
 		T.reposition();
 		mysuspend();
