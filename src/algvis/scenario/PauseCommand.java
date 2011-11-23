@@ -4,9 +4,6 @@ import org.jdom.Element;
 
 public class PauseCommand implements Command {
 
-	public PauseCommand() {
-	}
-
 	@Override
 	public void execute() {
 	}

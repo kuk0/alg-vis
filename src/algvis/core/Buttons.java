@@ -32,6 +32,8 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	ICheckBox pause;
 	ChLabel stats;
 	JButton zoomIn, zoomOut;
+	
+	private Thread scenarioTraverser;
 
 	// ILabel zoomLabel;
 	abstract public void actionButtons(JPanel P);
@@ -145,31 +147,46 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent evt) {
-		// TODO Better disabling/enabling "previous" and "next" buttons or
-		// adding subScenario to all Algorithms
+		if (scenarioTraverser != null && scenarioTraverser.isAlive()) {
+			scenarioTraverser.interrupt();
+			try {
+				scenarioTraverser.join();
+			} catch (InterruptedException e) {
+				return;
+			}
+		}
 		if (evt.getSource() == previous) {
-			if (D.scenario != null) {
-				D.scenario.previous();
-				if (D.scenario.hasPrevious() == false) {
-					disablePrevious();
+			scenarioTraverser = new Thread(new Runnable() {
+				public void run() {
+					if (D.scenario.hasPrevious()) {
+						D.scenario.previous();
+					}
+					if (!D.scenario.hasPrevious()) {
+						disablePrevious();
+					}
+					enableNext();
 				}
-				enableNext();
-			} else {
-				disablePrevious();
-			}
+			});
+			scenarioTraverser.start();
 		} else if (evt.getSource() == next) {
-			if (D.scenario != null && D.scenario.hasNext()) {
-				D.scenario.next();
-			} else if (D.A.suspended) {
-				D.next();
-			} else {
-				disableNext();
-			}
-			if (D.scenario != null) {
-				enablePrevious();
-			} else {
-				disablePrevious();
-			}
+			scenarioTraverser = new Thread(new Runnable() {
+				public void run() {
+					if (D.scenario != null) {
+						if (D.scenario.hasNext()) {
+							D.scenario.next();
+							if (!D.scenario.hasNext() && !D.A.suspended) {
+								disableNext();
+							}
+						} else if (D.A.suspended) {
+							D.next();
+						}
+						enablePrevious();
+					} else if (D.A.suspended) {
+						D.next();
+					}
+				}
+			});
+			scenarioTraverser.start();
 			// System.out.println("next");
 			// repaint();
 		} else if (evt.getSource() == clear) {

@@ -45,7 +45,7 @@ public class BSTNode extends Node {
 		if (v != null) {
 			v.parent = this;
 		}
-		if (D.subScenario != null) D.subScenario.add(new LinkLeftCommand(this, v));
+		if (D.scenario != null) D.scenario.add(new LinkLeftCommand(this, v));
 	}
 	
 	public void unlinkLeft(BSTNode v) {
@@ -60,7 +60,7 @@ public class BSTNode extends Node {
 		if (v != null) {
 			v.parent = this;
 		}
-		if (D.subScenario != null) D.subScenario.add(new LinkRightCommand(this, v));
+		if (D.scenario != null) D.scenario.add(new LinkRightCommand(this, v));
 	}
 	
 	public void unlinkRight(BSTNode v) {

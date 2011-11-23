@@ -21,9 +21,7 @@ public class ChangeStateCommand implements Command {
 
 	@Override
 	public void unexecute() {
-		if (from != Node.INVISIBLE) {
-			n.setState(from);
-		}
+		n.setState(from);
 	}
 
 	@Override

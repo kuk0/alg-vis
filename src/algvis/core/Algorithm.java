@@ -1,6 +1,7 @@
 package algvis.core;
 
-import algvis.scenario.AlgorithmScenario;
+import algvis.bst.BST;
+import algvis.scenario.NewAlgorithmCommand;
 import algvis.scenario.PauseCommand;
 
 /**
@@ -16,28 +17,26 @@ abstract public class Algorithm extends Thread {
 	private DataStructure D;
 	boolean suspended = false;
 
-	// only for compatibility until scenario is added to all algorithms
+	/**
+	 * rather use Algorithm(DataStructure D, String name)
+	 */
 	public Algorithm(DataStructure D) {
 		this.D = D;
 	}
 	
 	public Algorithm(DataStructure D, String name) {
 		this(D);
-		D.subScenario = new AlgorithmScenario(name);
-		D.scenario.add(D.subScenario);
+		D.scenario.add(new NewAlgorithmCommand(name));
 	}
 
 	/**
 	 * Mysuspend.
 	 */
 	public void mysuspend() {
-		if (D.subScenario != null) {
-			D.subScenario.add(new PauseCommand());
+		if (D.scenario != null) {
+			D.scenario.add(new PauseCommand());
 		}
 		if (D.M.pause) {
-			if (D.subScenario != null) {
-				D.subScenario.canAdd = false;
-			}
 			suspended = true;
 			synchronized (this) {
 				try {
@@ -45,10 +44,6 @@ abstract public class Algorithm extends Thread {
 						wait();
 					}
 				} catch (InterruptedException e) {
-				} finally {
-					if (D.subScenario != null) {
-						D.subScenario.canAdd = true;
-					}
 				}
 			}
 		}
@@ -66,10 +61,10 @@ abstract public class Algorithm extends Thread {
 	}
 
 	protected void finish() {
-		if (D.subScenario != null) {
-			D.subScenario.canAdd = false;
-			D.subScenario = null;
+		if (D instanceof BST) {
+			((BST) D).unsetNodeV();
 		}
+		D.scenario.add(new PauseCommand());
 	}
 	
 	public void setHeader(String s) {

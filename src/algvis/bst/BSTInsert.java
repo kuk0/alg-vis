@@ -11,7 +11,7 @@ public class BSTInsert extends Algorithm {
 	public BSTInsert(BST T, int x) {
 		super(T, "BSTInsert");
 		this.T = T;
-		v = T.v = new BSTNode(T, K = x);
+		v = T.setNodeV(new BSTNode(T, K = x));
 		v.bgColor(Colors.INSERT);
 		setHeader("insertion");
 	}
@@ -74,7 +74,6 @@ public class BSTInsert extends Algorithm {
 		mysuspend();
 		setText("done");
 		v.bgColor(Colors.NORMAL);
-		// T.v = null;
 		finish();
 	}
 }

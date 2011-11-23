@@ -4,13 +4,32 @@ import algvis.core.Dictionary;
 import algvis.core.StringUtils;
 import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.scenario.SetBSTNodeVCommand;
+import algvis.scenario.UnsetBSTNodeVCommand;
 
 public class BST extends Dictionary {
 	public static String dsName = "bst";
+	/*
+	 * TODO this.v could be "movingNode" in DataStracture or rather
+	 * DataStracture could have array of "movingNodes" (i.e. because of Heap),
+	 * so then we need only one "SetMovingNodesCommand" for all DataStractures
+	 * and no "SetBSTNodeVCommand", "SetHeapNodeVCommand",
+	 * "SetHeapNodeV2Command",...
+	 */
 	public BSTNode root = null, v = null;
 
 	public BST(VisPanel M) {
 		super(M, dsName);
+	}
+
+	public BSTNode setNodeV(BSTNode v) {
+		scenario.add(new SetBSTNodeVCommand(this, v));
+		return this.v = v;
+	}
+
+	public void unsetNodeV() {
+		scenario.add(new UnsetBSTNodeVCommand(this, v));
+		v = null;
 	}
 
 	@Override
