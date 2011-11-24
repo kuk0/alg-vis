@@ -12,7 +12,7 @@ public class TreeNode extends Node {
 
 	public TreeNode child = null, right = null, parent = null;
 
-	// variables for TR, probably there will be some changes to offset variables
+	// variables for TR
 	public int offset = 0; // offset from base line, base line has x-coord
 							// equaled to x-coord of leftmost child
 	public int level; // "height" from root
@@ -21,13 +21,10 @@ public class TreeNode extends Node {
 	public int toBaseline = 0; // distance to child's baseline
 	public int modifier = 0;
 	public int fakex = 0, fakey = 0; // temporary coordinates of the node
+	public int number = 1;
 
-	// another variables for fAL
-	public int prelim = 0;
-	// public int sigma = 0;
-	public int change = 0;
-	public int shift = 0;
-	public TreeNode ancestor = this;
+	public int change = 0, shift = 0; // for evenly spaced smaller subtrees
+	public TreeNode ancestor = this; // unused variable for now
 
 	// statistics
 	public int size = 1, height = 1;
@@ -181,23 +178,17 @@ public class TreeNode extends Node {
 	}
 
 	public void reposition() {
-		fTRDisposeThreads();
 		fTRInitialization(0);
 		fTRPrePosition();
 		fTRDisposeThreads();
 		fTRPetrification(0);
-		// fTRCentering();
-		// fTRDisposeThreads();
-		// fTRCorrection();
-		// fTRCorrection2(0);
 		fTRBounding(-fakex);
 		System.out.print("\n");
 	}
 
 	/**
-	 * First traverse of tree in repositioning process
-	 * 
-	 * Sets a proper level to self and sons
+	 * First traverse of tree in repositioning process. Set some basic
+	 * variables.
 	 * 
 	 * @param level
 	 *            current level in tree
@@ -211,17 +202,22 @@ public class TreeNode extends Node {
 		this.toBaseline = 0;
 		TreeNode T = child;
 		level++;
+		int noofchild = 1;
 		while (T != null) {
 			T.fTRInitialization(level);
+			T.number = noofchild;
 			T = T.right;
+			noofchild++;
 		}
 	}
 
+	/**
+	 * The core of algorithm. Computes relative coordinates, uses threads to
+	 * keep subtrees/subforests bounded and easy-track for spacing.
+	 * 
+	 * @return Leftmost and rightmost nodes on the last level of subtree
+	 */
 	private NodePair<TreeNode> fTRPrePosition() {
-		/*
-		 * Notice that result contains leftmost and rightmost deepest node in
-		 * form result.child for left and result.right for right
-		 */
 		NodePair<TreeNode> result = new NodePair<TreeNode>();
 
 		if (isLeaf()) {
@@ -237,12 +233,12 @@ public class TreeNode extends Node {
 		/*
 		 * So lets get result from first child
 		 */
-
 		NodePair<TreeNode> fromLeftSubtree = LeftSubtree.fTRPrePosition();
 		result = fromLeftSubtree;
 
 		/*
-		 * let's the fun begin
+		 * Spacing right subtree with left subforest. It will pre-compute shifts
+		 * for distributing smaller subtrees.
 		 */
 		while (RightSubtree != null) {
 			NodePair<TreeNode> fromRightSubtree = RightSubtree.fTRPrePosition();
@@ -254,29 +250,13 @@ public class TreeNode extends Node {
 
 			//
 			while ((L != null) && (R != null)) {
-				/*
-				 * LeftSubtree.offset + loffset is a distance from L pointer to
-				 * "this" node. similar - RightSubtree.offset + roffset is a
-				 * distance from R pointer to "this" node
-				 */
 				int distance = (roffset - loffset);
-				// System.out.print("Distance at L: " + L.key + " R: " +
-				// R.key
-				// + " is " + distance + ".\n");
-				// System.out.print("RightSubtree.offset: " +
-				// RightSubtree.offset +
-				// " roffset: "
-				// + roffset + " LeftSubtree.offset: " + LeftSubtree.offset
-				// + " loffset: " + loffset + "\n");
 				if (distance < D.minsepx) {
 					RightSubtree.offset += (D.minsepx - distance);
 					roffset += (D.minsepx - distance);
 				}
-				// (Goin') To da floooooor!
 				/*
-				 * But watch out! When you pass through thread there could be
-				 * and there will be for sure incorrect offset! And what if
-				 * there is another threaded node?
+				 * I think this (Elevator) part causes O(n^2) (un)efficiency
 				 */
 				if (!L.thread) {
 					loffset += L.toExtremeSon;
@@ -323,15 +303,13 @@ public class TreeNode extends Node {
 			}
 
 			/*
-			 * Guess what?! L & R pointers are set right there where we want it.
-			 * :)
+			 * L & R pointers are set right for making thread easy
 			 */
-			// both left (conjucture of) subtree(s) and right subtree have
-			// the same height
+			// both left subforest and right subtree have the same height
 			if ((L == null) && (R == null)) {
 				fromLeftSubtree.left = fromLeftSubtree.left;
 				fromLeftSubtree.right = fromRightSubtree.right;
-				// left (conjucture of) subtree(s) is more shallow
+				// left subforest is more shallow
 			} else if ((L == null) && (R != null)) {
 				fromLeftSubtree.left.thread = true;
 				fromLeftSubtree.left.child = R;
@@ -342,17 +320,9 @@ public class TreeNode extends Node {
 			} else if ((L != null) && (R == null)) {
 				fromRightSubtree.right.thread = true;
 				fromRightSubtree.right.child = L;
-			} else {
-				System.out.print("Error: unexpected finish in while loop at "
-						+ "L: " + LeftSubtree.key + " R: " + RightSubtree.key
-						+ "\n");
 			}
 
 			LeftSubtree = LeftSubtree.right;
-			// it should be the same as RightSubtree
-			if (LeftSubtree != RightSubtree) {
-				System.out.print("Error in while cycle.\n");
-			}
 			RightSubtree = RightSubtree.right;
 		}
 
@@ -364,15 +334,30 @@ public class TreeNode extends Node {
 	}
 
 	/**
-	 * 
-	 * @param leftestx
-	 *            x-coordinate of leftmost sibling (the baseline)
+	 * Disposes threads. Useful as stand-alone only for testing.
 	 */
-	private void fTRPetrification(int leftestx) {
-		/*
-		 * Change coordinates
-		 */
-		fakex = leftestx + this.offset;
+	public void fTRDisposeThreads() {
+		if (this.thread) {
+			this.thread = false;
+			this.child = null;
+		}
+	
+		TreeNode T = child;
+		while (T != null) {
+			T.fTRDisposeThreads();
+			T = T.right;
+		}
+	}
+
+	/**
+	 * Changes relative coordinates to absolute. Spacing smaller subtrees work
+	 * with absolute coordinates.
+	 * 
+	 * @param baseline
+	 *            x-coordinate of the baseline
+	 */
+	private void fTRPetrification(int baseline) {
+		fakex = baseline + this.offset;
 		fakey = this.level * (D.minsepy);
 
 		if (isLeaf()) {
@@ -386,20 +371,23 @@ public class TreeNode extends Node {
 	}
 
 	/**
-	 * Correcting centering of parents. From now on algorithm works only with
-	 * fakex attribute.
+	 * This will be overwritten.
 	 */
-	private void fTRCentering() {
+	@SuppressWarnings("unused")
+	private void fTRLeafGathering() {
 		if (isLeaf()) {
 			return;
 		}
 
 		TreeNode T = this.child;
 		while (T != null) {
-			T.fTRCentering();
+			T.fTRLeafGathering();
 			T = T.right;
 		}
 
+		/*
+		 * Traverse from right to left
+		 */
 		// allmighty references! :-/
 		T = this.child;
 		Stack<TreeNode> stack = new Stack<TreeNode>();
@@ -422,6 +410,9 @@ public class TreeNode extends Node {
 		// uff.. it's working correctly
 		// but something does not :-/
 
+		/*
+		 * Traverse from left to right
+		 */
 		T = this.child.right;
 		U = child;
 		while (T != null) {
@@ -432,95 +423,25 @@ public class TreeNode extends Node {
 			U = U.right;
 			T = T.right;
 		}
-
-		this.toExtremeSon = (this.rightmostChild().fakex - this.leftmostChild().fakex) / 2;
-		this.fakex = leftmostChild().fakex + toExtremeSon;
 	}
 
-	public void fTRDisposeThreads() {
-		/*
-		 * Dispose threads
-		 */
-		if (this.thread) {
-			this.thread = false;
-			this.child = null;
-		}
-
-		TreeNode T = child;
-		while (T != null) {
-			T.fTRDisposeThreads();
-			T = T.right;
-		}
-	}
-
+	/**
+	 * this will be overwritten
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("unused")
 	private NodePair<TreeNode> fTRCorrection() {
 		NodePair<TreeNode> result = new NodePair<TreeNode>();
-
-		// nothing to correct
-		if (isLeaf()) {
-			result.left = this;
-			result.right = this;
-			return result;
-		}
-
-		TreeNode LeftSubtree = this.child;
-		TreeNode RightSubtree = this.child.right;
-
-		NodePair<TreeNode> fromLeftSubtree = LeftSubtree.fTRCorrection();
-
-		while (RightSubtree != null) {
-			TreeNode L = LeftSubtree;
-			TreeNode R = RightSubtree;
-			int leftx = LeftSubtree.fakex;
-			int rightx = RightSubtree.fakex;
-			int correction = 0;
-			NodePair<TreeNode> fromRightSubtree = RightSubtree.fTRCorrection();
-
-			while ((L != null) && (R != null)) {
-				int distance = -(rightx - leftx - D.minsepx);
-				System.out.print(L.key + "-" + leftx + "," + R.key + "-"
-						+ rightx + "; " + distance + "\n");
-				if (distance > 0) {
-					correction += distance;
-					rightx += distance;
-				}
-
-				leftx += L.toExtremeSon;
-				rightx -= R.toExtremeSon;
-				L = L.rightmostChild();
-				R = R.leftmostChild();
-			}
-
-			if ((L == null) && (R == null)) {
-				fromLeftSubtree.left = fromLeftSubtree.left;
-				fromLeftSubtree.right = fromRightSubtree.right;
-			} else if ((L == null) && (R != null)) {
-				fromLeftSubtree.left.thread = true;
-				fromLeftSubtree.left.child = R;
-
-				fromLeftSubtree.left = fromRightSubtree.left;
-				fromLeftSubtree.right = fromRightSubtree.right;
-			} else if ((L != null) && (R == null)) {
-				fromRightSubtree.right.thread = true;
-				fromRightSubtree.right.child = L;
-			} else {
-				System.out.print("Error: unexpected finish in while loop at "
-						+ "L: " + LeftSubtree.key + " R: " + RightSubtree.key
-						+ "\n");
-			}
-
-			RightSubtree.modifier = -correction;
-
-			LeftSubtree = LeftSubtree.right;
-			if (LeftSubtree != RightSubtree) {
-				System.out.print("Error in while cycle.\n");
-			}
-			RightSubtree = RightSubtree.right;
-		}
-
-		return fromLeftSubtree;
+		return result;
 	}
 
+	/**
+	 * this will be overwritten
+	 * 
+	 * @param modsum
+	 */
+	@SuppressWarnings("unused")
 	private void fTRCorrection2(int modsum) {
 		modsum += modifier;
 		// fakex += modsum;
@@ -536,6 +457,13 @@ public class TreeNode extends Node {
 
 	}
 
+	/**
+	 * Final step of layout algorithm. Changes temporary coordinates to real
+	 * one. And computes boundary of a tree.
+	 * 
+	 * @param correction
+	 * 		Useful when you want make root rooted at [0,0]
+	 */
 	private void fTRBounding(int correction) {
 		fakex += correction;
 		tox = fakex;
@@ -568,29 +496,16 @@ public class TreeNode extends Node {
 	}
 
 	@SuppressWarnings("unused")
-	private int fTRLeftestx() {
-		if (child == null) {
-			return fakex;
-		} else {
-			return leftmostChild().fTRLeftestx();
-		}
-	}
-
-	@SuppressWarnings("unused")
 	private void fTRGetInfo(int phase) {
 		System.out.print("Node: " + key + " fakex: " + fakex + " mod: "
 				+ modifier + " change: " + change + " shift: " + shift + " ("
 				+ phase + ")" + "\n");
 	}
 
-	@SuppressWarnings("unused")
-	private void fTRGetInfo(int phase, int modsum) {
+	private void fTRGetInfo(int phase, int variable) {
 		System.out
 				.print("Node: " + key + " fakex: " + fakex + " mod: "
-						+ modifier /*
-									 * + " change: " + change + " shift: " +
-									 * shift
-									 */
+						+ modifier + " change: " + change + " shift: " + shift
 						+ " offset: " + offset + " toE: " + toExtremeSon
 						+ " toB: " + toBaseline + " thread: " + thread + " ("
 						+ phase + ")" + "\n");
