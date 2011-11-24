@@ -18,6 +18,7 @@ public class TreeNode extends Node {
 	public int level; // "height" from root
 	public boolean thread = false; // is this node threaded?
 	public int toExtremeSon = 0; // offset from leftest son
+	public int toBaseline = 0; // distance to child's baseline
 	public int modifier = 0;
 	public int fakex = 0, fakey = 0; // temporary coordinates of the node
 
@@ -183,11 +184,12 @@ public class TreeNode extends Node {
 		fTRDisposeThreads();
 		fTRInitialization(0);
 		fTRPrePosition();
+		fTRDisposeThreads();
 		fTRPetrification(0);
-		fTRCentering();
-//		fTRDisposeThreads();
-//		fTRCorrection();
-//		fTRCorrection2(0);
+		// fTRCentering();
+		// fTRDisposeThreads();
+		// fTRCorrection();
+		// fTRCorrection2(0);
 		fTRBounding(-fakex);
 		System.out.print("\n");
 	}
@@ -206,6 +208,7 @@ public class TreeNode extends Node {
 		this.offset = 0;
 		this.modifier = 0;
 		this.toExtremeSon = 0;
+		this.toBaseline = 0;
 		TreeNode T = child;
 		level++;
 		while (T != null) {
@@ -246,8 +249,8 @@ public class TreeNode extends Node {
 
 			TreeNode L = LeftSubtree;
 			TreeNode R = RightSubtree;
-			int loffset = L.offset;
-			int roffset = RightSubtree.offset = L.offset;
+			int loffset = LeftSubtree.offset;
+			int roffset = RightSubtree.offset = LeftSubtree.offset;
 
 			//
 			while ((L != null) && (R != null)) {
@@ -270,44 +273,53 @@ public class TreeNode extends Node {
 					roffset += (D.minsepx - distance);
 				}
 				// (Goin') To da floooooor!
-				// System.out.print("New distance at L: " + L.key + " R: " +
-				// R.key
-				// + " is " + distance + ".\n");
-				// System.out.print("RightSubtree.offset: " +
-				// RightSubtree.offset +
-				// " roffset: "
-				// + roffset + " LeftSubtree.offset: " + LeftSubtree.offset
-				// + " loffset: " + loffset + "\n");
 				/*
 				 * But watch out! When you pass through thread there could be
 				 * and there will be for sure incorrect offset! And what if
 				 * there is another threaded node?
 				 */
-				boolean LwasThread = L.thread;
-				TreeNode LNext = L.rightmostChild();
-				if (LNext != null) {
-					loffset += LNext.offset;
-				}
-				L = LNext;
-
-				TreeNode RNext = R.leftmostChild();
-				if (RNext != null) {
-					roffset += RNext.offset;
-				}
-				R = RNext;
-
-				// note that Elevator on R always finish in RightSubtree
-				TreeNode Elevator = null;
-				if (LwasThread) {
-					LwasThread = false;
+				if (!L.thread) {
+					loffset += L.toExtremeSon;
+				} else {
 					loffset = 0;
-					Elevator = L;
-					// I am not very sure about references.. :-/
-					while (Elevator.parent != this.parent) {
-						loffset += Elevator.offset;
+
+					System.out.print(L.key + "->" + L.child.key + ": ");
+					TreeNode Elevator = L.child;
+					int cursep = 0;
+					while (Elevator.parent != LeftSubtree.parent) {
+						System.out.print(cursep + ", ");
+						cursep += Elevator.offset
+								- Elevator.parent.leftmostChild().offset
+								- Elevator.parent.toExtremeSon;
 						Elevator = Elevator.parent;
 					}
+
+					loffset = Elevator.offset + cursep;
+					System.out.print(loffset + "\n");
 				}
+
+				if (!R.thread) {
+					roffset -= R.toExtremeSon;
+				} else {
+					roffset = 0;
+
+					System.out.print(R.key + "->" + R.child.key + ": ");
+					TreeNode Elevator = R.child;
+					int cursep = 0;
+					do {
+						System.out.print(cursep + ", ");
+						cursep += Elevator.offset
+								- Elevator.parent.leftmostChild().offset
+								- Elevator.parent.toExtremeSon;
+						Elevator = Elevator.parent;
+					} while (Elevator != RightSubtree);
+
+					roffset = RightSubtree.offset + cursep;
+					System.out.print(roffset + "\n");
+				}
+
+				L = L.rightmostChild();
+				R = R.leftmostChild();
 			}
 
 			/*
@@ -344,6 +356,10 @@ public class TreeNode extends Node {
 			RightSubtree = RightSubtree.right;
 		}
 
+		this.toExtremeSon = (rightmostChild().offset - leftmostChild().offset) / 2;
+		this.toBaseline = leftmostChild().offset + toExtremeSon;
+		this.offset += toExtremeSon;
+
 		return fromLeftSubtree;
 	}
 
@@ -364,7 +380,7 @@ public class TreeNode extends Node {
 		}
 		TreeNode T = child;
 		while (T != null) {
-			T.fTRPetrification(fakex);
+			T.fTRPetrification(fakex - toBaseline);
 			T = T.right;
 		}
 	}
@@ -524,7 +540,7 @@ public class TreeNode extends Node {
 		fakex += correction;
 		tox = fakex;
 		toy = fakey;
-		// this.fTRGetInfo(3);
+		this.fTRGetInfo(3, toExtremeSon);
 
 		if (tox < D.x1) {
 			D.x1 = tox;
@@ -569,9 +585,15 @@ public class TreeNode extends Node {
 
 	@SuppressWarnings("unused")
 	private void fTRGetInfo(int phase, int modsum) {
-		System.out.print("Node: " + key + " fakex: " + fakex + " mod: "
-				+ modifier + " modsum: " + modsum + " change: " + change
-				+ " shift: " + shift + " (" + phase + ")" + "\n");
+		System.out
+				.print("Node: " + key + " fakex: " + fakex + " mod: "
+						+ modifier /*
+									 * + " change: " + change + " shift: " +
+									 * shift
+									 */
+						+ " offset: " + offset + " toE: " + toExtremeSon
+						+ " toB: " + toBaseline + " thread: " + thread + " ("
+						+ phase + ")" + "\n");
 	}
 
 }
