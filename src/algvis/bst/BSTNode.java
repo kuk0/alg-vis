@@ -97,7 +97,7 @@ public class BSTNode extends Node {
 	}
 
 	public void drawTree(View v) {
-		if (this.state != INVISIBLE) {
+		if (state != INVISIBLE) {
 			if (thread) {
 				v.setColor(Color.red);
 			} else {
@@ -226,7 +226,7 @@ public class BSTNode extends Node {
 	private void fTRInitialization(int level) {
 		// this.state = INVISIBLE;
 		this.level = level;
-		this.offset = 0;
+		offset = 0;
 		if (left != null)
 			left.fTRInitialization(level + 1);
 		if (right != null)
@@ -234,8 +234,6 @@ public class BSTNode extends Node {
 	}
 
 	/**
-	 * Second & third traverse of tree in fbtr
-	 * 
 	 * Sets threads with help from extreme nodes. Node is extreme when is lay at
 	 * the highest level and is leftmost/rightmost.
 	 * 
@@ -298,13 +296,13 @@ public class BSTNode extends Node {
 
 			int loffset = 0;
 			int roffset = 0;
-			BSTNode L = this.left;
-			BSTNode R = this.right;
+			BSTNode L = left;
+			BSTNode R = right;
 			/*
-			 * A little change - left.offset will be 0 and only right.offset
-			 * accumulates. Offsets will be corrected after run. The reason is
-			 * clear - it will be much more easier to transform to m-ary trees.
-			 * Notice that offset could be a negative integer!
+			 * left.offset will be 0 and only right.offset accumulates. Offsets
+			 * will be corrected after run. The reason is clear - it will be
+			 * much more easier to transform to m-ary trees. Notice that offset
+			 * could be a negative integer!
 			 */
 			left.offset = 0;
 			right.offset = 0;
@@ -402,20 +400,20 @@ public class BSTNode extends Node {
 			if ((L == null) && (R == null)) {
 				result.left = fromLeftSubtree.left;
 				result.right = fromRightSubtree.right;
-			} else {
-				System.out.print("Error: unexpected finish in while loop at "
-						+ "L: " + left.key + " R: " + right.key + "\n");
 			}
 
 		}
 		return result;
 	}
 
+	/**
+	 * Disposes threads.
+	 */
 	private void fTRDisposeThreads() {
-		if (this.thread) {
-			this.thread = false;
-			this.left = null;
-			this.right = null;
+		if (thread) {
+			thread = false;
+			left = null;
+			right = null;
 		}
 		if (left != null) {
 			left.fTRDisposeThreads();
@@ -426,16 +424,16 @@ public class BSTNode extends Node {
 	}
 
 	/**
-	 * Fourth traverse in fbtr
+	 * Last traverse in the algorithm
 	 * 
-	 * Calculates real position from relative
+	 * Calculates real coordinates from relative position
 	 * 
 	 * @param xcoordinate
 	 *            real x coordinate of parent node
 	 */
 	private void fTRPetrification(int xcoordinate) {
-		tox = xcoordinate + this.offset;
-		toy = this.level * D.minsepy;
+		tox = xcoordinate + offset;
+		toy = level * D.minsepy;
 		if (tox < D.x1) {
 			D.x1 = tox;
 		}

@@ -52,14 +52,14 @@ public class TreeNode extends Node {
 	 * (properly) in its children.
 	 */
 	public void calc() {
-		this.size = 1;
-		this.height = 1;
+		size = 1;
+		height = 1;
 		if (!isLeaf()) {
 			TreeNode T = child;
 			while (T != null) {
-				this.size += T.size;
-				if (this.height <= T.height) {
-					this.height = T.height + 1;
+				size += T.size;
+				if (height <= T.height) {
+					height = T.height + 1;
 				}
 				T = T.right;
 			}
@@ -89,7 +89,7 @@ public class TreeNode extends Node {
 	 * from and to them
 	 */
 	public void drawTree(View v) {
-		if (this.state != INVISIBLE) {
+		if (state != INVISIBLE) {
 			if (thread) {
 				v.setColor(Color.red);
 				v.drawLine(x, y, child.x, child.y);
@@ -123,7 +123,7 @@ public class TreeNode extends Node {
 	public TreeNode find(int x, int y) {
 		if (inside(x, y))
 			return this;
-		TreeNode T = this.child;
+		TreeNode T = child;
 		TreeNode tmp = null;
 		while ((T != null) && (tmp == null)) {
 			tmp = T.find(x, y);
@@ -167,7 +167,7 @@ public class TreeNode extends Node {
 
 	public void append(int x, int j) {
 		if (key == x) {
-			addChild(new TreeNode(this.D, j));
+			addChild(new TreeNode(D, j));
 		} else {
 			TreeNode T = child;
 			while (T != null) {
@@ -196,10 +196,9 @@ public class TreeNode extends Node {
 	private void fTRInitialization(int level) {
 		// System.out.print(level);
 		this.level = level;
-		this.offset = 0;
-		this.modifier = 0;
-		this.toExtremeSon = 0;
-		this.toBaseline = 0;
+		offset = modifier = shift = change = 0;
+		toExtremeSon = 0;
+		toBaseline = 0;
 		TreeNode T = child;
 		level++;
 		int noofchild = 1;
@@ -227,8 +226,8 @@ public class TreeNode extends Node {
 			return result;
 		}
 
-		TreeNode LeftSubtree = this.child;
-		TreeNode RightSubtree = this.child.right;
+		TreeNode LeftSubtree = child;
+		TreeNode RightSubtree = child.right;
 
 		/*
 		 * So lets get result from first child
@@ -326,9 +325,9 @@ public class TreeNode extends Node {
 			RightSubtree = RightSubtree.right;
 		}
 
-		this.toExtremeSon = (rightmostChild().offset - leftmostChild().offset) / 2;
-		this.toBaseline = leftmostChild().offset + toExtremeSon;
-		this.offset += toExtremeSon;
+		toExtremeSon = (rightmostChild().offset - leftmostChild().offset) / 2;
+		toBaseline = leftmostChild().offset + toExtremeSon;
+		offset += toExtremeSon;
 
 		return fromLeftSubtree;
 	}
@@ -337,9 +336,9 @@ public class TreeNode extends Node {
 	 * Disposes threads. Useful as stand-alone only for testing.
 	 */
 	public void fTRDisposeThreads() {
-		if (this.thread) {
-			this.thread = false;
-			this.child = null;
+		if (thread) {
+			thread = false;
+			child = null;
 		}
 	
 		TreeNode T = child;
@@ -357,8 +356,8 @@ public class TreeNode extends Node {
 	 *            x-coordinate of the baseline
 	 */
 	private void fTRPetrification(int baseline) {
-		fakex = baseline + this.offset;
-		fakey = this.level * (D.minsepy);
+		fakex = baseline + offset;
+		fakey = level * (D.minsepy);
 
 		if (isLeaf()) {
 			return;
@@ -379,7 +378,7 @@ public class TreeNode extends Node {
 			return;
 		}
 
-		TreeNode T = this.child;
+		TreeNode T = child;
 		while (T != null) {
 			T.fTRLeafGathering();
 			T = T.right;
@@ -389,7 +388,7 @@ public class TreeNode extends Node {
 		 * Traverse from right to left
 		 */
 		// allmighty references! :-/
-		T = this.child;
+		T = child;
 		Stack<TreeNode> stack = new Stack<TreeNode>();
 		while (T != null) {
 			NodePair<TreeNode> N = new NodePair<TreeNode>();
@@ -413,7 +412,7 @@ public class TreeNode extends Node {
 		/*
 		 * Traverse from left to right
 		 */
-		T = this.child.right;
+		T = child.right;
 		U = child;
 		while (T != null) {
 			if (T.isLeaf()) {
@@ -444,7 +443,6 @@ public class TreeNode extends Node {
 	@SuppressWarnings("unused")
 	private void fTRCorrection2(int modsum) {
 		modsum += modifier;
-		// fakex += modsum;
 
 		if (isLeaf()) {
 			return;
