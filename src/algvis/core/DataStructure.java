@@ -42,6 +42,7 @@ abstract public class DataStructure {
 		unmark();
 		A = a;
 		M.B.enableNext();
+		M.B.enablePrevious();
 		A.start();
 		try {
 			A.join();
