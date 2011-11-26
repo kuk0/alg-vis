@@ -2,6 +2,7 @@ package algvis.bst;
 
 import algvis.core.Algorithm;
 import algvis.core.Colors;
+import algvis.core.Node;
 
 public class BSTFind extends Algorithm {
 	BST T;
@@ -9,9 +10,10 @@ public class BSTFind extends Algorithm {
 	int K;
 
 	public BSTFind(BST T, int x) {
-		super(T);
+		super(T, "BSTFind");
 		this.T = T;
-		v = T.v = new BSTNode(T, K = x);
+		v = T.setNodeV(new BSTNode(T, K = x, T.up()));
+		v.setState(Node.ALIVE);
 		v.bgColor(Colors.FIND);
 		setHeader("search");
 	}
@@ -76,5 +78,6 @@ public class BSTFind extends Algorithm {
 				mysuspend();
 			}
 		}
+		finish();
 	}
 }

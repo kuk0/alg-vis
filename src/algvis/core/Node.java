@@ -6,7 +6,6 @@ import algvis.scenario.ArrowCommand;
 import algvis.scenario.ChangeColorCommand;
 import algvis.scenario.ChangeStateCommand;
 import algvis.scenario.MoveCommand;
-import algvis.scenario.NoArrowCommand;
 
 /**
  * The Class Node.
@@ -63,6 +62,10 @@ public class Node {
 		setColor(Color.black, Colors.NORMAL);
 	}
 
+	public Node(DataStructure D, int key, int[] pos) {
+		this(D, key, pos[0], pos[1]);
+	}
+	
 	public Node(DataStructure D, int key) {
 		this(D, key, 0, 0);
 	}
@@ -120,7 +123,7 @@ public class Node {
 		dir = w;
 		arrow = Node.DIRARROW;
 		if (D.scenario != null) {
-			D.scenario.add(new ArrowCommand(this));
+			D.scenario.add(new ArrowCommand(this, true));
 		}
 	}
 
@@ -142,7 +145,7 @@ public class Node {
 	public void pointInDir(int angle) {
 		dir = null;
 		arrow = angle;
-		D.scenario.add(new ArrowCommand(this));
+		D.scenario.add(new ArrowCommand(this, true));
 	}
 
 	/**
@@ -150,8 +153,9 @@ public class Node {
 	 */
 	public void noArrow() {
 		if (D.scenario != null) {
-			D.scenario.add(new NoArrowCommand(this));
+			D.scenario.add(new ArrowCommand(this, false));
 		}
+		dir = null;
 		arrow = Node.NOARROW;
 	}
 
@@ -294,15 +298,25 @@ public class Node {
 		this.tox = tox;
 		this.toy = toy;
 		this.steps = steps;
-		if (state != Node.INVISIBLE && !D.M.S.V.inside(tox, toy)) {
-			while (D.M.S.V.inside(x, y)) {
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					break;
+		if (state == Node.ALIVE) {
+			if (!D.M.S.V.inside(tox, toy)) {
+				while (D.M.S.V.inside(x, y)) {
+					try {
+						Thread.sleep(50);
+					} catch (InterruptedException e) {
+						break;
+					}
+				}
+				setState(Node.INVISIBLE);
+			} else if (!D.M.S.V.inside(x, y)) {
+				while (x != tox || y != toy) {
+					try {
+						Thread.sleep(50);
+					} catch (InterruptedException e) {
+						break;
+					}
 				}
 			}
-			setState(Node.INVISIBLE);
 		}
 	}
 
@@ -333,10 +347,6 @@ public class Node {
 	 * Go to the root position.
 	 */
 	public void goToRoot() {
-		if (state == Node.INVISIBLE) {
-			setState(Node.ALIVE);
-		}
-		this.toy = y = (int) (D.M.S.V.viewY - D.M.S.V.viewH) - D.radius;
 		goToS(D.rootx, D.rooty, (D.rooty - y) / 20);
 	}
 
@@ -344,10 +354,6 @@ public class Node {
 	 * Go above the root position.
 	 */
 	public void goAboveRoot() {
-		if (state == Node.INVISIBLE) {
-			setState(Node.ALIVE);
-		}
-		this.toy = y = (int) (D.M.S.V.viewY - D.M.S.V.viewH) - D.radius;
 		int toy = D.rooty - 2 * D.radius - D.yspan;
 		goToS(D.rootx, toy, (toy - y) / 20);
 	}

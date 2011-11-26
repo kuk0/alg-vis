@@ -7,29 +7,45 @@ import algvis.core.Node;
 public class ArrowCommand implements Command {
 	private Node n, dir;
 	private int arrow;
+	private boolean drawArrow;
+	private String name;
 
-	public ArrowCommand(Node n) {
+	public ArrowCommand(Node n, boolean drawArrow) {
 		this.n = n;
 		dir = n.dir;
 		arrow = n.arrow;
+		this.drawArrow = drawArrow;
+		if (drawArrow) {
+			name = "arrow";
+		} else {
+			name = "noArrow";
+		}
 	}
 
 	@Override
 	public void execute() {
-		n.dir = dir;
-		n.arrow = arrow;
+		if (drawArrow) {
+			n.dir = dir;
+			n.arrow = arrow;
+		} else {
+			n.noArrow();
+		}
 	}
 
 	@Override
 	public void unexecute() {
-		n.dir = null;
-		n.arrow = Node.NOARROW;
+		if (drawArrow) {
+			n.noArrow();
+		} else {
+			n.arrow = arrow;
+			n.dir = dir;
+		}
 	}
 
 	@Override
 	public Element getXML() {
 		Element e = new Element("node");
-		e.setAttribute("action", "arrow");
+		e.setAttribute("action", name);
 		e.setAttribute("key", Integer.toString(n.key));
 		if (dir != null) {
 			e.setAttribute("toNode", Integer.toString(dir.key));

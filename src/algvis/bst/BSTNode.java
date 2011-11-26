@@ -7,6 +7,7 @@ import algvis.core.Node;
 import algvis.core.View;
 import algvis.scenario.LinkLeftCommand;
 import algvis.scenario.LinkRightCommand;
+import algvis.scenario.UnsetBSTParentCommand;
 
 public class BSTNode extends Node {
 	public int leftw, rightw;
@@ -24,6 +25,10 @@ public class BSTNode extends Node {
 		super(D, key, x, y);
 	}
 
+	public BSTNode(DataStructure D, int key, int[] pos) {
+		super(D, key, pos);
+	}
+	
 	public BSTNode(DataStructure D, int key) {
 		super(D, key);
 	}
@@ -41,33 +46,46 @@ public class BSTNode extends Node {
 	}
 
 	public void linkLeft(BSTNode v) {
+		if (left != null) {
+			unlinkLeft();
+		}
 		left = v;
 		if (v != null) {
 			v.parent = this;
 		}
-		if (D.scenario != null) D.scenario.add(new LinkLeftCommand(this, v));
+		if (D.scenario != null) D.scenario.add(new LinkLeftCommand(this, v, true));
 	}
 	
-	public void unlinkLeft(BSTNode v) {
-		left = null;
-		if (v != null) {
-			v.parent = null;
+	public void unlinkLeft() {
+		if (left != null) {
+			left.parent = null;
 		}
+		if (D.scenario != null) D.scenario.add(new LinkLeftCommand(this, left, false));
+		left = null;
 	}
 
 	public void linkRight(BSTNode v) {
+		if (right != null) {
+			unlinkRight();
+		}
 		right = v;
 		if (v != null) {
 			v.parent = this;
 		}
-		if (D.scenario != null) D.scenario.add(new LinkRightCommand(this, v));
+		if (D.scenario != null) D.scenario.add(new LinkRightCommand(this, v, true));
 	}
 	
-	public void unlinkRight(BSTNode v) {
-		right = null;
-		if (v != null) {
-			v.parent = null;
+	public void unlinkRight() {
+		if (right != null) {
+			right.parent = null;
 		}
+		if (D.scenario != null) D.scenario.add(new LinkRightCommand(this, right, false));
+		right = null;
+	}
+	
+	public void unsetParent() {
+		if (D.scenario != null) D.scenario.add(new UnsetBSTParentCommand(this, parent));
+		parent = null;
 	}
 
 	public void isolate() {

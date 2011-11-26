@@ -8,25 +8,41 @@ import algvis.bst.BSTNode;
 public class SetBSTNodeVCommand implements Command {
 	private BST T;
 	private BSTNode v;
+	private boolean setted;
+	private String name;
 
-	public SetBSTNodeVCommand(BST T, BSTNode v) {
+	public SetBSTNodeVCommand(BST T, BSTNode v, boolean setted) {
 		this.T = T;
 		this.v = v;
+		this.setted = setted;
+		if (setted) {
+			name = "setNode";
+		} else {
+			name = "unsetNode";
+		}
 	}
 
 	@Override
 	public void execute() {
-		T.setNodeV(v);
+		if (setted) {
+			T.setNodeV(v);
+		} else {
+			T.unsetNodeV();
+		}
 	}
 
 	@Override
 	public void unexecute() {
-		T.unsetNodeV();
+		if (setted) {
+			T.unsetNodeV();
+		} else {
+			T.setNodeV(v);
+		}
 	}
 
 	@Override
 	public Element getXML() {
-		Element e = new Element("setNode");
+		Element e = new Element(name);
 		e.setAttribute("key", Integer.toString(v.key));
 		return e;
 	}

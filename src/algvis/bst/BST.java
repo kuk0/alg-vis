@@ -5,7 +5,7 @@ import algvis.core.StringUtils;
 import algvis.core.View;
 import algvis.core.VisPanel;
 import algvis.scenario.SetBSTNodeVCommand;
-import algvis.scenario.UnsetBSTNodeVCommand;
+import algvis.scenario.SetBSTRootCommand;
 
 public class BST extends Dictionary {
 	public static String dsName = "bst";
@@ -23,13 +23,21 @@ public class BST extends Dictionary {
 	}
 
 	public BSTNode setNodeV(BSTNode v) {
-		scenario.add(new SetBSTNodeVCommand(this, v));
+		if (this.v != null) {
+			unsetNodeV();
+		}
+		scenario.add(new SetBSTNodeVCommand(this, v, true));
 		return this.v = v;
 	}
 
 	public void unsetNodeV() {
-		scenario.add(new UnsetBSTNodeVCommand(this, v));
+		scenario.add(new SetBSTNodeVCommand(this, v, false));
 		v = null;
+	}
+	
+	public void setRoot(BSTNode root) {
+		scenario.add(new SetBSTRootCommand(this, root, this.root));
+		this.root = root;
 	}
 
 	@Override

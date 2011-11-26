@@ -84,4 +84,9 @@ abstract public class DataStructure {
 			chosen = null;
 		}
 	}
+	
+	public int[] up() {
+		int[] result = { rootx, (int) (M.S.V.viewY - M.S.V.viewH) - radius };
+		return result;
+	}
 }

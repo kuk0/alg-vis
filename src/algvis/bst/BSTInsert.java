@@ -2,6 +2,7 @@ package algvis.bst;
 
 import algvis.core.Algorithm;
 import algvis.core.Colors;
+import algvis.core.Node;
 
 public class BSTInsert extends Algorithm {
 	BST T;
@@ -11,7 +12,8 @@ public class BSTInsert extends Algorithm {
 	public BSTInsert(BST T, int x) {
 		super(T, "BSTInsert");
 		this.T = T;
-		v = T.setNodeV(new BSTNode(T, K = x));
+		v = T.setNodeV(new BSTNode(T, K = x, T.up()));
+		v.setState(Node.ALIVE);
 		v.bgColor(Colors.INSERT);
 		setHeader("insertion");
 	}
@@ -19,7 +21,7 @@ public class BSTInsert extends Algorithm {
 	@Override
 	public void run() {
 		if (T.root == null) {
-			T.root = v;
+			T.setRoot(v);
 			v.goToRoot();
 			setText("newroot");
 		} else {
