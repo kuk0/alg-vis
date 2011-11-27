@@ -247,12 +247,23 @@ public class TreeNode extends Node {
 			int loffset = LeftSubtree.offset;
 			int roffset = RightSubtree.offset = LeftSubtree.offset;
 
-			//
 			while ((L != null) && (R != null)) {
-				int distance = (roffset - loffset);
-				if (distance < D.minsepx) {
-					RightSubtree.offset += (D.minsepx - distance);
-					roffset += (D.minsepx - distance);
+				int distance = (loffset + D.minsepx - roffset);
+				if (distance > 0) {
+					RightSubtree.offset += distance;
+					roffset += distance;
+
+					/*
+					 * set spacing for smaller subtrees
+					 */
+					TreeNode Elevator = L;
+					while (Elevator.parent != LeftSubtree.parent) {
+						Elevator = Elevator.parent;
+					}
+					int theta = RightSubtree.number - Elevator.number;
+					RightSubtree.change -= distance / theta;
+					RightSubtree.shift += distance;
+					Elevator.change += distance / theta;
 				}
 				/*
 				 * I think this (Elevator) part causes O(n^2) (un)efficiency
@@ -325,6 +336,27 @@ public class TreeNode extends Node {
 			RightSubtree = RightSubtree.right;
 		}
 
+		/*
+		 * spaces smaller subtrees: a traverse of children from right to left
+		 */
+		int distance = 0;
+		int change = 0;
+		TreeNode T = child;
+		Stack<TreeNode> stack = new Stack<TreeNode>();
+		while (T != null) {
+			NodePair<TreeNode> N = new NodePair<TreeNode>();
+			N.left = T;
+			stack.push(T);
+			T = T.right;
+		}
+
+		while (!stack.empty()) {
+			T = stack.pop();
+			T.offset += distance;
+			change += T.change;
+			distance += T.shift + change;
+		}
+
 		toExtremeSon = (rightmostChild().offset - leftmostChild().offset) / 2;
 		toBaseline = leftmostChild().offset + toExtremeSon;
 		offset += toExtremeSon;
@@ -340,7 +372,7 @@ public class TreeNode extends Node {
 			thread = false;
 			child = null;
 		}
-	
+
 		TreeNode T = child;
 		while (T != null) {
 			T.fTRDisposeThreads();
@@ -460,7 +492,7 @@ public class TreeNode extends Node {
 	 * one. And computes boundary of a tree.
 	 * 
 	 * @param correction
-	 * 		Useful when you want make root rooted at [0,0]
+	 *            Useful when you want make root rooted at [0,0]
 	 */
 	private void fTRBounding(int correction) {
 		fakex += correction;
