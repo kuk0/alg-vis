@@ -2,6 +2,7 @@ package algvis.leftistheap;
 
 import java.awt.Color;
 
+import algvis.binomialheap.BinHeapNode;
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -15,7 +16,7 @@ public class LeftHeapNode extends BSTNode {
 	int rank = 1;
 	
 	public LeftHeapNode(DataStructure D, int key, int x, int y) {
-		super(D, key, x, y);
+		super(D, key, x, y);		
 		bgKeyColor();		
 	}
 	
@@ -64,7 +65,26 @@ public class LeftHeapNode extends BSTNode {
 			v.parent = tmp;
 			v.parent.right = v;
 		}
-	}		
+	}	
+	
+	// vyhodi sa zo zoznamu
+	public void unlink() {
+		/* if (parent != null) {
+			if (parent.child == this) {
+				if (right == this)
+					parent.child = null;
+				else
+					parent.child = right;
+			}
+			parent.rank--;
+			parent = null;
+		}
+		left.right = right;
+		right.left = left;
+		left = right = this;
+		*/
+	}
+	
 	
 	//docasne a mozno aj navzdy skopirovane z AAtree koli vykreslovaniu ranku
 	@Override
@@ -81,4 +101,17 @@ public class LeftHeapNode extends BSTNode {
 	v.drawString(str, x + D.radius, y - D.radius, 7);
 	}
 	
+	
+	public void repos(int rrightw, LeftHeapNode w) {
+		//this.goTo(w.x + rrightw, w.y);
+		this.tox += rrightw;				
+		
+		if (this.right != null) {
+			((LeftHeapNode)this.right).repos(rrightw, (LeftHeapNode)this.right);
+		}
+		if (this.left != null) {
+			((LeftHeapNode)this.left).repos(rrightw, (LeftHeapNode)this.left);
+		}
+	} 
+		
 }

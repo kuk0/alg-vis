@@ -6,7 +6,7 @@ import algvis.core.VisPanel;
 
 public class LeftHeapInsert extends LeftHeapAlg{
 	int K;
-	//int i; //halda cislo i  
+	int i; //halda cislo i  
 	LeftHeap H;
 	LeftHeapNode v;
 
@@ -14,24 +14,23 @@ public class LeftHeapInsert extends LeftHeapAlg{
 		super(M);
 	}
 	
-	public LeftHeapInsert(LeftHeap H, int x) {
+	public LeftHeapInsert(LeftHeap H, int i, int x) {
 		super(H.M);
-	//	this.i = i;
+		this.i = i;
 		H.v = v = new LeftHeapNode(H, K = x);
 		this.H = H;
-		//setHeader("insertion"); //??
-
+		setHeader("insertion"); 
 	}
 
 	@Override
 	public void run() {
 		//treba doplnit spravny text	
-		if (H.root == null) {
-			H.root = v;
+		if (H.root[i] == null) {
+			H.root[i] = v;			
 			v.goToRoot();
 			setText("newroot");
 		} else {
-			BSTNode w = H.root;
+			BSTNode w = H.root[i];
 			v.goAboveRoot();
 			setText("bstinsertstart");
 			mysuspend();
@@ -66,9 +65,9 @@ public class LeftHeapInsert extends LeftHeapAlg{
 					  ((LeftHeapNode) w).linkup(v);
 					  break;
 					} else {
-						H.root = v;
-						H.root.right = ((LeftHeapNode) w);
-						w.parent = H.root;
+						H.root[i] = v;
+						H.root[i].right = ((LeftHeapNode) w);
+						w.parent = H.root[i];
 						break;
 						
 					}
@@ -81,6 +80,8 @@ public class LeftHeapInsert extends LeftHeapAlg{
 			H.reposition();
 			
 			//uprava rankov,, maju sa upravovat az po koren alebo iba do vtedy, kym sa zmeni rank?
+			setText("leftrankupdate");
+			mysuspend();
 			w = v;
 			while (v.parent != null){				
 				v = ((LeftHeapNode) v.parent);
@@ -88,35 +89,40 @@ public class LeftHeapInsert extends LeftHeapAlg{
 				if (v.left != null) {
 					v.rank = Math.min(((LeftHeapNode) v.left).rank, ((LeftHeapNode) v.right).rank) + 1;
 				}
-				mysuspend();
+				//mysuspend();
 				v.unmark();
 			}
 			
-			
+			setText("done");
+			mysuspend();
 			//vymienanie s bratmi podla ranku			
 			while (w != null){								
 				if ((w.left != null) && (w.right != null)){
 					w.left.mark();
 					w.right.mark();
 					if (((LeftHeapNode) w.left).rank < ((LeftHeapNode) w.right).rank) {
+						setText("leftranksonch");
+						mysuspend();
 						BSTNode tmp = w.left;
 						w.left = w.right;
 						w.right = tmp;					
-					}
-					mysuspend();
+					}else{
+						setText("leftranksonok");
+						mysuspend();
+					}				
 					w.left.unmark();
 					w.right.unmark();
 					H.reposition();		//dorobit iba premiestnenie bratov
 				}
 				if (( w.left == null) && (w.right != null)){
 					w.right.mark();
-					w.left = w.right;
-					w.right = null;
+					setText("leftranksonch");
 					mysuspend();
+					w.left = w.right;
+					w.right = null;					
 					w.left.unmark();
 					H.reposition();		//dorobit iba premiestnenie bratov
-				}												
-				//mysuspend;
+				}																
 				w = ((LeftHeapNode) w.parent);								
 			}
 		}

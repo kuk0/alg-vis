@@ -18,6 +18,7 @@ public class BinomialHeap extends MeldablePQ {
 		super(M);
 		root = new BinHeapNode[numHeaps + 1];
 		min = new BinHeapNode[numHeaps + 1];
+		
 	}
 	
 	@Override

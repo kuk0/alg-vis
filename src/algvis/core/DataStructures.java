@@ -32,8 +32,8 @@ public class DataStructures {
 	static final Class[] PANEL = { BSTPanel.class, RotPanel.class,
 			AVLPanel.class, BPanel.class, RBPanel.class, AAPanel.class,
 			TreapPanel.class, SkipListPanel.class, GBPanel.class,
-			SplayPanel.class, HeapPanel.class, BinHeapPanel.class,
-			LazyBinHeapPanel.class, FibHeapPanel.class, LeftHeapPanel.class };
+			SplayPanel.class, HeapPanel.class, LeftHeapPanel.class, BinHeapPanel.class,
+			LazyBinHeapPanel.class, FibHeapPanel.class };
 	static final int N = PANEL.length;
 
 	private static boolean check_range(int i) {
