@@ -1,7 +1,5 @@
 package algvis.core;
 
-import algvis.treenode.TreeDS;
-
 /**
  * The Class ADTs.
  * This class contains the list of all abstract data types (ADTs).
@@ -17,7 +15,6 @@ public class ADTs {
 		Dictionary.class,    // insert, find, delete
 		PriorityQueue.class, // insert, decrease-key, delete-min
 		MeldablePQ.class,     // insert, decrease-key, delete-min, meld
-		TreeDS.class
 	};
 	static final int N = ADT.length;
 
