@@ -87,7 +87,7 @@ public class DataStructures {
 		}
     }
     
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings("unchecked")
 	public static VisPanel getPanel(int i, Languages L) {
     	if (!check_range(i)) return null;
     	try {

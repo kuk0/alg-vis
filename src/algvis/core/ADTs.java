@@ -14,7 +14,7 @@ public class ADTs {
 	static final Class[] ADT = {
 		Dictionary.class,    // insert, find, delete
 		PriorityQueue.class, // insert, decrease-key, delete-min
-		MeldablePQ.class,     // insert, decrease-key, delete-min, meld
+		MeldablePQ.class     // insert, decrease-key, delete-min, meld
 	};
 	static final int N = ADT.length;
 
