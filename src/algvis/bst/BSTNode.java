@@ -216,7 +216,7 @@ public class BSTNode extends Node {
 	}
 
 	/**
-	 * First traverse of tree in fbtr
+	 * First traverse of tree in the algorithm
 	 * 
 	 * Sets a proper level to self and children
 	 * 
@@ -234,8 +234,8 @@ public class BSTNode extends Node {
 	}
 
 	/**
-	 * Sets threads with help from extreme nodes. Node is extreme when is lay at
-	 * the highest level and is leftmost/rightmost.
+	 * Set threads with help from extreme nodes. Node is extreme when is laying
+	 * at the highest level and is leftmost/rightmost.
 	 * 
 	 * Simplified (divide & conquer principle): 1. work out left and right
 	 * subtree 2. get extreme nodes from left and right subtree 3. calculates
@@ -313,10 +313,10 @@ public class BSTNode extends Node {
 				 * node. Similar - right.offset + roffset is a distance from R
 				 * pointer to "this" node
 				 */
-				int distance = (roffset - loffset);
-				if (distance < D.minsepx) {
-					right.offset += (D.minsepx - distance);
-					roffset += (D.minsepx - distance);
+				int distance = (loffset + D.minsepx - roffset);
+				if (distance > 0) {
+					right.offset += distance;
+					roffset += distance;
 				}
 				/*
 				 * When passes through thread there will be for sure incorrect

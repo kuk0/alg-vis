@@ -183,7 +183,6 @@ public class TreeNode extends Node {
 		fTRDisposeThreads();
 		fTRPetrification(0);
 		fTRBounding(-fakex);
-		System.out.print("\n");
 	}
 
 	/**
@@ -272,12 +271,9 @@ public class TreeNode extends Node {
 					loffset += L.toExtremeSon;
 				} else {
 					loffset = 0;
-
-					System.out.print(L.key + "->" + L.child.key + ": ");
 					TreeNode Elevator = L.child;
 					int cursep = 0;
 					while (Elevator.parent != LeftSubtree.parent) {
-						System.out.print(cursep + ", ");
 						cursep += Elevator.offset
 								- Elevator.parent.leftmostChild().offset
 								- Elevator.parent.toExtremeSon;
@@ -285,19 +281,15 @@ public class TreeNode extends Node {
 					}
 
 					loffset = Elevator.offset + cursep;
-					System.out.print(loffset + "\n");
 				}
 
 				if (!R.thread) {
 					roffset -= R.toExtremeSon;
 				} else {
 					roffset = 0;
-
-					System.out.print(R.key + "->" + R.child.key + ": ");
 					TreeNode Elevator = R.child;
 					int cursep = 0;
 					do {
-						System.out.print(cursep + ", ");
 						cursep += Elevator.offset
 								- Elevator.parent.leftmostChild().offset
 								- Elevator.parent.toExtremeSon;
@@ -305,7 +297,6 @@ public class TreeNode extends Node {
 					} while (Elevator != RightSubtree);
 
 					roffset = RightSubtree.offset + cursep;
-					System.out.print(roffset + "\n");
 				}
 
 				L = L.rightmostChild();
@@ -357,6 +348,9 @@ public class TreeNode extends Node {
 			distance += T.shift + change;
 		}
 
+		/*
+		 * finally, set proper offset to self
+		 */
 		toExtremeSon = (rightmostChild().offset - leftmostChild().offset) / 2;
 		toBaseline = leftmostChild().offset + toExtremeSon;
 		offset += toExtremeSon;
@@ -402,92 +396,6 @@ public class TreeNode extends Node {
 	}
 
 	/**
-	 * This will be overwritten.
-	 */
-	@SuppressWarnings("unused")
-	private void fTRLeafGathering() {
-		if (isLeaf()) {
-			return;
-		}
-
-		TreeNode T = child;
-		while (T != null) {
-			T.fTRLeafGathering();
-			T = T.right;
-		}
-
-		/*
-		 * Traverse from right to left
-		 */
-		// allmighty references! :-/
-		T = child;
-		Stack<TreeNode> stack = new Stack<TreeNode>();
-		while (T != null) {
-			NodePair<TreeNode> N = new NodePair<TreeNode>();
-			N.left = T;
-			stack.push(T);
-			T = T.right;
-		}
-
-		TreeNode U = stack.pop();
-		while (!stack.empty()) {
-			T = stack.pop();
-			// System.out.print(T.key+ ", " + U.key+ " ");
-			if (T.isLeaf()) {
-				T.fakex = U.fakex - D.minsepx;
-			}
-			U = T;
-		}
-		// uff.. it's working correctly
-		// but something does not :-/
-
-		/*
-		 * Traverse from left to right
-		 */
-		T = child.right;
-		U = child;
-		while (T != null) {
-			if (T.isLeaf()) {
-				T.fakex = U.fakex + D.minsepx;
-			}
-
-			U = U.right;
-			T = T.right;
-		}
-	}
-
-	/**
-	 * this will be overwritten
-	 * 
-	 * @return
-	 */
-	@SuppressWarnings("unused")
-	private NodePair<TreeNode> fTRCorrection() {
-		NodePair<TreeNode> result = new NodePair<TreeNode>();
-		return result;
-	}
-
-	/**
-	 * this will be overwritten
-	 * 
-	 * @param modsum
-	 */
-	@SuppressWarnings("unused")
-	private void fTRCorrection2(int modsum) {
-		modsum += modifier;
-
-		if (isLeaf()) {
-			return;
-		}
-		TreeNode T = child;
-		while (T != null) {
-			T.fTRCorrection2(modsum);
-			T = T.right;
-		}
-
-	}
-
-	/**
 	 * Final step of layout algorithm. Changes temporary coordinates to real
 	 * one. And computes boundary of a tree.
 	 * 
@@ -498,7 +406,6 @@ public class TreeNode extends Node {
 		fakex += correction;
 		tox = fakex;
 		toy = fakey;
-		this.fTRGetInfo(3, toExtremeSon);
 
 		if (tox < D.x1) {
 			D.x1 = tox;
@@ -525,20 +432,13 @@ public class TreeNode extends Node {
 		}
 	}
 
-	@SuppressWarnings("unused")
-	private void fTRGetInfo(int phase) {
-		System.out.print("Node: " + key + " fakex: " + fakex + " mod: "
-				+ modifier + " change: " + change + " shift: " + shift + " ("
-				+ phase + ")" + "\n");
-	}
-
-	private void fTRGetInfo(int phase, int variable) {
-		System.out
-				.print("Node: " + key + " fakex: " + fakex + " mod: "
-						+ modifier + " change: " + change + " shift: " + shift
-						+ " offset: " + offset + " toE: " + toExtremeSon
-						+ " toB: " + toBaseline + " thread: " + thread + " ("
-						+ phase + ")" + "\n");
-	}
+	// private void fTRGetInfo(int phase, int variable) {
+	// System.out
+	// .print("Node: " + key + " fakex: " + fakex + " mod: "
+	// + modifier + " change: " + change + " shift: " + shift
+	// + " offset: " + offset + " toE: " + toExtremeSon
+	// + " toB: " + toBaseline + " thread: " + thread + " ("
+	// + phase + ")" + "\n");
+	// }
 
 }
