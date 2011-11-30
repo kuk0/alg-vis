@@ -15,19 +15,15 @@ import org.jdom.output.XMLOutputter;
  * Scenario (or history list) stores list of Commands, which are executed. It
  * enables the world to traverse through the list and save it as XML file.
  */
-public class Scenario extends LinkedList<Command> implements XMLable {
-	/**
-	 * Eclipse has told me I should add this line, because Scenario is
-	 * serializable. hmm... ???
-	 */
-	private static final long serialVersionUID = -2527919523280478542L;
+public class Scenario implements XMLable {
 	private String name;
+	private LinkedList<Command> scenario;
 	private ListIterator<Command> position;
 	private boolean addingEnabled;
 
 	public Scenario(String name) {
-		super();
-		position = listIterator();
+		scenario = new LinkedList<Command>();
+		position = scenario.listIterator();
 		this.name = name;
 		enableAdding(true);
 	}
@@ -39,7 +35,6 @@ public class Scenario extends LinkedList<Command> implements XMLable {
 	/**
 	 * Appends the command to current position of Scenario.
 	 */
-	@Override
 	public boolean add(Command c) {
 		if (addingEnabled) {
 			position.add(c);
@@ -90,7 +85,7 @@ public class Scenario extends LinkedList<Command> implements XMLable {
 		Element root = new Element(name);
 		Element algorithm = null;
 		Element step = null;
-		for (Command c : this) {
+		for (Command c : scenario) {
 			if (c instanceof NewAlgorithmCommand) {
 				if (algorithm != null) {
 					root.addContent(algorithm);
