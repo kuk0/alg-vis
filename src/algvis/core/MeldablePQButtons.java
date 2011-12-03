@@ -11,7 +11,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import algvis.binomialheap.BinomialHeap;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ILabel;
 import algvis.internationalization.IRadioButton;
@@ -153,7 +152,7 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 
 	public void stateChanged(ChangeEvent evt) {
 		if (evt.getSource() == activeHeap) {
-			BinomialHeap H = ((BinomialHeap) D);
+			MeldablePQ H = ((MeldablePQ) D);
 			H.lowlight();
 			H.highlight((Integer) activeHeap.getValue());
 			if (H.chosen != null) H.chosen.unmark();

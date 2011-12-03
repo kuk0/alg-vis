@@ -1,6 +1,6 @@
 package algvis.core;
 
-abstract public class MeldablePQ extends DataStructure {
+abstract public class MeldablePQ extends DataStructure implements Highlighting{
 	public static String adtName = "meldable-pq";
 
     public static final int numHeaps = 10;

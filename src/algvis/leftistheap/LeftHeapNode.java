@@ -2,7 +2,6 @@ package algvis.leftistheap;
 
 import java.awt.Color;
 
-import algvis.binomialheap.BinHeapNode;
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -112,6 +111,38 @@ public class LeftHeapNode extends BSTNode {
 		if (this.left != null) {
 			((LeftHeapNode)this.left).repos(rrightw, (LeftHeapNode)this.left);
 		}
-	} 
-		
+	}
+	
+	//spravit nejake globalnejsie pre MPQ? 
+	public void lowlight() {
+		bgColor(new Color(200, 200 - key / 10, 0));
+	}
+
+	public void highlight() {
+		bgKeyColor();
+	}
+	
+	
+	public void lowlightTree(){
+		lowlight();
+		if (left != null) {
+			 ((LeftHeapNode)left).lowlightTree();
+		}
+		if (right != null) {
+		 ((LeftHeapNode)right).lowlightTree();
+		}
+	}
+	
+	
+	public void highlightTree(){
+		highlight();
+		if (left != null) {
+			 ((LeftHeapNode)left).highlightTree();
+		}
+		if (right != null) {
+		 ((LeftHeapNode)right).highlightTree();
+		}
+		//highlightTree(this);		
+	}
+	
 }

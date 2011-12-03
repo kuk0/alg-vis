@@ -138,6 +138,7 @@ public class LeftHeap extends MeldablePQ {
 				root[i].moveTree();
 				root[i].drawTree(V);				
 			}
+		}
 			if (v != null) {							
 				v.move();	
 				v.draw(V);
@@ -146,6 +147,20 @@ public class LeftHeap extends MeldablePQ {
 				v2.move();	
 				v2.draw(V);
 			}
+	}
+
+	//@Override
+	public void highlight(int i) {
+		active = i;
+		if (root[active] != null) {
+			root[active].highlightTree();
+		}
+	}
+
+	//@Override
+	public void lowlight() {
+		if (root[active] != null) {
+			root[active].lowlightTree();
 		}
 	}
 

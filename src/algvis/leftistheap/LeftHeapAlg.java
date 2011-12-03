@@ -23,7 +23,7 @@ public class LeftHeapAlg extends Algorithm{
 	public void meld(int i) {
 		//root[0] primelduvavame k root[i]
 		//i = 1		
-		//misung medyi v a w
+		//misung medzi v a w
 		
 		LeftHeapNode v = H.root[0];
 		H.root[0] = (LeftHeapNode) v.right;
