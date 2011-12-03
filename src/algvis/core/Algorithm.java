@@ -1,8 +1,7 @@
 package algvis.core;
 
 import algvis.bst.BST;
-import algvis.scenario.NewAlgorithmCommand;
-import algvis.scenario.PauseCommand;
+import algvis.scenario.EnableButtonsCommand;
 
 /**
  * The Class Algorithm.
@@ -26,16 +25,15 @@ abstract public class Algorithm extends Thread {
 	
 	public Algorithm(DataStructure D, String name) {
 		this(D);
-		D.scenario.add(new NewAlgorithmCommand(name));
+		D.scenario.startMacro();
+		D.scenario.add(new EnableButtonsCommand(D.M.B, false));
 	}
 
 	/**
 	 * Mysuspend.
 	 */
 	public void mysuspend() {
-		if (D.scenario != null) {
-			D.scenario.add(new PauseCommand());
-		}
+		D.scenario.startMacro();
 		if (D.M.pause) {
 			suspended = true;
 			synchronized (this) {
@@ -64,7 +62,8 @@ abstract public class Algorithm extends Thread {
 		if (D instanceof BST) {
 			((BST) D).unsetNodeV();
 		}
-		D.scenario.add(new PauseCommand());
+		D.scenario.add(new EnableButtonsCommand(D.M.B, true));
+		D.scenario.endMacro();
 	}
 	
 	public void setHeader(String s) {

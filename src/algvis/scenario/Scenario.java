@@ -3,7 +3,9 @@ package algvis.scenario;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ListIterator;
 
 import org.jdom.Document;
@@ -17,19 +19,34 @@ import org.jdom.output.XMLOutputter;
  */
 public class Scenario implements XMLable {
 	private String name;
-	private LinkedList<Command> scenario;
+	private List<Command> scenario;
 	private ListIterator<Command> position;
-	private boolean addingEnabled;
+	private boolean addingEnabled = true;
+	private boolean macroEnabled = false;
+	private ArrayList<Command> macro = null;
 
 	public Scenario(String name) {
 		scenario = new LinkedList<Command>();
 		position = scenario.listIterator();
 		this.name = name;
-		enableAdding(true);
 	}
 
 	public void enableAdding(boolean e) {
 		addingEnabled = e;
+	}
+
+	public void startMacro() {
+		endMacro();
+		macro = new ArrayList<Command>();
+		macroEnabled = true;
+	}
+
+	public void endMacro() {
+		macroEnabled = false;
+		if (macro != null && macro.size() > 0) {
+			add(new MacroCommand(macro));
+			macro = null;
+		}
 	}
 
 	/**
@@ -37,7 +54,15 @@ public class Scenario implements XMLable {
 	 */
 	public boolean add(Command c) {
 		if (addingEnabled) {
-			position.add(c);
+			if (macroEnabled) {
+				macro.add(c);
+			} else {
+				while (position.hasNext()) {
+					position.next();
+					position.remove();
+				}
+				position.add(c);
+			}
 			return true;
 		} else {
 			return false;
@@ -54,60 +79,21 @@ public class Scenario implements XMLable {
 
 	public void next() {
 		enableAdding(false);
-		Command current = position.next();
-		current.execute();
-		while (hasNext()) {
-			current = position.next();
-			current.execute();
-			if (current instanceof PauseCommand) {
-				break;
-			}
-		}
+		position.next().execute();
 		enableAdding(true);
 	}
 
 	public void previous() {
 		enableAdding(false);
-		Command current = position.previous();
-		current.unexecute();
-		while (hasPrevious()) {
-			current = position.previous();
-			current.unexecute();
-			if (current instanceof PauseCommand) {
-				break;
-			}
-		}
+		position.previous().unexecute();
 		enableAdding(true);
 	}
 
 	@Override
 	public Element getXML() {
 		Element root = new Element(name);
-		Element algorithm = null;
-		Element step = null;
 		for (Command c : scenario) {
-			if (c instanceof NewAlgorithmCommand) {
-				if (algorithm != null) {
-					root.addContent(algorithm);
-				}
-				algorithm = new Element(((NewAlgorithmCommand) c).getName());
-				step = new Element("step");
-			} else if (c instanceof PauseCommand) {
-				if (step != null) {
-					algorithm.addContent(step);
-				}
-				step = new Element("step");
-			} else {
-				if (step == null) {
-					System.out.println("Something went bad :(");
-					System.out
-							.println("Bad scenario - some commands are missing.");
-				} else
-					step.addContent(c.getXML());
-			}
-		}
-		if (algorithm != null) {
-			root.addContent(algorithm);
+			root.addContent(c.getXML());
 		}
 		return root;
 	}

@@ -78,20 +78,20 @@ public class DictButtons extends Buttons {
 			}
 		}
 	}
-
+	
 	@Override
-	public void enableNext() {
-		super.enableNext();
-		insertB.setEnabled(false);
-		findB.setEnabled(false);
-		deleteB.setEnabled(false);
-	}
-
-	@Override
-	public void disableNext() {
-		super.disableNext();
+	public void enableAll() {
+		super.enableAll();
 		insertB.setEnabled(true);
 		findB.setEnabled(true);
 		deleteB.setEnabled(true);
+	}
+	
+	@Override
+	public void disableAll() {
+		super.disableAll();
+		insertB.setEnabled(false);
+		findB.setEnabled(false);
+		deleteB.setEnabled(false);
 	}
 }

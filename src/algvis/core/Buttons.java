@@ -201,32 +201,40 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		} else if (evt.getSource() == zoomOut) {
 			M.S.V.zoomOut();
 		} else if (evt.getSource() == save) {
-		 	D.scenario.saveXML("test.xml");
+			D.scenario.saveXML("test.xml");
 		}
 	}
 
 	public void enableNext() {
-		clear.setEnabled(false);
-		random.setEnabled(false);
 		next.setEnabled(true);
 	}
 
 	public void disableNext() {
-		clear.setEnabled(true);
-		random.setEnabled(true);
 		next.setEnabled(false);
 	}
 	
 	public void enablePrevious() {
-		// clear.setEnabled(false);
-		// random.setEnabled(false);
 		previous.setEnabled(true);
 	}
 
 	public void disablePrevious() {
-		// clear.setEnabled(true);
-		// random.setEnabled(true);
 		previous.setEnabled(false);
+	}
+	
+	/**
+	 * enables all buttons except previous and next
+	 */
+	public void enableAll() {
+		clear.setEnabled(true);
+		random.setEnabled(true);
+	}
+
+	/**
+	 * disables all buttons except previous and next
+	 */
+	public void disableAll() {
+		clear.setEnabled(false);
+		random.setEnabled(false);
 	}
 
 	public void setStats(String s) {

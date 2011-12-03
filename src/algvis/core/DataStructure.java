@@ -43,6 +43,7 @@ abstract public class DataStructure {
 		A = a;
 		M.B.enableNext();
 		M.B.enablePrevious();
+		M.B.disableAll();
 		A.start();
 		try {
 			A.join();
@@ -52,6 +53,7 @@ abstract public class DataStructure {
 		}
 		setStats();
 		M.B.disableNext();
+		M.B.enableAll();
 	}
 
 	protected void setStats() {
