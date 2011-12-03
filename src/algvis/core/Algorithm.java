@@ -60,7 +60,7 @@ abstract public class Algorithm extends Thread {
 
 	protected void finish() {
 		if (D instanceof BST) {
-			((BST) D).unsetNodeV();
+			((BST) D).setNodeV(null);
 		}
 		D.scenario.add(new EnableButtonsCommand(D.M.B, true));
 		D.scenario.endMacro();

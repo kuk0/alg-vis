@@ -36,6 +36,8 @@ public class SetBSTRootCommand implements Command {
 		if (previousRoot != null) {
 			e.setAttribute("previousRootKey",
 					Integer.toString(previousRoot.key));
+		} else {
+			e.setAttribute("previousRoot", "null");
 		}
 		return e;
 	}
