@@ -42,7 +42,7 @@ public class LeftHeapInsert extends LeftHeapAlg{
 					} else {
 						v.pointAbove(w.right);
 					}
-					setText("bstinsertright", K, w.key);
+					setText("leftinsertright", K, w.key);
 					mysuspend();
 					v.noArrow();
 					if (w.right != null) {
@@ -57,7 +57,7 @@ public class LeftHeapInsert extends LeftHeapAlg{
 					} else {
 						v.pointAbove(w.left);
 					}
-					setText("bstinsertleft", K, w.key);
+					setText("leftinsertup", K, w.key);
 					mysuspend();
 					v.noArrow();
 					

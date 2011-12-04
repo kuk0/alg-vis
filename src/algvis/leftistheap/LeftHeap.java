@@ -23,9 +23,9 @@ public class LeftHeap extends MeldablePQ {
 	@Override
 	public void insert(int x) {
 		start(new LeftHeapInsert(this, active,  x));
-		active = 0;
+	/*	active = 0;
 		start(new LeftHeapInsert(this, 0,  x+1));
-		active = 1;
+		active = 1;*/
 	//	n++;
 	}
 
@@ -61,7 +61,7 @@ public class LeftHeap extends MeldablePQ {
 	
 	@Override
 	public void meld(int i, int j) {
-		Pair p = chooseHeaps(1, 0);		//<<---- potom i,j
+		Pair p = chooseHeaps(i, j);		//j pripojit k i
 		i = p.first;
 		j = p.second;
 		((MeldablePQButtons) M.B).activeHeap.setValue(i);
@@ -111,22 +111,31 @@ public class LeftHeap extends MeldablePQ {
 	// tuto potom zmazat
 	//opravit, aby sa posuvali, uplne prerobit.
 	public void reposition() {
-		
-		for (int i = 0; i <= numHeaps; ++i){ //<<----- 10 = numHeaps, nepomaha., i od 1 potom
+		//spravit nejako tak, ze najst najlavejsi a najpravejsi vrchol 
+		//a z toho sirku stromu a pridavat do plus		
+				
+		int plus = 0;
+		// je root[i].rightw + root[i].leftw sirka stromu?
+		for (int i = 1; i <= numHeaps; ++i){ //<<----- 10 = numHeaps, nepomaha., i od 1 potom
 			if (root[i] != null) {
-			  root[i].reposition();
-				M.S.V.setBounds(x1, y1, x2, y2);
+				root[i].reposition();
+				M.S.V.setBounds(x1, y1, x2, y2);			
+				root[i].reboxTree();
+				if (root[i-1] != null){
+					root[i-1].reboxTree();
+					plus += root[i-1].rightw + root[i].leftw;
+					root[i].repos(plus, 0, root[i]);
+				}
+				if (root[i] == root[active]){
+					if (root[0] != null){
+						root[0].repos(plus, 100, root[0]);
+					}
+				}
+						
 			}
-		}		
-		root[1].reboxTree();		
-		if (root[0] != null){
-			root[0].reboxTree();
-			//root[0].goTo(root[0].x + root[1].leftw, root[0].y);
-			//root[0].tox = root[0].tox + root[1].leftw;
-			int plus = root[1].rightw + root[0].leftw;
-			root[0].repos(plus, root[0]);
 		}
 		
+		M.S.V.setBounds(0, 0, plus, y2);
 		
 	}
 
