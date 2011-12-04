@@ -22,20 +22,24 @@ public class LeftHeapAlg extends Algorithm{
 	
 	public void meld(int i) {
 		//root[0] primelduvavame k root[i]
-		//i = 1		
-		//misung medzi v a w
+		/*treba spravit, aby sa posuvali na spravne miesta, 
+		 * aby sa vobec posuvali, 
+		 * aby vobec bolo vidno vrchol, ktory sa prave vklada 
+		 */
 		
 		LeftHeapNode v = H.root[0];
-		H.root[0] = (LeftHeapNode) v.right;
-		v.right = null;
-		
-		while (v != null){			
-			v.mark();
-		
-			int K = H.root[0].key;
+		v.rank = 1;
+
+		//v je vrchol, ktory vkladame
+		while (H.root[0] != null){	
+			H.root[0] = (LeftHeapNode) v.right;
+			v.right = null;
 			
-			BSTNode w = H.root[i];			
-			v.goAboveRoot();
+			v.mark();					
+			H.reposition();  //<<-----
+			BSTNode w = H.root[i];
+			int K = v.key;
+			v.goAbove(w); //v.goAboveRoot(); 
 			setText("bstinsertstart");
 			mysuspend();
 
@@ -46,7 +50,7 @@ public class LeftHeapAlg extends Algorithm{
 					} else {
 						v.pointAbove(w.right);
 					}
-					setText("bstinsertright", K, w.key);
+					setText("leftinsertright", K, w.key);
 					mysuspend();
 					v.noArrow();
 					if (w.right != null) {
@@ -61,7 +65,7 @@ public class LeftHeapAlg extends Algorithm{
 					} else {
 						v.pointAbove(w.left);
 					}
-					setText("bstinsertleft", K, w.key);
+					setText("leftinsertup", K, w.key);
 					mysuspend();
 					v.noArrow();
 					
@@ -87,14 +91,19 @@ public class LeftHeapAlg extends Algorithm{
 			setText("leftrankupdate");
 			mysuspend();
 			w = v;
-			while (v.parent != null){				
-				v = ((LeftHeapNode) v.parent);
-				v.mark();
-				if (v.left != null) {
+
+			while (v != null){
+				if ((v.left != null) && (v.right != null)) {
 					v.rank = Math.min(((LeftHeapNode) v.left).rank, ((LeftHeapNode) v.right).rank) + 1;
+				}else{
+					v.rank = 1;
 				}
-				//mysuspend();
-				v.unmark();
+
+				if (v.parent != null){
+					v = ((LeftHeapNode) v.parent);
+				}else{
+					break;
+			    }
 			}
 			
 			setText("done");
@@ -135,78 +144,16 @@ public class LeftHeapAlg extends Algorithm{
 		mysuspend();
 		setText("done");
 		v.bgColor(Colors.NORMAL);
-		H.v = null;
-		
-		v = (LeftHeapNode) v.right;
-		v.parent = null;
-		H.root[0] = (LeftHeapNode) v.right;
-		v.right = null;
+		H.v = null;  //??
+		if (H.root[0] !=null ){
+			v = H.root[0];	
+			v.rank = 1;
+		}
 						
 		}
 		
-		
-		
-		
-		
-		
-		
-	/*		while (true) {
-			if (H.root[0] != null && v.size > H.root[0].size) {
-				// pripojime vlavo
-				BinHeapNode u = H.root[0];
-				if (H.root[0].right == H.root[0]) {
-					H.root[0] = null;
-				} else {
-					H.root[0] = H.root[0].right;
-				}
-				u.unlink();
-				u.highlightTree(u);
-				v.linkLeft(u);
-				v.unmark();
-				v = H.root[i] = u;
-				v.mark();
-			} else if (H.root[0] != null && v.size <= H.root[0].size
-					&& (v.right == H.root[i] || H.root[0].size < v.right.size)) {
-				// pripojime vpravo
-				BinHeapNode u = H.root[0];
-				if (H.root[0].right == H.root[0]) {
-					H.root[0] = null;
-				} else {
-					H.root[0] = H.root[0].right;
-				}
-				u.unlink();
-				u.highlightTree(u);
-				v.linkRight(u);
-			} else if (v.left.size == v.size && v.left != v
-					&& (v.right == H.root[i] || v.size < v.right.size)) {
-				// spojime 2 rovnakej velkosti
-				BinHeapNode u = v.left;
-				if (u.prec(v)) { // napojime v pod u
-					v.unlink();
-					u.linkChild(v);
-					v.unmark();
-					v = u;
-					v.mark();
-				} else { // napojime u pod v
-					if (H.root[i] == u) {
-						H.root[i] = v;
-					}
-					u.unlink();
-					v.linkChild(u);
-				}
-			} else if (v.right != H.root[i]) {
-				// posunieme sa
-				v.unmark();
-				v = v.right;
-				v.mark();
-			} else {
-				// koncime
-				v.unmark();
-				break;
-			}
-			H.reposition();
-			mysuspend();
-		} */
+		H.reposition();
+		setText("done");
 	}
 
 }

@@ -16,7 +16,7 @@ public class LeftHeapMeld extends LeftHeapAlg{
 		if (i == j) {
 			return;
 		}
-	/*	if (H.root[i] == null) {
+		if (H.root[i] == null) {
 			H.root[i] = H.root[j];			
 			H.root[j] = null;
 			if (H.root[i] != null) {
@@ -33,9 +33,11 @@ public class LeftHeapMeld extends LeftHeapAlg{
 		}
 		H.root[0] = H.root[j];		
 		H.root[j] = null;
+		H.active = i;
+		H.root[0].highlightTree();
 		H.reposition();
-	*/
-
+	
+		mysuspend();
 		meld(i); 
 	}
 

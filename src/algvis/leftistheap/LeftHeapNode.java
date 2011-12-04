@@ -101,24 +101,25 @@ public class LeftHeapNode extends BSTNode {
 	}
 	
 	
-	public void repos(int rrightw, LeftHeapNode w) {
-		//this.goTo(w.x + rrightw, w.y);
-		this.tox += rrightw;				
+	public void repos(int px, int py,  LeftHeapNode w) {
+		//this.goTo(w.x + px, w.y + py);
+		w.tox += px;
+		w.toy += py;
 		
 		if (this.right != null) {
-			((LeftHeapNode)this.right).repos(rrightw, (LeftHeapNode)this.right);
+			((LeftHeapNode)this.right).repos(px, py, (LeftHeapNode)this.right);
 		}
 		if (this.left != null) {
-			((LeftHeapNode)this.left).repos(rrightw, (LeftHeapNode)this.left);
+			((LeftHeapNode)this.left).repos(px, py, (LeftHeapNode)this.left);
 		}
 	}
 	
 	//spravit nejake globalnejsie pre MPQ? 
-	public void lowlight() {
+	private void lowlight() {
 		bgColor(new Color(200, 200 - key / 10, 0));
 	}
 
-	public void highlight() {
+	private void highlight() {
 		bgKeyColor();
 	}
 	
