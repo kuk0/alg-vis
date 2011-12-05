@@ -193,7 +193,12 @@ abstract public class Buttons extends JPanel implements ActionListener {
 			D.clear();
 			// repaint();
 		} else if (evt.getSource() == random) {
-			D.random(I.getInt(10));
+			Thread t = new Thread(new Runnable() {
+				public void run() {
+					D.random(I.getInt(10));
+				}
+			});
+			t.start();
 		} else if (evt.getSource() == pause) {
 			M.pause = pause.isSelected();
 		} else if (evt.getSource() == zoomIn) {
