@@ -114,31 +114,28 @@ public class LeftHeap extends MeldablePQ {
 		//spravit nejako tak, ze najst najlavejsi a najpravejsi vrchol 
 		//a z toho sirku stromu a pridavat do plus		
 				
-		int plus = 0;
+		int sumx = 0; // - this.radius - this.xspan;
 		// je root[i].rightw + root[i].leftw sirka stromu?
-		for (int i = 1; i <= numHeaps; ++i){ //<<----- 10 = numHeaps, nepomaha., i od 1 potom
+		for (int i = 1; i <= numHeaps; ++i){ //<<----- 10 = numHeaps, nepomaha., i od 1 potom			
 			if (root[i] != null) {
 				root[i].reposition();
-				M.S.V.setBounds(x1, y1, x2, y2);			
-				root[i].reboxTree();
-				if (root[i-1] != null){
-					root[i-1].reboxTree();
-					plus += root[i-1].rightw + root[i].leftw;
-					root[i].repos(plus, 0, root[i]);
-				}
+				root[i].reboxTree();				
+				sumx += root[i].leftw;
+				root[i].repos(sumx, 0);
+								
 				if (root[i] == root[active]){
 					if (root[0] != null){
-						root[0].repos(plus, 100, root[0]);
+						root[0].repos(sumx, 100);
 					}
 				}
-						
+				sumx += root[i].rightw;
+				
 			}
-		}
-		
-		M.S.V.setBounds(0, 0, plus, y2);
-		
+		}		
+		M.S.V.setBounds(0, 0, sumx, y2);		
 	}
 
+	
 	@Override
 	public void draw(View V) {
 		//pre ten for cyklus sa to tak rychlo vykreslovalo!!

@@ -101,16 +101,20 @@ public class LeftHeapNode extends BSTNode {
 	}
 	
 	
-	public void repos(int px, int py,  LeftHeapNode w) {
-		//this.goTo(w.x + px, w.y + py);
-		w.tox += px;
-		w.toy += py;
+	public void repos(int px, int py){ //,  LeftHeapNode w) {
+		//this.goTo(px, py);
+		tox = px;
+		toy = py;
 		
 		if (this.right != null) {
-			((LeftHeapNode)this.right).repos(px, py, (LeftHeapNode)this.right);
+			//((LeftHeapNode)this.right).repos(px, py, (LeftHeapNode)this.right);
+			//right.reboxTree();
+			((LeftHeapNode)this.right).repos(x + right.leftw, y + (D.yspan + 2 * D.radius));
 		}
 		if (this.left != null) {
-			((LeftHeapNode)this.left).repos(px, py, (LeftHeapNode)this.left);
+			//((LeftHeapNode)this.left).repos(px, py, (LeftHeapNode)this.left);
+			//left.reboxTree();
+			((LeftHeapNode)this.left).repos(x - left.rightw, y + (D.yspan + 2 * D.radius));
 		}
 	}
 	
