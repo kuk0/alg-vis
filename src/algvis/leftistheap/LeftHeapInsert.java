@@ -31,7 +31,7 @@ public class LeftHeapInsert extends LeftHeapAlg{
 			setText("newroot");
 		} else {
 			BSTNode w = H.root[i];
-			v.goAboveRoot();
+			v.goAbove(w);
 			setText("bstinsertstart");
 			mysuspend();
 
@@ -83,6 +83,7 @@ public class LeftHeapInsert extends LeftHeapAlg{
 			setText("leftrankupdate");
 			mysuspend();
 			w = v;
+			/*
 			while (v.parent != null){				
 				v = ((LeftHeapNode) v.parent);
 				v.mark();
@@ -91,6 +92,21 @@ public class LeftHeapInsert extends LeftHeapAlg{
 				}
 				//mysuspend();
 				v.unmark();
+			}
+			*/
+			LeftHeapNode tmp = v;
+			while (tmp != null){
+				if ((tmp.left != null) && (tmp.right != null)) {
+					tmp.rank = Math.min(((LeftHeapNode) tmp.left).rank, ((LeftHeapNode) tmp.right).rank) + 1;
+				}else{
+					tmp.rank = 1;
+				}
+
+				if (tmp.parent != null){
+					tmp = ((LeftHeapNode) tmp.parent);
+				}else{
+					break;
+			    }
 			}
 			
 			setText("done");
@@ -103,9 +119,9 @@ public class LeftHeapInsert extends LeftHeapAlg{
 					if (((LeftHeapNode) w.left).rank < ((LeftHeapNode) w.right).rank) {
 						setText("leftranksonch");
 						mysuspend();
-						BSTNode tmp = w.left;
+						BSTNode tmp3 = w.left;
 						w.left = w.right;
-						w.right = tmp;					
+						w.right = tmp3;					
 					}else{
 						setText("leftranksonok");
 						mysuspend();

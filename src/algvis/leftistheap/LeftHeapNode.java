@@ -13,6 +13,9 @@ public class LeftHeapNode extends BSTNode {
 	Color color = Color.yellow;
 	int height = 1;
 	int rank = 1;
+	boolean rightline = true;	//visibility of the line leading to the right son	
+	boolean leftline = true;	//visibility of the line leading to the left son
+	
 	
 	public LeftHeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);		
@@ -102,19 +105,19 @@ public class LeftHeapNode extends BSTNode {
 	
 	
 	public void repos(int px, int py){ //,  LeftHeapNode w) {
-		//this.goTo(px, py);
-		tox = px;
-		toy = py;
+		this.goTo(px, py);
+		//tox = px;
+		//toy = py;
 		
 		if (this.right != null) {
 			//((LeftHeapNode)this.right).repos(px, py, (LeftHeapNode)this.right);
 			//right.reboxTree();
-			((LeftHeapNode)this.right).repos(x + right.leftw, y + (D.yspan + 2 * D.radius));
+			((LeftHeapNode)this.right).repos(px + right.leftw, py + (D.yspan + 2 * D.radius));
 		}
 		if (this.left != null) {
 			//((LeftHeapNode)this.left).repos(px, py, (LeftHeapNode)this.left);
 			//left.reboxTree();
-			((LeftHeapNode)this.left).repos(x - left.rightw, y + (D.yspan + 2 * D.radius));
+			((LeftHeapNode)this.left).repos(px - left.rightw, py + (D.yspan + 2 * D.radius));
 		}
 	}
 	
@@ -149,5 +152,30 @@ public class LeftHeapNode extends BSTNode {
 		}
 		//highlightTree(this);		
 	}
+	
+	@Override
+	public void drawTree(View v) {
+		if (this.state != INVISIBLE) {
+			if (thread) {
+				v.setColor(Color.red);
+			} else {
+				v.setColor(Color.black);
+			}
+			if ((left != null) && (left.state != INVISIBLE) && (leftline)) {
+				v.drawLine(x, y, left.x, left.y);
+			}
+			if ((right != null) && (right.state != INVISIBLE) && (rightline)) {
+				v.drawLine(x, y, right.x, right.y);
+			}
+		}
+		if (left != null) {
+			left.drawTree(v);
+		}
+		if (right != null) {
+			right.drawTree(v);
+		}
+		draw(v);
+		
+	}	
 	
 }

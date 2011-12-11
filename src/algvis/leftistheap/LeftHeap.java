@@ -121,14 +121,16 @@ public class LeftHeap extends MeldablePQ {
 				root[i].reposition();
 				root[i].reboxTree();				
 				sumx += root[i].leftw;
-				root[i].repos(sumx, 0);
-								
-				if (root[i] == root[active]){
-					if (root[0] != null){
-						root[0].repos(sumx, 100);
-					}
-				}
+				root[i].repos(sumx, root[i].y);
 				sumx += root[i].rightw;
+
+				if (i == active){								
+					if (root[0] != null){
+						sumx += root[0].leftw;
+						root[0].repos(sumx, root[0].y);						
+						sumx += root[0].rightw;
+					}					
+				}				
 				
 			}
 		}		
@@ -146,12 +148,12 @@ public class LeftHeap extends MeldablePQ {
 			}
 		}
 			if (v != null) {							
-				v.move();	
-				v.draw(V);
+				v.moveTree();	
+				v.drawTree(V);
 			}
 			if (v2 != null) {							
-				v2.move();	
-				v2.draw(V);
+				v2.moveTree();	
+				v2.drawTree(V);
 			}
 	}
 
