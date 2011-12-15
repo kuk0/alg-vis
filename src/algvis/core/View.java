@@ -15,12 +15,14 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JPanel;
 
+import algvis.transitions.TInt;
+
 public class View implements MouseListener, MouseMotionListener,
 		MouseWheelListener {
 	Graphics2D g;
 	final static double SCALE_FACTOR = 1.1, MIN_ZOOM = 0.16, MAX_ZOOM = 5.5;
 	int W, H; // display width&height
-	int minx, miny, maxx, maxy;
+	TInt minx = new TInt(), miny = new TInt(), maxx = new TInt(), maxy = new TInt();
 	int mouseX, mouseY; // mouse position
 	public Alignment align = Alignment.CENTER;
 
@@ -46,43 +48,55 @@ public class View implements MouseListener, MouseMotionListener,
 		setBounds(0, 0, 0, 0);
 		resetView();
 	}
+	
+	public void step() {
+		minx.step();
+		miny.step();
+		maxx.step();
+		maxy.step();		
+	}
 
 	public void resetView() {
 		at.setToIdentity();
 		double f = 1, f2 = 1;
-		if ((maxx - minx) > W || (maxy - miny) > H) {
-			f2 = Math.min(W / (double) (maxx - minx), H
-					/ (double) (maxy - miny));
+		int mnx = minx.get(), mny = miny.get(),
+			mxx = maxx.get(), mxy = maxy.get();
+		if ((mxx - mnx) > W || (mxy - mny) > H) {
+			f2 = Math.min(W / (double) (mxx - mnx), H / (double) (mxy - mny));
 			f = Math.max(f2, MIN_ZOOM);
 		}
 		if (align == Alignment.CENTER) {
 			if (f2 < f) {
 				at.translate(W / 2, 0);
 				at.scale(f, f);
-				at.translate(-(maxx + minx) / 2, -miny);
-			} else if (-f * minx >= W / 1.99999) {
+				at.translate(-(mxx + mnx) / 2, -mny);
+			} else if (-f * mnx >= W / 1.99999) {
 				at.scale(f, f);
-				at.translate(-minx, -miny);
-			} else if (f * maxx >= W / 1.99999) {
+				at.translate(-mnx, -mny);
+			} else if (f * mxx >= W / 1.99999) {
 				at.translate(W, 0);
 				at.scale(f, f);
-				at.translate(-maxx, -miny);
+				at.translate(-mxx, -mny);
 			} else {
 				at.translate(W / 2, 0);
 				at.scale(f, f);
-				at.translate(0, -miny);
+				at.translate(0, -mny);
 			}
 		} else if (align == Alignment.LEFT) {
 			at.scale(f, f);
-			at.translate(-minx, -miny);
+			at.translate(-mnx, -mny);
 		}
 	}
 
 	public void setBounds(int minx, int miny, int maxx, int maxy) {
-		this.minx = minx - 50;
-		this.miny = miny - 50;
-		this.maxx = maxx + 50;
-		this.maxy = maxy + 50;
+		this.minx.set(minx - 50);
+		this.miny.set(miny - 50);
+		this.maxx.set(maxx + 50);
+		this.maxy.set(maxy + 50);
+		/*
+		 * this.minx = minx - 50; this.miny = miny - 50; this.maxx = maxx + 50;
+		 * this.maxy = maxy + 50;
+		 */
 	}
 
 	public void zoom(int x, int y, double f) {
