@@ -23,15 +23,11 @@ public class Screen extends JPanel implements Runnable {
 
 	public Screen(VisPanel P) {
 		this.P = P;
-		V = new View();
-		addMouseListener(V);
-		addMouseMotionListener(V);
-		addMouseWheelListener(V);
+		V = new View(this);
 	}
 
 	public void setDS(DataStructure D) {
 		this.D = D;
-		V.setDS(D);
 	}
 
 	void check_size() {
@@ -57,24 +53,12 @@ public class Screen extends JPanel implements Runnable {
 		if (D != null) {
 			V.startDrawing();
 			D.draw(V);
-			// DEBUG
-			/*int M = 500, d;
-			V.drawLine(-M, 0, M, 0);
-			V.drawLine(0, -M, 0, M);
-			for (int s=-M; s<=M; s += 10) {
-				if (s % 100 == 0) d = 10;
-				else if (s % 50 == 0) d = 8;
-				else d = 5;
-				V.drawLine(s, -d, s, d);
-				V.drawLine(-d, s, d, s);
-			}*/
-			// DEBUG
 			V.endDrawing();
+			//V.resetView();
 		} else {
 			System.out.println("[DS null !]");
 		}
 		g.drawImage(I, 0, 0, null);
-		// System.out.println ("screen paint");
 	}
 
 	public void suspend() {

@@ -13,6 +13,8 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.awt.geom.RoundRectangle2D;
 
+import javax.swing.JPanel;
+
 public class View implements MouseListener, MouseMotionListener,
 		MouseWheelListener {
 	Graphics2D g;
@@ -20,12 +22,16 @@ public class View implements MouseListener, MouseMotionListener,
 	int W, H; // display width&height
 	int minx, miny, maxx, maxy;
 	int mouseX, mouseY; // mouse position
+	public Alignment align = Alignment.CENTER;
 
 	double x, y, f;
 	AffineTransform at, oldTransform;
-	DataStructure D;
+	ClickListener D;
 
-	public View() {
+	public View(JPanel P) {
+		P.addMouseListener(this);
+		P.addMouseMotionListener(this);
+		P.addMouseWheelListener(this);
 	}
 
 	public void setGraphics(Graphics2D g, int W, int H) {
@@ -37,19 +43,39 @@ public class View implements MouseListener, MouseMotionListener,
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		at = new AffineTransform();
+		setBounds(0, 0, 0, 0);
 		resetView();
 	}
 
 	public void resetView() {
 		at.setToIdentity();
-		double f = 1;
+		double f = 1, f2 = 1;
 		if ((maxx - minx) > W || (maxy - miny) > H) {
-			f = Math
-					.min(W / (double) (maxx - minx), H / (double) (maxy - miny));
-			at.scale(f, f);
+			f2 = Math.min(W / (double) (maxx - minx), H
+					/ (double) (maxy - miny));
+			f = Math.max(f2, MIN_ZOOM);
 		}
-		at.translate(-minx, -miny);
-		// (maxy + miny + H) / 2
+		if (align == Alignment.CENTER) {
+			if (f2 < f) {
+				at.translate(W / 2, 0);
+				at.scale(f, f);
+				at.translate(-(maxx + minx) / 2, -miny);
+			} else if (-f * minx >= W / 1.99999) {
+				at.scale(f, f);
+				at.translate(-minx, -miny);
+			} else if (f * maxx >= W / 1.99999) {
+				at.translate(W, 0);
+				at.scale(f, f);
+				at.translate(-maxx, -miny);
+			} else {
+				at.translate(W / 2, 0);
+				at.scale(f, f);
+				at.translate(0, -miny);
+			}
+		} else if (align == Alignment.LEFT) {
+			at.scale(f, f);
+			at.translate(-minx, -miny);
+		}
 	}
 
 	public void setBounds(int minx, int miny, int maxx, int maxy) {
@@ -57,22 +83,6 @@ public class View implements MouseListener, MouseMotionListener,
 		this.miny = miny - 50;
 		this.maxx = maxx + 50;
 		this.maxy = maxy + 50;
-	}
-
-	public void moveLeft() {
-		at.translate(-0.1 * W, 0);
-	}
-
-	public void moveRight() {
-		at.translate(0.1 * W, 0);
-	}
-
-	public void moveUp() {
-		at.translate(0, -0.1 * H);
-	}
-
-	public void moveDown() {
-		at.translate(0, 0.1 * H);
 	}
 
 	public void zoom(int x, int y, double f) {
@@ -86,7 +96,7 @@ public class View implements MouseListener, MouseMotionListener,
 	}
 
 	public void zoomIn() {
-		zoom(W/2, H/2, SCALE_FACTOR);
+		zoom(W / 2, H / 2, SCALE_FACTOR);
 	}
 
 	public void zoomIn(int x, int y) {
@@ -98,7 +108,7 @@ public class View implements MouseListener, MouseMotionListener,
 	}
 
 	public void zoomOut() {
-		zoom(W/2, H/2, 1 / SCALE_FACTOR);
+		zoom(W / 2, H / 2, 1 / SCALE_FACTOR);
 	}
 
 	public void mousePressed(MouseEvent e) {
@@ -133,7 +143,9 @@ public class View implements MouseListener, MouseMotionListener,
 		} catch (NoninvertibleTransformException exc) {
 			exc.printStackTrace();
 		}
-		D.mouseClicked(p.getX(), p.getY());
+		if (D != null) {
+			D.mouseClicked((int) p.getX(), (int) p.getY());
+		}
 	}
 
 	public void mouseWheelMoved(MouseWheelEvent e) {
@@ -296,7 +308,7 @@ public class View implements MouseListener, MouseMotionListener,
 		arrowHead(x, y, x2, y2);
 	}
 
-	public void setDS(DataStructure D) {
+	public void setDS(ClickListener D) {
 		this.D = D;
 	}
 }

@@ -68,8 +68,6 @@ abstract public class DataStructure {
 		M.pause = p;
 	}
 	
-	public void mouseClicked(double x, double y) {}
-	
 	public void unmark() {
 		if (chosen != null) {
 			chosen.unmark();

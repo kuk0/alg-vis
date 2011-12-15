@@ -1,18 +1,20 @@
 package algvis.heap;
 
 import algvis.bst.BSTNode;
+import algvis.core.ClickListener;
 import algvis.core.Node;
 import algvis.core.PriorityQueue;
 import algvis.core.View;
 import algvis.core.VisPanel;
 
-public class Heap extends PriorityQueue {
+public class Heap extends PriorityQueue implements ClickListener {
 	public static String dsName = "heap";
 	int n = 0;
 	BSTNode root = null, v = null, v2 = null;
 
 	public Heap(VisPanel M) {
 		super(M);
+		M.S.V.setDS(this);
 	}
 
 	@Override

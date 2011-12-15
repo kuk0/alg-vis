@@ -4,12 +4,13 @@ import java.util.Random;
 
 import algvis.bst.BST;
 import algvis.bst.BSTNode;
+import algvis.core.ClickListener;
 import algvis.core.DataStructure;
 import algvis.core.InputField;
 import algvis.core.View;
 import algvis.core.VisPanel;
 
-public class Rotations extends DataStructure {
+public class Rotations extends DataStructure implements ClickListener {
 	public static String adtName = "dictionary";
 	public static String dsName = "rotations";
 	BST T;
@@ -18,6 +19,7 @@ public class Rotations extends DataStructure {
 		super(M);
 		T = new BST(M);
 		random(10);
+		M.S.V.setDS(this);
 	}
 
 	public void rotate(int x) {
