@@ -147,12 +147,14 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent evt) {
-		if (scenarioTraverser != null && scenarioTraverser.isAlive()) {
-			scenarioTraverser.interrupt();
-			try {
-				scenarioTraverser.join();
-			} catch (InterruptedException e) {
-				return;
+		if (scenarioTraverser != null) {
+			while (scenarioTraverser.isAlive()) {
+				scenarioTraverser.interrupt();
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					return;
+				}
 			}
 		}
 		if (evt.getSource() == previous) {

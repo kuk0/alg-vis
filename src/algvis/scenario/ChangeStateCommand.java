@@ -10,18 +10,38 @@ public class ChangeStateCommand implements Command {
 
 	public ChangeStateCommand(Node n, int to) {
 		this.n = n;
-		this.from = n.state;
+		if (n.state == Node.UP) {
+			this.from = Node.OUT;
+		} else {
+			this.from = n.state;
+		}
 		this.to = to;
 	}
 
 	@Override
 	public void execute() {
+		if (to == Node.OUT) {
+			wait4Node();
+		}
 		n.setState(to);
 	}
 
 	@Override
 	public void unexecute() {
+		if (from == Node.OUT) {
+			wait4Node();
+		}
 		n.setState(from);
+	}
+
+	public void wait4Node() {
+		while (n.x != n.tox || n.y != n.toy) {
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				break;
+			}
+		}
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package algvis.core;
 
-import algvis.bst.BST;
 import algvis.scenario.EnableButtonsCommand;
 
 /**
@@ -59,9 +58,6 @@ abstract public class Algorithm extends Thread {
 	}
 
 	protected void finish() {
-		if (D instanceof BST) {
-			((BST) D).setNodeV(null);
-		}
 		D.scenario.add(new EnableButtonsCommand(D.M.B, true));
 		D.scenario.endMacro();
 	}

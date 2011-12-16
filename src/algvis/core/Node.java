@@ -24,8 +24,8 @@ public class Node {
 	 * steps - the number of steps to reach the destination 
 	 */
 	public int x, y, tox, toy, steps;
-	/** the state of a node - either ALIVE or INVISIBLE. */
-	public int state = -1;
+	/** the state of a node - either INVISIBLE, ALIVE, UP or OUT. */
+	public int state = UP;
 	public Color fgcolor, bgcolor;
 	public boolean marked = false;
 	public Node dir = null;
@@ -47,7 +47,7 @@ public class Node {
 	 * (the node moves down, or diagonally left or right until it gets out
 	 * of the screen, and then turns INVISIBLE)
 	 */
-	public static final int INVISIBLE = -1, ALIVE = 0;
+	public static final int INVISIBLE = -1, ALIVE = 0, UP = 1, OUT = 2;
 	public static final int NOARROW = -10000, DIRARROW = -10001, TOARROW = -10002;
 	
 	public Node() {
@@ -73,7 +73,7 @@ public class Node {
 	public Node(Node v) {
 		this(v.D, v.key, v.x, v.y);
 	}
-
+	
 	public void setState(int s) {
 		if (D != null && D.scenario != null) {
 			D.scenario.add(new ChangeStateCommand(this, s));
@@ -285,39 +285,12 @@ public class Node {
 	 * Set new coordinates, where the node should go.
 	 */
 	public void goTo(int tox, int toy) {
-		goToS(tox, toy, D.M.STEPS);
-	}
-	
-	/**
-	 * Set steps ("speed") and new coordinates, where the node should go.
-	 */
-	public void goToS(int tox, int toy, int steps) {
 		if (D.scenario != null) {
-			D.scenario.add(new MoveCommand(this, tox, toy, steps));
+			D.scenario.add(new MoveCommand(this, tox, toy));
 		}
 		this.tox = tox;
 		this.toy = toy;
-		this.steps = steps;
-		if (state == Node.ALIVE) {
-			if (!D.M.S.V.inside(tox, toy)) {
-				while (D.M.S.V.inside(x, y)) {
-					try {
-						Thread.sleep(50);
-					} catch (InterruptedException e) {
-						break;
-					}
-				}
-				setState(Node.INVISIBLE);
-			} else if (!D.M.S.V.inside(x, y)) {
-				while (x != tox || y != toy) {
-					try {
-						Thread.sleep(50);
-					} catch (InterruptedException e) {
-						break;
-					}
-				}
-			}
-		}
+		this.steps = D.M.STEPS;
 	}
 
 	/**
@@ -347,7 +320,7 @@ public class Node {
 	 * Go to the root position.
 	 */
 	public void goToRoot() {
-		goToS(D.rootx, D.rooty, (D.rooty - y) / 20);
+		goTo(D.rootx, D.rooty);
 	}
 
 	/**
@@ -355,7 +328,7 @@ public class Node {
 	 */
 	public void goAboveRoot() {
 		int toy = D.rooty - 2 * D.radius - D.yspan;
-		goToS(D.rootx, toy, (toy - y) / 20);
+		goTo(D.rootx, toy);
 	}
 
 	/**
@@ -363,7 +336,8 @@ public class Node {
 	 */
 	public void goDown() {
 		int down = (int) (D.M.S.V.viewY + D.M.S.V.viewH) + D.radius;
-		goToS(x, down, (down - y) / 20);
+		goTo(x, down);
+		setState(OUT);
 	}
 
 	/**
@@ -371,8 +345,8 @@ public class Node {
 	 */
 	public void goLeft() {
 		int down = (int) (D.M.S.V.viewY + D.M.S.V.viewH) + D.radius;
-		goToS((int) (D.M.S.V.viewX - D.M.S.V.viewW) - D.radius, down,
-				(down - y) / 20);
+		goTo((int) (D.M.S.V.viewX - D.M.S.V.viewW) - D.radius, down);
+		setState(OUT);
 	}
 
 	/**
@@ -380,18 +354,28 @@ public class Node {
 	 */
 	public void goRight() {
 		int down = (int) (D.M.S.V.viewY + D.M.S.V.viewH) + D.radius;
-		goToS((int) (D.M.S.V.viewX + D.M.S.V.viewW) + D.radius, down,
-				(down - y) / 20);
+		goTo((int) (D.M.S.V.viewX + D.M.S.V.viewW) + D.radius, down);
+		setState(OUT);
 	}
 	
 	/**
 	 * Make one step towards the destination (tox, toy).
+	 * In the special state OUT go out of the screen.
 	 */
 	public void move() {
-		if (steps > 0) {
-			x += (tox - x) / steps;
-			y += (toy - y) / steps;
-			--steps;
+		switch (state) {
+		case Node.OUT:
+			if (!D.M.S.V.inside(x, y - D.radius)) {
+				state = Node.INVISIBLE;
+			}
+		case Node.ALIVE:
+		case Node.INVISIBLE:
+			if (steps > 0) {
+				x += (tox - x) / steps;
+				y += (toy - y) / steps;
+				--steps;
+			}
+			break;
 		}
 	}
 }
