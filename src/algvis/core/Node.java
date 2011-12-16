@@ -3,8 +3,8 @@ package algvis.core;
 import java.awt.Color;
 
 import algvis.scenario.ArrowCommand;
-import algvis.scenario.ChangeColorCommand;
-import algvis.scenario.ChangeStateCommand;
+import algvis.scenario.SetColorCommand;
+import algvis.scenario.SetStateCommand;
 import algvis.scenario.MoveCommand;
 
 /**
@@ -76,7 +76,7 @@ public class Node {
 	
 	public void setState(int s) {
 		if (D != null && D.scenario != null) {
-			D.scenario.add(new ChangeStateCommand(this, s));
+			D.scenario.add(new SetStateCommand(this, s));
 		}
 		state = s;
 	}
@@ -93,7 +93,7 @@ public class Node {
 	public void bgColor(Color bg) {
 		if (bg != bgcolor) {
 			if (D.scenario != null) {
-				D.scenario.add(new ChangeColorCommand(this, bg));
+				D.scenario.add(new SetColorCommand(this, bg));
 			}
 			bgcolor = bg;
 		}

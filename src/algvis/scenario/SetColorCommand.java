@@ -6,11 +6,11 @@ import org.jdom.Element;
 
 import algvis.core.Node;
 
-public class ChangeColorCommand implements Command {
+public class SetColorCommand implements Command {
 	private Color fromBgColor, toBgColor;
 	private Node n;
 
-	public ChangeColorCommand(Node n, Color toBgColor) {
+	public SetColorCommand(Node n, Color toBgColor) {
 		this.n = n;
 		fromBgColor = n.bgcolor;
 		this.toBgColor = toBgColor;
