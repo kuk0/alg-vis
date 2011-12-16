@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
+import algvis.core.NodePair;
 import algvis.core.View;
 
 public class BSTNode extends Node {
@@ -96,7 +97,7 @@ public class BSTNode extends Node {
 	}
 
 	public void drawTree(View v) {
-		if (this.state != INVISIBLE) {
+		if (state != INVISIBLE) {
 			if (thread) {
 				v.setColor(Color.red);
 			} else {
@@ -189,9 +190,11 @@ public class BSTNode extends Node {
 	public void reposition() {
 		// reboxTree();
 		// repos();
-		fTRFirst(0);
-		fTRSecond();
-		fTRFourth(0);
+		// System.out.print("New run.\n");
+		fTRInitialization(0);
+		fTRPrePosition();
+		fTRDisposeThreads();
+		fTRPetrification(0);
 	}
 
 	/**
@@ -213,27 +216,26 @@ public class BSTNode extends Node {
 	}
 
 	/**
-	 * First traverse of tree in fbtr
+	 * First traverse of tree in the algorithm
 	 * 
 	 * Sets a proper level to self and children
 	 * 
 	 * @param level
 	 *            current level in tree
 	 */
-	public void fTRFirst(int level) {
+	private void fTRInitialization(int level) {
+		// this.state = INVISIBLE;
 		this.level = level;
-		this.offset = 0;
+		offset = 0;
 		if (left != null)
-			left.fTRFirst(level + 1);
+			left.fTRInitialization(level + 1);
 		if (right != null)
-			right.fTRFirst(level + 1);
+			right.fTRInitialization(level + 1);
 	}
 
 	/**
-	 * Second & third traverse of tree in fbtr
-	 * 
-	 * Sets threads with help from extreme nodes. Node is extreme when is lay at
-	 * the highest level and is leftmost/rightmost.
+	 * Set threads with help from extreme nodes. Node is extreme when is laying
+	 * at the highest level and is leftmost/rightmost.
 	 * 
 	 * Simplified (divide & conquer principle): 1. work out left and right
 	 * subtree 2. get extreme nodes from left and right subtree 3. calculates
@@ -242,28 +244,26 @@ public class BSTNode extends Node {
 	 * @return Leftmost and rightmost node on the deepest level of a tree rooted
 	 *         by this node
 	 */
-	public ExtremeBSTPair fTRSecond() {
-		ExtremeBSTPair result = new ExtremeBSTPair();
-		ExtremeBSTPair fromLeftSubtree = null, fromRightSubtree = null;
-		// minsep - minimal separation between two nodes on x-axis.
-		int minsep = D.xspan + 2 * D.radius;
+	private NodePair<BSTNode> fTRPrePosition() {
+		NodePair<BSTNode> result = new NodePair<BSTNode>();
+		NodePair<BSTNode> fromLeftSubtree = null, fromRightSubtree = null;
 
 		// 1. & 2. work out left & right subtree
 		if (left != null)
-			fromLeftSubtree = left.fTRSecond();
+			fromLeftSubtree = left.fTRPrePosition();
 		if (right != null)
-			fromRightSubtree = right.fTRSecond();
+			fromRightSubtree = right.fTRPrePosition();
 		// 3. examine this node
 		if (isLeaf()) {
 			if (!isRoot()) {
 				if (parent.key < key) {
-					offset = minsep / 2;
+					offset = D.minsepx / 2;
 				} else {
-					offset = -(minsep / 2);
+					offset = -(D.minsepx / 2);
 				}
 			}
-			result.a.left = this;
-			result.a.right = this;
+			result.left = this;
+			result.right = this;
 		} else {
 			/*
 			 * Is not a leaf! So at least one subtree must not be empty. In case
@@ -273,16 +273,16 @@ public class BSTNode extends Node {
 			 * There is only one son so proper offset have to be set.
 			 */
 			if (left == null) {
-				right.offset = minsep / 2;
-				result.a.left = fromRightSubtree.a.left;
-				result.a.right = fromRightSubtree.a.right;
+				right.offset = D.minsepx / 2;
+				result.left = fromRightSubtree.left;
+				result.right = fromRightSubtree.right;
 				return result;
 			}
 
 			if (right == null) {
-				left.offset = -(minsep / 2);
-				result.a.left = fromLeftSubtree.a.left;
-				result.a.right = fromLeftSubtree.a.right;
+				left.offset = -(D.minsepx / 2);
+				result.left = fromLeftSubtree.left;
+				result.right = fromLeftSubtree.right;
 				return result;
 			}
 
@@ -296,13 +296,13 @@ public class BSTNode extends Node {
 
 			int loffset = 0;
 			int roffset = 0;
-			BSTNode L = this.left;
-			BSTNode R = this.right;
+			BSTNode L = left;
+			BSTNode R = right;
 			/*
-			 * A little change - left.offset will be 0 and only right.offset
-			 * accumulates. Offsets will be corrected after run. The reason is
-			 * clear - it will be much more easier to transform to m-ary trees.
-			 * Notice that offset could be a negative integer!
+			 * left.offset will be 0 and only right.offset accumulates. Offsets
+			 * will be corrected after run. The reason is clear - it will be
+			 * much more easier to transform to m-ary trees. Notice that offset
+			 * could be a negative integer!
 			 */
 			left.offset = 0;
 			right.offset = 0;
@@ -313,10 +313,10 @@ public class BSTNode extends Node {
 				 * node. Similar - right.offset + roffset is a distance from R
 				 * pointer to "this" node
 				 */
-				int distance = (roffset - loffset);
-				if (distance < minsep) {
-					right.offset += (minsep - distance);
-					roffset += (minsep - distance);
+				int distance = (loffset + D.minsepx - roffset);
+				if (distance > 0) {
+					right.offset += distance;
+					roffset += distance;
 				}
 				/*
 				 * When passes through thread there will be for sure incorrect
@@ -377,31 +377,29 @@ public class BSTNode extends Node {
 			 * threads from subtrees are set properly.
 			 */
 
-			int left_height = fromLeftSubtree.a.left.level;
-			int right_height = fromRightSubtree.a.right.level;
 			/*
 			 * Left subtree is more shallow than right subtree. Thus extreme for
 			 * this tree will be the same as for right subtree.
 			 * 
 			 * Notice that L & R pointers are set right there where we want it.
 			 */
-			if (right_height > left_height) {
-				fromLeftSubtree.a.left.thread = true;
-				fromLeftSubtree.a.left.right = R;
-				result.a.left = fromRightSubtree.a.left;
-				result.a.right = fromRightSubtree.a.right;
+			if ((L == null) && (R != null)) {
+				fromLeftSubtree.left.thread = true;
+				fromLeftSubtree.left.right = R;
+				result.left = fromRightSubtree.left;
+				result.right = fromRightSubtree.right;
 			} else
 			// right subtree is more shallow then left subtree
-			if (left_height > right_height) {
-				fromRightSubtree.a.right.thread = true;
-				fromRightSubtree.a.right.left = L;
-				result.a.left = fromLeftSubtree.a.left;
-				result.a.right = fromLeftSubtree.a.right;
+			if ((L != null) && (R == null)) {
+				fromRightSubtree.right.thread = true;
+				fromRightSubtree.right.left = L;
+				result.left = fromLeftSubtree.left;
+				result.right = fromLeftSubtree.right;
 			} else
 			// subtrees have the same height
-			{
-				result.a.left = fromLeftSubtree.a.left;
-				result.a.right = fromRightSubtree.a.right;
+			if ((L == null) && (R == null)) {
+				result.left = fromLeftSubtree.left;
+				result.right = fromRightSubtree.right;
 			}
 
 		}
@@ -409,19 +407,33 @@ public class BSTNode extends Node {
 	}
 
 	/**
-	 * Fourth traverse in fbtr
+	 * Disposes threads.
+	 */
+	private void fTRDisposeThreads() {
+		if (thread) {
+			thread = false;
+			left = null;
+			right = null;
+		}
+		if (left != null) {
+			left.fTRDisposeThreads();
+		}
+		if (right != null) {
+			right.fTRDisposeThreads();
+		}
+	}
+
+	/**
+	 * Last traverse in the algorithm
 	 * 
-	 * Calculates real position from relative
+	 * Calculates real coordinates from relative position
 	 * 
 	 * @param xcoordinate
 	 *            real x coordinate of parent node
 	 */
-	public void fTRFourth(int xcoordinate) {
-		/*
-		 * Change coordinates
-		 */
-		tox = xcoordinate + this.offset;
-		toy = this.level * (D.yspan + 2 * D.radius);
+	private void fTRPetrification(int xcoordinate) {
+		tox = xcoordinate + offset;
+		toy = level * D.minsepy;
 		if (tox < D.x1) {
 			D.x1 = tox;
 		}
@@ -435,22 +447,15 @@ public class BSTNode extends Node {
 		if (toy > D.y2) {
 			D.y2 = toy;
 		}
+
 		this.goTo(tox, toy);
-
-		/*
-		 * Dispose threads
-		 */
-		if (this.thread) {
-			this.thread = false;
-			this.left = null;
-			this.right = null;
-		}
-
-		if (left != null) {
-			left.fTRFourth(tox);
-		}
-		if (right != null) {
-			right.fTRFourth(tox);
+		if (!thread) {
+			if (left != null) {
+				left.fTRPetrification(tox);
+			}
+			if (right != null) {
+				right.fTRPetrification(tox);
+			}
 		}
 	}
 }
