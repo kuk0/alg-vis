@@ -28,7 +28,6 @@ import algvis.treap.TreapPanel;
  * The data structure can then be found in "Data structures -> adtName -> dsName". 
  */
 public class DataStructures {
-	@SuppressWarnings("unchecked")
 	static final Class[] PANEL = { BSTPanel.class, RotPanel.class,
 			AVLPanel.class, BPanel.class, RBPanel.class, AAPanel.class,
 			TreapPanel.class, SkipListPanel.class, GBPanel.class,
@@ -44,7 +43,6 @@ public class DataStructures {
     	return true;
 	}
 
-	@SuppressWarnings("unchecked")
 	public static Class<? extends DataStructure> DS(int i) {
 		if (!check_range(i)) return null;
 		try {
@@ -65,7 +63,6 @@ public class DataStructures {
 		return r;
     }
 
-	@SuppressWarnings("unchecked")
 	public static String getADT(int i) {
     	if (!check_range(i)) return "";
 		try {
@@ -87,7 +84,6 @@ public class DataStructures {
 		}
     }
     
-    @SuppressWarnings("unchecked")
 	public static VisPanel getPanel(int i, Languages L) {
     	if (!check_range(i)) return null;
     	try {

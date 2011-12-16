@@ -36,9 +36,9 @@ public class HeapInsert extends HeapAlg {
 				k >>= 1;
 			}
 			if ((k & n) == 0) {
-				w.linkleft(v);
+				w.linkLeft(v);
 			} else {
-				w.linkright(v);
+				w.linkRight(v);
 			}
 			H.reposition();
 			mysuspend();

@@ -43,7 +43,7 @@ public class AAInsert extends Algorithm {
 					if (w.right != null) {
 						w = w.right;
 					} else {
-						w.linkright(v);
+						w.linkRight(v);
 						break;
 					}
 				} else {
@@ -51,7 +51,7 @@ public class AAInsert extends Algorithm {
 					if (w.left != null) {
 						w = w.left;
 					} else {
-						w.linkleft(v);
+						w.linkLeft(v);
 						break;
 					}
 				}

@@ -27,7 +27,7 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 	public Screen S; // obrazovky v strede
 	public ILabel statusBar; // a status baru
 
-	JSlider vSlider, hSlider;
+	public JSlider vSlider, hSlider;
 
 	public Languages L;
 

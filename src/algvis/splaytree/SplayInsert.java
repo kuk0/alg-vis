@@ -32,14 +32,14 @@ public class SplayInsert extends SplayAlg {
 			} else if (w.key < K) {
 				setText("splayinsertleft");
 				mysuspend();
-				v.linkleft(w);
-				v.linkright(w.right);
+				v.linkLeft(w);
+				v.linkRight(w.right);
 				w.right = null;
 			} else {
 				setText("splayinsertright");
 				mysuspend();
-				v.linkright(w);
-				v.linkleft(w.left);
+				v.linkRight(w);
+				v.linkLeft(w.left);
 				w.left = null;
 			}
 			T.root = v;
