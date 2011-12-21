@@ -1,6 +1,11 @@
-package algvis.core;
+package algvis.unionfind;
 
 import java.util.ArrayList;
+
+import algvis.core.DataStructure;
+import algvis.core.TreeNode;
+import algvis.core.View;
+import algvis.core.VisPanel;
 
 public class UnionFind extends DataStructure {
 	public static String adtName = "ufa";
@@ -10,10 +15,14 @@ public class UnionFind extends DataStructure {
 	public ArrayList<TreeNode> sets = new ArrayList<TreeNode>();
 	public ArrayList<TreeNode> vertices = new ArrayList<TreeNode>();
 	public TreeNode v = null;
-	
+
 	public UnionFind(VisPanel M) {
 		super(M);
-		clear();
+		count = 0;
+		sets = new ArrayList<TreeNode>();
+		for (int i = 0; i < 10; i++) {
+			makeSet();
+		}
 	}
 
 	@Override
@@ -24,7 +33,7 @@ public class UnionFind extends DataStructure {
 	@Override
 	public void insert(int x) {
 		// This represent how many times MakeSet() will be called
-		for (int i =0; i < x; i++) {
+		for (int i = 0; i < x; i++) {
 			// MakeSet();
 		}
 	}
@@ -34,17 +43,20 @@ public class UnionFind extends DataStructure {
 		TreeNode T = new TreeNode(this, count);
 		sets.add(T);
 		vertices.add(T);
+		for (TreeNode V : sets) {
+			V.reposition();
+		}
 	}
-	
+
 	public void union(int element1, int element2) {
-	
+
 	}
-	
+
 	@Override
 	public void clear() {
 		count = 0;
 		sets = new ArrayList<TreeNode>();
-		for(int i = 0; i < 10; i++) {
+		for (int i = 0; i < 10; i++) {
 			makeSet();
 		}
 		setStats();
@@ -63,5 +75,4 @@ public class UnionFind extends DataStructure {
 			v.draw(V);
 		}
 	}
-
 }

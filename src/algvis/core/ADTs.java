@@ -1,5 +1,7 @@
 package algvis.core;
 
+import algvis.unionfind.UnionFind;
+
 /**
  * The Class ADTs.
  * This class contains the list of all abstract data types (ADTs).

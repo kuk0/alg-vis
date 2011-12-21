@@ -1,7 +1,6 @@
 package algvis.unionfind;
 
 import algvis.core.DataStructure;
-import algvis.core.UnionFind;
 import algvis.core.VisPanel;
 import algvis.internationalization.Languages;
 
@@ -18,5 +17,4 @@ public class UnionFindPanel extends VisPanel {
 		D = new UnionFind(this);
 		B = new UnionFindButtons(this);
 	}
-
 }
