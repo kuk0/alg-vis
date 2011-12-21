@@ -41,7 +41,7 @@ public class AVLInsert extends Algorithm {
 					if (w.right != null) {
 						w = w.right;
 					} else {
-						w.linkright(new AVLNode(v));
+						w.linkRight(new AVLNode(v));
 						break;
 					}
 				} else {
@@ -49,7 +49,7 @@ public class AVLInsert extends Algorithm {
 					if (w.left != null) {
 						w = w.left;
 					} else {
-						w.linkleft(new AVLNode(v));
+						w.linkLeft(new AVLNode(v));
 						break;
 					}
 				}

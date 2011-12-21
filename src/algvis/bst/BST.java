@@ -79,17 +79,17 @@ public class BST extends Dictionary {
 			v.parent = null;
 		} else {
 			if (u.isLeft()) {
-				u.parent.linkleft(v);
+				u.parent.linkLeft(v);
 			} else {
-				u.parent.linkright(v);
+				u.parent.linkRight(v);
 			}
 		}
 		if (v.left == null) {
 			u.right = null;
 		} else {
-			u.linkright(v.left);
+			u.linkRight(v.left);
 		}
-		v.linkleft(u);
+		v.linkLeft(u);
 	}
 
 	protected void rightrot(BSTNode v) {
@@ -99,17 +99,17 @@ public class BST extends Dictionary {
 			v.parent = null;
 		} else {
 			if (u.isLeft()) {
-				u.parent.linkleft(v);
+				u.parent.linkLeft(v);
 			} else {
-				u.parent.linkright(v);
+				u.parent.linkRight(v);
 			}
 		}
 		if (v.right == null) {
 			u.left = null;
 		} else {
-			u.linkleft(v.right);
+			u.linkLeft(v.right);
 		}
-		v.linkright(u);
+		v.linkRight(u);
 	}
 
 	/**

@@ -19,12 +19,12 @@ public class RotNode extends BSTNode {
 
 	public void linkLeft(BSTNode v) {
 		oldleft = left;
-		super.linkleft(v);
+		super.linkLeft(v);
 	}
 
 	public void linkRight(BSTNode v) {
 		oldright = right;
-		super.linkright(v);
+		super.linkRight(v);
 	}
 
 	public void removeOldEdges() {

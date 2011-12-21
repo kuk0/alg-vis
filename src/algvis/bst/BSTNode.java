@@ -4,16 +4,17 @@ import java.awt.Color;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
+import algvis.core.NodePair;
 import algvis.core.View;
 
 public class BSTNode extends Node {
-	public int leftw, rightw;
 	public BSTNode left = null, right = null, parent = null;
+	public int leftw, rightw;
 
-	// variables for TR
-	public int offset = 0; // offset from parent node
-	public int level; // distance to root
-	public boolean thread = false; // is this node threaded?
+	// variables for the Reingold-Tilford layout
+	int offset = 0; // offset from the parent node
+	int level; // distance from the root
+	boolean thread = false; // is this node threaded?
 
 	// statistics
 	public int size = 1, height = 1, sumh = 1;
@@ -35,17 +36,17 @@ public class BSTNode extends Node {
 	}
 
 	public boolean isLeft() {
-		return parent.left == this;
+		return parent != null && parent.left == this;
 	}
 
-	public void linkleft(BSTNode v) {
+	public void linkLeft(BSTNode v) {
 		left = v;
 		if (v != null) {
 			v.parent = this;
 		}
 	}
 
-	public void linkright(BSTNode v) {
+	public void linkRight(BSTNode v) {
 		right = v;
 		if (v != null) {
 			v.parent = this;
@@ -96,7 +97,7 @@ public class BSTNode extends Node {
 	}
 
 	public void drawTree(View v) {
-		if (this.state != INVISIBLE) {
+		if (state != INVISIBLE) {
 			if (thread) {
 				v.setColor(Color.red);
 			} else {
@@ -114,6 +115,10 @@ public class BSTNode extends Node {
 		}
 		if (right != null) {
 			right.drawTree(v);
+		}
+		if (false) {
+			v.setColor(Color.LIGHT_GRAY);
+			v.drawLine(x, y, x, -100);
 		}
 		draw(v);
 	}
@@ -163,7 +168,6 @@ public class BSTNode extends Node {
 	 * Calculate the coordinates of each node from the widths of boxes around
 	 * them and direct the nodes to their new positions.
 	 */
-	@SuppressWarnings("unused")
 	private void repos() {
 		if (isRoot()) {
 			goToRoot();
@@ -187,11 +191,13 @@ public class BSTNode extends Node {
 	}
 
 	public void reposition() {
-		// reboxTree();
-		// repos();
-		fTRFirst(0);
-		fTRSecond();
-		fTRFourth(0);
+		if (false) { // simple layout
+			reboxTree();
+			repos();
+		} else { // Reingold-Tilford layout
+			RTPreposition();
+			RTPetrification(0, 0);
+		}
 	}
 
 	/**
@@ -213,110 +219,79 @@ public class BSTNode extends Node {
 	}
 
 	/**
-	 * First traverse of tree in fbtr
+	 * Set up the threads with the help of extreme nodes. A node is "extreme"
+	 * when it is the leftmost/rightmost in the lowest level.
 	 * 
-	 * Sets a proper level to self and children
+	 * 1. work out left and right subtree 2. get extreme nodes from the left and
+	 * right subtree 3. calculate the offset from parent & set a new thread if
+	 * required
 	 * 
-	 * @param level
-	 *            current level in tree
+	 * @return the leftmost and the rightmost node on the deepest level of the
+	 *         subtree rooted at this node
 	 */
-	public void fTRFirst(int level) {
-		this.level = level;
-		this.offset = 0;
-		if (left != null)
-			left.fTRFirst(level + 1);
-		if (right != null)
-			right.fTRFirst(level + 1);
-	}
-
-	/**
-	 * Second & third traverse of tree in fbtr
-	 * 
-	 * Sets threads with help from extreme nodes. Node is extreme when is lay at
-	 * the highest level and is leftmost/rightmost.
-	 * 
-	 * Simplified (divide & conquer principle): 1. work out left and right
-	 * subtree 2. get extreme nodes from left and right subtree 3. calculates
-	 * offset from parent & set a new thread if required
-	 * 
-	 * @return Leftmost and rightmost node on the deepest level of a tree rooted
-	 *         by this node
-	 */
-	public ExtremeBSTPair fTRSecond() {
-		ExtremeBSTPair result = new ExtremeBSTPair();
-		ExtremeBSTPair fromLeftSubtree = null, fromRightSubtree = null;
-		// minsep - minimal separation between two nodes on x-axis.
-		int minsep = D.xspan + 2 * D.radius;
+	private NodePair<BSTNode> RTPreposition() {
+		NodePair<BSTNode> result = new NodePair<BSTNode>();
+		NodePair<BSTNode> fromLeftSubtree = null, fromRightSubtree = null;
+		offset = 0;
 
 		// 1. & 2. work out left & right subtree
 		if (left != null)
-			fromLeftSubtree = left.fTRSecond();
+			fromLeftSubtree = left.RTPreposition();
 		if (right != null)
-			fromRightSubtree = right.fTRSecond();
+			fromRightSubtree = right.RTPreposition();
 		// 3. examine this node
 		if (isLeaf()) {
 			if (!isRoot()) {
-				if (parent.key < key) {
-					offset = minsep / 2;
-				} else {
-					offset = -(minsep / 2);
-				}
+				offset = isLeft() ? -D.minsepx / 2 : +D.minsepx / 2;
 			}
-			result.a.left = this;
-			result.a.right = this;
-		} else {
+			result.left = this;
+			result.right = this;
+		} else { // This is not a leaf; at least one subtree is non-empty.
 			/*
-			 * Is not a leaf! So at least one subtree must not be empty. In case
-			 * of one subtree is empty, it is not necessary to make a new
-			 * thread.
-			 * 
-			 * There is only one son so proper offset have to be set.
+			 * If one subtree is empty, it is not necessary to make a new
+			 * thread. A proper offset must be set.
 			 */
 			if (left == null) {
-				right.offset = minsep / 2;
-				result.a.left = fromRightSubtree.a.left;
-				result.a.right = fromRightSubtree.a.right;
+				right.offset = D.minsepx / 2;
+				result.left = fromRightSubtree.left;
+				result.right = fromRightSubtree.right;
 				return result;
 			}
 
 			if (right == null) {
-				left.offset = -(minsep / 2);
-				result.a.left = fromLeftSubtree.a.left;
-				result.a.right = fromLeftSubtree.a.right;
+				left.offset = -D.minsepx / 2;
+				result.left = fromLeftSubtree.left;
+				result.right = fromLeftSubtree.right;
 				return result;
 			}
 
+			// Calculate offsets for the left and the right son.
+			int loffset = 0; // offset of this node from the right contour of
+								// the left subtree.
+			int roffset = 0; // offset of this node from the left contour of the
+								// right subtree.
+			BSTNode L = left;
+			BSTNode R = right;
 			/*
-			 * Separate left & right subtrees. loffset - offset of a current
-			 * node of the right contour of the left subtree. roffset - offset
-			 * of a current node of the left contour of the right subtree.
-			 * 
-			 * Algorithm calculates offsets for left and right son.
-			 */
-
-			int loffset = 0;
-			int roffset = 0;
-			BSTNode L = this.left;
-			BSTNode R = this.right;
-			/*
-			 * A little change - left.offset will be 0 and only right.offset
-			 * accumulates. Offsets will be corrected after run. The reason is
-			 * clear - it will be much more easier to transform to m-ary trees.
-			 * Notice that offset could be a negative integer!
+			 * First, left.offset is 0 and only right.offset accumulates. The
+			 * offsets are corrected afterwards (this way is easier to
+			 * generalize to m-ary trees). Note that offsets can be negative.
 			 */
 			left.offset = 0;
 			right.offset = 0;
 
+			// traverse the right contour of the left subtree and the left
+			// counour of the right subtree
 			while ((L != null) && (R != null)) {
 				/*
-				 * left.offset + loffset is a distance from L pointer to "this"
-				 * node. Similar - right.offset + roffset is a distance from R
-				 * pointer to "this" node
+				 * left.offset + loffset is the horizontal distance from L to
+				 * this node. Similarly, right.offset + roffset is the
+				 * horizontal distance from R to this node.
 				 */
-				int distance = (roffset - loffset);
-				if (distance < minsep) {
-					right.offset += (minsep - distance);
-					roffset += (minsep - distance);
+				int distance = (loffset + D.minsepx - roffset);
+				if (distance > 0) {
+					right.offset += distance;
+					roffset += distance;
 				}
 				/*
 				 * When passes through thread there will be for sure incorrect
@@ -324,23 +299,13 @@ public class BSTNode extends Node {
 				 * TR published by Reingold this value is already calculated.
 				 */
 				boolean LwasThread = L.thread, RwasThread = R.thread;
-				if (L.right != null) {
-					L = L.right;
+				L = (L.right != null) ? L.right : L.left;
+				if (L != null) {
 					loffset += L.offset;
-				} else {
-					L = L.left;
-					if (L != null) {
-						loffset += L.offset;
-					}
 				}
-				if (R.left != null) {
-					R = R.left;
+				R = (R.left != null) ? R.left : R.right;
+				if (R != null) {
 					roffset += R.offset;
-				} else {
-					R = R.right;
-					if (R != null) {
-						roffset += R.offset;
-					}
 				}
 
 				BSTNode Elevator = null;
@@ -377,31 +342,23 @@ public class BSTNode extends Node {
 			 * threads from subtrees are set properly.
 			 */
 
-			int left_height = fromLeftSubtree.a.left.level;
-			int right_height = fromRightSubtree.a.right.level;
-			/*
-			 * Left subtree is more shallow than right subtree. Thus extreme for
-			 * this tree will be the same as for right subtree.
-			 * 
-			 * Notice that L & R pointers are set right there where we want it.
-			 */
-			if (right_height > left_height) {
-				fromLeftSubtree.a.left.thread = true;
-				fromLeftSubtree.a.left.right = R;
-				result.a.left = fromRightSubtree.a.left;
-				result.a.right = fromRightSubtree.a.right;
-			} else
-			// right subtree is more shallow then left subtree
-			if (left_height > right_height) {
-				fromRightSubtree.a.right.thread = true;
-				fromRightSubtree.a.right.left = L;
-				result.a.left = fromLeftSubtree.a.left;
-				result.a.right = fromLeftSubtree.a.right;
-			} else
-			// subtrees have the same height
-			{
-				result.a.left = fromLeftSubtree.a.left;
-				result.a.right = fromRightSubtree.a.right;
+			if ((R != null) && (L == null)) { // the right subtree is deeper
+												// than the left subtree
+				fromLeftSubtree.left.thread = true;
+				fromLeftSubtree.left.right = R;
+				result.left = fromRightSubtree.left;
+				result.right = fromRightSubtree.right;
+			} else if ((L != null) && (R == null)) { // the left subtree is
+														// deeper than the right
+														// subtree
+				fromRightSubtree.right.thread = true;
+				fromRightSubtree.right.left = L;
+				result.left = fromLeftSubtree.left;
+				result.right = fromLeftSubtree.right;
+			} else if ((L == null) && (R == null)) { // both subtrees have the
+														// same height
+				result.left = fromLeftSubtree.left;
+				result.right = fromRightSubtree.right;
 			}
 
 		}
@@ -409,19 +366,14 @@ public class BSTNode extends Node {
 	}
 
 	/**
-	 * Fourth traverse in fbtr
+	 * Calculate the absolute coordinates from the relative ones
+	 * and dispose the threads.
 	 * 
-	 * Calculates real position from relative
-	 * 
-	 * @param xcoordinate
+	 * @param x
 	 *            real x coordinate of parent node
 	 */
-	public void fTRFourth(int xcoordinate) {
-		/*
-		 * Change coordinates
-		 */
-		tox = xcoordinate + this.offset;
-		toy = this.level * (D.yspan + 2 * D.radius);
+	private void RTPetrification(int x, int y) {
+		goTo(x + offset, y);
 		if (tox < D.x1) {
 			D.x1 = tox;
 		}
@@ -435,22 +387,17 @@ public class BSTNode extends Node {
 		if (toy > D.y2) {
 			D.y2 = toy;
 		}
-		this.goTo(tox, toy);
 
-		/*
-		 * Dispose threads
-		 */
-		if (this.thread) {
-			this.thread = false;
-			this.left = null;
-			this.right = null;
+		if (thread) {
+			thread = false;
+			left = null;
+			right = null;
 		}
-
 		if (left != null) {
-			left.fTRFourth(tox);
+			left.RTPetrification(tox, y + D.minsepy);
 		}
 		if (right != null) {
-			right.fTRFourth(tox);
+			right.RTPetrification(tox, y + D.minsepy);
 		}
 	}
 }

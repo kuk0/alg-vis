@@ -109,7 +109,7 @@ public class GBDelete extends GBAlg {
 									r.parent = null;
 								}
 							} else {
-								r.parent.linkright(r = r.right);
+								r.parent.linkRight(r = r.right);
 							}
 							T.v.goDown();
 						} else {

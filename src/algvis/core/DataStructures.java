@@ -2,6 +2,8 @@ package algvis.core;
 
 import java.lang.reflect.Constructor;
 
+import unionfind.UnionFindPanel;
+
 import algvis.aatree.AAPanel;
 import algvis.avltree.AVLPanel;
 import algvis.binomialheap.BinHeapPanel;
@@ -29,12 +31,13 @@ import algvis.treap.TreapPanel;
  * "Data structures -> adtName -> dsName".
  */
 public class DataStructures {
+	@SuppressWarnings("rawtypes")
 	static final Class[] PANEL = { BSTPanel.class, RotPanel.class,
 			AVLPanel.class, a23Panel.class, a234Panel.class, BPanel.class,
 			RBPanel.class, AAPanel.class, TreapPanel.class,
 			SkipListPanel.class, GBPanel.class, SplayPanel.class,
 			HeapPanel.class, BinHeapPanel.class, LazyBinHeapPanel.class,
-			FibHeapPanel.class };
+			FibHeapPanel.class, UnionFindPanel.class };
 	static final int N = PANEL.length;
 
 	private static boolean check_range(int i) {
@@ -102,8 +105,8 @@ public class DataStructures {
 							+ i);
 			return "";
 		}
-	}
-
+    }
+    
 	public static VisPanel getPanel(int i, Languages L) {
 		if (!check_range(i))
 			return null;
