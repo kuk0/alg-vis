@@ -1,4 +1,4 @@
-package unionfind;
+package algvis.unionfind;
 
 import algvis.core.DataStructure;
 import algvis.core.UnionFind;

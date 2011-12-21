@@ -2,7 +2,6 @@ package algvis.core;
 
 import java.lang.reflect.Constructor;
 
-import unionfind.UnionFindPanel;
 
 import algvis.aatree.AAPanel;
 import algvis.avltree.AVLPanel;
@@ -21,6 +20,7 @@ import algvis.scapegoattree.GBPanel;
 import algvis.skiplist.SkipListPanel;
 import algvis.splaytree.SplayPanel;
 import algvis.treap.TreapPanel;
+import algvis.unionfind.UnionFindPanel;
 
 /**
  * The Class DataStructures. This class contains the list of all visualized data

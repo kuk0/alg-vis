@@ -1,4 +1,4 @@
-package unionfind;
+package algvis.unionfind;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
