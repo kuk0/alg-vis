@@ -29,6 +29,7 @@ import algvis.treap.TreapPanel;
  * "Data structures -> adtName -> dsName".
  */
 public class DataStructures {
+	@SuppressWarnings("rawtypes")
 	static final Class[] PANEL = { BSTPanel.class, RotPanel.class,
 			AVLPanel.class, a23Panel.class, a234Panel.class, BPanel.class,
 			RBPanel.class, AAPanel.class, TreapPanel.class,
@@ -102,8 +103,8 @@ public class DataStructures {
 							+ i);
 			return "";
 		}
-	}
-
+    }
+    
 	public static VisPanel getPanel(int i, Languages L) {
 		if (!check_range(i))
 			return null;

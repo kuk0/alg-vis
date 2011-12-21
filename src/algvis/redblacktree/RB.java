@@ -83,13 +83,13 @@ public class RB extends BST {
 			v.parent = NULL;
 		} else {
 			if (u.isLeft()) {
-				u.parent.linkleft(v);
+				u.parent.linkLeft(v);
 			} else {
-				u.parent.linkright(v);
+				u.parent.linkRight(v);
 			}
 		}
-		u.linkright(v.left);
-		v.linkleft(u);
+		u.linkRight(v.left);
+		v.linkLeft(u);
 	}
 
 	@Override
@@ -100,13 +100,13 @@ public class RB extends BST {
 			v.parent = NULL;
 		} else {
 			if (u.isLeft()) {
-				u.parent.linkleft(v);
+				u.parent.linkLeft(v);
 			} else {
-				u.parent.linkright(v);
+				u.parent.linkRight(v);
 			}
 		}
-		u.linkleft(v.right);
-		v.linkright(u);
+		u.linkLeft(v.right);
+		v.linkRight(u);
 	}
 
 	@Override
