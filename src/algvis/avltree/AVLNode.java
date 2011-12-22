@@ -34,8 +34,6 @@ public class AVLNode extends BSTNode {
 	public int balance() {
 		int l = (left == null) ? 0 : left.height, r = (right == null) ? 0
 				: right.height;
-		if (r - l != bal) {
-		}
 		setBalance(r - l);
 		return bal;
 	}
