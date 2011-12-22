@@ -1,8 +1,9 @@
-package algvis.scenario;
+package algvis.scenario.commands.bstnode;
 
 import org.jdom.Element;
 
 import algvis.bst.BSTNode;
+import algvis.scenario.commands.Command;
 
 public class UnsetBSTParentCommand implements Command {
 	private BSTNode n, parent;

@@ -1,10 +1,11 @@
-package algvis.scenario;
+package algvis.scenario.commands.node;
 
 import java.awt.Color;
 
 import org.jdom.Element;
 
 import algvis.core.Node;
+import algvis.scenario.commands.Command;
 
 public class SetColorCommand implements Command {
 	private Color fromBgColor, toBgColor;

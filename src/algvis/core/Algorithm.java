@@ -1,6 +1,6 @@
 package algvis.core;
 
-import algvis.scenario.EnableButtonsCommand;
+import algvis.scenario.commands.EnableButtonsCommand;
 
 /**
  * The Class Algorithm.

@@ -1,8 +1,9 @@
-package algvis.scenario;
+package algvis.scenario.commands.node;
 
 import org.jdom.Element;
 
 import algvis.core.Node;
+import algvis.scenario.commands.Command;
 
 public class SetStateCommand implements Command {
 	private int from, to;

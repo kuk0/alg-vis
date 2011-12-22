@@ -5,10 +5,10 @@ import java.awt.Color;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.View;
-import algvis.scenario.LinkLeftCommand;
-import algvis.scenario.LinkRightCommand;
-import algvis.scenario.SetLevelCommand;
-import algvis.scenario.UnsetBSTParentCommand;
+import algvis.scenario.commands.bstnode.LinkLeftCommand;
+import algvis.scenario.commands.bstnode.LinkRightCommand;
+import algvis.scenario.commands.bstnode.SetLevelCommand;
+import algvis.scenario.commands.bstnode.UnsetBSTParentCommand;
 
 public class BSTNode extends Node {
 	public int leftw, rightw;

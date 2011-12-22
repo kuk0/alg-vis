@@ -13,6 +13,9 @@ import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
+import algvis.scenario.commands.Command;
+import algvis.scenario.commands.MacroCommand;
+
 /**
  * Scenario (or history list) stores list of Commands, which are executed. It
  * enables the world to traverse through the list and save it as XML file.

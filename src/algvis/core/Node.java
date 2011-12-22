@@ -2,12 +2,12 @@ package algvis.core;
 
 import java.awt.Color;
 
-import algvis.scenario.ArcCommand;
-import algvis.scenario.ArrowCommand;
-import algvis.scenario.MarkCommand;
-import algvis.scenario.SetColorCommand;
-import algvis.scenario.SetStateCommand;
-import algvis.scenario.MoveCommand;
+import algvis.scenario.commands.node.ArcCommand;
+import algvis.scenario.commands.node.ArrowCommand;
+import algvis.scenario.commands.node.MarkCommand;
+import algvis.scenario.commands.node.MoveCommand;
+import algvis.scenario.commands.node.SetColorCommand;
+import algvis.scenario.commands.node.SetStateCommand;
 
 /**
  * The Class Node.

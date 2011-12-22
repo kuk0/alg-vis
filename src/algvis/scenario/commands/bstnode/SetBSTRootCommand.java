@@ -1,9 +1,10 @@
-package algvis.scenario;
+package algvis.scenario.commands.bstnode;
 
 import org.jdom.Element;
 
 import algvis.bst.BST;
 import algvis.bst.BSTNode;
+import algvis.scenario.commands.Command;
 
 public class SetBSTRootCommand implements Command {
 	private BST T;

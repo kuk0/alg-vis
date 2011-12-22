@@ -1,4 +1,4 @@
-package algvis.scenario;
+package algvis.scenario.commands;
 
 import org.jdom.Element;
 

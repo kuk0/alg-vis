@@ -4,8 +4,8 @@ import algvis.core.Dictionary;
 import algvis.core.StringUtils;
 import algvis.core.View;
 import algvis.core.VisPanel;
-import algvis.scenario.SetBSTNodeVCommand;
-import algvis.scenario.SetBSTRootCommand;
+import algvis.scenario.commands.bstnode.SetBSTNodeVCommand;
+import algvis.scenario.commands.bstnode.SetBSTRootCommand;
 
 public class BST extends Dictionary {
 	public static String dsName = "bst";

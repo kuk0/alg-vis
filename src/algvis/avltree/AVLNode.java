@@ -7,7 +7,7 @@ import algvis.core.Colors;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.View;
-import algvis.scenario.SetBalanceCommand;
+import algvis.scenario.commands.avlnode.SetBalanceCommand;
 
 //import static java.lang.Math.random;
 //import static java.lang.Math.round;

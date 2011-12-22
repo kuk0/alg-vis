@@ -1,8 +1,9 @@
-package algvis.scenario;
+package algvis.scenario.commands.avlnode;
 
 import org.jdom.Element;
 
 import algvis.avltree.AVLNode;
+import algvis.scenario.commands.Command;
 
 public class SetBalanceCommand implements Command {
 	private AVLNode n;
