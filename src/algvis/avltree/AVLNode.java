@@ -20,7 +20,7 @@ public class AVLNode extends BSTNode {
 	}
 
 	public AVLNode(DataStructure D, int key, int[] pos) {
-		super(D, key, pos);
+		this(D, key, pos[0], pos[1]);
 	}
 	
 	public AVLNode(DataStructure D, int key) {

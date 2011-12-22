@@ -76,6 +76,7 @@ public class BSTInsert extends Algorithm {
 		mysuspend();
 		setText("done");
 		v.bgColor(Colors.NORMAL);
+		T.setNodeV(null);
 		finish();
 	}
 }

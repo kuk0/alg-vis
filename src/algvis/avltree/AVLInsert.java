@@ -27,6 +27,8 @@ public class AVLInsert extends Algorithm {
 			v.goToRoot();
 			setText("newroot");
 			mysuspend();
+			v.bgColor(Colors.NORMAL);
+			T.setNodeV(null);
 		} else {
 			v.goAboveRoot();
 			setText("bstinsertstart");
@@ -63,7 +65,9 @@ public class AVLInsert extends Algorithm {
 			T.reposition();
 			setText("avlinsertbal");
 			mysuspend();
-
+			
+			v.bgColor(Colors.NORMAL);
+			T.setNodeV(null);
 			// bubleme nahor
 			while (w != null) {
 				w.mark();
@@ -128,7 +132,6 @@ public class AVLInsert extends Algorithm {
 		}
 		T.reposition();
 		setText("done");
-		v.bgColor(Colors.NORMAL);
 		finish();
 	}
 }

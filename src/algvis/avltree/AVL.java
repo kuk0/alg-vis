@@ -25,13 +25,4 @@ public class AVL extends BST {
 	public void delete(int x) {
 		start(new AVLDelete(this, x));
 	}
-
-	@Override
-	public void clear() {
-		scenario.startMacro();
-		setRoot(null);
-		setNodeV(null);
-		setStats();
-		scenario.endMacro();
-	}
 }

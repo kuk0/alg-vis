@@ -7,7 +7,7 @@ import algvis.core.VisPanel;
 
 public class AA extends BST {
 	public static String dsName = "aatree";
-	boolean mode23 = false;
+	private boolean mode23 = false;
 
 	public AA(VisPanel M) {
 		super(M);
@@ -27,15 +27,20 @@ public class AA extends BST {
 	public void delete(int x) {
 		start(new AADelete(this, x));
 	}
-
-	@Override
-	public void clear() {
-		root = null;
-		setStats();
+	
+	public void setMode23(boolean setted) {
+		mode23 = setted;
+		scenario.startMacro();
+		reposition();
+		scenario.endMacro();
+	}
+	
+	public boolean getMode23() {
+		return mode23;
 	}
 
 	public BSTNode skew(BSTNode w) {
-		if (w.left != null && ((AANode) w.left).level == ((AANode) w).level) {
+		if (w.left != null && w.left.getLevel() == w.getLevel()) {
 			w = w.left;
 			rotate(w);
 			reposition();
@@ -45,11 +50,10 @@ public class AA extends BST {
 
 	public BSTNode split(BSTNode w) {
 		BSTNode r = w.right;
-		if (r != null && r.right != null
-				&& ((AANode) r.right).level == ((AANode) w).level) {
+		if (r != null && r.right != null && r.right.getLevel() == w.getLevel()) {
 			w = r;
 			rotate(w);
-			((AANode) w).level++;
+			w.setLevel(w.getLevel() + 1);
 			reposition();
 		}
 		return w;

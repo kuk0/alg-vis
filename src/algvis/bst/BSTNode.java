@@ -7,6 +7,7 @@ import algvis.core.Node;
 import algvis.core.View;
 import algvis.scenario.LinkLeftCommand;
 import algvis.scenario.LinkRightCommand;
+import algvis.scenario.SetLevelCommand;
 import algvis.scenario.UnsetBSTParentCommand;
 
 public class BSTNode extends Node {
@@ -15,7 +16,7 @@ public class BSTNode extends Node {
 
 	// variables for TR
 	public int offset = 0; // offset from parent node
-	public int level; // distance to root
+	private int level; // distance to root
 	public boolean thread = false; // is this node threaded?
 
 	// statistics
@@ -33,6 +34,15 @@ public class BSTNode extends Node {
 		super(D, key);
 	}
 
+	public void setLevel(int level) {
+		D.scenario.add(new SetLevelCommand(this, level));
+		this.level = level;
+	}
+	
+	public int getLevel() {
+		return level;
+	}
+	
 	public boolean isRoot() {
 		return parent == null;
 	}
@@ -257,7 +267,7 @@ public class BSTNode extends Node {
 	 *            current level in tree
 	 */
 	public void fTRFirst(int level) {
-		this.level = level;
+		setLevel(level);
 		this.offset = 0;
 		if (left != null)
 			left.fTRFirst(level + 1);

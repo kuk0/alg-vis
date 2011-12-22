@@ -3,16 +3,18 @@ package algvis.aatree;
 import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
 import algvis.core.Colors;
+import algvis.core.Node;
 
 public class AAInsert extends Algorithm {
 	AA T;
-	AANode v;
+	BSTNode v;
 	int K;
 
 	public AAInsert(AA T, int x) {
 		super(T);
 		this.T = T;
-		T.v = v = new AANode(T, K = x);
+		v = T.setNodeV(new AANode(T, K = x, T.up()));
+		v.setState(Node.ALIVE);
 		v.bgColor(Colors.INSERT);
 		setHeader("insertion");
 	}
@@ -21,12 +23,12 @@ public class AAInsert extends Algorithm {
 	public void run() {
 		BSTNode w = T.root;
 		if (T.root == null) {
-			T.root = v;
+			T.setRoot(v);
 			v.goToRoot();
 			setText("newroot");
 			mysuspend();
 			v.bgColor(Colors.NORMAL);
-			T.v = null;
+			T.setNodeV(null);
 		} else {
 			v.goAboveRoot();
 			setText("bstinsertstart");
@@ -37,6 +39,7 @@ public class AAInsert extends Algorithm {
 					setText("alreadythere");
 					v.goDown();
 					v.bgColor(Colors.NOTFOUND);
+					finish();
 					return;
 				} else if (w.key < K) {
 					setText("bstinsertright", K, w.key);
@@ -63,14 +66,14 @@ public class AAInsert extends Algorithm {
 			mysuspend();
 
 			v.bgColor(Colors.NORMAL);
-			T.v = null;
+			T.setNodeV(null);
 			// bubleme nahor
 			while (w != null) {
 				w.mark();
 				setText("aaok");
 				// skew
 				if (w.left != null
-						&& ((AANode) w.left).level == ((AANode) w).level) {
+						&& w.left.getLevel() == w.getLevel()) {
 					setText("aaskew");
 					mysuspend();
 					w.unmark();
@@ -85,7 +88,7 @@ public class AAInsert extends Algorithm {
 				// split
 				BSTNode r = w.right;
 				if (r != null && r.right != null
-						&& ((AANode) r.right).level == ((AANode) w).level) {
+						&& r.right.getLevel() == w.getLevel()) {
 					setText("aasplit");
 					w.unmark();
 					w = r;
@@ -94,7 +97,7 @@ public class AAInsert extends Algorithm {
 					mysuspend();
 					w.noArc();
 					T.rotate(w);
-					((AANode) w).level++;
+					w.setLevel(w.getLevel() + 1);
 					T.reposition();
 				}
 				mysuspend();
@@ -104,5 +107,6 @@ public class AAInsert extends Algorithm {
 		}
 		T.reposition();
 		setText("done");
+		finish();
 	}
 }
