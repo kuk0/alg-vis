@@ -34,6 +34,7 @@ public class AlgVis extends JPanel implements ActionListener {
 		this.P = P;
 		// Internationalization
 		L = new Languages(s);
+		NodeImages.loadImages();
 	}
 
 	public void init() {

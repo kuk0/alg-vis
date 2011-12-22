@@ -1,6 +1,7 @@
 package algvis.core;
 
 import java.awt.Color;
+import java.awt.Image;
 
 /**
  * The Class Node.
@@ -159,10 +160,17 @@ public class Node {
 	 * @param v view
 	 */
 	protected void drawBg(View v) {
-		v.setColor(bgcolor);
+		/*v.setColor(bgcolor);
 		v.fillCircle(x, y, D.radius);
 		v.setColor(Color.BLACK); // fgcolor);
-		v.drawCircle(x, y, D.radius);
+		v.drawCircle(x, y, D.radius);*/
+		Image bg = NodeImages.yellow;
+		if (bgcolor == Color.red) {
+			bg = NodeImages.red;
+		} else if (bgcolor == Color.black){
+			bg = NodeImages.black;
+		}
+		v.drawImage(bg, x-D.radius-1, y-D.radius-1, 2*D.radius+2, 2*D.radius+2);
 		if (marked) {
 			v.drawCircle(x, y, D.radius + 2);
 		}

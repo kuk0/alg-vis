@@ -2,6 +2,7 @@ package algvis.core;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -306,6 +307,10 @@ public class View implements MouseListener, MouseMotionListener,
 		}
 		// g.drawLine(x, y, x2, y2);
 		arrowHead(x, y, x2, y2);
+	}
+
+	public void drawImage(Image img, int x, int y, int w, int h) {
+		g.drawImage(img, x, y, w, h, null);
 	}
 
 	public void setDS(ClickListener D) {
