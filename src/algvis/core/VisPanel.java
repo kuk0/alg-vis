@@ -97,12 +97,12 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 
 			@Override
 			public Dimension getPreferredSize() {
-				return new Dimension(700, 400);
+				return new Dimension(550, 400);
 			}
 
 			@Override
 			public Dimension getMinimumSize() {
-				return new Dimension(700, 400);
+				return new Dimension(550, 400);
 //				return new Dimension(300, 100);
 			}
 		};
@@ -141,7 +141,7 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 
 			@Override
 			public Dimension getMinimumSize() {
-				return new Dimension(300, 600);
+				return new Dimension(250, 600);
 				//return new Dimension(200, 530);
 			}
 		};
