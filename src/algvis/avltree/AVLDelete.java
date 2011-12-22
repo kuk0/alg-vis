@@ -88,7 +88,6 @@ public class AVLDelete extends Algorithm {
 				BSTNode s = (d.left == null) ? d.right : d.left;
 				if (d.isRoot()) {
 					T.setRoot(s);
-					s.unsetParent();
 				} else {
 					if (d.isLeft()) {
 						d.parent.linkLeft(s);
@@ -124,7 +123,6 @@ public class AVLDelete extends Algorithm {
 				v.goNextTo(d);
 				mysuspend();
 				if (d.parent == null) {
-					v.unsetParent();
 					T.setRoot(v);
 				} else {
 					if (d.isLeft()) {

@@ -8,7 +8,6 @@ import algvis.core.View;
 import algvis.scenario.commands.bstnode.LinkLeftCommand;
 import algvis.scenario.commands.bstnode.LinkRightCommand;
 import algvis.scenario.commands.bstnode.SetLevelCommand;
-import algvis.scenario.commands.bstnode.UnsetBSTParentCommand;
 
 public class BSTNode extends Node {
 	public int leftw, rightw;
@@ -128,13 +127,6 @@ public class BSTNode extends Node {
 			parent.unlinkLeft();
 		} else {
 			parent.unlinkRight();
-		}
-	}
-	
-	public void unsetParent() {
-		if (parent != null) {
-			D.scenario.add(new UnsetBSTParentCommand(this, parent));
-			parent = null;
 		}
 	}
 

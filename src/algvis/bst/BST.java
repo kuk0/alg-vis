@@ -111,7 +111,6 @@ public class BST extends Dictionary {
 		}
 		if (u.isRoot()) {
 			setRoot(v);
-			v.unsetParent();
 		} else {
 			if (u.isLeft()) {
 				u.parent.linkLeft(v);
@@ -131,7 +130,6 @@ public class BST extends Dictionary {
 		}
 		if (u.isRoot()) {
 			setRoot(v);
-			v.unsetParent();
 		} else {
 			if (u.isLeft()) {
 				u.parent.linkLeft(v);

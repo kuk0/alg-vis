@@ -107,7 +107,6 @@ public class BSTDelete extends Algorithm {
 					d.unlinkLeft();
 				}
 				if (d.isRoot()) {
-					s.unsetParent();
 					T.setRoot(s);
 				} else {
 					if (d.isLeft()) {
@@ -140,7 +139,6 @@ public class BSTDelete extends Algorithm {
 				v.goNextTo(d);
 				mysuspend();
 				if (d.parent == null) {
-					v.unsetParent();
 					T.setRoot(v);
 				} else {
 					if (d.isLeft()) {
