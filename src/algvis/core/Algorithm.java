@@ -1,6 +1,6 @@
 package algvis.core;
 
-import algvis.scenario.commands.EnableButtonsCommand;
+import algvis.scenario.commands.HardPauseCommand;
 
 /**
  * The Class Algorithm.
@@ -21,7 +21,7 @@ abstract public class Algorithm extends Thread {
 	public Algorithm(DataStructure D) {
 		this.D = D;
 		D.scenario.startMacro();
-		D.scenario.add(new EnableButtonsCommand(D.M.B, false));
+		D.scenario.add(new HardPauseCommand(D, false));
 	}
 
 	/**
@@ -54,7 +54,7 @@ abstract public class Algorithm extends Thread {
 	}
 
 	protected void finish() {
-		D.scenario.add(new EnableButtonsCommand(D.M.B, true));
+		D.scenario.add(new HardPauseCommand(D, true));
 		D.scenario.endMacro();
 	}
 	

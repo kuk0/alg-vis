@@ -173,19 +173,15 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		} else if (evt.getSource() == next) {
 			scenarioTraverser = new Thread(new Runnable() {
 				public void run() {
-					if (D.scenario != null) {
-						if (D.scenario.hasNext()) {
-							D.scenario.next();
-							if (!D.scenario.hasNext() && !D.A.suspended) {
-								disableNext();
-							}
-						} else if (D.A.suspended) {
-							D.next();
+					if (D.scenario.hasNext()) {
+						D.scenario.next();
+						if (!D.scenario.hasNext() && !D.A.suspended) {
+							disableNext();
 						}
-						enablePrevious();
 					} else if (D.A.suspended) {
 						D.next();
 					}
+					enablePrevious();
 				}
 			});
 			scenarioTraverser.start();
@@ -198,6 +194,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 			D.random(I.getInt(10));
 		} else if (evt.getSource() == pause) {
 			M.pause = pause.isSelected();
+			D.scenario.setPauses(pause.isSelected());
 		} else if (evt.getSource() == zoomIn) {
 			M.S.V.zoomIn();
 		} else if (evt.getSource() == zoomOut) {

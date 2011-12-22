@@ -26,6 +26,7 @@ public class Scenario implements XMLable {
 	private ListIterator<Command> position;
 	private boolean addingEnabled = true;
 	private boolean macroEnabled = false;
+	private boolean pauses = true, stopped = false;
 	private ArrayList<Command> macro = null;
 
 	public Scenario(String name) {
@@ -34,6 +35,14 @@ public class Scenario implements XMLable {
 		this.name = name;
 	}
 
+	public void stop() {
+		stopped = true;
+	}
+	
+	public void setPauses(boolean pauses) {
+		this.pauses = pauses;
+	}
+	
 	public void enableAdding(boolean e) {
 		addingEnabled = e;
 	}
@@ -84,13 +93,31 @@ public class Scenario implements XMLable {
 
 	public void next() {
 		enableAdding(false);
-		position.next().execute();
+		if (pauses) {
+			position.next().execute();
+		} else {
+			Command c = null;
+			while(hasNext() && !stopped) {
+				c = position.next();
+				c.execute();
+			}
+			stopped = false;
+		}
 		enableAdding(true);
 	}
 
 	public void previous() {
 		enableAdding(false);
-		position.previous().unexecute();
+		if (pauses) {
+			position.previous().unexecute();
+		} else {
+			Command c = null;
+			while(hasPrevious() && !stopped) {
+				c = position.previous();
+				c.unexecute();
+			}
+			stopped = false;
+		}
 		enableAdding(true);
 	}
 

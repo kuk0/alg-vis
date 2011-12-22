@@ -2,32 +2,35 @@ package algvis.scenario.commands;
 
 import org.jdom.Element;
 
-import algvis.core.Buttons;
+import algvis.core.DataStructure;
 
-public class EnableButtonsCommand implements Command {
-	private Buttons b;
+public class HardPauseCommand implements Command {
+	private DataStructure d;
+	/** if false then it's start of an algorithm else it's end of an algorithm */
 	private boolean enabled;
 
-	public EnableButtonsCommand(Buttons b, boolean enabled) {
-		this.b = b;
+	public HardPauseCommand(DataStructure d, boolean enabled) {
+		this.d = d;
 		this.enabled = enabled;
 	}
 
 	@Override
 	public void execute() {
 		if (enabled) {
-			b.enableAll();
+			d.M.B.enableAll();
+			d.scenario.stop();
 		} else {
-			b.disableAll();
+			d.M.B.disableAll();
 		}
 	}
 
 	@Override
 	public void unexecute() {
 		if (enabled) {
-			b.disableAll();
+			d.M.B.disableAll();
 		} else {
-			b.enableAll();
+			d.M.B.enableAll();
+			d.scenario.stop();
 		}
 	}
 
