@@ -129,7 +129,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	private JButton createButton(String alt, String path) {
-		java.net.URL imgURL = Buttons.class.getResource(path);
+		java.net.URL imgURL = getClass().getResource(path);
 		if (imgURL != null) {
 			return new JButton(new ImageIcon(imgURL));
 		} else {
@@ -140,8 +140,8 @@ abstract public class Buttons extends JPanel implements ActionListener {
 
 	public void initZoom() {
 		// zoomLabel = new ILabel(M.L, "zoomio");
-		zoomIn = createButton("+", "../images/zoom_in.gif");
-		zoomOut = createButton("-", "../images/zoom_out.gif");
+		zoomIn = createButton("+", "/algvis/images/zoom_in.gif");
+		zoomOut = createButton("-", "/algvis/images/zoom_out.gif");
 		zoomIn.addActionListener(this);
 		zoomOut.addActionListener(this);
 	}
