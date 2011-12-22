@@ -17,12 +17,8 @@ abstract public class DataStructure {
 	public static String adtName = ""; // unused field?
 	public static String dsName = ""; // also here? Subclasses of this also have static dsName...
 
-	public DataStructure(VisPanel M) {
-		this.M = M;
-	}
-	
 	public DataStructure(VisPanel M, String dsName) {
-		this(M);
+		this.M = M;
 		scenario = new Scenario(dsName);
 	}
 

@@ -23,13 +23,19 @@ public class BST extends Dictionary {
 	}
 
 	public BSTNode setNodeV(BSTNode v) {
-		scenario.add(new SetBSTNodeVCommand(this, v, this.v));
-		return this.v = v;
+		if (this.v != v) {
+			scenario.add(new SetBSTNodeVCommand(this, v, this.v));
+			this.v = v;
+		}
+		return v;
 	}
 	
 	public BSTNode setRoot(BSTNode root) {
-		scenario.add(new SetBSTRootCommand(this, root, this.root));
-		return this.root = root;
+		if (this.root != root) {
+			scenario.add(new SetBSTRootCommand(this, root, this.root));
+			this.root = root;
+		}
+		return root;
 	}
 
 	@Override
@@ -49,11 +55,13 @@ public class BST extends Dictionary {
 
 	@Override
 	public void clear() {
-		scenario.startMacro();
-		setRoot(null);
-		setNodeV(null);
-		setStats();
-		scenario.endMacro();
+		if (root != null || v != null) {
+			scenario.startMacro();
+			setRoot(null);
+			setNodeV(null);
+			setStats();
+			scenario.endMacro();
+		}
 	}
 
 	@Override

@@ -6,7 +6,8 @@ import algvis.scenario.commands.node.ArcCommand;
 import algvis.scenario.commands.node.ArrowCommand;
 import algvis.scenario.commands.node.MarkCommand;
 import algvis.scenario.commands.node.MoveCommand;
-import algvis.scenario.commands.node.SetColorCommand;
+import algvis.scenario.commands.node.SetBgColorCommand;
+import algvis.scenario.commands.node.SetFgColorCommand;
 import algvis.scenario.commands.node.SetStateCommand;
 
 /**
@@ -77,25 +78,30 @@ public class Node {
 	}
 	
 	public void setState(int s) {
-		if (D != null && D.scenario != null) {
+		if (state != s) {
 			D.scenario.add(new SetStateCommand(this, s));
+			state = s;
 		}
-		state = s;
 	}
 
 	public void setColor(Color fg, Color bg) {
-		fgcolor = fg;
-		bgcolor = bg;
+		fgColor(fg);
+		bgColor(bg);
 	}
 
 	public void fgColor(Color fg) {
-		fgcolor = fg;
+		if (fg != fgcolor) {
+			if (D != null) {
+				D.scenario.add(new SetFgColorCommand(this, fg));
+			}
+			fgcolor = fg;
+		}
 	}
 
 	public void bgColor(Color bg) {
 		if (bg != bgcolor) {
-			if (D.scenario != null) {
-				D.scenario.add(new SetColorCommand(this, bg));
+			if (D != null) {
+				D.scenario.add(new SetBgColorCommand(this, bg));
 			}
 			bgcolor = bg;
 		}
@@ -109,13 +115,17 @@ public class Node {
 	}
 
 	public void mark() {
-		D.scenario.add(new MarkCommand(this, true));
-		marked = true;
+		if (!marked) {
+			D.scenario.add(new MarkCommand(this, true));
+			marked = true;
+		}
 	}
 
 	public void unmark() {
-		D.scenario.add(new MarkCommand(this, false));
-		marked = false;
+		if (marked) {
+			D.scenario.add(new MarkCommand(this, false));
+			marked = false;
+		}
 	}
 	
 	/**
@@ -123,9 +133,9 @@ public class Node {
 	 * @param w
 	 */
 	public void pointAbove(Node w) {
-		dir = w;
-		arrow = Node.DIRARROW;
-		if (D.scenario != null) {
+		if (dir != w || arrow != Node.DIRARROW) {
+			dir = w;
+			arrow = Node.DIRARROW;
 			D.scenario.add(new ArrowCommand(this, true));
 		}
 	}
@@ -135,8 +145,11 @@ public class Node {
 	 * @param w
 	 */
 	public void pointTo(Node w) {
-		dir = w;
-		arrow = Node.TOARROW;
+		if (dir != w || arrow != Node.TOARROW) {
+			dir = w;
+			arrow = Node.TOARROW;
+			D.scenario.add(new ArrowCommand(this, true));
+		}
 	}
 
 	/**
@@ -146,20 +159,22 @@ public class Node {
 	 * @param angle 
 	 */
 	public void pointInDir(int angle) {
-		dir = null;
-		arrow = angle;
-		D.scenario.add(new ArrowCommand(this, true));
+		if (dir != null || arrow != angle) {
+			dir = null;
+			arrow = angle;
+			D.scenario.add(new ArrowCommand(this, true));
+		}
 	}
 
 	/**
 	 * Stop drawing an arrow.
 	 */
 	public void noArrow() {
-		if (D.scenario != null) {
+		if (dir != null || arrow != Node.NOARROW) {
 			D.scenario.add(new ArrowCommand(this, false));
+			dir = null;
+			arrow = Node.NOARROW;
 		}
-		dir = null;
-		arrow = Node.NOARROW;
 	}
 
 	/**
@@ -168,17 +183,21 @@ public class Node {
 	 * @param w
 	 */
 	public void setArc(Node w) {
-		dir = w;
-		arc = true;
-		D.scenario.add(new ArcCommand(this, dir, true));
+		if (dir != w || arc == false) {
+			dir = w;
+			arc = true;
+			D.scenario.add(new ArcCommand(this, dir, true));
+		}
 	}
 
 	/**
 	 * Stop drawing an arc.
 	 */
 	public void noArc() {
-		arc = false;
-		D.scenario.add(new ArcCommand(this, dir, false));
+		if (arc == true) {
+			arc = false;
+			D.scenario.add(new ArcCommand(this, dir, false));
+		}
 	}
 
 	/**
@@ -290,12 +309,12 @@ public class Node {
 	 * Set new coordinates, where the node should go.
 	 */
 	public void goTo(int tox, int toy) {
-		if (D.scenario != null) {
+		if (this.tox != tox || this.toy != toy) {
 			D.scenario.add(new MoveCommand(this, tox, toy));
+			this.tox = tox;
+			this.toy = toy;
+			this.steps = D.M.STEPS;
 		}
-		this.tox = tox;
-		this.toy = toy;
-		this.steps = D.M.STEPS;
 	}
 
 	/**

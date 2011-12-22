@@ -11,7 +11,7 @@ public class BTree extends Dictionary {
 	int xspan = 5, yspan = 15;
 
 	public BTree(VisPanel M) {
-		super(M);
+		super(M, dsName);
 	}
 
 	@Override

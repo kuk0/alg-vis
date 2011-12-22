@@ -46,8 +46,10 @@ public class Scenario implements XMLable {
 
 	public void endMacro() {
 		macroEnabled = false;
-		if (macro != null && macro.size() > 0) {
-			add(new MacroCommand(macro));
+		if (macro != null) {
+			if (macro.size() > 0) {
+				add(new MacroCommand(macro));
+			}
 			macro = null;
 		}
 	}

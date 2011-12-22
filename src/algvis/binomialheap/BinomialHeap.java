@@ -15,7 +15,7 @@ public class BinomialHeap extends MeldablePQ {
 	public BinHeapNode d, v, v2;
 
 	public BinomialHeap(VisPanel M) {
-		super(M);
+		super(M, dsName);
 		root = new BinHeapNode[numHeaps + 1];
 		min = new BinHeapNode[numHeaps + 1];
 	}

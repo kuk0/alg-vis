@@ -35,8 +35,10 @@ public class BSTNode extends Node {
 	}
 
 	public void setLevel(int level) {
-		D.scenario.add(new SetLevelCommand(this, level));
-		this.level = level;
+		if (this.level != level) {
+			D.scenario.add(new SetLevelCommand(this, level));
+			this.level = level;
+		}
 	}
 	
 	public int getLevel() {
@@ -61,20 +63,22 @@ public class BSTNode extends Node {
 	 * creates new edge between this and newLeft
 	 */
 	public void linkLeft(BSTNode newLeft) {
-		if (left != null) {
-			// remove edge between this and left
-			unlinkLeft();
-		}
-		if (newLeft != null) {
-			if (newLeft.parent != null) {
-				// remove edge between newLeft and its parent
-				newLeft.unlinkParent();
+		if (left != newLeft) {
+			if (left != null) {
+				// remove edge between this and left
+				unlinkLeft();
 			}
-			// create new edge between this and newLeft
-			newLeft.parent = this;
+			if (newLeft != null) {
+				if (newLeft.parent != null) {
+					// remove edge between newLeft and its parent
+					newLeft.unlinkParent();
+				}
+				// create new edge between this and newLeft
+				newLeft.parent = this;
+			}
+			left = newLeft;
+			D.scenario.add(new LinkLeftCommand(this, newLeft, true));
 		}
-		left = newLeft;
-		if (D.scenario != null) D.scenario.add(new LinkLeftCommand(this, newLeft, true));
 	}
 	
 	/**
@@ -82,7 +86,7 @@ public class BSTNode extends Node {
 	 */
 	public void unlinkLeft() {
 		left.parent = null;
-		if (D.scenario != null) D.scenario.add(new LinkLeftCommand(this, left, false));
+		D.scenario.add(new LinkLeftCommand(this, left, false));
 		left = null;
 	}
 
@@ -92,20 +96,22 @@ public class BSTNode extends Node {
 	 * creates new edge between this and newRight
 	 */
 	public void linkRight(BSTNode newRight) {
-		if (right != null) {
-			// remove edge between this and right
-			unlinkRight();
-		}
-		if (newRight != null) {
-			if (newRight.parent != null) {
-				// remove edge between newRight and its parent
-				newRight.unlinkParent();
+		if (right != newRight) {
+			if (right != null) {
+				// remove edge between this and right
+				unlinkRight();
 			}
-			// create new edge between this and newRight
-			newRight.parent = this;
+			if (newRight != null) {
+				if (newRight.parent != null) {
+					// remove edge between newRight and its parent
+					newRight.unlinkParent();
+				}
+				// create new edge between this and newRight
+				newRight.parent = this;
+			}
+			right = newRight;
+			D.scenario.add(new LinkRightCommand(this, newRight, true));
 		}
-		right = newRight;
-		if (D.scenario != null) D.scenario.add(new LinkRightCommand(this, newRight, true));
 	}
 	
 	/**
@@ -113,7 +119,7 @@ public class BSTNode extends Node {
 	 */
 	public void unlinkRight() {
 		right.parent = null;
-		if (D.scenario != null) D.scenario.add(new LinkRightCommand(this, right, false));
+		D.scenario.add(new LinkRightCommand(this, right, false));
 		right = null;
 	}
 	
@@ -126,8 +132,10 @@ public class BSTNode extends Node {
 	}
 	
 	public void unsetParent() {
-		if (D.scenario != null) D.scenario.add(new UnsetBSTParentCommand(this, parent));
-		parent = null;
+		if (parent != null) {
+			D.scenario.add(new UnsetBSTParentCommand(this, parent));
+			parent = null;
+		}
 	}
 
 	public void isolate() {

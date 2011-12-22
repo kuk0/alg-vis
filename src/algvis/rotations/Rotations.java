@@ -15,7 +15,7 @@ public class Rotations extends DataStructure {
 	BST T;
 
 	public Rotations(VisPanel M) {
-		super(M);
+		super(M, dsName);
 		T = new BST(M);
 		random(10);
 	}

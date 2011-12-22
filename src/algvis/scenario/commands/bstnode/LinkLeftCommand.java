@@ -19,17 +19,17 @@ public class LinkLeftCommand implements Command {
 	public void execute() {
 		if (linked) {
 			n1.linkLeft(n2);
-		} else {
+		} else if (n1.left != null) {
 			n1.unlinkLeft();
 		}
 	}
 
 	@Override
 	public void unexecute() {
-		if (linked) {
-			n1.unlinkLeft();
-		} else {
+		if (!linked) {
 			n1.linkLeft(n2);
+		} else if (n1.left != null) {
+			n1.unlinkLeft();
 		}
 	}
 
