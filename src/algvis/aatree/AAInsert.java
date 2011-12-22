@@ -72,8 +72,7 @@ public class AAInsert extends Algorithm {
 				w.mark();
 				setText("aaok");
 				// skew
-				if (w.left != null
-						&& w.left.getLevel() == w.getLevel()) {
+				if (w.left != null && w.left.getLevel() == w.getLevel()) {
 					setText("aaskew");
 					mysuspend();
 					w.unmark();

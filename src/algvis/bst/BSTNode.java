@@ -55,42 +55,74 @@ public class BSTNode extends Node {
 		return parent.left == this;
 	}
 
-	public void linkLeft(BSTNode v) {
+	/**
+	 * removes edge between this and left;
+	 * removes edge between newLeft and its parent;
+	 * creates new edge between this and newLeft
+	 */
+	public void linkLeft(BSTNode newLeft) {
 		if (left != null) {
+			// remove edge between this and left
 			unlinkLeft();
 		}
-		left = v;
-		if (v != null) {
-			v.parent = this;
+		if (newLeft != null) {
+			if (newLeft.parent != null) {
+				// remove edge between newLeft and its parent
+				newLeft.unlinkParent();
+			}
+			// create new edge between this and newLeft
+			newLeft.parent = this;
 		}
-		if (D.scenario != null) D.scenario.add(new LinkLeftCommand(this, v, true));
+		left = newLeft;
+		if (D.scenario != null) D.scenario.add(new LinkLeftCommand(this, newLeft, true));
 	}
 	
+	/**
+	 * removes edge between this and left
+	 */
 	public void unlinkLeft() {
-		if (left != null) {
-			left.parent = null;
-		}
+		left.parent = null;
 		if (D.scenario != null) D.scenario.add(new LinkLeftCommand(this, left, false));
 		left = null;
 	}
 
-	public void linkRight(BSTNode v) {
+	/**
+	 * removes edge between this and right;
+	 * removes edge between newRight and its parent;
+	 * creates new edge between this and newRight
+	 */
+	public void linkRight(BSTNode newRight) {
 		if (right != null) {
+			// remove edge between this and right
 			unlinkRight();
 		}
-		right = v;
-		if (v != null) {
-			v.parent = this;
+		if (newRight != null) {
+			if (newRight.parent != null) {
+				// remove edge between newRight and its parent
+				newRight.unlinkParent();
+			}
+			// create new edge between this and newRight
+			newRight.parent = this;
 		}
-		if (D.scenario != null) D.scenario.add(new LinkRightCommand(this, v, true));
+		right = newRight;
+		if (D.scenario != null) D.scenario.add(new LinkRightCommand(this, newRight, true));
 	}
 	
+	/**
+	 * removes edge between this and right
+	 */
 	public void unlinkRight() {
-		if (right != null) {
-			right.parent = null;
-		}
+		right.parent = null;
 		if (D.scenario != null) D.scenario.add(new LinkRightCommand(this, right, false));
 		right = null;
+	}
+	
+	private void unlinkParent() {
+		if (isLeft()) {
+			parent.unlinkLeft();
+		} else {
+			parent.unlinkRight();
+		}
 	}
 	
 	public void unsetParent() {
