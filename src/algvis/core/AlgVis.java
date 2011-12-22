@@ -96,6 +96,10 @@ public class AlgVis extends JPanel implements ActionListener {
 		add(cards);
 
 		Fonts.init(getGraphics());
+		
+		// set default panel for testing; TODO delete these lines
+		CardLayout cl = (CardLayout) (cards.getLayout());
+		cl.show(cards, DataStructures.getName(2)); // AVL
 	}
 
 	public void actionPerformed(ActionEvent e) {

@@ -2,7 +2,9 @@ package algvis.core;
 
 import java.awt.Color;
 
+import algvis.scenario.ArcCommand;
 import algvis.scenario.ArrowCommand;
+import algvis.scenario.MarkCommand;
 import algvis.scenario.SetColorCommand;
 import algvis.scenario.SetStateCommand;
 import algvis.scenario.MoveCommand;
@@ -107,13 +109,14 @@ public class Node {
 	}
 
 	public void mark() {
+		D.scenario.add(new MarkCommand(this, true));
 		marked = true;
 	}
 
 	public void unmark() {
+		D.scenario.add(new MarkCommand(this, false));
 		marked = false;
 	}
-
 	
 	/**
 	 * Draw an arrow pointing above the node w.
@@ -167,6 +170,7 @@ public class Node {
 	public void setArc(Node w) {
 		dir = w;
 		arc = true;
+		D.scenario.add(new ArcCommand(this, dir, true));
 	}
 
 	/**
@@ -174,6 +178,7 @@ public class Node {
 	 */
 	public void noArc() {
 		arc = false;
+		D.scenario.add(new ArcCommand(this, dir, false));
 	}
 
 	/**
@@ -263,7 +268,7 @@ public class Node {
 	}
 
 	public void draw(View v) {
-		if (state == Node.INVISIBLE /*|| state == Node.UP*/ || key == NULL) {
+		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
 			return;
 		}
 		drawBg(v);
@@ -365,7 +370,7 @@ public class Node {
 	public void move() {
 		switch (state) {
 		case Node.OUT:
-			if (!D.M.S.V.inside(x, y - D.radius)) {
+			if (!D.M.S.V.inside(x, y)) {
 				state = Node.INVISIBLE;
 			}
 		case Node.ALIVE:

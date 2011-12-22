@@ -28,7 +28,10 @@ public class AVL extends BST {
 
 	@Override
 	public void clear() {
-		root = null;
+		scenario.startMacro();
+		setRoot(null);
+		setNodeV(null);
 		setStats();
+		scenario.endMacro();
 	}
 }

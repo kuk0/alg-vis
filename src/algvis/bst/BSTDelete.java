@@ -10,7 +10,7 @@ public class BSTDelete extends Algorithm {
 	int K;
 
 	public BSTDelete(BST T, int x) { // Buttons B,
-		super(T, "BSTDelete");
+		super(T);
 		this.T = T;
 		v = T.setNodeV(new BSTNode(T, K = x, T.up()));
 		v.setState(Node.ALIVE);
@@ -132,8 +132,6 @@ public class BSTDelete extends Algorithm {
 					mysuspend();
 				}
 				v = T.setNodeV(s);
-				v.key = s.key;
-				v.bgColor(Colors.NORMAL);
 				if (s.isLeft()) {
 					s.parent.linkLeft(s.right);
 				} else {

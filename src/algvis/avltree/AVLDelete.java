@@ -13,7 +13,8 @@ public class AVLDelete extends Algorithm {
 	public AVLDelete(AVL T, int x) {
 		super(T);
 		this.T = T;
-		v = T.v = new BSTNode(T, K = x);
+		v = T.setNodeV(new AVLNode(T, K = x, T.up()));
+		v.setState(Node.ALIVE);
 		v.bgColor(Colors.DELETE);
 		setHeader("deletion");
 	}
@@ -27,6 +28,7 @@ public class AVLDelete extends Algorithm {
 			v.goDown();
 			v.bgColor(Colors.NOTFOUND);
 			setText("notfound");
+			finish();
 			return;
 		} else {
 			BSTNode d = T.root;
@@ -62,6 +64,7 @@ public class AVLDelete extends Algorithm {
 
 			if (d == null) { // notfound
 				setText("notfound");
+				finish();
 				return;
 			}
 
@@ -71,11 +74,11 @@ public class AVLDelete extends Algorithm {
 				setText("bstdeletecase1");
 				mysuspend();
 				if (d.isRoot()) {
-					T.root = null;
+					T.setRoot(null);
 				} else if (d.isLeft()) {
-					d.parent.left = null;
+					d.parent.unlinkLeft();
 				} else {
-					d.parent.right = null;
+					d.parent.unlinkRight();
 				}
 				v.goDown();
 
@@ -84,14 +87,13 @@ public class AVLDelete extends Algorithm {
 				mysuspend();
 				BSTNode s = (d.left == null) ? d.right : d.left;
 				if (d.isRoot()) {
-					T.root = s;
-					s.parent = null;
+					T.setRoot(s);
+					s.unsetParent();
 				} else {
-					s.parent = d.parent;
 					if (d.isLeft()) {
-						d.parent.left = s;
+						d.parent.linkLeft(s);
 					} else {
-						d.parent.right = s;
+						d.parent.linkRight(s);
 					}
 				}
 				v.goDown();
@@ -99,7 +101,8 @@ public class AVLDelete extends Algorithm {
 			} else { // case III - 2 synovia
 				setText("bstdeletecase3");
 				BSTNode s = d.right;
-				v = T.v = new AVLNode(T, -Node.INF);
+				v = T.setNodeV(new AVLNode(T, -Node.INF, T.up()));
+				v.setState(Node.ALIVE);
 				v.bgColor(Colors.FIND);
 				v.goTo(s);
 				mysuspend();
@@ -110,23 +113,19 @@ public class AVLDelete extends Algorithm {
 				}
 				w = s.parent;
 				if (w == d) {
-					w = v;
+					w = s;
 				}
-				v.key = s.key;
-				v.bgColor(Colors.NORMAL);
-				if (s.right != null) {
-					s.right.parent = s.parent;
-				}
+				v = T.setNodeV(s);
 				if (s.isLeft()) {
-					s.parent.left = s.right;
+					s.parent.linkLeft(s.right);
 				} else {
-					s.parent.right = s.right;
+					s.parent.linkRight(s.right);
 				}
 				v.goNextTo(d);
 				mysuspend();
 				if (d.parent == null) {
-					v.parent = null;
-					T.root = v;
+					v.unsetParent();
+					T.setRoot(v);
 				} else {
 					if (d.isLeft()) {
 						d.parent.linkLeft(v);
@@ -138,7 +137,7 @@ public class AVLDelete extends Algorithm {
 				v.linkRight(d.right);
 				v.goTo(d);
 				v.calc();
-				T.v = d;
+				T.setNodeV(d);
 				d.goDown();
 			} // end case III
 
@@ -208,5 +207,6 @@ public class AVLDelete extends Algorithm {
 			T.reposition();
 			setText("done");
 		}
+		finish();
 	}
 }

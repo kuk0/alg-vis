@@ -3,6 +3,7 @@ package algvis.avltree;
 import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
 import algvis.core.Colors;
+import algvis.core.Node;
 
 public class AVLInsert extends Algorithm {
 	AVL T;
@@ -12,7 +13,8 @@ public class AVLInsert extends Algorithm {
 	public AVLInsert(AVL T, int x) {
 		super(T);
 		this.T = T;
-		T.v = v = new BSTNode(T, K = x);
+		v = T.setNodeV(new AVLNode(T, K = x, T.up()));
+		v.setState(Node.ALIVE);
 		v.bgColor(Colors.INSERT);
 		setHeader("insertion");
 	}
@@ -21,7 +23,7 @@ public class AVLInsert extends Algorithm {
 	public void run() {
 		BSTNode w = T.root;
 		if (T.root == null) {
-			T.root = v = new AVLNode(v);
+			T.setRoot(v);
 			v.goToRoot();
 			setText("newroot");
 			mysuspend();
@@ -35,13 +37,14 @@ public class AVLInsert extends Algorithm {
 					setText("alreadythere");
 					v.goDown();
 					v.bgColor(Colors.NOTFOUND);
+					finish();
 					return;
 				} else if (w.key < K) {
 					setText("bstinsertright", K, w.key);
 					if (w.right != null) {
 						w = w.right;
 					} else {
-						w.linkRight(new AVLNode(v));
+						w.linkRight(v);
 						break;
 					}
 				} else {
@@ -49,7 +52,7 @@ public class AVLInsert extends Algorithm {
 					if (w.left != null) {
 						w = w.left;
 					} else {
-						w.linkLeft(new AVLNode(v));
+						w.linkLeft(v);
 						break;
 					}
 				}
@@ -57,7 +60,6 @@ public class AVLInsert extends Algorithm {
 				mysuspend();
 			}
 
-			v = T.v = null;
 			T.reposition();
 			setText("avlinsertbal");
 			mysuspend();
@@ -99,7 +101,7 @@ public class AVLInsert extends Algorithm {
 						w.unmark();
 						w = w.right;
 						w.mark();
-						w.setArc(w.parent);
+						w.setArc(w.parent); 
 						mysuspend();
 						w.noArc();
 						T.rotate(w);
@@ -126,5 +128,7 @@ public class AVLInsert extends Algorithm {
 		}
 		T.reposition();
 		setText("done");
+		v.bgColor(Colors.NORMAL);
+		finish();
 	}
 }

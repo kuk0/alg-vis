@@ -10,7 +10,7 @@ public class BSTInsert extends Algorithm {
 	int K;
 
 	public BSTInsert(BST T, int x) {
-		super(T, "BSTInsert");
+		super(T);
 		this.T = T;
 		v = T.setNodeV(new BSTNode(T, K = x, T.up()));
 		v.setState(Node.ALIVE);

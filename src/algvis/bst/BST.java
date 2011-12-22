@@ -27,9 +27,9 @@ public class BST extends Dictionary {
 		return this.v = v;
 	}
 	
-	public void setRoot(BSTNode root) {
+	public BSTNode setRoot(BSTNode root) {
 		scenario.add(new SetBSTRootCommand(this, root, this.root));
-		this.root = root;
+		return this.root = root;
 	}
 
 	@Override
@@ -96,40 +96,40 @@ public class BST extends Dictionary {
 
 	protected void leftrot(BSTNode v) {
 		BSTNode u = v.parent;
+		if (v.left == null) {
+			u.unlinkRight();
+		} else {
+			u.linkRight(v.left);
+		}
 		if (u.isRoot()) {
-			root = v;
-			v.parent = null;
+			setRoot(v);
+			v.unsetParent();
 		} else {
 			if (u.isLeft()) {
 				u.parent.linkLeft(v);
 			} else {
 				u.parent.linkRight(v);
 			}
-		}
-		if (v.left == null) {
-			u.right = null;
-		} else {
-			u.linkRight(v.left);
 		}
 		v.linkLeft(u);
 	}
 
 	protected void rightrot(BSTNode v) {
 		BSTNode u = v.parent;
+		if (v.right == null) {
+			u.unlinkLeft();
+		} else {
+			u.linkLeft(v.right);
+		}
 		if (u.isRoot()) {
-			root = v;
-			v.parent = null;
+			setRoot(v);
+			v.unsetParent();
 		} else {
 			if (u.isLeft()) {
 				u.parent.linkLeft(v);
 			} else {
 				u.parent.linkRight(v);
 			}
-		}
-		if (v.right == null) {
-			u.left = null;
-		} else {
-			u.linkLeft(v.right);
 		}
 		v.linkRight(u);
 	}

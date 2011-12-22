@@ -10,11 +10,7 @@ public class SetStateCommand implements Command {
 
 	public SetStateCommand(Node n, int to) {
 		this.n = n;
-		if (n.state == Node.UP) {
-			this.from = Node.OUT;
-		} else {
-			this.from = n.state;
-		}
+		this.from = n.state;
 		this.to = to;
 	}
 
@@ -28,7 +24,7 @@ public class SetStateCommand implements Command {
 
 	@Override
 	public void unexecute() {
-		if (from == Node.OUT) {
+		if (from == Node.UP) {
 			wait4Node();
 		}
 		n.setState(from);

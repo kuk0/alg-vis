@@ -7,17 +7,22 @@ import algvis.core.Colors;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.View;
+import algvis.scenario.SetBalanceCommand;
 
 //import static java.lang.Math.random;
 //import static java.lang.Math.round;
 
 public class AVLNode extends BSTNode {
-	int bal = 0;
+	private int bal = 0;
 
 	public AVLNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 	}
 
+	public AVLNode(DataStructure D, int key, int[] pos) {
+		super(D, key, pos);
+	}
+	
 	public AVLNode(DataStructure D, int key) {
 		this(D, key, -10, -10);
 	}
@@ -29,7 +34,21 @@ public class AVLNode extends BSTNode {
 	public int balance() {
 		int l = (left == null) ? 0 : left.height, r = (right == null) ? 0
 				: right.height;
-		return bal = r - l;
+		if (r - l != bal) {
+		}
+		setBalance(r - l);
+		return bal;
+	}
+	
+	public void setBalance(int bal) {
+		if (this.bal != bal) {
+			D.scenario.add(new SetBalanceCommand(this, bal));
+			this.bal = bal;
+		}
+	}
+	
+	public int getBalance() {
+		return bal;
 	}
 
 	@Override

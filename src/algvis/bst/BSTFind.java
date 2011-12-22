@@ -10,7 +10,7 @@ public class BSTFind extends Algorithm {
 	int K;
 
 	public BSTFind(BST T, int x) {
-		super(T, "BSTFind");
+		super(T);
 		this.T = T;
 		v = T.setNodeV(new BSTNode(T, K = x, T.up()));
 		v.setState(Node.ALIVE);

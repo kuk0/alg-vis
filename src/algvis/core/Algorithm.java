@@ -20,10 +20,6 @@ abstract public class Algorithm extends Thread {
 	 */
 	public Algorithm(DataStructure D) {
 		this.D = D;
-	}
-	
-	public Algorithm(DataStructure D, String name) {
-		this(D);
 		D.scenario.startMacro();
 		D.scenario.add(new EnableButtonsCommand(D.M.B, false));
 	}
