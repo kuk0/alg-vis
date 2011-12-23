@@ -45,12 +45,12 @@ public class SkipList extends Dictionary {
 	@Override
 	public String stats() {
 		if (root == null) {
-			return M.L.getString("size") + ": 0;   " + M.L.getString("height")
-					+ ": 0;   #" + M.L.getString("excess") + ": 0";
+			return M.S.L.getString("size") + ": 0;   " + M.S.L.getString("height")
+					+ ": 0;   #" + M.S.L.getString("excess") + ": 0";
 		} else {
-			return M.L.getString("size") + ": " + n + ";   "
-					+ M.L.getString("height") + ": " + height + ";   #"
-					+ M.L.getString("excess") + ": " + e;
+			return M.S.L.getString("size") + ": " + n + ";   "
+					+ M.S.L.getString("height") + ": " + height + ";   #"
+					+ M.S.L.getString("excess") + ": " + e;
 		}
 	}
 
@@ -70,6 +70,6 @@ public class SkipList extends Dictionary {
 		x1 = 0;
 		y1 = 0;
 		root._reposition();
-		M.S.V.setBounds(x1, y1, x2, y2);
+		M.screen.V.setBounds(x1, y1, x2, y2);
 	}
 }

@@ -63,9 +63,8 @@ public class Languages {
 		try {
 			return all_msgs[current_lang].getString(s);
 		} catch (MissingResourceException e) {
-			System.out.println(s);
-			System.out.println(e.getMessage());
-			return "";
+			System.out.println(e.getMessage() + ": " + s);
+			return "???";
 		}
 	}
 }

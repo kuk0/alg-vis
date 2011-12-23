@@ -36,14 +36,14 @@ public class Rotations extends DataStructure {
 					break;
 				} else if (w.key < x) {
 					if (w.right == null) {
-						w.linkright(v);
+						w.linkRight(v);
 						break;
 					} else {
 						w = w.right;
 					}
 				} else {
 					if (w.left == null) {
-						w.linkleft(v);
+						w.linkLeft(v);
 						break;
 					} else {
 						w = w.left;

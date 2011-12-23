@@ -341,7 +341,7 @@ public class Node {
 			}
 			break;
 		case Node.UP:
-			y = (int) (D.M.S.V.viewY - D.M.S.V.viewH) - D.radius;
+			y = (int) (D.M.screen.V.viewY - D.M.screen.V.viewH) - D.radius;
 			setState(Node.ALIVE);
 			move();
 			break;
@@ -355,7 +355,7 @@ public class Node {
 			if (state == Node.RIGHT) {
 				x += 20;
 			}
-			if (!D.M.S.V.inside(x, y - D.radius)) {
+			if (!D.M.screen.V.inside(x, y - D.radius)) {
 				setState(Node.INVISIBLE);
 			}
 			break;

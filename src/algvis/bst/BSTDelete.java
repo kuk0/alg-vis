@@ -137,13 +137,13 @@ public class BSTDelete extends Algorithm {
 					T.root = v;
 				} else {
 					if (d.isLeft()) {
-						d.parent.linkleft(v);
+						d.parent.linkLeft(v);
 					} else {
-						d.parent.linkright(v);
+						d.parent.linkRight(v);
 					}
 				}
-				v.linkleft(d.left);
-				v.linkright(d.right);
+				v.linkLeft(d.left);
+				v.linkRight(d.right);
 				v.goTo(d);
 				T.v = d;
 				d.goDown();

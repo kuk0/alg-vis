@@ -22,6 +22,7 @@ public class AlgVis extends JPanel implements ActionListener {
 	JPanel cards;
 	JRootPane P;
 	Languages L;
+	Settings S;
 
 	Map<String, IMenu> adtItems = new HashMap<String, IMenu>();
 	IMenuItem[] dsItems;
@@ -32,8 +33,8 @@ public class AlgVis extends JPanel implements ActionListener {
 
 	public AlgVis(JRootPane P, String s) {
 		this.P = P;
-		// Internationalization
 		L = new Languages(s);
+		S = new Settings(L);
 	}
 
 	public void init() {
@@ -42,8 +43,10 @@ public class AlgVis extends JPanel implements ActionListener {
 		menuBar = new JMenuBar();
 		IMenu dsMenu = new IMenu(L, "datastructures");
 		dsMenu.setMnemonic(KeyEvent.VK_D);
-		IMenu lMenu = new IMenu(L, "language");
-		lMenu.setMnemonic(KeyEvent.VK_L);
+		IMenu langMenu = new IMenu(L, "language");
+		langMenu.setMnemonic(KeyEvent.VK_L);
+		IMenu layoutMenu = new IMenu(L, "layout");
+		layoutMenu.setMnemonic(KeyEvent.VK_Y);
 
 		// Data structures menu
 		// Dictionaries
@@ -80,14 +83,26 @@ public class AlgVis extends JPanel implements ActionListener {
 		enItem.addActionListener(this);
 		skItem.addActionListener(this);
 
-		lMenu.add(enItem);
-		lMenu.add(skItem);
-		menuBar.add(lMenu);
+		langMenu.add(enItem);
+		langMenu.add(skItem);
+		menuBar.add(langMenu);
+		
+		// Layout menu
+		IMenuItem sItem = new IMenuItem(L, "layout-simple", KeyEvent.VK_S);
+		IMenuItem cItem = new IMenuItem(L, "layout-compact", KeyEvent.VK_C);
+		sItem.setActionCommand("layout-simple");
+		cItem.setActionCommand("layout-compact");
+		sItem.addActionListener(this);
+		cItem.addActionListener(this);
+		
+		layoutMenu.add(sItem);
+		layoutMenu.add(cItem);
+		menuBar.add(layoutMenu);
 
 		// Cards with data structures
 		cards = new JPanel(new CardLayout());
 		for (int i = 0; i < DataStructures.N; ++i) {
-			VisPanel P = DataStructures.getPanel(i, L);
+			VisPanel P = DataStructures.getPanel(i, S);
 			if (P != null) cards.add(P, DataStructures.getName(i));
 		}
 
@@ -100,15 +115,25 @@ public class AlgVis extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		String[] cmd = e.getActionCommand().split("-", 2);
+
+		// set language
 		if ("lang".equals(cmd[0])) {
 			L.selectLanguage(cmd[1]);
-			// DEBUG: System.out.println("akcia: " + cmd[1]);
 		}
+		
+		// set layout
+		if ("layout".equals(cmd[0])) {
+			if (cmd[1] == "compact") {
+				S.layout = Layout.COMPACT;
+			} else {
+				S.layout = Layout.SIMPLE;
+			}
+		}
+		
+		// set different data structure
 		if ("ds".equals(cmd[0])) {
-			// DEBUG: System.out.println("akcia: " + cmd[1]);
 			for (int i = 0; i < DataStructures.N; ++i) {
 				if (DataStructures.getName(i).equals(cmd[1])) {
-					// nastav i-ty panel
 					CardLayout cl = (CardLayout) (cards.getLayout());
 					cl.show(cards, DataStructures.getName(i));
 					break;
