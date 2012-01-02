@@ -115,7 +115,7 @@ public class AlgVis extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		String[] cmd = e.getActionCommand().split("-", 2);
-
+		
 		// set language
 		if ("lang".equals(cmd[0])) {
 			L.selectLanguage(cmd[1]);
@@ -123,11 +123,7 @@ public class AlgVis extends JPanel implements ActionListener {
 		
 		// set layout
 		if ("layout".equals(cmd[0])) {
-			if (cmd[1] == "compact") {
-				S.layout = Layout.COMPACT;
-			} else {
-				S.layout = Layout.SIMPLE;
-			}
+			S.setLayout(cmd[1]);
 		}
 		
 		// set different data structure

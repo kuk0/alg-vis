@@ -1,11 +1,12 @@
 package algvis.bst;
 
 import algvis.core.Dictionary;
+import algvis.core.LayoutListener;
 import algvis.core.StringUtils;
 import algvis.core.View;
 import algvis.core.VisPanel;
 
-public class BST extends Dictionary {
+public class BST extends Dictionary implements LayoutListener {
 	public static String dsName = "bst";
 	public BSTNode root = null, v = null;
 
@@ -143,5 +144,9 @@ public class BST extends Dictionary {
 			M.screen.V.setBounds(x1, y1, x2, y2);
 			//System.out.println(x1+" "+y1+" "+x2+" "+y2);
 		}
+	}
+	
+	public void changeLayout() {
+		reposition();
 	}
 }
