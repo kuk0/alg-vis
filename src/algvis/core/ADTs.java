@@ -15,7 +15,6 @@ public class ADTs {
 		Dictionary.class,    // insert, find, delete
 		PriorityQueue.class, // insert, decrease-key, delete-min
 		MeldablePQ.class,    // insert, decrease-key, delete-min, meld
-		UnionFind.class      // make-set, union, find
 	};
 	static final int N = ADT.length;
 
