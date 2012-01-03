@@ -142,7 +142,6 @@ public class BST extends Dictionary implements LayoutListener {
 			x1 = x2 = y1 = y2 = 0;
 			root.reposition();
 			M.screen.V.setBounds(x1, y1, x2, y2);
-			//System.out.println(x1+" "+y1+" "+x2+" "+y2);
 		}
 	}
 	

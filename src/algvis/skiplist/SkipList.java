@@ -1,5 +1,6 @@
 package algvis.skiplist;
 
+import algvis.core.Alignment;
 import algvis.core.Dictionary;
 import algvis.core.Node;
 import algvis.core.View;
@@ -12,6 +13,7 @@ public class SkipList extends Dictionary {
 
 	public SkipList(VisPanel M) {
 		super(M);
+		M.screen.V.align = Alignment.LEFT;
 		root = new SkipNode(this, -Node.INF);
 		root.linkright(sent = new SkipNode(this, Node.INF));
 		reposition();

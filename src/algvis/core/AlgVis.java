@@ -51,14 +51,16 @@ public class AlgVis extends JPanel implements ActionListener {
 		// Data structures menu
 		// Dictionaries
 		/**
-		 * Create a submenu (IMenu) for each abstract data type listed in the class ADTs.
+		 * Create a submenu (IMenu) for each abstract data type listed in the
+		 * class ADTs.
 		 */
 		for (int i = 0; i < ADTs.N; ++i) {
 			String adtName = ADTs.getName(i);
 			adtItems.put(adtName, new IMenu(L, adtName));
 		}
 		/**
-		 * Create menu items for each data structure listed in the class DataStructures.
+		 * Create menu items for each data structure listed in the class
+		 * DataStructures.
 		 */
 		dsItems = new IMenuItem[DataStructures.N];
 		for (int i = 0; i < DataStructures.N; ++i) {

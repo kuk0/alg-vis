@@ -31,7 +31,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	IButton next, clear, random;
 	ICheckBox pause;
 	ChLabel stats;
-	JButton zoomIn, zoomOut;
+	JButton zoomIn, zoomOut, resetView;
 
 	// ILabel zoomLabel;
 	abstract public void actionButtons(JPanel P);
@@ -64,6 +64,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		// second.add(zoomLabel);
 		second.add(zoomIn);
 		second.add(zoomOut);
+		second.add(resetView);
 
 		otherButtons(second);
 
@@ -121,10 +122,13 @@ abstract public class Buttons extends JPanel implements ActionListener {
 
 	public void initZoom() {
 		// zoomLabel = new ILabel(M.S.L, "zoomio");
+//		zoomIn = createButton("+", "../images/zoom_in.gif");
 		zoomIn = createButton("+", "/algvis/images/zoom_in.gif");
 		zoomOut = createButton("-", "/algvis/images/zoom_out.gif");
+		resetView = createButton("R", "/algvis/images/reset.gif");
 		zoomIn.addActionListener(this);
 		zoomOut.addActionListener(this);
+		resetView.addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent evt) {
@@ -143,6 +147,8 @@ abstract public class Buttons extends JPanel implements ActionListener {
 			M.screen.V.zoomIn();
 		} else if (evt.getSource() == zoomOut) {
 			M.screen.V.zoomOut();
+		} else if (evt.getSource() == resetView) {
+			M.screen.V.resetView();
 		}
 	}
 

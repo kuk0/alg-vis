@@ -1,6 +1,9 @@
 package algvis.binomialheap;
 
 import java.awt.Color;
+
+import algvis.core.Alignment;
+import algvis.core.ClickListener;
 import algvis.core.MeldablePQ;
 import algvis.core.MeldablePQButtons;
 import algvis.core.Node;
@@ -8,7 +11,7 @@ import algvis.core.Pair;
 import algvis.core.View;
 import algvis.core.VisPanel;
 
-public class BinomialHeap extends MeldablePQ {
+public class BinomialHeap extends MeldablePQ implements ClickListener {
 	public static String dsName = "binheap";
 	public BinHeapNode[] root; // root[0] je pomocny, prave meldujuci
 	public BinHeapNode[] min;
@@ -18,6 +21,8 @@ public class BinomialHeap extends MeldablePQ {
 		super(M);
 		root = new BinHeapNode[numHeaps + 1];
 		min = new BinHeapNode[numHeaps + 1];
+		M.screen.V.setDS(this);
+		M.screen.V.align = Alignment.LEFT;
 	}
 	
 	@Override

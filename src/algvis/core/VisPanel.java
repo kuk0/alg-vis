@@ -8,14 +8,10 @@ import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSlider;
-import javax.swing.SwingConstants;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import algvis.internationalization.ILabel;
 
-public abstract class VisPanel extends JPanel implements ChangeListener {
+public abstract class VisPanel extends JPanel {
 	private static final long serialVersionUID = 5104769085118210624L;
 	public static Class<? extends DataStructure> DS;
 
@@ -25,9 +21,6 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 	public DataStructure D; // datovej struktury
 	public Screen screen; // obrazovky v strede
 	public ILabel statusBar; // a status baru
-
-	public JSlider vSlider, hSlider;
-
 	public Settings S;
 
 	int STEPS = 10;
@@ -107,15 +100,6 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 		};
 		screenP.add(screen, BorderLayout.CENTER);
 
-		vSlider = new JSlider(SwingConstants.VERTICAL, 0, 100, 50);
-		vSlider.addChangeListener(this);
-		vSlider.setInverted(true);
-		screenP.add(vSlider, BorderLayout.WEST);
-
-		hSlider = new JSlider(SwingConstants.HORIZONTAL, 0, 100, 50);
-		hSlider.addChangeListener(this);
-		screenP.add(hSlider, BorderLayout.SOUTH);
-
 		screenP.setBorder(BorderFactory.createCompoundBorder(BorderFactory
 				.createTitledBorder(S.L.getString("display")), BorderFactory
 				.createEmptyBorder(5, 5, 5, 5)));
@@ -156,19 +140,6 @@ public abstract class VisPanel extends JPanel implements ChangeListener {
 
 	abstract public void initDS();
 
-	public void stateChanged(ChangeEvent e) {
-		JSlider source = (JSlider) e.getSource();
-		if (true) { // !source.getValueIsAdjusting()) {
-			int val = source.getValue();
-			int or = source.getOrientation();
-			if (or == SwingConstants.VERTICAL) {
-				screen.V.setY(val);
-			} else if (or == SwingConstants.HORIZONTAL) {
-				screen.V.setX(val);
-			}
-		}
-	}
-	
 	/*public void showStatus (String t) {
 		statusBar.setT(t);
 	}*/

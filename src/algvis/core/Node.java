@@ -341,7 +341,9 @@ public class Node {
 			}
 			break;
 		case Node.UP:
-			y = (int) (D.M.screen.V.viewY - D.M.screen.V.viewH) - D.radius;
+			//TODO:
+			//y = (int) (D.M.screen.V.viewY - D.M.screen.V.viewH) - D.radius;
+			y = - 5*D.radius;
 			setState(Node.ALIVE);
 			move();
 			break;
