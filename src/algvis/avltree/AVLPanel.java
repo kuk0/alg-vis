@@ -2,6 +2,7 @@ package algvis.avltree;
 
 import algvis.core.DataStructure;
 import algvis.core.DictButtons;
+import algvis.core.Settings;
 import algvis.core.VisPanel;
 import algvis.internationalization.Languages;
 
@@ -9,8 +10,8 @@ public class AVLPanel extends VisPanel {
 	private static final long serialVersionUID = 9157486805598407776L;
 	public static Class<? extends DataStructure> DS = AVL.class;
 
-	public AVLPanel(Languages L) {
-		super(L);
+	public AVLPanel(Settings S) {
+		super(S);
 	}
 
 	@Override
