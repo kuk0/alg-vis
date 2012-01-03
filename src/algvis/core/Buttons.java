@@ -31,7 +31,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	IButton next, clear, random;
 	ICheckBox pause;
 	ChLabel stats;
-	JButton zoomIn, zoomOut;
+	JButton zoomIn, zoomOut, resetView;
 
 	// ILabel zoomLabel;
 	abstract public void actionButtons(JPanel P);
@@ -64,6 +64,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		// second.add(zoomLabel);
 		second.add(zoomIn);
 		second.add(zoomOut);
+		second.add(resetView);
 
 		otherButtons(second);
 
@@ -80,31 +81,31 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		add(second);
 		add(third);
 		setBorder(BorderFactory.createCompoundBorder(BorderFactory
-				.createTitledBorder(M.L.getString("control")), BorderFactory
+				.createTitledBorder(M.S.L.getString("control")), BorderFactory
 				.createEmptyBorder(5, 5, 5, 5)));
 	}
 
 	public void initNext() {
-		next = new IButton(M.L, "next");
+		next = new IButton(M.S.L, "next");
 		next.setMnemonic(KeyEvent.VK_N);
 		next.setEnabled(false);
 		next.addActionListener(this);
 	}
 
 	public void initPause() {
-		pause = new ICheckBox(M.L, "button-pause", true);
+		pause = new ICheckBox(M.S.L, "button-pause", true);
 		pause.setMnemonic(KeyEvent.VK_P);
 		pause.addActionListener(this);
 	}
 
 	public void initClear() {
-		clear = new IButton(M.L, "button-clear");
+		clear = new IButton(M.S.L, "button-clear");
 		clear.setMnemonic(KeyEvent.VK_C);
 		clear.addActionListener(this);
 	}
 
 	public void initRandom() {
-		random = new IButton(M.L, "button-random");
+		random = new IButton(M.S.L, "button-random");
 		random.setMnemonic(KeyEvent.VK_R);
 		random.addActionListener(this);
 	}
@@ -120,11 +121,14 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	public void initZoom() {
-		// zoomLabel = new ILabel(M.L, "zoomio");
+		// zoomLabel = new ILabel(M.S.L, "zoomio");
+//		zoomIn = createButton("+", "../images/zoom_in.gif");
 		zoomIn = createButton("+", "/algvis/images/zoom_in.gif");
 		zoomOut = createButton("-", "/algvis/images/zoom_out.gif");
+		resetView = createButton("R", "/algvis/images/reset.gif");
 		zoomIn.addActionListener(this);
 		zoomOut.addActionListener(this);
+		resetView.addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent evt) {
@@ -140,9 +144,11 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		} else if (evt.getSource() == pause) {
 			M.pause = pause.isSelected();
 		} else if (evt.getSource() == zoomIn) {
-			M.S.V.zoomIn();
+			M.screen.V.zoomIn();
 		} else if (evt.getSource() == zoomOut) {
-			M.S.V.zoomOut();
+			M.screen.V.zoomOut();
+		} else if (evt.getSource() == resetView) {
+			M.screen.V.resetView();
 		}
 	}
 

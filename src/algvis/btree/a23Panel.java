@@ -2,15 +2,15 @@ package algvis.btree;
 
 import algvis.core.DataStructure;
 import algvis.core.DictButtons;
+import algvis.core.Settings;
 import algvis.core.VisPanel;
-import algvis.internationalization.Languages;
 
 public class a23Panel  extends VisPanel {
 	private static final long serialVersionUID = 3849830550882705599L;
 	public static Class<? extends DataStructure> DS = a23Tree.class;
 
-	public a23Panel(Languages L) {
-		super(L);
+	public a23Panel(Settings S) {
+		super(S);
 	}
 
 	@Override

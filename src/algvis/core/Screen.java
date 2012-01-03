@@ -5,16 +5,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 
 import javax.swing.JPanel;
 
-public class Screen extends JPanel implements Runnable, MouseListener,
-		MouseMotionListener, MouseWheelListener {
+public class Screen extends JPanel implements Runnable {
 	private static final long serialVersionUID = -8279768206774288161L;
 	// obrazovka (ak nie je suspendnuta) neustale vykresluje poziciu
 	Thread t = null;
@@ -29,10 +23,7 @@ public class Screen extends JPanel implements Runnable, MouseListener,
 
 	public Screen(VisPanel P) {
 		this.P = P;
-		V = new View(P);
-		addMouseListener(this);
-		addMouseMotionListener(this);
-		addMouseWheelListener(this);
+		V = new View(this);
 	}
 
 	public void setDS(DataStructure D) {
@@ -44,8 +35,8 @@ public class Screen extends JPanel implements Runnable, MouseListener,
 		if (I == null || d.width != size.width || d.height != size.height) {
 			I = createImage(d.width, d.height);
 			G = I.getGraphics();
-			V.setWH(d.width, d.height);
-			V.setGraphics((Graphics2D)G);
+			//V.setWH(d.width, d.height);
+			V.setGraphics((Graphics2D)G, d.width, d.height);
 			size = d;
 		}
 	}
@@ -60,12 +51,14 @@ public class Screen extends JPanel implements Runnable, MouseListener,
 		check_size();
 		clear();
 		if (D != null) {
+			V.startDrawing();
 			D.draw(V);
+			V.endDrawing();
+			//V.resetView();
 		} else {
 			System.out.println("[DS null !]");
 		}
 		g.drawImage(I, 0, 0, null);
-		// System.out.println ("screen paint");
 	}
 
 	public void suspend() {
@@ -104,46 +97,6 @@ public class Screen extends JPanel implements Runnable, MouseListener,
 				Thread.sleep(50);
 			}
 		} catch (InterruptedException e) {
-		}
-	}
-
-	int mx, my; // mouse position
-
-	public void mousePressed(MouseEvent e) {
-		mx = e.getX();
-		my = e.getY();
-	}
-
-	public void mouseDragged(MouseEvent e) {
-		int x = e.getX(), y = e.getY();
-		P.hSlider.setValue(P.hSlider.getValue() + mx - x);
-		P.vSlider.setValue(P.vSlider.getValue() + my - y);
-		mx = x;
-		my = y;
-	}
-
-	public void mouseReleased(MouseEvent e) {
-	}
-
-	public void mouseMoved(MouseEvent e) {
-	}
-
-	public void mouseEntered(MouseEvent e) {
-	}
-
-	public void mouseExited(MouseEvent e) {
-	}
-
-	public void mouseClicked(MouseEvent e) {
-		D.mouseClicked(V.r2vX(e.getX()), V.r2vY(e.getY()));
-	}
-
-	public void mouseWheelMoved(MouseWheelEvent e) {
-		int notches = e.getWheelRotation();
-		if (notches > 0) {
-			V.zoomOut();
-		} else {
-			V.zoomIn();
 		}
 	}
 }

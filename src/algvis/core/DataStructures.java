@@ -11,7 +11,6 @@ import algvis.btree.a234Panel;
 import algvis.btree.a23Panel;
 import algvis.fibonacciheap.FibHeapPanel;
 import algvis.heap.HeapPanel;
-import algvis.internationalization.Languages;
 import algvis.lazybinomialheap.LazyBinHeapPanel;
 import algvis.redblacktree.RBPanel;
 import algvis.rotations.RotPanel;
@@ -46,6 +45,7 @@ public class DataStructures {
 		return true;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static Class<? extends DataStructure> DS(int i) {
 		if (!check_range(i))
 			return null;
@@ -81,6 +81,7 @@ public class DataStructures {
 		return -1;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static String getADT(int i) {
 		if (!check_range(i))
 			return "";
@@ -103,15 +104,16 @@ public class DataStructures {
 							+ i);
 			return "";
 		}
-    }
-    
-	public static VisPanel getPanel(int i, Languages L) {
+	}
+
+	public static VisPanel getPanel(int i, Settings S) {
 		if (!check_range(i))
 			return null;
 		try {
+			@SuppressWarnings({ "rawtypes", "unchecked" })
 			Constructor ct = DataStructures.PANEL[i]
-					.getConstructor(Languages.class);
-			return (VisPanel) ct.newInstance(L);
+					.getConstructor(Settings.class);
+			return (VisPanel) ct.newInstance(S);
 		} catch (Exception e) {
 			System.out.println("DataStructures is unable to get panel: " + i);
 			return null;
