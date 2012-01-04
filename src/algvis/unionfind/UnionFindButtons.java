@@ -21,11 +21,11 @@ public class UnionFindButtons extends Buttons {
 
 	@Override
 	public void actionButtons(JPanel P) {
-		makesetB = new IButton(M.L, "button-makeset");
+		makesetB = new IButton(M.S.L, "button-makeset");
 		makesetB.setMnemonic(KeyEvent.VK_M);
 		makesetB.addActionListener(this);
 
-		unionB = new IButton(M.L, "button-union");
+		unionB = new IButton(M.S.L, "button-union");
 		unionB.setMnemonic(KeyEvent.VK_U);
 		unionB.addActionListener(this);
 
