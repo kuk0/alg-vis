@@ -3,6 +3,7 @@ package algvis.bst;
 import java.awt.Color;
 
 import algvis.core.DataStructure;
+import algvis.core.Layout;
 import algvis.core.Node;
 import algvis.core.NodePair;
 import algvis.core.View;
@@ -191,7 +192,7 @@ public class BSTNode extends Node {
 	}
 
 	public void reposition() {
-		if (false) { // simple layout
+		if (D.M.S.layout == Layout.SIMPLE) { // simple layout
 			reboxTree();
 			repos();
 		} else { // Reingold-Tilford layout
