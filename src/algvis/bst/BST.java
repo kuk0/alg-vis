@@ -1,13 +1,14 @@
 package algvis.bst;
 
 import algvis.core.Dictionary;
+import algvis.core.LayoutListener;
 import algvis.core.StringUtils;
 import algvis.core.View;
 import algvis.core.VisPanel;
 import algvis.scenario.commands.bstnode.SetBSTNodeVCommand;
 import algvis.scenario.commands.bstnode.SetBSTRootCommand;
 
-public class BST extends Dictionary {
+public class BST extends Dictionary implements LayoutListener {
 	public static String dsName = "bst";
 	/*
 	 * TODO this.v could be "movingNode" in DataStracture or rather
@@ -67,22 +68,22 @@ public class BST extends Dictionary {
 	@Override
 	public String stats() {
 		if (root == null) {
-			return M.L.getString("size") + ": 0;   " + M.L.getString("height")
-					+ ": 0 =  1.00\u00b7" + M.L.getString("opt") + ";   "
-					+ M.L.getString("avedepth") + ": 0";
+			return M.S.L.getString("size") + ": 0;   " + M.S.L.getString("height")
+					+ ": 0 =  1.00\u00b7" + M.S.L.getString("opt") + ";   "
+					+ M.S.L.getString("avedepth") + ": 0";
 		} else {
 			root.calcTree();
-			return M.L.getString("size")
+			return M.S.L.getString("size")
 					+ ": "
 					+ root.size
 					+ ";   "
-					+ M.L.getString("height")
+					+ M.S.L.getString("height")
 					+ ": "
 					+ root.height
 					+ " = "
 					+ StringUtils.format(root.height / (Math.floor(lg(root.size)) + 1), 2,
-							5) + "\u00b7" + M.L.getString("opt") + ";   "
-					+ M.L.getString("avedepth") + ": "
+							5) + "\u00b7" + M.S.L.getString("opt") + ";   "
+					+ M.S.L.getString("avedepth") + ": "
 					+ StringUtils.format(root.sumh / (double) root.size, 2, -5);
 		}
 	}
@@ -118,6 +119,16 @@ public class BST extends Dictionary {
 				u.parent.linkRight(v);
 			}
 		}
+/* TODO	hm...	
+<<<<<<< HEAD
+=======
+		if (v.left == null) {
+			u.right = null;
+		} else {
+			u.linkRight(v.left);
+		}
+>>>>>>> kuko/master
+*/
 		v.linkLeft(u);
 	}
 
@@ -137,6 +148,16 @@ public class BST extends Dictionary {
 				u.parent.linkRight(v);
 			}
 		}
+/* TODO	hm...
+<<<<<<< HEAD
+=======
+		if (v.right == null) {
+			u.left = null;
+		} else {
+			u.linkLeft(v.right);
+		}
+>>>>>>> kuko/master
+*/
 		v.linkRight(u);
 	}
 
@@ -168,8 +189,11 @@ public class BST extends Dictionary {
 		if (root != null) {
 			x1 = x2 = y1 = y2 = 0;
 			root.reposition();
-			M.S.V.setBounds(x1, y1, x2, y2);
-			//System.out.println(x1+" "+y1+" "+x2+" "+y2);
+			M.screen.V.setBounds(x1, y1, x2, y2);
 		}
+	}
+	
+	public void changeLayout() {
+		reposition();
 	}
 }

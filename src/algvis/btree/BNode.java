@@ -311,10 +311,10 @@ public class BNode extends Node {
 
 	public int pos(int i) {
 		if (i < 0) {
-			return tox - D.M.S.V.stringWidth(toString(), 9) / 2 - D.radius;
+			return tox - D.M.screen.V.stringWidth(toString(), 9) / 2 - D.radius;
 		}
 		if (i >= numKeys) {
-			return tox + D.M.S.V.stringWidth(toString(), 9) / 2 + D.radius;
+			return tox + D.M.screen.V.stringWidth(toString(), 9) / 2 + D.radius;
 		}
 		if (numKeys <= 1) {
 			return x;
@@ -325,8 +325,8 @@ public class BNode extends Node {
 		} else {
 			t = "  " + key[i];
 		}
-		return tox - D.M.S.V.stringWidth(toString(), 9) / 2
-				+ D.M.S.V.stringWidth(s, 9) + D.M.S.V.stringWidth(t, 9) / 2;
+		return tox - D.M.screen.V.stringWidth(toString(), 9) / 2
+				+ D.M.screen.V.stringWidth(s, 9) + D.M.screen.V.stringWidth(t, 9) / 2;
 	}
 
 	@Override

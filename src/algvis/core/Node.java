@@ -400,6 +400,30 @@ public class Node {
 				--steps;
 			}
 			break;
+<<<<<<< HEAD
+=======
+		case Node.UP:
+			//TODO:
+			//y = (int) (D.M.screen.V.viewY - D.M.screen.V.viewH) - D.radius;
+			y = - 5*D.radius;
+			setState(Node.ALIVE);
+			move();
+			break;
+		case Node.DOWN:
+		case Node.LEFT:
+		case Node.RIGHT:
+			y += 20;
+			if (state == Node.LEFT) {
+				x -= 20;
+			}
+			if (state == Node.RIGHT) {
+				x += 20;
+			}
+			if (!D.M.screen.V.inside(x, y - D.radius)) {
+				setState(Node.INVISIBLE);
+			}
+			break;
+>>>>>>> kuko/master
 		}
 	}
 }

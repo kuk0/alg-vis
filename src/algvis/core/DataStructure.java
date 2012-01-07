@@ -11,7 +11,7 @@ abstract public class DataStructure {
 	public VisPanel M;
 	public Scenario scenario;
 	public int radius = 10, xspan = 15, yspan = 5, rootx = 0, rooty = 0,
-			sheight = 600, swidth = 400;
+			sheight = 600, swidth = 400, minsepx = 38, minsepy = 30;
 	public int x1, x2, y1 = -50, y2;
 	public Node chosen = null;
 	public static String adtName = ""; // unused field?
@@ -29,7 +29,7 @@ abstract public class DataStructure {
 	abstract public void clear();
 
 	abstract public void draw(View v);
-
+	
 	public void next() {
 		A.myresume();
 	}
@@ -73,9 +73,6 @@ abstract public class DataStructure {
 		}
 		M.pause = p;
 	}
-	
-	public void mouseClicked(int x, int y) {
-	}
 
 	public void unmark() {
 		if (chosen != null) {
@@ -85,7 +82,7 @@ abstract public class DataStructure {
 	}
 	
 	public int[] up() {
-		int[] result = { rootx, (int) (M.S.V.viewY - M.S.V.viewH) - radius };
+		int[] result = { rootx, (int) (M.screen.V.viewY - M.screen.V.viewH) - radius };
 		return result;
 	}
 }
