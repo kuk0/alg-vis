@@ -54,6 +54,7 @@ public class UnionFindButtons extends Buttons {
 			t.start();
 		} else if (evt.getSource() == unionB) {
 			final Vector<Integer> args = I.getNonEmptyVI();
+			// if (args.size() != 2) { return; }
 			Random G = new Random(System.currentTimeMillis());
 			switch (args.size()) {
 			case 0:

@@ -8,7 +8,7 @@ public class TreeNode extends Node {
 
 	// variables for the Reingold-Tilford-Walker layout
 	int offset = 0; // offset from base line, base line has x-coord
-						   // equaled to x-coord of leftmost child
+					// equaled to x-coord of leftmost child
 	int level; // distance from the root
 	boolean thread = false; // is this node threaded?
 	int toExtremeSon = 0; // offset from the leftmost son
@@ -18,11 +18,14 @@ public class TreeNode extends Node {
 	int number = 1;
 
 	int change = 0, shift = 0; // for evenly spaced smaller subtrees
-	//TreeNode ancestor = this; // unused variable for now
+	// TreeNode ancestor = this; // unused variable for now
 
 	// statistics
 	public int size = 1, height = 1;
 	public int nos = 0; // number of sons, probably useless
+
+	// from binary node
+	public int leftw, rightw;
 
 	public TreeNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
@@ -126,6 +129,28 @@ public class TreeNode extends Node {
 		return res;
 	}
 
+	public void rebox() {
+		TreeNode L = leftmostChild();
+		TreeNode R = rightmostChild();
+		leftw = (L == null) ? D.xspan/2 + D.radius : L.leftw + (x - L.x);
+		rightw = (R == null) ? D.xspan/2 + D.radius : R.rightw + (R.x - x);
+	}
+
+	/**
+	 * The same as in BSTNode
+	 */
+	public void reboxTree() {
+		TreeNode L = leftmostChild();
+		TreeNode R = rightmostChild();
+		if (L != null) {
+			L.reboxTree();
+		}
+		if (R != null) {
+			R.reboxTree();
+		}
+		rebox();
+	}
+
 	public void addRight(TreeNode w) {
 		if (right == null) {
 			right = w;
@@ -177,6 +202,12 @@ public class TreeNode extends Node {
 		fTRDisposeThreads();
 		fTRPetrification(0);
 		fTRBounding(-tmpx);
+		reboxTree();
+		D.x1 -= D.xspan + D.radius;
+		D.x2 += D.xspan + D.radius;
+		D.y1 -= D.yspan + D.radius;
+		D.y2 += D.yspan + D.radius;
+//		System.out.println(D.x1 + " " + leftw + " " + D.x2 + " " + rightw);
 	}
 
 	/**
@@ -187,7 +218,7 @@ public class TreeNode extends Node {
 	 *            current level in tree
 	 */
 	private void fTRInitialization(int level) {
-		// System.out.print(level);
+		// System.out.println(level);
 		this.level = level;
 		offset = modifier = shift = change = 0;
 		toExtremeSon = 0;
@@ -369,7 +400,7 @@ public class TreeNode extends Node {
 	}
 
 	/**
-	 * Changes relative coordinates to absolute. Spacing smaller subtrees work
+	 * Changes relative coordinates to absolute. Spacing smaller subtrees works
 	 * with absolute coordinates.
 	 * 
 	 * @param baseline
@@ -394,7 +425,7 @@ public class TreeNode extends Node {
 	 *            Useful when you want make root rooted at [0,0]
 	 */
 	private void fTRBounding(int correction) {
-		goTo(tmpx+correction, tmpy);
+		goTo(tmpx + correction, tmpy);
 
 		if (tox < D.x1) {
 			D.x1 = tox;
@@ -402,8 +433,8 @@ public class TreeNode extends Node {
 		if (tox > D.x2) {
 			D.x2 = tox;
 		}
-		// this case should be always false
 		if (toy < D.y1) {
+			// this case should be always false
 			D.y1 = toy;
 		}
 		if (toy > D.y2) {
@@ -417,13 +448,23 @@ public class TreeNode extends Node {
 		}
 	}
 
+	public void shift(int amount) {
+		goTo(tox + amount, toy);
+		//System.out.println(tox);
+		TreeNode w = child;
+		while (w != null) {
+			w.fTRBounding(amount);
+			w = w.right;
+		}
+	}
+
 	// private void fTRGetInfo(int phase, int variable) {
 	// System.out
-	// .print("Node: " + key + " fakex: " + fakex + " mod: "
+	// .println("Node: " + key + " fakex: " + fakex + " mod: "
 	// + modifier + " change: " + change + " shift: " + shift
 	// + " offset: " + offset + " toE: " + toExtremeSon
 	// + " toB: " + toBaseline + " thread: " + thread + " ("
-	// + phase + ")" + "\n");
+	// + phase + ")");
 	// }
 
 }

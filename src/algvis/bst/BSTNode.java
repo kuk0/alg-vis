@@ -198,6 +198,7 @@ public class BSTNode extends Node {
 		} else { // Reingold-Tilford layout
 			RTPreposition();
 			RTPetrification(0, 0);
+			reboxTree();
 		}
 	}
 
@@ -381,8 +382,8 @@ public class BSTNode extends Node {
 		if (tox > D.x2) {
 			D.x2 = tox;
 		}
-		// this case should be always false
 		if (toy < D.y1) {
+			// this case should be always false
 			D.y1 = toy;
 		}
 		if (toy > D.y2) {
