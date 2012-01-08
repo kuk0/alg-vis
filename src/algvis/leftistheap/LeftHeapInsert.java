@@ -1,7 +1,5 @@
 package algvis.leftistheap;
 
-import algvis.bst.BSTNode;
-import algvis.core.Colors;
 import algvis.core.VisPanel;
 
 public class LeftHeapInsert extends LeftHeapAlg{
@@ -15,140 +13,45 @@ public class LeftHeapInsert extends LeftHeapAlg{
 	}
 	
 	public LeftHeapInsert(LeftHeap H, int i, int x) {
-		super(H.M);
+		//super(H.M);
+		super(H);
 		this.i = i;
 		H.v = v = new LeftHeapNode(H, K = x);
 		this.H = H;
-		setHeader("insertion"); 
+		setHeader("insertion");
 	}
 
 	@Override
 	public void run() {
 		//treba doplnit spravny text	
-		if (H.root[i] == null) {
-			H.root[i] = v;			
-			v.goToRoot();
-			setText("newroot");
-		} else {
-			BSTNode w = H.root[i];
-			v.goAbove(w);
-			setText("bstinsertstart");
-			mysuspend();
-
-			while (true) {
-				if (w.key < K) {
-					if (w.right == null) {
-						v.pointInDir(45);
-					} else {
-						v.pointAbove(w.right);
-					}
-					setText("leftinsertright", K, w.key);
-					mysuspend();
-					v.noArrow();
-					if (w.right != null) {
-						w = w.right;
-					} else {
-						w.linkRight(v);
-						break;
-					}					
-				} else {
-					if (w.left == null) {
-						v.pointInDir(135);
-					} else {
-						v.pointAbove(w.left);
-					}
-					setText("leftinsertup", K, w.key);
-					mysuspend();
-					v.noArrow();
-					
-					if (w.parent != null){
-					  ((LeftHeapNode) w).linkup(v);
-					  break;
-					} else {
-						H.root[i] = v;
-						H.root[i].right = ((LeftHeapNode) w);
-						w.parent = H.root[i];
-						break;
-						
-					}
-				}
-				v.goAbove(w);
-				mysuspend();
-			}
-			
-			//dorobit iba premiestnenie vrcholu
+			H.root[0] = v;
 			H.reposition();
-			
-			//uprava rankov,, maju sa upravovat az po koren alebo iba do vtedy, kym sa zmeni rank?
-			setText("leftrankupdate");
-			mysuspend();
-			w = v;
-			/*
-			while (v.parent != null){				
-				v = ((LeftHeapNode) v.parent);
-				v.mark();
-				if (v.left != null) {
-					v.rank = Math.min(((LeftHeapNode) v.left).rank, ((LeftHeapNode) v.right).rank) + 1;
-				}
-				//mysuspend();
-				v.unmark();
-			}
-			*/
-			LeftHeapNode tmp = v;
-			while (tmp != null){
-				if ((tmp.left != null) && (tmp.right != null)) {
-					tmp.rank = Math.min(((LeftHeapNode) tmp.left).rank, ((LeftHeapNode) tmp.right).rank) + 1;
-				}else{
-					tmp.rank = 1;
-				}
+			//mysuspend();
 
-				if (tmp.parent != null){
-					tmp = ((LeftHeapNode) tmp.parent);
-				}else{
-					break;
-			    }
+			if (H.root[i] == null) {
+				H.root[i] = H.root[0];
+				H.root[0] = null;
+				if (H.root[i] != null) {
+					H.root[i].highlightTree();
+				}
+				H.reposition();
+				// heap #1 is empty; done;
+				return;
+			}
+
+			if (H.root[0] == null) {
+				// heap #2 is empty; done;
+				return;
 			}
 			
-			setText("done");
-			mysuspend();
-			//vymienanie s bratmi podla ranku			
-			while (w != null){								
-				if ((w.left != null) && (w.right != null)){
-					w.left.mark();
-					w.right.mark();
-					if (((LeftHeapNode) w.left).rank < ((LeftHeapNode) w.right).rank) {
-						setText("leftranksonch");
-						mysuspend();
-						BSTNode tmp3 = w.left;
-						w.left = w.right;
-						w.right = tmp3;					
-					}else{
-						setText("leftranksonok");
-						mysuspend();
-					}				
-					w.left.unmark();
-					w.right.unmark();
-					H.reposition();		//dorobit iba premiestnenie bratov
-				}
-				if (( w.left == null) && (w.right != null)){
-					w.right.mark();
-					setText("leftranksonch");
-					mysuspend();
-					w.left = w.right;
-					w.right = null;					
-					w.left.unmark();
-					H.reposition();		//dorobit iba premiestnenie bratov
-				}																
-				w = ((LeftHeapNode) w.parent);								
-			}
-		}
-		
-		H.reposition();
-		mysuspend();
-		setText("done");
-		v.bgColor(Colors.NORMAL);
-		H.v = null; 
+			H.active = i;
+			H.root[0].highlightTree();			
+			H.reposition();
 
+			mysuspend();
+			meld(i);
+			H.v = null;
+			v = null;
 	}	
 	
 }

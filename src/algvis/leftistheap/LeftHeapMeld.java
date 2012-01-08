@@ -5,9 +5,9 @@ public class LeftHeapMeld extends LeftHeapAlg {
 
 	public LeftHeapMeld(LeftHeap H, int i, int j) {
 		super(H);
-		// TODO Auto-generated constructor stub
 		this.i = i;
 		this.j = j;
+		setHeader("melding");
 	}
 
 	@Override
@@ -30,8 +30,11 @@ public class LeftHeapMeld extends LeftHeapAlg {
 			// heap #2 is empty; done;
 			return;
 		}
+		
 		H.root[0] = H.root[j];
-		H.root[j] = null;
+		if (j != 0){
+			H.root[j] = null;
+		}
 		H.active = i;
 		H.root[0].highlightTree();
 		H.reposition();

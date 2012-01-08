@@ -31,7 +31,7 @@ public class LeftHeap extends MeldablePQ {
 
 	@Override
 	public void delete() {
-		// TODO Auto-generated method stub
+		start(new LeftHeapDelete(this, active));
 
 	}
 
@@ -104,7 +104,7 @@ public class LeftHeap extends MeldablePQ {
 
 	@Override
 	public void clear() {
-		for (int i = 1; i <= numHeaps; i++) {
+		for (int i = 0; i <= numHeaps; i++) {
 			root[i] = null;
 		}
 

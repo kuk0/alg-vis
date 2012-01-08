@@ -25,7 +25,7 @@ public class LeftHeapAlg extends Algorithm {
 		 * o jeden level nizsie posunie jedna halda.
 		 */
 
-		BSTNode w = H.root[i];
+		BSTNode w = (BSTNode) H.root[i];
 		H.root[0].mark();
 		w.mark();
 		setText("leftmeldstart");
@@ -34,7 +34,7 @@ public class LeftHeapAlg extends Algorithm {
 			H.root[0].mark();
 			w.mark();
 			// posuvame sa dole a nic nemenime
-			if (!((LeftHeapNode) w).prec(H.root[0])) {// (w.key <
+			if (((LeftHeapNode) w).prec(H.root[0])) {// (w.key <
 														// H.root[0].key){
 				// dat podmienku, aby sa vypisoval spravny text pre min aj max
 				// haldu.
