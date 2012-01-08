@@ -155,11 +155,19 @@ public class LeftHeapNode extends BSTNode {
 				v.setColor(Color.black);
 			//} 
 			
-			if ((left != null) && (left.state != INVISIBLE) && (leftline)) {
-				v.drawLine(x, y, left.x, left.y);
+			if ((left != null) && (left.state != INVISIBLE)) {
+				if(leftline){
+					v.drawLine(x, y, left.x, left.y);
+				}else{
+					v.drawDashedLine(x, y, left.x, left.y);
+				}
 			}
 			if ((right != null) && (right.state != INVISIBLE) && (rightline)) {
-				v.drawLine(x, y, right.x, right.y);
+				if(rightline){
+					v.drawLine(x, y, right.x, right.y);
+				}else{
+					v.drawDashedLine(x, y, right.x, right.y);
+				}				
 			}
 		}
 		if (left != null) {
