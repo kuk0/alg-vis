@@ -2,7 +2,6 @@ package algvis.leftistheap;
 
 import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
-import algvis.core.Colors;
 import algvis.core.VisPanel;
 
 public class LeftHeapAlg extends Algorithm{
@@ -29,95 +28,69 @@ public class LeftHeapAlg extends Algorithm{
 		
 		/*
 		 * Treba upravit komentare, 
-		 * zistit, kedy sa ma posuvat root[0] dole,
 		 * upravit miesta mysuspend(),
 		 * nechat zmiznut hrany,
 		 * na konci root[0] = null.
 		 */
-		
-		BSTNode w = H.root[i];
-		while (w != null){	//asi by bolo lepsie kym H.root[0] != null
+		BSTNode w = H.root[i]; 
+		H.root[0].mark();
+		w.mark();
+		setText("leftmeldstart");
+		mysuspend();
+		while (true){	//asi by bolo lepsie kym H.root[0] != null (true){//
 			H.root[0].mark();
-			w.mark();
-			H.reposition();  //<<-----
-			int K = H.root[0].key;
-			setText("bstinsertstart");
-			//mysuspend();
-				if (w.key < K) {	//posuvame sa dole a nic nemenime
-					setText("leftinsertright", K, w.key);
-					H.root[0].repos(H.root[0].x, H.root[0].y + H.yspan + 2 * H.radius);
+			w.mark();			
+				//posuvame sa dole a nic nemenime
+				if (!((LeftHeapNode) w).prec(H.root[0])){//(w.key < H.root[0].key){	
+					//dat podmienku, aby sa vypisoval spravny text pre min aj max haldu.
+					setText("leftmeldright", H.root[0].key, w.key); 
 					mysuspend();
-					w.unmark();
-					H.root[0].unmark();
-					if (w.right != null) { //ukoncime kolo cyklu
-						w = w.right;
-						H.root[0].repos(H.root[0].x, H.root[0].y + H.yspan + 2 * H.radius);
-					} else {	//povieme, ze nie je co riesit a napojime v vpravo na w
-						w.linkright(H.root[0]);
-						H.root[0] = null;
-						break;
-					}
-				} else {	//vymenime w a root[0], napojime root[0] ako praveho syna. treba upravit rank a povymienat synov??
-					//text bla bla;
+				} else {	//vymenime w a root[0], napojime root[0] ako praveho syna.
+					setText("leftmeldswap", H.root[0].key, w.key); 
 					mysuspend();
-					
-					H.root[0].repos(H.root[0].x, H.root[0].y + H.yspan + 2 * H.radius);
-					w.unmark();
-					H.root[0].unmark();
+					BSTNode tmp1 = w.parent;
+					BSTNode tmp2 = H.root[0];
 
-					BSTNode tmp1;
-					BSTNode tmp2;
-					tmp1 = w.parent;
-					tmp2 = (BSTNode) H.root[0];
-					
+					H.root[0] = (LeftHeapNode) w;					
 					if (w.parent != null){
-						//w.parent.right = null;
-						H.root[0] = (LeftHeapNode) w;
 						H.root[0].parent = null;
 						tmp1.right = tmp2;
 						tmp2.parent = tmp1;
 						w = tmp2;
-						
-					}else{
-						tmp1 = H.root[0];
-						H.root[0] = (LeftHeapNode) w;
-						H.root[i] = (LeftHeapNode) tmp1;
+					}else{												
+						H.root[i] = (LeftHeapNode) tmp2;
 						w = H.root[i];
 					}
-					H.reposition();
-					mysuspend();
-					setText("leftinsertup", K, w.key);
-					if (w.right == null){
-						w.linkright(H.root[0]);
-						H.root[0] = null;
-						break;
-					}
-					
-					w = w.right;
-					
-					mysuspend();
-				
-				//H.v.goAbove(w);
-				//mysuspend();
+					H.reposition();	
 				}
-		}
-		
 			
-			//dorobit iba premiestnenie vrcholu
-			H.reposition();
-				
-			//uprava rankov
-			setText("leftrankupdate");
-			mysuspend();		
-			
-			//najdeme si najpravejsieho synacika, kedze w sme si nechali ako nulllove musime ho znovu najst,
-			//neskor asi cely while cyklus prerobim na inu podmienku (root[0] != null) 
-			LeftHeapNode ther = H.root[i];
-			while (ther.right != null){
-				ther = (LeftHeapNode) ther.right;
+			if(w.parent != null){
+				((LeftHeapNode)w.parent).rightline = true;
 			}
 			
-			LeftHeapNode tmp = ther;
+			H.root[0].repos(H.root[0].tox, H.root[0].toy + H.yspan + 2 * H.radius);
+			H.root[0].unmark();
+			w.unmark();
+			
+			if (w.right == null) {		//jedine za tejto podmienky sa skonci while cyklus
+				//povieme, ze nie je co riesit a napojime v vpravo na w
+				setText("leftmeldnoson", H.root[0].key, w.key);
+				mysuspend();
+				w.linkright(H.root[0]);
+				H.root[0] = null;
+				H.reposition();
+				break;
+			}
+			
+			//toto odstranenie hrany sa mi vizualne moc nepaci
+			((LeftHeapNode)w).rightline = false;
+			w = w.right;
+		}
+			//uprava rankov
+			setText("leftrankupdate");
+			mysuspend();
+			
+			LeftHeapNode tmp = (LeftHeapNode) w;
 
 			while (tmp != null){
 				if ((tmp.left != null) && (tmp.right != null)) {
@@ -125,55 +98,52 @@ public class LeftHeapAlg extends Algorithm{
 				}else{
 					tmp.rank = 1;
 				}
-
-				if (tmp.parent != null){
-					tmp = ((LeftHeapNode) tmp.parent);
-				}else{
-					break;
-			    }
-			
-			
+				
+				tmp = ((LeftHeapNode) tmp.parent);			
 			}
-			setText("done");
+			setText("leftrankstart"); //text ideme vymienat bratov
 			mysuspend();
 			//vymienanie s bratmi podla ranku			
-			tmp = (LeftHeapNode) ther;
+			tmp = (LeftHeapNode) w;
 			
 			while (tmp != null){								
-				if ((tmp.left != null) && (tmp.right != null)){
+				int l;
+				if (tmp.left == null) {
+					l = -47;
+				}else{
 					tmp.left.mark();
-					tmp.right.mark();
-					if (((LeftHeapNode) tmp.left).rank < ((LeftHeapNode) tmp.right).rank) {
-						setText("leftranksonch");
-						mysuspend();
-						BSTNode tmp3 = tmp.left;
-						tmp.left = tmp.right;
-						tmp.right = tmp3;					
-					}else{
-						setText("leftranksonok");
-						mysuspend();
-					}				
-					tmp.left.unmark();
-					tmp.right.unmark();
-					H.reposition();		//dorobit iba premiestnenie bratov
+					l = ((LeftHeapNode) tmp.left).rank;
 				}
-				if (( tmp.left == null) && (tmp.right != null)){
+				int r;
+				if (tmp.right == null) {
+					r = -47;
+				}else{
 					tmp.right.mark();
+					r = ((LeftHeapNode) tmp.right).rank;
+				}
+					if (l < r) {
 					setText("leftranksonch");
 					mysuspend();
-					tmp.left = tmp.right;
-					tmp.right = null;
-					tmp.left.unmark();
-					H.reposition();		//dorobit iba premiestnenie bratov
+					tmp.swapChildren();
+				}else{
+					setText("leftranksonok");
+					mysuspend();
 				}
-				tmp = ((LeftHeapNode) tmp.parent);
+				
+				H.reposition();
+			
+				if (tmp.left != null){
+					tmp.left.unmark();
+				}
+				if (tmp.right != null){
+					tmp.right.unmark();
+				}
+			tmp = ((LeftHeapNode) tmp.parent);
 			}
-
+			
 		H.reposition();
 		mysuspend();
-		setText("done");
-		H.reposition();
-		setText("done");
+		setText("done");		
 	}
 
 }

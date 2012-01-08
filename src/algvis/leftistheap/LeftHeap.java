@@ -96,9 +96,17 @@ public class LeftHeap extends MeldablePQ {
 	} 
 
 	@Override
-	public void clear() {	
-		root[1] = null;		
+	public void clear() {
+		for (int i = 1; i <= numHeaps; i++){
+			root[i] = null;				
+		} 
+		
+		//root[active] = null;		  		 
+		//reposition();
+		
 		setStats();
+		
+		
 
 	}
 
@@ -126,6 +134,8 @@ public class LeftHeap extends MeldablePQ {
 
 				if (i == active){								
 					if (root[0] != null){
+						root[0].reposition();
+						root[0].reboxTree();
 						sumx += root[0].leftw;
 						root[0].repos(sumx, root[0].y);						
 						sumx += root[0].rightw;

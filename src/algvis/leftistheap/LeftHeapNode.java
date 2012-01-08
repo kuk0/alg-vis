@@ -32,7 +32,6 @@ public class LeftHeapNode extends BSTNode {
 		this(v.D, v.key, v.x, v.y);
 	}
 	
-	//TOTO MOZE NEFUNGOVAT!
 	/**
 	 * v.prec(w) iff v precedes w in the heap order, i.e., should be higher in the heap
 	 * v precedes w if v.key < w.key when we have a min heap, but
@@ -85,6 +84,12 @@ public class LeftHeapNode extends BSTNode {
 		right.left = left;
 		left = right = this;
 		*/
+	}
+	
+	public void swapChildren(){
+		BSTNode tmp = this.left;
+		this.left = this.right;
+		this.right = tmp;
 	}
 	
 	
