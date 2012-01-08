@@ -12,14 +12,14 @@ public class BSTFind extends Algorithm {
 	public BSTFind(BST T, int x) {
 		super(T);
 		this.T = T;
-		v = T.setNodeV(new BSTNode(T, K = x, T.up()));
-		v.setState(Node.ALIVE);
+		v = T.setNodeV(new BSTNode(T, K = x));
 		v.bgColor(Colors.FIND);
 		setHeader("search");
 	}
 
 	@Override
 	public void run() {
+		v.getReady();
 		if (T.root == null) {
 			v.goToRoot();
 			setText("empty");

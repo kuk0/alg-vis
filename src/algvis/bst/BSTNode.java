@@ -27,10 +27,6 @@ public class BSTNode extends Node {
 		super(D, key, x, y);
 	}
 
-	public BSTNode(DataStructure D, int key, int[] pos) {
-		super(D, key, pos);
-	}
-	
 	public BSTNode(DataStructure D, int key) {
 		super(D, key);
 	}
@@ -195,12 +191,10 @@ public class BSTNode extends Node {
 		if (right != null) {
 			right.drawTree(v);
 		}
-		/* TODO dead code?
 		if (false) {
 			v.setColor(Color.LIGHT_GRAY);
 			v.drawLine(x, y, x, -100);
 		}
-		*/
 		draw(v);
 	}
 
@@ -300,32 +294,8 @@ public class BSTNode extends Node {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * First traverse of tree in fbtr
-	 * 
-	 * Sets a proper level to self and children
-	 * 
-	 * @param level
-	 *            current level in tree
-	 */
-	public void fTRFirst(int level) {
-		setLevel(level);
-		this.offset = 0;
-		if (left != null)
-			left.fTRFirst(level + 1);
-		if (right != null)
-			right.fTRFirst(level + 1);
-	}
-
-	/**
-	 * Second & third traverse of tree in fbtr
-	 * 
-	 * Sets threads with help from extreme nodes. Node is extreme when is lay at
-	 * the highest level and is leftmost/rightmost.
-=======
 	 * Set up the threads with the help of extreme nodes. A node is "extreme"
 	 * when it is the leftmost/rightmost in the lowest level.
->>>>>>> kuko/master
 	 * 
 	 * 1. work out left and right subtree 2. get extreme nodes from the left and
 	 * right subtree 3. calculate the offset from parent & set a new thread if

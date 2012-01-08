@@ -80,9 +80,4 @@ abstract public class DataStructure {
 			chosen = null;
 		}
 	}
-	
-	public int[] up() {
-		int[] result = { rootx, (int) (M.screen.V.viewY - M.screen.V.viewH) - radius };
-		return result;
-	}
 }

@@ -10,13 +10,6 @@ import algvis.scenario.commands.bstnode.SetBSTRootCommand;
 
 public class BST extends Dictionary implements LayoutListener {
 	public static String dsName = "bst";
-	/*
-	 * TODO this.v could be "movingNode" in DataStracture or rather
-	 * DataStracture could have array of "movingNodes" (i.e. because of Heap),
-	 * so then we need only one "SetMovingNodesCommand" for all DataStractures
-	 * and no "SetBSTNodeVCommand", "SetHeapNodeVCommand",
-	 * "SetHeapNodeV2Command",...
-	 */
 	public BSTNode root = null, v = null;
 
 	public BST(VisPanel M) {

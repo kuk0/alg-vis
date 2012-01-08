@@ -19,7 +19,7 @@ public class View implements MouseListener, MouseMotionListener,
 		MouseWheelListener {
 	Graphics2D g;
 	final static double SCALE_FACTOR = 1.1, MIN_ZOOM = 0.16, MAX_ZOOM = 5.5;
-	int W, H; // display width&height
+	public int W, H; // display width&height
 	int minx, miny, maxx, maxy;
 	int mouseX, mouseY; // mouse position
 	public Alignment align = Alignment.CENTER;
@@ -111,6 +111,22 @@ public class View implements MouseListener, MouseMotionListener,
 		zoom(W / 2, H / 2, 1 / SCALE_FACTOR);
 	}
 
+	public Point2D v2r(double x, double y) {
+		Point2D p = new Point2D.Double(x, y);
+		at.transform(p, p);
+		return p;
+	}
+
+	public Point2D r2v(double x, double y) {
+		Point2D p = new Point2D.Double(x, y);
+		try {
+			at.inverseTransform(p, p);
+		} catch (NoninvertibleTransformException exc) {
+			exc.printStackTrace();
+		}
+		return p;
+	}
+
 	public void mousePressed(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
@@ -137,12 +153,7 @@ public class View implements MouseListener, MouseMotionListener,
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		Point2D p = new Point2D.Double(e.getX(), e.getY());
-		try {
-			at.inverseTransform(p, p);
-		} catch (NoninvertibleTransformException exc) {
-			exc.printStackTrace();
-		}
+		Point2D p = r2v(e.getX(), e.getY());
 		if (D != null) {
 			D.mouseClicked((int) p.getX(), (int) p.getY());
 		}
@@ -158,9 +169,9 @@ public class View implements MouseListener, MouseMotionListener,
 	}
 
 	public boolean inside(int x, int y) {
-		return true;
-		// return (viewX - viewW <= x) && (x <= viewX + viewW) && (viewY - viewH
-		// <= y) && (y <= viewY + viewH);
+		Point2D p = v2r(x, y);
+		return (0 <= p.getX()) && (p.getX() <= W) && (0 <= p.getY())
+				&& (p.getY() <= H);
 	}
 
 	public void setColor(Color c) {

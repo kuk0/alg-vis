@@ -13,7 +13,7 @@ public class AADelete extends Algorithm {
 	public AADelete(AA T, int x) {
 		super(T);
 		this.T = T;
-		v = T.setNodeV(new BSTNode(T, K = x, T.up()));
+		v = T.setNodeV(new BSTNode(T, K = x));
 		v.setState(Node.ALIVE);
 		v.bgColor(Colors.DELETE);
 		setHeader("deletion");
@@ -101,7 +101,7 @@ public class AADelete extends Algorithm {
 				setText("bstdeletecase3");
 				int lev = d.getLevel();
 				BSTNode s = d.right;
-				v = T.setNodeV(new AANode(T, -Node.INF, T.up()));
+				v = T.setNodeV(new AANode(T, -Node.INF));
 				v.setState(Node.ALIVE);
 				v.bgColor(Colors.FIND);
 				v.goTo(s);

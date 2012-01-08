@@ -13,7 +13,7 @@ public class AAInsert extends Algorithm {
 	public AAInsert(AA T, int x) {
 		super(T);
 		this.T = T;
-		v = T.setNodeV(new AANode(T, K = x, T.up()));
+		v = T.setNodeV(new AANode(T, K = x));
 		v.setState(Node.ALIVE);
 		v.bgColor(Colors.INSERT);
 		setHeader("insertion");

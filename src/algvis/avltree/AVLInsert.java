@@ -3,7 +3,6 @@ package algvis.avltree;
 import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
 import algvis.core.Colors;
-import algvis.core.Node;
 
 public class AVLInsert extends Algorithm {
 	AVL T;
@@ -13,8 +12,7 @@ public class AVLInsert extends Algorithm {
 	public AVLInsert(AVL T, int x) {
 		super(T);
 		this.T = T;
-		v = T.setNodeV(new AVLNode(T, K = x, T.up()));
-		v.setState(Node.ALIVE);
+		v = T.setNodeV(new AVLNode(T, K = x));
 		v.bgColor(Colors.INSERT);
 		setHeader("insertion");
 	}

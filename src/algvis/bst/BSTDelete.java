@@ -12,14 +12,14 @@ public class BSTDelete extends Algorithm {
 	public BSTDelete(BST T, int x) { // Buttons B,
 		super(T);
 		this.T = T;
-		v = T.setNodeV(new BSTNode(T, K = x, T.up()));
-		v.setState(Node.ALIVE);
+		v = T.setNodeV(new BSTNode(T, K = x));
 		v.bgColor(Colors.DELETE);
 		setHeader("deletion");
 	}
 
 	@Override
 	public void run() {
+		v.getReady();
 		if (T.root == null) {
 			v.goToRoot();
 			setText("empty");
@@ -120,9 +120,9 @@ public class BSTDelete extends Algorithm {
 			} else { // case III - 2 synovia
 				setText("bstdeletecase3");
 				BSTNode s = d.right;
-				v = T.setNodeV(new BSTNode(T, -Node.INF, T.up()));
-				v.setState(Node.ALIVE);
+				v = T.setNodeV(new BSTNode(T, -Node.INF));
 				v.bgColor(Colors.FIND);
+				v.getReady();
 				v.goTo(s);
 				mysuspend();
 				while (s.left != null) {

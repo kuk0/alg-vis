@@ -13,7 +13,7 @@ public class AVLDelete extends Algorithm {
 	public AVLDelete(AVL T, int x) {
 		super(T);
 		this.T = T;
-		v = T.setNodeV(new AVLNode(T, K = x, T.up()));
+		v = T.setNodeV(new AVLNode(T, K = x));
 		v.setState(Node.ALIVE);
 		v.bgColor(Colors.DELETE);
 		setHeader("deletion");
@@ -100,7 +100,7 @@ public class AVLDelete extends Algorithm {
 			} else { // case III - 2 synovia
 				setText("bstdeletecase3");
 				BSTNode s = d.right;
-				v = T.setNodeV(new AVLNode(T, -Node.INF, T.up()));
+				v = T.setNodeV(new AVLNode(T, -Node.INF));
 				v.setState(Node.ALIVE);
 				v.bgColor(Colors.FIND);
 				v.goTo(s);
