@@ -1,8 +1,10 @@
 package algvis.core;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -215,6 +217,16 @@ public class View implements MouseListener, MouseMotionListener,
 		g.drawLine(x1, y1, x2, y2);
 	}
 
+	public void drawDashedLine(int x1, int y1, int x2, int y2) {
+		final float dash1[] = { 2.0f, 5.0f };
+		final Stroke old = g.getStroke(), dashed = new BasicStroke(1.0f,
+				BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1,
+				0.0f);
+		g.setStroke(dashed);
+		g.drawLine(x1, y1, x2, y2);
+		g.setStroke(old);
+	}
+
 	// square; x, y is the center
 	public void drawSquare(int x, int y, int a) {
 		g.drawRect(x - a, y - a, 2 * a, 2 * a);
@@ -300,9 +312,14 @@ public class View implements MouseListener, MouseMotionListener,
 		arrowHead(x1, y1, x2, y2);
 	}
 
+	public void drawDoubleArrow(int x1, int y1, int x2, int y2) {
+		g.drawLine(x1, y1, x2, y2);
+		arrowHead(x1, y1, x2, y2);
+		arrowHead(x2, y2, x1, y1);
+	}
+
 	public void drawArcArrow(int x, int y, int w, int h, int a1, int a2) {
 		g.drawArc(x, y, w, h, a1, a2 - a1);
-		// g.drawRect(x, y, w, h);
 		double a = a2 * Math.PI / 180;
 		int x2 = x + (int) Math.round(w / 2.0 * (1 + Math.cos(a))), y2 = y
 				+ (int) Math.round(h / 2.0 * (1 - Math.sin(a)));
@@ -315,7 +332,6 @@ public class View implements MouseListener, MouseMotionListener,
 			x = x2 - dx;
 			y = y2 - dy;
 		}
-		// g.drawLine(x, y, x2, y2);
 		arrowHead(x, y, x2, y2);
 	}
 
