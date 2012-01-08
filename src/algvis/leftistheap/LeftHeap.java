@@ -12,7 +12,7 @@ import algvis.core.VisPanel;
 public class LeftHeap extends MeldablePQ {
 	public static String dsName = "leftheap";
 	int n = 0; // pocet vrcholov
-	LeftHeapNode root[]  = null, v = null, v2 = null;
+	LeftHeapNode root[] = null, v = null, v2 = null;
 
 	public LeftHeap(VisPanel M) {
 		super(M);
@@ -22,11 +22,11 @@ public class LeftHeap extends MeldablePQ {
 
 	@Override
 	public void insert(int x) {
-		start(new LeftHeapInsert(this, active,  x));
-	/*	active = 0;
-		start(new LeftHeapInsert(this, 0,  x+1));
-		active = 1;*/
-	//	n++;
+		start(new LeftHeapInsert(this, active, x));
+		/*
+		 * active = 0; start(new LeftHeapInsert(this, 0, x+1)); active = 1;
+		 */
+		// n++;
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class LeftHeap extends MeldablePQ {
 
 	}
 
-	//pripadne to skontrolovat...
+	// pripadne to skontrolovat...
 	protected Pair chooseHeaps(int i, int j) {
 		if (i < 1 || i > numHeaps) {
 			i = -1;
@@ -55,25 +55,23 @@ public class LeftHeap extends MeldablePQ {
 					}
 				}
 			}
-		} 
-		return new Pair(i, j); 		
+		}
+		return new Pair(i, j);
 	}
-	
+
 	@Override
 	public void meld(int i, int j) {
-		Pair p = chooseHeaps(i, j);		//j pripojit k i
+		Pair p = chooseHeaps(i, j); // j pripojit k i
 		i = p.first;
 		j = p.second;
 		((MeldablePQButtons) M.B).activeHeap.setValue(i);
-		start(new LeftHeapMeld(this, i, j));	
+		start(new LeftHeapMeld(this, i, j));
 	}
 
 	@Override
 	public String stats() {
-		
-	
-			
-		if (root[active] == null) {   //<<---- root
+
+		if (root[active] == null) { // <<---- root
 			return M.L.getString("size") + ": 0;   " + M.L.getString("height")
 					+ ": 0 =  1.00\u00b7" + M.L.getString("opt") + ";   "
 					+ M.L.getString("avedepth") + ": 0";
@@ -87,87 +85,89 @@ public class LeftHeap extends MeldablePQ {
 					+ ": "
 					+ root[active].height
 					+ " = "
-					+ StringUtils.format(root[active].height / (Math.floor(lg(root[active].size)) + 1), 2,
-							5) + "\u00b7" + M.L.getString("opt") + ";   "
-					+ M.L.getString("avedepth") + ": "
-					+ StringUtils.format(root[active].sumh / (double) root[active].size, 2, -5);
-		}		
-		
-	} 
+					+ StringUtils.format(
+							root[active].height
+									/ (Math.floor(lg(root[active].size)) + 1),
+							2, 5)
+					+ "\u00b7"
+					+ M.L.getString("opt")
+					+ ";   "
+					+ M.L.getString("avedepth")
+					+ ": "
+					+ StringUtils.format(root[active].sumh
+							/ (double) root[active].size, 2, -5);
+		}
+
+	}
 
 	@Override
 	public void clear() {
-		for (int i = 1; i <= numHeaps; i++){
-			root[i] = null;				
-		} 
-		
-		//root[active] = null;		  		 
-		//reposition();
-		
+		for (int i = 1; i <= numHeaps; i++) {
+			root[i] = null;
+		}
+
+		// root[active] = null;
+		// reposition();
+
 		setStats();
-		
-		
 
 	}
 
 	@Override
 	public void decreaseKey(Node v, int delta) {
-		
 
 	}
 
 	// tuto potom zmazat
-	//opravit, aby sa posuvali, uplne prerobit.
+	// opravit, aby sa posuvali, uplne prerobit.
 	public void reposition() {
-		//spravit nejako tak, ze najst najlavejsi a najpravejsi vrchol 
-		//a z toho sirku stromu a pridavat do plus		
-				
+		// spravit nejako tak, ze najst najlavejsi a najpravejsi vrchol
+		// a z toho sirku stromu a pridavat do plus
+
 		int sumx = 0; // - this.radius - this.xspan;
 		// je root[i].rightw + root[i].leftw sirka stromu?
-		for (int i = 1; i <= numHeaps; ++i){ //<<----- 10 = numHeaps, nepomaha., i od 1 potom			
+		for (int i = 1; i <= numHeaps; ++i) {
 			if (root[i] != null) {
 				root[i].reposition();
-				root[i].reboxTree();				
+				root[i].reboxTree();
 				sumx += root[i].leftw;
 				root[i].repos(sumx, root[i].y);
 				sumx += root[i].rightw;
 
-				if (i == active){								
-					if (root[0] != null){
+				if (i == active) {
+					if (root[0] != null) {
 						root[0].reposition();
 						root[0].reboxTree();
 						sumx += root[0].leftw;
-						root[0].repos(sumx, root[0].y);						
+						root[0].repos(sumx, root[0].y);
 						sumx += root[0].rightw;
-					}					
-				}				
-				
-			}
-		}		
-		M.S.V.setBounds(0, 0, sumx, y2);		
-	}
+					}
+				}
 
-	
-	@Override
-	public void draw(View V) {
-		//pre ten for cyklus sa to tak rychlo vykreslovalo!!
-		for (int i = 0; i <= numHeaps; ++i){  //<<----- i od 1 potom
-			if (root[i] != null) {
-				root[i].moveTree();
-				root[i].drawTree(V);				
 			}
 		}
-			if (v != null) {							
-				v.moveTree();	
-				v.drawTree(V);
-			}
-			if (v2 != null) {							
-				v2.moveTree();	
-				v2.drawTree(V);
-			}
+		M.S.V.setBounds(0, 0, sumx, y2);
 	}
 
-	//@Override
+	@Override
+	public void draw(View V) {
+		for (int i = 0; i <= numHeaps; ++i) {
+			if (root[i] != null) {
+				root[i].moveTree();
+				root[i].drawTree(V);
+			}
+		}
+		if (v != null) {
+			v.moveTree();
+			v.drawTree(V);
+		}
+		if (v2 != null) {
+			v2.moveTree();
+			v2.drawTree(V);
+		}
+	}
+
+	// @Override
 	public void highlight(int i) {
 		active = i;
 		if (root[active] != null) {
@@ -175,7 +175,7 @@ public class LeftHeap extends MeldablePQ {
 		}
 	}
 
-	//@Override
+	// @Override
 	public void lowlight() {
 		if (root[active] != null) {
 			root[active].lowlightTree();

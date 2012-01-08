@@ -9,33 +9,32 @@ import algvis.core.MeldablePQ;
 import algvis.core.View;
 
 public class LeftHeapNode extends BSTNode {
-	//LeftHeapNode left, right, parent;
+	// LeftHeapNode left, right, parent;
 	Color color = Color.yellow;
 	int height = 1;
 	int rank = 1;
-	boolean rightline = true;	//visibility of the line leading to the right son	
-	boolean leftline = true;	//visibility of the line leading to the left son
-	
-	
+	boolean rightline = true; // visibility of the line leading to the right son
+	boolean leftline = true; // visibility of the line leading to the left son
+
 	public LeftHeapNode(DataStructure D, int key, int x, int y) {
-		super(D, key, x, y);		
-		bgKeyColor();		
+		super(D, key, x, y);
+		bgKeyColor();
 	}
-	
+
 	public LeftHeapNode(DataStructure D, int key) {
 		super(D, key);
 		bgKeyColor();
 		setState(Node.UP);
 	}
-	
+
 	public LeftHeapNode(LeftHeapNode v) {
 		this(v.D, v.key, v.x, v.y);
 	}
-	
+
 	/**
-	 * v.prec(w) iff v precedes w in the heap order, i.e., should be higher in the heap
-	 * v precedes w if v.key < w.key when we have a min heap, but
-	 * v precedes w if v.key > w.key when we have a max heap
+	 * v.prec(w) iff v precedes w in the heap order, i.e., should be higher in
+	 * the heap v precedes w if v.key < w.key when we have a min heap, but v
+	 * precedes w if v.key > w.key when we have a max heap
 	 */
 	public boolean prec(Node v) {
 		if (((MeldablePQ) D).minHeap) {
@@ -55,78 +54,71 @@ public class LeftHeapNode extends BSTNode {
 			return this.key >= v.key;
 		}
 	}
-	
-	//pripojit this ako noveho rodica v a v dat ako praveho syna 
+
+	// pripojit this ako noveho rodica v a v dat ako praveho syna
 	public void linkup(LeftHeapNode v) {
-		if((this.parent != null) && (v != null) ){
+		if ((this.parent != null) && (v != null)) {
 			BSTNode tmp = this.parent;
-			//this.parent = v;
+			// this.parent = v;
 			v.right = this;
-			this.parent = v;		
+			this.parent = v;
 			v.parent = tmp;
 			v.parent.right = v;
 		}
-	}	
-	
+	}
+
 	// vyhodi sa zo zoznamu
 	public void unlink() {
-		/* if (parent != null) {
-			if (parent.child == this) {
-				if (right == this)
-					parent.child = null;
-				else
-					parent.child = right;
-			}
-			parent.rank--;
-			parent = null;
-		}
-		left.right = right;
-		right.left = left;
-		left = right = this;
-		*/
+		/*
+		 * if (parent != null) { if (parent.child == this) { if (right == this)
+		 * parent.child = null; else parent.child = right; } parent.rank--;
+		 * parent = null; } left.right = right; right.left = left; left = right
+		 * = this;
+		 */
 	}
-	
-	public void swapChildren(){
+
+	public void swapChildren() {
 		BSTNode tmp = this.left;
 		this.left = this.right;
 		this.right = tmp;
 	}
-	
-	
-	//docasne a mozno aj navzdy skopirovane z AAtree koli vykreslovaniu ranku
+
+	// docasne a mozno aj navzdy skopirovane z AAtree koli vykreslovaniu ranku
 	@Override
 	public void draw(View v) {
-	
-	if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
-		return;
+
+		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
+			return;
+		}
+		drawBg(v);
+		drawKey(v);
+		drawArrow(v);
+		drawArc(v);
+		String str = new String("" + rank);
+		v.drawString(str, x + D.radius, y - D.radius, 7);
 	}
-	drawBg(v);
-	drawKey(v);
-	drawArrow(v);
-	drawArc(v);
-	String str = new String("" + rank);
-	v.drawString(str, x + D.radius, y - D.radius, 7);
-	}
-	
-	
-	public void repos(int px, int py){ //,  LeftHeapNode w) {
+
+	public void repos(int px, int py) { // , LeftHeapNode w) {
 		this.goTo(px, py);
-		//tox = px;
-		//toy = py;
-		
+		// tox = px;
+		// toy = py;
+
 		if (this.right != null) {
-			//((LeftHeapNode)this.right).repos(px, py, (LeftHeapNode)this.right);
-			//right.reboxTree();
-			((LeftHeapNode)this.right).repos(px + right.leftw, py + (D.yspan + 2 * D.radius));
+			// ((LeftHeapNode)this.right).repos(px, py,
+			// (LeftHeapNode)this.right);
+			// right.reboxTree();
+			((LeftHeapNode) this.right).repos(px + right.leftw, py
+					+ (D.yspan + 2 * D.radius));
 		}
 		if (this.left != null) {
-			//((LeftHeapNode)this.left).repos(px, py, (LeftHeapNode)this.left);
-			//left.reboxTree();
-			((LeftHeapNode)this.left).repos(px - left.rightw, py + (D.yspan + 2 * D.radius));
+			// ((LeftHeapNode)this.left).repos(px, py, (LeftHeapNode)this.left);
+			// left.reboxTree();
+			((LeftHeapNode) this.left).repos(px - left.rightw, py
+					+ (D.yspan + 2 * D.radius));
 		}
 	}
-	
-	//spravit nejake globalnejsie pre MPQ? 
+
+	// spravit nejake globalnejsie pre MPQ?
 	private void lowlight() {
 		bgColor(new Color(200, 200 - key / 10, 0));
 	}
@@ -134,30 +126,28 @@ public class LeftHeapNode extends BSTNode {
 	private void highlight() {
 		bgKeyColor();
 	}
-	
-	
-	public void lowlightTree(){
+
+	public void lowlightTree() {
 		lowlight();
 		if (left != null) {
-			 ((LeftHeapNode)left).lowlightTree();
+			((LeftHeapNode) left).lowlightTree();
 		}
 		if (right != null) {
-		 ((LeftHeapNode)right).lowlightTree();
+			((LeftHeapNode) right).lowlightTree();
 		}
 	}
-	
-	
-	public void highlightTree(){
+
+	public void highlightTree() {
 		highlight();
 		if (left != null) {
-			 ((LeftHeapNode)left).highlightTree();
+			((LeftHeapNode) left).highlightTree();
 		}
 		if (right != null) {
-		 ((LeftHeapNode)right).highlightTree();
+			((LeftHeapNode) right).highlightTree();
 		}
-		//highlightTree(this);		
+		// highlightTree(this);
 	}
-	
+
 	@Override
 	public void drawTree(View v) {
 		if (this.state != INVISIBLE) {
@@ -180,7 +170,7 @@ public class LeftHeapNode extends BSTNode {
 			right.drawTree(v);
 		}
 		draw(v);
-		
-	}	
-	
+
+	}
+
 }
