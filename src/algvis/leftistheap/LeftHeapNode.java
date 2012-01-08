@@ -12,6 +12,7 @@ public class LeftHeapNode extends BSTNode {
 	Color color = Color.yellow;
 	int height = 1;
 	int rank = 1;
+	boolean doubleArrow = false;
 	//mozno by bolo dobre spravit rightline a leftline globalnejsie, aby nemuselo cele drawTree byt prepisane 
 	boolean rightline = true; // visibility of the line leading to the right son
 	boolean leftline = true; // visibility of the line leading to the left son
@@ -82,18 +83,34 @@ public class LeftHeapNode extends BSTNode {
 		this.left = this.right;
 		this.right = tmp;
 	}
+	
+	public void setDoubleArrow(Node w) {
+		dir = w;
+		doubleArrow = true;
+	}
+
+	public void noDoubleArrow() {
+		doubleArrow = false;
+	}
+	
+	private void drawDoubleArrow(View v) {
+		if (!doubleArrow || dir == null) {
+			return;
+		}
+		int x1, y1, x2, y2;
+		if (x < dir.x) {
+			x1 = x; y1 = y; x2 = dir.x; y2 = dir.y;
+		} else {
+			x2 = x; y2 = y; x1 = dir.x; y1 = dir.y;
+		}
+		v.drawDoubleArrow(x1+2*D.radius,y1,x2-2*D.radius,y2);
+	}
 
 	// docasne a mozno aj navzdy skopirovane z AAtree koli vykreslovaniu ranku
 	@Override
 	public void draw(View v) {
-
-		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
-			return;
-		}
-		drawBg(v);
-		drawKey(v);
-		drawArrow(v);
-		drawArc(v);
+		super.draw(v);
+		drawDoubleArrow(v);
 		String str = new String("" + rank);
 		v.drawString(str, x + D.radius, y - D.radius, 7);
 	}
@@ -155,11 +172,19 @@ public class LeftHeapNode extends BSTNode {
 				v.setColor(Color.black);
 			//} 
 			
-			if ((left != null) && (left.state != INVISIBLE) && (leftline)) {
-				v.drawLine(x, y, left.x, left.y);
+			if ((left != null) && (left.state != INVISIBLE)) {
+				if (leftline) {
+					v.drawLine(x, y, left.x, left.y);
+				} else {
+					v.drawDashedLine(x, y, left.x, left.y);
+				}				
 			}
-			if ((right != null) && (right.state != INVISIBLE) && (rightline)) {
-				v.drawLine(x, y, right.x, right.y);
+			if ((right != null) && (right.state != INVISIBLE)) {
+				if (rightline) {
+					v.drawLine(x, y, right.x, right.y);
+				} else {
+					v.drawDashedLine(x, y, right.x, right.y);
+				}				
 			}
 		}
 		if (left != null) {
@@ -169,7 +194,6 @@ public class LeftHeapNode extends BSTNode {
 			right.drawTree(v);
 		}
 		draw(v);
-
 	} 
 
 }

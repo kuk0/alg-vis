@@ -21,7 +21,7 @@ public class Node {
 	public int state;
 	public Color fgcolor, bgcolor;
 	public boolean marked = false;
-	Node dir = null;
+	protected Node dir = null;
 	int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S, 135=SW,
 								// 180=W)
 	boolean arc = false;
