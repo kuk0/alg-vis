@@ -48,7 +48,7 @@ public class LeftHeapInsert extends LeftHeapAlg{
 					if (w.right != null) {
 						w = w.right;
 					} else {
-						w.linkright(v);
+						w.linkRight(v);
 						break;
 					}					
 				} else {

@@ -72,7 +72,7 @@ public class LeftHeapAlg extends Algorithm {
 				// povieme, ze nie je co riesit a napojime v vpravo na w
 				setText("leftmeldnoson", H.root[0].key, w.key);
 				mysuspend();
-				w.linkright(H.root[0]);
+				w.linkRight(H.root[0]);
 				H.root[0] = null;
 				H.reposition();
 				break;

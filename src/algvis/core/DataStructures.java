@@ -7,9 +7,10 @@ import algvis.avltree.AVLPanel;
 import algvis.binomialheap.BinHeapPanel;
 import algvis.bst.BSTPanel;
 import algvis.btree.BPanel;
+import algvis.btree.a234Panel;
+import algvis.btree.a23Panel;
 import algvis.fibonacciheap.FibHeapPanel;
 import algvis.heap.HeapPanel;
-import algvis.internationalization.Languages;
 import algvis.lazybinomialheap.LazyBinHeapPanel;
 import algvis.leftistheap.LeftHeapPanel;
 import algvis.redblacktree.RBPanel;
@@ -28,12 +29,13 @@ import algvis.treap.TreapPanel;
  * "Data structures -> adtName -> dsName".
  */
 public class DataStructures {
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	static final Class[] PANEL = { BSTPanel.class, RotPanel.class,
-			AVLPanel.class, BPanel.class, RBPanel.class, AAPanel.class,
-			TreapPanel.class, SkipListPanel.class, GBPanel.class,
-			SplayPanel.class, HeapPanel.class, LeftHeapPanel.class, BinHeapPanel.class,
-			LazyBinHeapPanel.class, FibHeapPanel.class };
+			AVLPanel.class, a23Panel.class, a234Panel.class, BPanel.class,
+			RBPanel.class, AAPanel.class, TreapPanel.class,
+			SkipListPanel.class, GBPanel.class, SplayPanel.class,
+			HeapPanel.class, LeftHeapPanel.class, BinHeapPanel.class, LazyBinHeapPanel.class,
+			FibHeapPanel.class };
 	static final int N = PANEL.length;
 
 	private static boolean check_range(int i) {
@@ -70,6 +72,16 @@ public class DataStructures {
 		return r;
 	}
 
+	public static int getIndex(String s) {
+		if (s == null)
+			return -1;
+		for (int i = 0; i < N; ++i) {
+			if (s.equals(getName(i)))
+				return i;
+		}
+		return -1;
+	}
+
 	@SuppressWarnings("unchecked")
 	public static String getADT(int i) {
 		if (!check_range(i))
@@ -95,14 +107,14 @@ public class DataStructures {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public static VisPanel getPanel(int i, Languages L) {
+	public static VisPanel getPanel(int i, Settings S) {
 		if (!check_range(i))
 			return null;
 		try {
+			@SuppressWarnings({ "rawtypes", "unchecked" })
 			Constructor ct = DataStructures.PANEL[i]
-					.getConstructor(Languages.class);
-			return (VisPanel) ct.newInstance(L);
+					.getConstructor(Settings.class);
+			return (VisPanel) ct.newInstance(S);
 		} catch (Exception e) {
 			System.out.println("DataStructures is unable to get panel: " + i);
 			return null;

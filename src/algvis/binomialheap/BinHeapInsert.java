@@ -19,6 +19,7 @@ public class BinHeapInsert extends BinHeapAlg {
 		// meld
 		if (H.root[i] == null) {
 			H.root[i] = H.min[i] = H.root[0];
+			H.root[0] = null;
 			H.reposition();
 			mysuspend();
 			return;

@@ -33,7 +33,7 @@ public class RBNode extends BSTNode {
 	}
 
 	@Override
-	public void linkleft(BSTNode v) {
+	public void linkLeft(BSTNode v) {
 		left = v;
 		if (v.key != Node.NULL) {
 			v.parent = this;
@@ -41,7 +41,7 @@ public class RBNode extends BSTNode {
 	}
 
 	@Override
-	public void linkright(BSTNode v) {
+	public void linkRight(BSTNode v) {
 		right = v;
 		if (v.key != Node.NULL) {
 			v.parent = this;

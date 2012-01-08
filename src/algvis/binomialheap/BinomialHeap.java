@@ -1,6 +1,9 @@
 package algvis.binomialheap;
 
 import java.awt.Color;
+
+import algvis.core.Alignment;
+import algvis.core.ClickListener;
 import algvis.core.MeldablePQ;
 import algvis.core.MeldablePQButtons;
 import algvis.core.Node;
@@ -8,7 +11,7 @@ import algvis.core.Pair;
 import algvis.core.View;
 import algvis.core.VisPanel;
 
-public class BinomialHeap extends MeldablePQ {
+public class BinomialHeap extends MeldablePQ implements ClickListener {
 	public static String dsName = "binheap";
 	public BinHeapNode[] root; // root[0] je pomocny, prave meldujuci
 	public BinHeapNode[] min;
@@ -18,7 +21,10 @@ public class BinomialHeap extends MeldablePQ {
 		super(M);
 		root = new BinHeapNode[numHeaps + 1];
 		min = new BinHeapNode[numHeaps + 1];
+
 		
+		M.screen.V.setDS(this);
+		M.screen.V.align = Alignment.LEFT;
 	}
 	
 	@Override
@@ -107,15 +113,15 @@ public class BinomialHeap extends MeldablePQ {
 				root[i].drawTree(V, root[i], null);
 				if (i > 0) {
 					V.setColor(Color.black);
-					V.drawStringLeft(M.L.getString("heap") + " #" + i + ":",
+					V.drawStringLeft(M.S.L.getString("heap") + " #" + i + ":",
 							root[i].x - radius - 5, root[i].y, 9);
 				}
 				if (min[i] != null) {
 					if (minHeap) {
-						V.drawStringTop(M.L.getString("min"), min[i].x,
+						V.drawStringTop(M.S.L.getString("min"), min[i].x,
 								min[i].y - radius - 2, 9);
 					} else {
-						V.drawStringTop(M.L.getString("max"), min[i].x,
+						V.drawStringTop(M.S.L.getString("max"), min[i].x,
 								min[i].y - radius - 2, 9);
 					}
 				}
@@ -153,7 +159,7 @@ public class BinomialHeap extends MeldablePQ {
 			root[0]._reposition(x0, maxy);
 			maxy += root[0].left.height * (2 * radius + yspan) - yspan;
 		}
-		M.S.V.setBounds(0, 0, maxx, maxy);
+		M.screen.V.setBounds(0, 0, maxx, maxy);
 	}
 
 	public void lowlight() {

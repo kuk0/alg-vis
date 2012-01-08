@@ -1,7 +1,6 @@
 package algvis.leftistheap;
 
 import java.awt.Color;
-
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -13,6 +12,7 @@ public class LeftHeapNode extends BSTNode {
 	Color color = Color.yellow;
 	int height = 1;
 	int rank = 1;
+	//mozno by bolo dobre spravit rightline a leftline globalnejsie, aby nemuselo cele drawTree byt prepisane 
 	boolean rightline = true; // visibility of the line leading to the right son
 	boolean leftline = true; // visibility of the line leading to the left son
 
@@ -104,15 +104,10 @@ public class LeftHeapNode extends BSTNode {
 		// toy = py;
 
 		if (this.right != null) {
-			// ((LeftHeapNode)this.right).repos(px, py,
-			// (LeftHeapNode)this.right);
-			// right.reboxTree();
 			((LeftHeapNode) this.right).repos(px + right.leftw, py
 					+ (D.yspan + 2 * D.radius));
 		}
 		if (this.left != null) {
-			// ((LeftHeapNode)this.left).repos(px, py, (LeftHeapNode)this.left);
-			// left.reboxTree();
 			((LeftHeapNode) this.left).repos(px - left.rightw, py
 					+ (D.yspan + 2 * D.radius));
 		}
@@ -148,14 +143,18 @@ public class LeftHeapNode extends BSTNode {
 		// highlightTree(this);
 	}
 
+	
 	@Override
 	public void drawTree(View v) {
+		
 		if (this.state != INVISIBLE) {
+			/*
 			if (thread) {
 				v.setColor(Color.red);
-			} else {
+			} else { */
 				v.setColor(Color.black);
-			}
+			//} 
+			
 			if ((left != null) && (left.state != INVISIBLE) && (leftline)) {
 				v.drawLine(x, y, left.x, left.y);
 			}
@@ -171,6 +170,6 @@ public class LeftHeapNode extends BSTNode {
 		}
 		draw(v);
 
-	}
+	} 
 
 }

@@ -17,7 +17,7 @@ public class LeftHeap extends MeldablePQ {
 	public LeftHeap(VisPanel M) {
 		super(M);
 		root = new LeftHeapNode[numHeaps + 1];
-
+		
 	}
 
 	@Override
@@ -70,18 +70,18 @@ public class LeftHeap extends MeldablePQ {
 
 	@Override
 	public String stats() {
-
+		
 		if (root[active] == null) { // <<---- root
-			return M.L.getString("size") + ": 0;   " + M.L.getString("height")
-					+ ": 0 =  1.00\u00b7" + M.L.getString("opt") + ";   "
-					+ M.L.getString("avedepth") + ": 0";
+			return M.S.L.getString("size") + ": 0;   " + M.S.L.getString("height")
+					+ ": 0 =  1.00\u00b7" + M.S.L.getString("opt") + ";   "
+					+ M.S.L.getString("avedepth") + ": 0";
 		} else {
 			root[active].calcTree();
-			return M.L.getString("size")
+			return M.S.L.getString("size")
 					+ ": "
 					+ root[active].size
 					+ ";   "
-					+ M.L.getString("height")
+					+ M.S.L.getString("height")
 					+ ": "
 					+ root[active].height
 					+ " = "
@@ -90,13 +90,15 @@ public class LeftHeap extends MeldablePQ {
 									/ (Math.floor(lg(root[active].size)) + 1),
 							2, 5)
 					+ "\u00b7"
-					+ M.L.getString("opt")
+					+ M.S.L.getString("opt")
 					+ ";   "
-					+ M.L.getString("avedepth")
+					+ M.S.L.getString("avedepth")
 					+ ": "
 					+ StringUtils.format(root[active].sumh
 							/ (double) root[active].size, 2, -5);
 		}
+		
+	//	return "";
 
 	}
 
@@ -146,7 +148,7 @@ public class LeftHeap extends MeldablePQ {
 
 			}
 		}
-		M.S.V.setBounds(0, 0, sumx, y2);
+		M.screen.V.setBounds(0, 0, sumx, y2);
 	}
 
 	@Override
@@ -181,5 +183,6 @@ public class LeftHeap extends MeldablePQ {
 			root[active].lowlightTree();
 		}
 	}
+
 
 }
