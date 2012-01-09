@@ -61,11 +61,29 @@ public class Node {
 	public Node(DataStructure D, int key) {
 		this(D, key, 0, 0);
 		setState(Node.UP);
-		x = 0;
 	}
 
 	public Node(Node v) {
 		this(v.D, v.key, v.x, v.y);
+	}
+
+	/**
+	 * position the node above top of the screen and set its state to ALIVE, so
+	 * the node is ready to come to screen now
+	 */
+	public void getReady() {
+		Point2D p = D.M.screen.V.r2v(0, 0);
+		toy = y = (int) p.getY() - 5 * D.radius;
+		setState(Node.ALIVE);
+	}
+
+	/**
+	 * set bg color and getReady()
+	 * (useful to reduce code length in Algorithms)
+	 */
+	public void getReady(Color bg) {
+		bgColor(bg);
+		getReady();
 	}
 
 	public void setState(int s) {
@@ -346,12 +364,6 @@ public class Node {
 				y += (toy - y) / steps;
 				--steps;
 			}
-			break;
-		case Node.UP:
-			Point2D p = D.M.screen.V.r2v(0, 0);
-			y = (int) p.getY() - 5 * D.radius;
-			setState(Node.ALIVE);
-			move();
 			break;
 		case Node.DOWN:
 		case Node.LEFT:
