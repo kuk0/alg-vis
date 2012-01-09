@@ -21,7 +21,8 @@ public class BinHeapNode extends Node {
 		size = 1;
 		rank = 0;
 		steps = 0;
-		bgKeyColor();
+		//bgKeyColor();
+		bgcolor = Color.white;
 	}
 
 	public BinHeapNode(DataStructure D, int key) {

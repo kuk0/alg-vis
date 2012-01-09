@@ -90,7 +90,8 @@ public class Node {
 	 * the color).
 	 */
 	public void bgKeyColor() {
-		bgColor(new Color(255, 255 - key / 10, 0));
+		bgcolor = Color.white;
+		// bgColor(new Color(255, 255 - key / 10, 0));
 	}
 
 	public void mark() {

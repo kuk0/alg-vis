@@ -5,7 +5,12 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -28,7 +33,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	public VisPanel M;
 	public DataStructure D;
 	public InputField I;
-	IButton next, clear, random;
+	IButton next, clear, random, snapshot;
 	ICheckBox pause;
 	ChLabel stats;
 	JButton zoomIn, zoomOut, resetView;
@@ -55,12 +60,14 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		initPause();
 		initClear();
 		initRandom();
+		initSnapshot();
 		initZoom();
 		JPanel second = new JPanel();
 		second.setLayout(new FlowLayout());
 		second.add(pause);
 		second.add(clear);
 		second.add(random);
+		second.add(snapshot);
 		// second.add(zoomLabel);
 		second.add(zoomIn);
 		second.add(zoomOut);
@@ -110,6 +117,12 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		random.addActionListener(this);
 	}
 
+	public void initSnapshot() {
+		snapshot = new IButton(M.S.L, "button-snapshot");
+		snapshot.setMnemonic(KeyEvent.VK_S);
+		snapshot.addActionListener(this);
+	}
+
 	private JButton createButton(String alt, String path) {
 		java.net.URL imgURL = getClass().getResource(path);
 		if (imgURL != null) {
@@ -149,6 +162,21 @@ abstract public class Buttons extends JPanel implements ActionListener {
 			M.screen.V.zoomOut();
 		} else if (evt.getSource() == resetView) {
 			M.screen.V.resetView();
+		} else if (evt.getSource() == snapshot) {
+			try {
+			     // bi; // = (BufferedImage) M.screen.I; // retrieve image
+			    View V = M.screen.V;
+			    Point2D p = V.v2r(V.minx, V.miny), q = V.v2r(V.maxx, V.maxy);
+			    int x1 = (int)p.getX(), y1 = (int)p.getY(), x2 = (int)q.getX(), y2 = (int)q.getY(),
+			    	w = x2 - x1, h = y2 - y1; 
+			    BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+			    bi.getGraphics().drawImage(M.screen.I, 0, 0, w, h, x1, y1, x2, y2, null);
+			    int i = 0;
+			    File outputfile;
+			    while ((outputfile = new File(String.format("%3d", i)+".png")).exists()) ++i;
+			    ImageIO.write(bi, "png", outputfile);
+			} catch (IOException e) {
+			}
 		}
 	}
 
