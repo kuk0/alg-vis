@@ -14,7 +14,7 @@ public class SplayFind extends SplayAlg {
 	public void run() {
 		if (T.root == null) {
 			v.goToRoot();
-			setText("bstfindempty");
+			setText("empty");
 			mysuspend();
 			v.goDown();
 			v.bgColor(Colors.NOTFOUND);

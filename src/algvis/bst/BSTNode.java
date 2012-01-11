@@ -106,9 +106,11 @@ public class BSTNode extends Node {
 			}
 			if ((left != null) && (left.state != INVISIBLE)) {
 				v.drawLine(x, y, left.x, left.y);
+				if (v.output) System.out.println("  Edge("+id+","+left.id+")");
 			}
 			if ((right != null) && (right.state != INVISIBLE)) {
 				v.drawLine(x, y, right.x, right.y);
+				if (v.output) System.out.println("  Edge("+id+","+right.id+")");
 			}
 		}
 		if (left != null) {

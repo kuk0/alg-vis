@@ -10,6 +10,8 @@ import java.awt.geom.Point2D;
  * middle.
  */
 public class Node {
+	public static int N = 0;
+	public int id;
 	public DataStructure D;
 	public int key;
 	/**
@@ -50,6 +52,8 @@ public class Node {
 	}
 
 	public Node(DataStructure D, int key, int x, int y) {
+		this.id = Node.N;
+		++Node.N;
 		this.D = D;
 		this.key = key;
 		this.x = tox = x;
@@ -253,6 +257,7 @@ public class Node {
 		drawKey(v);
 		drawArrow(v);
 		drawArc(v);
+		if (v.output) System.out.println("  Node("+id+","+key+","+x+"+"+y+"*1j)");
 	}
 
 	/**

@@ -5,12 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -37,6 +32,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	ICheckBox pause;
 	ChLabel stats;
 	JButton zoomIn, zoomOut, resetView;
+	int snap=0;
 
 	// ILabel zoomLabel;
 	abstract public void actionButtons(JPanel P);
@@ -163,7 +159,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		} else if (evt.getSource() == resetView) {
 			M.screen.V.resetView();
 		} else if (evt.getSource() == snapshot) {
-			try {
+			/*try {
 			     // bi; // = (BufferedImage) M.screen.I; // retrieve image
 			    View V = M.screen.V;
 			    Point2D p = V.v2r(V.minx, V.miny), q = V.v2r(V.maxx, V.maxy);
@@ -176,7 +172,28 @@ abstract public class Buttons extends JPanel implements ActionListener {
 			    while ((outputfile = new File(String.format("%3d", i)+".png")).exists()) ++i;
 			    ImageIO.write(bi, "png", outputfile);
 			} catch (IOException e) {
+			}*/
+
+			if (snap == 0) {
+				System.out.println("#!/usr/bin/python\n" +
+						"from pyks import *\n" +
+						"from trees import *");
+				System.out.println();
 			}
+			System.out.println("\n" +
+					"def s"+snap+"():\n" +
+					"  clear()\n" +
+					"  setuv(0.032, -0.032)");
+			M.screen.V.output = true;
+			D.draw(M.screen.V);
+			M.screen.V.output = false;
+			System.out.println("\n" +
+					"new()\n" +
+					"s"+snap+"()\n" +
+					"drawedges()\n" +
+					"drawnodes()\n" +
+					"save(\"s"+snap+".pdf\")");
+			++snap;
 		}
 	}
 

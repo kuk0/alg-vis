@@ -29,6 +29,8 @@ public class View implements MouseListener, MouseMotionListener,
 	double x, y, f;
 	AffineTransform at, oldTransform;
 	ClickListener D;
+	
+	public boolean output = false;
 
 	public View(JPanel P) {
 		P.addMouseListener(this);
