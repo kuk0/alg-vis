@@ -13,7 +13,7 @@ public class AVLInsert extends Algorithm {
 		super(T);
 		this.T = T;
 		v = T.setNodeV(new AVLNode(T, K = x));
-		v.bgColor(Colors.INSERT);
+		v.getReady(Colors.INSERT);
 		setHeader("insertion");
 	}
 

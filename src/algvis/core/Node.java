@@ -69,6 +69,7 @@ public class Node {
 
 	public Node(DataStructure D, int key) {
 		this(D, key, 0, 0);
+		state = Node.UP;
 	}
 
 	public Node(Node v) {
@@ -86,7 +87,8 @@ public class Node {
 	}
 
 	/**
-	 * set bg color and getReady() (useful to reduce code length in Algorithms)
+	 * set bg color and getReady()
+	 * (useful to reduce code length in Algorithms)
 	 */
 	public void getReady(Color bg) {
 		bgColor(bg);

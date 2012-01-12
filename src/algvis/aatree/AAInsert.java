@@ -14,8 +14,7 @@ public class AAInsert extends Algorithm {
 		super(T);
 		this.T = T;
 		v = T.setNodeV(new AANode(T, K = x));
-		v.setState(Node.ALIVE);
-		v.bgColor(Colors.INSERT);
+		v.getReady(Colors.INSERT);
 		setHeader("insertion");
 	}
 

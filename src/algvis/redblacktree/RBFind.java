@@ -13,7 +13,7 @@ public class RBFind extends Algorithm {
 		super(T);
 		this.T = T;
 		v = T.v = new BSTNode(T, K = x);
-		v.bgColor(Colors.FIND);
+		v.getReady(Colors.FIND);
 		setHeader("search");
 	}
 

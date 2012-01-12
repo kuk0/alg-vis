@@ -15,7 +15,7 @@ public class AVLDelete extends Algorithm {
 		this.T = T;
 		v = T.setNodeV(new AVLNode(T, K = x));
 		v.setState(Node.ALIVE);
-		v.bgColor(Colors.DELETE);
+		v.getReady(Colors.DELETE);
 		setHeader("deletion");
 	}
 
@@ -101,8 +101,7 @@ public class AVLDelete extends Algorithm {
 				setText("bstdeletecase3");
 				BSTNode s = d.right;
 				v = T.setNodeV(new AVLNode(T, -Node.INF));
-				v.setState(Node.ALIVE);
-				v.bgColor(Colors.FIND);
+				v.getReady(Colors.FIND);
 				v.goTo(s);
 				mysuspend();
 				while (s.left != null) {

@@ -13,13 +13,12 @@ public class BSTDelete extends Algorithm {
 		super(T);
 		this.T = T;
 		v = T.setNodeV(new BSTNode(T, K = x));
-		v.bgColor(Colors.DELETE);
+		v.getReady(Colors.DELETE);
 		setHeader("deletion");
 	}
 
 	@Override
 	public void run() {
-		v.getReady();
 		if (T.root == null) {
 			v.goToRoot();
 			setText("empty");
@@ -121,8 +120,7 @@ public class BSTDelete extends Algorithm {
 				setText("bstdeletecase3");
 				BSTNode s = d.right;
 				v = T.setNodeV(new BSTNode(T, -Node.INF));
-				v.bgColor(Colors.FIND);
-				v.getReady();
+				v.getReady(Colors.FIND);
 				v.goTo(s);
 				mysuspend();
 				while (s.left != null) {

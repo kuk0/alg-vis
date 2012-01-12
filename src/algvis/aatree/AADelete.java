@@ -14,8 +14,7 @@ public class AADelete extends Algorithm {
 		super(T);
 		this.T = T;
 		v = T.setNodeV(new BSTNode(T, K = x));
-		v.setState(Node.ALIVE);
-		v.bgColor(Colors.DELETE);
+		v.getReady(Colors.DELETE);
 		setHeader("deletion");
 	}
 
@@ -102,8 +101,7 @@ public class AADelete extends Algorithm {
 				int lev = d.getLevel();
 				BSTNode s = d.right;
 				v = T.setNodeV(new AANode(T, -Node.INF));
-				v.setState(Node.ALIVE);
-				v.bgColor(Colors.FIND);
+				v.getReady(Colors.FIND);
 				v.goTo(s);
 				mysuspend();
 				while (s.left != null) {

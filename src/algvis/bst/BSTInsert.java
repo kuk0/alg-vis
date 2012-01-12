@@ -12,13 +12,12 @@ public class BSTInsert extends Algorithm {
 		super(T);
 		this.T = T;
 		v = T.setNodeV(new BSTNode(T, K = x));
-		v.bgColor(Colors.INSERT);
+		v.getReady(Colors.INSERT);
 		setHeader("insertion");
 	}
 
 	@Override
 	public void run() {
-		v.getReady();
 		if (T.root == null) {
 			T.setRoot(v);
 			v.goToRoot();
