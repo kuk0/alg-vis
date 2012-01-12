@@ -17,12 +17,9 @@ abstract public class Algorithm extends Thread {
 	boolean suspended = false;
 	private algvis.core.Commentary.State commentaryState;
 
-	/**
-	 * rather use Algorithm(DataStructure D, String name)
-	 */
 	public Algorithm(DataStructure D) {
 		this.D = D;
-		D.scenario.startMacro();
+		D.scenario.addingNextStep();
 		D.scenario.add(new HardPauseCommand(D, false));
 		commentaryState = D.M.C.getState();
 	}
@@ -31,7 +28,6 @@ abstract public class Algorithm extends Thread {
 	 * Mysuspend.
 	 */
 	public void mysuspend() {
-		D.scenario.startMacro();
 		if (D.M.pause) {
 			suspended = true;
 			synchronized (this) {
@@ -43,6 +39,7 @@ abstract public class Algorithm extends Thread {
 				}
 			}
 		}
+		D.scenario.addingNextStep();
 	}
 
 	/**
@@ -58,7 +55,6 @@ abstract public class Algorithm extends Thread {
 
 	protected void finish() {
 		D.scenario.add(new HardPauseCommand(D, true));
-		D.scenario.endMacro();
 	}
 	
 	public void setHeader(String s) {

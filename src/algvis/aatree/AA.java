@@ -30,9 +30,8 @@ public class AA extends BST {
 	
 	public void setMode23(boolean setted) {
 		mode23 = setted;
-		scenario.startMacro();
+		scenario.addingNextStep();
 		reposition();
-		scenario.endMacro();
 	}
 	
 	public boolean getMode23() {

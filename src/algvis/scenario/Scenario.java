@@ -3,7 +3,6 @@ package algvis.scenario;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -25,42 +24,36 @@ public class Scenario implements XMLable {
 	private List<Command> scenario;
 	private ListIterator<Command> position;
 	private boolean addingEnabled = true;
-	private boolean macroEnabled = false;
 	private boolean pauses = true, stopped = false;
-	private ArrayList<Command> macro = null;
+	private MacroCommand macro = null;
 
 	public Scenario(String name) {
 		scenario = new LinkedList<Command>();
 		position = scenario.listIterator();
 		this.name = name;
+		macro = new MacroCommand();
+		/* TODO delete this line */
 	}
 
 	public void stop() {
 		stopped = true;
 	}
-	
+
 	public void setPauses(boolean pauses) {
 		this.pauses = pauses;
 	}
-	
+
 	public void enableAdding(boolean e) {
 		addingEnabled = e;
 	}
 
-	public void startMacro() {
-		endMacro();
-		macro = new ArrayList<Command>();
-		macroEnabled = true;
-	}
-
-	public void endMacro() {
-		macroEnabled = false;
-		if (macro != null) {
-			if (macro.size() > 0) {
-				add(new MacroCommand(macro));
-			}
-			macro = null;
+	public void addingNextStep() {
+		macro = new MacroCommand();
+		while (position.hasNext()) {
+			position.next();
+			position.remove();
 		}
+		position.add(macro);
 	}
 
 	/**
@@ -68,15 +61,7 @@ public class Scenario implements XMLable {
 	 */
 	public boolean add(Command c) {
 		if (addingEnabled) {
-			if (macroEnabled) {
-				macro.add(c);
-			} else {
-				while (position.hasNext()) {
-					position.next();
-					position.remove();
-				}
-				position.add(c);
-			}
+			macro.add(c);
 			return true;
 		} else {
 			return false;
@@ -96,10 +81,8 @@ public class Scenario implements XMLable {
 		if (pauses) {
 			position.next().execute();
 		} else {
-			Command c = null;
-			while(hasNext() && !stopped) {
-				c = position.next();
-				c.execute();
+			while (hasNext() && !stopped) {
+				position.next().execute();
 			}
 			stopped = false;
 		}
@@ -111,10 +94,8 @@ public class Scenario implements XMLable {
 		if (pauses) {
 			position.previous().unexecute();
 		} else {
-			Command c = null;
-			while(hasPrevious() && !stopped) {
-				c = position.previous();
-				c.unexecute();
+			while (hasPrevious() && !stopped) {
+				position.previous().unexecute();
 			}
 			stopped = false;
 		}

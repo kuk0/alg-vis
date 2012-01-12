@@ -8,9 +8,12 @@ import org.jdom.Element;
 public class MacroCommand implements Command {
 	private final ArrayList<Command> commands;
 
-	@SuppressWarnings("unchecked")
-	public MacroCommand(ArrayList<Command> commands) {
-		this.commands = (ArrayList<Command>) commands.clone();
+	public MacroCommand() {
+		commands = new ArrayList<Command>();
+	}
+
+	public void add(Command c) {
+		commands.add(c);
 	}
 
 	@Override

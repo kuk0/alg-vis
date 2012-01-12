@@ -50,11 +50,10 @@ public class BST extends Dictionary implements LayoutListener {
 	@Override
 	public void clear() {
 		if (root != null || v != null) {
-			scenario.startMacro();
+			scenario.addingNextStep();
 			setRoot(null);
 			setNodeV(null);
 			setStats();
-			scenario.endMacro();
 		}
 	}
 
