@@ -346,6 +346,17 @@ public class BNode extends Node {
 			V.drawString(toString(), x, y, 9);
 		}
 	}
+	
+	@Override
+	public void draw(View v) {
+		if (state == Node.INVISIBLE || state == Node.UP) {
+			return;
+		}
+		drawBg(v);
+		drawKey(v);
+		if (v.output) System.out.println("  BNode("+id+",'"+toString()+"',"+x+"+"+y+"*1j)");
+	}
+
 
 	public void drawTree(View v) {
 		for (int i = 0; i < numChildren; ++i) {

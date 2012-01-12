@@ -60,7 +60,8 @@ public class RBNode extends BSTNode {
 		}
 		bgColor(red ? Color.red : Color.black);
 		fgColor(red ? Color.black : Color.white);
-		super.draw(v);
+		if (v.output) System.out.println("  RBNode("+id+(red?",True,":",False,")+key+","+x+"+"+y+"*1j)");
+		else super.draw(v);
 	}
 
 	@Override

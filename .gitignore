@@ -5,3 +5,4 @@
 bin/
 *.pdf
 *.png
+*.pyc
