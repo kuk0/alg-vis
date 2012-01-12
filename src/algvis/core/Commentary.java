@@ -33,8 +33,9 @@ public class Commentary extends JEditorPane implements LanguageListener {
 		L.addListener(this);
 	}
 
-	private void clear() {
+	public void clear() {
 		text = "";
+		super.setText(text);
 		position = k = 0;
 		s = new ArrayList<String>();
 		pre = new ArrayList<String>();

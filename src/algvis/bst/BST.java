@@ -1,10 +1,12 @@
 package algvis.bst;
 
+import algvis.core.Commentary.State;
 import algvis.core.Dictionary;
 import algvis.core.LayoutListener;
 import algvis.core.StringUtils;
 import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.scenario.commands.SetCommentaryStateCommand;
 import algvis.scenario.commands.bstnode.SetBSTNodeVCommand;
 import algvis.scenario.commands.bstnode.SetBSTRootCommand;
 
@@ -53,6 +55,9 @@ public class BST extends Dictionary implements LayoutListener {
 			scenario.addingNextStep();
 			setRoot(null);
 			setNodeV(null);
+			State commState = M.C.getState();
+			M.C.clear();
+			scenario.add(new SetCommentaryStateCommand(M.C, commState));
 			setStats();
 		}
 	}
