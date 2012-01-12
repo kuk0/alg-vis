@@ -1,6 +1,7 @@
 package algvis.core;
 
 import algvis.scenario.commands.HardPauseCommand;
+import algvis.scenario.commands.SetCommentaryStateCommand;
 
 /**
  * The Class Algorithm.
@@ -14,6 +15,7 @@ import algvis.scenario.commands.HardPauseCommand;
 abstract public class Algorithm extends Thread {
 	private DataStructure D;
 	boolean suspended = false;
+	private algvis.core.Commentary.State commentaryState;
 
 	/**
 	 * rather use Algorithm(DataStructure D, String name)
@@ -22,6 +24,7 @@ abstract public class Algorithm extends Thread {
 		this.D = D;
 		D.scenario.startMacro();
 		D.scenario.add(new HardPauseCommand(D, false));
+		commentaryState = D.M.C.getState();
 	}
 
 	/**
@@ -61,25 +64,34 @@ abstract public class Algorithm extends Thread {
 	public void setHeader(String s) {
 		if (D.M.pause) {
 			D.M.C.setHeader(s);
+			saveCommentary();
 		}
 	}
 
 	public void setText(String s) {
 		if (D.M.pause) {
 			D.M.C.setText(s);
+			saveCommentary();
 		}
 	}
 
 	public void setText(String s, String... par) {
 		if (D.M.pause) {
 			D.M.C.setText(s, par);
+			saveCommentary();
 		}
 	}
 
 	public void setText(String s, int... par) {
 		if (D.M.pause) {
 			D.M.C.setText(s, par);
+			saveCommentary();
 		}
+	}
+
+	private void saveCommentary() {
+		D.scenario.add(new SetCommentaryStateCommand(D.M.C, commentaryState));
+		commentaryState = D.M.C.getState();
 	}
 
 	public void run() {

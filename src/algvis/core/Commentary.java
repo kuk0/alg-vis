@@ -17,12 +17,12 @@ public class Commentary extends JEditorPane implements LanguageListener {
 	private static final long serialVersionUID = 9023200331860482960L;
 	Languages L;
 	JScrollPane sp;
-	int k = 0;
-	String text;
-	List<String> s = new ArrayList<String> (),
+	private int k = 0, position = 0;
+	private String text;
+	private List<String> s = new ArrayList<String> (),
 	           pre = new ArrayList<String> (),
 	          post = new ArrayList<String> ();
-	ArrayList<String[]> param = new ArrayList<String[]> ();
+	private List<String[]> param = new ArrayList<String[]> ();
 
 	public Commentary(Languages L, JScrollPane sp) {
 		super();
@@ -32,14 +32,14 @@ public class Commentary extends JEditorPane implements LanguageListener {
 		this.sp = sp;
 		L.addListener(this);
 	}
-	
-	public void clear() {
+
+	private void clear() {
 		text = "";
-		k = 0;
-		s.clear();
-		pre.clear();
-		post.clear();
-		param.clear();
+		position = k = 0;
+		s = new ArrayList<String>();
+		pre = new ArrayList<String>();
+		post = new ArrayList<String>();
+		param = new ArrayList<String[]>();
 	}
 	
 	private String str(int i) {
@@ -70,12 +70,13 @@ public class Commentary extends JEditorPane implements LanguageListener {
 	
 	public void languageChanged() {
 		text = "";
-		for (int i=0; i<s.size(); ++i) text += str(i); //+ str(i) + str(i) + str(i) + str(i); 			
+		for (int i=0; i<position; ++i) text += str(i); //+ str(i) + str(i) + str(i) + str(i); 			
 		super.setText(text);
 		scrollDown();
 	}
 
-	public void add(String u, String v, String w, String ...par) {
+	private void add(String u, String v, String w, String ...par) {
+		++position;
 		pre.add(u);
 		s.add(v);
 		post.add(w);
@@ -105,5 +106,35 @@ public class Commentary extends JEditorPane implements LanguageListener {
 		String[] par2 = new String[par.length];
 		for (int i = 0; i<par.length; ++i) par2[i] = "" + par[i];
 		add (""+k+". ", s, "<br>", par2);
+	}
+
+	public void restoreState(State state) {
+		k = state.k;
+		position = state.position;
+		s = state.s;
+		pre = state.pre;
+		post = state.post;
+		param = state.param;
+		languageChanged();
+	}
+
+	public State getState() {
+		return new State(k, position, s, pre, post, param);
+	}
+
+	public static class State {
+		private final int k, position;
+		private final List<String> s, pre, post;
+		private final List<String[]> param;
+
+		public State(int k, int position, List<String> s, List<String> pre,
+				List<String> post, List<String[]> param) {
+			this.k = k;
+			this.position = position;
+			this.s = s;
+			this.pre = pre;
+			this.post = post;
+			this.param = param;
+		}
 	}
 }
