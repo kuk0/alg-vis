@@ -3,7 +3,6 @@ package algvis.aatree;
 import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
 import algvis.core.Colors;
-import algvis.core.Node;
 
 public class AAInsert extends Algorithm {
 	AA T;

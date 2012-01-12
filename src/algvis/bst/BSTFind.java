@@ -2,7 +2,6 @@ package algvis.bst;
 
 import algvis.core.Algorithm;
 import algvis.core.Colors;
-import algvis.core.Node;
 
 public class BSTFind extends Algorithm {
 	BST T;
