@@ -13,6 +13,7 @@ public class SplayInsert extends SplayAlg {
 	@Override
 	public void run() {
 		if (T.root == null) {
+			setHeader("insertion");
 			T.root = v;
 			v.goToRoot();
 			setText("newroot");
