@@ -6,7 +6,7 @@ import java.util.ListIterator;
 import org.jdom.Element;
 
 public class MacroCommand implements Command {
-	private ArrayList<Command> commands;
+	private final ArrayList<Command> commands;
 
 	@SuppressWarnings("unchecked")
 	public MacroCommand(ArrayList<Command> commands) {

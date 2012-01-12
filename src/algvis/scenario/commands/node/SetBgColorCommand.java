@@ -8,8 +8,8 @@ import algvis.core.Node;
 import algvis.scenario.commands.Command;
 
 public class SetBgColorCommand implements Command {
-	private Color fromBgColor, toBgColor;
-	private Node n;
+	private final Color fromBgColor, toBgColor;
+	private final Node n;
 
 	public SetBgColorCommand(Node n, Color toBgColor) {
 		this.n = n;

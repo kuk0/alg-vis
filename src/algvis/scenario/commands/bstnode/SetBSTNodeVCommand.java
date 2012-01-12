@@ -7,8 +7,8 @@ import algvis.bst.BSTNode;
 import algvis.scenario.commands.Command;
 
 public class SetBSTNodeVCommand implements Command {
-	private BST T;
-	private BSTNode v, old;
+	private final BST T;
+	private final BSTNode v, old;
 
 	public SetBSTNodeVCommand(BST T, BSTNode v, BSTNode old) {
 		this.T = T;

@@ -6,8 +6,8 @@ import algvis.bst.BSTNode;
 import algvis.scenario.commands.Command;
 
 public class SetLevelCommand implements Command {
-	private BSTNode n;
-	private int fromLevel, toLevel;
+	private final BSTNode n;
+	private final int fromLevel, toLevel;
 
 	public SetLevelCommand(BSTNode n, int toLevel) {
 		this.n = n;

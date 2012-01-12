@@ -6,10 +6,10 @@ import algvis.core.Node;
 import algvis.scenario.commands.Command;
 
 public class ArrowCommand implements Command {
-	private Node n, dir;
-	private int arrow;
-	private boolean drawArrow;
-	private String name;
+	private final Node n, dir;
+	private final int arrow;
+	private final boolean drawArrow;
+	private final String name;
 
 	public ArrowCommand(Node n, boolean drawArrow) {
 		this.n = n;

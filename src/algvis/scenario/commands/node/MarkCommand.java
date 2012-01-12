@@ -6,8 +6,8 @@ import algvis.core.Node;
 import algvis.scenario.commands.Command;
 
 public class MarkCommand implements Command {
-	private Node n;
-	private boolean marked;
+	private final Node n;
+	private final boolean marked;
 
 	public MarkCommand(Node n, boolean marked) {
 		this.n = n;

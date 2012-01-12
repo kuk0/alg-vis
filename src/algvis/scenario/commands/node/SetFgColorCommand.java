@@ -8,8 +8,8 @@ import algvis.core.Node;
 import algvis.scenario.commands.Command;
 
 public class SetFgColorCommand implements Command {
-	private Color fromfgColor, tofgColor;
-	private Node n;
+	private final Color fromfgColor, tofgColor;
+	private final Node n;
 
 	public SetFgColorCommand(Node n, Color tofgColor) {
 		this.n = n;

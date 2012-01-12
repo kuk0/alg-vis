@@ -8,9 +8,9 @@ import algvis.core.Node;
 import algvis.scenario.commands.Command;
 
 public class SetStateCommand implements Command {
-	private int fromState, toState;
-	private int fromX, fromY;
-	private Node n;
+	private final int fromState, toState;
+	private final int fromX, fromY;
+	private final Node n;
 
 	public SetStateCommand(Node n, int toState) {
 		this.n = n;

@@ -7,8 +7,8 @@ import algvis.bst.BSTNode;
 import algvis.scenario.commands.Command;
 
 public class SetBSTRootCommand implements Command {
-	private BST T;
-	private BSTNode root, previousRoot;
+	private final BST T;
+	private final BSTNode root, previousRoot;
 
 	public SetBSTRootCommand(BST T, BSTNode root, BSTNode previousRoot) {
 		this.T = T;

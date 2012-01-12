@@ -6,8 +6,8 @@ import algvis.avltree.AVLNode;
 import algvis.scenario.commands.Command;
 
 public class SetBalanceCommand implements Command {
-	private AVLNode n;
-	private int fromBal, toBal;
+	private final AVLNode n;
+	private final int fromBal, toBal;
 
 	public SetBalanceCommand(AVLNode n, int bal) {
 		this.n = n;

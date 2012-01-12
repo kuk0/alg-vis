@@ -6,8 +6,8 @@ import algvis.core.Node;
 import algvis.scenario.commands.Command;
 
 public class ArcCommand implements Command {
-	private Node fromNode, toNode;
-	private boolean setted;
+	private final Node fromNode, toNode;
+	private final boolean setted;
 
 	public ArcCommand(Node fromNode, Node toNode, boolean setted) {
 		this.fromNode = fromNode;

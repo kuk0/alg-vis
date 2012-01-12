@@ -6,8 +6,8 @@ import algvis.bst.BSTNode;
 import algvis.scenario.commands.Command;
 
 public class LinkLeftCommand implements Command {
-	private BSTNode n1, n2;
-	private boolean linked;
+	private final BSTNode n1, n2;
+	private final boolean linked;
 
 	public LinkLeftCommand(BSTNode n1, BSTNode n2, boolean linked) {
 		this.n1 = n1;

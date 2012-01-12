@@ -6,8 +6,8 @@ import algvis.core.Node;
 import algvis.scenario.commands.Command;
 
 public class MoveCommand implements Command {
-	private int fromX, fromY, toX, toY;
-	private Node n;
+	private final int fromX, fromY, toX, toY;
+	private final Node n;
 
 	public MoveCommand(Node n, int toX, int toY) {
 		this.n = n;

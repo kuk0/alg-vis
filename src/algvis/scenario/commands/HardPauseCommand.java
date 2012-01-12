@@ -5,9 +5,9 @@ import org.jdom.Element;
 import algvis.core.DataStructure;
 
 public class HardPauseCommand implements Command {
-	private DataStructure d;
+	private final DataStructure d;
 	/** if false then it's start of an algorithm else it's end of an algorithm */
-	private boolean enabled;
+	private final boolean enabled;
 
 	public HardPauseCommand(DataStructure d, boolean enabled) {
 		this.d = d;
