@@ -58,31 +58,23 @@ abstract public class Algorithm extends Thread {
 	}
 	
 	public void setHeader(String s) {
-		if (D.M.pause) {
-			D.M.C.setHeader(s);
-			saveCommentary();
-		}
+		D.M.C.setHeader(s);
+		saveCommentary();
 	}
 
 	public void setText(String s) {
-		if (D.M.pause) {
-			D.M.C.setText(s);
-			saveCommentary();
-		}
+		D.M.C.setText(s);
+		saveCommentary();
 	}
 
 	public void setText(String s, String... par) {
-		if (D.M.pause) {
-			D.M.C.setText(s, par);
-			saveCommentary();
-		}
+		D.M.C.setText(s, par);
+		saveCommentary();
 	}
 
 	public void setText(String s, int... par) {
-		if (D.M.pause) {
-			D.M.C.setText(s, par);
-			saveCommentary();
-		}
+		D.M.C.setText(s, par);
+		saveCommentary();
 	}
 
 	private void saveCommentary() {
