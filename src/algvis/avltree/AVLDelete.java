@@ -14,7 +14,6 @@ public class AVLDelete extends Algorithm {
 		super(T);
 		this.T = T;
 		v = T.setNodeV(new AVLNode(T, K = x));
-		v.setState(Node.ALIVE);
 		v.getReady(Colors.DELETE);
 		setHeader("deletion");
 	}
