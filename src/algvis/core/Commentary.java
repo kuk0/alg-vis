@@ -1,11 +1,9 @@
 package algvis.core;
 
 import java.awt.EventQueue;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BoundedRangeModel;
 import javax.swing.JEditorPane;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -28,6 +26,9 @@ public class Commentary extends JEditorPane implements LanguageListener {
 		super();
 		setContentType("text/html; charset=iso-8859-2");
 		setEditable(false);
+		//setFont(font);
+		//setMargin( new Insets( 4, 4, 4, 4 ) );
+		
 		this.L = L;
 		this.sp = sp;
 		L.addListener(this);
@@ -49,20 +50,10 @@ public class Commentary extends JEditorPane implements LanguageListener {
 	}
 	
 	private void scrollDown() {
-		JScrollBar bar = sp.getVerticalScrollBar();
-		if (bar == null) return;
-		BoundedRangeModel model = bar.getModel();
-	    if ((model.getExtent() + model.getValue()) == model.getMaximum()) return;
-	    
 	    EventQueue.invokeLater(new Runnable() {
             public void run() {
-                EventQueue.invokeLater(new Runnable() {
-                    public void run() {
-                    	Rectangle r = getVisibleRect();
-                    	r.y = getHeight() - r.height;
-                    	scrollRectToVisible(r);
-                    }
-                });
+            	final JScrollBar v = sp.getVerticalScrollBar();
+            	v.setValue(v.getMaximum()-v.getVisibleAmount());
             }
         });
 	}
