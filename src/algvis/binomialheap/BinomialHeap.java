@@ -77,6 +77,7 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 		for (int i = 0; i <= numHeaps; ++i) {
 			root[i] = null;
 		}
+		v = v2 = null;
 		setStats();
 	}
 

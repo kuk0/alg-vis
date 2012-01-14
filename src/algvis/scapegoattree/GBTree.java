@@ -32,8 +32,7 @@ public class GBTree extends BST {
 	@Override
 	public void clear() {
 		del = 0;
-		root = null;
-		setStats();
+		super.clear();
 	}
 
 	@Override

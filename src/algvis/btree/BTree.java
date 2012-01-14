@@ -31,7 +31,7 @@ public class BTree extends Dictionary {
 
 	@Override
 	public void clear() {
-		root = null;
+		root = v = null;
 		setStats();
 	}
 

@@ -12,9 +12,11 @@ public class SplayAlg extends Algorithm {
 	public SplayAlg(Splay T, int x) {
 		super(T);
 		this.T = T;
-		T.v = s = new SplayNode(T, K = x);
-		s.bgColor(Colors.FIND);
-		setHeader("splay");
+		if (T.root != null) {
+			T.v = s = new SplayNode(T, K = x);
+			s.bgColor(Colors.FIND);
+			setHeader("splay");
+		}
 	}
 	
 	public BSTNode find(int K) {

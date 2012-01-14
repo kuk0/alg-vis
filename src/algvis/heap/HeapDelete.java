@@ -48,7 +48,11 @@ public class HeapDelete extends HeapAlg {
 
 		H.root.key = H.v.key;
 		H.v = null;
-		setText("heapbubbledown");
+		if (H.minHeap) {
+			setText("minheapbubbledown");
+		} else {
+			setText("maxheapbubbledown");
+		}
 		// mysuspend();
 
 		v = H.root;

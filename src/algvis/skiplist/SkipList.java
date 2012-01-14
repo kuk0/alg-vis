@@ -38,6 +38,7 @@ public class SkipList extends Dictionary {
 	public void clear() {
 		height = 1;
 		n = e = 0;
+		v = null;
 		root = new SkipNode(this, -Node.INF);
 		root.linkright(sent = new SkipNode(this, Node.INF));
 		reposition();

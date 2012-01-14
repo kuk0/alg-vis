@@ -36,7 +36,7 @@ public class Heap extends PriorityQueue implements ClickListener {
 	
 	@Override
 	public void clear() {
-		root = null;
+		root = v = v2 = null;
 		n = 0;
 		setStats();
 	}

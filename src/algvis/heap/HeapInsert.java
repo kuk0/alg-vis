@@ -45,10 +45,7 @@ public class HeapInsert extends HeapAlg {
 		}
 		H.v = null;
 
-		setText("heapbubbleup");
 		// mysuspend();
 		bubbleup(v);
-
-		setText("done");
 	}
 }
