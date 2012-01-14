@@ -31,7 +31,7 @@ public class BST extends Dictionary implements LayoutListener {
 
 	@Override
 	public void clear() {
-		root = null;
+		root = v = null;
 		setStats();
 	}
 

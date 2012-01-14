@@ -29,12 +29,6 @@ public class Splay extends BST {
 	}
 
 	@Override
-	public void clear() {
-		root = null;
-		setStats();
-	}
-
-	@Override
 	public void draw(View V) {
 		if (root != null) {
 			root.moveTree();
