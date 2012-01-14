@@ -133,19 +133,17 @@ public class LeftHeap extends MeldablePQ {
 				root[i].reposition();
 				root[i].reboxTree();
 				sumx += root[i].leftw;
-				root[i].repos(sumx, root[i].y);
+				root[i].repos(sumx, root[i].toy);
 				sumx += root[i].rightw;
-
-				if (i == active) {
-					if (root[0] != null) {
-						root[0].reposition();
-						root[0].reboxTree();
-						sumx += root[0].leftw;
-						root[0].repos(sumx, root[0].y);
-						sumx += root[0].rightw;
-					}
+			}
+			if (i == active) {
+				if (root[0] != null) {
+					root[0].reposition();
+					root[0].reboxTree();
+					sumx += root[0].leftw;
+					root[0].repos(sumx, root[0].y);
+					sumx += root[0].rightw;
 				}
-
 			}
 		}
 		M.screen.V.setBounds(0, 0, sumx, y2);
@@ -183,6 +181,4 @@ public class LeftHeap extends MeldablePQ {
 			root[active].lowlightTree();
 		}
 	}
-
-
 }

@@ -27,6 +27,12 @@ public class LeftHeapInsert extends LeftHeapAlg{
 		//treba doplnit spravny text	
 			H.root[0] = v;
 			H.reposition();
+
+			/* toto je trochu surove, ale v reposition nemoze byt root[0].repos(sumx, root[0].toy);
+			 * lebo potom pri meldovani stale root[0] vracia spat nahor.
+			 */
+			H.root[0].goTo(H.root[0].tox, 0);
+
 			//mysuspend();
 			H.v = null;
 			v = null;
@@ -34,7 +40,6 @@ public class LeftHeapInsert extends LeftHeapAlg{
 
 			if (H.root[i] == null) {
 				H.root[i] = H.root[0];
-				//H.root[0].goToRoot();
 				H.root[0] = null;
 				if (H.root[i] != null) {
 					setText("newroot");
@@ -52,12 +57,10 @@ public class LeftHeapInsert extends LeftHeapAlg{
 			
 			H.active = i;
 			H.root[0].highlightTree();
-			//H.root[0].goNextTo(H.root[i]);
 			H.reposition();
 
 			mysuspend();
 			meld(i);
-
 	}	
 	
 }

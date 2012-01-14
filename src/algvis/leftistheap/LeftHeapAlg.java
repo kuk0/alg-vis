@@ -1,6 +1,5 @@
 package algvis.leftistheap;
 
-import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
 import algvis.core.VisPanel;
 
@@ -25,7 +24,8 @@ public class LeftHeapAlg extends Algorithm {
 		 * o jeden level nizsie posunie jedna halda.
 		 */
 
-		BSTNode w = (BSTNode) H.root[i];
+		LeftHeapNode w = H.root[i];
+		//LeftHeapNode w = H.root[i];
 		H.root[0].mark();
 		w.mark();
 		setText("leftmeldstart");
@@ -34,33 +34,40 @@ public class LeftHeapAlg extends Algorithm {
 			H.root[0].mark();
 			w.mark();
 			// posuvame sa dole a nic nemenime
-			if (((LeftHeapNode) w).prec(H.root[0])) {// (w.key <
-														// H.root[0].key){
-				// dat podmienku, aby sa vypisoval spravny text pre min aj max
-				// haldu.
-				setText("leftmeldright", H.root[0].key, w.key);
+			if (w.prec(H.root[0])) {// (w.key < H.root[0].key){
+				if (!H.minHeap){
+					setText("leftmeldrightg", w.key, H.root[0].key);
+				}else{
+					setText("leftmeldrightl", w.key, H.root[0].key);
+				}
 				mysuspend();
 			} else { // vymenime w a root[0], napojime root[0] ako praveho syna.
-				setText("leftmeldswap", H.root[0].key, w.key);
+				if (!H.minHeap){
+					setText("leftmeldswapl", w.key, H.root[0].key);
+				}else{
+					setText("leftmeldswapg", w.key, H.root[0].key);
+				}
+				w.setDoubleArrow(H.root[0]);
 				mysuspend();
-				BSTNode tmp1 = w.parent;
-				BSTNode tmp2 = H.root[0];
+				w.noDoubleArrow();
+				LeftHeapNode tmp1 = w.getParent();
+				LeftHeapNode tmp2 = H.root[0];
 
-				H.root[0] = (LeftHeapNode) w;
-				if (w.parent != null) {
-					H.root[0].parent = null;
-					tmp1.right = tmp2;
-					tmp2.parent = tmp1;
+				H.root[0] = w;
+				if (w.getParent() != null) {
+					H.root[0].setParent(null);
+					tmp1.setRight(tmp2);
+					tmp2.setParent(tmp1);
 					w = tmp2;
 				} else {
-					H.root[i] = (LeftHeapNode) tmp2;
+					H.root[i] = tmp2;
 					w = H.root[i];
 				}
 				H.reposition();
 			}
 
-			if (w.parent != null) {
-				((LeftHeapNode) w.parent).rightline = true;
+			if (w.getParent() != null) {
+				w.getParent().rightline = true;
 			}
 
 			H.root[0].repos(H.root[0].tox, H.root[0].toy + H.yspan + 2
@@ -68,7 +75,7 @@ public class LeftHeapAlg extends Algorithm {
 			H.root[0].unmark();
 			w.unmark();
 
-			if (w.right == null) { // jedine za tejto podmienky sa skonci cyklus
+			if (w.getRight() == null) { // jedine za tejto podmienky sa skonci cyklus
 				// povieme, ze nie je co riesit a napojime v vpravo na w
 				setText("leftmeldnoson", H.root[0].key, w.key);
 				mysuspend();
@@ -79,63 +86,64 @@ public class LeftHeapAlg extends Algorithm {
 			}
 
 			// toto odstranenie hrany sa mi vizualne moc nepaci
-			((LeftHeapNode) w).rightline = false;
-			w = w.right;
+			w.rightline = false;
+			w = w.getRight();
+			mysuspend();
 		}
 		// uprava rankov
 		setText("leftrankupdate");
 		mysuspend();
 
-		LeftHeapNode tmp = (LeftHeapNode) w;
+		LeftHeapNode tmp = w;
 
 		while (tmp != null) {
-			if ((tmp.left != null) && (tmp.right != null)) {
-				tmp.rank = Math.min(((LeftHeapNode) tmp.left).rank,
-						((LeftHeapNode) tmp.right).rank) + 1;
+			if ((tmp.getLeft() != null) && (tmp.getRight() != null)) {
+				tmp.rank = Math.min(tmp.getLeft().rank,
+						tmp.getRight().rank) + 1;
 			} else {
 				tmp.rank = 1;
 			}
 
-			tmp = ((LeftHeapNode) tmp.parent);
+			tmp =tmp.getParent();
 		}
 		setText("leftrankstart"); // text ideme vymienat bratov
 		mysuspend();
 		// vymienanie s bratmi podla ranku
-		tmp = (LeftHeapNode) w;
+		tmp = w;
 
 		while (tmp != null) {
 			int l;
-			if (tmp.left == null) {
+			if (tmp.getLeft() == null) {
 				l = -47;
 			} else {
-				tmp.left.mark();
-				l = ((LeftHeapNode) tmp.left).rank;
+				tmp.getLeft().mark();
+				l = tmp.getLeft().rank;
 			}
 			int r;
-			if (tmp.right == null) {
+			if (tmp.getRight() == null) {
 				r = -47;
 			} else {
-				tmp.right.mark();
-				r = ((LeftHeapNode) tmp.right).rank;
+				tmp.getRight().mark();
+				r = tmp.getRight().rank;
 			}
 			if (l < r) {
-				setText("leftranksonch");
+				//setText("leftranksonch"); //potom vymazat z Messages
 				mysuspend();
 				tmp.swapChildren();
 			} else {
-				setText("leftranksonok");
+				//setText("leftranksonok");  //potom vymazat z Messages
 				mysuspend();
 			}
 
 			H.reposition();
 
-			if (tmp.left != null) {
-				tmp.left.unmark();
+			if (tmp.getLeft() != null) {
+				tmp.getLeft().unmark();
 			}
-			if (tmp.right != null) {
-				tmp.right.unmark();
+			if (tmp.getRight() != null) {
+				tmp.getRight().unmark();
 			}
-			tmp = ((LeftHeapNode) tmp.parent);
+			tmp = tmp.getParent();
 		}
 
 		H.reposition();

@@ -58,13 +58,13 @@ public class LeftHeapNode extends BSTNode {
 
 	// pripojit this ako noveho rodica v a v dat ako praveho syna
 	public void linkup(LeftHeapNode v) {
-		if ((this.parent != null) && (v != null)) {
-			BSTNode tmp = this.parent;
+		if ((this.getParent() != null) && (v != null)) {
+			LeftHeapNode tmp = this.getParent();
 			// this.parent = v;
-			v.right = this;
-			this.parent = v;
-			v.parent = tmp;
-			v.parent.right = v;
+			v.setRight(this);
+			this.setParent(v);
+			v.setParent(tmp);
+			v.getParent().setRight(v);
 		}
 	}
 
@@ -79,9 +79,9 @@ public class LeftHeapNode extends BSTNode {
 	}
 
 	public void swapChildren() {
-		BSTNode tmp = this.left;
-		this.left = this.right;
-		this.right = tmp;
+		LeftHeapNode tmp = this.getLeft();
+		this.setLeft(this.getRight());
+		this.setRight(tmp);
 	}
 	
 	public void setDoubleArrow(Node w) {
@@ -120,12 +120,12 @@ public class LeftHeapNode extends BSTNode {
 		// tox = px;
 		// toy = py;
 
-		if (this.right != null) {
-			((LeftHeapNode) this.right).repos(px + right.leftw, py
+		if (this.getRight() != null) {
+			this.getRight().repos(px + getRight().leftw, py
 					+ (D.yspan + 2 * D.radius));
 		}
-		if (this.left != null) {
-			((LeftHeapNode) this.left).repos(px - left.rightw, py
+		if (this.getLeft() != null) {
+			this.getLeft().repos(px - getLeft().rightw, py
 					+ (D.yspan + 2 * D.radius));
 		}
 	}
@@ -141,21 +141,21 @@ public class LeftHeapNode extends BSTNode {
 
 	public void lowlightTree() {
 		lowlight();
-		if (left != null) {
-			((LeftHeapNode) left).lowlightTree();
+		if (getLeft() != null) {
+			getLeft().lowlightTree();
 		}
-		if (right != null) {
-			((LeftHeapNode) right).lowlightTree();
+		if (getRight() != null) {
+			getRight().lowlightTree();
 		}
 	}
 
 	public void highlightTree() {
 		highlight();
-		if (left != null) {
-			((LeftHeapNode) left).highlightTree();
+		if (getLeft() != null) {
+			getLeft().highlightTree();
 		}
-		if (right != null) {
-			((LeftHeapNode) right).highlightTree();
+		if (getRight() != null) {
+			getRight().highlightTree();
 		}
 		// highlightTree(this);
 	}
@@ -172,28 +172,58 @@ public class LeftHeapNode extends BSTNode {
 				v.setColor(Color.black);
 			//} 
 			
-			if ((left != null) && (left.state != INVISIBLE)) {
+			if ((getLeft() != null) && (getLeft().state != INVISIBLE)) {
 				if (leftline) {
-					v.drawLine(x, y, left.x, left.y);
+					v.drawLine(x, y, getLeft().x, getLeft().y);
 				} else {
-					v.drawDashedLine(x, y, left.x, left.y);
+					v.drawDashedLine(x, y, getLeft().x, getLeft().y);
 				}				
 			}
-			if ((right != null) && (right.state != INVISIBLE)) {
+			if ((getRight() != null) && (getRight().state != INVISIBLE)) {
 				if (rightline) {
-					v.drawLine(x, y, right.x, right.y);
+					v.drawLine(x, y, getRight().x, getRight().y);
 				} else {
-					v.drawDashedLine(x, y, right.x, right.y);
+					v.drawDashedLine(x, y, getRight().x, getRight().y);
 				}				
 			}
 		}
-		if (left != null) {
-			left.drawTree(v);
+		if (getLeft() != null) {
+			getLeft().drawTree(v);
 		}
-		if (right != null) {
-			right.drawTree(v);
+		if (getRight() != null) {
+			getRight().drawTree(v);
 		}
 		draw(v);
-	} 
+	}
+
+	//@Override
+	public LeftHeapNode getRight(){
+		return (LeftHeapNode) this.right;
+	}
+
+	//@Override
+	public LeftHeapNode getLeft(){
+		return (LeftHeapNode) this.left;
+	}
+
+	//@Override
+	public void setRight(LeftHeapNode v){
+		this.right = v;
+	}
+
+	//@Override
+	public void setLeft(LeftHeapNode v){
+		this.left = v;
+	}
+
+	//@Override
+	public LeftHeapNode getParent(){
+		return (LeftHeapNode) this.parent;
+	}
+
+	//@Override
+	public void setParent(LeftHeapNode v){
+		this.parent = v;
+	}
 
 }
