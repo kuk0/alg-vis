@@ -5,7 +5,7 @@ import algvis.core.VisPanel;
 public class LeftHeapInsert extends LeftHeapAlg{
 	int K;
 	int i; //halda cislo i  
-	LeftHeap H;
+	//LeftHeap H;
 	LeftHeapNode v;
 
 	public LeftHeapInsert(VisPanel M) {
@@ -17,7 +17,8 @@ public class LeftHeapInsert extends LeftHeapAlg{
 		super(H);
 		this.i = i;
 		H.v = v = new LeftHeapNode(H, K = x);
-		this.H = H;
+		//H.root[0] = new LeftHeapNode(H, K = x);
+		//this.H = H;
 		setHeader("insertion");
 	}
 
@@ -27,11 +28,16 @@ public class LeftHeapInsert extends LeftHeapAlg{
 			H.root[0] = v;
 			H.reposition();
 			//mysuspend();
+			H.v = null;
+			v = null;
+			
 
 			if (H.root[i] == null) {
 				H.root[i] = H.root[0];
+				//H.root[0].goToRoot();
 				H.root[0] = null;
 				if (H.root[i] != null) {
+					setText("newroot");
 					H.root[i].highlightTree();
 				}
 				H.reposition();
@@ -45,13 +51,13 @@ public class LeftHeapInsert extends LeftHeapAlg{
 			}
 			
 			H.active = i;
-			H.root[0].highlightTree();			
+			H.root[0].highlightTree();
+			//H.root[0].goNextTo(H.root[i]);
 			H.reposition();
 
 			mysuspend();
 			meld(i);
-			H.v = null;
-			v = null;
+
 	}	
 	
 }

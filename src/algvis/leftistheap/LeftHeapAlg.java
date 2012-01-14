@@ -139,7 +139,7 @@ public class LeftHeapAlg extends Algorithm {
 		}
 
 		H.reposition();
-		mysuspend();
+		//mysuspend();
 		setText("done");
 
 	}
