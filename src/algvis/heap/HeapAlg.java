@@ -15,9 +15,9 @@ public class HeapAlg extends Algorithm {
 	
 	public void bubbleup(BSTNode v) {
 		if (H.minHeap) {
-			setText("minheapbubbleup");
+			addStep("minheapbubbleup");
 		} else {
-			setText("maxheapbubbleup");
+			addStep("maxheapbubbleup");
 		}
 		BSTNode w = v.parent;
 		while (w != null && ((HeapNode) v).prec(w)) {
@@ -37,6 +37,6 @@ public class HeapAlg extends Algorithm {
 			v = w;
 			w = w.parent;
 		}
-		setText("done");
+		addStep("done");
 	}
 }

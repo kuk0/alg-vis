@@ -50,22 +50,28 @@ abstract public class Algorithm extends Thread {
 			M.C.setHeader(s);
 		}
 	}
-
-	public void setText(String s) {
+	
+	public void addNote(String s) {
 		if (M.pause) {
-			M.C.setText(s);
+			M.C.addNote(s);
 		}
 	}
 
-	public void setText(String s, String... par) {
+	public void addStep(String s) {
 		if (M.pause) {
-			M.C.setText(s, par);
+			M.C.addStep(s);
 		}
 	}
 
-	public void setText(String s, int... par) {
+	public void addStep(String s, String... par) {
 		if (M.pause) {
-			M.C.setText(s, par);
+			M.C.addStep(s, par);
+		}
+	}
+
+	public void addStep(String s, int... par) {
+		if (M.pause) {
+			M.C.addStep(s, par);
 		}
 	}
 

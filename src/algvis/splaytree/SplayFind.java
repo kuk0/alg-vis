@@ -14,28 +14,28 @@ public class SplayFind extends SplayAlg {
 	public void run() {
 		if (T.root == null) {
 			v.goToRoot();
-			setText("bstfindempty");
+			addStep("bstfindempty");
 			mysuspend();
 			v.goDown();
 			v.bgColor(Colors.NOTFOUND);
 			setHeader("search");
-			setText("bstfindnotfound");
+			addStep("bstfindnotfound");
 		} else {
 			v.goAboveRoot();
 			BSTNode w = find(K);
 			splay(w);
 
-			setText("splayinroot");
+			addStep("splayinroot");
 			mysuspend();
 
 			setHeader("search");
 			w.bgColor(Colors.NORMAL);
 			v.goToRoot();
 			if (w.key == v.key) {
-				setText("found");
+				addStep("found");
 				v.bgColor(Colors.FOUND);
 			} else {
-				setText("notfound");
+				addStep("notfound");
 				v.bgColor(Colors.NOTFOUND);
 				v.goDown();
 			}

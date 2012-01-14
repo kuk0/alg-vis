@@ -45,12 +45,12 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		setEditable(false);
 		Font font = UIManager.getFont("Label.font");
 		StyleSheet css = ((HTMLDocument) getDocument()).getStyleSheet();
-		css.addRule("body { " + "font-family: " + font.getFamily() + "; "
-				+ "font-size: 12pt;" + // font.getSize()?
-				"margin: 10pt; margin-top: 0pt; " + "}");
-		css.addRule(".step { " + "margin-bottom: 5pt;" + "}");
-		css.addRule("ol { " + "padding-left: 14px;" + "margin: 0px;" + "}");
+		css.addRule("body { font-family: " + font.getFamily() + "; "
+				+ "font-size: 12pt; margin: 10pt; margin-top: 0pt; " + "}");
+		css.addRule(".step { margin-bottom: 5pt; }");
+		css.addRule("ol { padding-left: 14px; margin: 0px; }");
 		css.addRule("a { color: black; text-decoration:none; }");
+		css.addRule("p.note { font-style: italic; margin: 0pt; margin-bottom: 5pt; }");
 		this.L = L;
 		this.sp = sp;
 		L.addListener(this);
@@ -65,7 +65,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		pre.clear();
 		post.clear();
 		param.clear();
-		super.setText("<html><body></body></html>");
+		setText("<html><body></body></html>");
 	}
 
 	private String str(int i) {
@@ -86,10 +86,10 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	}
 
 	public void languageChanged() {
-		text = "";
+		StringBuffer text = new StringBuffer("");
 		for (int i = 0; i < s.size(); ++i)
-			text += str(i); // + str(i) + str(i) + str(i) + str(i);
-		super.setText(text);
+			text.append(str(i));
+		setText(text.toString());
 		scrollDown();
 	}
 
@@ -122,23 +122,25 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		add("<h2>", h, "</h2>");
 	}
 
-	public void setText(String s) {
-		++k;
-		add("<ol start=\"" + k + "\"><li class=\"step\"><p><a href=\"" + k + "\"> ", s, "</a></p></li></ol>");
+	public void addNote(String s) {
+		add("<p class=\"note\">", s, "</p>");
 	}
 
-	public void setText(String s, String... par) {
+	public void addStep(String s, String... par) {
 		++k;
-		add("<li class=\"step\">" + k + ". ", s, "</li>", par);
+		add("<ol start=\"" + k + "\"><li class=\"step\"><p><a href=\"" + k
+				+ "\"> ", s, "</a></p></li></ol>", par);
 	}
 
-	public void setText(String s, int... par) {
-		++k;
+	public void addStep(String s) {
+		addStep(s, "");
+	}
+
+	public void addStep(String s, int... par) {
 		String[] par2 = new String[par.length];
 		for (int i = 0; i < par.length; ++i)
 			par2[i] = "" + par[i];
-		add("<ol start=\"" + k + "\"><li class=\"step\"><p><a href=\"" + k
-				+ "\"> ", s, "</a></p></li></ol>", par2);
+		addStep(s, par2);
 	}
 
 	public void hyperlinkUpdate(HyperlinkEvent e) {
