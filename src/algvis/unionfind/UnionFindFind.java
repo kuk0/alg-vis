@@ -1,60 +1,92 @@
 package algvis.unionfind;
 
+import java.util.Stack;
+
 import algvis.core.Algorithm;
-import algvis.core.TreeNode;
 
 public class UnionFindFind extends Algorithm {
-	public static final int SIMPLE = 1, COMPRESSION = 2, ZIGZAG = 3;
-	public int state = SIMPLE;
+	public enum findType {
+		SIMPLE, COMPRESSION, ZIGZAG
+	};
+
+	public findType findState = findType.SIMPLE;
 	UnionFind U;
-	
+
 	public UnionFindFind(UnionFind U) {
 		super(U.M);
 		this.U = U;
-		setHeader(null);
+		setState(this.U.findState);
 	}
 
-	public int setState(int state) {
-		switch (state) {
-		case SIMPLE:
-			this.state = SIMPLE;
-			return 1;
-		case COMPRESSION:
-			this.state = COMPRESSION;
-			return 1;
-		case ZIGZAG:
-			this.state = ZIGZAG;
-			return 1;
-		default:
-			return 0;
-		}
+	public void setState(findType state) {
+		this.findState = state;
 	}
 
-	public TreeNode Find(TreeNode T) {
-		switch (state) {
+	public UnionFindNode find(UnionFindNode T) {
+		switch (findState) {
 		case SIMPLE:
-			this.state = SIMPLE;
-			return null;
+			return findSimple(T);
 		case COMPRESSION:
-			this.state = COMPRESSION;
-			return null;
+			return findWithCompression(T);
 		case ZIGZAG:
-			this.state = ZIGZAG;
-			return null;
+			return findZigZag(T);
 		default:
 			return null;
 		}
 	}
-	
-	public TreeNode FindSimple(TreeNode T) {
-		return null;
+
+	public UnionFindNode findSimple(UnionFindNode T) {
+		setText("uffindstart", T.key);
+		mysuspend();
+		Stack<UnionFindNode> S = new Stack<UnionFindNode>();
+		UnionFindNode result = T;
+		while (T.parent != null) {
+			S.add(T);
+			T.mark();
+			setText("ufup");
+			mysuspend();
+			T = (UnionFindNode) T.parent;
+		}
+		result = T;
+		setText("ufrootfound", result.key);
+		mysuspend();
+		while (!S.empty()) {
+			T = S.pop();
+			T.unmark();
+		}
+		return result;
 	}
 
-	public TreeNode FindWithCompression(TreeNode T) {
-		return null;
+	public UnionFindNode findWithCompression(UnionFindNode T) {
+		setText("uffindstart", T.key);
+		mysuspend();
+		Stack<UnionFindNode> S = new Stack<UnionFindNode>();
+		UnionFindNode result = T;
+		while (T.parent != null) {
+			S.add(T);
+			T.mark();
+			setText("ufup");
+			mysuspend();
+			T = (UnionFindNode) T.parent;
+		}
+		result = T;
+		setText("ufrootfound", result.key);
+		setText("ufdownstart");
+		mysuspend();
+		while (!S.empty()) {
+			setText("ufdown");
+			mysuspend();
+			T = S.pop();
+			T.unmark();
+			T.parent.deleteChild(T);
+			result.addChild(T);
+			// mysuspend();
+			U.reposition();
+		}
+		return result;
 	}
 
-	public TreeNode FindZigZag(TreeNode T) {
+	public UnionFindNode findZigZag(UnionFindNode T) {
 		return null;
 	}
 }

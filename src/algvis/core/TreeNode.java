@@ -132,8 +132,9 @@ public class TreeNode extends Node {
 	public void rebox() {
 		TreeNode L = leftmostChild();
 		TreeNode R = rightmostChild();
-		leftw = (L == null) ? D.xspan/2 + D.radius : L.leftw + (x - L.x);
-		rightw = (R == null) ? D.xspan/2 + D.radius : R.rightw + (R.x - x);
+		leftw = (L == null) ? D.xspan / 2 + D.radius : L.leftw + (tox - L.tox);
+		rightw = (R == null) ? D.xspan / 2 + D.radius : R.rightw
+				+ (R.tox - tox);
 	}
 
 	/**
@@ -168,6 +169,23 @@ public class TreeNode extends Node {
 		} else {
 			child.addRight(w);
 		}
+	}
+
+	public void deleteChild(TreeNode w) {
+		if (w == child) {
+			w.right = null; // very important!
+			child = child.right;
+			return;
+		}
+
+		TreeNode v = child;
+		while ((v != null) && (v.right != w)) {
+			v = v.right;
+		}
+		if (v != null) {
+			v.right = w.right;
+		}
+		w.right = null;
 	}
 
 	public TreeNode leftmostChild() {
@@ -207,7 +225,7 @@ public class TreeNode extends Node {
 		D.x2 += D.xspan + D.radius;
 		D.y1 -= D.yspan + D.radius;
 		D.y2 += D.yspan + D.radius;
-//		System.out.println(D.x1 + " " + leftw + " " + D.x2 + " " + rightw);
+		// System.out.println(D.x1 + " " + leftw + " " + D.x2 + " " + rightw);
 	}
 
 	/**
@@ -223,6 +241,7 @@ public class TreeNode extends Node {
 		offset = modifier = shift = change = 0;
 		toExtremeSon = 0;
 		toBaseline = 0;
+		leftw = rightw = 0;
 		TreeNode w = child;
 		level++;
 		int noofchild = 1;
@@ -448,12 +467,20 @@ public class TreeNode extends Node {
 		}
 	}
 
-	public void shift(int amount) {
-		goTo(tox + amount, toy);
-		//System.out.println(tox);
+	/**
+	 * Beware! This method don't change bounds of data structure!
+	 * 
+	 * @param xamount
+	 *            amount of shift in x-axis
+	 * @param yamount
+	 *            amount of shift in y-axis
+	 */
+	public void shift(int xamount, int yamount) {
+		goTo(tox + xamount, toy + yamount);
+		// System.out.println(tox);
 		TreeNode w = child;
 		while (w != null) {
-			w.fTRBounding(amount);
+			w.shift(xamount, yamount);
 			w = w.right;
 		}
 	}

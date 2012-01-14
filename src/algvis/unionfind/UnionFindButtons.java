@@ -53,23 +53,27 @@ public class UnionFindButtons extends Buttons {
 			});
 			t.start();
 		} else if (evt.getSource() == unionB) {
-			final Vector<Integer> args = I.getNonEmptyVI();
+			int count = ((UnionFind) D).count;
+			final Vector<Integer> args = I.getVI(1, count+1);
 			// if (args.size() != 2) { return; }
 			Random G = new Random(System.currentTimeMillis());
 			switch (args.size()) {
 			case 0:
-				args.add(G.nextInt(((UnionFind) D).count)+1);
-			case 1:				
+				args.add(G.nextInt(count)+1);
+			case 1:
 				int i;
+				int ii = args.elementAt(0);
 				do {
-					i = G.nextInt(((UnionFind) D).count)+1;
-				} while (i != args.elementAt(0));
+					i = G.nextInt(count)+1;
+//					System.out.println(i);
+				} while (i == ii);
 				args.add(i);
 			}
+			//System.out.println(args.get(0)+" "+ args.get(1));
 			// is this thread necessary?
 			Thread t = new Thread(new Runnable() {
 				public void run() {
-					((UnionFind) D).union(args.elementAt(0), args.elementAt(1));
+					((UnionFind) D).union(args.elementAt(0)-1, args.elementAt(1)-1);
 				}
 			});
 			t.start();
