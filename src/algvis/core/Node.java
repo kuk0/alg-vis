@@ -17,8 +17,8 @@ public class Node {
 	 * steps - the number of steps to reach the destination
 	 */
 	public int x, y, tox, toy, steps;
-	/** the state of a node - either ALIVE, UP, DOWN, LEFT, or RIGHT. */
-	public int state;
+	/** the state of a node - either ALIVE, DOWN, LEFT, or RIGHT. */
+	public int state = INVISIBLE;
 	public Color fgcolor, bgcolor;
 	public boolean marked = false;
 	Node dir = null;
@@ -34,15 +34,13 @@ public class Node {
 	 */
 	public static final int INF = 99999, NOKEY = -1, NULL = 100000;
 	/**
-	 * a node can be in several different states: INVISIBLE (not drawn), ALIVE
-	 * (visible), UP (this is the default starting state; the node is not yet
-	 * visible, but when it moves, it starts at the top of the screen and
-	 * automatically changes state to ALIVE); DOWN, LEFT, and RIGHT (the node
-	 * moves down, or diagonally left or right until it gets out of the screen,
-	 * and then turns INVISIBLE)
+	 * a node can be in several different states: INVISIBLE (default starting
+	 * state, not drawn), ALIVE (visible), DOWN, LEFT, and RIGHT (the node moves
+	 * down, or diagonally left or right until it gets out of the screen, and
+	 * then turns INVISIBLE)
 	 */
-	public static final int INVISIBLE = -1, ALIVE = 0, UP = 1, DOWN = 2,
-			LEFT = 3, RIGHT = 4;
+	public static final int INVISIBLE = -1, ALIVE = 0, DOWN = 2, LEFT = 3,
+			RIGHT = 4;
 	public static final int NOARROW = -10000, DIRARROW = -10001,
 			TOARROW = -10002;
 
@@ -60,7 +58,7 @@ public class Node {
 
 	public Node(DataStructure D, int key) {
 		this(D, key, 0, 0);
-		setState(Node.UP);
+		getReady();
 	}
 
 	public Node(Node v) {
@@ -71,19 +69,20 @@ public class Node {
 	 * position the node above top of the screen and set its state to ALIVE, so
 	 * the node is ready to come to screen now
 	 */
-	public void getReady() {
-		Point2D p = D.M.screen.V.r2v(0, 0);
-		toy = y = (int) p.getY() - 5 * D.radius;
+	protected void getReady() {
+		if (D.M.screen.V.at != null) {
+			Point2D p = D.M.screen.V.r2v(0, 0);
+			toy = y = (int) p.getY() - 5 * D.radius;
+		} else {
+			/*
+			 * because of rotations and skiplist constructor inserts (at that
+			 * time "AffineTransform at" not exists)
+			 */
+			tox = x = 0;
+			toy = y = - 5 * D.radius;
+			System.out.println(getClass().getName() + " " + key);
+		}
 		setState(Node.ALIVE);
-	}
-
-	/**
-	 * set bg color and getReady()
-	 * (useful to reduce code length in Algorithms)
-	 */
-	public void getReady(Color bg) {
-		bgColor(bg);
-		getReady();
 	}
 
 	public void setState(int s) {
@@ -263,7 +262,7 @@ public class Node {
 	}
 
 	public void draw(View v) {
-		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
+		if (state == Node.INVISIBLE || key == NULL) {
 			return;
 		}
 		drawBg(v);
@@ -352,8 +351,7 @@ public class Node {
 
 	/**
 	 * Make one step towards the destination (tox, toy). In the special states
-	 * DOWN, LEFT, or RIGHT, go downwards off the screen. In the special state
-	 * UP, the node starts moving from the top of the screen.
+	 * DOWN, LEFT, or RIGHT, go downwards off the screen.
 	 */
 	public void move() {
 		switch (state) {

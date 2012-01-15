@@ -6,14 +6,14 @@ import algvis.core.Colors;
 
 public class AVLInsert extends Algorithm {
 	AVL T;
-	BSTNode v;
+	AVLNode v;
 	int K;
 
 	public AVLInsert(AVL T, int x) {
 		super(T.M);
 		this.T = T;
-		T.v = v = new BSTNode(T, K = x);
-		v.getReady(Colors.INSERT);
+		T.v = v = new AVLNode(T, K = x);
+		v.bgColor(Colors.INSERT);
 		setHeader("insertion");
 	}
 
@@ -21,10 +21,11 @@ public class AVLInsert extends Algorithm {
 	public void run() {
 		BSTNode w = T.root;
 		if (T.root == null) {
-			T.root = v = new AVLNode(v);
+			T.root = v;
 			v.goToRoot();
 			addStep("newroot");
 			mysuspend();
+			v.bgColor(Colors.NORMAL);
 		} else {
 			v.goAboveRoot();
 			addStep("bstinsertstart");
@@ -41,7 +42,7 @@ public class AVLInsert extends Algorithm {
 					if (w.right != null) {
 						w = w.right;
 					} else {
-						w.linkRight(new AVLNode(v));
+						w.linkRight(v);
 						break;
 					}
 				} else {
@@ -49,7 +50,7 @@ public class AVLInsert extends Algorithm {
 					if (w.left != null) {
 						w = w.left;
 					} else {
-						w.linkLeft(new AVLNode(v));
+						w.linkLeft(v);
 						break;
 					}
 				}
@@ -57,7 +58,8 @@ public class AVLInsert extends Algorithm {
 				mysuspend();
 			}
 
-			v = T.v = null;
+			v.bgColor(Colors.NORMAL);
+			T.v = v = null;
 			T.reposition();
 			addNote("avlinsertbal");
 			mysuspend();

@@ -12,7 +12,7 @@ public class BSTInsert extends Algorithm {
 		super(T.M);
 		this.T = T;
 		v = T.v = new BSTNode(T, K = x);
-		v.getReady(Colors.INSERT);
+		v.bgColor(Colors.INSERT);
 		setHeader("insertion");
 	}
 

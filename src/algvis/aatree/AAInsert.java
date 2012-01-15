@@ -13,7 +13,7 @@ public class AAInsert extends Algorithm {
 		super(T.M);
 		this.T = T;
 		T.v = v = new AANode(T, K = x);
-		v.getReady(Colors.INSERT);
+		v.bgColor(Colors.INSERT);
 		setHeader("insertion");
 	}
 

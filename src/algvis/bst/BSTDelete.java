@@ -13,7 +13,7 @@ public class BSTDelete extends Algorithm {
 		super(T.M);
 		this.T = T;
 		v = T.v = new BSTNode(T, K = x);
-		v.getReady(Colors.DELETE);
+		v.bgColor(Colors.DELETE);
 		setHeader("deletion");
 	}
 
@@ -112,7 +112,7 @@ public class BSTDelete extends Algorithm {
 				addStep("bstdeletecase3");
 				BSTNode s = d.right;
 				v = T.v = new BSTNode(T, -Node.INF);
-				v.getReady(Colors.FIND);
+				v.bgColor(Colors.FIND);
 				v.goTo(s);
 				mysuspend();
 				while (s.left != null) {

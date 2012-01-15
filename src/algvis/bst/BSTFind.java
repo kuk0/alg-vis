@@ -12,7 +12,7 @@ public class BSTFind extends Algorithm {
 		super(T.M);
 		this.T = T;
 		v = T.v = new BSTNode(T, K = x);
-		v.getReady(Colors.FIND);
+		v.bgColor(Colors.FIND);
 		setHeader("search");
 	}
 

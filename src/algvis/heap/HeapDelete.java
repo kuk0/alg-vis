@@ -68,7 +68,9 @@ public class HeapDelete extends HeapAlg {
 				break;
 			}
 			H.v = new HeapNode((HeapNode) v);
+			H.v.setState(Node.ALIVE);
 			H.v2 = new HeapNode((HeapNode) w);
+			H.v2.setState(Node.ALIVE);
 			v.key = Node.NOKEY;
 			w.key = Node.NOKEY;
 			H.v.goTo(w);
