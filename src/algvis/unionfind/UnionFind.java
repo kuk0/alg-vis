@@ -6,8 +6,8 @@ import algvis.core.Alignment;
 import algvis.core.DataStructure;
 import algvis.core.View;
 import algvis.core.VisPanel;
-import algvis.unionfind.UnionFindFind.findType;
-import algvis.unionfind.UnionFindUnion.unionType;
+import algvis.unionfind.UnionFindFind.FindHeuristic;
+import algvis.unionfind.UnionFindUnion.UnionHeuristic;
 
 public class UnionFind extends DataStructure {
 	public static String adtName = "ufa";
@@ -18,8 +18,8 @@ public class UnionFind extends DataStructure {
 	public ArrayList<UnionFindNode> vertices = new ArrayList<UnionFindNode>();
 	public UnionFindNode v = null;
 
-	public findType findState = findType.COMPRESSION;
-	public unionType unionState = unionType.SIMPLE;
+	public FindHeuristic pathCompression = FindHeuristic.NONE;
+	public UnionHeuristic unionState = UnionHeuristic.NONE;
 
 	public UnionFind(VisPanel M) {
 		super(M);
@@ -50,6 +50,10 @@ public class UnionFind extends DataStructure {
 		sets.add(T);
 		vertices.add(T);
 		reposition();
+	}
+
+	public void find(int element1) {
+		start(new UnionFindFind(this, element1));
 	}
 
 	public void union(int element1, int element2) {
@@ -103,8 +107,9 @@ public class UnionFind extends DataStructure {
 			x1 = shift;
 			for (int i = 0; i < sets.size(); i++) {
 				shift += sets.get(i).leftw;
-				sets.get(i).shift(shift,0);
+				sets.get(i).shift(shift, 0);
 				shift += sets.get(i).rightw;
+				System.out.println(shift);
 			}
 			x2 = shift;
 			// System.out.println(x1 + " " + x2 + " " + y1 + " " + y2);

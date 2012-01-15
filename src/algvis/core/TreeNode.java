@@ -81,11 +81,7 @@ public class TreeNode extends Node {
 		setArc(parent);
 	}
 
-	/**
-	 * Draw edges, then the node itself. Don't draw invisible nodes and edges
-	 * from and to them
-	 */
-	public void drawTree(View v) {
+	public void drawEdges(View v) {
 		if (state != INVISIBLE) {
 			if (thread) {
 				v.setColor(Color.red);
@@ -96,12 +92,29 @@ public class TreeNode extends Node {
 				while (w != null) {
 					v.setColor(Color.black);
 					v.drawLine(x, y, w.x, w.y);
-					w.drawTree(v);
+					w.drawEdges(v);
 					w = w.right;
 				}
 			}
 		}
+	}
+
+	public void drawVertices(View v) {
+		TreeNode w = child;
+		while (w != null) {
+			w.drawVertices(v);
+			w = w.right;
+		}
 		draw(v);
+	}
+
+	/**
+	 * Draw edges, then the node itself. Don't draw invisible nodes and edges
+	 * from and to them
+	 */
+	public void drawTree(View v) {
+		drawEdges(v);
+		drawVertices(v);
 	}
 
 	public void moveTree() {
@@ -130,26 +143,37 @@ public class TreeNode extends Node {
 	}
 
 	public void rebox() {
-		TreeNode L = leftmostChild();
-		TreeNode R = rightmostChild();
-		leftw = (L == null) ? D.xspan / 2 + D.radius : L.leftw + (tox - L.tox);
-		rightw = (R == null) ? D.xspan / 2 + D.radius : R.rightw
-				+ (R.tox - tox);
 	}
 
 	/**
-	 * The same as in BSTNode
+	 * Rebox the whole subtree calculating the widths recursively bottom-up.
 	 */
 	public void reboxTree() {
-		TreeNode L = leftmostChild();
-		TreeNode R = rightmostChild();
-		if (L != null) {
-			L.reboxTree();
+		int bw = D.xspan / 2 + D.radius;
+		int le = 9999999; // keeps current extreme leftw value
+		int re = -9999999;
+		TreeNode T = child;
+		while (T != null) {
+			T.reboxTree();
+
+			int lxe = (T.tox - tox) - T.leftw;
+			if (lxe < le) {
+				le = lxe;
+			}
+			int rxe = (T.tox - tox) + T.rightw;
+			if (rxe > re) {
+				re = rxe;
+			}
+			T = T.right;
 		}
-		if (R != null) {
-			R.reboxTree();
+		if (le > -bw) {
+			le = -bw;
 		}
-		rebox();
+		if (re < bw) {
+			re = bw;
+		}
+		leftw = -le;
+		rightw = re;
 	}
 
 	public void addRight(TreeNode w) {
@@ -173,19 +197,18 @@ public class TreeNode extends Node {
 
 	public void deleteChild(TreeNode w) {
 		if (w == child) {
-			w.right = null; // very important!
 			child = child.right;
-			return;
+			w.right = null;
+		} else {
+			TreeNode v = child;
+			while ((v != null) && (v.right != w)) {
+				v = v.right;
+			}
+			if (v != null) {
+				v.right = w.right;
+			}
+			w.right = null;
 		}
-
-		TreeNode v = child;
-		while ((v != null) && (v.right != w)) {
-			v = v.right;
-		}
-		if (v != null) {
-			v.right = w.right;
-		}
-		w.right = null;
 	}
 
 	public TreeNode leftmostChild() {
@@ -221,6 +244,7 @@ public class TreeNode extends Node {
 		fTRPetrification(0);
 		fTRBounding(-tmpx);
 		reboxTree();
+		// System.out.println(key+" "+leftw+" "+rightw);
 		D.x1 -= D.xspan + D.radius;
 		D.x2 += D.xspan + D.radius;
 		D.y1 -= D.yspan + D.radius;
@@ -468,7 +492,7 @@ public class TreeNode extends Node {
 	}
 
 	/**
-	 * Beware! This method don't change bounds of data structure!
+	 * Beware! This method doesn't change bounds of the data structure!
 	 * 
 	 * @param xamount
 	 *            amount of shift in x-axis

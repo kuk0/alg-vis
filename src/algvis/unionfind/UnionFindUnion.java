@@ -1,35 +1,37 @@
 package algvis.unionfind;
 
+import algvis.core.Colors;
+
 public class UnionFindUnion extends UnionFindFind {
-	public enum unionType {
-		SIMPLE, BYRANK
+	public enum UnionHeuristic {
+		NONE, BYRANK
 	}
 
-	public unionType unionState = unionType.BYRANK;
-	UnionFind U;
-	UnionFindNode V = null;
-	UnionFindNode W = null;
+	public UnionHeuristic unionState = UnionHeuristic.BYRANK;
+	UnionFind UF;
+	UnionFindNode u = null;
+	UnionFindNode v = null;
 
-	public UnionFindUnion(UnionFind U, int element1, int element2) {
-		super(U);
-		this.U = U;
-		this.unionState = U.unionState;
-		this.V = this.U.at(element1);
-		this.W = this.U.at(element2);
+	public UnionFindUnion(UnionFind UF, int element1, int element2) {
+		super(UF);
+		this.UF = UF;
+		this.unionState = UF.unionState;
+		this.u = this.UF.at(element1);
+		this.v = this.UF.at(element2);
 		setHeader("ufunion");
 	}
 
-	public void setState(unionType state) {
+	public void setState(UnionHeuristic state) {
 		this.unionState = state;
 	}
 
 	public void run() {
 		switch (unionState) {
-		case SIMPLE:
-			unionSimple(V, W);
+		case NONE:
+			unionSimple(u, v);
 			break;
 		case BYRANK:
-			unionByRank(V, W);
+			unionByRank(u, v);
 			break;
 		default:
 			break;
@@ -45,12 +47,16 @@ public class UnionFindUnion extends UnionFindFind {
 		} else {
 			setText("ufunionsimple");
 			mysuspend();
+			UF.sets.remove(R2);
 			R1.addChild(R2);
 		}
-		if (R2 != R1) {
-			U.sets.remove(R2);
-		}
-		U.reposition();
+
+		R1.unmark();
+		R1.bgcolor = Colors.NORMAL;
+		R2.unmark();
+		R2.bgcolor = Colors.NORMAL;
+		
+		UF.reposition();
 		setText("done");
 	}
 
@@ -65,24 +71,30 @@ public class UnionFindUnion extends UnionFindFind {
 			if (R1.rank > R2.rank) {
 				setText("ufunionfirstsecond");
 				mysuspend();
+				UF.sets.remove(R2);
 				R1.addChild(R2);
-				U.sets.remove(R2);
 			} else if (R1.rank < R2.rank) {
 				setText("ufunionsecondfirst");
 				mysuspend();
+				UF.sets.remove(R1);
 				R2.addChild(R1);
-				U.sets.remove(R1);
 			} else {
 				setText("ufunionsamerank");
 				mysuspend();
+				UF.sets.remove(R2);
 				R1.addChild(R2);
 				R1.rank++;
-				U.sets.remove(R2);
 			}
 		}
-		U.reposition();
+
+		R1.unmark();
+		R1.bgcolor = Colors.NORMAL;
+		R2.unmark();
+		R2.bgcolor = Colors.NORMAL;
+
+		UF.reposition();
 		setText("done");
-		U.M.screen.V.resetView(); // only for testing, but still there should be
+		UF.M.screen.V.resetView(); // only for testing, but still there should be
 									// some correction.
 	}
 }
