@@ -34,24 +34,24 @@ public class GBDelete extends GBAlg {
 	public void run() {
 		if (T.root == null) {
 			v.goToRoot();
-			setText("empty");
+			addStep("empty");
 			mysuspend();
 			v.goDown();
 			v.bgColor(Colors.NOTFOUND);
-			setText("notfound");
+			addStep("notfound");
 		} else {
 			BSTNode w = T.root;
 			v.goTo(w);
-			setText("bstfindstart");
+			addStep("bstfindstart");
 			mysuspend();
 			while (true) {
 				if (w.key == K) {
 					if (((GBNode) w).deleted) {
-						setText("gbdeletedeleted");
+						addStep("gbdeletedeleted");
 						v.bgColor(Colors.NOTFOUND);
 						v.goDown();
 					} else {
-						setText("gbdeletemark");
+						addStep("gbdeletemark");
 						((GBNode) w).deleted = true;
 						w.bgColor(GBNode.DELETED);
 						++T.del;
@@ -59,23 +59,23 @@ public class GBDelete extends GBAlg {
 					}
 					break;
 				} else if (w.key < K) {
-					setText("bstfindright", K, w.key);
+					addStep("bstfindright", K, w.key);
 					w = w.right;
 					if (w != null) {
 						v.goTo(w);
 					} else { // notfound
-						setText("notfound");
+						addStep("notfound");
 						v.bgColor(Colors.NOTFOUND);
 						v.goRight();
 						break;
 					}
 				} else {
-					setText("bstfindleft", K, w.key);
+					addStep("bstfindleft", K, w.key);
 					w = w.left;
 					if (w != null) {
 						v.goTo(w);
 					} else { // notfound
-						setText("notfound");
+						addStep("notfound");
 						v.bgColor(Colors.NOTFOUND);
 						v.goLeft();
 						break;
@@ -87,13 +87,13 @@ public class GBDelete extends GBAlg {
 			// rebuilding
 			BSTNode b = T.root;
 			if (b.size < 2 * T.del) {
-				setText("gbdeleterebuild");
+				addStep("gbdeleterebuild");
 				BSTNode r = b;
 				int s = 0;
 				r.mark();
 				mysuspend();
 				// to vine
-				setText("gbrebuild1");
+				addStep("gbrebuild1");
 				while (r != null) {
 					if (r.left == null) {
 						r.unmark();
@@ -133,7 +133,7 @@ public class GBDelete extends GBAlg {
 				}
 
 				// to tree
-				setText("gbrebuild2");
+				addStep("gbrebuild2");
 				int c = 1;
 				for (int i = 0, l = (int) Math.floor(T.lg(s + 1)); i < l; ++i) {
 					c *= 2;

@@ -22,16 +22,16 @@ public class AADelete extends Algorithm {
 	public void run() {
 		if (T.root == null) {
 			v.goToRoot();
-			setText("empty");
+			addStep("empty");
 			mysuspend();
 			v.goDown();
 			v.bgColor(Colors.NOTFOUND);
-			setText("notfound");
+			addStep("notfound");
 			return;
 		} else {
 			BSTNode d = T.root;
 			v.goTo(d);
-			setText("bstdeletestart");
+			addStep("bstdeletestart");
 			mysuspend();
 
 			while (true) {
@@ -39,7 +39,7 @@ public class AADelete extends Algorithm {
 					v.bgColor(Colors.FOUND);
 					break;
 				} else if (d.key < K) { // right
-					setText("bstfindright", K, d.key);
+					addStep("bstfindright", K, d.key);
 					d = d.right;
 					if (d != null) {
 						v.goTo(d);
@@ -48,7 +48,7 @@ public class AADelete extends Algorithm {
 						break;
 					}
 				} else { // left
-					setText("bstfindleft", K, d.key);
+					addStep("bstfindleft", K, d.key);
 					d = d.left;
 					if (d != null) {
 						v.goTo(d);
@@ -61,14 +61,14 @@ public class AADelete extends Algorithm {
 			}
 
 			if (d == null) { // notfound
-				setText("notfound");
+				addStep("notfound");
 				return;
 			}
 
 			BSTNode w = d.parent;
 			d.bgColor(Colors.FOUND);
 			if (d.isLeaf()) { // case I - list
-				setText("bstdeletecase1");
+				addStep("bstdeletecase1");
 				mysuspend();
 				if (d.isRoot()) {
 					T.root = null;
@@ -80,7 +80,7 @@ public class AADelete extends Algorithm {
 				v.goDown();
 
 			} else if (d.left == null || d.right == null) { // case IIa - 1 syn
-				setText("bstdeletecase2");
+				addStep("bstdeletecase2");
 				mysuspend();
 				BSTNode s = (d.left == null) ? d.right : d.left;
 				if (d.isRoot()) {
@@ -97,7 +97,7 @@ public class AADelete extends Algorithm {
 				v.goDown();
 
 			} else { // case III - 2 synovia
-				setText("bstdeletecase3");
+				addStep("bstdeletecase3");
 				int lev = ((AANode) d).level;
 				BSTNode s = d.right;
 				v = T.v = new AANode(T, -Node.INF);
@@ -150,7 +150,7 @@ public class AADelete extends Algorithm {
 			while (w != null) {
 				int ll = (w.left == null) ? 0 : ((AANode) w.left).level, rl = (w.right == null) ? 0
 						: ((AANode) w.right).level, wl = ((AANode) w).level;
-				setText("aaok");
+				addStep("aaok");
 				w.mark();
 				if (ll < wl - 1 || rl < wl - 1) {
 					wl--;
@@ -161,7 +161,7 @@ public class AADelete extends Algorithm {
 					// skew
 					if (w.left != null
 							&& ((AANode) w.left).level == ((AANode) w).level) {
-						setText("aaskew");
+						addStep("aaskew");
 						mysuspend();
 						w.unmark();
 						w = w.left;
@@ -178,7 +178,7 @@ public class AADelete extends Algorithm {
 						AANode r = (AANode) w.right;
 						if (r.left != null
 								&& ((AANode) r.left).level == (r.level)) {
-							setText("aaskew2");
+							addStep("aaskew2");
 							r.left.setArc(r);
 							mysuspend();
 							r.left.noArc();
@@ -190,7 +190,7 @@ public class AADelete extends Algorithm {
 							r = (AANode) w.right.right;
 							if (r.left != null
 									&& ((AANode) r.left).level == (r.level)) {
-								setText("aaskew3");
+								addStep("aaskew3");
 								r.left.setArc(r);
 								mysuspend();
 								r.left.noArc();
@@ -203,7 +203,7 @@ public class AADelete extends Algorithm {
 					BSTNode r = w.right;
 					if (r != null && r.right != null
 							&& ((AANode) r.right).level == ((AANode) w).level) {
-						setText("aasplit");
+						addStep("aasplit");
 						r.setArc();
 						mysuspend();
 						r.noArc();
@@ -221,7 +221,7 @@ public class AADelete extends Algorithm {
 						if (r != null
 								&& r.right != null
 								&& ((AANode) r.right).level == ((AANode) w.right).level) {
-							setText("aasplit2");
+							addStep("aasplit2");
 							r.setArc();
 							mysuspend();
 							r.noArc();
@@ -237,7 +237,7 @@ public class AADelete extends Algorithm {
 			}
 
 			T.reposition();
-			setText("done");
+			addStep("done");
 		}
 	}
 }

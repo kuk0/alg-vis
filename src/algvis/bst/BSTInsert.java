@@ -21,16 +21,16 @@ public class BSTInsert extends Algorithm {
 		if (T.root == null) {
 			T.root = v;
 			v.goToRoot();
-			setText("newroot");
+			addStep("newroot");
 		} else {
 			BSTNode w = T.root;
 			v.goAboveRoot();
-			setText("bstinsertstart");
+			addStep("bstinsertstart");
 			mysuspend();
 
 			while (true) {
 				if (w.key == K) {
-					setText("alreadythere");
+					addStep("alreadythere");
 					v.goDown();
 					v.bgColor(Colors.NOTFOUND);
 					return;
@@ -40,7 +40,7 @@ public class BSTInsert extends Algorithm {
 					} else {
 						v.pointAbove(w.right);
 					}
-					setText("bstinsertright", K, w.key);
+					addStep("bstinsertright", K, w.key);
 					mysuspend();
 					v.noArrow();
 					if (w.right != null) {
@@ -55,7 +55,7 @@ public class BSTInsert extends Algorithm {
 					} else {
 						v.pointAbove(w.left);
 					}
-					setText("bstinsertleft", K, w.key);
+					addStep("bstinsertleft", K, w.key);
 					mysuspend();
 					v.noArrow();
 					if (w.left != null) {
@@ -71,7 +71,7 @@ public class BSTInsert extends Algorithm {
 		}
 		T.reposition();
 		mysuspend();
-		setText("done");
+		addNote("done");
 		v.bgColor(Colors.NORMAL);
 		T.v = null;
 	}

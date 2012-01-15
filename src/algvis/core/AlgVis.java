@@ -38,6 +38,8 @@ public class AlgVis extends JPanel implements ActionListener {
 	}
 
 	public void init() {
+		Fonts.init(getGraphics());
+
 		// Menu
 		JMenuBar menuBar;
 		menuBar = new JMenuBar();
@@ -111,8 +113,6 @@ public class AlgVis extends JPanel implements ActionListener {
 		add(menuBar);
 		P.setJMenuBar(menuBar);
 		add(cards);
-
-		Fonts.init(getGraphics());
 	}
 
 	public void actionPerformed(ActionEvent e) {

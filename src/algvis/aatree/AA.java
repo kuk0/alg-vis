@@ -28,12 +28,6 @@ public class AA extends BST {
 		start(new AADelete(this, x));
 	}
 
-	@Override
-	public void clear() {
-		root = null;
-		setStats();
-	}
-
 	public BSTNode skew(BSTNode w) {
 		if (w.left != null && ((AANode) w.left).level == ((AANode) w).level) {
 			w = w.left;
