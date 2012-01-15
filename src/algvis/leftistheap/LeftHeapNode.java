@@ -112,7 +112,12 @@ public class LeftHeapNode extends BSTNode {
 		super.draw(v);
 		drawDoubleArrow(v);
 		String str = new String("" + rank);
-		v.drawString(str, x + D.radius, y - D.radius, 7);
+		if (this.getParent() != null && this.getParent().getLeft() == this) {
+			v.drawString(str, x - D.radius, y - D.radius, 7);
+		} else {
+			v.drawString(str, x + D.radius, y - D.radius, 7);
+		}
+
 	}
 
 	public void repos(int px, int py) { // , LeftHeapNode w) {

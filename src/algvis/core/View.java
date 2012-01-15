@@ -314,8 +314,8 @@ public class View implements MouseListener, MouseMotionListener,
 
 	public void drawDoubleArrow(int x1, int y1, int x2, int y2) {
 		g.drawLine(x1, y1, x2, y2);
-		arrowHead(x1, y1, x2, y2);
-		arrowHead(x2, y2, x1, y1);
+		arrowHead(x1, y1, x2 + 2, y2);
+		arrowHead(x2, y2, x1 - 2, y1);
 	}
 
 	public void drawArcArrow(int x, int y, int w, int h, int a1, int a2) {
