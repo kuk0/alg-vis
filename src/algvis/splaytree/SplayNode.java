@@ -11,7 +11,8 @@ public class SplayNode extends BSTNode {
 	}
 
 	public SplayNode(DataStructure D, int key) {
-		this(D, key, -10, -10);
+		this(D, key, 0, 0);
+		getReady();
 	}
 
 	@Override
