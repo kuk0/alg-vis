@@ -24,7 +24,8 @@ public class AVLNode extends BSTNode {
 	}
 	
 	public AVLNode(DataStructure D, int key) {
-		this(D, key, -10, -10);
+		this(D, key, 0, 0);
+		getReady();
 	}
 
 	public AVLNode(BSTNode v) {
@@ -57,7 +58,7 @@ public class AVLNode extends BSTNode {
 
 	@Override
 	public void draw(View V) {
-		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
+		if (state == Node.INVISIBLE || key == NULL) {
 			return;
 		}
 		drawBg(V);

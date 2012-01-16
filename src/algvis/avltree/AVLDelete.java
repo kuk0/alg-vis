@@ -14,7 +14,7 @@ public class AVLDelete extends Algorithm {
 		super(T);
 		this.T = T;
 		v = T.setNodeV(new AVLNode(T, K = x));
-		v.getReady(Colors.DELETE);
+		v.bgColor(Colors.DELETE);
 		setHeader("deletion");
 	}
 
@@ -22,17 +22,17 @@ public class AVLDelete extends Algorithm {
 	public void run() {
 		if (T.root == null) {
 			v.goToRoot();
-			setText("empty");
+			addStep("empty");
 			mysuspend();
 			v.goDown();
 			v.bgColor(Colors.NOTFOUND);
-			setText("notfound");
+			addStep("notfound");
 			finish();
 			return;
 		} else {
 			BSTNode d = T.root;
 			v.goTo(d);
-			setText("bstdeletestart");
+			addStep("bstdeletestart");
 			mysuspend();
 
 			while (true) {
@@ -40,7 +40,7 @@ public class AVLDelete extends Algorithm {
 					v.bgColor(Colors.FOUND);
 					break;
 				} else if (d.key < K) { // right
-					setText("bstfindright", K, d.key);
+					addStep("bstfindright", K, d.key);
 					d = d.right;
 					if (d != null) {
 						v.goTo(d);
@@ -49,7 +49,7 @@ public class AVLDelete extends Algorithm {
 						break;
 					}
 				} else { // left
-					setText("bstfindleft", K, d.key);
+					addStep("bstfindleft", K, d.key);
 					d = d.left;
 					if (d != null) {
 						v.goTo(d);
@@ -62,7 +62,7 @@ public class AVLDelete extends Algorithm {
 			}
 
 			if (d == null) { // notfound
-				setText("notfound");
+				addStep("notfound");
 				finish();
 				return;
 			}
@@ -70,7 +70,7 @@ public class AVLDelete extends Algorithm {
 			BSTNode w = d.parent;
 			d.bgColor(Colors.FOUND);
 			if (d.isLeaf()) { // case I - list
-				setText("bstdeletecase1");
+				addStep("bstdeletecase1");
 				mysuspend();
 				if (d.isRoot()) {
 					T.setRoot(null);
@@ -82,7 +82,7 @@ public class AVLDelete extends Algorithm {
 				v.goDown();
 
 			} else if (d.left == null || d.right == null) { // case IIa - 1 syn
-				setText("bstdeletecase2");
+				addStep("bstdeletecase2");
 				mysuspend();
 				BSTNode s = (d.left == null) ? d.right : d.left;
 				if (d.isRoot()) {
@@ -97,10 +97,10 @@ public class AVLDelete extends Algorithm {
 				v.goDown();
 
 			} else { // case III - 2 synovia
-				setText("bstdeletecase3");
+				addStep("bstdeletecase3");
 				BSTNode s = d.right;
 				v = T.setNodeV(new AVLNode(T, -Node.INF));
-				v.getReady(Colors.FIND);
+				v.bgColor(Colors.FIND);
 				v.goTo(s);
 				mysuspend();
 				while (s.left != null) {
@@ -137,17 +137,17 @@ public class AVLDelete extends Algorithm {
 				d.goDown();
 			} // end case III
 
-			setText("avldeletebal");
+			addStep("avldeletebal");
 			mysuspend();
 			// bubleme nahor
 			while (w != null) {
 				w.mark();
 				w.calc();
-				setText("avlupdatebal");
+				addStep("avlupdatebal");
 				mysuspend();
 				if (((AVLNode) w).balance() == -2) {
 					if (((AVLNode) w.left).balance() != +1) { // R-rot
-						setText("avlr");
+						addStep("avlr");
 						w.unmark();
 						w = w.left;
 						w.mark();
@@ -156,7 +156,7 @@ public class AVLDelete extends Algorithm {
 						w.noArc();
 						T.rotate(w);
 					} else { // LR-rot
-						setText("avllr");
+						addStep("avllr");
 						w.unmark();
 						w = w.left.right;
 						w.mark();
@@ -172,7 +172,7 @@ public class AVLDelete extends Algorithm {
 					mysuspend();
 				} else if (((AVLNode) w).balance() == +2) {
 					if (((AVLNode) w.right).balance() != -1) { // L-rot
-						setText("avll");
+						addStep("avll");
 						w.unmark();
 						w = w.right;
 						w.mark();
@@ -181,7 +181,7 @@ public class AVLDelete extends Algorithm {
 						w.noArc();
 						T.rotate(w);
 					} else { // RL-rot
-						setText("avlrl");
+						addStep("avlrl");
 						w.unmark();
 						w = w.right.left;
 						w.mark();
@@ -201,7 +201,7 @@ public class AVLDelete extends Algorithm {
 			}
 
 			T.reposition();
-			setText("done");
+			addStep("done");
 		}
 		finish();
 	}

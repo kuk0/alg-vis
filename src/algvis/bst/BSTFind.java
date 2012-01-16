@@ -12,7 +12,7 @@ public class BSTFind extends Algorithm {
 		super(T);
 		this.T = T;
 		v = T.setNodeV(new BSTNode(T, K = x));
-		v.getReady(Colors.FIND);
+		v.bgColor(Colors.FIND);
 		setHeader("search");
 	}
 
@@ -20,20 +20,20 @@ public class BSTFind extends Algorithm {
 	public void run() {
 		if (T.root == null) {
 			v.goToRoot();
-			setText("empty");
+			addStep("empty");
 			mysuspend();
 			v.goDown();
 			v.bgColor(Colors.NOTFOUND);
-			setText("notfound");
+			addStep("notfound");
 		} else {
 			BSTNode w = T.root;
 			v.goAbove(w);
-			setText("bstfindstart");
+			addStep("bstfindstart");
 			mysuspend();
 			while (true) {
 				if (w.key == K) {
 					v.goTo(w);
-					setText("found");
+					addStep("found");
 					v.bgColor(Colors.FOUND);
 					break;
 				} else if (w.key < K) {
@@ -42,14 +42,14 @@ public class BSTFind extends Algorithm {
 					} else {
 						v.pointAbove(w.right);
 					}
-					setText("bstfindright", K, w.key);
+					addStep("bstfindright", K, w.key);
 					mysuspend();
 					v.noArrow();
 					w = w.right;
 					if (w != null) {
 						v.goAbove(w);
 					} else { // not found
-						setText("notfound");
+						addStep("notfound");
 						v.bgColor(Colors.NOTFOUND);
 						v.goRight();
 						break;
@@ -60,14 +60,14 @@ public class BSTFind extends Algorithm {
 					} else {
 						v.pointAbove(w.left);
 					}
-					setText("bstfindleft", K, w.key);
+					addStep("bstfindleft", K, w.key);
 					mysuspend();
 					v.noArrow();
 					w = w.left;
 					if (w != null) {
 						v.goAbove(w);
 					} else { // notfound
-						setText("notfound");
+						addStep("notfound");
 						v.bgColor(Colors.NOTFOUND);
 						v.goLeft();
 						break;

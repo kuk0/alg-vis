@@ -19,26 +19,26 @@ public class BFind extends Algorithm {
 	public void run() {
 		if (T.root == null) {
 			v.goToRoot();
-			setText("empty");
+			addStep("empty");
 			mysuspend();
 			v.goDown();
 			v.bgColor(Colors.NOTFOUND);
-			setText("notfound");
+			addStep("notfound");
 		} else {
 			BNode w = T.root;
 			v.goTo(w);
-			setText("bstfindstart");
+			addStep("bstfindstart");
 			mysuspend();
 
 			while (true) {
 				if (w.isIn(v.key[0])) {
-					setText("found");
+					addStep("found");
 					v.goDown();
 					v.bgColor(Colors.FOUND);
 					break;
 				}
 				if (w.isLeaf()) {
-					setText("notfound");
+					addStep("notfound");
 					v.bgColor(Colors.NOTFOUND);
 					v.goDown();
 					break;

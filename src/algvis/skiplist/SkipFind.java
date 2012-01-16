@@ -11,16 +11,16 @@ public class SkipFind extends SkipAlg {
 
 	@Override
 	public void run() {
-		setText("skipfindstart");
+		addStep("skipfindstart");
 		SkipNode w = find();
 
 		w = w.right;
 		v.goTo(w);
 		if (w.key == v.key) {
-			setText("found");
+			addStep("found");
 			v.bgColor(Colors.FOUND);
 		} else {
-			setText("notfound");
+			addStep("notfound");
 			v.bgColor(Colors.NOTFOUND);
 			v.goDown();
 		}

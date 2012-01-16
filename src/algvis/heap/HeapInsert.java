@@ -12,7 +12,7 @@ public class HeapInsert extends HeapAlg {
 	@Override
 	public void run() {
 		if (H.n == 1000) {
-			setText("heapfull");
+			addStep("heapfull");
 			H.v = null;
 			return;
 		}

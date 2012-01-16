@@ -22,12 +22,12 @@ public class SkipAlg extends Algorithm {
 
 		for (int i = L.height - 1;; --i) {
 			while (w.right.key < K) {
-				setText("skipnext");
+				addStep("skipnext");
 				w = w.right;
 				v.goTo(w);
 				mysuspend();
 			}
-			setText("skipdown");
+			addStep("skipdown");
 			p[i] = w;
 			if (w.down == null) {
 				break;

@@ -61,19 +61,24 @@ abstract public class Algorithm extends Thread {
 		D.M.C.setHeader(s);
 		saveCommentary();
 	}
-
-	public void setText(String s) {
-		D.M.C.setText(s);
+	
+	public void addNote(String s) {
+		D.M.C.addNote(s);
 		saveCommentary();
 	}
 
-	public void setText(String s, String... par) {
-		D.M.C.setText(s, par);
+	public void addStep(String s) {
+		D.M.C.addStep(s);
 		saveCommentary();
 	}
 
-	public void setText(String s, int... par) {
-		D.M.C.setText(s, par);
+	public void addStep(String s, String... par) {
+		D.M.C.addStep(s, par);
+		saveCommentary();
+	}
+
+	public void addStep(String s, int... par) {
+		D.M.C.addStep(s, par);
 		saveCommentary();
 	}
 

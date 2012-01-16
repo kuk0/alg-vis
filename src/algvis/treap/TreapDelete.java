@@ -21,16 +21,16 @@ public class TreapDelete extends Algorithm {
 	public void run() {
 		if (T.root == null) {
 			v.goToRoot();
-			setText("empty");
+			addStep("empty");
 			mysuspend();
 			v.goDown();
 			v.bgColor(Colors.NOTFOUND);
-			setText("notfound");
+			addStep("notfound");
 			return;
 		} else {
 			BSTNode d = T.root;
 			v.goTo(d);
-			setText("bstdeletestart");
+			addStep("bstdeletestart");
 			mysuspend();
 
 			while (true) {
@@ -38,7 +38,7 @@ public class TreapDelete extends Algorithm {
 					v.bgColor(Colors.FOUND);
 					break;
 				} else if (d.key < K) { // right
-					setText("bstfindright", K, d.key);
+					addStep("bstfindright", K, d.key);
 					d = d.right;
 					if (d != null) {
 						v.goTo(d);
@@ -47,7 +47,7 @@ public class TreapDelete extends Algorithm {
 						break;
 					}
 				} else { // left
-					setText("bstfindleft", K, d.key);
+					addStep("bstfindleft", K, d.key);
 					d = d.left;
 					if (d != null) {
 						v.goTo(d);
@@ -60,13 +60,13 @@ public class TreapDelete extends Algorithm {
 			}
 
 			if (d == null) { // notfound
-				setText("notfound");
+				addStep("notfound");
 				return;
 			}
 
 			d.bgColor(Colors.FOUND);
 			T.v = null;
-			setText("treapbubbledown");
+			addStep("treapbubbledown");
 			// prebubleme k listu
 			while (!d.isLeaf()) {
 				if (d.left == null) {
@@ -85,7 +85,7 @@ public class TreapDelete extends Algorithm {
 				mysuspend();
 			}
 			T.v = d;
-			setText("treapdeletecase1");
+			addStep("treapdeletecase1");
 			mysuspend();
 			if (d.isRoot()) {
 				T.root = null;
@@ -97,7 +97,7 @@ public class TreapDelete extends Algorithm {
 			d.goDown();
 
 			T.reposition();
-			setText("done");
+			addStep("done");
 		}
 	}
 }

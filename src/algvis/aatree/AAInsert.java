@@ -13,7 +13,7 @@ public class AAInsert extends Algorithm {
 		super(T);
 		this.T = T;
 		v = T.setNodeV(new AANode(T, K = x));
-		v.getReady(Colors.INSERT);
+		v.bgColor(Colors.INSERT);
 		setHeader("insertion");
 	}
 
@@ -23,24 +23,24 @@ public class AAInsert extends Algorithm {
 		if (T.root == null) {
 			T.setRoot(v);
 			v.goToRoot();
-			setText("newroot");
+			addStep("newroot");
 			mysuspend();
 			v.bgColor(Colors.NORMAL);
 			T.setNodeV(null);
 		} else {
 			v.goAboveRoot();
-			setText("bstinsertstart");
+			addStep("bstinsertstart");
 			mysuspend();
 
 			while (true) {
 				if (w.key == K) {
-					setText("alreadythere");
+					addStep("alreadythere");
 					v.goDown();
 					v.bgColor(Colors.NOTFOUND);
 					finish();
 					return;
 				} else if (w.key < K) {
-					setText("bstinsertright", K, w.key);
+					addStep("bstinsertright", K, w.key);
 					if (w.right != null) {
 						w = w.right;
 					} else {
@@ -48,7 +48,7 @@ public class AAInsert extends Algorithm {
 						break;
 					}
 				} else {
-					setText("bstinsertleft", K, w.key);
+					addStep("bstinsertleft", K, w.key);
 					if (w.left != null) {
 						w = w.left;
 					} else {
@@ -68,10 +68,10 @@ public class AAInsert extends Algorithm {
 			// bubleme nahor
 			while (w != null) {
 				w.mark();
-				setText("aaok");
+				addStep("aaok");
 				// skew
 				if (w.left != null && w.left.getLevel() == w.getLevel()) {
-					setText("aaskew");
+					addStep("aaskew");
 					mysuspend();
 					w.unmark();
 					w = w.left;
@@ -86,7 +86,7 @@ public class AAInsert extends Algorithm {
 				BSTNode r = w.right;
 				if (r != null && r.right != null
 						&& r.right.getLevel() == w.getLevel()) {
-					setText("aasplit");
+					addStep("aasplit");
 					w.unmark();
 					w = r;
 					w.mark();
@@ -103,7 +103,7 @@ public class AAInsert extends Algorithm {
 			}
 		}
 		T.reposition();
-		setText("done");
+		addStep("done");
 		finish();
 	}
 }
