@@ -26,7 +26,7 @@ public class BinHeapNode extends Node {
 
 	public BinHeapNode(DataStructure D, int key) {
 		this(D, key, 0, 0);
-		setState(Node.UP);
+		getReady();
 	}
 
 	public BinHeapNode(BinHeapNode v) {
@@ -227,7 +227,7 @@ public class BinHeapNode extends Node {
 
 	@Override
 	public void draw(View v) {
-		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
+		if (state == Node.INVISIBLE || key == NULL) {
 			return;
 		}
 		drawBg(v);
