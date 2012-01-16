@@ -22,7 +22,9 @@ public class HeapAlg extends Algorithm {
 		BSTNode w = v.parent;
 		while (w != null && ((HeapNode) v).prec(w)) {
 			H.v = new HeapNode((HeapNode) v);
+			H.v.setState(Node.ALIVE);
 			H.v2 = new HeapNode((HeapNode) w);
+			H.v2.setState(Node.ALIVE);
 			v.key = Node.NOKEY;
 			w.key = Node.NOKEY;
 			H.v.goTo(w);

@@ -40,7 +40,7 @@ public class AVLNode extends BSTNode {
 
 	@Override
 	public void draw(View V) {
-		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
+		if (state == Node.INVISIBLE || key == NULL) {
 			return;
 		}
 		drawBg(V);
