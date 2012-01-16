@@ -19,7 +19,8 @@ public class AVLNode extends BSTNode {
 	}
 
 	public AVLNode(DataStructure D, int key) {
-		this(D, key, -10, -10);
+		this(D, key, 0, 0);
+		getReady();
 	}
 
 	public AVLNode(BSTNode v) {
