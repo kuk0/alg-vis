@@ -21,7 +21,7 @@ public class View implements MouseListener, MouseMotionListener,
 		MouseWheelListener {
 	Graphics2D g;
 	final static double SCALE_FACTOR = 1.1, MIN_ZOOM = 0.16, MAX_ZOOM = 5.5;
-	int W, H; // display width&height
+	public int W, H; // display width&height
 	int minx, miny, maxx, maxy;
 	int mouseX, mouseY; // mouse position
 	public Alignment align = Alignment.CENTER;

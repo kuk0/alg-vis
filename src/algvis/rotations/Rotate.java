@@ -9,7 +9,7 @@ public class Rotate extends Algorithm {
 	BSTNode v;
 
 	public Rotate(BST T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		v = T.root;
 		while (v != null && v.key != x) {

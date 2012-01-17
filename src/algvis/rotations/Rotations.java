@@ -16,7 +16,7 @@ public class Rotations extends DataStructure implements ClickListener {
 	BST T;
 
 	public Rotations(VisPanel M) {
-		super(M);
+		super(M, dsName);
 		T = new BST(M);
 		random(10);
 		M.screen.V.setDS(this);

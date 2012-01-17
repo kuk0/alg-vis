@@ -6,10 +6,14 @@ import algvis.core.Node;
 import algvis.core.View;
 
 public class AANode extends BSTNode {
-	int level = 1;
 
 	public AANode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
+		setLevel(1);
+	}
+
+	public AANode(DataStructure D, int key, int[] pos) {
+		this(D, key, pos[0], pos[1]);
 	}
 
 	public AANode(DataStructure D, int key) {
@@ -30,7 +34,7 @@ public class AANode extends BSTNode {
 		drawKey(v);
 		drawArrow(v);
 		drawArc(v);
-		String str = new String("" + level);
+		String str = new String("" + getLevel());
 		v.drawString(str, x + D.radius, y - D.radius, 7);
 	}
 
@@ -63,9 +67,9 @@ public class AANode extends BSTNode {
 			D.y2 = this.toy;
 		}
 		if (left != null) {
-			if (((AA) D).mode23) {
+			if (((AA) D).getMode23()) {
 				left.goTo(this.tox - left.rightw, this.toy
-						+ (((AANode) left).level == level ? D.yspan : 2
+						+ (left.getLevel() == getLevel() ? D.yspan : 2
 								* D.radius + D.yspan));
 			} else {
 				left.goTo(this.tox - left.rightw, this.toy + 2 * D.radius
@@ -74,9 +78,9 @@ public class AANode extends BSTNode {
 			((AANode) left).repos();
 		}
 		if (right != null) {
-			if (((AA) D).mode23) {
+			if (((AA) D).getMode23()) {
 				right.goTo(this.tox + right.leftw, this.toy
-						+ (((AANode) right).level == level ? D.yspan : 2
+						+ (right.getLevel() == getLevel() ? D.yspan : 2
 								* D.radius + D.yspan));
 			} else {
 				right.goTo(this.tox + right.leftw, this.toy + 2 * D.radius

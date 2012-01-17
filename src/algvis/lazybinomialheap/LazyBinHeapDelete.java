@@ -12,7 +12,7 @@ public class LazyBinHeapDelete extends Algorithm {
 	}
 
 	public LazyBinHeapDelete(LazyBinomialHeap H, int i) {
-		super(H.M);
+		super(H);
 		this.H = H;
 		this.i = i;
 		H.cleanup = new BinHeapNode[lg(H.size(i)+1) + 1];

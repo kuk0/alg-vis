@@ -10,7 +10,7 @@ public class BinHeapDecrKey extends Algorithm {
 	BinHeapNode v;
 	
 	public BinHeapDecrKey(BinomialHeap H, BinHeapNode v, int delta) {
-		super(H.M);
+		super(H);
 		this.H = H;
 		this.v = v;
 		this.delta = delta;
@@ -29,9 +29,7 @@ public class BinHeapDecrKey extends Algorithm {
 		BinHeapNode w = v.parent;
 		while (w != null && v.prec(w)) {
 			H.v = new BinHeapNode(v);
-			H.v.setState(Node.ALIVE);
 			H.v2 = new BinHeapNode(w);
-			H.v2.setState(Node.ALIVE);
 			v.key = Node.NOKEY;
 			w.key = Node.NOKEY;
 			H.v.goTo(w);

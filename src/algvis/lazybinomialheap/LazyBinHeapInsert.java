@@ -9,7 +9,7 @@ public class LazyBinHeapInsert extends Algorithm {
 	int i;
 
 	public LazyBinHeapInsert(LazyBinomialHeap H, int i, int x) {
-		super(H.M);
+		super(H);
 		this.H = H;
 		this.i = i;
 		v = new BinHeapNode(H, x);

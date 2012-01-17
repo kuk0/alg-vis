@@ -7,7 +7,7 @@ public class LazyBinHeapMeld extends Algorithm {
 	int i, j;
 
 	public LazyBinHeapMeld(LazyBinomialHeap H, int i, int j) {
-		super(H.M);
+		super(H);
 		this.H = H;
 		this.i = i;
 		this.j = j;

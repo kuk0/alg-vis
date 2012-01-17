@@ -7,8 +7,8 @@ abstract public class MeldablePQ extends DataStructure {
 	public boolean minHeap = false;
 	public int active = 1;
 
-	public MeldablePQ(VisPanel M) {
-		super(M);
+	public MeldablePQ(VisPanel M, String dsName) {
+		super(M, dsName);
 	}
 
 	public static String adtName() {

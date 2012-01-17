@@ -10,7 +10,7 @@ public class SplayAlg extends Algorithm {
 	int K;
 	
 	public SplayAlg(Splay T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		if (T.root != null) {
 			T.v = s = new SplayNode(T, K = x);
