@@ -9,9 +9,9 @@ public class BSTInsert extends Algorithm {
 	int K;
 
 	public BSTInsert(BST T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
-		v = T.v = new BSTNode(T, K = x);
+		v = T.setNodeV(new BSTNode(T, K = x));
 		v.bgColor(Colors.INSERT);
 		setHeader("insertion");
 	}
@@ -19,7 +19,7 @@ public class BSTInsert extends Algorithm {
 	@Override
 	public void run() {
 		if (T.root == null) {
-			T.root = v;
+			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
 		} else {
@@ -31,8 +31,9 @@ public class BSTInsert extends Algorithm {
 			while (true) {
 				if (w.key == K) {
 					addStep("alreadythere");
-					v.goDown();
 					v.bgColor(Colors.NOTFOUND);
+					v.goDown();
+					finish();
 					return;
 				} else if (w.key < K) {
 					if (w.right == null) {
@@ -73,6 +74,7 @@ public class BSTInsert extends Algorithm {
 		mysuspend();
 		addNote("done");
 		v.bgColor(Colors.NORMAL);
-		T.v = null;
+		T.setNodeV(null);
+		finish();
 	}
 }

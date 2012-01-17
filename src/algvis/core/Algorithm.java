@@ -1,5 +1,8 @@
 package algvis.core;
 
+import algvis.scenario.commands.HardPauseCommand;
+import algvis.scenario.commands.SetCommentaryStateCommand;
+
 /**
  * The Class Algorithm.
  * Each visualized data structure consists of data and algorithms (such as insert, delete)
@@ -10,18 +13,22 @@ package algvis.core;
  * after pressing the "Next" button.   
  */
 abstract public class Algorithm extends Thread {
-	VisPanel M;
+	private DataStructure D;
 	boolean suspended = false;
+	private algvis.core.Commentary.State commentaryState;
 
-	public Algorithm(VisPanel M) {
-		this.M = M;
+	public Algorithm(DataStructure D) {
+		this.D = D;
+		D.scenario.addingNextStep();
+		D.scenario.add(new HardPauseCommand(D, false));
+		commentaryState = D.M.C.getState();
 	}
 
 	/**
 	 * Mysuspend.
 	 */
 	public void mysuspend() {
-		if (M.pause) {
+		if (D.M.pause) {
 			suspended = true;
 			synchronized (this) {
 				try {
@@ -32,6 +39,7 @@ abstract public class Algorithm extends Thread {
 				}
 			}
 		}
+		D.scenario.addingNextStep();
 	}
 
 	/**
@@ -45,34 +53,38 @@ abstract public class Algorithm extends Thread {
 		}
 	}
 
+	protected void finish() {
+		D.scenario.add(new HardPauseCommand(D, true));
+	}
+	
 	public void setHeader(String s) {
-		if (M.pause) {
-			M.C.setHeader(s);
-		}
+		D.M.C.setHeader(s);
+		saveCommentary();
 	}
 	
 	public void addNote(String s) {
-		if (M.pause) {
-			M.C.addNote(s);
-		}
+		D.M.C.addNote(s);
+		saveCommentary();
 	}
 
 	public void addStep(String s) {
-		if (M.pause) {
-			M.C.addStep(s);
-		}
+		D.M.C.addStep(s);
+		saveCommentary();
 	}
 
 	public void addStep(String s, String... par) {
-		if (M.pause) {
-			M.C.addStep(s, par);
-		}
+		D.M.C.addStep(s, par);
+		saveCommentary();
 	}
 
 	public void addStep(String s, int... par) {
-		if (M.pause) {
-			M.C.addStep(s, par);
-		}
+		D.M.C.addStep(s, par);
+		saveCommentary();
+	}
+
+	private void saveCommentary() {
+		D.scenario.add(new SetCommentaryStateCommand(D.M.C, commentaryState));
+		commentaryState = D.M.C.getState();
 	}
 
 	public void run() {

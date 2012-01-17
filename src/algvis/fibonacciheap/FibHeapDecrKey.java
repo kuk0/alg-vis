@@ -11,7 +11,7 @@ public class FibHeapDecrKey extends Algorithm {
 	BinHeapNode v;
 	
 	public FibHeapDecrKey(BinomialHeap H, BinHeapNode v, int delta, int i) {
-		super(H.M);
+		super(H);
 		this.H = H;
 		this.v = v;
 		this.delta = delta;

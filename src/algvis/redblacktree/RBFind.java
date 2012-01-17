@@ -10,7 +10,7 @@ public class RBFind extends Algorithm {
 	int K;
 
 	public RBFind(RB T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		v = T.v = new BSTNode(T, K = x);
 		v.bgColor(Colors.FIND);

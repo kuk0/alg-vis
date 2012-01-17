@@ -28,10 +28,11 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	public VisPanel M;
 	public DataStructure D;
 	public InputField I;
-	IButton next, clear, random;
+	IButton previous, next, clear, random, save;
 	ICheckBox pause;
 	ChLabel stats;
 	JButton zoomIn, zoomOut, resetView;
+	private Thread scenarioTraverser;
 
 	// ILabel zoomLabel;
 	abstract public void actionButtons(JPanel P);
@@ -48,6 +49,8 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		I = new InputField(5, M.statusBar);
 		first.add(I);
 		actionButtons(first);
+		initPrevious();
+		first.add(previous);
 		initNext();
 		first.add(next);
 
@@ -55,12 +58,14 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		initPause();
 		initClear();
 		initRandom();
+		//initSave();
 		initZoom();
 		JPanel second = new JPanel();
 		second.setLayout(new FlowLayout());
 		second.add(pause);
 		second.add(clear);
 		second.add(random);
+	 	//second.add(save);
 		// second.add(zoomLabel);
 		second.add(zoomIn);
 		second.add(zoomOut);
@@ -85,6 +90,13 @@ abstract public class Buttons extends JPanel implements ActionListener {
 				.createEmptyBorder(5, 5, 5, 5)));
 	}
 
+	public void initPrevious() {
+		previous = new IButton(M.S.L, "previous");
+		previous.setMnemonic(KeyEvent.VK_O);
+		previous.setEnabled(false);
+		previous.addActionListener(this);
+	}
+	
 	public void initNext() {
 		next = new IButton(M.S.L, "next");
 		next.setMnemonic(KeyEvent.VK_N);
@@ -109,6 +121,13 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		random.setMnemonic(KeyEvent.VK_R);
 		random.addActionListener(this);
 	}
+	
+	public void initSave() {
+		save = new IButton(M.S.L, "button-save");
+	 	save.setMnemonic(KeyEvent.VK_S);
+	 	save.setEnabled(D.scenario.isEnabled());
+	 	save.addActionListener(this);
+	}
 
 	private JButton createButton(String alt, String path) {
 		java.net.URL imgURL = getClass().getResource(path);
@@ -132,8 +151,44 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent evt) {
-		if (evt.getSource() == next) {
-			D.next();
+		if (scenarioTraverser != null) {
+			while (scenarioTraverser.isAlive()) {
+				scenarioTraverser.interrupt();
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					return;
+				}
+			}
+		}
+		if (evt.getSource() == previous) {
+			scenarioTraverser = new Thread(new Runnable() {
+				public void run() {
+					if (D.scenario.hasPrevious()) {
+						D.scenario.previous();
+					}
+					if (!D.scenario.hasPrevious()) {
+						disablePrevious();
+					}
+					enableNext();
+				}
+			});
+			scenarioTraverser.start();
+		} else if (evt.getSource() == next) {
+			scenarioTraverser = new Thread(new Runnable() {
+				public void run() {
+					if (D.scenario.hasNext()) {
+						D.scenario.next();
+						if (!D.scenario.hasNext() && !D.A.suspended) {
+							disableNext();
+						}
+					} else if (D.A.suspended) {
+						D.next();
+					}
+					enablePrevious();
+				}
+			});
+			scenarioTraverser.start();
 			// System.out.println("next");
 			// repaint();
 		} else if (evt.getSource() == clear) {
@@ -143,25 +198,50 @@ abstract public class Buttons extends JPanel implements ActionListener {
 			D.random(I.getInt(10));
 		} else if (evt.getSource() == pause) {
 			M.pause = pause.isSelected();
+			D.scenario.setPauses(pause.isSelected());
 		} else if (evt.getSource() == zoomIn) {
 			M.screen.V.zoomIn();
 		} else if (evt.getSource() == zoomOut) {
 			M.screen.V.zoomOut();
+		} else if (evt.getSource() == save) {
+			D.scenario.saveXML("test.xml");
 		} else if (evt.getSource() == resetView) {
 			M.screen.V.resetView();
 		}
 	}
 
 	public void enableNext() {
-		clear.setEnabled(false);
-		random.setEnabled(false);
 		next.setEnabled(true);
 	}
 
 	public void disableNext() {
+		next.setEnabled(false);
+	}
+	
+	public void enablePrevious() {
+		if (D.scenario.isEnabled()) {
+			previous.setEnabled(true);
+		}
+	}
+
+	public void disablePrevious() {
+		previous.setEnabled(false);
+	}
+	
+	/**
+	 * enables all buttons except previous and next
+	 */
+	public void enableAll() {
 		clear.setEnabled(true);
 		random.setEnabled(true);
-		next.setEnabled(false);
+	}
+
+	/**
+	 * disables all buttons except previous and next
+	 */
+	public void disableAll() {
+		clear.setEnabled(false);
+		random.setEnabled(false);
 	}
 
 	public void setStats(String s) {
