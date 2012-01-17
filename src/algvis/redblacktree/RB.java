@@ -14,6 +14,7 @@ public class RB extends BST {
 
 	public RB(VisPanel M) {
 		super(M);
+		scenario.enable(false);
 		root = NULL.parent = NULL;
 		NULL.red = false;
 		NULL.size = NULL.height = NULL.sumh = 0;
