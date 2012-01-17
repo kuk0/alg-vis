@@ -27,7 +27,7 @@ public class Node {
 	 */
 	public int x, y, tox, toy, steps;
 	/** the state of a node - either ALIVE, DOWN, LEFT, or RIGHT. */
-	public int state = INVISIBLE;
+	public int state = ALIVE;
 	public Color fgcolor, bgcolor;
 	public boolean marked = false;
 	public Node dir = null;
@@ -91,7 +91,6 @@ public class Node {
 			toy = y = - 5 * D.radius;
 			System.out.println(getClass().getName() + " " + key);
 		}
-		setState(Node.ALIVE);
 	}
 
 	public void setState(int s) {

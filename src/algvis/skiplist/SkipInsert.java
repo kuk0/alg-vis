@@ -49,7 +49,6 @@ public class SkipInsert extends SkipAlg {
 				L.reposition();
 				oldv = v;
 				v = new SkipNode(L, v.key, v.tox, -10);
-				v.setState(Node.ALIVE);
 			} else {
 				v.linkdown(oldv);
 				SkipNode oldr = L.root, olds = L.sent;
@@ -60,7 +59,6 @@ public class SkipInsert extends SkipAlg {
 				L.reposition();
 				oldv = v;
 				v = new SkipNode(L, v.key, v.tox, -10);
-				v.setState(Node.ALIVE);
 				++i;
 				++L.height;
 			}

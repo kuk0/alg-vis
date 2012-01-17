@@ -70,7 +70,6 @@ public class BDelete extends Algorithm {
 					T.v.goDown();
 				} else {
 					T.v = d.del(K);
-					T.v.setState(Node.ALIVE);
 					T.reposition();
 					T.v.goDown();
 					mysuspend();
@@ -79,7 +78,6 @@ public class BDelete extends Algorithm {
 				addStep("bdelete2");
 				BNode s = d.way(K + 1);
 				v = T.v = new BNode(T, -Node.INF, d.x, d.y);
-				v.setState(Node.ALIVE);
 				v.goAbove(s);
 				mysuspend();
 				while (!s.isLeaf()) {
@@ -88,7 +86,6 @@ public class BDelete extends Algorithm {
 					mysuspend();
 				}
 				v = T.v = s.delMin();
-				v.setState(Node.ALIVE);
 				v.goTo(d);
 				mysuspend();
 				d.replace(K, v.key[0]);
@@ -129,13 +126,11 @@ public class BDelete extends Algorithm {
 						addStep("bright");
 					}
 					T.v = lefts ? s.delMax() : s.delMin();
-					T.v.setState(Node.ALIVE);
 					T.v.goTo(p);
 					mysuspend();
 					int pkey = p.key[k];
 					p.key[k] = T.v.key[0];
 					T.v = new BNode(T, pkey, p.x, p.y);
-					T.v.setState(Node.ALIVE);
 					T.v.goTo(d);
 					mysuspend();
 					if (lefts) {
@@ -160,7 +155,6 @@ public class BDelete extends Algorithm {
 					addStep("bmerge");
 					if (p.isRoot() && p.numKeys == 1) {
 						T.v = new BNode(T.root);
-						v.setState(Node.ALIVE);
 						T.root.key[0] = Node.NOKEY;
 						T.v.goTo((d.tox + s.tox) / 2, d.y);
 						mysuspend();
@@ -172,7 +166,6 @@ public class BDelete extends Algorithm {
 						break;
 					} else {
 						T.v = p.del(p.key[k]);
-						T.v.setState(Node.ALIVE);
 						T.v.goTo((d.tox + s.tox) / 2, d.y);
 						mysuspend();
 						if (lefts) {
