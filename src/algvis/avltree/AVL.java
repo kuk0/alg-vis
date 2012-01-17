@@ -9,6 +9,7 @@ public class AVL extends BST {
 	
 	public AVL(VisPanel M) {
 		super(M);
+		scenario.enable();
 	}
 
 	@Override

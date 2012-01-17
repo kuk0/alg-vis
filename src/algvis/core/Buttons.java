@@ -125,6 +125,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	public void initSave() {
 		save = new IButton(M.S.L, "button-save");
 	 	save.setMnemonic(KeyEvent.VK_S);
+	 	save.setEnabled(D.scenario.isEnabled());
 	 	save.addActionListener(this);
 	}
 
@@ -218,7 +219,9 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 	
 	public void enablePrevious() {
-		previous.setEnabled(true);
+		if (D.scenario.isEnabled()) {
+			previous.setEnabled(true);
+		}
 	}
 
 	public void disablePrevious() {

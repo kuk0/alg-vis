@@ -20,19 +20,29 @@ import algvis.scenario.commands.MacroCommand;
  * enables the world to traverse through the list and save it as XML file.
  */
 public class Scenario implements XMLable {
-	private String name;
-	private List<Command> scenario;
+	private final String name;
+	private final List<Command> scenario;
 	private ListIterator<Command> position;
 	private boolean addingEnabled = true;
 	private boolean pauses = true, stopped = false;
 	private MacroCommand macro = null;
+	private boolean enabled;
 
 	public Scenario(String name) {
 		scenario = new LinkedList<Command>();
 		position = scenario.listIterator();
 		this.name = name;
+		enabled = false;
 		macro = new MacroCommand();
 		/* TODO delete this line */
+	}
+	
+	public void enable() {
+		enabled = true;
+	}
+	
+	public boolean isEnabled() {
+		return enabled;
 	}
 
 	public void stop() {

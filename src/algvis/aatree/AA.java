@@ -11,6 +11,7 @@ public class AA extends BST {
 
 	public AA(VisPanel M) {
 		super(M);
+		scenario.enable();
 	}
 
 	@Override
