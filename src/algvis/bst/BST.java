@@ -121,16 +121,6 @@ public class BST extends Dictionary implements LayoutListener {
 				u.parent.linkRight(v);
 			}
 		}
-/* TODO	hm...	
-<<<<<<< HEAD
-=======
-		if (v.left == null) {
-			u.right = null;
-		} else {
-			u.linkRight(v.left);
-		}
->>>>>>> kuko/master
-*/
 		v.linkLeft(u);
 	}
 
@@ -150,16 +140,6 @@ public class BST extends Dictionary implements LayoutListener {
 				u.parent.linkRight(v);
 			}
 		}
-/* TODO	hm...
-<<<<<<< HEAD
-=======
-		if (v.right == null) {
-			u.left = null;
-		} else {
-			u.linkLeft(v.right);
-		}
->>>>>>> kuko/master
-*/
 		v.linkRight(u);
 	}
 
