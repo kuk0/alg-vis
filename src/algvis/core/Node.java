@@ -89,7 +89,7 @@ public class Node {
 			 */
 			tox = x = 0;
 			toy = y = - 5 * D.radius;
-			System.out.println(getClass().getName() + " " + key);
+			//System.out.println(getClass().getName() + " " + key);
 		}
 	}
 

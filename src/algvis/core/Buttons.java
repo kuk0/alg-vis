@@ -58,14 +58,14 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		initPause();
 		initClear();
 		initRandom();
-		initSave();
+		//initSave();
 		initZoom();
 		JPanel second = new JPanel();
 		second.setLayout(new FlowLayout());
 		second.add(pause);
 		second.add(clear);
 		second.add(random);
-	 	second.add(save);
+	 	//second.add(save);
 		// second.add(zoomLabel);
 		second.add(zoomIn);
 		second.add(zoomOut);
@@ -125,7 +125,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	public void initSave() {
 		save = new IButton(M.S.L, "button-save");
 	 	save.setMnemonic(KeyEvent.VK_S);
-	 	save.setEnabled(D.scenario.isEnabled()); // TODO false 
+	 	save.setEnabled(D.scenario.isEnabled());
 	 	save.addActionListener(this);
 	}
 
