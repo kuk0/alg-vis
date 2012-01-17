@@ -42,10 +42,10 @@ public class UnionFindUnion extends UnionFindFind {
 		UnionFindNode R1 = find(V);
 		UnionFindNode R2 = find(W);
 		if (R1 == R2) {
-			setText("ufsameset");
+			addStep("ufsameset");
 			mysuspend();
 		} else {
-			setText("ufunionsimple");
+			addStep("ufunionsimple");
 			mysuspend();
 			UF.sets.remove(R2);
 			R1.addChild(R2);
@@ -57,29 +57,29 @@ public class UnionFindUnion extends UnionFindFind {
 		R2.bgcolor = Colors.NORMAL;
 		
 		UF.reposition();
-		setText("done");
+		addStep("done");
 	}
 
 	private void unionByRank(UnionFindNode V, UnionFindNode W) {
 		UnionFindNode R1 = find(V);
 		UnionFindNode R2 = find(W);
 		if (R1 == R2) {
-			setText("ufsameset");
+			addStep("ufsameset");
 			mysuspend();
 		} else {
-			setText("ufunionbyrank", R1.rank, R2.rank);
+			addStep("ufunionbyrank", R1.rank, R2.rank);
 			if (R1.rank > R2.rank) {
-				setText("ufunionfirstsecond");
+				addStep("ufunionfirstsecond");
 				mysuspend();
 				UF.sets.remove(R2);
 				R1.addChild(R2);
 			} else if (R1.rank < R2.rank) {
-				setText("ufunionsecondfirst");
+				addStep("ufunionsecondfirst");
 				mysuspend();
 				UF.sets.remove(R1);
 				R2.addChild(R1);
 			} else {
-				setText("ufunionsamerank");
+				addStep("ufunionsamerank");
 				mysuspend();
 				UF.sets.remove(R2);
 				R1.addChild(R2);
@@ -93,7 +93,7 @@ public class UnionFindUnion extends UnionFindFind {
 		R2.bgcolor = Colors.NORMAL;
 
 		UF.reposition();
-		setText("done");
+		addStep("done");
 		UF.M.screen.V.resetView(); // only for testing, but still there should be
 									// some correction.
 	}

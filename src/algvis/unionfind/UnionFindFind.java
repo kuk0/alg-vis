@@ -50,13 +50,13 @@ public class UnionFindFind extends Algorithm {
 
 		u.bgcolor = Colors.FIND;
 		u.mark();
-		setText("uffindstart", u.key);
+		addStep("uffindstart", u.key);
 		mysuspend();
 
 		// u is a representative
 		if (u.parent == null) {
 			u.bgcolor = Colors.FOUND;
-			setText("ufalreadyroot");
+			addStep("ufalreadyroot");
 			mysuspend();
 			return u;
 		}
@@ -67,7 +67,7 @@ public class UnionFindFind extends Algorithm {
 		while (v.parent != null) {
 			S.add(v);
 			v.bgcolor = Colors.FIND;
-			setText("ufup");
+			addStep("ufup");
 			mysuspend();
 			v = (UnionFindNode) v.parent;
 		}
@@ -75,7 +75,7 @@ public class UnionFindFind extends Algorithm {
 		// root found
 		result = v;
 		v.bgcolor = Colors.FOUND;
-		setText("ufrootfound", result.key);
+		addStep("ufrootfound", result.key);
 		mysuspend();
 
 		// traveling back
@@ -97,13 +97,13 @@ public class UnionFindFind extends Algorithm {
 
 		u.bgcolor = Colors.FIND;
 		u.mark();
-		setText("uffindstart", u.key);
+		addStep("uffindstart", u.key);
 		mysuspend();
 
 		// u is a representative
 		if (u.parent == null) {
 			u.bgcolor = Colors.FOUND;
-			setText("ufalreadyroot");
+			addStep("ufalreadyroot");
 			mysuspend();
 			return u;
 		}
@@ -114,7 +114,7 @@ public class UnionFindFind extends Algorithm {
 		while (v.parent != null) {
 			S.add(v);
 			v.bgcolor = Colors.FIND;
-			setText("ufup");
+			addStep("ufup");
 			mysuspend();
 			v = (UnionFindNode) v.parent;
 		}
@@ -122,8 +122,8 @@ public class UnionFindFind extends Algorithm {
 		// root found
 		result = v;
 		v.bgcolor = Colors.FOUND;
-		setText("ufrootfound", result.key);
-		setText("ufdownstart");
+		addStep("ufrootfound", result.key);
+		addStep("ufdownstart");
 		mysuspend();
 
 		// don't compress a path of a son of a root
@@ -133,7 +133,7 @@ public class UnionFindFind extends Algorithm {
 		}
 
 		while (!S.empty()) {
-			setText("ufdown");
+			addStep("ufdown");
 			mysuspend();
 			v = S.pop();
 			v.bgcolor = Colors.NORMAL;
