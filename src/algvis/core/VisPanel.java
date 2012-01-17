@@ -130,8 +130,8 @@ public abstract class VisPanel extends JPanel {
 		};
 		C = new Commentary(S.L, SP);
 		SP.setViewportView(C);
-		JPanel CP = new JPanel();
-		CP.add(SP);
+		//JPanel CP = new JPanel();
+		//CP.add(SP);
 		SP.setBorder(BorderFactory.createCompoundBorder(BorderFactory
 				.createTitledBorder(S.L.getString("text")), BorderFactory
 				.createEmptyBorder(5, 5, 5, 5)));

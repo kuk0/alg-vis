@@ -22,15 +22,15 @@ public class BDelete extends Algorithm {
 	public void run() {
 		if (T.root == null) {
 			v.goToRoot();
-			setText("empty");
+			addStep("empty");
 			mysuspend();
 			v.goDown();
 			v.bgColor(Colors.NOTFOUND);
-			setText("notfound");
+			addStep("notfound");
 		} else {
 			BNode d = T.root;
 			v.goAbove(d);
-			setText("bstdeletestart");
+			addStep("bstdeletestart");
 			mysuspend();
 
 			while (true) {
@@ -39,11 +39,11 @@ public class BDelete extends Algorithm {
 				}
 				int p = d.search(K);
 				if (p == 0) {
-					setText("bfind0", K, d.key[0]);
+					addStep("bfind0", K, d.key[0]);
 				} else if (p == d.numKeys) {
-					setText("bfindn", d.key[d.numKeys - 1], K, d.numKeys + 1);
+					addStep("bfindn", d.key[d.numKeys - 1], K, d.numKeys + 1);
 				} else {
-					setText("bfind", d.key[p - 1], K, d.key[p], p + 1);
+					addStep("bfind", d.key[p - 1], K, d.key[p], p + 1);
 				}
 				d = d.c[p];
 				if (d == null) {
@@ -54,7 +54,7 @@ public class BDelete extends Algorithm {
 			}
 
 			if (d == null) { // notfound
-				setText("notfound");
+				addStep("notfound");
 				v.goDown();
 				return;
 			}
@@ -63,21 +63,23 @@ public class BDelete extends Algorithm {
 			mysuspend();
 			d.bgColor(Colors.NORMAL);
 			if (d.isLeaf()) {
-				setText("bdelete1");
+				addStep("bdelete1");
 				if (d.isRoot() && d.numKeys == 1) {
 					T.v = d;
 					T.root = null;
 					T.v.goDown();
 				} else {
 					T.v = d.del(K);
+					T.v.setState(Node.ALIVE);
 					T.reposition();
 					T.v.goDown();
 					mysuspend();
 				}
 			} else {
-				setText("bdelete2");
+				addStep("bdelete2");
 				BNode s = d.way(K + 1);
 				v = T.v = new BNode(T, -Node.INF, d.x, d.y);
+				v.setState(Node.ALIVE);
 				v.goAbove(s);
 				mysuspend();
 				while (!s.isLeaf()) {
@@ -86,6 +88,7 @@ public class BDelete extends Algorithm {
 					mysuspend();
 				}
 				v = T.v = s.delMin();
+				v.setState(Node.ALIVE);
 				v.goTo(d);
 				mysuspend();
 				d.replace(K, v.key[0]);
@@ -121,16 +124,18 @@ public class BDelete extends Algorithm {
 					// a p.key[k] pridat do d
 					// tiez treba prehodit pointer z s ku d
 					if (lefts) {
-						setText("bleft");
+						addStep("bleft");
 					} else {
-						setText("bright");
+						addStep("bright");
 					}
 					T.v = lefts ? s.delMax() : s.delMin();
+					T.v.setState(Node.ALIVE);
 					T.v.goTo(p);
 					mysuspend();
 					int pkey = p.key[k];
 					p.key[k] = T.v.key[0];
 					T.v = new BNode(T, pkey, p.x, p.y);
+					T.v.setState(Node.ALIVE);
 					T.v.goTo(d);
 					mysuspend();
 					if (lefts) {
@@ -152,9 +157,10 @@ public class BDelete extends Algorithm {
 				} else {
 					// treba spojit vrchol d + p.key[k] + s
 					// zmenit p.c[k] na novy vrchol a posunut to
-					setText("bmerge");
+					addStep("bmerge");
 					if (p.isRoot() && p.numKeys == 1) {
 						T.v = new BNode(T.root);
+						v.setState(Node.ALIVE);
 						T.root.key[0] = Node.NOKEY;
 						T.v.goTo((d.tox + s.tox) / 2, d.y);
 						mysuspend();
@@ -166,6 +172,7 @@ public class BDelete extends Algorithm {
 						break;
 					} else {
 						T.v = p.del(p.key[k]);
+						T.v.setState(Node.ALIVE);
 						T.v.goTo((d.tox + s.tox) / 2, d.y);
 						mysuspend();
 						if (lefts) {

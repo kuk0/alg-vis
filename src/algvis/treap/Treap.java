@@ -25,10 +25,4 @@ public class Treap extends BST {
 	public void delete(int x) {
 		start(new TreapDelete(this, x));
 	}
-
-	@Override
-	public void clear() {
-		root = null;
-		setStats();
-	}
 }

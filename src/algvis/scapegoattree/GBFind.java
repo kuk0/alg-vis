@@ -14,45 +14,45 @@ public class GBFind extends GBAlg {
 	public void run() {
 		if (T.root == null) {
 			v.goToRoot();
-			setText("empty");
+			addStep("empty");
 			mysuspend();
 			v.goDown();
 			v.bgColor(Colors.NOTFOUND);
-			setText("notfound");
+			addStep("notfound");
 		} else {
 			BSTNode w = T.root;
 			v.goTo(w);
-			setText("bstfindstart");
+			addStep("bstfindstart");
 			mysuspend();
 			while (true) {
 				if (w.key == K) {
 					if (((GBNode) w).deleted) {
-						setText("gbfinddeleted");
+						addStep("gbfinddeleted");
 						v.bgColor(Colors.NOTFOUND);
 						v.goDown();
 					} else {
-						setText("found");
+						addStep("found");
 						v.bgColor(Colors.FOUND);
 					}
 					break;
 				} else if (w.key < K) {
-					setText("bstfindright", K, w.key);
+					addStep("bstfindright", K, w.key);
 					w = w.right;
 					if (w != null) {
 						v.goTo(w);
 					} else { // notfound
-						setText("notfound");
+						addStep("notfound");
 						v.bgColor(Colors.NOTFOUND);
 						v.goRight();
 						break;
 					}
 				} else {
-					setText("bstfindleft", K, w.key);
+					addStep("bstfindleft", K, w.key);
 					w = w.left;
 					if (w != null) {
 						v.goTo(w);
 					} else { // notfound
-						setText("notfound");
+						addStep("notfound");
 						v.bgColor(Colors.NOTFOUND);
 						v.goLeft();
 						break;

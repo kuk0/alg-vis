@@ -13,11 +13,11 @@ public class SkipDelete extends SkipAlg {
 
 	@Override
 	public void run() {
-		setText("bstdeletestart");
+		addStep("bstdeletestart");
 		SkipNode w = find();
 		
 		if (w.right.key != K) {
-			setText("notfound");
+			addStep("notfound");
 			v.goDown();
 			mysuspend();
 			return;
@@ -25,7 +25,7 @@ public class SkipDelete extends SkipAlg {
 
 		L.n--;
 		L.e++;
-		setText("skipdelete");
+		addStep("skipdelete");
 		for (int i = 0; i < L.height; ++i) {
 			if (p[i].right.key != K) {
 				break;
@@ -49,7 +49,7 @@ public class SkipDelete extends SkipAlg {
 			}
 		}
 
-		setText("done");
+		addStep("done");
 		L.reposition();
 		mysuspend();
 		L.v = null;

@@ -20,21 +20,21 @@ public class TreapInsert extends Algorithm {
 		if (T.root == null) {
 			T.root = v;
 			v.goToRoot();
-			setText("newroot");
+			addStep("newroot");
 			mysuspend();
 		} else {
 			BSTNode w = T.root;
 			v.goAboveRoot();
-			setText("bstinsertstart");
+			addStep("bstinsertstart");
 			mysuspend();
 
 			while (true) {
 				if (w.key == K) {
-					setText("alreadythere");
+					addStep("alreadythere");
 					v.goDown();
 					return;
 				} else if (w.key < K) {
-					setText("bstinsertright", K, w.key);
+					addStep("bstinsertright", K, w.key);
 					if (w.right != null) {
 						w = w.right;
 					} else {
@@ -42,7 +42,7 @@ public class TreapInsert extends Algorithm {
 						break;
 					}
 				} else {
-					setText("bstinsertleft", K, w.key);
+					addStep("bstinsertleft", K, w.key);
 					if (w.left != null) {
 						w = w.left;
 					} else {
@@ -56,13 +56,13 @@ public class TreapInsert extends Algorithm {
 			T.reposition();
 			mysuspend();
 			// bubleme nahor
-			setText("treapbubbleup");
+			addStep("treapbubbleup");
 			while (!v.isRoot() && ((TreapNode) v.parent).p < ((TreapNode) v).p) {
 				T.rotate(v);
 				mysuspend();
 			}
 		}
-		setText("done");
+		addStep("done");
 		T.v = null;
 	}
 }

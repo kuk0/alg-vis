@@ -20,7 +20,6 @@ public class HeapNode extends BSTNode {
 	public HeapNode(DataStructure D, int key) {
 		super(D, key);
 		bgKeyColor();
-		setState(Node.UP);
 	}
 
 	public HeapNode(HeapNode v) {

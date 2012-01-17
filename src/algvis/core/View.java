@@ -1,8 +1,10 @@
 package algvis.core;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -111,6 +113,22 @@ public class View implements MouseListener, MouseMotionListener,
 		zoom(W / 2, H / 2, 1 / SCALE_FACTOR);
 	}
 
+	public Point2D v2r(double x, double y) {
+		Point2D p = new Point2D.Double(x, y);
+		at.transform(p, p);
+		return p;
+	}
+
+	public Point2D r2v(double x, double y) {
+		Point2D p = new Point2D.Double(x, y);
+		try {
+			at.inverseTransform(p, p);
+		} catch (NoninvertibleTransformException exc) {
+			exc.printStackTrace();
+		}
+		return p;
+	}
+
 	public void mousePressed(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
@@ -137,12 +155,7 @@ public class View implements MouseListener, MouseMotionListener,
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		Point2D p = new Point2D.Double(e.getX(), e.getY());
-		try {
-			at.inverseTransform(p, p);
-		} catch (NoninvertibleTransformException exc) {
-			exc.printStackTrace();
-		}
+		Point2D p = r2v(e.getX(), e.getY());
 		if (D != null) {
 			D.mouseClicked((int) p.getX(), (int) p.getY());
 		}
@@ -158,9 +171,9 @@ public class View implements MouseListener, MouseMotionListener,
 	}
 
 	public boolean inside(int x, int y) {
-		return true;
-		// return (viewX - viewW <= x) && (x <= viewX + viewW) && (viewY - viewH
-		// <= y) && (y <= viewY + viewH);
+		Point2D p = v2r(x, y);
+		return (0 <= p.getX()) && (p.getX() <= W) && (0 <= p.getY())
+				&& (p.getY() <= H);
 	}
 
 	public void setColor(Color c) {
@@ -202,6 +215,16 @@ public class View implements MouseListener, MouseMotionListener,
 
 	public void drawLine(int x1, int y1, int x2, int y2) {
 		g.drawLine(x1, y1, x2, y2);
+	}
+
+	public void drawDashedLine(int x1, int y1, int x2, int y2) {
+		final float dash1[] = { 2.0f, 5.0f };
+		final Stroke old = g.getStroke(), dashed = new BasicStroke(1.0f,
+				BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1,
+				0.0f);
+		g.setStroke(dashed);
+		g.drawLine(x1, y1, x2, y2);
+		g.setStroke(old);
 	}
 
 	// square; x, y is the center
@@ -289,9 +312,14 @@ public class View implements MouseListener, MouseMotionListener,
 		arrowHead(x1, y1, x2, y2);
 	}
 
+	public void drawDoubleArrow(int x1, int y1, int x2, int y2) {
+		g.drawLine(x1, y1, x2, y2);
+		arrowHead(x1, y1, x2, y2);
+		arrowHead(x2, y2, x1, y1);
+	}
+
 	public void drawArcArrow(int x, int y, int w, int h, int a1, int a2) {
 		g.drawArc(x, y, w, h, a1, a2 - a1);
-		// g.drawRect(x, y, w, h);
 		double a = a2 * Math.PI / 180;
 		int x2 = x + (int) Math.round(w / 2.0 * (1 + Math.cos(a))), y2 = y
 				+ (int) Math.round(h / 2.0 * (1 - Math.sin(a)));
@@ -304,7 +332,6 @@ public class View implements MouseListener, MouseMotionListener,
 			x = x2 - dx;
 			y = y2 - dy;
 		}
-		// g.drawLine(x, y, x2, y2);
 		arrowHead(x, y, x2, y2);
 	}
 

@@ -12,7 +12,7 @@ public class HeapDelete extends HeapAlg {
 	@Override
 	public void run() {
 		if (H.n == 0) {
-			setText("heapempty");
+			addStep("heapempty");
 			return;
 		}
 		if (H.n == 1) {
@@ -48,7 +48,11 @@ public class HeapDelete extends HeapAlg {
 
 		H.root.key = H.v.key;
 		H.v = null;
-		setText("heapbubbledown");
+		if (H.minHeap) {
+			addStep("minheapbubbledown");
+		} else {
+			addStep("maxheapbubbledown");
+		}
 		// mysuspend();
 
 		v = H.root;
@@ -64,7 +68,9 @@ public class HeapDelete extends HeapAlg {
 				break;
 			}
 			H.v = new HeapNode((HeapNode) v);
+			H.v.setState(Node.ALIVE);
 			H.v2 = new HeapNode((HeapNode) w);
+			H.v2.setState(Node.ALIVE);
 			v.key = Node.NOKEY;
 			w.key = Node.NOKEY;
 			H.v.goTo(w);
@@ -79,6 +85,6 @@ public class HeapDelete extends HeapAlg {
 			v = w;
 		}
 
-		setText("done");
+		addStep("done");
 	}
 }

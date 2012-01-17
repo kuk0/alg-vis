@@ -55,7 +55,7 @@ public class RBNode extends BSTNode {
 
 	@Override
 	public void draw(View v) {
-		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
+		if (state == Node.INVISIBLE || key == NULL) {
 			return;
 		}
 		bgColor(red ? Color.red : Color.black);

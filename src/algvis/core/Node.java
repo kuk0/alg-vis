@@ -1,49 +1,49 @@
 package algvis.core;
 
 import java.awt.Color;
+import java.awt.geom.Point2D;
 
 /**
- * The Class Node.
- * This is a basic element of the visualization. Nodes can be drawn, they can move,
- * change color, become marked/unmarked, or point in some direction.
- * Nodes are by default drawn as circles with their key in the middle.
+ * The Class Node. This is a basic element of the visualization. Nodes can be
+ * drawn, they can move, change color, become marked/unmarked, or point in some
+ * direction. Nodes are by default drawn as circles with their key in the
+ * middle.
  */
 public class Node {
 	public DataStructure D;
 	public int key;
 	/**
-	 * x, y - node position
-	 * tox, toy - the position, where the node is heading
-	 * steps - the number of steps to reach the destination 
+	 * x, y - node position tox, toy - the position, where the node is heading
+	 * steps - the number of steps to reach the destination
 	 */
 	public int x, y, tox, toy, steps;
-	/** the state of a node - either ALIVE, UP, DOWN, LEFT, or RIGHT. */
-	public int state;
+	/** the state of a node - either ALIVE, DOWN, LEFT, or RIGHT. */
+	public int state = INVISIBLE;
 	public Color fgcolor, bgcolor;
 	public boolean marked = false;
 	Node dir = null;
-	int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S, 135=SW, 180=W)
+	int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S, 135=SW,
+								// 180=W)
 	boolean arc = false;
 
 	/**
-	 * the key values are generally integers from 1 to 999 (inclusive)
-	 * special values of a key are: INF (infinity) or -INF (-infinity),
-	 * these are drawn nicely as the numeral 8 sideways
-	 * NOKEY (drawn as an empty circle), and NULL (not drawn at all)
+	 * the key values are generally integers from 1 to 999 (inclusive) special
+	 * values of a key are: INF (infinity) or -INF (-infinity), these are drawn
+	 * nicely as the numeral 8 sideways NOKEY (drawn as an empty circle), and
+	 * NULL (not drawn at all)
 	 */
 	public static final int INF = 99999, NOKEY = -1, NULL = 100000;
 	/**
-	 * a node can be in several different states: INVISIBLE (not drawn),
-	 * ALIVE (visible), UP (this is the default starting state; the node is
-	 * not yet visible, but when it moves, it starts at the top of the screen
-	 * and automatically changes state to ALIVE); DOWN, LEFT, and RIGHT
-	 * (the node moves down, or diagonally left or right until it gets out
-	 * of the screen, and then turns INVISIBLE)
+	 * a node can be in several different states: INVISIBLE (default starting
+	 * state, not drawn), ALIVE (visible), DOWN, LEFT, and RIGHT (the node moves
+	 * down, or diagonally left or right until it gets out of the screen, and
+	 * then turns INVISIBLE)
 	 */
-	public static final int INVISIBLE = -1, ALIVE = 0, UP = 1, DOWN = 2,
-		LEFT = 3, RIGHT = 4;
-	public static final int NOARROW = -10000, DIRARROW = -10001, TOARROW = -10002;
-	
+	public static final int INVISIBLE = -1, ALIVE = 0, DOWN = 2, LEFT = 3,
+			RIGHT = 4;
+	public static final int NOARROW = -10000, DIRARROW = -10001,
+			TOARROW = -10002;
+
 	public Node() {
 	}
 
@@ -58,12 +58,31 @@ public class Node {
 
 	public Node(DataStructure D, int key) {
 		this(D, key, 0, 0);
-		setState(Node.UP);
-		x = 0;
+		getReady();
 	}
 
 	public Node(Node v) {
 		this(v.D, v.key, v.x, v.y);
+	}
+
+	/**
+	 * position the node above top of the screen and set its state to ALIVE, so
+	 * the node is ready to come to screen now
+	 */
+	protected void getReady() {
+		if (D.M.screen.V.at != null) {
+			Point2D p = D.M.screen.V.r2v(0, 0);
+			toy = y = (int) p.getY() - 5 * D.radius;
+		} else {
+			/*
+			 * because of rotations and skiplist constructor inserts (at that
+			 * time "AffineTransform at" not exists)
+			 */
+			tox = x = 0;
+			toy = y = - 5 * D.radius;
+			System.out.println(getClass().getName() + " " + key);
+		}
+		setState(Node.ALIVE);
 	}
 
 	public void setState(int s) {
@@ -84,7 +103,8 @@ public class Node {
 	}
 
 	/**
-	 * Set background color depending on the key (the higher the key, the darker the color).
+	 * Set background color depending on the key (the higher the key, the darker
+	 * the color).
 	 */
 	public void bgKeyColor() {
 		bgColor(new Color(255, 255 - key / 10, 0));
@@ -98,9 +118,9 @@ public class Node {
 		marked = false;
 	}
 
-	
 	/**
 	 * Draw an arrow pointing above the node w.
+	 * 
 	 * @param w
 	 */
 	public void pointAbove(Node w) {
@@ -110,6 +130,7 @@ public class Node {
 
 	/**
 	 * Draw an arrow pointing to the node w.
+	 * 
 	 * @param w
 	 */
 	public void pointTo(Node w) {
@@ -118,10 +139,10 @@ public class Node {
 	}
 
 	/**
-	 * Point in direction angle.
-	 * The angle in degrees should be a nonnegative integer
-	 * 0 = RIGHT, then clockwise: 90 = DOWN, 180 = LEFT 
-	 * @param angle 
+	 * Point in direction angle. The angle in degrees should be a nonnegative
+	 * integer 0 = RIGHT, then clockwise: 90 = DOWN, 180 = LEFT
+	 * 
+	 * @param angle
 	 */
 	public void pointInDir(int angle) {
 		dir = null;
@@ -136,8 +157,8 @@ public class Node {
 	}
 
 	/**
-	 * Draw an arc pointing to node w.
-	 * Assumption: w is above this node.
+	 * Draw an arc pointing to node w. Assumption: w is above this node.
+	 * 
 	 * @param w
 	 */
 	public void setArc(Node w) {
@@ -154,9 +175,11 @@ public class Node {
 
 	/**
 	 * Draw bg.
-	 *
-	 * @param g where to draw
-	 * @param v view
+	 * 
+	 * @param g
+	 *            where to draw
+	 * @param v
+	 *            view
 	 */
 	protected void drawBg(View v) {
 		v.setColor(bgcolor);
@@ -168,7 +191,6 @@ public class Node {
 		}
 	}
 
-	
 	/**
 	 * Convert the key into a string (INF is converted to "8" sideways).
 	 */
@@ -240,7 +262,7 @@ public class Node {
 	}
 
 	public void draw(View v) {
-		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
+		if (state == Node.INVISIBLE || key == NULL) {
 			return;
 		}
 		drawBg(v);
@@ -250,8 +272,8 @@ public class Node {
 	}
 
 	/**
-	 * Is the given point inside the node?
-	 * (Used mainly to decide whether a user clicked at the node.)
+	 * Is the given point inside the node? (Used mainly to decide whether a user
+	 * clicked at the node.)
 	 */
 	public boolean inside(int x, int y) {
 		return (this.x - x) * (this.x - x) + (this.y - y) * (this.y - y) <= D.radius
@@ -274,7 +296,8 @@ public class Node {
 		goTo(v.tox, v.toy);
 	}
 
-	// public void goAbove (int tox, int toy) { goTo (tox, toy - 2*D.radius - D.yspan); }
+	// public void goAbove (int tox, int toy) { goTo (tox, toy - 2*D.radius -
+	// D.yspan); }
 	/**
 	 * Go above node v (or more precisely: above the position where v is going).
 	 */
@@ -282,7 +305,8 @@ public class Node {
 		goTo(v.tox, v.toy - 2 * D.radius - D.yspan);
 	}
 
-	// public void goNextTo (int tox, int toy) { goTo (tox + 2*D.radius + D.xspan, toy); }
+	// public void goNextTo (int tox, int toy) { goTo (tox + 2*D.radius +
+	// D.xspan, toy); }
 	/**
 	 * Go next to node v (precisely to the right of where v is going).
 	 */
@@ -326,9 +350,8 @@ public class Node {
 	}
 
 	/**
-	 * Make one step towards the destination (tox, toy).
-	 * In the special states DOWN, LEFT, or RIGHT, go downwards off the screen.
-	 * In the special state UP, the node starts moving from the top of the screen.
+	 * Make one step towards the destination (tox, toy). In the special states
+	 * DOWN, LEFT, or RIGHT, go downwards off the screen.
 	 */
 	public void move() {
 		switch (state) {
@@ -339,13 +362,6 @@ public class Node {
 				y += (toy - y) / steps;
 				--steps;
 			}
-			break;
-		case Node.UP:
-			//TODO:
-			//y = (int) (D.M.screen.V.viewY - D.M.screen.V.viewH) - D.radius;
-			y = - 5*D.radius;
-			setState(Node.ALIVE);
-			move();
 			break;
 		case Node.DOWN:
 		case Node.LEFT:

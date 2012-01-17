@@ -10,7 +10,11 @@ public class HeapDecrKey extends HeapAlg {
 		super(H);
 		this.v = v;
 		this.delta = delta;
-		//setHeader("insertion");
+		if (H.minHeap) {
+			setHeader("decreasekey");
+		} else {
+			setHeader("increasekey");
+		}
 	}
 	
 	@Override
