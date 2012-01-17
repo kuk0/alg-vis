@@ -9,6 +9,7 @@ import algvis.core.VisPanel;
 import algvis.scenario.commands.SetCommentaryStateCommand;
 import algvis.scenario.commands.bstnode.SetBSTNodeVCommand;
 import algvis.scenario.commands.bstnode.SetBSTRootCommand;
+import algvis.scenario.commands.node.Wait4NodeCommand;
 
 public class BST extends Dictionary implements LayoutListener {
 	public static String dsName = "bst";
@@ -22,6 +23,9 @@ public class BST extends Dictionary implements LayoutListener {
 		if (this.v != v) {
 			scenario.add(new SetBSTNodeVCommand(this, v, this.v));
 			this.v = v;
+		}
+		if (v != null) {
+			scenario.add(new Wait4NodeCommand(v));
 		}
 		return v;
 	}

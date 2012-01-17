@@ -1,7 +1,5 @@
 package algvis.scenario.commands.node;
 
-import java.awt.geom.Point2D;
-
 import org.jdom.Element;
 
 import algvis.core.Node;
@@ -31,24 +29,7 @@ public class SetStateCommand implements Command {
 				|| toState == Node.RIGHT) {
 			n.goTo(fromX, fromY);
 		}
-		if (fromState == Node.UP) {
-			Point2D p = n.D.M.screen.V.r2v(0, 0);
-			n.goTo(n.tox, (int) p.getY() - 5 * n.D.radius);
-			wait4Node();
-		}
 		n.setState(fromState);
-	}
-
-	private void wait4Node() {
-		while (n.x != n.tox || n.y != n.toy) {
-			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
-				n.x = n.tox;
-				n.y = n.toy;
-				break;
-			}
-		}
 	}
 
 	@Override
