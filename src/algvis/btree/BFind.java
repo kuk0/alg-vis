@@ -8,7 +8,7 @@ public class BFind extends Algorithm {
 	BNode v;
 
 	public BFind(BTree T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		v = T.v = new BNode(T, x);
 		v.bgColor(Colors.FIND);

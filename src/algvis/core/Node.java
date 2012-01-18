@@ -3,6 +3,14 @@ package algvis.core;
 import java.awt.Color;
 import java.awt.geom.Point2D;
 
+import algvis.scenario.commands.node.ArcCommand;
+import algvis.scenario.commands.node.ArrowCommand;
+import algvis.scenario.commands.node.MarkCommand;
+import algvis.scenario.commands.node.MoveCommand;
+import algvis.scenario.commands.node.SetBgColorCommand;
+import algvis.scenario.commands.node.SetFgColorCommand;
+import algvis.scenario.commands.node.SetStateCommand;
+
 /**
  * The Class Node. This is a basic element of the visualization. Nodes can be
  * drawn, they can move, change color, become marked/unmarked, or point in some
@@ -13,16 +21,17 @@ public class Node {
 	public DataStructure D;
 	public int key;
 	/**
-	 * x, y - node position tox, toy - the position, where the node is heading
+	 * x, y - node position
+	 * tox, toy - the position, where the node is heading
 	 * steps - the number of steps to reach the destination
 	 */
 	public int x, y, tox, toy, steps;
 	/** the state of a node - either ALIVE, DOWN, LEFT, or RIGHT. */
-	public int state = INVISIBLE;
+	public int state = ALIVE;
 	public Color fgcolor, bgcolor;
 	public boolean marked = false;
-	Node dir = null;
-	int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S, 135=SW,
+	public Node dir = null;
+	public int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S, 135=SW,
 								// 180=W)
 	boolean arc = false;
 
@@ -74,32 +83,44 @@ public class Node {
 			Point2D p = D.M.screen.V.r2v(0, 0);
 			toy = y = (int) p.getY() - 5 * D.radius;
 		} else {
-			/*
+			/* TODO
 			 * because of rotations and skiplist constructor inserts (at that
 			 * time "AffineTransform at" not exists)
 			 */
 			tox = x = 0;
 			toy = y = - 5 * D.radius;
-			System.out.println(getClass().getName() + " " + key);
+			//System.out.println(getClass().getName() + " " + key);
 		}
-		setState(Node.ALIVE);
 	}
 
 	public void setState(int s) {
-		state = s;
+		if (state != s) {
+			D.scenario.add(new SetStateCommand(this, s));
+			state = s;
+		}
 	}
 
 	public void setColor(Color fg, Color bg) {
-		fgcolor = fg;
-		bgcolor = bg;
+		fgColor(fg);
+		bgColor(bg);
 	}
 
 	public void fgColor(Color fg) {
-		fgcolor = fg;
+		if (fg != fgcolor) {
+			if (D != null) {
+				D.scenario.add(new SetFgColorCommand(this, fg));
+			}
+			fgcolor = fg;
+		}
 	}
 
 	public void bgColor(Color bg) {
-		bgcolor = bg;
+		if (bg != bgcolor) {
+			if (D != null) {
+				D.scenario.add(new SetBgColorCommand(this, bg));
+			}
+			bgcolor = bg;
+		}
 	}
 
 	/**
@@ -111,11 +132,17 @@ public class Node {
 	}
 
 	public void mark() {
-		marked = true;
+		if (!marked) {
+			D.scenario.add(new MarkCommand(this, true));
+			marked = true;
+		}
 	}
 
 	public void unmark() {
-		marked = false;
+		if (marked) {
+			D.scenario.add(new MarkCommand(this, false));
+			marked = false;
+		}
 	}
 
 	/**
@@ -124,8 +151,11 @@ public class Node {
 	 * @param w
 	 */
 	public void pointAbove(Node w) {
-		dir = w;
-		arrow = Node.DIRARROW;
+		if (dir != w || arrow != Node.DIRARROW) {
+			dir = w;
+			arrow = Node.DIRARROW;
+			D.scenario.add(new ArrowCommand(this, true));
+		}
 	}
 
 	/**
@@ -134,8 +164,11 @@ public class Node {
 	 * @param w
 	 */
 	public void pointTo(Node w) {
-		dir = w;
-		arrow = Node.TOARROW;
+		if (dir != w || arrow != Node.TOARROW) {
+			dir = w;
+			arrow = Node.TOARROW;
+			D.scenario.add(new ArrowCommand(this, true));
+		}
 	}
 
 	/**
@@ -145,15 +178,22 @@ public class Node {
 	 * @param angle
 	 */
 	public void pointInDir(int angle) {
-		dir = null;
-		arrow = angle;
+		if (dir != null || arrow != angle) {
+			dir = null;
+			arrow = angle;
+			D.scenario.add(new ArrowCommand(this, true));
+		}
 	}
 
 	/**
 	 * Stop drawing an arrow.
 	 */
 	public void noArrow() {
-		arrow = Node.NOARROW;
+		if (dir != null || arrow != Node.NOARROW) {
+			D.scenario.add(new ArrowCommand(this, false));
+			dir = null;
+			arrow = Node.NOARROW;
+		}
 	}
 
 	/**
@@ -162,15 +202,21 @@ public class Node {
 	 * @param w
 	 */
 	public void setArc(Node w) {
-		dir = w;
-		arc = true;
+		if (dir != w || arc == false) {
+			dir = w;
+			arc = true;
+			D.scenario.add(new ArcCommand(this, dir, true));
+		}
 	}
 
 	/**
 	 * Stop drawing an arc.
 	 */
 	public void noArc() {
-		arc = false;
+		if (arc == true) {
+			arc = false;
+			D.scenario.add(new ArcCommand(this, dir, false));
+		}
 	}
 
 	/**
@@ -284,9 +330,12 @@ public class Node {
 	 * Set new coordinates, where the node should go.
 	 */
 	public void goTo(int tox, int toy) {
-		this.tox = tox;
-		this.toy = toy;
-		steps = D.M.STEPS;
+		if (this.tox != tox || this.toy != toy) {
+			D.scenario.add(new MoveCommand(this, tox, toy));
+			this.tox = tox;
+			this.toy = toy;
+			this.steps = D.M.STEPS;
+		}
 	}
 
 	/**
@@ -325,30 +374,31 @@ public class Node {
 	 * Go above the root position.
 	 */
 	public void goAboveRoot() {
-		goTo(D.rootx, D.rooty - 2 * D.radius - D.yspan);
+		int toy = D.rooty - 2 * D.radius - D.yspan;
+		goTo(D.rootx, toy);
 	}
 
 	/**
 	 * Go downwards out of the screen.
 	 */
 	public void goDown() {
-		state = Node.DOWN;
+		setState(DOWN);
 	}
 
 	/**
 	 * Go left downwards out of the screen.
 	 */
 	public void goLeft() {
-		state = Node.LEFT;
+		setState(LEFT);
 	}
 
 	/**
 	 * Go right downwards out of the screen.
 	 */
 	public void goRight() {
-		state = Node.RIGHT;
+		setState(RIGHT);
 	}
-
+	
 	/**
 	 * Make one step towards the destination (tox, toy). In the special states
 	 * DOWN, LEFT, or RIGHT, go downwards off the screen.
@@ -366,15 +416,14 @@ public class Node {
 		case Node.DOWN:
 		case Node.LEFT:
 		case Node.RIGHT:
-			y += 20;
+			toy = y += 20;
 			if (state == Node.LEFT) {
-				x -= 20;
-			}
-			if (state == Node.RIGHT) {
-				x += 20;
+				tox = x -= 20;
+			} else if (state == Node.RIGHT) {
+				tox = x += 20;
 			}
 			if (!D.M.screen.V.inside(x, y - D.radius)) {
-				setState(Node.INVISIBLE);
+				state = Node.INVISIBLE;
 			}
 			break;
 		}

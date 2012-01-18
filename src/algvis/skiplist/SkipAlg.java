@@ -9,7 +9,7 @@ public class SkipAlg extends Algorithm {
 	int K;
 
 	public SkipAlg(SkipList L, int x) {
-		super(L.M);
+		super(L);
 		this.L = L;
 		L.v = v = new SkipNode(L, x);
 		K = x;

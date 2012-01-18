@@ -44,7 +44,6 @@ public class BNode extends Node {
 
 	public BNode(BNode u, BNode v, BNode w) {
 		this(u.D, Node.NOKEY, v.x, v.y);
-		setState(Node.ALIVE);
 		int n1 = u.numKeys, n2 = w.numKeys;
 		numKeys = n1 + 1 + n2;
 		for (int i = 0; i < n1; ++i) {
@@ -168,9 +167,6 @@ public class BNode extends Node {
 		int k = numKeys, ku = numKeys / 2; // , kw = numKeys - ku - 1;
 		BNode u = new BNode(D, key[0], x, y), v = new BNode(D, key[ku], x, y), w = new BNode(
 				D, key[k - 1], x, y);
-		u.setState(Node.ALIVE);
-		v.setState(Node.ALIVE);
-		w.setState(Node.ALIVE);
 		for (int i = 1; i < ku; ++i) {
 			u.addLeaf(key[i]);
 		}

@@ -17,11 +17,13 @@ public class RotNode extends BSTNode {
 		super(D, key);
 	}
 
+	@Override
 	public void linkLeft(BSTNode v) {
 		oldleft = left;
 		super.linkLeft(v);
 	}
 
+	@Override
 	public void linkRight(BSTNode v) {
 		oldright = right;
 		super.linkRight(v);

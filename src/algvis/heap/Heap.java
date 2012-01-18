@@ -13,7 +13,7 @@ public class Heap extends PriorityQueue implements ClickListener {
 	BSTNode root = null, v = null, v2 = null;
 
 	public Heap(VisPanel M) {
-		super(M);
+		super(M, dsName);
 		M.screen.V.setDS(this);
 	}
 

@@ -9,7 +9,7 @@ public class RBInsert extends Algorithm {
 	int K;
 
 	public RBInsert(RB T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		T.v = v = new RBNode(T, K = x);
 		setHeader("insertion");

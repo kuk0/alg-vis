@@ -10,7 +10,7 @@ public class TreapDelete extends Algorithm {
 	int K;
 
 	public TreapDelete(Treap T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		v = T.v = new BSTNode(T, K = x);
 		v.bgColor(Colors.DELETE);

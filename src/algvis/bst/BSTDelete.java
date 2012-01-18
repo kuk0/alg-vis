@@ -10,9 +10,9 @@ public class BSTDelete extends Algorithm {
 	int K;
 
 	public BSTDelete(BST T, int x) { // Buttons B,
-		super(T.M);
+		super(T);
 		this.T = T;
-		v = T.v = new BSTNode(T, K = x);
+		v = T.setNodeV(new BSTNode(T, K = x));
 		v.bgColor(Colors.DELETE);
 		setHeader("deletion");
 	}
@@ -26,6 +26,7 @@ public class BSTDelete extends Algorithm {
 			v.goDown();
 			v.bgColor(Colors.NOTFOUND);
 			addStep("notfound");
+			finish();
 			return;
 		} else {
 			BSTNode d = T.root;
@@ -50,6 +51,7 @@ public class BSTDelete extends Algorithm {
 					if (d != null) {
 						v.goTo(d);
 					} else {
+						addStep("notfound");
 						v.goRight();
 						break;
 					}
@@ -66,6 +68,7 @@ public class BSTDelete extends Algorithm {
 					if (d != null) {
 						v.goTo(d);
 					} else {
+						addStep("notfound");
 						v.goLeft();
 						break;
 					}
@@ -74,7 +77,7 @@ public class BSTDelete extends Algorithm {
 			}
 
 			if (d == null) { // notfound
-				addStep("notfound");
+				finish();
 				return;
 			}
 
@@ -83,27 +86,32 @@ public class BSTDelete extends Algorithm {
 				addStep("bstdeletecase1");
 				mysuspend();
 				if (d.isRoot()) {
-					T.root = null;
+					T.setRoot(null);
 				} else if (d.isLeft()) {
-					d.parent.left = null;
+					d.parent.unlinkLeft();
 				} else {
-					d.parent.right = null;
+					d.parent.unlinkRight();
 				}
 				v.goDown();
 
 			} else if (d.left == null || d.right == null) { // case IIa - 1 syn
 				addStep("bstdeletecase2");
 				mysuspend();
-				BSTNode s = (d.left == null) ? d.right : d.left;
-				if (d.isRoot()) {
-					T.root = s;
-					s.parent = null;
+				BSTNode s;
+				if (d.left == null) {
+					s = d.right;
+					d.unlinkRight();
 				} else {
-					s.parent = d.parent;
+					s = d.left;
+					d.unlinkLeft();
+				}
+				if (d.isRoot()) {
+					T.setRoot(s);
+				} else {
 					if (d.isLeft()) {
-						d.parent.left = s;
+						d.parent.linkLeft(s);
 					} else {
-						d.parent.right = s;
+						d.parent.linkRight(s);
 					}
 				}
 				v.goDown();
@@ -111,7 +119,7 @@ public class BSTDelete extends Algorithm {
 			} else { // case III - 2 synovia
 				addStep("bstdeletecase3");
 				BSTNode s = d.right;
-				v = T.v = new BSTNode(T, -Node.INF);
+				v = T.setNodeV(new BSTNode(T, -Node.INF));
 				v.bgColor(Colors.FIND);
 				v.goTo(s);
 				mysuspend();
@@ -120,21 +128,16 @@ public class BSTDelete extends Algorithm {
 					v.goTo(s);
 					mysuspend();
 				}
-				v.key = s.key;
-				v.bgColor(Colors.NORMAL);
-				if (s.right != null) {
-					s.right.parent = s.parent;
-				}
+				v = T.setNodeV(s);
 				if (s.isLeft()) {
-					s.parent.left = s.right;
+					s.parent.linkLeft(s.right);
 				} else {
-					s.parent.right = s.right;
+					s.parent.linkRight(s.right);
 				}
 				v.goNextTo(d);
 				mysuspend();
 				if (d.parent == null) {
-					v.parent = null;
-					T.root = v;
+					T.setRoot(v);
 				} else {
 					if (d.isLeft()) {
 						d.parent.linkLeft(v);
@@ -145,12 +148,13 @@ public class BSTDelete extends Algorithm {
 				v.linkLeft(d.left);
 				v.linkRight(d.right);
 				v.goTo(d);
-				T.v = d;
+				T.setNodeV(d);
 				d.goDown();
 			} // end case III
 
 			T.reposition();
 			addStep("done");
 		}
+		finish();
 	}
 }

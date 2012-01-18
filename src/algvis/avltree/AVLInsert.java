@@ -10,9 +10,9 @@ public class AVLInsert extends Algorithm {
 	int K;
 
 	public AVLInsert(AVL T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
-		T.v = v = new AVLNode(T, K = x);
+		v = (AVLNode) T.setNodeV(new AVLNode(T, K = x));
 		v.bgColor(Colors.INSERT);
 		setHeader("insertion");
 	}
@@ -21,11 +21,12 @@ public class AVLInsert extends Algorithm {
 	public void run() {
 		BSTNode w = T.root;
 		if (T.root == null) {
-			T.root = v;
+			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
 			mysuspend();
 			v.bgColor(Colors.NORMAL);
+			T.setNodeV(null);
 		} else {
 			v.goAboveRoot();
 			addStep("bstinsertstart");
@@ -36,6 +37,7 @@ public class AVLInsert extends Algorithm {
 					addStep("alreadythere");
 					v.goDown();
 					v.bgColor(Colors.NOTFOUND);
+					finish();
 					return;
 				} else if (w.key < K) {
 					addStep("bstinsertright", K, w.key);
@@ -59,11 +61,12 @@ public class AVLInsert extends Algorithm {
 			}
 
 			v.bgColor(Colors.NORMAL);
-			T.v = v = null;
 			T.reposition();
 			addNote("avlinsertbal");
 			mysuspend();
-
+			
+			v.bgColor(Colors.NORMAL);
+			T.setNodeV(null);
 			// bubleme nahor
 			while (w != null) {
 				w.mark();
@@ -101,7 +104,7 @@ public class AVLInsert extends Algorithm {
 						w.unmark();
 						w = w.right;
 						w.mark();
-						w.setArc(w.parent);
+						w.setArc(w.parent); 
 						mysuspend();
 						w.noArc();
 						T.rotate(w);
@@ -127,5 +130,6 @@ public class AVLInsert extends Algorithm {
 		}
 		T.reposition();
 		addNote("done");
+		finish();
 	}
 }
