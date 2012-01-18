@@ -7,8 +7,9 @@ import algvis.core.Colors;
 
 public class UnionFindFind extends Algorithm {
 	public enum FindHeuristic {
-		NONE, COMPRESSION, HALVING
+		NONE, COMPRESSION, HALVING, SPLITTING
 	};
+	UnionFindNode u = null;
 
 	public FindHeuristic findState = FindHeuristic.NONE;
 	UnionFind UF;
@@ -16,14 +17,20 @@ public class UnionFindFind extends Algorithm {
 	public UnionFindFind(UnionFind UF) {
 		super(UF.M);
 		this.UF = UF;
-		setState(this.UF.pathCompression);
+		setState(UF.pathCompression);
 	}
 
 	public UnionFindFind(UnionFind UF, int element1) {
 		super(UF.M);
 		this.UF = UF;
-		setState(this.UF.pathCompression);
-		UnionFindNode U = this.UF.at(element1);
+		setState(UF.pathCompression);
+		u = UF.at(element1);
+	}
+	
+	public void run() {
+		setHeader("uffind");
+		UnionFindNode v = find(u);
+		v.bgcolor = Colors.NORMAL;
 	}
 
 	public void setState(FindHeuristic state) {
@@ -58,6 +65,7 @@ public class UnionFindFind extends Algorithm {
 			u.bgcolor = Colors.FOUND;
 			addStep("ufalreadyroot");
 			mysuspend();
+			u.unmark();
 			return u;
 		}
 
@@ -105,6 +113,7 @@ public class UnionFindFind extends Algorithm {
 			u.bgcolor = Colors.FOUND;
 			addStep("ufalreadyroot");
 			mysuspend();
+			u.unmark();
 			return u;
 		}
 

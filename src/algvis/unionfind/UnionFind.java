@@ -109,7 +109,6 @@ public class UnionFind extends DataStructure {
 				shift += sets.get(i).leftw;
 				sets.get(i).shift(shift, 0);
 				shift += sets.get(i).rightw;
-				System.out.println(shift);
 			}
 			x2 = shift;
 			// System.out.println(x1 + " " + x2 + " " + y1 + " " + y2);
