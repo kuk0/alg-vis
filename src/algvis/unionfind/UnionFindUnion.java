@@ -55,9 +55,11 @@ public class UnionFindUnion extends UnionFindFind {
 		R1.bgcolor = Colors.NORMAL;
 		R2.unmark();
 		R2.bgcolor = Colors.NORMAL;
-		
+
 		UF.reposition();
-		addStep("done");
+		addNote("done");
+		UF.M.screen.V.resetView(); // only for testing, but still there should
+									// be some correction.
 	}
 
 	private void unionByRank(UnionFindNode V, UnionFindNode W) {
@@ -93,8 +95,8 @@ public class UnionFindUnion extends UnionFindFind {
 		R2.bgcolor = Colors.NORMAL;
 
 		UF.reposition();
-		addStep("done");
-		UF.M.screen.V.resetView(); // only for testing, but still there should be
-									// some correction.
+		addNote("done");
+		UF.M.screen.V.resetView(); // only for testing, but still there should
+									// be some correction.
 	}
 }

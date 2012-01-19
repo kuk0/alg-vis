@@ -3,13 +3,14 @@ package algvis.unionfind;
 import java.util.ArrayList;
 
 import algvis.core.Alignment;
+import algvis.core.ClickListener;
 import algvis.core.DataStructure;
 import algvis.core.View;
 import algvis.core.VisPanel;
 import algvis.unionfind.UnionFindFind.FindHeuristic;
 import algvis.unionfind.UnionFindUnion.UnionHeuristic;
 
-public class UnionFind extends DataStructure {
+public class UnionFind extends DataStructure implements ClickListener {
 	public static String adtName = "ufa";
 	public static String dsName = "ufi";
 
@@ -21,8 +22,11 @@ public class UnionFind extends DataStructure {
 	public FindHeuristic pathCompression = FindHeuristic.NONE;
 	public UnionHeuristic unionState = UnionHeuristic.NONE;
 
+	public UnionFindNode firstSelected = null;
+	public UnionFindNode secondSelected = null;
+
 	public UnionFind(VisPanel M) {
-		super(M);
+		super(M, dsName);
 		M.screen.V.align = Alignment.LEFT;
 		count = 0;
 		sets = new ArrayList<UnionFindNode>();
@@ -80,6 +84,12 @@ public class UnionFind extends DataStructure {
 			}
 		}
 		if (v != null) {
+			if (isSelected(v) && (v.marked == false)) {
+				v.mark();
+			}
+			if (!isSelected(v) && (v.marked != false)) {
+				v.unmark();
+			}
 			v.move();
 			v.draw(V);
 		}
@@ -118,5 +128,28 @@ public class UnionFind extends DataStructure {
 
 	public UnionFindNode at(int elementAt) {
 		return vertices.get(elementAt);
+	}
+
+	public boolean isSelected(UnionFindNode u) {
+		if ((u == firstSelected) || (u == secondSelected))
+			return true;
+		else
+			return false;
+	}
+
+	public void mouseClicked(int x, int y) {
+		// see find()
+		System.out.println("ahoj");
+/*		UnionFindNode u = null;
+		int i = 0;
+		int j = sets.size();
+		do {
+			System.out.println(i);
+			u = (UnionFindNode) sets.get(i).find(x, y);
+			i++;
+		} while ((u == null) && (i < j));
+		if (u != null) {
+			u.mark();
+		}*/
 	}
 }

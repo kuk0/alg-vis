@@ -15,13 +15,13 @@ public class UnionFindFind extends Algorithm {
 	UnionFind UF;
 
 	public UnionFindFind(UnionFind UF) {
-		super(UF.M);
+		super(UF);
 		this.UF = UF;
 		setState(UF.pathCompression);
 	}
 
 	public UnionFindFind(UnionFind UF, int element1) {
-		super(UF.M);
+		super(UF);
 		this.UF = UF;
 		setState(UF.pathCompression);
 		u = UF.at(element1);
@@ -31,6 +31,7 @@ public class UnionFindFind extends Algorithm {
 		setHeader("uffind");
 		UnionFindNode v = find(u);
 		v.bgcolor = Colors.NORMAL;
+		addNote("done");
 	}
 
 	public void setState(FindHeuristic state) {
