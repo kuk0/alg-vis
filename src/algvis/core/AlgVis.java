@@ -120,7 +120,7 @@ public class AlgVis extends JPanel implements ActionListener {
 		 * 7 - AA
 		 * 0 - BST
 		 */
-		cl.show(cards, DataStructures.getName(0));
+		cl.show(cards, DataStructures.getName(16));
 	}
 
 	public void actionPerformed(ActionEvent e) {

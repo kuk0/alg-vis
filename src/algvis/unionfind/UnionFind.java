@@ -19,7 +19,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 	public ArrayList<UnionFindNode> vertices = new ArrayList<UnionFindNode>();
 	public UnionFindNode v = null;
 
-	public FindHeuristic pathCompression = FindHeuristic.NONE;
+	public FindHeuristic pathCompression = FindHeuristic.HALVING;
 	public UnionHeuristic unionState = UnionHeuristic.NONE;
 
 	public UnionFindNode firstSelected = null;
@@ -28,6 +28,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 	public UnionFind(VisPanel M) {
 		super(M, dsName);
 		M.screen.V.align = Alignment.LEFT;
+		M.screen.V.setDS(this);
 		count = 0;
 		sets = new ArrayList<UnionFindNode>();
 		for (int i = 0; i < 10; i++) {
@@ -56,12 +57,12 @@ public class UnionFind extends DataStructure implements ClickListener {
 		reposition();
 	}
 
-	public void find(int element1) {
-		start(new UnionFindFind(this, element1));
+	public void find(UnionFindNode u) {
+		start(new UnionFindFind(this, u));
 	}
 
-	public void union(int element1, int element2) {
-		start(new UnionFindUnion(this, element1, element2));
+	public void union(UnionFindNode u, UnionFindNode v) {
+		start(new UnionFindUnion(this, u, v));
 	}
 
 	@Override
@@ -138,18 +139,34 @@ public class UnionFind extends DataStructure implements ClickListener {
 	}
 
 	public void mouseClicked(int x, int y) {
-		// see find()
-		System.out.println("ahoj");
-/*		UnionFindNode u = null;
+		UnionFindNode u = null;
 		int i = 0;
 		int j = sets.size();
 		do {
-			System.out.println(i);
 			u = (UnionFindNode) sets.get(i).find(x, y);
 			i++;
 		} while ((u == null) && (i < j));
 		if (u != null) {
-			u.mark();
-		}*/
+			if (isSelected(u)) {
+				u.unmark();
+				if (u == secondSelected) {
+					secondSelected = null;
+				} else if (u == firstSelected) {
+					firstSelected = secondSelected;
+					secondSelected = null;
+				}
+			} else {
+				u.mark();
+				if (firstSelected == null) {
+					firstSelected = u;
+				} else if (secondSelected == null) {
+					secondSelected = u;
+				} else {
+					firstSelected.unmark();
+					firstSelected = secondSelected;
+					secondSelected = u;
+				}
+			}
+		}
 	}
 }

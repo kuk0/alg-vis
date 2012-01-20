@@ -12,12 +12,12 @@ public class UnionFindUnion extends UnionFindFind {
 	UnionFindNode u = null;
 	UnionFindNode v = null;
 
-	public UnionFindUnion(UnionFind UF, int element1, int element2) {
+	public UnionFindUnion(UnionFind UF, UnionFindNode u, UnionFindNode v) {
 		super(UF);
 		this.UF = UF;
 		this.unionState = UF.unionState;
-		this.u = this.UF.at(element1);
-		this.v = this.UF.at(element2);
+		this.u = u;
+		this.v = v;
 		setHeader("ufunion");
 	}
 

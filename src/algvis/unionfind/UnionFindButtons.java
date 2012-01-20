@@ -60,19 +60,39 @@ public class UnionFindButtons extends Buttons {
 		} else if (evt.getSource() == findB) {
 			int count = ((UnionFind) D).count;
 			final Vector<Integer> args = I.getVI(1, count + 1);
+			if (((UnionFind) D).firstSelected != null) {
+				args.insertElementAt(((UnionFind) D).firstSelected.key, 0);
+//				((UnionFind) D).firstSelected.unmark();
+				((UnionFind) D).firstSelected = null;
+			}
+			if (((UnionFind) D).secondSelected != null) {
+				args.insertElementAt(((UnionFind) D).secondSelected.key, 1);
+				((UnionFind) D).secondSelected.unmark();
+				((UnionFind) D).secondSelected = null;
+			}
 			if (args.size() == 0) {
 				Random G = new Random(System.currentTimeMillis());
 				args.add(G.nextInt(count) + 1);
 			}
 			Thread t = new Thread(new Runnable() {
 				public void run() {
-					((UnionFind) D).find(args.elementAt(0) - 1);
+					((UnionFind) D).find(((UnionFind) D).at(args.elementAt(0) - 1));
 				}
 			});
 			t.start();
 		} else if (evt.getSource() == unionB) {
 			int count = ((UnionFind) D).count;
 			final Vector<Integer> args = I.getVI(1, count + 1);
+			if (((UnionFind) D).firstSelected != null) {
+				args.insertElementAt(((UnionFind) D).firstSelected.key, 0);
+//				((UnionFind) D).firstSelected.unmark();
+				((UnionFind) D).firstSelected = null;
+			}
+			if (((UnionFind) D).secondSelected != null) {
+				args.insertElementAt(((UnionFind) D).secondSelected.key, 1);
+//				((UnionFind) D).secondSelected.unmark();
+				((UnionFind) D).secondSelected = null;
+			}
 			// if (args.size() != 2) { return; }
 			Random G = new Random(System.currentTimeMillis());
 			switch (args.size()) {
@@ -91,8 +111,9 @@ public class UnionFindButtons extends Buttons {
 			// is this thread necessary?
 			Thread t = new Thread(new Runnable() {
 				public void run() {
-					((UnionFind) D).union(args.elementAt(0) - 1,
-							args.elementAt(1) - 1);
+					((UnionFind) D).union(
+							((UnionFind) D).at(args.elementAt(0) - 1),
+							((UnionFind) D).at(args.elementAt(1) - 1));
 				}
 			});
 			t.start();
