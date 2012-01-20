@@ -62,7 +62,6 @@ public class UnionFindButtons extends Buttons {
 			final Vector<Integer> args = I.getVI(1, count + 1);
 			if (((UnionFind) D).firstSelected != null) {
 				args.insertElementAt(((UnionFind) D).firstSelected.key, 0);
-//				((UnionFind) D).firstSelected.unmark();
 				((UnionFind) D).firstSelected = null;
 			}
 			if (((UnionFind) D).secondSelected != null) {
@@ -85,15 +84,12 @@ public class UnionFindButtons extends Buttons {
 			final Vector<Integer> args = I.getVI(1, count + 1);
 			if (((UnionFind) D).firstSelected != null) {
 				args.insertElementAt(((UnionFind) D).firstSelected.key, 0);
-//				((UnionFind) D).firstSelected.unmark();
 				((UnionFind) D).firstSelected = null;
 			}
 			if (((UnionFind) D).secondSelected != null) {
 				args.insertElementAt(((UnionFind) D).secondSelected.key, 1);
-//				((UnionFind) D).secondSelected.unmark();
 				((UnionFind) D).secondSelected = null;
 			}
-			// if (args.size() != 2) { return; }
 			Random G = new Random(System.currentTimeMillis());
 			switch (args.size()) {
 			case 0:
@@ -103,11 +99,9 @@ public class UnionFindButtons extends Buttons {
 				int ii = args.elementAt(0);
 				do {
 					i = G.nextInt(count) + 1;
-					// System.out.println(i);
 				} while (i == ii);
 				args.add(i);
 			}
-			// System.out.println(args.get(0)+" "+ args.get(1));
 			// is this thread necessary?
 			Thread t = new Thread(new Runnable() {
 				public void run() {
