@@ -10,10 +10,13 @@ import javax.swing.JPanel;
 import algvis.core.Buttons;
 import algvis.core.VisPanel;
 import algvis.internationalization.IButton;
+import algvis.internationalization.IComboBox;
+import algvis.internationalization.ILabel;
 
 public class UnionFindButtons extends Buttons {
 	private static final long serialVersionUID = 2683381160819263717L;
 	IButton makesetB, findB, unionB;
+	IComboBox unionHeuristicCB, findHeuristicCB;
 
 	public UnionFindButtons(VisPanel M) {
 		super(M);
@@ -43,22 +46,39 @@ public class UnionFindButtons extends Buttons {
 	}
 
 	@Override
+	public void otherButtons(JPanel P) {
+		ILabel uhLabel = new ILabel(M.S.L, "uf-union-heuristic"), fhLabel = new ILabel(
+				M.S.L, "uf-find-heuristic");
+		String[] uh = { "uf-none", "uf-byrank" }, fh = { "uf-none",
+				"uf-compresion", "uf-halving", "uf-splitting" };
+		unionHeuristicCB = new IComboBox(M.S.L, uh);
+		findHeuristicCB = new IComboBox(M.S.L, fh);
+		unionHeuristicCB.addActionListener(this);
+		findHeuristicCB.addActionListener(this);
+		P.add(uhLabel);
+		P.add(unionHeuristicCB);
+		P.add(fhLabel);
+		P.add(findHeuristicCB);
+	}
+
+	@Override
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
+		final UnionFind D = (UnionFind) this.D;
 		if (evt.getSource() == makesetB) {
 			int N = I.getInt(10, 1, 1000);
-			((UnionFind) D).makeSet(N);
+			D.makeSet(N);
 		} else if (evt.getSource() == findB) {
-			int count = ((UnionFind) D).count;
+			int count = D.count;
 			final Vector<Integer> args = I.getVI(1, count + 1);
-			if (((UnionFind) D).firstSelected != null) {
-				args.insertElementAt(((UnionFind) D).firstSelected.key, 0);
-				((UnionFind) D).firstSelected = null;
+			if (D.firstSelected != null) {
+				args.insertElementAt(D.firstSelected.key, 0);
+				D.firstSelected = null;
 			}
-			if (((UnionFind) D).secondSelected != null) {
-				args.insertElementAt(((UnionFind) D).secondSelected.key, 1);
-				((UnionFind) D).secondSelected.unmark();
-				((UnionFind) D).secondSelected = null;
+			if (D.secondSelected != null) {
+				args.insertElementAt(D.secondSelected.key, 1);
+				D.secondSelected.unmark();
+				D.secondSelected = null;
 			}
 			if (args.size() == 0) {
 				Random G = new Random(System.currentTimeMillis());
@@ -66,7 +86,7 @@ public class UnionFindButtons extends Buttons {
 			}
 			Thread t = new Thread(new Runnable() {
 				public void run() {
-					((UnionFind) D).find(((UnionFind) D).at(args.elementAt(0) - 1));
+					D.find(D.at(args.elementAt(0) - 1));
 				}
 			});
 			t.start();
@@ -96,12 +116,18 @@ public class UnionFindButtons extends Buttons {
 			// is this thread necessary?
 			Thread t = new Thread(new Runnable() {
 				public void run() {
-					((UnionFind) D).union(
-							((UnionFind) D).at(args.elementAt(0) - 1),
-							((UnionFind) D).at(args.elementAt(1) - 1));
+					D.union(D.at(args.elementAt(0) - 1),
+							D.at(args.elementAt(1) - 1));
 				}
 			});
 			t.start();
+		} else if (evt.getSource() == unionHeuristicCB) {
+			int i = unionHeuristicCB.getSelectedIndex();
+			((UnionFind) D).unionState = UnionFindUnion.UnionHeuristic.values()[i];
+		} else if (evt.getSource() == findHeuristicCB) {
+			int i = findHeuristicCB.getSelectedIndex();
+			((UnionFind) D).pathCompression = UnionFindFind.FindHeuristic
+					.values()[i];
 		}
 	}
 
@@ -120,5 +146,4 @@ public class UnionFindButtons extends Buttons {
 		findB.setEnabled(true);
 		unionB.setEnabled(true);
 	}
-
 }
