@@ -1,5 +1,7 @@
 package algvis.internationalization;
 
+import java.awt.Color;
+
 import javax.swing.JComboBox;
 
 public class IComboBox extends JComboBox implements LanguageListener {
@@ -13,6 +15,7 @@ public class IComboBox extends JComboBox implements LanguageListener {
 		this.choices = choices;
 		languageChanged();
 		L.addListener(this);
+		setBackground(Color.WHITE);
 	}
 
 	@Override

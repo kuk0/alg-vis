@@ -7,7 +7,7 @@ public class UnionFindUnion extends UnionFindFind {
 		NONE, BYRANK
 	}
 
-	public UnionHeuristic unionState = UnionHeuristic.BYRANK;
+	public UnionHeuristic unionState = UnionHeuristic.NONE;
 	UnionFind UF;
 	UnionFindNode u = null;
 	UnionFindNode v = null;
@@ -58,7 +58,7 @@ public class UnionFindUnion extends UnionFindFind {
 
 		UF.reposition();
 		addNote("done");
-		UF.M.screen.V.resetView(); // only for testing, but still there should
+		//UF.M.screen.V.resetView(); // only for testing, but still there should
 									// be some correction.
 	}
 
@@ -96,7 +96,7 @@ public class UnionFindUnion extends UnionFindFind {
 
 		UF.reposition();
 		addNote("done");
-		UF.M.screen.V.resetView(); // only for testing, but still there should
+		//UF.M.screen.V.resetView(); // only for testing, but still there should
 									// be some correction.
 	}
 }

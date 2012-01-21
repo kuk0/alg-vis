@@ -1,5 +1,7 @@
 package algvis.internationalization;
 
+import java.awt.Color;
+
 
 public class ILabel extends ChLabel implements LanguageListener {
 	private static final long serialVersionUID = 8993404595330090194L;

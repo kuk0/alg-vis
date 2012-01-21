@@ -47,12 +47,14 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		JPanel first = initFirstRow();
 		JPanel second = initSecondRow();
 		JPanel third = initThirdRow();
+		JPanel statsPanel = initStats();
 
 		// put everything together
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		add(first);
 		add(second);
-		add(third);
+		if (third != null) add(third);
+		add(statsPanel);
 		setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createTitledBorder(M.S.L.getString("control")),
 				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
@@ -88,20 +90,24 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		second.add(random);
 		// second.add(save);
 		// second.add(zoomLabel);
-		second.add(zoomIn);
-		second.add(zoomOut);
+		//second.add(zoomIn);
+		//second.add(zoomOut);
 		second.add(resetView);
 		otherButtons(second);
 		return second;
 	}
 
-	// statistics
 	public JPanel initThirdRow() {
-		JPanel third = new JPanel();
-		third.setLayout(new FlowLayout());
+		return null;
+	}
+
+	// statistics
+	public JPanel initStats() {
+		JPanel statsPanel = new JPanel();
+		statsPanel.setLayout(new FlowLayout());
 		stats = new ChLabel(D.stats());
-		third.add(stats);
-		return third;
+		statsPanel.add(stats);
+		return statsPanel;
 	}
 
 	public void initPrevious() {
