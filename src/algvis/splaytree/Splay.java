@@ -11,6 +11,7 @@ public class Splay extends BST {
 
 	public Splay(VisPanel M) {
 		super(M);
+		scenario.enable(false);
 	}
 
 	@Override

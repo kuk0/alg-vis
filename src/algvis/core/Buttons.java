@@ -109,6 +109,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		previous.setMnemonic(KeyEvent.VK_O);
 		previous.setEnabled(false);
 		previous.addActionListener(this);
+		previous.setVisible(D.scenario.isEnabled());
 	}
 
 	public void initNext() {
