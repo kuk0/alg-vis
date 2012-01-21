@@ -28,7 +28,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	Languages L;
 	JScrollPane sp;
 	private int k = 0, position = 0;
-	private String text;
+	//private String text;
 	private List<String> s = new ArrayList<String>(),
 			pre = new ArrayList<String>(), post = new ArrayList<String>();
 	private List<String[]> param = new ArrayList<String[]> ();
@@ -59,7 +59,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	}
 
 	public void clear() {
-		text = "";
+		//text = "";
 		position = k = 0;
 		s = new ArrayList<String>();
 		pre = new ArrayList<String>();

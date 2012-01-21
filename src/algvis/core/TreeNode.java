@@ -85,7 +85,9 @@ public class TreeNode extends Node {
 		if (state != INVISIBLE) {
 			if (thread) {
 				v.setColor(Color.red);
-				v.drawLine(x, y, child.x, child.y);
+				if (child !=null){
+					v.drawLine(x, y, child.x, child.y);
+				} else System.out.println("child: "+child);
 				v.setColor(Color.black);
 			} else {
 				TreeNode w = child;

@@ -21,10 +21,6 @@ public class UnionFindButtons extends Buttons {
 
 	@Override
 	public void actionButtons(JPanel P) {
-		makesetB = new IButton(M.S.L, "button-makeset");
-		makesetB.setMnemonic(KeyEvent.VK_M);
-		makesetB.addActionListener(this);
-
 		findB = new IButton(M.S.L, "button-uffind");
 		findB.setMnemonic(KeyEvent.VK_F);
 		findB.addActionListener(this);
@@ -33,30 +29,25 @@ public class UnionFindButtons extends Buttons {
 		unionB.setMnemonic(KeyEvent.VK_U);
 		unionB.addActionListener(this);
 
-		P.add(makesetB);
 		P.add(findB);
 		P.add(unionB);
+	}
+
+	@Override
+	public void actionButtons2(JPanel P) {
+		makesetB = new IButton(M.S.L, "button-makeset");
+		makesetB.setMnemonic(KeyEvent.VK_A);
+		makesetB.addActionListener(this);
+
+		P.add(makesetB);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
 		if (evt.getSource() == makesetB) {
-			final Vector<Integer> args = I.getVI();
-			if (args.size() == 0) {
-				args.add(1);
-			}
-			// is this thread necessary?
-			Thread t = new Thread(new Runnable() {
-				public void run() {
-					for (int x : args) {
-						for (int j = 0; j < x; j++) {
-							((UnionFind) D).makeSet();
-						}
-					}
-				}
-			});
-			t.start();
+			int N = I.getInt(10, 1, 1000);
+			((UnionFind) D).makeSet(N);
 		} else if (evt.getSource() == findB) {
 			int count = ((UnionFind) D).count;
 			final Vector<Integer> args = I.getVI(1, count + 1);

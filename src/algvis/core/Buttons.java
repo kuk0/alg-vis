@@ -17,11 +17,11 @@ import algvis.internationalization.IButton;
 import algvis.internationalization.ICheckBox;
 
 /**
- * The Class Buttons.
- * This is a panel with standard buttons such as input field, the "Next", "Clear", and "Random" buttons,
- * "Pause" checkbox, label with statistics, and "Zoom in/Zoom out" buttons.
- * Panels with data structure-specific buttons (such "Insert" or "Delete") are created by
- * extending this class (see for example classes DictButtons, PQButtons). 
+ * The Class Buttons. This is a panel with standard buttons such as input field,
+ * the "Next", "Clear", and "Random" buttons, "Pause" checkbox, label with
+ * statistics, and "Zoom in/Zoom out" buttons. Panels with data
+ * structure-specific buttons (such "Insert" or "Delete") are created by
+ * extending this class (see for example classes DictButtons, PQButtons).
  */
 abstract public class Buttons extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1417759004124906334L;
@@ -34,15 +34,32 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	JButton zoomIn, zoomOut, resetView;
 	private Thread scenarioTraverser;
 
-	// ILabel zoomLabel;
 	abstract public void actionButtons(JPanel P);
+
+	public void actionButtons2(JPanel P) {
+	}
 
 	public Buttons(VisPanel M) {
 		this.M = M;
 		D = M.D;
 		assert D != null : "data structure not initialized yet";
 
-		// first
+		JPanel first = initFirstRow();
+		JPanel second = initSecondRow();
+		JPanel third = initThirdRow();
+
+		// put everything together
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		add(first);
+		add(second);
+		add(third);
+		setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createTitledBorder(M.S.L.getString("control")),
+				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+	}
+
+	// input field, actions (insert, find, delete,...), previous, next
+	public JPanel initFirstRow() {
 		JPanel first = new JPanel();
 		first.setLayout(new FlowLayout());
 
@@ -50,44 +67,41 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		first.add(I);
 		actionButtons(first);
 		initPrevious();
-		first.add(previous);
 		initNext();
+		first.add(previous);
 		first.add(next);
+		actionButtons2(first);
+		return first;
+	}
 
-		// second
+	// [x] pause, clear, random, zoom in/out
+	public JPanel initSecondRow() {
+		JPanel second = new JPanel();
 		initPause();
 		initClear();
 		initRandom();
-		//initSave();
+		// initSave();
 		initZoom();
-		JPanel second = new JPanel();
 		second.setLayout(new FlowLayout());
 		second.add(pause);
 		second.add(clear);
 		second.add(random);
-	 	//second.add(save);
+		// second.add(save);
 		// second.add(zoomLabel);
 		second.add(zoomIn);
 		second.add(zoomOut);
 		second.add(resetView);
-
 		otherButtons(second);
+		return second;
+	}
 
-		// third
+	// statistics
+	public JPanel initThirdRow() {
 		JPanel third = new JPanel();
 		third.setLayout(new FlowLayout());
-
 		stats = new ChLabel(D.stats());
 		third.add(stats);
-
-		// put everything together
-		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		add(first);
-		add(second);
-		add(third);
-		setBorder(BorderFactory.createCompoundBorder(BorderFactory
-				.createTitledBorder(M.S.L.getString("control")), BorderFactory
-				.createEmptyBorder(5, 5, 5, 5)));
+		return third;
 	}
 
 	public void initPrevious() {
@@ -96,7 +110,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		previous.setEnabled(false);
 		previous.addActionListener(this);
 	}
-	
+
 	public void initNext() {
 		next = new IButton(M.S.L, "next");
 		next.setMnemonic(KeyEvent.VK_N);
@@ -121,12 +135,12 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		random.setMnemonic(KeyEvent.VK_R);
 		random.addActionListener(this);
 	}
-	
+
 	public void initSave() {
 		save = new IButton(M.S.L, "button-save");
-	 	save.setMnemonic(KeyEvent.VK_S);
-	 	save.setEnabled(D.scenario.isEnabled());
-	 	save.addActionListener(this);
+		save.setMnemonic(KeyEvent.VK_S);
+		save.setEnabled(D.scenario.isEnabled());
+		save.addActionListener(this);
 	}
 
 	private JButton createButton(String alt, String path) {
@@ -141,7 +155,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 
 	public void initZoom() {
 		// zoomLabel = new ILabel(M.S.L, "zoomio");
-//		zoomIn = createButton("+", "../images/zoom_in.gif");
+		// zoomIn = createButton("+", "../images/zoom_in.gif");
 		zoomIn = createButton("+", "/algvis/images/zoom_in.gif");
 		zoomOut = createButton("-", "/algvis/images/zoom_out.gif");
 		resetView = createButton("R", "/algvis/images/reset.gif");
@@ -217,7 +231,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	public void disableNext() {
 		next.setEnabled(false);
 	}
-	
+
 	public void enablePrevious() {
 		if (D.scenario.isEnabled()) {
 			previous.setEnabled(true);
@@ -227,7 +241,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	public void disablePrevious() {
 		previous.setEnabled(false);
 	}
-	
+
 	/**
 	 * enables all buttons except previous and next
 	 */
@@ -251,7 +265,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 
 	public void otherButtons(JPanel P) {
 	}
-	
+
 	@Override
 	public Dimension getMaximumSize() {
 		return new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);

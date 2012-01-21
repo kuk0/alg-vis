@@ -31,9 +31,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 		M.screen.V.setDS(this);
 		count = 0;
 		sets = new ArrayList<UnionFindNode>();
-		for (int i = 0; i < 10; i++) {
-			makeSet();
-		}
+		makeSet(10);
 	}
 
 	@Override
@@ -43,17 +41,15 @@ public class UnionFind extends DataStructure implements ClickListener {
 
 	@Override
 	public void insert(int x) {
-		// This represent how many times MakeSet() will be called
-		for (int i = 0; i < x; i++) {
-			// MakeSet();
-		}
 	}
 
-	public void makeSet() {
-		count++;
-		UnionFindNode T = new UnionFindNode(this, count);
-		sets.add(T);
-		vertices.add(T);
+	public void makeSet(int N) {
+		for (int i = 0; i < N; i++) {
+			count++;
+			UnionFindNode T = new UnionFindNode(this, count);
+			sets.add(T);
+			vertices.add(T);
+		}
 		reposition();
 	}
 
@@ -70,9 +66,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 		count = 0;
 		sets = new ArrayList<UnionFindNode>();
 		vertices = new ArrayList<UnionFindNode>();
-		for (int i = 0; i < 10; i++) {
-			makeSet();
-		}
+		makeSet(10);
 		setStats();
 	}
 

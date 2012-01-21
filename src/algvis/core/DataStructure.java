@@ -40,7 +40,15 @@ abstract public class DataStructure {
 		M.B.enableNext();
 		M.B.enablePrevious();
 		M.B.disableAll();
-		A.start();
+		
+		try {
+			A.start();
+		} catch (IllegalThreadStateException e) {
+			System.out.println("LOL");
+			M.B.disableNext();
+			M.B.enableAll();
+			return;
+		}
 		try {
 			A.join();
 			// System.out.println("join");
