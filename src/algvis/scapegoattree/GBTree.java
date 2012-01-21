@@ -12,6 +12,7 @@ public class GBTree extends BST {
 
 	public GBTree(VisPanel M) {
 		super(M);
+		scenario.enable(false);
 	}
 
 	@Override

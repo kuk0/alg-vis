@@ -17,7 +17,7 @@ public class BST extends Dictionary implements LayoutListener {
 
 	public BST(VisPanel M) {
 		super(M, dsName);
-		scenario.enable();
+		scenario.enable(true);
 	}
 
 	public BSTNode setNodeV(BSTNode v) {
