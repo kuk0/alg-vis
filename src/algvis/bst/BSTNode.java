@@ -19,7 +19,7 @@ public class BSTNode extends Node {
 	int offset = 0; // offset from parent node
 	private int level; // distance to root
 	boolean thread = false; // is this node threaded?
-
+	
 	// statistics
 	public int size = 1, height = 1, sumh = 1;
 
@@ -475,5 +475,11 @@ public class BSTNode extends Node {
 		if (right != null) {
 			right.RTPetrification(tox, y + D.minsepy);
 		}
+	}
+	
+	public void subtreeBgColor(Color bg) {
+		bgColor(bg);
+		if (left != null) left.subtreeBgColor(bg);
+		if (right != null) right.subtreeBgColor(bg);
 	}
 }

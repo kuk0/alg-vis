@@ -39,22 +39,22 @@ public class UnionFindUnion extends UnionFindFind {
 	}
 
 	private void unionSimple(UnionFindNode V, UnionFindNode W) {
-		UnionFindNode R1 = find(V);
-		UnionFindNode R2 = find(W);
-		if (R1 == R2) {
+		UnionFindNode r1 = find(V);
+		UnionFindNode r2 = find(W);
+		if (r1 == r2) {
 			addStep("ufsameset");
 			mysuspend();
 		} else {
 			addStep("ufunionsimple");
 			mysuspend();
-			UF.sets.remove(R2);
-			R1.addChild(R2);
+			UF.sets.remove(r2);
+			r1.addChild(r2);
 		}
 
-		R1.unmark();
-		R1.bgcolor = Colors.NORMAL;
-		R2.unmark();
-		R2.bgcolor = Colors.NORMAL;
+		r1.unmark();
+		r1.bgcolor = Colors.NORMAL;
+		r2.unmark();
+		r2.bgcolor = Colors.NORMAL;
 
 		UF.reposition();
 		addNote("done");
@@ -63,36 +63,36 @@ public class UnionFindUnion extends UnionFindFind {
 	}
 
 	private void unionByRank(UnionFindNode V, UnionFindNode W) {
-		UnionFindNode R1 = find(V);
-		UnionFindNode R2 = find(W);
-		if (R1 == R2) {
+		UnionFindNode r1 = find(V);
+		UnionFindNode r2 = find(W);
+		if (r1 == r2) {
 			addStep("ufsameset");
 			mysuspend();
 		} else {
-			addStep("ufunionbyrank", R1.rank, R2.rank);
-			if (R1.rank > R2.rank) {
+			addStep("ufunionbyrank", r1.rank, r2.rank);
+			if (r1.rank > r2.rank) {
 				addStep("ufunionfirstsecond");
 				mysuspend();
-				UF.sets.remove(R2);
-				R1.addChild(R2);
-			} else if (R1.rank < R2.rank) {
+				UF.sets.remove(r2);
+				r1.addChild(r2);
+			} else if (r1.rank < r2.rank) {
 				addStep("ufunionsecondfirst");
 				mysuspend();
-				UF.sets.remove(R1);
-				R2.addChild(R1);
+				UF.sets.remove(r1);
+				r2.addChild(r1);
 			} else {
 				addStep("ufunionsamerank");
 				mysuspend();
-				UF.sets.remove(R2);
-				R1.addChild(R2);
-				R1.rank++;
+				UF.sets.remove(r2);
+				r1.addChild(r2);
+				r1.rank++;
 			}
 		}
 
-		R1.unmark();
-		R1.bgcolor = Colors.NORMAL;
-		R2.unmark();
-		R2.bgcolor = Colors.NORMAL;
+		r1.unmark();
+		r1.bgcolor = Colors.NORMAL;
+		r2.unmark();
+		r2.bgcolor = Colors.NORMAL;
 
 		UF.reposition();
 		addNote("done");
