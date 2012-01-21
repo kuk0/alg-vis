@@ -63,6 +63,25 @@ public class RBNode extends BSTNode {
 		super.draw(v);
 	}
 
+	public void drawBigNodes(View v) {
+		if (key == NULL) {
+			return;
+		}
+		v.drawWideLine(x - 1, y, x + 1, y);
+		if (left != null) {
+			if (((RBNode) left).red) {
+				v.drawWideLine(x, y, left.x, left.y);
+			}
+			((RBNode) left).drawBigNodes(v);
+		}
+		if (right != null) {
+			if (((RBNode) right).red) {
+				v.drawWideLine(x, y, right.x, right.y);
+			}
+			((RBNode) right).drawBigNodes(v);
+		}
+	}
+
 	@Override
 	public void calc() {
 		if (key == NULL) {
@@ -98,19 +117,10 @@ public class RBNode extends BSTNode {
 		calc();
 	}
 
-	@Override
-	public void drawTree(View v) {
-		if (left.key != Node.NULL) {
-			v.setColor(Color.black);
-			v.drawLine(x, y, left.x, left.y);
-			left.drawTree(v);
-		}
-		if (right.key != Node.NULL) {
-			v.setColor(Color.black);
-			v.drawLine(x, y, right.x, right.y);
-			right.drawTree(v);
-		}
-		draw(v);
+	public void drawTree2(View v) {
+		// if (((RB)D).mode24)
+		drawBigNodes(v);
+		drawTree(v);
 	}
 
 	@Override
@@ -124,7 +134,7 @@ public class RBNode extends BSTNode {
 		move();
 	}
 
-	/**/@Override
+	//*/@Override
 	public void rebox() {
 		leftw = (left.key == Node.NULL) ? D.xspan + D.radius : left.leftw
 				+ left.rightw;
@@ -183,5 +193,5 @@ public class RBNode extends BSTNode {
 			reboxTree();
 			repos();
 		}
-	}/**/
+	} //*/
 }

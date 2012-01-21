@@ -216,6 +216,17 @@ public class View implements MouseListener, MouseMotionListener,
 	public void drawLine(int x1, int y1, int x2, int y2) {
 		g.drawLine(x1, y1, x2, y2);
 	}
+	
+	public void drawWideLine(int x1, int y1, int x2, int y2) {
+		final Stroke old = g.getStroke(), wide = new BasicStroke(27.0f,
+				BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+		final Color c = g.getColor();
+		g.setColor(new Color(230,230,230));
+		g.setStroke(wide);
+		g.drawLine(x1, y1, x2, y2);
+		g.setStroke(old);
+		g.setColor(c);
+	}
 
 	public void drawDashedLine(int x1, int y1, int x2, int y2) {
 		final float dash1[] = { 2.0f, 5.0f };

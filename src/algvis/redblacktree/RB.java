@@ -17,6 +17,7 @@ public class RB extends BST {
 		root = NULL.parent = NULL;
 		NULL.red = false;
 		NULL.size = NULL.height = NULL.sumh = 0;
+		NULL.state = Node.INVISIBLE;
 	}
 
 	@Override
@@ -67,7 +68,7 @@ public class RB extends BST {
 	public void draw(View V) {
 		if (root != NULL) {
 			root.moveTree();
-			root.drawTree(V);
+			((RBNode)root).drawTree2(V);
 		}
 		if (v != null) {
 			v.move();
