@@ -14,21 +14,39 @@ public class Rotations extends DataStructure implements ClickListener {
 	public static String adtName = "dictionary";
 	public static String dsName = "rotations";
 	BST T;
+	BSTNode v;
 
+	public String getName() {
+		return "rotations";
+	}
+	
 	public Rotations(VisPanel M) {
-		super(M);
+		super(M, dsName);
 		T = new BST(M);
-		random(10);
+		random(20);
 		M.screen.V.setDS(this);
 	}
 
 	public void rotate(int x) {
-		start(new Rotate(T, x));
+		v = T.root;
+		while (v != null && v.key != x) {
+			if (v.key < x) {
+				v = v.right;
+			} else {
+				v = v.left;
+			}
+		}
+		if (v == null) {
+			// vypis ze taky vrchol neexistuje
+			return;
+		} else {
+			start(new Rotate(this, v));
+		}
 	}
 
 	@Override
 	public void insert(int x) {
-		BSTNode v = new RotNode(T, x);
+		BSTNode v = new BSTNode(T, x);
 		BSTNode w = T.root;
 		if (w == null) {
 			T.root = v;
@@ -63,9 +81,12 @@ public class Rotations extends DataStructure implements ClickListener {
 
 	@Override
 	public void draw(View V) {
+		if (v != null && v.parent != null) {
+			V.drawWideLine(v.x, v.y, v.parent.x, v.parent.y);
+		}			
 		if (T.root != null) {
 			T.root.moveTree();
-			((RotNode) T.root).drawTree(V);
+			T.root.drawTree(V);
 		}
 	}
 

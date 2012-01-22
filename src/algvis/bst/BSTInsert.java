@@ -9,9 +9,9 @@ public class BSTInsert extends Algorithm {
 	int K;
 
 	public BSTInsert(BST T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
-		v = T.v = new BSTNode(T, K = x);
+		v = T.setNodeV(new BSTNode(T, K = x));
 		v.bgColor(Colors.INSERT);
 		setHeader("insertion");
 	}
@@ -19,20 +19,21 @@ public class BSTInsert extends Algorithm {
 	@Override
 	public void run() {
 		if (T.root == null) {
-			T.root = v;
+			T.setRoot(v);
 			v.goToRoot();
-			setText("newroot");
+			addStep("newroot");
 		} else {
 			BSTNode w = T.root;
 			v.goAboveRoot();
-			setText("bstinsertstart");
+			addStep("bstinsertstart");
 			mysuspend();
 
 			while (true) {
 				if (w.key == K) {
-					setText("alreadythere");
-					v.goDown();
+					addStep("alreadythere");
 					v.bgColor(Colors.NOTFOUND);
+					v.goDown();
+					finish();
 					return;
 				} else if (w.key < K) {
 					if (w.right == null) {
@@ -40,7 +41,7 @@ public class BSTInsert extends Algorithm {
 					} else {
 						v.pointAbove(w.right);
 					}
-					setText("bstinsertright", K, w.key);
+					addStep("bstinsertright", K, w.key);
 					mysuspend();
 					v.noArrow();
 					if (w.right != null) {
@@ -55,7 +56,7 @@ public class BSTInsert extends Algorithm {
 					} else {
 						v.pointAbove(w.left);
 					}
-					setText("bstinsertleft", K, w.key);
+					addStep("bstinsertleft", K, w.key);
 					mysuspend();
 					v.noArrow();
 					if (w.left != null) {
@@ -71,8 +72,9 @@ public class BSTInsert extends Algorithm {
 		}
 		T.reposition();
 		mysuspend();
-		setText("done");
+		addNote("done");
 		v.bgColor(Colors.NORMAL);
-		T.v = null;
+		T.setNodeV(null);
+		finish();
 	}
 }

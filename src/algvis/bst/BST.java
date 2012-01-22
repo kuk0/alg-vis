@@ -1,17 +1,47 @@
 package algvis.bst;
 
+import algvis.core.Commentary.State;
 import algvis.core.Dictionary;
 import algvis.core.LayoutListener;
 import algvis.core.StringUtils;
 import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.scenario.commands.SetCommentaryStateCommand;
+import algvis.scenario.commands.bstnode.SetBSTNodeVCommand;
+import algvis.scenario.commands.bstnode.SetBSTRootCommand;
+import algvis.scenario.commands.node.Wait4NodeCommand;
 
 public class BST extends Dictionary implements LayoutListener {
 	public static String dsName = "bst";
 	public BSTNode root = null, v = null;
+	boolean order = false;
 
+	public String getName() {
+		return "bst";
+	}
+	
 	public BST(VisPanel M) {
-		super(M);
+		super(M, dsName);
+		scenario.enable(true);
+	}
+
+	public BSTNode setNodeV(BSTNode v) {
+		if (this.v != v) {
+			scenario.add(new SetBSTNodeVCommand(this, v, this.v));
+			this.v = v;
+		}
+		if (v != null) {
+			scenario.add(new Wait4NodeCommand(v));
+		}
+		return v;
+	}
+	
+	public BSTNode setRoot(BSTNode root) {
+		if (this.root != root) {
+			scenario.add(new SetBSTRootCommand(this, root, this.root));
+			this.root = root;
+		}
+		return root;
 	}
 
 	@Override
@@ -31,8 +61,15 @@ public class BST extends Dictionary implements LayoutListener {
 
 	@Override
 	public void clear() {
-		root = null;
-		setStats();
+		if (root != null || v != null) {
+			scenario.addingNextStep();
+			setRoot(null);
+			setNodeV(null);
+			State commState = M.C.getState();
+			M.C.clear();
+			scenario.add(new SetCommentaryStateCommand(M.C, commState));
+			setStats();
+		}
 	}
 
 	@Override
@@ -64,6 +101,7 @@ public class BST extends Dictionary implements LayoutListener {
 	@Override
 	public void draw(View V) {
 		if (root != null) {
+			BSTNode.i = 0;
 			root.moveTree();
 			root.drawTree(V);
 		}
@@ -75,40 +113,38 @@ public class BST extends Dictionary implements LayoutListener {
 
 	protected void leftrot(BSTNode v) {
 		BSTNode u = v.parent;
+		if (v.left == null) {
+			u.unlinkRight();
+		} else {
+			u.linkRight(v.left);
+		}
 		if (u.isRoot()) {
-			root = v;
-			v.parent = null;
+			setRoot(v);
 		} else {
 			if (u.isLeft()) {
 				u.parent.linkLeft(v);
 			} else {
 				u.parent.linkRight(v);
 			}
-		}
-		if (v.left == null) {
-			u.right = null;
-		} else {
-			u.linkRight(v.left);
 		}
 		v.linkLeft(u);
 	}
 
 	protected void rightrot(BSTNode v) {
 		BSTNode u = v.parent;
+		if (v.right == null) {
+			u.unlinkLeft();
+		} else {
+			u.linkLeft(v.right);
+		}
 		if (u.isRoot()) {
-			root = v;
-			v.parent = null;
+			setRoot(v);
 		} else {
 			if (u.isLeft()) {
 				u.parent.linkLeft(v);
 			} else {
 				u.parent.linkRight(v);
 			}
-		}
-		if (v.right == null) {
-			u.left = null;
-		} else {
-			u.linkLeft(v.right);
 		}
 		v.linkRight(u);
 	}

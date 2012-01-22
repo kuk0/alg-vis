@@ -18,11 +18,11 @@ public class SkipInsert extends SkipAlg {
 
 	@Override
 	public void run() {
-		setText("skipinsertstart");
+		addStep("skipinsertstart");
 		SkipNode w = find();
 
 		if (w.right.key == v.key) {
-			setText("alreadythere");
+			addStep("alreadythere");
 			v.goDown();
 			mysuspend();
 			//System.out.println("dupl");
@@ -30,12 +30,12 @@ public class SkipInsert extends SkipAlg {
 		}
 
 		L.n++;
-		setText("skipinsertafter");
+		addStep("skipinsertafter");
 		SkipNode z, oldv = null;
 		int i = 0;
 		do {
 			if (i > 0) {
-				setText("skippromote");
+				addStep("skippromote");
 				L.e++;
 			}
 			if (i < L.height) {
@@ -65,10 +65,10 @@ public class SkipInsert extends SkipAlg {
 			mysuspend();
 		} while (R.nextInt(2) == 1);
 
-		setText("skipend");
+		addStep("skipend");
 		mysuspend();
 
-		setText("done");
+		addStep("done");
 		L.v.bgColor(Colors.NORMAL);
 		L.v = null;
 	}

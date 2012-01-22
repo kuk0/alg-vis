@@ -17,7 +17,7 @@ public class ChLabel extends JLabel {
 		FontMetrics metrics = getFontMetrics(getFont());
 		int width = metrics.stringWidth(getText());
 		int height = metrics.getHeight();
-		Dimension newDimension = new Dimension(width + 40, height + 10);
+		Dimension newDimension = new Dimension(width, height + 10);
 		setPreferredSize(newDimension);
 		setBounds(new Rectangle(getLocation(), getPreferredSize()));
 	}

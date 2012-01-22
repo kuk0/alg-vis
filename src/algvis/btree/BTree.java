@@ -10,8 +10,12 @@ public class BTree extends Dictionary {
 	BNode root = null, v = null;
 	int xspan = 5, yspan = 15;
 
+	public String getName() {
+		return "btree";
+	}
+	
 	public BTree(VisPanel M) {
-		super(M);
+		super(M, dsName);
 	}
 
 	@Override
@@ -31,7 +35,7 @@ public class BTree extends Dictionary {
 
 	@Override
 	public void clear() {
-		root = null;
+		root = v = null;
 		setStats();
 	}
 

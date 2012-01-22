@@ -10,17 +10,19 @@ public class SplayAlg extends Algorithm {
 	int K;
 	
 	public SplayAlg(Splay T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
-		T.v = s = new SplayNode(T, K = x);
-		s.bgColor(Colors.FIND);
-		setHeader("splay");
+		if (T.root != null) {
+			T.v = s = new SplayNode(T, K = x);
+			s.bgColor(Colors.FIND);
+			setHeader("splay");
+		}
 	}
 	
 	public BSTNode find(int K) {
 		BSTNode w = T.root;
 		s.goTo(w);
-		setText("splaystart");
+		addStep("splaystart");
 		mysuspend();
 		while (true) {
 			if (w.key == K) {
@@ -30,20 +32,20 @@ public class SplayAlg extends Algorithm {
 					break;
 				}
 				w = w.right;
-				setText("bstfindright", K, w.key);
+				addStep("bstfindright", K, w.key);
 			} else { // left
 				if (w.left == null) {
 					break;
 				}
 				w = w.left;
-				setText("bstfindleft", K, w.key);
+				addStep("bstfindleft", K, w.key);
 			}
 			s.goTo(w);
 			mysuspend();
 		}
 		w.bgColor(Colors.FIND);
 		T.v = null;
-		setText("splayfound");
+		addStep("splayfound");
 		mysuspend();
 		return w;
 	}
@@ -51,7 +53,7 @@ public class SplayAlg extends Algorithm {
 	public void splay(BSTNode w) {
 		while (!w.isRoot()) {
 			if (w.parent.isRoot()) {
-				setText("splayroot");
+				addStep("splayroot");
 				w.setArc(w.parent);
 				mysuspend();
 				w.noArc();
@@ -59,9 +61,9 @@ public class SplayAlg extends Algorithm {
 			} else {
 				if (w.isLeft() == w.parent.isLeft()) {
 					if (w.isLeft()) {
-						setText("splayzigzigleft");
+						addStep("splayzigzigleft");
 					} else {
-						setText("splayzigzigright");
+						addStep("splayzigzigright");
 					}
 					w.parent.setArc(w.parent.parent);
 					mysuspend();
@@ -73,9 +75,9 @@ public class SplayAlg extends Algorithm {
 					T.rotate(w);
 				} else {
 					if (!w.isLeft()) {
-						setText("splayzigzagleft");
+						addStep("splayzigzagleft");
 					} else {
-						setText("splayzigzagright");
+						addStep("splayzigzagright");
 					}
 					w.setArc(w.parent);
 					mysuspend();

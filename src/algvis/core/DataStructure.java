@@ -2,22 +2,27 @@ package algvis.core;
 
 import java.util.Random;
 
+import algvis.scenario.Scenario;
 
 abstract public class DataStructure {
 	// datova struktura musi vediet gombikom povedat, kolko ich potrebuje,
 	// kolko ma vstupov, ake to su a co treba robit
 	Algorithm A;
 	public VisPanel M;
+	public Scenario scenario;
 	public int radius = 10, xspan = 15, yspan = 5, rootx = 0, rooty = 0,
 			sheight = 600, swidth = 400, minsepx = 38, minsepy = 30;
 	public int x1, x2, y1 = -50, y2;
 	public Node chosen = null;
-	public static String adtName = "";
-	public static String dsName = "";
+	public static String adtName = ""; // unused field?
+	public static String dsName = ""; // also here? Subclasses of this also have static dsName...
 
-	public DataStructure(VisPanel M) {
+	public DataStructure(VisPanel M, String dsName) {
 		this.M = M;
+		scenario = new Scenario(dsName);
 	}
+
+	abstract public String getName();
 
 	abstract public String stats();
 
@@ -35,7 +40,17 @@ abstract public class DataStructure {
 		unmark();
 		A = a;
 		M.B.enableNext();
-		A.start();
+		M.B.enablePrevious();
+		M.B.disableAll();
+		
+		try {
+			A.start();
+		} catch (IllegalThreadStateException e) {
+			System.out.println("LOL");
+			M.B.disableNext();
+			M.B.enableAll();
+			return;
+		}
 		try {
 			A.join();
 			// System.out.println("join");
@@ -44,6 +59,7 @@ abstract public class DataStructure {
 		}
 		setStats();
 		M.B.disableNext();
+		M.B.enableAll();
 	}
 
 	protected void setStats() {
@@ -67,7 +83,7 @@ abstract public class DataStructure {
 		}
 		M.pause = p;
 	}
-	
+
 	public void unmark() {
 		if (chosen != null) {
 			chosen.unmark();

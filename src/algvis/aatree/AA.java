@@ -3,11 +3,16 @@ package algvis.aatree;
 import algvis.bst.BST;
 import algvis.bst.BSTFind;
 import algvis.bst.BSTNode;
+import algvis.core.View;
 import algvis.core.VisPanel;
 
 public class AA extends BST {
 	public static String dsName = "aatree";
-	boolean mode23 = false;
+	public boolean mode23 = false;
+
+	public String getName() {
+		return "aatree";
+	}
 
 	public AA(VisPanel M) {
 		super(M);
@@ -28,14 +33,18 @@ public class AA extends BST {
 		start(new AADelete(this, x));
 	}
 
-	@Override
-	public void clear() {
-		root = null;
-		setStats();
+	public void setMode23(boolean set) {
+		mode23 = set;
+		scenario.addingNextStep();
+		reposition();
+	}
+
+	public boolean getMode23() {
+		return mode23;
 	}
 
 	public BSTNode skew(BSTNode w) {
-		if (w.left != null && ((AANode) w.left).level == ((AANode) w).level) {
+		if (w.left != null && w.left.getLevel() == w.getLevel()) {
 			w = w.left;
 			rotate(w);
 			reposition();
@@ -45,13 +54,24 @@ public class AA extends BST {
 
 	public BSTNode split(BSTNode w) {
 		BSTNode r = w.right;
-		if (r != null && r.right != null
-				&& ((AANode) r.right).level == ((AANode) w).level) {
+		if (r != null && r.right != null && r.right.getLevel() == w.getLevel()) {
 			w = r;
 			rotate(w);
-			((AANode) w).level++;
+			w.setLevel(w.getLevel() + 1);
 			reposition();
 		}
 		return w;
+	}
+	
+	@Override
+	public void draw(View V) {
+		if (root != null) {
+			root.moveTree();
+			((AANode)root).drawTree2(V);
+		}
+		if (v != null) {
+			v.move();
+			v.draw(V);
+		}
 	}
 }

@@ -9,7 +9,7 @@ public class BInsert extends Algorithm {
 	int K;
 
 	public BInsert(BTree T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		v = T.v = new BNode(T, K = x);
 		v.bgColor(Colors.INSERT);
@@ -21,18 +21,18 @@ public class BInsert extends Algorithm {
 		if (T.root == null) {
 			T.root = v;
 			v.goAboveRoot();
-			setText("newroot");
+			addStep("newroot");
 			mysuspend();
 			v.bgColor(Colors.NORMAL);
 		} else {
 			BNode w = T.root;
 			v.goAbove(w);
-			setText("bstinsertstart");
+			addStep("bstinsertstart");
 			mysuspend();
 
 			while (true) {
 				if (w.isIn(K)) {
-					setText("alreadythere");
+					addStep("alreadythere");
 					v.goDown();
 					return;
 				}
@@ -41,18 +41,18 @@ public class BInsert extends Algorithm {
 				}
 				int p = w.search(K);
 				if (p == 0) {
-					setText("bfind0", K, w.key[0]);
+					addStep("bfind0", K, w.key[0]);
 				} else if (p == w.numKeys) {
-					setText("bfindn", w.key[w.numKeys - 1], K, w.numKeys + 1);
+					addStep("bfindn", w.key[w.numKeys - 1], K, w.numKeys + 1);
 				} else {
-					setText("bfind", w.key[p - 1], K, w.key[p], p + 1);
+					addStep("bfind", w.key[p - 1], K, w.key[p], p + 1);
 				}
 				w = w.c[p];
 				v.goAbove(w);
 				mysuspend();
 			}
 
-			setText("binsertleaf");
+			addStep("binsertleaf");
 			w.addLeaf(K);
 			if (w.numKeys >= T.order) {
 				w.bgColor(Colors.NOTFOUND);
@@ -61,7 +61,7 @@ public class BInsert extends Algorithm {
 			mysuspend();
 
 			while (w.numKeys >= T.order) {
-				setText("bsplit");
+				addStep("bsplit");
 				int o = (w.parent != null) ? w.order() : -1;
 				w = w.split();
 				if (w.parent == null) {

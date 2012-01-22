@@ -11,8 +11,12 @@ public class SkipList extends Dictionary {
 	SkipNode root, sent, v = null;
 	int height = 1, n = 0, e = 0;
 
+	public String getName() {
+		return "skiplist";
+	}
+	
 	public SkipList(VisPanel M) {
-		super(M);
+		super(M, dsName);
 		M.screen.V.align = Alignment.LEFT;
 		root = new SkipNode(this, -Node.INF);
 		root.linkright(sent = new SkipNode(this, Node.INF));
@@ -38,6 +42,7 @@ public class SkipList extends Dictionary {
 	public void clear() {
 		height = 1;
 		n = e = 0;
+		v = null;
 		root = new SkipNode(this, -Node.INF);
 		root.linkright(sent = new SkipNode(this, Node.INF));
 		reposition();

@@ -12,8 +12,12 @@ public class Heap extends PriorityQueue implements ClickListener {
 	int n = 0;
 	BSTNode root = null, v = null, v2 = null;
 
+	public String getName() {
+		return "heap";
+	}
+	
 	public Heap(VisPanel M) {
-		super(M);
+		super(M, dsName);
 		M.screen.V.setDS(this);
 	}
 
@@ -36,7 +40,7 @@ public class Heap extends PriorityQueue implements ClickListener {
 	
 	@Override
 	public void clear() {
-		root = null;
+		root = v = v2 = null;
 		n = 0;
 		setStats();
 	}

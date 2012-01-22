@@ -10,13 +10,19 @@ import algvis.core.VisPanel;
 public class RB extends BST {
 	public static String dsName = "redblack";
 	RBNode NULL = new RBNode(this, Node.NULL);
-	boolean mode24 = false;
+	public boolean mode24 = false;
 
+	public String getName() {
+		return "redblack";
+	}
+	
 	public RB(VisPanel M) {
 		super(M);
+		scenario.enable(false);
 		root = NULL.parent = NULL;
 		NULL.red = false;
 		NULL.size = NULL.height = NULL.sumh = 0;
+		NULL.state = Node.INVISIBLE;
 	}
 
 	@Override
@@ -67,7 +73,7 @@ public class RB extends BST {
 	public void draw(View V) {
 		if (root != NULL) {
 			root.moveTree();
-			root.drawTree(V);
+			((RBNode)root).drawTree2(V);
 		}
 		if (v != null) {
 			v.move();

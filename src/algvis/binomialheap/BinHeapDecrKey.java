@@ -10,7 +10,7 @@ public class BinHeapDecrKey extends Algorithm {
 	BinHeapNode v;
 	
 	public BinHeapDecrKey(BinomialHeap H, BinHeapNode v, int delta) {
-		super(H.M);
+		super(H);
 		this.H = H;
 		this.v = v;
 		this.delta = delta;

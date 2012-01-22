@@ -10,8 +10,13 @@ public class GBTree extends BST {
 	double alpha = 1.01;
 	int del = 0;
 
+	public String getName() {
+		return "scapegoat";
+	}
+	
 	public GBTree(VisPanel M) {
 		super(M);
+		scenario.enable(false);
 	}
 
 	@Override
@@ -32,8 +37,7 @@ public class GBTree extends BST {
 	@Override
 	public void clear() {
 		del = 0;
-		root = null;
-		setStats();
+		super.clear();
 	}
 
 	@Override

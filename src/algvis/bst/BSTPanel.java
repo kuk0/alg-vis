@@ -1,7 +1,6 @@
 package algvis.bst;
 
 import algvis.core.DataStructure;
-import algvis.core.DictButtons;
 import algvis.core.LayoutListener;
 import algvis.core.Settings;
 import algvis.core.VisPanel;
@@ -18,7 +17,7 @@ public class BSTPanel extends VisPanel {
 	@Override
 	public void initDS() {
 		D = new BST(this);
-		B = new DictButtons(this);
+		B = new BSTButtons(this);
 		S.addLayoutListener((LayoutListener) D);
 	}
 }

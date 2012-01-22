@@ -7,16 +7,19 @@ import algvis.core.Layout;
 import algvis.core.Node;
 import algvis.core.NodePair;
 import algvis.core.View;
+import algvis.scenario.commands.bstnode.LinkLeftCommand;
+import algvis.scenario.commands.bstnode.LinkRightCommand;
+import algvis.scenario.commands.bstnode.SetLevelCommand;
 
 public class BSTNode extends Node {
 	public BSTNode left = null, right = null, parent = null;
 	public int leftw, rightw;
 
 	// variables for the Reingold-Tilford layout
-	int offset = 0; // offset from the parent node
-	int level; // distance from the root
+	int offset = 0; // offset from parent node
+	private int level; // distance to root
 	boolean thread = false; // is this node threaded?
-
+	
 	// statistics
 	public int size = 1, height = 1, sumh = 1;
 
@@ -28,6 +31,17 @@ public class BSTNode extends Node {
 		super(D, key);
 	}
 
+	public void setLevel(int level) {
+		if (this.level != level) {
+			D.scenario.add(new SetLevelCommand(this, level));
+			this.level = level;
+		}
+	}
+	
+	public int getLevel() {
+		return level;
+	}
+	
 	public boolean isRoot() {
 		return parent == null;
 	}
@@ -40,17 +54,77 @@ public class BSTNode extends Node {
 		return parent != null && parent.left == this;
 	}
 
-	public void linkLeft(BSTNode v) {
-		left = v;
-		if (v != null) {
-			v.parent = this;
+	/**
+	 * removes edge between this and left;
+	 * removes edge between newLeft and its parent;
+	 * creates new edge between this and newLeft
+	 */
+	public void linkLeft(BSTNode newLeft) {
+		if (left != newLeft) {
+			if (left != null) {
+				// remove edge between this and left
+				unlinkLeft();
+			}
+			if (newLeft != null) {
+				if (newLeft.parent != null) {
+					// remove edge between newLeft and its parent
+					newLeft.unlinkParent();
+				}
+				// create new edge between this and newLeft
+				newLeft.parent = this;
+			}
+			left = newLeft;
+			D.scenario.add(new LinkLeftCommand(this, newLeft, true));
 		}
 	}
+	
+	/**
+	 * removes edge between this and left
+	 */
+	public void unlinkLeft() {
+		left.parent = null;
+		D.scenario.add(new LinkLeftCommand(this, left, false));
+		left = null;
+	}
 
-	public void linkRight(BSTNode v) {
-		right = v;
-		if (v != null) {
-			v.parent = this;
+	/**
+	 * removes edge between this and right;
+	 * removes edge between newRight and its parent;
+	 * creates new edge between this and newRight
+	 */
+	public void linkRight(BSTNode newRight) {
+		if (right != newRight) {
+			if (right != null) {
+				// remove edge between this and right
+				unlinkRight();
+			}
+			if (newRight != null) {
+				if (newRight.parent != null) {
+					// remove edge between newRight and its parent
+					newRight.unlinkParent();
+				}
+				// create new edge between this and newRight
+				newRight.parent = this;
+			}
+			right = newRight;
+			D.scenario.add(new LinkRightCommand(this, newRight, true));
+		}
+	}
+	
+	/**
+	 * removes edge between this and right
+	 */
+	public void unlinkRight() {
+		right.parent = null;
+		D.scenario.add(new LinkRightCommand(this, right, false));
+		right = null;
+	}
+	
+	private void unlinkParent() {
+		if (isLeft()) {
+			parent.unlinkLeft();
+		} else {
+			parent.unlinkRight();
 		}
 	}
 
@@ -97,6 +171,7 @@ public class BSTNode extends Node {
 		setArc(parent);
 	}
 
+	static int i;
 	public void drawTree(View v) {
 		if (state != INVISIBLE) {
 			if (thread) {
@@ -114,12 +189,14 @@ public class BSTNode extends Node {
 		if (left != null) {
 			left.drawTree(v);
 		}
+		if (D instanceof BST && ((BST)D).order) {
+			v.setColor(Color.LIGHT_GRAY);
+			++i;
+			v.drawLine(x, y, x, -20);
+			v.drawString(""+i, x, -23, 10);
+		}
 		if (right != null) {
 			right.drawTree(v);
-		}
-		if (false) {
-			v.setColor(Color.LIGHT_GRAY);
-			v.drawLine(x, y, x, -100);
 		}
 		draw(v);
 	}
@@ -199,6 +276,7 @@ public class BSTNode extends Node {
 		} else { // Reingold-Tilford layout
 			RTPreposition();
 			RTPetrification(0, 0);
+			reboxTree();
 		}
 	}
 
@@ -382,8 +460,8 @@ public class BSTNode extends Node {
 		if (tox > D.x2) {
 			D.x2 = tox;
 		}
-		// this case should be always false
 		if (toy < D.y1) {
+			// this case should be always false
 			D.y1 = toy;
 		}
 		if (toy > D.y2) {
@@ -401,5 +479,11 @@ public class BSTNode extends Node {
 		if (right != null) {
 			right.RTPetrification(tox, y + D.minsepy);
 		}
+	}
+	
+	public void subtreeBgColor(Color bg) {
+		bgColor(bg);
+		if (left != null) left.subtreeBgColor(bg);
+		if (right != null) right.subtreeBgColor(bg);
 	}
 }

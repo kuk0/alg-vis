@@ -13,11 +13,11 @@ public class SplayDelete extends SplayAlg {
 	public void run() {
 		if (T.root == null) {
 			s.goToRoot();
-			setText("empty");
+			addStep("empty");
 			mysuspend();
 			s.goDown();
 			s.bgColor(Colors.NOTFOUND);
-			setText("notfound");
+			addStep("notfound");
 			return;
 		}
 
@@ -28,7 +28,7 @@ public class SplayDelete extends SplayAlg {
 		w.bgColor(Colors.NORMAL);
 
 		if (w.key != s.key) {
-			setText("notfound");
+			addStep("notfound");
 			s.bgColor(Colors.NOTFOUND);
 			s.goDown();
 			return;
@@ -38,19 +38,19 @@ public class SplayDelete extends SplayAlg {
 		T.v.goDown();
 		T.v.bgColor(Colors.DELETE);
 		if (w.left == null) {
-			setText("splaydeleteright");
+			addStep("splaydeleteright");
 			T.root = w.right;
 			T.root.parent = null;
 			T.reposition();
 			mysuspend();
 		} else if (w.right == null) {
-			setText("splaydeleteleft");
+			addStep("splaydeleteleft");
 			T.root = w.left;
 			T.root.parent = null;
 			T.reposition();
 			mysuspend();
 		} else {
-			setText("splaydelete");
+			addStep("splaydelete");
 			T.root2 = w.left;
 			T.root2.parent = null;
 			T.root = w.right;
@@ -93,7 +93,7 @@ public class SplayDelete extends SplayAlg {
 				}
 				mysuspend();
 			}
-			setText("splaydeletelink");
+			addStep("splaydeletelink");
 			T.root = w;
 			w.bgColor(Colors.NORMAL);
 			w.linkLeft(T.root2);
@@ -102,7 +102,7 @@ public class SplayDelete extends SplayAlg {
 			mysuspend();
 		}
 
-		setText("done");
+		addStep("done");
 		T.vv = null;
 	}
 }

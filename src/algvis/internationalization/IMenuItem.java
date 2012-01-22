@@ -18,6 +18,7 @@ public class IMenuItem extends JMenuItem implements LanguageListener {
 		super(L.getString(text), K);
 		this.L = L;
 		this.t = text;
+		L.addListener(this);
 	}
 
 	public void setT(String text) {
@@ -26,6 +27,8 @@ public class IMenuItem extends JMenuItem implements LanguageListener {
 	}
 
 	public void languageChanged() {
+		if (t.equals("bst")) System.out.println("bst");
+		if (t.equals("layout-simple")) System.out.println("tu");
 		setText(L.getString(t));
 	}
 }

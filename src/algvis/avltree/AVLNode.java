@@ -7,19 +7,25 @@ import algvis.core.Colors;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.View;
+import algvis.scenario.commands.avlnode.SetBalanceCommand;
 
 //import static java.lang.Math.random;
 //import static java.lang.Math.round;
 
 public class AVLNode extends BSTNode {
-	int bal = 0;
+	private int bal = 0;
 
 	public AVLNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 	}
 
+	public AVLNode(DataStructure D, int key, int[] pos) {
+		this(D, key, pos[0], pos[1]);
+	}
+	
 	public AVLNode(DataStructure D, int key) {
-		this(D, key, -10, -10);
+		this(D, key, 0, 0);
+		getReady();
 	}
 
 	public AVLNode(BSTNode v) {
@@ -29,7 +35,19 @@ public class AVLNode extends BSTNode {
 	public int balance() {
 		int l = (left == null) ? 0 : left.height, r = (right == null) ? 0
 				: right.height;
-		return bal = r - l;
+		setBalance(r - l);
+		return bal;
+	}
+	
+	public void setBalance(int bal) {
+		if (this.bal != bal) {
+			D.scenario.add(new SetBalanceCommand(this, bal));
+			this.bal = bal;
+		}
+	}
+	
+	public int getBalance() {
+		return bal;
 	}
 
 	@Override
@@ -40,7 +58,7 @@ public class AVLNode extends BSTNode {
 
 	@Override
 	public void draw(View V) {
-		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
+		if (state == Node.INVISIBLE || key == NULL) {
 			return;
 		}
 		drawBg(V);

@@ -35,7 +35,7 @@ public class BNode extends Node {
 
 	public BNode(DataStructure D, int key) {
 		this(D, key, 0, 0);
-		setState(Node.UP);
+		getReady();
 	}
 
 	public BNode(BNode v) {

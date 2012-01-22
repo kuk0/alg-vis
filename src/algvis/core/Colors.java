@@ -9,4 +9,5 @@ public class Colors {
 	public static final Color FOUND = Color.green;
 	public static final Color NOTFOUND = Color.red;
 	public static final Color DELETE = Color.red;
+	public static final Color CACHED = Color.pink;
 }

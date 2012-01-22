@@ -7,8 +7,13 @@ import algvis.core.VisPanel;
 public class Treap extends BST {
 	public static String dsName = "treap";
 	
+	public String getName() {
+		return "treap";
+	}
+	
 	public Treap(VisPanel M) {
 		super(M);
+		scenario.enable(false);
 	}
 
 	@Override
@@ -24,11 +29,5 @@ public class Treap extends BST {
 	@Override
 	public void delete(int x) {
 		start(new TreapDelete(this, x));
-	}
-
-	@Override
-	public void clear() {
-		root = null;
-		setStats();
 	}
 }

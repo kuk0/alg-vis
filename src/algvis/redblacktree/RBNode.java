@@ -55,12 +55,29 @@ public class RBNode extends BSTNode {
 
 	@Override
 	public void draw(View v) {
-		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
+		if (state == Node.INVISIBLE || key == NULL) {
 			return;
 		}
 		bgColor(red ? Color.red : Color.black);
 		fgColor(red ? Color.black : Color.white);
 		super.draw(v);
+	}
+
+	public void drawBigNodes(View v) {
+		if (key == NULL) {
+			return;
+		}
+		if (left != null) {
+			((RBNode) left).drawBigNodes(v);
+		}
+		if (right != null) {
+			((RBNode) right).drawBigNodes(v);
+		}
+		if (red && parent != null) {
+			v.drawWideLine(x, y, parent.x, parent.y);
+		} else {
+			v.drawWideLine(x - 1, y, x + 1, y);
+		}
 	}
 
 	@Override
@@ -98,19 +115,11 @@ public class RBNode extends BSTNode {
 		calc();
 	}
 
-	@Override
-	public void drawTree(View v) {
-		if (left.key != Node.NULL) {
-			v.setColor(Color.black);
-			v.drawLine(x, y, left.x, left.y);
-			left.drawTree(v);
+	public void drawTree2(View v) {
+		if (((RB)D).mode24) {
+			drawBigNodes(v);
 		}
-		if (right.key != Node.NULL) {
-			v.setColor(Color.black);
-			v.drawLine(x, y, right.x, right.y);
-			right.drawTree(v);
-		}
-		draw(v);
+		drawTree(v);
 	}
 
 	@Override
@@ -124,7 +133,7 @@ public class RBNode extends BSTNode {
 		move();
 	}
 
-	/**/@Override
+	// */@Override
 	public void rebox() {
 		leftw = (left.key == Node.NULL) ? D.xspan + D.radius : left.leftw
 				+ left.rightw;
@@ -183,5 +192,5 @@ public class RBNode extends BSTNode {
 			reboxTree();
 			repos();
 		}
-	}/**/
+	} // */
 }

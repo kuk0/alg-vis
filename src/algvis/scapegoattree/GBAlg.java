@@ -9,7 +9,7 @@ public class GBAlg extends Algorithm {
 	int K;
 
 	public GBAlg(GBTree T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		T.v = v = new GBNode(T, K = x);
 	}
