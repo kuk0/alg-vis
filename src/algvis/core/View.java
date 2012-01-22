@@ -22,7 +22,7 @@ public class View implements MouseListener, MouseMotionListener,
 	Graphics2D g;
 	final static double SCALE_FACTOR = 1.1, MIN_ZOOM = 0.16, MAX_ZOOM = 5.5;
 	public int W, H; // display width&height
-	int minx, miny, maxx, maxy;
+	public int minx, miny, maxx, maxy;
 	int mouseX, mouseY; // mouse position
 	public Alignment align = Alignment.CENTER;
 
@@ -34,6 +34,8 @@ public class View implements MouseListener, MouseMotionListener,
 		P.addMouseListener(this);
 		P.addMouseMotionListener(this);
 		P.addMouseWheelListener(this);
+		at = new AffineTransform();
+		setBounds(0, 0, 0, 0);
 	}
 
 	public void setGraphics(Graphics2D g, int W, int H) {
@@ -44,8 +46,6 @@ public class View implements MouseListener, MouseMotionListener,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		at = new AffineTransform();
-		setBounds(0, 0, 0, 0);
 		resetView();
 	}
 

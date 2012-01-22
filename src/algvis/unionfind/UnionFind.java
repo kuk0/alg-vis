@@ -40,7 +40,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 
 	@Override
 	public String stats() {
-		return "No idea what this should contains.";
+		return "";
 	}
 
 	@Override

@@ -7,7 +7,6 @@ import algvis.core.Pair;
 import algvis.core.View;
 import algvis.core.VisPanel;
 
-
 public class LazyBinomialHeap extends BinomialHeap {
 	public static String dsName = "lazybinheap";
 	BinHeapNode[] cleanup;
@@ -15,9 +14,10 @@ public class LazyBinomialHeap extends BinomialHeap {
 	public String getName() {
 		return "lazybinheap";
 	}
-	
+
 	public LazyBinomialHeap(VisPanel M) {
 		super(M);
+		reposition();
 	}
 
 	@Override
@@ -43,15 +43,22 @@ public class LazyBinomialHeap extends BinomialHeap {
 	public void draw(View V) {
 		super.draw(V);
 		if (cleanup != null && root[active] != null) {
-			int x = root[active].x, y = -4*(radius+yspan);
-			for (int i=0; i<cleanup.length; ++i) {
+			int x = root[active].x, y = -4 * (radius + yspan);
+			for (int i = 0; i < cleanup.length; ++i) {
 				V.drawSquare(x, y, radius);
-				V.drawStringTop(""+(1<<i), x, y-radius+1, 9);
+				V.drawStringTop("" + (1 << i), x, y - radius + 1, 9);
 				if (cleanup[i] != null) {
-					V.drawArrow(x, y, cleanup[i].x, cleanup[i].y-radius-yspan);
+					V.drawArrow(x, y, cleanup[i].x, cleanup[i].y - radius
+							- yspan);
 				}
 				x += 2 * radius;
-			}	
+			}
 		}
+	}
+
+	@Override
+	public void reposition() {
+		super.reposition();
+		M.screen.V.miny = -4 * (radius + yspan) - 50;
 	}
 }
