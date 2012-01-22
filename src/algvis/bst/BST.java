@@ -15,6 +15,10 @@ public class BST extends Dictionary implements LayoutListener {
 	public static String dsName = "bst";
 	public BSTNode root = null, v = null;
 
+	public String getName() {
+		return "bst";
+	}
+	
 	public BST(VisPanel M) {
 		super(M, dsName);
 		scenario.enable(true);

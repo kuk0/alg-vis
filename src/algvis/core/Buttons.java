@@ -55,9 +55,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		add(second);
 		if (third != null) add(third);
 		add(statsPanel);
-		setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createTitledBorder(M.S.L.getString("control")),
-				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		setBorder(BorderFactory.createTitledBorder(""));
 	}
 
 	// input field, actions (insert, find, delete,...), previous, next

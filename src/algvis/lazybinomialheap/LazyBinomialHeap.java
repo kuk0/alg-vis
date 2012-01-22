@@ -12,6 +12,10 @@ public class LazyBinomialHeap extends BinomialHeap {
 	public static String dsName = "lazybinheap";
 	BinHeapNode[] cleanup;
 
+	public String getName() {
+		return "lazybinheap";
+	}
+	
 	public LazyBinomialHeap(VisPanel M) {
 		super(M);
 	}

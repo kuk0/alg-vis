@@ -22,6 +22,8 @@ abstract public class DataStructure {
 		scenario = new Scenario(dsName);
 	}
 
+	abstract public String getName();
+
 	abstract public String stats();
 
 	abstract public void insert(int x);

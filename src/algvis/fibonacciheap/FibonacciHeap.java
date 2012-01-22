@@ -7,6 +7,10 @@ import algvis.lazybinomialheap.LazyBinomialHeap;
 
 public class FibonacciHeap extends LazyBinomialHeap {
 	public static String dsName = "fibheap";
+
+	public String getName() {
+		return "fibheap";
+	}
 	
 	public FibonacciHeap(VisPanel M) {
 		super(M);

@@ -12,6 +12,10 @@ public class RB extends BST {
 	RBNode NULL = new RBNode(this, Node.NULL);
 	boolean mode24 = false;
 
+	public String getName() {
+		return "redblack";
+	}
+	
 	public RB(VisPanel M) {
 		super(M);
 		scenario.enable(false);

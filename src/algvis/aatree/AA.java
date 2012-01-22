@@ -9,6 +9,10 @@ public class AA extends BST {
 	public static String dsName = "aatree";
 	private boolean mode23 = false;
 
+	public String getName() {
+		return "aatree";
+	}
+		
 	public AA(VisPanel M) {
 		super(M);
 	}

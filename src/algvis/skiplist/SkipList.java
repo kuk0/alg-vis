@@ -11,6 +11,10 @@ public class SkipList extends Dictionary {
 	SkipNode root, sent, v = null;
 	int height = 1, n = 0, e = 0;
 
+	public String getName() {
+		return "skiplist";
+	}
+	
 	public SkipList(VisPanel M) {
 		super(M, dsName);
 		M.screen.V.align = Alignment.LEFT;

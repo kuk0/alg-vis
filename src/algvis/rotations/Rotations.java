@@ -7,7 +7,6 @@ import algvis.bst.BSTNode;
 import algvis.core.ClickListener;
 import algvis.core.DataStructure;
 import algvis.core.InputField;
-import algvis.core.Node;
 import algvis.core.View;
 import algvis.core.VisPanel;
 
@@ -17,6 +16,10 @@ public class Rotations extends DataStructure implements ClickListener {
 	BST T;
 	BSTNode v;
 
+	public String getName() {
+		return "rotations";
+	}
+	
 	public Rotations(VisPanel M) {
 		super(M, dsName);
 		T = new BST(M);

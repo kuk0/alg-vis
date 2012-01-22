@@ -10,6 +10,10 @@ public class GBTree extends BST {
 	double alpha = 1.01;
 	int del = 0;
 
+	public String getName() {
+		return "scapegoat";
+	}
+	
 	public GBTree(VisPanel M) {
 		super(M);
 		scenario.enable(false);

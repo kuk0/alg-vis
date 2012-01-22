@@ -9,6 +9,10 @@ public class Splay extends BST {
 	public static String dsName = "splaytree";
 	BSTNode root2 = null, vv = null;
 
+	public String getName() {
+		return "splaytree";
+	}
+	
 	public Splay(VisPanel M) {
 		super(M);
 		scenario.enable(false);
