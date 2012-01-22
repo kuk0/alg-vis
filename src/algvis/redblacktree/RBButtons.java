@@ -2,6 +2,7 @@ package algvis.redblacktree;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JPanel;
 
@@ -19,10 +20,10 @@ public class RBButtons extends DictButtons implements ActionListener {
 
 	@Override
 	public void otherButtons(JPanel P) {
-/*		B24 = new ICheckBox(M.S.L, "mode234", false);
+		B24 = new ICheckBox(M.S.L, "mode234", false);
 		B24.setMnemonic(KeyEvent.VK_2);
 		B24.addActionListener(this);
-		P.add(B24);*/
+		P.add(B24);
 	}
 
 	@Override
