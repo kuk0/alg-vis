@@ -19,7 +19,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 	public ArrayList<UnionFindNode> vertices = new ArrayList<UnionFindNode>();
 	public UnionFindNode v = null;
 
-	public FindHeuristic pathCompression = FindHeuristic.HALVING;
+	public FindHeuristic pathCompression = FindHeuristic.NONE;
 	public UnionHeuristic unionState = UnionHeuristic.NONE;
 
 	public UnionFindNode firstSelected = null;

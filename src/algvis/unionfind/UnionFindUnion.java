@@ -7,10 +7,9 @@ public class UnionFindUnion extends UnionFindFind {
 		NONE, BYRANK
 	}
 
-	public UnionHeuristic unionState = UnionHeuristic.NONE;
+	public UnionHeuristic unionState;
 	UnionFind UF;
-	UnionFindNode u = null;
-	UnionFindNode v = null;
+	UnionFindNode u, v;
 
 	public UnionFindUnion(UnionFind UF, UnionFindNode u, UnionFindNode v) {
 		super(UF);

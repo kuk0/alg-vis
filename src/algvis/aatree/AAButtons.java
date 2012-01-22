@@ -33,16 +33,4 @@ public class AAButtons extends DictButtons implements ActionListener {
 			((AA) M.D).setMode23(B23.isSelected());
 		}
 	}
-	
-	@Override
-	public void enableAll() {
-		super.enableAll();
-		B23.setEnabled(true);
-	}
-	
-	@Override
-	public void disableAll() {
-		super.disableAll();
-		B23.setEnabled(false);
-	}
 }

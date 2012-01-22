@@ -14,6 +14,7 @@ import algvis.scenario.commands.node.Wait4NodeCommand;
 public class BST extends Dictionary implements LayoutListener {
 	public static String dsName = "bst";
 	public BSTNode root = null, v = null;
+	boolean order = false;
 
 	public String getName() {
 		return "bst";
@@ -100,6 +101,7 @@ public class BST extends Dictionary implements LayoutListener {
 	@Override
 	public void draw(View V) {
 		if (root != null) {
+			BSTNode.i = 0;
 			root.moveTree();
 			root.drawTree(V);
 		}

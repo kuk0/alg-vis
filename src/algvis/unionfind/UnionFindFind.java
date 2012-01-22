@@ -12,7 +12,7 @@ public class UnionFindFind extends Algorithm {
 
 	UnionFindNode u = null;
 
-	public FindHeuristic findState = FindHeuristic.NONE;
+	public FindHeuristic findState;
 	UnionFind UF;
 
 	public UnionFindFind(UnionFind UF) {

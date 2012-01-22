@@ -171,6 +171,7 @@ public class BSTNode extends Node {
 		setArc(parent);
 	}
 
+	static int i;
 	public void drawTree(View v) {
 		if (state != INVISIBLE) {
 			if (thread) {
@@ -188,12 +189,14 @@ public class BSTNode extends Node {
 		if (left != null) {
 			left.drawTree(v);
 		}
+		if (D instanceof BST && ((BST)D).order) {
+			v.setColor(Color.LIGHT_GRAY);
+			++i;
+			v.drawLine(x, y, x, -20);
+			v.drawString(""+i, x, -23, 10);
+		}
 		if (right != null) {
 			right.drawTree(v);
-		}
-		if (false) {
-			v.setColor(Color.LIGHT_GRAY);
-			v.drawLine(x, y, x, -100);
 		}
 		draw(v);
 	}
