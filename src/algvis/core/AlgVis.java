@@ -17,6 +17,26 @@ import algvis.internationalization.IMenuItem;
 import algvis.internationalization.Languages;
 
 public class AlgVis extends JPanel implements ActionListener {
+	/* set the default panel 
+	 * 0 - BST
+	 * 1 - Rotations
+	 * 2 - AVL
+	 * 3 - 23 tree
+	 * 4 - 234 tree
+	 * 5 - B-tree
+	 * 6 - Red-black tree
+	 * 7 - AA-tree
+	 * 8 - Treap
+	 * 9 - SkipList
+	 * 10 - Scapegoat tree
+	 * 11 - Splay tree
+	 * 12 - Heap
+	 * 13 - Binomial heap
+	 * 14 - Lazy Binomial heap
+	 * 15 - Fibonacci heap
+	 * 16 - Union-find */
+	final static int DEFAULT_DS = 6; 
+	
 	private static final long serialVersionUID = -5202486006824196688L;
 
 	JPanel cards;
@@ -116,11 +136,7 @@ public class AlgVis extends JPanel implements ActionListener {
 		add(cards);
 
 		CardLayout cl = (CardLayout) (cards.getLayout());
-		// set default panel for testing; TODO delete these lines
-		/*
-		 * 2 - AVL 7 - AA 0 - BST
-		 */
-		cl.show(cards, DataStructures.getName(0));
+		cl.show(cards, DataStructures.getName(DEFAULT_DS));
 	}
 
 	@Override

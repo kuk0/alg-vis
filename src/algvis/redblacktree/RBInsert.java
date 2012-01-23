@@ -17,9 +17,9 @@ public class RBInsert extends Algorithm {
 	@Override
 	public void run() {
 		RBNode w = (RBNode) T.root;
-		if (T.root == T.NULL) {
-			v.setLeft(v.setRight(v.setParent(T.NULL)));
-			T.root = v;
+		if (T.root == null) {
+			//v.setLeft(v.setRight(v.setParent(T.NULL)));
+			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
 			mysuspend();
@@ -35,7 +35,7 @@ public class RBInsert extends Algorithm {
 					return;
 				} else if (w.key < K) {
 					addStep("bstinsertright", K, w.key);
-					if (w.getRight() != T.NULL) {
+					if (w.getRight() != null) {
 						w = w.getRight();
 					} else {
 						w.linkRight(v);
@@ -43,7 +43,7 @@ public class RBInsert extends Algorithm {
 					}
 				} else {
 					addStep("bstinsertleft", K, w.key);
-					if (w.getLeft() != T.NULL) {
+					if (w.getLeft() != null) {
 						w = w.getLeft();
 					} else {
 						w.linkLeft(v);
@@ -53,19 +53,20 @@ public class RBInsert extends Algorithm {
 				v.goAbove(w);
 				mysuspend();
 			}
-			v.setLeft(v.setRight(T.NULL));
+			//v.setLeft(v.setRight(T.NULL));
 
 			T.reposition();
 			mysuspend();
 
 			// bubleme nahor
 			w = v;
-			RBNode pw = w.getParent();
+			RBNode pw = w.getParent2();
 			while (!w.isRoot() && pw.red) {
 				w.mark();
 				boolean isleft = pw.isLeft();
-				RBNode ppw = pw.getParent(), y = (isleft ? ppw.getRight() : ppw
+				RBNode ppw = pw.getParent2(), y = (isleft ? ppw.getRight() : ppw
 						.getLeft());
+				if (y == null) y = T.NULL;
 				if (y.red) {
 					// case 1
 					addStep("rbinsertcase1");
@@ -76,7 +77,7 @@ public class RBInsert extends Algorithm {
 					w.unmark();
 					w = ppw;
 					w.mark();
-					pw = w.getParent();
+					pw = w.getParent2();
 					mysuspend();
 				} else {
 					// case 2
@@ -87,10 +88,10 @@ public class RBInsert extends Algorithm {
 						mysuspend();
 					} else {
 						w.unmark();
-						w = w.getParent();
+						w = w.getParent2();
 						w.mark();
 					}
-					pw = w.getParent();
+					pw = w.getParent2();
 					// case 3
 					addStep("rbinsertcase3");
 					mysuspend();
@@ -103,7 +104,7 @@ public class RBInsert extends Algorithm {
 				}
 			}
 		}
-		w.unmark();
+		if (w != null) w.unmark();
 		((RBNode) T.root).red = false;
 		T.v = null;
 		T.reposition();
