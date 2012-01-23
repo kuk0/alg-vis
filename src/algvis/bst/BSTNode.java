@@ -12,14 +12,14 @@ import algvis.scenario.commands.bstnode.LinkRightCommand;
 import algvis.scenario.commands.bstnode.SetLevelCommand;
 
 public class BSTNode extends Node {
-	public BSTNode left = null, right = null, parent = null;
+	private BSTNode left = null, right = null, parent = null;
 	public int leftw, rightw;
 
 	// variables for the Reingold-Tilford layout
 	int offset = 0; // offset from parent node
 	private int level; // distance to root
 	boolean thread = false; // is this node threaded?
-	
+
 	// statistics
 	public int size = 1, height = 1, sumh = 1;
 
@@ -31,105 +31,111 @@ public class BSTNode extends Node {
 		super(D, key);
 	}
 
+	public BSTNode getLeft() {
+		return left;
+	}
+
+	public void setLeft(BSTNode left) {
+		this.left = left;
+	}
+
 	public void setLevel(int level) {
 		if (this.level != level) {
 			D.scenario.add(new SetLevelCommand(this, level));
 			this.level = level;
 		}
 	}
-	
+
 	public int getLevel() {
 		return level;
 	}
-	
+
 	public boolean isRoot() {
-		return parent == null;
+		return getParent() == null;
 	}
 
 	public boolean isLeaf() {
-		return left == null && right == null;
+		return getLeft() == null && getRight() == null;
 	}
 
 	public boolean isLeft() {
-		return parent != null && parent.left == this;
+		return getParent() != null && getParent().getLeft() == this;
 	}
 
 	/**
-	 * removes edge between this and left;
-	 * removes edge between newLeft and its parent;
-	 * creates new edge between this and newLeft
+	 * removes edge between this and left; removes edge between newLeft and its
+	 * parent; creates new edge between this and newLeft
 	 */
 	public void linkLeft(BSTNode newLeft) {
-		if (left != newLeft) {
-			if (left != null) {
+		if (getLeft() != newLeft) {
+			if (getLeft() != null) {
 				// remove edge between this and left
 				unlinkLeft();
 			}
 			if (newLeft != null) {
-				if (newLeft.parent != null) {
+				if (newLeft.getParent() != null) {
 					// remove edge between newLeft and its parent
 					newLeft.unlinkParent();
 				}
 				// create new edge between this and newLeft
-				newLeft.parent = this;
+				newLeft.setParent(this);
 			}
-			left = newLeft;
+			setLeft(newLeft);
 			D.scenario.add(new LinkLeftCommand(this, newLeft, true));
 		}
 	}
-	
+
 	/**
 	 * removes edge between this and left
 	 */
 	public void unlinkLeft() {
-		left.parent = null;
-		D.scenario.add(new LinkLeftCommand(this, left, false));
-		left = null;
+		getLeft().setParent(null);
+		D.scenario.add(new LinkLeftCommand(this, getLeft(), false));
+		setLeft(null);
 	}
 
 	/**
-	 * removes edge between this and right;
-	 * removes edge between newRight and its parent;
-	 * creates new edge between this and newRight
+	 * removes edge between this and right; removes edge between newRight and
+	 * its parent; creates new edge between this and newRight
 	 */
 	public void linkRight(BSTNode newRight) {
-		if (right != newRight) {
-			if (right != null) {
+		if (getRight() != newRight) {
+			if (getRight() != null) {
 				// remove edge between this and right
 				unlinkRight();
 			}
 			if (newRight != null) {
-				if (newRight.parent != null) {
+				if (newRight.getParent() != null) {
 					// remove edge between newRight and its parent
 					newRight.unlinkParent();
 				}
 				// create new edge between this and newRight
-				newRight.parent = this;
+				newRight.setParent(this);
 			}
-			right = newRight;
+			setRight(newRight);
 			D.scenario.add(new LinkRightCommand(this, newRight, true));
 		}
 	}
-	
+
 	/**
 	 * removes edge between this and right
 	 */
 	public void unlinkRight() {
-		right.parent = null;
-		D.scenario.add(new LinkRightCommand(this, right, false));
-		right = null;
+		getRight().setParent(null);
+		D.scenario.add(new LinkRightCommand(this, getRight(), false));
+		setRight(null);
 	}
-	
+
 	private void unlinkParent() {
 		if (isLeft()) {
-			parent.unlinkLeft();
+			getParent().unlinkLeft();
 		} else {
-			parent.unlinkRight();
+			getParent().unlinkRight();
 		}
 	}
 
 	public void isolate() {
-		left = right = parent = null;
+		setLeft(setRight(setParent(null)));
 	}
 
 	/**
@@ -138,15 +144,15 @@ public class BSTNode extends Node {
 	 */
 	public void calc() {
 		int ls = 0, rs = 0, lh = 0, rh = 0, lsh = 0, rsh = 0;
-		if (left != null) {
-			ls = left.size;
-			lh = left.height;
-			lsh = left.sumh;
+		if (getLeft() != null) {
+			ls = getLeft().size;
+			lh = getLeft().height;
+			lsh = getLeft().sumh;
 		}
-		if (right != null) {
-			rs = right.size;
-			rh = right.height;
-			rsh = right.sumh;
+		if (getRight() != null) {
+			rs = getRight().size;
+			rh = getRight().height;
+			rsh = getRight().sumh;
 		}
 		size = ls + rs + 1;
 		height = Math.max(lh, rh) + 1;
@@ -158,20 +164,21 @@ public class BSTNode extends Node {
 	 * subtree (recursively bottom-up).
 	 */
 	public void calcTree() {
-		if (left != null) {
-			left.calcTree();
+		if (getLeft() != null) {
+			getLeft().calcTree();
 		}
-		if (right != null) {
-			right.calcTree();
+		if (getRight() != null) {
+			getRight().calcTree();
 		}
 		calc();
 	}
 
 	public void setArc() {
-		setArc(parent);
+		setArc(getParent());
 	}
 
 	static int i;
+
 	public void drawTree(View v) {
 		if (state != INVISIBLE) {
 			if (thread) {
@@ -179,34 +186,34 @@ public class BSTNode extends Node {
 			} else {
 				v.setColor(Color.black);
 			}
-			if ((left != null) && (left.state != INVISIBLE)) {
-				v.drawLine(x, y, left.x, left.y);
+			if ((getLeft() != null) && (getLeft().state != INVISIBLE)) {
+				v.drawLine(x, y, getLeft().x, getLeft().y);
 			}
-			if ((right != null) && (right.state != INVISIBLE)) {
-				v.drawLine(x, y, right.x, right.y);
+			if ((getRight() != null) && (getRight().state != INVISIBLE)) {
+				v.drawLine(x, y, getRight().x, getRight().y);
 			}
 		}
-		if (left != null) {
-			left.drawTree(v);
+		if (getLeft() != null) {
+			getLeft().drawTree(v);
 		}
-		if (D instanceof BST && ((BST)D).order) {
+		if (D instanceof BST && ((BST) D).order) {
 			v.setColor(Color.LIGHT_GRAY);
 			++i;
 			v.drawLine(x, y, x, -20);
-			v.drawString(""+i, x, -23, 10);
+			v.drawString("" + i, x, -23, 10);
 		}
-		if (right != null) {
-			right.drawTree(v);
+		if (getRight() != null) {
+			getRight().drawTree(v);
 		}
 		draw(v);
 	}
 
 	public void moveTree() {
-		if (left != null) {
-			left.moveTree();
+		if (getLeft() != null) {
+			getLeft().moveTree();
 		}
-		if (right != null) {
-			right.moveTree();
+		if (getRight() != null) {
+			getRight().moveTree();
 		}
 		move();
 	}
@@ -223,21 +230,22 @@ public class BSTNode extends Node {
 		 * whole left subtree, i.e., leftw+rightw; otherwise the width is the
 		 * node radius plus some additional space called xspan
 		 */
-		leftw = (left == null) ? D.xspan + D.radius : left.leftw + left.rightw;
+		leftw = (getLeft() == null) ? D.xspan + D.radius : getLeft().leftw
+				+ getLeft().rightw;
 		// rightw is computed analogically
-		rightw = (right == null) ? D.xspan + D.radius : right.leftw
-				+ right.rightw;
+		rightw = (getRight() == null) ? D.xspan + D.radius : getRight().leftw
+				+ getRight().rightw;
 	}
 
 	/**
 	 * Rebox the whole subtree calculating the widths recursively bottom-up.
 	 */
 	public void reboxTree() {
-		if (left != null) {
-			left.reboxTree();
+		if (getLeft() != null) {
+			getLeft().reboxTree();
 		}
-		if (right != null) {
-			right.reboxTree();
+		if (getRight() != null) {
+			getRight().reboxTree();
 		}
 		rebox();
 	}
@@ -257,14 +265,15 @@ public class BSTNode extends Node {
 		if (this.toy > D.y2) {
 			D.y2 = this.toy;
 		}
-		if (left != null) {
-			left.goTo(this.tox - left.rightw, this.toy + 2 * D.radius + D.yspan);
-			left.repos();
+		if (getLeft() != null) {
+			getLeft().goTo(this.tox - getLeft().rightw,
+					this.toy + 2 * D.radius + D.yspan);
+			getLeft().repos();
 		}
-		if (right != null) {
-			right.goTo(this.tox + right.leftw, this.toy + 2 * D.radius
-					+ D.yspan);
-			right.repos();
+		if (getRight() != null) {
+			getRight().goTo(this.tox + getRight().leftw,
+					this.toy + 2 * D.radius + D.yspan);
+			getRight().repos();
 		}
 	}
 
@@ -286,13 +295,13 @@ public class BSTNode extends Node {
 	public BSTNode find(int x, int y) {
 		if (inside(x, y))
 			return this;
-		if (left != null) {
-			BSTNode tmp = left.find(x, y);
+		if (getLeft() != null) {
+			BSTNode tmp = getLeft().find(x, y);
 			if (tmp != null)
 				return tmp;
 		}
-		if (right != null) {
-			return right.find(x, y);
+		if (getRight() != null) {
+			return getRight().find(x, y);
 		}
 		return null;
 	}
@@ -314,10 +323,10 @@ public class BSTNode extends Node {
 		offset = 0;
 
 		// 1. & 2. work out left & right subtree
-		if (left != null)
-			fromLeftSubtree = left.RTPreposition();
-		if (right != null)
-			fromRightSubtree = right.RTPreposition();
+		if (getLeft() != null)
+			fromLeftSubtree = getLeft().RTPreposition();
+		if (getRight() != null)
+			fromRightSubtree = getRight().RTPreposition();
 		// 3. examine this node
 		if (isLeaf()) {
 			if (!isRoot()) {
@@ -330,15 +339,15 @@ public class BSTNode extends Node {
 			 * If one subtree is empty, it is not necessary to make a new
 			 * thread. A proper offset must be set.
 			 */
-			if (left == null) {
-				right.offset = D.minsepx / 2;
+			if (getLeft() == null) {
+				getRight().offset = D.minsepx / 2;
 				result.left = fromRightSubtree.left;
 				result.right = fromRightSubtree.right;
 				return result;
 			}
 
-			if (right == null) {
-				left.offset = -D.minsepx / 2;
+			if (getRight() == null) {
+				getLeft().offset = -D.minsepx / 2;
 				result.left = fromLeftSubtree.left;
 				result.right = fromLeftSubtree.right;
 				return result;
@@ -349,15 +358,15 @@ public class BSTNode extends Node {
 								// the left subtree.
 			int roffset = 0; // offset of this node from the left contour of the
 								// right subtree.
-			BSTNode L = left;
-			BSTNode R = right;
+			BSTNode L = getLeft();
+			BSTNode R = getRight();
 			/*
 			 * First, left.offset is 0 and only right.offset accumulates. The
 			 * offsets are corrected afterwards (this way is easier to
 			 * generalize to m-ary trees). Note that offsets can be negative.
 			 */
-			left.offset = 0;
-			right.offset = 0;
+			getLeft().offset = 0;
+			getRight().offset = 0;
 
 			// traverse the right contour of the left subtree and the left
 			// counour of the right subtree
@@ -369,7 +378,7 @@ public class BSTNode extends Node {
 				 */
 				int distance = (loffset + D.minsepx - roffset);
 				if (distance > 0) {
-					right.offset += distance;
+					getRight().offset += distance;
 					roffset += distance;
 				}
 				/*
@@ -378,11 +387,11 @@ public class BSTNode extends Node {
 				 * TR published by Reingold this value is already calculated.
 				 */
 				boolean LwasThread = L.thread, RwasThread = R.thread;
-				L = (L.right != null) ? L.right : L.left;
+				L = (L.getRight() != null) ? L.getRight() : L.getLeft();
 				if (L != null) {
 					loffset += L.offset;
 				}
-				R = (R.left != null) ? R.left : R.right;
+				R = (R.getLeft() != null) ? R.getLeft() : R.getRight();
 				if (R != null) {
 					roffset += R.offset;
 				}
@@ -394,7 +403,7 @@ public class BSTNode extends Node {
 					Elevator = L;
 					while (Elevator != this) {
 						loffset += Elevator.offset;
-						Elevator = Elevator.parent;
+						Elevator = Elevator.getParent();
 					}
 				}
 				if (RwasThread) {
@@ -402,7 +411,7 @@ public class BSTNode extends Node {
 					Elevator = R;
 					while (Elevator != this) {
 						roffset += Elevator.offset;
-						Elevator = Elevator.parent;
+						Elevator = Elevator.getParent();
 					}
 				}
 			}
@@ -412,8 +421,8 @@ public class BSTNode extends Node {
 			 * lets change it
 			 */
 
-			right.offset /= 2;
-			left.offset = -right.offset;
+			getRight().offset /= 2;
+			getLeft().offset = -getRight().offset;
 
 			/*
 			 * General switch of making a new thread: we want to make a thread
@@ -424,14 +433,14 @@ public class BSTNode extends Node {
 			if ((R != null) && (L == null)) { // the right subtree is deeper
 												// than the left subtree
 				fromLeftSubtree.left.thread = true;
-				fromLeftSubtree.left.right = R;
+				fromLeftSubtree.left.setRight(R);
 				result.left = fromRightSubtree.left;
 				result.right = fromRightSubtree.right;
 			} else if ((L != null) && (R == null)) { // the left subtree is
 														// deeper than the right
 														// subtree
 				fromRightSubtree.right.thread = true;
-				fromRightSubtree.right.left = L;
+				fromRightSubtree.right.setLeft(L);
 				result.left = fromLeftSubtree.left;
 				result.right = fromLeftSubtree.right;
 			} else if ((L == null) && (R == null)) { // both subtrees have the
@@ -445,8 +454,8 @@ public class BSTNode extends Node {
 	}
 
 	/**
-	 * Calculate the absolute coordinates from the relative ones
-	 * and dispose the threads.
+	 * Calculate the absolute coordinates from the relative ones and dispose the
+	 * threads.
 	 * 
 	 * @param x
 	 *            real x coordinate of parent node
@@ -469,20 +478,40 @@ public class BSTNode extends Node {
 
 		if (thread) {
 			thread = false;
-			left = null;
-			right = null;
+			setLeft(null);
+			setRight(null);
 		}
-		if (left != null) {
-			left.RTPetrification(tox, y + D.minsepy);
+		if (getLeft() != null) {
+			getLeft().RTPetrification(tox, y + D.minsepy);
 		}
-		if (right != null) {
-			right.RTPetrification(tox, y + D.minsepy);
+		if (getRight() != null) {
+			getRight().RTPetrification(tox, y + D.minsepy);
 		}
 	}
-	
+
 	public void subtreeBgColor(Color bg) {
 		bgColor(bg);
-		if (left != null) left.subtreeBgColor(bg);
-		if (right != null) right.subtreeBgColor(bg);
+		if (getLeft() != null)
+			getLeft().subtreeBgColor(bg);
+		if (getRight() != null)
+			getRight().subtreeBgColor(bg);
+	}
+
+	public BSTNode getRight() {
+		return right;
+	}
+
+	public BSTNode setRight(BSTNode right) {
+		this.right = right;
+		return right;
+	}
+
+	public BSTNode getParent() {
+		return parent;
+	}
+
+	public BSTNode setParent(BSTNode parent) {
+		this.parent = parent;
+		return parent;
 	}
 }

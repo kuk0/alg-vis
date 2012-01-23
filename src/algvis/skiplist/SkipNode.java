@@ -42,6 +42,7 @@ public class SkipNode extends Node {
 		left = right = up = down = null;
 	}
 
+	@Override
 	public void drawBg(View v) {
 		v.setColor(bgcolor);
 		v.fillSqr(x, y, D.radius);

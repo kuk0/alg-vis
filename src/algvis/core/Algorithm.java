@@ -4,13 +4,13 @@ import algvis.scenario.commands.HardPauseCommand;
 import algvis.scenario.commands.SetCommentaryStateCommand;
 
 /**
- * The Class Algorithm.
- * Each visualized data structure consists of data and algorithms (such as insert, delete)
- * that update the data. All such algorithms are descendants of the class Algorithm.
+ * The Class Algorithm. Each visualized data structure consists of data and
+ * algorithms (such as insert, delete) that update the data. All such algorithms
+ * are descendants of the class Algorithm.
  * 
- * A visualized algorithm has its own thread which can be suspended (e.g., after each step
- * of the algorithm; see method mysuspend) and is automatically resumed (method myresume)
- * after pressing the "Next" button.   
+ * A visualized algorithm has its own thread which can be suspended (e.g., after
+ * each step of the algorithm; see method mysuspend) and is automatically
+ * resumed (method myresume) after pressing the "Next" button.
  */
 abstract public class Algorithm extends Thread {
 	private DataStructure D;
@@ -56,12 +56,12 @@ abstract public class Algorithm extends Thread {
 	protected void finish() {
 		D.scenario.add(new HardPauseCommand(D, true));
 	}
-	
+
 	public void setHeader(String s) {
 		D.M.C.setHeader(s);
 		saveCommentary();
 	}
-	
+
 	public void addNote(String s) {
 		D.M.C.addNote(s);
 		saveCommentary();
@@ -87,6 +87,7 @@ abstract public class Algorithm extends Thread {
 		commentaryState = D.M.C.getState();
 	}
 
+	@Override
 	public void run() {
 	}
 }

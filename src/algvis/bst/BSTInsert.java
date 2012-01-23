@@ -36,31 +36,31 @@ public class BSTInsert extends Algorithm {
 					finish();
 					return;
 				} else if (w.key < K) {
-					if (w.right == null) {
+					if (w.getRight() == null) {
 						v.pointInDir(45);
 					} else {
-						v.pointAbove(w.right);
+						v.pointAbove(w.getRight());
 					}
 					addStep("bstinsertright", K, w.key);
 					mysuspend();
 					v.noArrow();
-					if (w.right != null) {
-						w = w.right;
+					if (w.getRight() != null) {
+						w = w.getRight();
 					} else {
 						w.linkRight(v);
 						break;
 					}
 				} else {
-					if (w.left == null) {
+					if (w.getLeft() == null) {
 						v.pointInDir(135);
 					} else {
-						v.pointAbove(w.left);
+						v.pointAbove(w.getLeft());
 					}
 					addStep("bstinsertleft", K, w.key);
 					mysuspend();
 					v.noArrow();
-					if (w.left != null) {
-						w = w.left;
+					if (w.getLeft() != null) {
+						w = w.getLeft();
 					} else {
 						w.linkLeft(v);
 						break;

@@ -18,6 +18,7 @@ public class RotButtons extends Buttons {
 		super(M);
 	}
 
+	@Override
 	public void actionButtons(JPanel P) {
 		rotB = new IButton(M.S.L, "rotate");
 		rotB.setMnemonic(KeyEvent.VK_R);
@@ -31,6 +32,7 @@ public class RotButtons extends Buttons {
 		if (evt.getSource() == rotB) {
 			final Vector<Integer> args = I.getNonEmptyVI();
 			Thread t = new Thread(new Runnable() {
+				@Override
 				public void run() {
 					for (int x : args) {
 						((Rotations) D).rotate(x);

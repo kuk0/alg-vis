@@ -53,7 +53,8 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		add(first);
 		add(second);
-		if (third != null) add(third);
+		if (third != null)
+			add(third);
 		add(statsPanel);
 		setBorder(BorderFactory.createTitledBorder(""));
 	}
@@ -88,8 +89,8 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		second.add(random);
 		// second.add(save);
 		// second.add(zoomLabel);
-		//second.add(zoomIn);
-		//second.add(zoomOut);
+		// second.add(zoomIn);
+		// second.add(zoomOut);
 		second.add(resetView);
 		otherButtons(second);
 		return second;
@@ -169,6 +170,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		resetView.addActionListener(this);
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent evt) {
 		if (scenarioTraverser != null) {
 			while (scenarioTraverser.isAlive()) {
@@ -182,6 +184,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		}
 		if (evt.getSource() == previous) {
 			scenarioTraverser = new Thread(new Runnable() {
+				@Override
 				public void run() {
 					if (D.scenario.hasPrevious()) {
 						D.scenario.previous();
@@ -195,6 +198,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 			scenarioTraverser.start();
 		} else if (evt.getSource() == next) {
 			scenarioTraverser = new Thread(new Runnable() {
+				@Override
 				public void run() {
 					if (D.scenario.hasNext()) {
 						D.scenario.next();

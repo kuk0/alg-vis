@@ -326,7 +326,8 @@ public class BNode extends Node {
 			t = "  " + key[i];
 		}
 		return tox - D.M.screen.V.stringWidth(toString(), 9) / 2
-				+ D.M.screen.V.stringWidth(s, 9) + D.M.screen.V.stringWidth(t, 9) / 2;
+				+ D.M.screen.V.stringWidth(s, 9)
+				+ D.M.screen.V.stringWidth(t, 9) / 2;
 	}
 
 	@Override

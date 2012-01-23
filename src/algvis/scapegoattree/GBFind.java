@@ -37,7 +37,7 @@ public class GBFind extends GBAlg {
 					break;
 				} else if (w.key < K) {
 					addStep("bstfindright", K, w.key);
-					w = w.right;
+					w = w.getRight();
 					if (w != null) {
 						v.goTo(w);
 					} else { // notfound
@@ -48,7 +48,7 @@ public class GBFind extends GBAlg {
 					}
 				} else {
 					addStep("bstfindleft", K, w.key);
-					w = w.left;
+					w = w.getLeft();
 					if (w != null) {
 						v.goTo(w);
 					} else { // notfound

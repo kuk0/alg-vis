@@ -15,7 +15,7 @@ public class SkipDelete extends SkipAlg {
 	public void run() {
 		addStep("bstdeletestart");
 		SkipNode w = find();
-		
+
 		if (w.right.key != K) {
 			addStep("notfound");
 			v.goDown();

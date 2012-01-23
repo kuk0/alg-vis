@@ -24,6 +24,7 @@ public class UnionFindUnion extends UnionFindFind {
 		this.unionState = state;
 	}
 
+	@Override
 	public void run() {
 		switch (unionState) {
 		case NONE:
@@ -57,8 +58,9 @@ public class UnionFindUnion extends UnionFindFind {
 
 		UF.reposition();
 		addNote("done");
-		//UF.M.screen.V.resetView(); // only for testing, but still there should
-									// be some correction.
+		// UF.M.screen.V.resetView(); // only for testing, but still there
+		// should
+		// be some correction.
 	}
 
 	private void unionByRank(UnionFindNode V, UnionFindNode W) {
@@ -95,7 +97,8 @@ public class UnionFindUnion extends UnionFindFind {
 
 		UF.reposition();
 		addNote("done");
-		//UF.M.screen.V.resetView(); // only for testing, but still there should
-									// be some correction.
+		// UF.M.screen.V.resetView(); // only for testing, but still there
+		// should
+		// be some correction.
 	}
 }

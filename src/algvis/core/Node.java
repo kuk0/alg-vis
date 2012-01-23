@@ -21,8 +21,7 @@ public class Node {
 	public DataStructure D;
 	public int key;
 	/**
-	 * x, y - node position
-	 * tox, toy - the position, where the node is heading
+	 * x, y - node position tox, toy - the position, where the node is heading
 	 * steps - the number of steps to reach the destination
 	 */
 	public int x, y, tox, toy, steps;
@@ -31,8 +30,9 @@ public class Node {
 	public Color fgcolor, bgcolor;
 	public boolean marked = false;
 	public Node dir = null;
-	public int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S, 135=SW,
-								// 180=W)
+	public int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S,
+										// 135=SW,
+	// 180=W)
 	boolean arc = false;
 
 	/**
@@ -83,13 +83,13 @@ public class Node {
 			Point2D p = D.M.screen.V.r2v(0, 0);
 			toy = y = (int) p.getY() - 5 * D.radius;
 		} else {
-			/* TODO
-			 * because of rotations and skiplist constructor inserts (at that
-			 * time "AffineTransform at" not exists)
+			/*
+			 * TODO because of rotations and skiplist constructor inserts (at
+			 * that time "AffineTransform at" not exists)
 			 */
 			tox = x = 0;
-			toy = y = - 5 * D.radius;
-			//System.out.println(getClass().getName() + " " + key);
+			toy = y = -5 * D.radius;
+			// System.out.println(getClass().getName() + " " + key);
 		}
 	}
 
@@ -398,7 +398,7 @@ public class Node {
 	public void goRight() {
 		setState(RIGHT);
 	}
-	
+
 	/**
 	 * Make one step towards the destination (tox, toy). In the special states
 	 * DOWN, LEFT, or RIGHT, go downwards off the screen.

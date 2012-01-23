@@ -16,4 +16,19 @@ public class GBNode extends BSTNode {
 	public GBNode(DataStructure D, int key) {
 		super(D, key);
 	}
+
+	@Override
+	public GBNode getLeft() {
+		return (GBNode) super.getLeft();
+	}
+
+	@Override
+	public GBNode getRight() {
+		return (GBNode) super.getRight();
+	}
+
+	@Override
+	public GBNode getParent() {
+		return (GBNode) super.getParent();
+	}
 }

@@ -10,6 +10,7 @@ public class AA extends BST {
 	public static String dsName = "aatree";
 	public boolean mode23 = false;
 
+	@Override
 	public String getName() {
 		return "aatree";
 	}
@@ -44,8 +45,8 @@ public class AA extends BST {
 	}
 
 	public BSTNode skew(BSTNode w) {
-		if (w.left != null && w.left.getLevel() == w.getLevel()) {
-			w = w.left;
+		if (w.getLeft() != null && w.getLeft().getLevel() == w.getLevel()) {
+			w = w.getLeft();
 			rotate(w);
 			reposition();
 		}
@@ -53,8 +54,9 @@ public class AA extends BST {
 	}
 
 	public BSTNode split(BSTNode w) {
-		BSTNode r = w.right;
-		if (r != null && r.right != null && r.right.getLevel() == w.getLevel()) {
+		BSTNode r = w.getRight();
+		if (r != null && r.getRight() != null
+				&& r.getRight().getLevel() == w.getLevel()) {
 			w = r;
 			rotate(w);
 			w.setLevel(w.getLevel() + 1);
@@ -62,12 +64,12 @@ public class AA extends BST {
 		}
 		return w;
 	}
-	
+
 	@Override
 	public void draw(View V) {
 		if (root != null) {
 			root.moveTree();
-			((AANode)root).drawTree2(V);
+			((AANode) root).drawTree2(V);
 		}
 		if (v != null) {
 			v.move();

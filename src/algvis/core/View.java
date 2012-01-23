@@ -129,11 +129,13 @@ public class View implements MouseListener, MouseMotionListener,
 		return p;
 	}
 
+	@Override
 	public void mousePressed(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
 	}
 
+	@Override
 	public void mouseDragged(MouseEvent e) {
 		int x = e.getX(), y = e.getY();
 		at.preConcatenate(AffineTransform.getTranslateInstance(x - mouseX, y
@@ -142,18 +144,23 @@ public class View implements MouseListener, MouseMotionListener,
 		mouseY = y;
 	}
 
+	@Override
 	public void mouseReleased(MouseEvent e) {
 	}
 
+	@Override
 	public void mouseMoved(MouseEvent e) {
 	}
 
+	@Override
 	public void mouseEntered(MouseEvent e) {
 	}
 
+	@Override
 	public void mouseExited(MouseEvent e) {
 	}
 
+	@Override
 	public void mouseClicked(MouseEvent e) {
 		Point2D p = r2v(e.getX(), e.getY());
 		if (D != null) {
@@ -161,6 +168,7 @@ public class View implements MouseListener, MouseMotionListener,
 		}
 	}
 
+	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		int notches = e.getWheelRotation();
 		if (notches > 0) {
@@ -216,12 +224,12 @@ public class View implements MouseListener, MouseMotionListener,
 	public void drawLine(int x1, int y1, int x2, int y2) {
 		g.drawLine(x1, y1, x2, y2);
 	}
-	
+
 	public void drawWideLine(int x1, int y1, int x2, int y2) {
 		final Stroke old = g.getStroke(), wide = new BasicStroke(27.0f,
 				BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 		final Color c = g.getColor();
-		g.setColor(new Color(230,230,230));
+		g.setColor(new Color(230, 230, 230));
 		g.setStroke(wide);
 		g.drawLine(x1, y1, x2, y2);
 		g.setStroke(old);

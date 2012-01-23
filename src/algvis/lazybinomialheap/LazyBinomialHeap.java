@@ -11,6 +11,7 @@ public class LazyBinomialHeap extends BinomialHeap {
 	public static String dsName = "lazybinheap";
 	BinHeapNode[] cleanup;
 
+	@Override
 	public String getName() {
 		return "lazybinheap";
 	}

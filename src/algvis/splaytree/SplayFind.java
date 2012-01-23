@@ -1,6 +1,5 @@
 package algvis.splaytree;
 
-import algvis.bst.BSTNode;
 import algvis.core.Colors;
 
 public class SplayFind extends SplayAlg {
@@ -22,7 +21,7 @@ public class SplayFind extends SplayAlg {
 			addStep("bstfindnotfound");
 		} else {
 			v.goAboveRoot();
-			BSTNode w = find(K);
+			SplayNode w = find(K);
 			splay(w);
 
 			addStep("splayinroot");

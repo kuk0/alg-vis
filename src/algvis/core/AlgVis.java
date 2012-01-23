@@ -90,7 +90,7 @@ public class AlgVis extends JPanel implements ActionListener {
 		langMenu.add(enItem);
 		langMenu.add(skItem);
 		menuBar.add(langMenu);
-		
+
 		// Layout menu
 		IMenuItem sItem = new IMenuItem(L, "layout-simple", KeyEvent.VK_S);
 		IMenuItem cItem = new IMenuItem(L, "layout-compact", KeyEvent.VK_C);
@@ -98,7 +98,7 @@ public class AlgVis extends JPanel implements ActionListener {
 		cItem.setActionCommand("layout-compact");
 		sItem.addActionListener(this);
 		cItem.addActionListener(this);
-		
+
 		layoutMenu.add(sItem);
 		layoutMenu.add(cItem);
 		menuBar.add(layoutMenu);
@@ -107,35 +107,36 @@ public class AlgVis extends JPanel implements ActionListener {
 		cards = new JPanel(new CardLayout());
 		for (int i = 0; i < DataStructures.N; ++i) {
 			VisPanel P = DataStructures.getPanel(i, S);
-			if (P != null) cards.add(P, DataStructures.getName(i));
+			if (P != null)
+				cards.add(P, DataStructures.getName(i));
 		}
 
 		add(menuBar);
 		P.setJMenuBar(menuBar);
 		add(cards);
-		
+
 		CardLayout cl = (CardLayout) (cards.getLayout());
 		// set default panel for testing; TODO delete these lines
-		/* 2 - AVL
-		 * 7 - AA
-		 * 0 - BST
+		/*
+		 * 2 - AVL 7 - AA 0 - BST
 		 */
 		cl.show(cards, DataStructures.getName(0));
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		String[] cmd = e.getActionCommand().split("-", 2);
-		
+
 		// set language
 		if ("lang".equals(cmd[0])) {
 			L.selectLanguage(cmd[1]);
 		}
-		
+
 		// set layout
 		if ("layout".equals(cmd[0])) {
 			S.setLayout(cmd[1]);
 		}
-		
+
 		// set different data structure
 		if ("ds".equals(cmd[0])) {
 			for (int i = 0; i < DataStructures.N; ++i) {

@@ -1,18 +1,18 @@
 package algvis.splaytree;
 
 import algvis.bst.BST;
-import algvis.bst.BSTNode;
 import algvis.core.View;
 import algvis.core.VisPanel;
 
 public class Splay extends BST {
 	public static String dsName = "splaytree";
-	BSTNode root2 = null, vv = null;
+	SplayNode root2 = null, vv = null;
 
+	@Override
 	public String getName() {
 		return "splaytree";
 	}
-	
+
 	public Splay(VisPanel M) {
 		super(M);
 		scenario.enable(false);
@@ -58,18 +58,18 @@ public class Splay extends BST {
 	 * null) ? "0" : ((SplayNode)root).pot); }
 	 */
 
-	public void rotate2(BSTNode v) {
+	public void rotate2(SplayNode v) {
 		if (v.isLeft()) {
 			rightrot(v);
 		} else {
 			leftrot(v);
 		}
 		v.reposition();
-		if (v.left != null) {
-			v.left.calc();
+		if (v.getLeft() != null) {
+			v.getLeft().calc();
 		}
-		if (v.right != null) {
-			v.right.calc();
+		if (v.getRight() != null) {
+			v.getRight().calc();
 		}
 		v.calc();
 	}

@@ -12,14 +12,15 @@ public class RB extends BST {
 	RBNode NULL = new RBNode(this, Node.NULL);
 	public boolean mode24 = false;
 
+	@Override
 	public String getName() {
 		return "redblack";
 	}
-	
+
 	public RB(VisPanel M) {
 		super(M);
 		scenario.enable(false);
-		root = NULL.parent = NULL;
+		root = NULL.setParent(NULL);
 		NULL.red = false;
 		NULL.size = NULL.height = NULL.sumh = 0;
 		NULL.state = Node.INVISIBLE;
@@ -42,15 +43,16 @@ public class RB extends BST {
 
 	@Override
 	public void clear() {
-		root = NULL.parent = NULL;
+		root = NULL.setParent(NULL);
 		setStats();
 	}
 
 	@Override
 	public String stats() {
 		if (root == NULL) {
-			return M.S.L.getString("size") + ": 0;   " + M.S.L.getString("height")
-					+ ": 0 =  1.00\u00b7" + M.S.L.getString("opt") + ";   "
+			return M.S.L.getString("size") + ": 0;   "
+					+ M.S.L.getString("height") + ": 0 =  1.00\u00b7"
+					+ M.S.L.getString("opt") + ";   "
 					+ M.S.L.getString("avedepth") + ": 0";
 		} else {
 			root.calcTree();
@@ -62,8 +64,10 @@ public class RB extends BST {
 					+ ": "
 					+ root.height
 					+ " = "
-					+ StringUtils.format(root.height / (Math.floor(lg(root.size)) + 1), 2,
-							5) + "\u00b7" + M.S.L.getString("opt") + ";   "
+					+ StringUtils
+							.format(root.height
+									/ (Math.floor(lg(root.size)) + 1), 2, 5)
+					+ "\u00b7" + M.S.L.getString("opt") + ";   "
 					+ M.S.L.getString("avedepth") + ": "
 					+ StringUtils.format(root.sumh / (double) root.size, 2, -5);
 		}
@@ -73,7 +77,7 @@ public class RB extends BST {
 	public void draw(View V) {
 		if (root != NULL) {
 			root.moveTree();
-			((RBNode)root).drawTree2(V);
+			((RBNode) root).drawTree2(V);
 		}
 		if (v != null) {
 			v.move();
@@ -83,35 +87,35 @@ public class RB extends BST {
 
 	@Override
 	protected void leftrot(BSTNode v) {
-		BSTNode u = v.parent;
+		BSTNode u = v.getParent();
 		if (u.isRoot()) {
 			root = v;
-			v.parent = NULL;
+			v.setParent(NULL);
 		} else {
 			if (u.isLeft()) {
-				u.parent.linkLeft(v);
+				u.getParent().linkLeft(v);
 			} else {
-				u.parent.linkRight(v);
+				u.getParent().linkRight(v);
 			}
 		}
-		u.linkRight(v.left);
+		u.linkRight(v.getLeft());
 		v.linkLeft(u);
 	}
 
 	@Override
 	protected void rightrot(BSTNode v) {
-		BSTNode u = v.parent;
+		BSTNode u = v.getParent();
 		if (u.isRoot()) {
 			root = v;
-			v.parent = NULL;
+			v.setParent(NULL);
 		} else {
 			if (u.isLeft()) {
-				u.parent.linkLeft(v);
+				u.getParent().linkLeft(v);
 			} else {
-				u.parent.linkRight(v);
+				u.getParent().linkRight(v);
 			}
 		}
-		u.linkLeft(v.right);
+		u.linkLeft(v.getRight());
 		v.linkRight(u);
 	}
 
@@ -123,8 +127,8 @@ public class RB extends BST {
 			leftrot(v);
 		}
 		reposition();
-		v.left.calc();
-		v.right.calc();
+		v.getLeft().calc();
+		v.getRight().calc();
 		v.calc();
 	}
 }

@@ -1,20 +1,19 @@
 package algvis.core;
 
 /**
- * The Class StringUtils.
- * Contains basic string methods.
+ * The Class StringUtils. Contains basic string methods.
  */
 public class StringUtils {
 	// substitute values param for parameters in the string s
 	// parameters are denoted #1, #2, #3, ...
 	public static String subst(String s, int... param) {
 		for (int i = 0; i < param.length; ++i) {
-			s = s.replaceAll("#" + Integer.toString(i + 1), Integer
-					.toString(param[i]));
+			s = s.replaceAll("#" + Integer.toString(i + 1),
+					Integer.toString(param[i]));
 		}
 		return s;
 	}
-	
+
 	public static String subst(String s, String... param) {
 		for (int i = 0; i < param.length; ++i) {
 			s = s.replaceAll("#" + Integer.toString(i + 1), param[i]);
@@ -24,6 +23,7 @@ public class StringUtils {
 
 	static final String ZEROES = "000000000000";
 	static final String BLANKS = "            ";
+
 	public static String format(double val, int n, int w) { // rounding
 		double incr = 0.5;
 		for (int j = n; j > 0; j--) {

@@ -1,6 +1,7 @@
 package algvis.redblacktree;
 
 import java.awt.Color;
+
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -18,39 +19,54 @@ public class RBNode extends BSTNode {
 	}
 
 	@Override
+	public RBNode getLeft() {
+		return (RBNode) super.getLeft();
+	}
+
+	@Override
+	public RBNode getRight() {
+		return (RBNode) super.getRight();
+	}
+
+	@Override
+	public RBNode getParent() {
+		return (RBNode) super.getParent();
+	}
+
+	@Override
 	public boolean isRoot() {
-		return parent.key == Node.NULL;
+		return getParent().key == Node.NULL;
 	}
 
 	@Override
 	public boolean isLeaf() {
-		return left.key == Node.NULL && right.key == Node.NULL;
+		return getLeft().key == Node.NULL && getRight().key == Node.NULL;
 	}
 
 	@Override
 	public boolean isLeft() {
-		return parent.left == this;
+		return getParent().getLeft() == this;
 	}
 
 	@Override
 	public void linkLeft(BSTNode v) {
-		left = v;
+		setLeft(v);
 		if (v.key != Node.NULL) {
-			v.parent = this;
+			v.setParent(this);
 		}
 	}
 
 	@Override
 	public void linkRight(BSTNode v) {
-		right = v;
+		setRight(v);
 		if (v.key != Node.NULL) {
-			v.parent = this;
+			v.setParent(this);
 		}
 	}
 
 	@Override
 	public void isolate() {
-		left = right = parent = ((RB) D).NULL;
+		setLeft(setRight(setParent(((RB) D).NULL)));
 	}
 
 	@Override
@@ -67,14 +83,14 @@ public class RBNode extends BSTNode {
 		if (key == NULL) {
 			return;
 		}
-		if (left != null) {
-			((RBNode) left).drawBigNodes(v);
+		if (getLeft() != null) {
+			getLeft().drawBigNodes(v);
 		}
-		if (right != null) {
-			((RBNode) right).drawBigNodes(v);
+		if (getRight() != null) {
+			getRight().drawBigNodes(v);
 		}
-		if (red && parent != null) {
-			v.drawWideLine(x, y, parent.x, parent.y);
+		if (red && getParent() != null) {
+			v.drawWideLine(x, y, getParent().x, getParent().y);
 		} else {
 			v.drawWideLine(x - 1, y, x + 1, y);
 		}
@@ -86,15 +102,15 @@ public class RBNode extends BSTNode {
 			return;
 		}
 		int ls = 0, rs = 0, lh = 0, rh = 0, lsh = 0, rsh = 0;
-		if (left != null) {
-			ls = left.size;
-			lh = left.height;
-			lsh = left.sumh;
+		if (getLeft() != null) {
+			ls = getLeft().size;
+			lh = getLeft().height;
+			lsh = getLeft().sumh;
 		}
-		if (right != null) {
-			rs = right.size;
-			rh = right.height;
-			rsh = right.sumh;
+		if (getRight() != null) {
+			rs = getRight().size;
+			rh = getRight().height;
+			rsh = getRight().sumh;
 		}
 		size = ls + rs + 1;
 		height = Math.max(lh, rh) + 1;
@@ -106,17 +122,17 @@ public class RBNode extends BSTNode {
 		if (key == Node.NULL) {
 			return;
 		}
-		if (left.key != Node.NULL) {
-			left.calcTree();
+		if (getLeft().key != Node.NULL) {
+			getLeft().calcTree();
 		}
-		if (right.key != Node.NULL) {
-			right.calcTree();
+		if (getRight().key != Node.NULL) {
+			getRight().calcTree();
 		}
 		calc();
 	}
 
 	public void drawTree2(View v) {
-		if (((RB)D).mode24) {
+		if (((RB) D).mode24) {
 			drawBigNodes(v);
 		}
 		drawTree(v);
@@ -124,30 +140,31 @@ public class RBNode extends BSTNode {
 
 	@Override
 	public void moveTree() {
-		if (left.key != Node.NULL) {
-			((RBNode) left).moveTree();
+		if (getLeft().key != Node.NULL) {
+			getLeft().moveTree();
 		}
-		if (right.key != Node.NULL) {
-			((RBNode) right).moveTree();
+		if (getRight().key != Node.NULL) {
+			getRight().moveTree();
 		}
 		move();
 	}
 
 	// */@Override
+	@Override
 	public void rebox() {
-		leftw = (left.key == Node.NULL) ? D.xspan + D.radius : left.leftw
-				+ left.rightw;
-		rightw = (right.key == Node.NULL) ? D.xspan + D.radius : right.leftw
-				+ right.rightw;
+		leftw = (getLeft().key == Node.NULL) ? D.xspan + D.radius
+				: getLeft().leftw + getLeft().rightw;
+		rightw = (getRight().key == Node.NULL) ? D.xspan + D.radius
+				: getRight().leftw + getRight().rightw;
 	}
 
 	@Override
 	public void reboxTree() {
-		if (left.key != Node.NULL) {
-			((RBNode) left).reboxTree();
+		if (getLeft().key != Node.NULL) {
+			getLeft().reboxTree();
 		}
-		if (right.key != Node.NULL) {
-			((RBNode) right).reboxTree();
+		if (getRight().key != Node.NULL) {
+			getRight().reboxTree();
 		}
 		rebox();
 	}
@@ -162,27 +179,31 @@ public class RBNode extends BSTNode {
 		if (this.toy > D.y2) {
 			D.y2 = this.toy;
 		}
-		if (left.key != Node.NULL) {
+		if (getLeft().key != Node.NULL) {
 			if (((RB) D).mode24) {
-				left.goTo(this.tox - left.rightw, this.toy
-						+ (((RBNode) left).red ? D.yspan : 2 * D.radius
-								+ D.yspan) - (red ? D.yspan : 0));
+				getLeft().goTo(
+						this.tox - getLeft().rightw,
+						this.toy
+								+ (getLeft().red ? D.yspan : 2 * D.radius
+										+ D.yspan) - (red ? D.yspan : 0));
 			} else {
-				left.goTo(this.tox - left.rightw, this.toy + 2 * D.radius
-						+ D.yspan);
+				getLeft().goTo(this.tox - getLeft().rightw,
+						this.toy + 2 * D.radius + D.yspan);
 			}
-			((RBNode) left).repos();
+			getLeft().repos();
 		}
-		if (right.key != Node.NULL) {
+		if (getRight().key != Node.NULL) {
 			if (((RB) D).mode24) {
-				right.goTo(this.tox + right.leftw, this.toy
-						+ (((RBNode) right).red ? D.yspan : 2 * D.radius
-								+ D.yspan) - (red ? D.yspan : 0));
+				getRight().goTo(
+						this.tox + getRight().leftw,
+						this.toy
+								+ (getRight().red ? D.yspan : 2 * D.radius
+										+ D.yspan) - (red ? D.yspan : 0));
 			} else {
-				right.goTo(this.tox + right.leftw, this.toy + 2 * D.radius
-						+ D.yspan);
+				getRight().goTo(this.tox + getRight().leftw,
+						this.toy + 2 * D.radius + D.yspan);
 			}
-			((RBNode) right).repos();
+			getRight().repos();
 		}
 	}
 

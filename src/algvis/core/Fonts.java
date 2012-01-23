@@ -14,7 +14,7 @@ public class Fonts {
 		f = new Font[MAX + 1];
 		fm = new FontMetrics[MAX + 1];
 		for (int i = MIN; i <= MAX; ++i) {
-			f[i] = new Font("Sans-serif", Font.PLAIN, i); //"Helvetica"
+			f[i] = new Font("Sans-serif", Font.PLAIN, i); // "Helvetica"
 			fm[i] = g.getFontMetrics(f[i]);
 		}
 	}

@@ -1,14 +1,13 @@
 package algvis.splaytree;
 
-import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
 import algvis.core.Colors;
 
 public class SplayAlg extends Algorithm {
 	Splay T;
-	BSTNode s, v;
+	SplayNode s, v;
 	int K;
-	
+
 	public SplayAlg(Splay T, int x) {
 		super(T);
 		this.T = T;
@@ -18,9 +17,9 @@ public class SplayAlg extends Algorithm {
 			setHeader("splay");
 		}
 	}
-	
-	public BSTNode find(int K) {
-		BSTNode w = T.root;
+
+	public SplayNode find(int K) {
+		SplayNode w = (SplayNode) T.root;
 		s.goTo(w);
 		addStep("splaystart");
 		mysuspend();
@@ -28,16 +27,16 @@ public class SplayAlg extends Algorithm {
 			if (w.key == K) {
 				break;
 			} else if (w.key < K) { // right
-				if (w.right == null) {
+				if (w.getRight() == null) {
 					break;
 				}
-				w = w.right;
+				w = w.getRight();
 				addStep("bstfindright", K, w.key);
 			} else { // left
-				if (w.left == null) {
+				if (w.getLeft() == null) {
 					break;
 				}
-				w = w.left;
+				w = w.getLeft();
 				addStep("bstfindleft", K, w.key);
 			}
 			s.goTo(w);
@@ -49,27 +48,27 @@ public class SplayAlg extends Algorithm {
 		mysuspend();
 		return w;
 	}
-	
-	public void splay(BSTNode w) {
+
+	public void splay(SplayNode w) {
 		while (!w.isRoot()) {
-			if (w.parent.isRoot()) {
+			if (w.getParent().isRoot()) {
 				addStep("splayroot");
-				w.setArc(w.parent);
+				w.setArc(w.getParent());
 				mysuspend();
 				w.noArc();
 				T.rotate(w);
 			} else {
-				if (w.isLeft() == w.parent.isLeft()) {
+				if (w.isLeft() == w.getParent().isLeft()) {
 					if (w.isLeft()) {
 						addStep("splayzigzigleft");
 					} else {
 						addStep("splayzigzigright");
 					}
-					w.parent.setArc(w.parent.parent);
+					w.getParent().setArc(w.getParent().getParent());
 					mysuspend();
-					w.parent.noArc();
-					T.rotate(w.parent);
-					w.setArc(w.parent);
+					w.getParent().noArc();
+					T.rotate(w.getParent());
+					w.setArc(w.getParent());
 					mysuspend();
 					w.noArc();
 					T.rotate(w);
@@ -79,11 +78,11 @@ public class SplayAlg extends Algorithm {
 					} else {
 						addStep("splayzigzagright");
 					}
-					w.setArc(w.parent);
+					w.setArc(w.getParent());
 					mysuspend();
 					w.noArc();
 					T.rotate(w);
-					w.setArc(w.parent);
+					w.setArc(w.getParent());
 					mysuspend();
 					w.noArc();
 					T.rotate(w);

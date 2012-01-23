@@ -25,28 +25,38 @@ public class Rotate extends Algorithm {
 			// vypis ze to je root...
 			return;
 		}
-		BSTNode u = v.parent;
+		BSTNode u = v.getParent();
 		boolean rotR = v.isLeft();
 		if (rotR) {
-			if (v.left != null) v.left.subtreeBgColor(Color.red);
-			if (v.right != null) v.right.subtreeBgColor(Color.green);
-			if (u.right != null) u.right.subtreeBgColor(Color.blue);
+			if (v.getLeft() != null)
+				v.getLeft().subtreeBgColor(Color.red);
+			if (v.getRight() != null)
+				v.getRight().subtreeBgColor(Color.green);
+			if (u.getRight() != null)
+				u.getRight().subtreeBgColor(Color.blue);
 		} else {
-			if (u.left != null) u.left.subtreeBgColor(Color.red);
-			if (v.left != null) v.left.subtreeBgColor(Color.green);
-			if (v.right != null) v.right.subtreeBgColor(Color.blue);
+			if (u.getLeft() != null)
+				u.getLeft().subtreeBgColor(Color.red);
+			if (v.getLeft() != null)
+				v.getLeft().subtreeBgColor(Color.green);
+			if (v.getRight() != null)
+				v.getRight().subtreeBgColor(Color.blue);
 		}
 		mysuspend();
-		
+
 		T.rotate(v);
 		R.v = u;
 		T.reposition();
 		mysuspend();
 
 		R.v = null;
-		if (v.left != null) v.left.subtreeBgColor(Colors.NORMAL);
-		if (v.right != null) v.right.subtreeBgColor(Colors.NORMAL);
-		if (u.left != null) u.left.subtreeBgColor(Colors.NORMAL);
-		if (u.right != null) u.right.subtreeBgColor(Colors.NORMAL);
+		if (v.getLeft() != null)
+			v.getLeft().subtreeBgColor(Colors.NORMAL);
+		if (v.getRight() != null)
+			v.getRight().subtreeBgColor(Colors.NORMAL);
+		if (u.getLeft() != null)
+			u.getLeft().subtreeBgColor(Colors.NORMAL);
+		if (u.getRight() != null)
+			u.getRight().subtreeBgColor(Colors.NORMAL);
 	}
 }

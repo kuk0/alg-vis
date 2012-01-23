@@ -1,28 +1,27 @@
 package algvis.heap;
 
-import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
 import algvis.core.Node;
 
 public class HeapAlg extends Algorithm {
 	Heap H;
-	BSTNode v;
+	HeapNode v;
 
 	public HeapAlg(Heap H) {
 		super(H);
 		this.H = H;
 	}
-	
-	public void bubbleup(BSTNode v) {
+
+	public void bubbleup(HeapNode v) {
 		if (H.minHeap) {
 			addStep("minheapbubbleup");
 		} else {
 			addStep("maxheapbubbleup");
 		}
-		BSTNode w = v.parent;
-		while (w != null && ((HeapNode) v).prec(w)) {
-			H.v = new HeapNode((HeapNode) v);
-			H.v2 = new HeapNode((HeapNode) w);
+		HeapNode w = v.getParent();
+		while (w != null && v.prec(w)) {
+			H.v = new HeapNode(v);
+			H.v2 = new HeapNode(w);
 			v.key = Node.NOKEY;
 			w.key = Node.NOKEY;
 			H.v.goTo(w);
@@ -35,7 +34,7 @@ public class HeapAlg extends Algorithm {
 			H.v = null;
 			H.v2 = null;
 			v = w;
-			w = w.parent;
+			w = w.getParent();
 		}
 		addStep("done");
 	}

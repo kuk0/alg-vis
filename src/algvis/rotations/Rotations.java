@@ -16,10 +16,11 @@ public class Rotations extends DataStructure implements ClickListener {
 	BST T;
 	BSTNode v;
 
+	@Override
 	public String getName() {
 		return "rotations";
 	}
-	
+
 	public Rotations(VisPanel M) {
 		super(M, dsName);
 		T = new BST(M);
@@ -31,9 +32,9 @@ public class Rotations extends DataStructure implements ClickListener {
 		v = T.root;
 		while (v != null && v.key != x) {
 			if (v.key < x) {
-				v = v.right;
+				v = v.getRight();
 			} else {
-				v = v.left;
+				v = v.getLeft();
 			}
 		}
 		if (v == null) {
@@ -55,18 +56,18 @@ public class Rotations extends DataStructure implements ClickListener {
 				if (w.key == x) {
 					break;
 				} else if (w.key < x) {
-					if (w.right == null) {
+					if (w.getRight() == null) {
 						w.linkRight(v);
 						break;
 					} else {
-						w = w.right;
+						w = w.getRight();
 					}
 				} else {
-					if (w.left == null) {
+					if (w.getLeft() == null) {
 						w.linkLeft(v);
 						break;
 					} else {
-						w = w.left;
+						w = w.getLeft();
 					}
 				}
 			}
@@ -81,9 +82,9 @@ public class Rotations extends DataStructure implements ClickListener {
 
 	@Override
 	public void draw(View V) {
-		if (v != null && v.parent != null) {
-			V.drawWideLine(v.x, v.y, v.parent.x, v.parent.y);
-		}			
+		if (v != null && v.getParent() != null) {
+			V.drawWideLine(v.x, v.y, v.getParent().x, v.getParent().y);
+		}
 		if (T.root != null) {
 			T.root.moveTree();
 			T.root.drawTree(V);
@@ -106,8 +107,10 @@ public class Rotations extends DataStructure implements ClickListener {
 		M.pause = p;
 	}
 
+	@Override
 	public void mouseClicked(int x, int y) {
-		if (T.root == null) return;
+		if (T.root == null)
+			return;
 		BSTNode v = T.root.find(x, y);
 		if (v != null) {
 			if (v.marked) {

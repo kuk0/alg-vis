@@ -28,10 +28,10 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	Languages L;
 	JScrollPane sp;
 	private int k = 0, position = 0;
-	//private String text;
+	// private String text;
 	private List<String> s = new ArrayList<String>(),
 			pre = new ArrayList<String>(), post = new ArrayList<String>();
-	private List<String[]> param = new ArrayList<String[]> ();
+	private List<String[]> param = new ArrayList<String[]>();
 	static SimpleAttributeSet normalAttr = new SimpleAttributeSet();
 	static SimpleAttributeSet hoverAttr = new SimpleAttributeSet();
 	static {
@@ -59,7 +59,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	}
 
 	public void clear() {
-		//text = "";
+		// text = "";
 		position = k = 0;
 		s = new ArrayList<String>();
 		pre = new ArrayList<String>();
@@ -78,6 +78,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 
 	private void scrollDown() {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				final JScrollBar v = sp.getVerticalScrollBar();
 				v.setValue(v.getMaximum() - v.getVisibleAmount());
@@ -85,6 +86,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		});
 	}
 
+	@Override
 	public void languageChanged() {
 		StringBuffer text = new StringBuffer("");
 		for (int i = 0; i < position; ++i)
@@ -102,19 +104,20 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		HTMLDocument html = (HTMLDocument) getDocument();
 		Element body = null;
 		Element[] roots = html.getRootElements();
-		for( int i = 0; i < roots[0].getElementCount(); i++ ) {
-		    Element element = roots[0].getElement( i );
-		    if(element.getAttributes().getAttribute( StyleConstants.NameAttribute ) == HTML.Tag.BODY ) {
-		        body = element;
-		        break;
-		    }
+		for (int i = 0; i < roots[0].getElementCount(); i++) {
+			Element element = roots[0].getElement(i);
+			if (element.getAttributes().getAttribute(
+					StyleConstants.NameAttribute) == HTML.Tag.BODY) {
+				body = element;
+				break;
+			}
 		}
 		try {
 			html.insertBeforeEnd(body, str(s.size() - 1));
 		} catch (Exception e) {
 		}
-		//text += str(s.size() - 1);
-		//super.setText(text);
+		// text += str(s.size() - 1);
+		// super.setText(text);
 		scrollDown();
 	}
 
@@ -144,6 +147,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		addStep(s, par2);
 	}
 
+	@Override
 	public void hyperlinkUpdate(HyperlinkEvent e) {
 		if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
 			System.out.println(e.getDescription());

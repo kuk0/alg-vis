@@ -38,7 +38,7 @@ public class RBFind extends Algorithm {
 					break;
 				} else if (w.key < K) {
 					addStep("bstfindright", K, w.key);
-					w = w.right;
+					w = w.getRight();
 					if (w != T.NULL) {
 						v.goTo(w);
 					} else { // notfound
@@ -49,7 +49,7 @@ public class RBFind extends Algorithm {
 					}
 				} else {
 					addStep("bstfindleft", K, w.key);
-					w = w.left;
+					w = w.getLeft();
 					if (w != T.NULL) {
 						v.goTo(w);
 					} else { // notfound

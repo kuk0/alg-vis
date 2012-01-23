@@ -6,11 +6,13 @@ import algvis.core.VisPanel;
 
 public class Treap extends BST {
 	public static String dsName = "treap";
-	
+	TreapNode root = null, v = null;
+
+	@Override
 	public String getName() {
 		return "treap";
 	}
-	
+
 	public Treap(VisPanel M) {
 		super(M);
 		scenario.enable(false);

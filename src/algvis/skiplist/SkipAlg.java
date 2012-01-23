@@ -14,7 +14,7 @@ public class SkipAlg extends Algorithm {
 		L.v = v = new SkipNode(L, x);
 		K = x;
 	}
-	
+
 	public SkipNode find() {
 		SkipNode w = L.root;
 		v.goToRoot();

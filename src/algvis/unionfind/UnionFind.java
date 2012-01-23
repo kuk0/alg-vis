@@ -25,10 +25,11 @@ public class UnionFind extends DataStructure implements ClickListener {
 	public UnionFindNode firstSelected = null;
 	public UnionFindNode secondSelected = null;
 
+	@Override
 	public String getName() {
 		return "ufi";
 	}
-	
+
 	public UnionFind(VisPanel M) {
 		super(M, dsName);
 		M.screen.V.align = Alignment.LEFT;
@@ -136,6 +137,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 			return false;
 	}
 
+	@Override
 	public void mouseClicked(int x, int y) {
 		UnionFindNode u = null;
 		int i = 0;

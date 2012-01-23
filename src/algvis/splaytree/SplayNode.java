@@ -16,25 +16,40 @@ public class SplayNode extends BSTNode {
 	}
 
 	@Override
+	public SplayNode getLeft() {
+		return (SplayNode) super.getLeft();
+	}
+
+	@Override
+	public SplayNode getRight() {
+		return (SplayNode) super.getRight();
+	}
+
+	@Override
+	public SplayNode getParent() {
+		return (SplayNode) super.getParent();
+	}
+
+	@Override
 	public void calc() {
 		super.calc();
 		int lp = 0, rp = 0;
-		if (left != null) {
-			lp = ((SplayNode) left).pot;
+		if (getLeft() != null) {
+			lp = getLeft().pot;
 		}
-		if (right != null) {
-			rp = ((SplayNode) right).pot;
+		if (getRight() != null) {
+			rp = getRight().pot;
 		}
 		pot = (int) Math.floor(D.lg(size)) + lp + rp;
 	}
 
 	@Override
 	public void calcTree() {
-		if (left != null) {
-			left.calcTree();
+		if (getLeft() != null) {
+			getLeft().calcTree();
 		}
-		if (right != null) {
-			right.calcTree();
+		if (getRight() != null) {
+			getRight().calcTree();
 		}
 		calc();
 	}

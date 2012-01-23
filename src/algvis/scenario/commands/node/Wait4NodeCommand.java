@@ -7,11 +7,11 @@ import algvis.scenario.commands.Command;
 
 public class Wait4NodeCommand implements Command {
 	private final Node n;
-	
+
 	public Wait4NodeCommand(Node n) {
 		this.n = n;
 	}
-	
+
 	@Override
 	public Element getXML() {
 		Element e = new Element("waitBackwards");

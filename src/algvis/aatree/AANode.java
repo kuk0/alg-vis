@@ -21,6 +21,21 @@ public class AANode extends BSTNode {
 	}
 
 	@Override
+	public AANode getLeft() {
+		return (AANode) super.getLeft();
+	}
+
+	@Override
+	public AANode getRight() {
+		return (AANode) super.getRight();
+	}
+
+	@Override
+	public AANode getParent() {
+		return (AANode) super.getParent();
+	}
+
+	@Override
 	public void draw(View v) {
 		if (state == Node.INVISIBLE || key == NULL) {
 			return;
@@ -34,21 +49,22 @@ public class AANode extends BSTNode {
 	}
 
 	public void drawBigNodes(View v) {
-		if (left != null) {
-			((AANode) left).drawBigNodes(v);
+		if (getLeft() != null) {
+			getLeft().drawBigNodes(v);
 		}
-		if (right != null) {
-			((AANode) right).drawBigNodes(v);
+		if (getRight() != null) {
+			getRight().drawBigNodes(v);
 		}
-		if (parent != null && parent.getLevel() == getLevel()) {
-			v.drawWideLine(x, y, parent.x, parent.y);
+		if (getParent() != null && getParent().getLevel() == getLevel()) {
+			v.drawWideLine(x, y, getParent().x, getParent().y);
 		} else {
 			v.drawWideLine(x - 1, y, x + 1, y);
 		}
 	}
-	
+
 	public void drawTree2(View v) {
-		if (((AA)D).mode23) drawBigNodes(v);
+		if (((AA) D).mode23)
+			drawBigNodes(v);
 		drawTree(v);
 	}
 }

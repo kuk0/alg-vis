@@ -1,6 +1,5 @@
 package algvis.heap;
 
-import algvis.bst.BSTNode;
 import algvis.core.Node;
 
 public class HeapDelete extends HeapAlg {
@@ -23,7 +22,7 @@ public class HeapDelete extends HeapAlg {
 			mysuspend();
 			return;
 		}
-		BSTNode v, w;
+		HeapNode v, w;
 
 		int n = H.n, k = 1 << 10;
 		while ((k & n) == 0) {
@@ -32,15 +31,15 @@ public class HeapDelete extends HeapAlg {
 		k >>= 1;
 		w = H.root;
 		while (k > 0) {
-			w = ((n & k) == 0) ? w.left : w.right;
+			w = ((n & k) == 0) ? w.getLeft() : w.getRight();
 			k >>= 1;
 		}
 		H.v = w;
 		--H.n;
 		if ((n & 1) == 0) {
-			w.parent.left = null;
+			w.getParent().setLeft(null);
 		} else {
-			w.parent.right = null;
+			w.getParent().setRight(null);
 		}
 		H.v.goToRoot();
 		H.reposition();
@@ -58,17 +57,17 @@ public class HeapDelete extends HeapAlg {
 		v = H.root;
 		while (true) {
 			w = null;
-			if (v.left != null) {
-				w = v.left;
+			if (v.getLeft() != null) {
+				w = v.getLeft();
 			}
-			if (v.right != null && ((HeapNode) v.right).prec(w)) {
-				w = v.right;
+			if (v.getRight() != null && v.getRight().prec(w)) {
+				w = v.getRight();
 			}
-			if (w == null || ((HeapNode) v).prec(w)) {
+			if (w == null || v.prec(w)) {
 				break;
 			}
-			H.v = new HeapNode((HeapNode) v);
-			H.v2 = new HeapNode((HeapNode) w);
+			H.v = new HeapNode(v);
+			H.v2 = new HeapNode(w);
 			v.key = Node.NOKEY;
 			w.key = Node.NOKEY;
 			H.v.goTo(w);

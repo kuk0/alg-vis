@@ -19,6 +19,7 @@ public class IMenu extends JMenu implements LanguageListener {
 		setText(L.getString(t));
 	}
 
+	@Override
 	public void languageChanged() {
 		setText(L.getString(t));
 	}

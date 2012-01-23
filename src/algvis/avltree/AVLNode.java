@@ -19,10 +19,6 @@ public class AVLNode extends BSTNode {
 		super(D, key, x, y);
 	}
 
-	public AVLNode(DataStructure D, int key, int[] pos) {
-		this(D, key, pos[0], pos[1]);
-	}
-	
 	public AVLNode(DataStructure D, int key) {
 		this(D, key, 0, 0);
 		getReady();
@@ -32,20 +28,35 @@ public class AVLNode extends BSTNode {
 		this(v.D, v.key, v.x, v.y);
 	}
 
+	@Override
+	public AVLNode getLeft() {
+		return (AVLNode) super.getLeft();
+	}
+
+	@Override
+	public AVLNode getRight() {
+		return (AVLNode) super.getRight();
+	}
+
+	@Override
+	public AVLNode getParent() {
+		return (AVLNode) super.getParent();
+	}
+
 	public int balance() {
-		int l = (left == null) ? 0 : left.height, r = (right == null) ? 0
-				: right.height;
+		int l = (getLeft() == null) ? 0 : getLeft().height, r = (getRight() == null) ? 0
+				: getRight().height;
 		setBalance(r - l);
 		return bal;
 	}
-	
+
 	public void setBalance(int bal) {
 		if (this.bal != bal) {
 			D.scenario.add(new SetBalanceCommand(this, bal));
 			this.bal = bal;
 		}
 	}
-	
+
 	public int getBalance() {
 		return bal;
 	}
@@ -92,12 +103,11 @@ public class AVLNode extends BSTNode {
 				break;
 			}
 			V.setColor(fgcolor);
-			V.drawOval(x - D.radius, y - D.radius, 2 * D.radius,
-					2 * D.radius);
+			V.drawOval(x - D.radius, y - D.radius, 2 * D.radius, 2 * D.radius);
 		}
 
 		drawKey(V);
-		if (parent != null && parent.left == this) {
+		if (getParent() != null && getParent().getLeft() == this) {
 			V.drawString(b, x - D.radius - 1, y - D.radius - 1, 10);
 		} else {
 			V.drawString(b, x + D.radius + 1, y - D.radius - 1, 10);

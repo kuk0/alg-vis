@@ -1,6 +1,5 @@
 package algvis.redblacktree;
 
-import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
 
 public class RBInsert extends Algorithm {
@@ -17,9 +16,9 @@ public class RBInsert extends Algorithm {
 
 	@Override
 	public void run() {
-		BSTNode w = T.root;
+		RBNode w = (RBNode) T.root;
 		if (T.root == T.NULL) {
-			v.left = v.right = v.parent = T.NULL;
+			v.setLeft(v.setRight(v.setParent(T.NULL)));
 			T.root = v;
 			v.goToRoot();
 			addStep("newroot");
@@ -36,16 +35,16 @@ public class RBInsert extends Algorithm {
 					return;
 				} else if (w.key < K) {
 					addStep("bstinsertright", K, w.key);
-					if (w.right != T.NULL) {
-						w = w.right;
+					if (w.getRight() != T.NULL) {
+						w = w.getRight();
 					} else {
 						w.linkRight(v);
 						break;
 					}
 				} else {
 					addStep("bstinsertleft", K, w.key);
-					if (w.left != T.NULL) {
-						w = w.left;
+					if (w.getLeft() != T.NULL) {
+						w = w.getLeft();
 					} else {
 						w.linkLeft(v);
 						break;
@@ -54,19 +53,19 @@ public class RBInsert extends Algorithm {
 				v.goAbove(w);
 				mysuspend();
 			}
-			v.left = v.right = T.NULL;
+			v.setLeft(v.setRight(T.NULL));
 
 			T.reposition();
 			mysuspend();
 
 			// bubleme nahor
 			w = v;
-			RBNode pw = (RBNode) w.parent;
+			RBNode pw = w.getParent();
 			while (!w.isRoot() && pw.red) {
 				w.mark();
 				boolean isleft = pw.isLeft();
-				RBNode ppw = (RBNode) pw.parent, y = (RBNode) (isleft ? ppw.right
-						: ppw.left);
+				RBNode ppw = pw.getParent(), y = (isleft ? ppw.getRight() : ppw
+						.getLeft());
 				if (y.red) {
 					// case 1
 					addStep("rbinsertcase1");
@@ -77,7 +76,7 @@ public class RBInsert extends Algorithm {
 					w.unmark();
 					w = ppw;
 					w.mark();
-					pw = (RBNode) w.parent;
+					pw = w.getParent();
 					mysuspend();
 				} else {
 					// case 2
@@ -88,14 +87,14 @@ public class RBInsert extends Algorithm {
 						mysuspend();
 					} else {
 						w.unmark();
-						w = w.parent;
+						w = w.getParent();
 						w.mark();
 					}
-					pw = (RBNode) w.parent;
+					pw = w.getParent();
 					// case 3
 					addStep("rbinsertcase3");
 					mysuspend();
-					((RBNode) w).red = false;
+					w.red = false;
 					pw.red = true;
 					T.rotate(w);
 					mysuspend();

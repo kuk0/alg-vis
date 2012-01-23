@@ -28,6 +28,7 @@ public class UnionFindFind extends Algorithm {
 		this.u = u;
 	}
 
+	@Override
 	public void run() {
 		setHeader("uffind");
 		UnionFindNode v = find(u);
@@ -73,7 +74,7 @@ public class UnionFindFind extends Algorithm {
 			return u;
 		}
 
-		v = (UnionFindNode) u;
+		v = u;
 
 		// looking for root
 		while (v.parent != null) {
@@ -121,7 +122,7 @@ public class UnionFindFind extends Algorithm {
 			return u;
 		}
 
-		v = (UnionFindNode) u;
+		v = u;
 
 		// looking for root
 		while (v.parent != null) {
@@ -183,7 +184,7 @@ public class UnionFindFind extends Algorithm {
 			return u;
 		}
 
-		v = (UnionFindNode) u;
+		v = u;
 		UnionFindNode grandchild = null;
 		UnionFindNode child = null;
 
@@ -205,27 +206,27 @@ public class UnionFindFind extends Algorithm {
 		boolean odd = true;
 		if (v.parent != null)
 			do {
-			addStep("ufup");
-			mysuspend();
-			v.bgcolor = Colors.FIND;
-			v = (UnionFindNode) v.parent;
-			v.bgcolor = Colors.INSERT;
-			if (odd) {
-				odd = false;
-				grandchild.bgcolor = Colors.CACHED;
-				addStep("ufupspecial");
+				addStep("ufup");
 				mysuspend();
+				v.bgcolor = Colors.FIND;
+				v = (UnionFindNode) v.parent;
+				v.bgcolor = Colors.INSERT;
+				if (odd) {
+					odd = false;
+					grandchild.bgcolor = Colors.CACHED;
+					addStep("ufupspecial");
+					mysuspend();
+					grandchild.bgcolor = Colors.NORMAL;
+					grandchild.parent.deleteChild(grandchild);
+					v.addChild(grandchild);
+					UF.reposition();
+				} else {
+					odd = true;
+				}
 				grandchild.bgcolor = Colors.NORMAL;
-				grandchild.parent.deleteChild(grandchild);
-				v.addChild(grandchild);
-				UF.reposition();
-			} else {
-				odd = true;
-			}
-			grandchild.bgcolor = Colors.NORMAL;
-			grandchild = child;
-			child = v;
-		} while (v.parent != null);
+				grandchild = child;
+				child = v;
+			} while (v.parent != null);
 
 		// root found
 		if (grandchild != null)
@@ -259,7 +260,7 @@ public class UnionFindFind extends Algorithm {
 			return u;
 		}
 
-		v = (UnionFindNode) u;
+		v = u;
 		UnionFindNode grandchild = null;
 		UnionFindNode child = null;
 

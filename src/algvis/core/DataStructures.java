@@ -2,7 +2,6 @@ package algvis.core;
 
 import java.lang.reflect.Constructor;
 
-
 import algvis.aatree.AAPanel;
 import algvis.avltree.AVLPanel;
 import algvis.binomialheap.BinHeapPanel;

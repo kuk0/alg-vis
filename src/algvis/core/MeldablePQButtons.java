@@ -16,7 +16,6 @@ import algvis.internationalization.IButton;
 import algvis.internationalization.ILabel;
 import algvis.internationalization.IRadioButton;
 
-
 public class MeldablePQButtons extends Buttons implements ChangeListener {
 	private static final long serialVersionUID = 1242711038059609653L;
 	IButton insertB, deleteB, decrKeyB, meldB;
@@ -39,7 +38,7 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 		deleteB.setMnemonic(KeyEvent.VK_D);
 		deleteB.addActionListener(this);
 
-		if (((MeldablePQ)D).minHeap) {
+		if (((MeldablePQ) D).minHeap) {
 			decrKeyB = new IButton(M.S.L, "button-decreasekey");
 		} else {
 			decrKeyB = new IButton(M.S.L, "button-increasekey");
@@ -84,6 +83,7 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 		if (evt.getSource() == insertB) {
 			final Vector<Integer> args = I.getNonEmptyVI();
 			Thread t = new Thread(new Runnable() {
+				@Override
 				public void run() {
 					for (int x : args) {
 						((MeldablePQ) D).insert(x);
@@ -93,6 +93,7 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 			t.start();
 		} else if (evt.getSource() == deleteB) {
 			Thread t = new Thread(new Runnable() {
+				@Override
 				public void run() {
 					((MeldablePQ) D).delete();
 				}
@@ -100,8 +101,9 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 			t.start();
 		} else if (evt.getSource() == decrKeyB) {
 			final int delta = Math.abs(I.getInt(1));
-			final Node w = ((MeldablePQ)D).chosen;
+			final Node w = ((MeldablePQ) D).chosen;
 			Thread t = new Thread(new Runnable() {
+				@Override
 				public void run() {
 					((MeldablePQ) D).decreaseKey(w, delta);
 				}
@@ -114,6 +116,7 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 			final int i = args.get(0);
 			final int j = args.get(1);
 			Thread t = new Thread(new Runnable() {
+				@Override
 				public void run() {
 					((MeldablePQ) D).meld(i, j);
 				}
@@ -151,12 +154,14 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 		next.setEnabled(false);
 	}
 
+	@Override
 	public void stateChanged(ChangeEvent evt) {
 		if (evt.getSource() == activeHeap) {
 			BinomialHeap H = ((BinomialHeap) D);
 			H.lowlight();
 			H.highlight((Integer) activeHeap.getValue());
-			if (H.chosen != null) H.chosen.unmark();
+			if (H.chosen != null)
+				H.chosen.unmark();
 		}
 	}
 }

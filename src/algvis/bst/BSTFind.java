@@ -37,15 +37,15 @@ public class BSTFind extends Algorithm {
 					v.bgColor(Colors.FOUND);
 					break;
 				} else if (w.key < K) {
-					if (w.right == null) {
+					if (w.getRight() == null) {
 						v.pointInDir(45);
 					} else {
-						v.pointAbove(w.right);
+						v.pointAbove(w.getRight());
 					}
 					addStep("bstfindright", K, w.key);
 					mysuspend();
 					v.noArrow();
-					w = w.right;
+					w = w.getRight();
 					if (w != null) {
 						v.goAbove(w);
 					} else { // not found
@@ -55,15 +55,15 @@ public class BSTFind extends Algorithm {
 						break;
 					}
 				} else {
-					if (w.left == null) {
+					if (w.getLeft() == null) {
 						v.pointInDir(135);
 					} else {
-						v.pointAbove(w.left);
+						v.pointAbove(w.getLeft());
 					}
 					addStep("bstfindleft", K, w.key);
 					mysuspend();
 					v.noArrow();
-					w = w.left;
+					w = w.getLeft();
 					if (w != null) {
 						v.goAbove(w);
 					} else { // notfound

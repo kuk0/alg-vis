@@ -1,6 +1,5 @@
 package algvis.splaytree;
 
-import algvis.bst.BSTNode;
 import algvis.core.Colors;
 
 public class SplayInsert extends SplayAlg {
@@ -20,7 +19,7 @@ public class SplayInsert extends SplayAlg {
 			mysuspend();
 		} else {
 			v.goAboveRoot();
-			BSTNode w = find(K);
+			SplayNode w = find(K);
 			splay(w);
 
 			setHeader("insertion");
@@ -34,14 +33,14 @@ public class SplayInsert extends SplayAlg {
 				addStep("splayinsertleft");
 				mysuspend();
 				v.linkLeft(w);
-				v.linkRight(w.right);
-				w.right = null;
+				v.linkRight(w.getRight());
+				w.setRight(null);
 			} else {
 				addStep("splayinsertright");
 				mysuspend();
 				v.linkRight(w);
-				v.linkLeft(w.left);
-				w.left = null;
+				v.linkLeft(w.getLeft());
+				w.setLeft(null);
 			}
 			T.root = v;
 			T.reposition();
