@@ -1,11 +1,11 @@
 package algvis.scapegoattree;
 
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class GBDelete extends GBAlg {
 	public GBDelete(GBTree T, int x) {
 		super(T, x);
-		v.bgColor(Colors.DELETE);
+		v.setColor(NodeColor.DELETE);
 		setHeader("deletion");
 	}
 
@@ -16,7 +16,7 @@ public class GBDelete extends GBAlg {
 			addStep("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Colors.NOTFOUND);
+			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
 		} else {
 			GBNode w = (GBNode) T.root;
@@ -27,12 +27,12 @@ public class GBDelete extends GBAlg {
 				if (w.key == K) {
 					if (w.deleted) {
 						addStep("gbdeletedeleted");
-						v.bgColor(Colors.NOTFOUND);
+						v.setColor(NodeColor.NOTFOUND);
 						v.goDown();
 					} else {
 						addStep("gbdeletemark");
 						w.deleted = true;
-						w.bgColor(GBNode.DELETED);
+						w.setColor(NodeColor.DELETED);
 						++T.del;
 						T.v = null;
 					}
@@ -44,7 +44,7 @@ public class GBDelete extends GBAlg {
 						v.goTo(w);
 					} else { // notfound
 						addStep("notfound");
-						v.bgColor(Colors.NOTFOUND);
+						v.setColor(NodeColor.NOTFOUND);
 						v.goRight();
 						break;
 					}
@@ -55,7 +55,7 @@ public class GBDelete extends GBAlg {
 						v.goTo(w);
 					} else { // notfound
 						addStep("notfound");
-						v.bgColor(Colors.NOTFOUND);
+						v.setColor(NodeColor.NOTFOUND);
 						v.goLeft();
 						break;
 					}

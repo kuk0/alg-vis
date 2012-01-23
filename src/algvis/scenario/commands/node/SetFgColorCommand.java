@@ -8,23 +8,23 @@ import algvis.core.Node;
 import algvis.scenario.commands.Command;
 
 public class SetFgColorCommand implements Command {
-	private final Color fromfgColor, tofgColor;
+	private final Color oldFgColor, newFgColor;
 	private final Node n;
 
-	public SetFgColorCommand(Node n, Color tofgColor) {
+	public SetFgColorCommand(Node n, Color newfgColor) {
 		this.n = n;
-		fromfgColor = n.fgcolor;
-		this.tofgColor = tofgColor;
+		oldFgColor = n.getFgColor();
+		this.newFgColor = newfgColor;
 	}
 
 	@Override
 	public void execute() {
-		n.fgColor(tofgColor);
+		n.fgColor(newFgColor);
 	}
 
 	@Override
 	public void unexecute() {
-		n.fgColor(fromfgColor);
+		n.fgColor(oldFgColor);
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class SetFgColorCommand implements Command {
 		Element e = new Element("node");
 		e.setAttribute("action", "changeColor");
 		e.setAttribute("key", Integer.toString(n.key));
-		e.setAttribute("fgColor", tofgColor.toString());
+		e.setAttribute("fgColor", newFgColor.toString());
 		return e;
 	}
 

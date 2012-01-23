@@ -2,6 +2,7 @@ package algvis.binomialheap;
 
 import java.awt.Color;
 
+import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.MeldablePQ;
 import algvis.core.Node;
@@ -256,8 +257,7 @@ public class BinHeapNode extends Node {
 
 	public void markCut() {
 		cut = true;
-		bgColor(Color.black);
-		fgColor(Color.white);
+		setColor(NodeColor.BLACK);
 	}
 
 	public void unmarkCut() {

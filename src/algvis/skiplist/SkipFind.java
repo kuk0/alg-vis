@@ -1,11 +1,11 @@
 package algvis.skiplist;
 
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class SkipFind extends SkipAlg {
 	public SkipFind(SkipList L, int x) {
 		super(L, x);
-		v.bgColor(Colors.FIND);
+		v.setColor(NodeColor.FIND);
 		setHeader("search");
 	}
 
@@ -18,10 +18,10 @@ public class SkipFind extends SkipAlg {
 		v.goTo(w);
 		if (w.key == v.key) {
 			addStep("found");
-			v.bgColor(Colors.FOUND);
+			v.setColor(NodeColor.FOUND);
 		} else {
 			addStep("notfound");
-			v.bgColor(Colors.NOTFOUND);
+			v.setColor(NodeColor.NOTFOUND);
 			v.goDown();
 		}
 		mysuspend();

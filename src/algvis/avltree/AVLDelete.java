@@ -1,7 +1,7 @@
 package algvis.avltree;
 
 import algvis.core.Algorithm;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class AVLDelete extends Algorithm {
@@ -13,7 +13,7 @@ public class AVLDelete extends Algorithm {
 		super(T);
 		this.T = T;
 		v = (AVLNode) T.setNodeV(new AVLNode(T, K = x));
-		v.bgColor(Colors.DELETE);
+		v.setColor(NodeColor.DELETE);
 		setHeader("deletion");
 	}
 
@@ -24,7 +24,7 @@ public class AVLDelete extends Algorithm {
 			addStep("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Colors.NOTFOUND);
+			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
 			finish();
 			return;
@@ -36,7 +36,7 @@ public class AVLDelete extends Algorithm {
 
 			while (true) {
 				if (d.key == K) { // found
-					v.bgColor(Colors.FOUND);
+					v.setColor(NodeColor.FOUND);
 					break;
 				} else if (d.key < K) { // right
 					addStep("bstfindright", K, d.key);
@@ -67,7 +67,7 @@ public class AVLDelete extends Algorithm {
 			}
 
 			AVLNode w = d.getParent();
-			d.bgColor(Colors.FOUND);
+			d.setColor(NodeColor.FOUND);
 			if (d.isLeaf()) { // case I - list
 				addStep("bstdeletecase1");
 				mysuspend();
@@ -101,7 +101,7 @@ public class AVLDelete extends Algorithm {
 				addStep("bstdeletecase3");
 				AVLNode s = d.getRight();
 				v = (AVLNode) T.setNodeV(new AVLNode(T, -Node.INF));
-				v.bgColor(Colors.FIND);
+				v.setColor(NodeColor.FIND);
 				v.goTo(s);
 				mysuspend();
 				while (s.getLeft() != null) {

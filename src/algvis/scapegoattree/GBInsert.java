@@ -1,11 +1,11 @@
 package algvis.scapegoattree;
 
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class GBInsert extends GBAlg {
 	public GBInsert(GBTree T, int x) {
 		super(T, x);
-		v.bgColor(Colors.INSERT);
+		v.setColor(NodeColor.INSERT);
 		setHeader("insertion");
 	}
 
@@ -16,7 +16,7 @@ public class GBInsert extends GBAlg {
 			v.goToRoot();
 			addStep("newroot");
 			mysuspend();
-			v.bgColor(Colors.NORMAL);
+			v.setColor(NodeColor.NORMAL);
 		} else {
 			GBNode w = (GBNode) T.root;
 			v.goAboveRoot();
@@ -28,13 +28,13 @@ public class GBInsert extends GBAlg {
 					if (w.deleted) {
 						addStep("gbinsertunmark");
 						w.deleted = false;
-						w.bgColor(Colors.NORMAL);
+						w.setColor(NodeColor.NORMAL);
 						--T.del;
 						T.v = null;
 					} else {
 						addStep("alreadythere");
 						v.goDown();
-						v.bgColor(Colors.NOTFOUND);
+						v.setColor(NodeColor.NOTFOUND);
 					}
 					return;
 				} else if (w.key < K) {
@@ -57,7 +57,7 @@ public class GBInsert extends GBAlg {
 				v.goAbove(w);
 				mysuspend();
 			}
-			v.bgColor(Colors.NORMAL);
+			v.setColor(NodeColor.NORMAL);
 			T.reposition();
 			mysuspend();
 
