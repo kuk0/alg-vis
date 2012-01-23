@@ -8,23 +8,23 @@ import algvis.core.Node;
 import algvis.scenario.commands.Command;
 
 public class SetBgColorCommand implements Command {
-	private final Color fromBgColor, toBgColor;
+	private final Color oldBgColor, newBgColor;
 	private final Node n;
 
-	public SetBgColorCommand(Node n, Color toBgColor) {
+	public SetBgColorCommand(Node n, Color newBgColor) {
 		this.n = n;
-		fromBgColor = n.bgcolor;
-		this.toBgColor = toBgColor;
+		oldBgColor = n.getBgColor();
+		this.newBgColor = newBgColor;
 	}
 
 	@Override
 	public void execute() {
-		n.bgColor(toBgColor);
+		n.bgColor(newBgColor);
 	}
 
 	@Override
 	public void unexecute() {
-		n.bgColor(fromBgColor);
+		n.bgColor(oldBgColor);
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class SetBgColorCommand implements Command {
 		Element e = new Element("node");
 		e.setAttribute("action", "changeColor");
 		e.setAttribute("key", Integer.toString(n.key));
-		e.setAttribute("bgColor", toBgColor.toString());
+		e.setAttribute("bgColor", newBgColor.toString());
 		return e;
 	}
 

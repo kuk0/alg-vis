@@ -3,7 +3,7 @@ package algvis.avltree;
 import java.awt.Color;
 
 import algvis.bst.BSTNode;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.View;
@@ -78,7 +78,7 @@ public class AVLNode extends BSTNode {
 
 		int xx = x - D.radius, yy = y - D.radius, dx = 2 * D.radius, dy = 2 * D.radius;
 		String b = "";
-		if (bgcolor == Colors.NORMAL) {
+		if (getColor() == NodeColor.NORMAL) {
 			V.setColor(Color.ORANGE);
 			switch (bal) {
 			case +2:
@@ -102,7 +102,7 @@ public class AVLNode extends BSTNode {
 				V.fillArc(xx, yy, dx, dy, 90, 180);
 				break;
 			}
-			V.setColor(fgcolor);
+			V.setColor(getFgColor());
 			V.drawOval(x - D.radius, y - D.radius, 2 * D.radius, 2 * D.radius);
 		}
 

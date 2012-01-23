@@ -2,7 +2,7 @@ package algvis.btree;
 
 import java.awt.Color;
 
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.Fonts;
 import algvis.core.Node;
@@ -29,7 +29,7 @@ public class BNode extends Node {
 		this.x = tox = x;
 		this.y = toy = y;
 		steps = 0;
-		setColor(Color.black, Colors.NORMAL);
+		setColor(NodeColor.NORMAL);
 		width = _width();
 	}
 
@@ -332,10 +332,10 @@ public class BNode extends Node {
 
 	@Override
 	public void drawBg(View V) {
-		V.setColor(bgcolor);
+		V.setColor(getBgColor());
 		V.fillRoundRectangle(x, y, width / 2, D.radius, 2 * D.radius,
 				2 * D.radius);
-		V.setColor(fgcolor);
+		V.setColor(getFgColor());
 		V.drawRoundRectangle(x, y, width / 2, D.radius, 2 * D.radius,
 				2 * D.radius);
 		// g.drawLine (x-leftw, y+2, x+rightw, y-2);

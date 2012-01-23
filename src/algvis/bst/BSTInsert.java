@@ -1,7 +1,7 @@
 package algvis.bst;
 
 import algvis.core.Algorithm;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class BSTInsert extends Algorithm {
 	BST T;
@@ -12,7 +12,7 @@ public class BSTInsert extends Algorithm {
 		super(T);
 		this.T = T;
 		v = T.setNodeV(new BSTNode(T, K = x));
-		v.bgColor(Colors.INSERT);
+		v.setColor(NodeColor.INSERT);
 		setHeader("insertion");
 	}
 
@@ -31,7 +31,7 @@ public class BSTInsert extends Algorithm {
 			while (true) {
 				if (w.key == K) {
 					addStep("alreadythere");
-					v.bgColor(Colors.NOTFOUND);
+					v.setColor(NodeColor.NOTFOUND);
 					v.goDown();
 					finish();
 					return;
@@ -73,7 +73,7 @@ public class BSTInsert extends Algorithm {
 		T.reposition();
 		mysuspend();
 		addNote("done");
-		v.bgColor(Colors.NORMAL);
+		v.setColor(NodeColor.NORMAL);		
 		T.setNodeV(null);
 		finish();
 	}

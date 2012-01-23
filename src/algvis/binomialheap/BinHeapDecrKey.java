@@ -39,8 +39,8 @@ public class BinHeapDecrKey extends Algorithm {
 			mysuspend();
 			v.key = H.v2.key;
 			w.key = H.v.key;
-			v.bgcolor = H.v2.bgcolor;
-			w.bgcolor = H.v.bgcolor;
+			v.setColor(H.v2.getColor());
+			w.setColor(H.v.getColor());
 			H.v = null;
 			H.v2 = null;
 			v = w;

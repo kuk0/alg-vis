@@ -1,7 +1,7 @@
 package algvis.treap;
 
 import algvis.core.Algorithm;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class TreapDelete extends Algorithm {
 	Treap T;
@@ -12,7 +12,7 @@ public class TreapDelete extends Algorithm {
 		super(T);
 		this.T = T;
 		v = T.v = new TreapNode(T, K = x);
-		v.bgColor(Colors.DELETE);
+		v.setColor(NodeColor.DELETE);
 		setHeader("deletion");
 	}
 
@@ -23,7 +23,7 @@ public class TreapDelete extends Algorithm {
 			addStep("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Colors.NOTFOUND);
+			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
 			return;
 		} else {
@@ -34,7 +34,7 @@ public class TreapDelete extends Algorithm {
 
 			while (true) {
 				if (d.key == K) { // found
-					v.bgColor(Colors.FOUND);
+					v.setColor(NodeColor.FOUND);
 					break;
 				} else if (d.key < K) { // right
 					addStep("bstfindright", K, d.key);
@@ -63,7 +63,7 @@ public class TreapDelete extends Algorithm {
 				return;
 			}
 
-			d.bgColor(Colors.FOUND);
+			d.setColor(NodeColor.FOUND);
 			T.v = null;
 			addStep("treapbubbledown");
 			// prebubleme k listu
