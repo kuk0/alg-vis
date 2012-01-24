@@ -1,7 +1,7 @@
 package algvis.avltree;
 
 import algvis.core.Algorithm;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class AVLInsert extends Algorithm {
 	AVL T;
@@ -12,7 +12,7 @@ public class AVLInsert extends Algorithm {
 		super(T);
 		this.T = T;
 		v = (AVLNode) T.setNodeV(new AVLNode(T, K = x));
-		v.bgColor(Colors.INSERT);
+		v.setColor(NodeColor.INSERT);
 		setHeader("insertion");
 	}
 
@@ -24,7 +24,7 @@ public class AVLInsert extends Algorithm {
 			v.goToRoot();
 			addStep("newroot");
 			mysuspend();
-			v.bgColor(Colors.NORMAL);
+			v.setColor(NodeColor.NORMAL);
 			T.setNodeV(null);
 		} else {
 			v.goAboveRoot();
@@ -35,7 +35,7 @@ public class AVLInsert extends Algorithm {
 				if (w.key == K) {
 					addStep("alreadythere");
 					v.goDown();
-					v.bgColor(Colors.NOTFOUND);
+					v.setColor(NodeColor.NOTFOUND);
 					finish();
 					return;
 				} else if (w.key < K) {
@@ -59,12 +59,12 @@ public class AVLInsert extends Algorithm {
 				mysuspend();
 			}
 
-			v.bgColor(Colors.NORMAL);
+			v.setColor(NodeColor.NORMAL);
 			T.reposition();
 			addNote("avlinsertbal");
 			mysuspend();
 
-			v.bgColor(Colors.NORMAL);
+			v.setColor(NodeColor.NORMAL);
 			T.setNodeV(null);
 			// bubleme nahor
 			while (w != null) {

@@ -5,6 +5,7 @@ import java.awt.Color;
 import algvis.core.DataStructure;
 import algvis.core.Layout;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 import algvis.core.NodePair;
 import algvis.core.View;
 import algvis.scenario.commands.bstnode.LinkLeftCommand;
@@ -489,12 +490,12 @@ public class BSTNode extends Node {
 		}
 	}
 
-	public void subtreeBgColor(Color bg) {
-		bgColor(bg);
+	public void subtreeColor(NodeColor color) {
+		setColor(color);
 		if (getLeft() != null)
-			getLeft().subtreeBgColor(bg);
+			getLeft().subtreeColor(color);
 		if (getRight() != null)
-			getRight().subtreeBgColor(bg);
+			getRight().subtreeColor(color);
 	}
 
 	public BSTNode getRight() {

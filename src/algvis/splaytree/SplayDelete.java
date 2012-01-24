@@ -1,6 +1,6 @@
 package algvis.splaytree;
 
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class SplayDelete extends SplayAlg {
@@ -15,7 +15,7 @@ public class SplayDelete extends SplayAlg {
 			addStep("empty");
 			mysuspend();
 			s.goDown();
-			s.bgColor(Colors.NOTFOUND);
+			s.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
 			return;
 		}
@@ -24,18 +24,18 @@ public class SplayDelete extends SplayAlg {
 		splay(w);
 
 		setHeader("deletion");
-		w.bgColor(Colors.NORMAL);
+		w.setColor(NodeColor.NORMAL);
 
 		if (w.key != s.key) {
 			addStep("notfound");
-			s.bgColor(Colors.NOTFOUND);
+			s.setColor(NodeColor.NOTFOUND);
 			s.goDown();
 			return;
 		}
 
 		T.v = w;
 		T.v.goDown();
-		T.v.bgColor(Colors.DELETE);
+		T.v.setColor(NodeColor.DELETE);
 		if (w.getLeft() == null) {
 			addStep("splaydeleteright");
 			T.root = w.getRight();
@@ -55,7 +55,7 @@ public class SplayDelete extends SplayAlg {
 			T.root = w.getRight();
 			T.root.setParent(null);
 			T.vv = s = new SplayNode(T, -Node.INF);
-			s.bgColor(Colors.FIND);
+			s.setColor(NodeColor.FIND);
 			w = w.getRight();
 			s.goTo(w);
 			mysuspend();
@@ -64,7 +64,7 @@ public class SplayDelete extends SplayAlg {
 				s.goTo(w);
 				mysuspend();
 			}
-			w.bgColor(Colors.FIND);
+			w.setColor(NodeColor.FIND);
 			T.vv = null;
 			// splay
 			while (!w.isRoot()) {
@@ -94,7 +94,7 @@ public class SplayDelete extends SplayAlg {
 			}
 			addStep("splaydeletelink");
 			T.root = w;
-			w.bgColor(Colors.NORMAL);
+			w.setColor(NodeColor.NORMAL);
 			w.linkLeft(T.root2);
 			T.root2 = null;
 			T.reposition();

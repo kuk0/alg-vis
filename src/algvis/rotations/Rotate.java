@@ -1,11 +1,9 @@
 package algvis.rotations;
 
-import java.awt.Color;
-
 import algvis.bst.BST;
 import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class Rotate extends Algorithm {
 	Rotations R;
@@ -29,18 +27,18 @@ public class Rotate extends Algorithm {
 		boolean rotR = v.isLeft();
 		if (rotR) {
 			if (v.getLeft() != null)
-				v.getLeft().subtreeBgColor(Color.red);
+				v.getLeft().subtreeColor(NodeColor.RED);
 			if (v.getRight() != null)
-				v.getRight().subtreeBgColor(Color.green);
+				v.getRight().subtreeColor(NodeColor.GREEN);
 			if (u.getRight() != null)
-				u.getRight().subtreeBgColor(Color.blue);
+				u.getRight().subtreeColor(NodeColor.BLUE);
 		} else {
 			if (u.getLeft() != null)
-				u.getLeft().subtreeBgColor(Color.red);
+				u.getLeft().subtreeColor(NodeColor.RED);
 			if (v.getLeft() != null)
-				v.getLeft().subtreeBgColor(Color.green);
+				v.getLeft().subtreeColor(NodeColor.GREEN);
 			if (v.getRight() != null)
-				v.getRight().subtreeBgColor(Color.blue);
+				v.getRight().subtreeColor(NodeColor.BLUE);
 		}
 		mysuspend();
 
@@ -51,12 +49,12 @@ public class Rotate extends Algorithm {
 
 		R.v = null;
 		if (v.getLeft() != null)
-			v.getLeft().subtreeBgColor(Colors.NORMAL);
+			v.getLeft().subtreeColor(NodeColor.NORMAL);
 		if (v.getRight() != null)
-			v.getRight().subtreeBgColor(Colors.NORMAL);
+			v.getRight().subtreeColor(NodeColor.NORMAL);
 		if (u.getLeft() != null)
-			u.getLeft().subtreeBgColor(Colors.NORMAL);
+			u.getLeft().subtreeColor(NodeColor.NORMAL);
 		if (u.getRight() != null)
-			u.getRight().subtreeBgColor(Colors.NORMAL);
+			u.getRight().subtreeColor(NodeColor.NORMAL);
 	}
 }

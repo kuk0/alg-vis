@@ -27,7 +27,7 @@ public class Node {
 	public int x, y, tox, toy, steps;
 	/** the state of a node - either ALIVE, DOWN, LEFT, or RIGHT. */
 	public int state = ALIVE;
-	public Color fgcolor, bgcolor;
+	private NodeColor color = NodeColor.NORMAL;
 	public boolean marked = false;
 	public Node dir = null;
 	public int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S,
@@ -62,7 +62,6 @@ public class Node {
 		this.x = tox = x;
 		this.y = toy = y;
 		steps = 0;
-		setColor(Color.black, Colors.NORMAL);
 	}
 
 	public Node(DataStructure D, int key) {
@@ -100,27 +99,40 @@ public class Node {
 		}
 	}
 
-	public void setColor(Color fg, Color bg) {
-		fgColor(fg);
-		bgColor(bg);
+	public NodeColor getColor() {
+		return color;
+	}
+	
+	public void setColor(NodeColor color) {
+		fgColor(color.fgColor);
+		bgColor(color.bgColor);
+		this.color = color;
 	}
 
 	public void fgColor(Color fg) {
-		if (fg != fgcolor) {
+		if (fg != color.fgColor) {
 			if (D != null) {
 				D.scenario.add(new SetFgColorCommand(this, fg));
 			}
-			fgcolor = fg;
+			color = new NodeColor(fg, color.bgColor);
 		}
 	}
 
 	public void bgColor(Color bg) {
-		if (bg != bgcolor) {
+		if (bg != color.bgColor) {
 			if (D != null) {
 				D.scenario.add(new SetBgColorCommand(this, bg));
 			}
-			bgcolor = bg;
+			color = new NodeColor(color.fgColor, bg);
 		}
+	}
+	
+	public Color getFgColor() {
+		return color.fgColor;
+	}
+	
+	public Color getBgColor() {
+		return color.bgColor;
 	}
 
 	/**
@@ -228,7 +240,7 @@ public class Node {
 	 *            view
 	 */
 	protected void drawBg(View v) {
-		v.setColor(bgcolor);
+		v.setColor(getBgColor());
 		v.fillCircle(x, y, D.radius);
 		v.setColor(Color.BLACK); // fgcolor);
 		v.drawCircle(x, y, D.radius);
@@ -252,7 +264,7 @@ public class Node {
 	}
 
 	public void drawKey(View v) {
-		v.setColor(fgcolor);
+		v.setColor(getFgColor());
 		if (key != NOKEY) {
 			v.drawString(toString(), x, y, 9);
 		}
