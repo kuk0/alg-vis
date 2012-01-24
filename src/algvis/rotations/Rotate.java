@@ -28,35 +28,55 @@ public class Rotate extends Algorithm {
 		BSTNode u = v.getParent();
 		boolean rotR = v.isLeft();
 		if (rotR) {
-			if (v.getLeft() != null)
+			if (v.getLeft() != null) {
 				v.getLeft().subtreeBgColor(Color.red);
-			if (v.getRight() != null)
+				v.getLeft().markSubtree = true;
+			}
+			if (v.getRight() != null) {
 				v.getRight().subtreeBgColor(Color.green);
-			if (u.getRight() != null)
+				v.getRight().markSubtree = true;
+			}
+			if (u.getRight() != null) {
 				u.getRight().subtreeBgColor(Color.blue);
+				u.getRight().markSubtree = true;
+			}
 		} else {
-			if (u.getLeft() != null)
+			if (u.getLeft() != null) {
 				u.getLeft().subtreeBgColor(Color.red);
-			if (v.getLeft() != null)
+				u.getLeft().markSubtree = true;
+			}
+			if (v.getLeft() != null) {
 				v.getLeft().subtreeBgColor(Color.green);
-			if (v.getRight() != null)
+				v.getLeft().markSubtree = true;
+			}
+			if (v.getRight() != null) {
 				v.getRight().subtreeBgColor(Color.blue);
+				v.getRight().markSubtree = true;
+			}
 		}
 		mysuspend();
 
 		T.rotate(v);
 		R.v = u;
-		T.reposition();
+		R.reposition();
 		mysuspend();
 
 		R.v = null;
-		if (v.getLeft() != null)
+		if (v.getLeft() != null) {
 			v.getLeft().subtreeBgColor(Colors.NORMAL);
-		if (v.getRight() != null)
+			v.getLeft().markSubtree = false;
+		}
+		if (v.getRight() != null) {
 			v.getRight().subtreeBgColor(Colors.NORMAL);
-		if (u.getLeft() != null)
+			v.getRight().markSubtree = false;
+		}
+		if (u.getLeft() != null) {
 			u.getLeft().subtreeBgColor(Colors.NORMAL);
-		if (u.getRight() != null)
+			u.getLeft().markSubtree = false;
+		}
+		if (u.getRight() != null) {
 			u.getRight().subtreeBgColor(Colors.NORMAL);
+			u.getRight().markSubtree = false;
+		}
 	}
 }

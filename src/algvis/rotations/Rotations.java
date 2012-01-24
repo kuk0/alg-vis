@@ -4,6 +4,7 @@ import java.util.Random;
 
 import algvis.bst.BST;
 import algvis.bst.BSTNode;
+import algvis.core.Alignment;
 import algvis.core.ClickListener;
 import algvis.core.DataStructure;
 import algvis.core.InputField;
@@ -26,6 +27,7 @@ public class Rotations extends DataStructure implements ClickListener {
 		T = new BST(M);
 		random(20);
 		M.screen.V.setDS(this);
+		M.screen.V.align = Alignment.LEFT;
 	}
 
 	public void rotate(int x) {
@@ -43,6 +45,7 @@ public class Rotations extends DataStructure implements ClickListener {
 		} else {
 			start(new Rotate(this, v));
 		}
+		T.root.calcTree();
 	}
 
 	@Override
@@ -72,7 +75,7 @@ public class Rotations extends DataStructure implements ClickListener {
 				}
 			}
 		}
-		T.reposition();
+		reposition();
 	}
 
 	@Override
@@ -90,7 +93,13 @@ public class Rotations extends DataStructure implements ClickListener {
 			T.root.drawTree(V);
 		}
 	}
-
+	
+	public void reposition() {
+		T.reposition();
+		T.root.repos(T.root.leftw, 0);
+		M.screen.V.setBounds(T.x1, T.y1, T.x2, T.y2);
+	}
+	
 	@Override
 	public String stats() {
 		return "";
@@ -104,6 +113,8 @@ public class Rotations extends DataStructure implements ClickListener {
 		for (int i = 0; i < n; ++i) {
 			insert(g.nextInt(InputField.MAX + 1));
 		}
+		T.root.calcTree();
+		//M.screen.V.resetView();
 		M.pause = p;
 	}
 

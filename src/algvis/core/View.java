@@ -3,6 +3,7 @@ package algvis.core;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.event.MouseEvent;
@@ -356,5 +357,17 @@ public class View implements MouseListener, MouseMotionListener,
 
 	public void setDS(ClickListener D) {
 		this.D = D;
+	}
+
+	public void fillPolygon(Polygon p) {
+		final Stroke old = g.getStroke(), wide = new BasicStroke(27.0f,
+				BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+		final Color c = g.getColor();
+		g.setColor(new Color(230, 230, 230));
+		g.setStroke(wide);
+		g.fillPolygon(p);
+		g.drawPolygon(p);
+		g.setStroke(old);
+		g.setColor(c);
 	}
 }

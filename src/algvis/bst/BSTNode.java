@@ -1,6 +1,8 @@
 package algvis.bst;
 
 import java.awt.Color;
+import java.awt.Polygon;
+import java.util.Stack;
 
 import algvis.core.DataStructure;
 import algvis.core.Layout;
@@ -14,6 +16,7 @@ import algvis.scenario.commands.bstnode.SetLevelCommand;
 public class BSTNode extends Node {
 	private BSTNode left = null, right = null, parent = null;
 	public int leftw, rightw;
+	public boolean markSubtree = false;
 
 	// variables for the Reingold-Tilford layout
 	int offset = 0; // offset from parent node
@@ -32,11 +35,44 @@ public class BSTNode extends Node {
 	}
 
 	public BSTNode getLeft() {
+		if (thread)
+			return null;
+		else
+			return left;
+	}
+
+	public BSTNode setLeft(BSTNode left) {
+		if (thread) {
+			thread = false;
+			right = null;
+		}
+		this.left = left;
 		return left;
 	}
 
-	public void setLeft(BSTNode left) {
-		this.left = left;
+	public BSTNode getRight() {
+		if (thread)
+			return null;
+		else
+			return right;
+	}
+
+	public BSTNode setRight(BSTNode right) {
+		if (thread) {
+			thread = false;
+			left = null;
+		}
+		this.right = right;
+		return right;
+	}
+
+	public BSTNode getParent() {
+		return parent;
+	}
+
+	public BSTNode setParent(BSTNode parent) {
+		this.parent = parent;
+		return parent;
 	}
 
 	public void setLevel(int level) {
@@ -178,19 +214,53 @@ public class BSTNode extends Node {
 	}
 
 	static int i;
-
 	public void drawTree(View v) {
+		if (markSubtree) {
+			Polygon p = new Polygon();
+			p.addPoint(x - 1, y - 1);
+			if (D.M.S.layout == Layout.SIMPLE) {
+				if (height == 1) {
+					p.addPoint(x - 7, y + 10);
+					p.addPoint(x + 7, y + 10);
+				} else {
+					int x1 = x - leftw + D.xspan + D.radius, x2 = x + rightw
+							- D.xspan - D.radius, y1 = y + 2 * D.radius + D.yspan, y2 = y
+							+ (height - 1) * (2 * D.radius + D.yspan);
+					p.addPoint(x1, y1);
+					p.addPoint(x1, y2);
+					p.addPoint(x2, y2);
+					p.addPoint(x2, y1);
+				}
+			} else {
+				BSTNode u = this, w = this;
+				Stack<BSTNode> tmp = new Stack<BSTNode>();
+				while (u != null && w != null) {
+					p.addPoint(u.x - 1, u.y);
+					tmp.add(w);
+					if (u.thread && w.thread)
+						break;
+					u = (u.left != null) ? u.left : u.right;
+					w = (w.right != null) ? w.right : w.left;
+				}
+				while (!tmp.isEmpty()) {
+					w = tmp.pop();
+					p.addPoint(w.x + 1, w.y);
+				}
+			}
+			p.addPoint(x + 1, y - 1);
+			v.fillPolygon(p);
+		}
 		if (state != INVISIBLE) {
 			if (thread) {
-				v.setColor(Color.red);
+				//v.setColor(Color.yellow);
 			} else {
 				v.setColor(Color.black);
 			}
-			if ((getLeft() != null) && (getLeft().state != INVISIBLE)) {
-				v.drawLine(x, y, getLeft().x, getLeft().y);
+			if ((left != null) && (left.state != INVISIBLE)) {
+				v.drawLine(x, y, left.x, left.y);
 			}
-			if ((getRight() != null) && (getRight().state != INVISIBLE)) {
-				v.drawLine(x, y, getRight().x, getRight().y);
+			if ((right != null) && (right.state != INVISIBLE)) {
+				v.drawLine(x, y, right.x, right.y);
 			}
 		}
 		if (getLeft() != null) {
@@ -277,15 +347,48 @@ public class BSTNode extends Node {
 		}
 	}
 
+	public void repos(int x, int y) {
+		goTo(x, y);
+		if (getLeft() != null) {
+			getLeft().repos(this.tox - getLeft().rightw,
+					this.toy + 2 * D.radius + D.yspan);
+		}
+		if (getRight() != null) {
+			getRight().repos(this.tox + getRight().leftw,
+					this.toy + 2 * D.radius + D.yspan);
+		}
+		if (isRoot()) {
+			D.x1 = x-leftw;
+			D.x2 = x+rightw;
+			D.y2 = this.toy;
+		}
+		if (this.toy > D.y2) {
+			D.y2 = this.toy;
+		}
+	}
+
 	public void reposition() {
 		if (D.M.S.layout == Layout.SIMPLE) { // simple layout
 			reboxTree();
 			repos();
 		} else { // Reingold-Tilford layout
+			RTThreads();
 			RTPreposition();
 			RTPetrification(0, 0);
 			reboxTree();
 		}
+	}
+
+	private void RTThreads() {
+		if (thread) {
+			thread = false;
+			setLeft(null);
+			setRight(null);
+		}
+		if (getLeft() != null)
+			left.RTThreads();
+		if (getRight() != null)
+			right.RTThreads();
 	}
 
 	/**
@@ -387,11 +490,11 @@ public class BSTNode extends Node {
 				 * TR published by Reingold this value is already calculated.
 				 */
 				boolean LwasThread = L.thread, RwasThread = R.thread;
-				L = (L.getRight() != null) ? L.getRight() : L.getLeft();
+				L = (L.right != null) ? L.right : L.left;
 				if (L != null) {
 					loffset += L.offset;
 				}
-				R = (R.getLeft() != null) ? R.getLeft() : R.getRight();
+				R = (R.left != null) ? R.left : R.right;
 				if (R != null) {
 					roffset += R.offset;
 				}
@@ -433,14 +536,14 @@ public class BSTNode extends Node {
 			if ((R != null) && (L == null)) { // the right subtree is deeper
 												// than the left subtree
 				fromLeftSubtree.left.thread = true;
-				fromLeftSubtree.left.setRight(R);
+				fromLeftSubtree.left.right = R;
 				result.left = fromRightSubtree.left;
 				result.right = fromRightSubtree.right;
 			} else if ((L != null) && (R == null)) { // the left subtree is
 														// deeper than the right
 														// subtree
 				fromRightSubtree.right.thread = true;
-				fromRightSubtree.right.setLeft(L);
+				fromRightSubtree.right.left = L;
 				result.left = fromLeftSubtree.left;
 				result.right = fromLeftSubtree.right;
 			} else if ((L == null) && (R == null)) { // both subtrees have the
@@ -477,9 +580,9 @@ public class BSTNode extends Node {
 		}
 
 		if (thread) {
-			thread = false;
-			setLeft(null);
-			setRight(null);
+			// thread = false;
+			// setLeft(null);
+			// setRight(null);
 		}
 		if (getLeft() != null) {
 			getLeft().RTPetrification(tox, y + D.minsepy);
@@ -495,23 +598,5 @@ public class BSTNode extends Node {
 			getLeft().subtreeBgColor(bg);
 		if (getRight() != null)
 			getRight().subtreeBgColor(bg);
-	}
-
-	public BSTNode getRight() {
-		return right;
-	}
-
-	public BSTNode setRight(BSTNode right) {
-		this.right = right;
-		return right;
-	}
-
-	public BSTNode getParent() {
-		return parent;
-	}
-
-	public BSTNode setParent(BSTNode parent) {
-		this.parent = parent;
-		return parent;
 	}
 }

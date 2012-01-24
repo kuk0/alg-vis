@@ -11,7 +11,7 @@ import algvis.scenario.commands.bstnode.SetBSTNodeVCommand;
 import algvis.scenario.commands.bstnode.SetBSTRootCommand;
 import algvis.scenario.commands.node.Wait4NodeCommand;
 
-public class BST extends Dictionary implements LayoutListener {
+public class BST extends Dictionary implements LayoutListener { //, ClickListener {
 	public static String dsName = "bst";
 	public BSTNode root = null, v = null;
 	boolean order = false;
@@ -24,6 +24,7 @@ public class BST extends Dictionary implements LayoutListener {
 	public BST(VisPanel M) {
 		super(M, dsName);
 		scenario.enable(true);
+		//M.screen.V.setDS(this);
 	}
 
 	public BSTNode setNodeV(BSTNode v) {
@@ -70,6 +71,7 @@ public class BST extends Dictionary implements LayoutListener {
 			M.C.clear();
 			scenario.add(new SetCommentaryStateCommand(M.C, commState));
 			setStats();
+			M.screen.V.resetView();
 		}
 	}
 
@@ -101,7 +103,7 @@ public class BST extends Dictionary implements LayoutListener {
 
 	/**
 	 * Move and draw all the objects on the scene (in this case the BST and one
-	 * auxilliary node v).
+	 * auxiliary node v).
 	 */
 	@Override
 	public void draw(View V) {
@@ -190,4 +192,14 @@ public class BST extends Dictionary implements LayoutListener {
 	public void changeLayout() {
 		reposition();
 	}
+	
+	/*
+	public void mouseClicked(int x, int y) {
+		if (root != null) {
+			BSTNode w = root.find(x, y);
+			if (w != null) {
+				w.markSubtree = !w.markSubtree;
+			}
+		}
+	}*/
 }
