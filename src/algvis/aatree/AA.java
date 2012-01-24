@@ -3,6 +3,7 @@ package algvis.aatree;
 import algvis.bst.BST;
 import algvis.bst.BSTFind;
 import algvis.bst.BSTNode;
+import algvis.core.Layout;
 import algvis.core.View;
 import algvis.core.VisPanel;
 
@@ -75,5 +76,10 @@ public class AA extends BST {
 			v.move();
 			v.draw(V);
 		}
+	}
+	
+	@Override
+	public Layout getLayout() {
+		return Layout.COMPACT;
 	}
 }

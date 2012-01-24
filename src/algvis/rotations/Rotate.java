@@ -25,31 +25,33 @@ public class Rotate extends Algorithm {
 		}
 		BSTNode u = v.getParent();
 		boolean rotR = v.isLeft();
-		if (rotR) {
-			if (v.getLeft() != null) {
-				v.getLeft().subtreeColor(NodeColor.RED);
-				v.getLeft().markSubtree = true;
-			}
-			if (v.getRight() != null) {
-				v.getRight().subtreeColor(NodeColor.GREEN);
-				v.getRight().markSubtree = true;
-			}
-			if (u.getRight() != null) {
-				u.getRight().subtreeColor(NodeColor.BLUE);
-				u.getRight().markSubtree = true;
-			}
-		} else {
-			if (u.getLeft() != null) {
-				u.getLeft().subtreeColor(NodeColor.RED);
-				u.getLeft().markSubtree = true;
-			}
-			if (v.getLeft() != null) {
-				v.getLeft().subtreeColor(NodeColor.GREEN);
-				v.getLeft().markSubtree = true;
-			}
-			if (v.getRight() != null) {
-				v.getRight().subtreeColor(NodeColor.BLUE);
-				v.getRight().markSubtree = true;
+		if (R.subtrees) {
+			if (rotR) {
+				if (v.getLeft() != null) {
+					v.getLeft().subtreeColor(NodeColor.RED);
+					v.getLeft().markSubtree = true;
+				}
+				if (v.getRight() != null) {
+					v.getRight().subtreeColor(NodeColor.GREEN);
+					v.getRight().markSubtree = true;
+				}
+				if (u.getRight() != null) {
+					u.getRight().subtreeColor(NodeColor.BLUE);
+					u.getRight().markSubtree = true;
+				}
+			} else {
+				if (u.getLeft() != null) {
+					u.getLeft().subtreeColor(NodeColor.RED);
+					u.getLeft().markSubtree = true;
+				}
+				if (v.getLeft() != null) {
+					v.getLeft().subtreeColor(NodeColor.GREEN);
+					v.getLeft().markSubtree = true;
+				}
+				if (v.getRight() != null) {
+					v.getRight().subtreeColor(NodeColor.BLUE);
+					v.getRight().markSubtree = true;
+				}
 			}
 		}
 		mysuspend();

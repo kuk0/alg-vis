@@ -1,6 +1,7 @@
 package algvis.scapegoattree;
 
 import algvis.bst.BST;
+import algvis.core.Layout;
 import algvis.core.StringUtils;
 import algvis.core.View;
 import algvis.core.VisPanel;
@@ -83,5 +84,10 @@ public class GBTree extends BST {
 					+ ";   " + M.S.L.getString("avedepth") + ": "
 					+ StringUtils.format(root.sumh / (double) root.size, 2, -5);
 		}
+	}
+	
+	@Override
+	public Layout getLayout() {
+		return Layout.COMPACT;
 	}
 }

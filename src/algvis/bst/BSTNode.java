@@ -216,10 +216,15 @@ public class BSTNode extends Node {
 
 	static int i;
 	public void drawTree(View v) {
+		i = 0;
+		drawTree2(v);
+	}
+	
+	public void drawTree2(View v) {
 		if (markSubtree) {
 			Polygon p = new Polygon();
 			p.addPoint(x - 1, y - 1);
-			if (D.M.S.layout == Layout.SIMPLE) {
+			if (D.getLayout() == Layout.SIMPLE) {
 				if (height == 1) {
 					p.addPoint(x - 7, y + 10);
 					p.addPoint(x + 7, y + 10);
@@ -251,12 +256,12 @@ public class BSTNode extends Node {
 			p.addPoint(x + 1, y - 1);
 			v.fillPolygon(p);
 		}
-		if (state != INVISIBLE) {
-			if (thread) {
-				//v.setColor(Color.yellow);
-			} else {
+		if (state != INVISIBLE && !thread) {
+			/*if (thread) {
+				v.setColor(Color.yellow);
+			} else {*/
 				v.setColor(Color.black);
-			}
+			//}
 			if ((left != null) && (left.state != INVISIBLE)) {
 				v.drawLine(x, y, left.x, left.y);
 			}
@@ -265,16 +270,16 @@ public class BSTNode extends Node {
 			}
 		}
 		if (getLeft() != null) {
-			getLeft().drawTree(v);
+			getLeft().drawTree2(v);
 		}
-		if (D instanceof BST && ((BST) D).order) {
+		if (D instanceof BST && ((BST) D).order) { //  && D.M.S.layout == Layout.SIMPLE
 			v.setColor(Color.LIGHT_GRAY);
 			++i;
 			v.drawLine(x, y, x, -20);
 			v.drawString("" + i, x, -23, 10);
 		}
 		if (getRight() != null) {
-			getRight().drawTree(v);
+			getRight().drawTree2(v);
 		}
 		draw(v);
 	}
@@ -369,7 +374,7 @@ public class BSTNode extends Node {
 	}
 
 	public void reposition() {
-		if (D.M.S.layout == Layout.SIMPLE) { // simple layout
+		if (D.getLayout() == Layout.SIMPLE) { // simple layout
 			reboxTree();
 			repos();
 		} else { // Reingold-Tilford layout

@@ -2,6 +2,7 @@ package algvis.bst;
 
 import algvis.core.Commentary.State;
 import algvis.core.Dictionary;
+import algvis.core.Layout;
 import algvis.core.LayoutListener;
 import algvis.core.StringUtils;
 import algvis.core.View;
@@ -14,7 +15,7 @@ import algvis.scenario.commands.node.Wait4NodeCommand;
 public class BST extends Dictionary implements LayoutListener { //, ClickListener {
 	public static String dsName = "bst";
 	public BSTNode root = null, v = null;
-	boolean order = false;
+	public boolean order = false;
 
 	@Override
 	public String getName() {
@@ -108,7 +109,6 @@ public class BST extends Dictionary implements LayoutListener { //, ClickListene
 	@Override
 	public void draw(View V) {
 		if (root != null) {
-			BSTNode.i = 0;
 			root.moveTree();
 			root.drawTree(V);
 		}
@@ -202,4 +202,9 @@ public class BST extends Dictionary implements LayoutListener { //, ClickListene
 			}
 		}
 	}*/
+	
+	@Override
+	public Layout getLayout() {
+		return Layout.SIMPLE;
+	}
 }

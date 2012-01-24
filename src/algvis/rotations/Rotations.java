@@ -8,14 +8,16 @@ import algvis.core.Alignment;
 import algvis.core.ClickListener;
 import algvis.core.DataStructure;
 import algvis.core.InputField;
+import algvis.core.Layout;
 import algvis.core.View;
 import algvis.core.VisPanel;
 
 public class Rotations extends DataStructure implements ClickListener {
 	public static String adtName = "dictionary";
 	public static String dsName = "rotations";
-	BST T;
+	public BST T;
 	BSTNode v;
+	public boolean subtrees = false;
 
 	@Override
 	public String getName() {
@@ -136,5 +138,11 @@ public class Rotations extends DataStructure implements ClickListener {
 				M.B.I.setText("" + chosen.key);
 			}
 		}
+	}
+	
+	
+	@Override
+	public Layout getLayout() {
+		return Layout.SIMPLE;
 	}
 }

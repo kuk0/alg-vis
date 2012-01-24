@@ -1,6 +1,7 @@
 package algvis.splaytree;
 
 import algvis.bst.BST;
+import algvis.core.Layout;
 import algvis.core.View;
 import algvis.core.VisPanel;
 
@@ -72,5 +73,10 @@ public class Splay extends BST {
 			v.getRight().calc();
 		}
 		v.calc();
+	}
+	
+	@Override
+	public Layout getLayout() {
+		return Layout.COMPACT;
 	}
 }

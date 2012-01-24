@@ -91,4 +91,8 @@ abstract public class DataStructure {
 			chosen = null;
 		}
 	}
+	
+	public Layout getLayout() {
+		return M.S.layout;
+	}
 }

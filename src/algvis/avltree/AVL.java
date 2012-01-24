@@ -2,6 +2,7 @@ package algvis.avltree;
 
 import algvis.bst.BST;
 import algvis.bst.BSTFind;
+import algvis.core.Layout;
 import algvis.core.VisPanel;
 
 public class AVL extends BST {
@@ -29,5 +30,10 @@ public class AVL extends BST {
 	@Override
 	public void delete(int x) {
 		start(new AVLDelete(this, x));
+	}
+	
+	@Override
+	public Layout getLayout() {
+		return Layout.COMPACT;
 	}
 }

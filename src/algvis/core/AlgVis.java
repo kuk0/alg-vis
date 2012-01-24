@@ -35,7 +35,7 @@ public class AlgVis extends JPanel implements ActionListener {
 	 * 14 - Lazy Binomial heap
 	 * 15 - Fibonacci heap
 	 * 16 - Union-find */
-	final static int DEFAULT_DS = 1; 
+	final static int DEFAULT_DS = 0; 
 	
 	private static final long serialVersionUID = -5202486006824196688L;
 
@@ -111,6 +111,7 @@ public class AlgVis extends JPanel implements ActionListener {
 		langMenu.add(skItem);
 		menuBar.add(langMenu);
 
+		/*
 		// Layout menu
 		IMenuItem sItem = new IMenuItem(L, "layout-simple", KeyEvent.VK_S);
 		IMenuItem cItem = new IMenuItem(L, "layout-compact", KeyEvent.VK_C);
@@ -122,6 +123,7 @@ public class AlgVis extends JPanel implements ActionListener {
 		layoutMenu.add(sItem);
 		layoutMenu.add(cItem);
 		menuBar.add(layoutMenu);
+		*/
 
 		// Cards with data structures
 		cards = new JPanel(new CardLayout());

@@ -1,6 +1,7 @@
 package algvis.redblacktree;
 
 import algvis.bst.BST;
+import algvis.core.Layout;
 import algvis.core.Node;
 import algvis.core.View;
 import algvis.core.VisPanel;
@@ -52,5 +53,10 @@ public class RB extends BST {
 			v.move();
 			v.draw(V);
 		}
+	}
+
+	@Override
+	public Layout getLayout() {
+		return Layout.COMPACT;
 	}
 }
