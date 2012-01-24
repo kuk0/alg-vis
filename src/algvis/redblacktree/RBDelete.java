@@ -2,8 +2,8 @@ package algvis.redblacktree;
 
 import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
-import algvis.core.Colors;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 
 public class RBDelete extends Algorithm {
 	RB T;
@@ -14,7 +14,7 @@ public class RBDelete extends Algorithm {
 		super(T);
 		this.T = T;
 		v = T.v = new RBNode(T, K = x);
-		v.bgColor(Colors.DELETE);
+		v.setColor(NodeColor.DELETE);
 		setHeader("deletion");
 	}
 
@@ -25,7 +25,7 @@ public class RBDelete extends Algorithm {
 			addStep("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Colors.NOTFOUND);
+			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
 			return;
 		} else {
@@ -36,7 +36,7 @@ public class RBDelete extends Algorithm {
 
 			while (true) {
 				if (d.key == K) { // found
-					v.bgColor(Colors.FOUND);
+					v.setColor(NodeColor.FOUND);
 					break;
 				} else if (d.key < K) { // right
 					addStep("bstfindright", K, d.key);
@@ -68,7 +68,7 @@ public class RBDelete extends Algorithm {
 			RBNode u = d, w = (u.getLeft() != null) ? u.getLeft() : u
 					.getRight();
 			T.NULL.setParent(u.getParent());
-			d.bgColor(Colors.FOUND);
+			d.setColor(NodeColor.FOUND);
 			if (d.isLeaf()) { // case I - list
 				addStep("bstdeletecase1");
 				mysuspend();
@@ -103,7 +103,7 @@ public class RBDelete extends Algorithm {
 				addStep("bstdeletecase3");
 				RBNode s = d.getRight();
 				v = T.v = new RBNode(T, -Node.INF);
-				v.bgColor(Colors.FIND);
+				v.setColor(NodeColor.FIND);
 				v.goTo(s);
 				mysuspend();
 				while (s.getLeft() != null) {

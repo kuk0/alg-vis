@@ -1,12 +1,12 @@
 package algvis.skiplist;
 
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class SkipDelete extends SkipAlg {
 	public SkipDelete(SkipList L, int x) {
 		super(L, x);
-		v.bgColor(Colors.DELETE);
+		v.setColor(NodeColor.DELETE);
 		p = new SkipNode[L.height];
 		setHeader("insertion");
 	}

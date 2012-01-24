@@ -1,6 +1,6 @@
 package algvis.unionfind;
 
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class UnionFindUnion extends UnionFindFind {
 	public enum UnionHeuristic {
@@ -52,9 +52,9 @@ public class UnionFindUnion extends UnionFindFind {
 		}
 
 		r1.unmark();
-		r1.bgcolor = Colors.NORMAL;
+		r1.setColor(NodeColor.NORMAL);
 		r2.unmark();
-		r2.bgcolor = Colors.NORMAL;
+		r2.setColor(NodeColor.NORMAL);
 
 		UF.reposition();
 		addNote("done");
@@ -91,9 +91,9 @@ public class UnionFindUnion extends UnionFindFind {
 		}
 
 		r1.unmark();
-		r1.bgcolor = Colors.NORMAL;
+		r1.setColor(NodeColor.NORMAL);
 		r2.unmark();
-		r2.bgcolor = Colors.NORMAL;
+		r2.setColor(NodeColor.NORMAL);
 
 		UF.reposition();
 		addNote("done");

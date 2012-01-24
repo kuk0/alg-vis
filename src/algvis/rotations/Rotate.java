@@ -1,11 +1,9 @@
 package algvis.rotations;
 
-import java.awt.Color;
-
 import algvis.bst.BST;
 import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class Rotate extends Algorithm {
 	Rotations R;
@@ -29,28 +27,28 @@ public class Rotate extends Algorithm {
 		boolean rotR = v.isLeft();
 		if (rotR) {
 			if (v.getLeft() != null) {
-				v.getLeft().subtreeBgColor(Color.red);
+				v.getLeft().subtreeColor(NodeColor.RED);
 				v.getLeft().markSubtree = true;
 			}
 			if (v.getRight() != null) {
-				v.getRight().subtreeBgColor(Color.green);
+				v.getRight().subtreeColor(NodeColor.GREEN);
 				v.getRight().markSubtree = true;
 			}
 			if (u.getRight() != null) {
-				u.getRight().subtreeBgColor(Color.blue);
+				u.getRight().subtreeColor(NodeColor.BLUE);
 				u.getRight().markSubtree = true;
 			}
 		} else {
 			if (u.getLeft() != null) {
-				u.getLeft().subtreeBgColor(Color.red);
+				u.getLeft().subtreeColor(NodeColor.RED);
 				u.getLeft().markSubtree = true;
 			}
 			if (v.getLeft() != null) {
-				v.getLeft().subtreeBgColor(Color.green);
+				v.getLeft().subtreeColor(NodeColor.GREEN);
 				v.getLeft().markSubtree = true;
 			}
 			if (v.getRight() != null) {
-				v.getRight().subtreeBgColor(Color.blue);
+				v.getRight().subtreeColor(NodeColor.BLUE);
 				v.getRight().markSubtree = true;
 			}
 		}
@@ -63,19 +61,19 @@ public class Rotate extends Algorithm {
 
 		R.v = null;
 		if (v.getLeft() != null) {
-			v.getLeft().subtreeBgColor(Colors.NORMAL);
+			v.getLeft().subtreeColor(NodeColor.NORMAL);
 			v.getLeft().markSubtree = false;
 		}
 		if (v.getRight() != null) {
-			v.getRight().subtreeBgColor(Colors.NORMAL);
+			v.getRight().subtreeColor(NodeColor.NORMAL);
 			v.getRight().markSubtree = false;
 		}
 		if (u.getLeft() != null) {
-			u.getLeft().subtreeBgColor(Colors.NORMAL);
+			u.getLeft().subtreeColor(NodeColor.NORMAL);
 			u.getLeft().markSubtree = false;
 		}
 		if (u.getRight() != null) {
-			u.getRight().subtreeBgColor(Colors.NORMAL);
+			u.getRight().subtreeColor(NodeColor.NORMAL);
 			u.getRight().markSubtree = false;
 		}
 	}
