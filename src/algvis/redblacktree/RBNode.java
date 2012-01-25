@@ -64,7 +64,7 @@ public class RBNode extends BSTNode {
 		}
 	}
 
-	public void drawTree2(View v) {
+	public void drawRBTree(View v) {
 		if (((RB) D).mode24) {
 			drawBigNodes(v);
 		}

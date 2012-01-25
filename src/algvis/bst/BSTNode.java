@@ -220,7 +220,7 @@ public class BSTNode extends Node {
 		drawTree2(v);
 	}
 	
-	public void drawTree2(View v) {
+	private void drawTree2(View v) {
 		if (markSubtree) {
 			Polygon p = new Polygon();
 			p.addPoint(x - 1, y - 1);
