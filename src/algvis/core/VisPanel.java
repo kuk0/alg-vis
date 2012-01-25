@@ -126,7 +126,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 				// return new Dimension(200, 530);
 			}
 		};
-		C = new Commentary(S.L, SP);
+		C = new Commentary(this, S.L, SP);
 		SP.setViewportView(C);
 		// JPanel CP = new JPanel();
 		// CP.add(SP);

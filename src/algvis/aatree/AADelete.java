@@ -27,7 +27,6 @@ public class AADelete extends Algorithm {
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
-			finish();
 			return;
 		} else {
 			AANode d = (AANode) T.root;
@@ -63,7 +62,6 @@ public class AADelete extends Algorithm {
 
 			if (d == null) { // notfound
 				addStep("notfound");
-				finish();
 				return;
 			}
 
@@ -238,6 +236,5 @@ public class AADelete extends Algorithm {
 			T.reposition();
 			addStep("done");
 		}
-		finish();
 	}
 }

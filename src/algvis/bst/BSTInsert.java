@@ -33,7 +33,6 @@ public class BSTInsert extends Algorithm {
 					addStep("alreadythere");
 					v.setColor(NodeColor.NOTFOUND);
 					v.goDown();
-					finish();
 					return;
 				} else if (w.key < K) {
 					if (w.getRight() == null) {
@@ -75,6 +74,5 @@ public class BSTInsert extends Algorithm {
 		addNote("done");
 		v.setColor(NodeColor.NORMAL);		
 		T.setNodeV(null);
-		finish();
 	}
 }

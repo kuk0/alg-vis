@@ -3,9 +3,6 @@ package algvis.scenario;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -21,16 +18,15 @@ import algvis.scenario.commands.MacroCommand;
  */
 public class Scenario implements XMLable {
 	private final String name;
-	private final List<Command> scenario;
-	private ListIterator<Command> position;
+	private final MacroCommand scenario;
+	private MacroCommand algorithm = null, step = null;
 	private boolean addingEnabled = true;
-	private boolean pauses = true, stopped = false;
-	private MacroCommand step = null;
+	private boolean pauses = true;
 	private boolean enabled;
+	private Thread traverser = null;
 
 	public Scenario(String name) {
-		scenario = new LinkedList<Command>();
-		position = scenario.listIterator();
+		scenario = new MacroCommand(name);
 		this.name = name;
 		enabled = false;
 	}
@@ -43,10 +39,6 @@ public class Scenario implements XMLable {
 		return enabled;
 	}
 
-	public void stop() {
-		stopped = true;
-	}
-
 	public void setPauses(boolean pauses) {
 		this.pauses = pauses;
 	}
@@ -55,20 +47,19 @@ public class Scenario implements XMLable {
 		addingEnabled = e;
 	}
 
-	public void addingNextStep() {
-		step = new MacroCommand();
-		while (position.hasNext()) {
-			position.next();
-			position.remove();
-		}
-		position.add(step);
+	public void newAlgorithm() {
+		scenario.add(algorithm = new MacroCommand("algorithm"));
+	}
+
+	public void newStep() {
+		algorithm.add(step = new MacroCommand("step"));
 	}
 
 	/**
-	 * Appends the command to current position of Scenario.
+	 * Appends the command to current step of current algorithm of Scenario.
 	 */
 	public boolean add(Command c) {
-		if (addingEnabled && step != null) {
+		if (addingEnabled && algorithm != null && step != null) {
 			step.add(c);
 			return true;
 		} else {
@@ -76,23 +67,44 @@ public class Scenario implements XMLable {
 		}
 	}
 
+	public boolean isAlgorithmRunning() {
+		return (step.hasNext() || algorithm.hasNext())
+				&& (step.hasPrevious() || algorithm.hasPrevious());
+	}
+
 	public boolean hasPrevious() {
-		return position.hasPrevious();
+		return step.hasPrevious() || algorithm.hasPrevious()
+				|| scenario.hasPrevious();
 	}
 
 	public boolean hasNext() {
-		return position.hasNext();
+		return step.hasNext() || algorithm.hasNext() || scenario.hasNext();
 	}
 
 	public void next() {
 		enableAdding(false);
 		if (pauses) {
-			position.next().execute();
-		} else {
-			while (hasNext() && !stopped) {
-				position.next().execute();
+			if (step.hasPrevious()) {
+				if (algorithm.hasNext()) {
+					step = (MacroCommand) algorithm.next();
+				} else {
+					algorithm = (MacroCommand) scenario.next();
+					step = (MacroCommand) algorithm.next();
+				}
+			} else {
+				algorithm.next();
+				scenario.next();
 			}
-			stopped = false;
+			step.execute();
+		} else {
+			if (step.hasPrevious()) {
+				if (!algorithm.hasNext()) {
+					algorithm = (MacroCommand) scenario.next();
+				}
+			} else {
+				scenario.next();
+			}
+			algorithm.execute();
 		}
 		enableAdding(true);
 	}
@@ -100,23 +112,70 @@ public class Scenario implements XMLable {
 	public void previous() {
 		enableAdding(false);
 		if (pauses) {
-			position.previous().unexecute();
-		} else {
-			while (hasPrevious() && !stopped) {
-				position.previous().unexecute();
+			step.unexecute();
+			algorithm.previous();
+			if (algorithm.hasPrevious()) {
+				step = (MacroCommand) algorithm.getPrevious();
+			} else {
+				scenario.previous();
+				if (scenario.hasPrevious()) {
+					algorithm = (MacroCommand) scenario.getPrevious();
+					step = (MacroCommand) algorithm.getPrevious();
+				}
 			}
-			stopped = false;
+		} else {
+			algorithm.unexecute();
+			scenario.previous();
+			if (scenario.hasPrevious()) {
+				algorithm = (MacroCommand) scenario.getPrevious();
+				step = (MacroCommand) algorithm.getPrevious();
+			}
 		}
 		enableAdding(true);
 	}
 
+	public void goToStep(int s) {
+		enableAdding(false);
+		algorithm.goTo(s);
+		if (algorithm.hasPrevious()) {
+			step = (MacroCommand) algorithm.getPrevious();
+		}
+		enableAdding(true);
+	}
+
+	public int getAlgPos() {
+		return algorithm.getPosIndex();
+	}
+
+	/**
+	 * returns true if new traverser has been started, else returns false
+	 */
+	public boolean startNewTraverser(Thread t) {
+		if (!killTraverser()) {
+			return false;
+		} else {
+			t.start();
+			return true;
+		}
+	}
+
+	public boolean killTraverser() {
+		if (traverser != null) {
+			while (traverser.isAlive()) {
+				traverser.interrupt();
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 	@Override
 	public Element getXML() {
-		Element root = new Element(name);
-		for (Command c : scenario) {
-			root.addContent(c.getXML());
-		}
-		return root;
+		return scenario.getXML();
 	}
 
 	public void saveXML(String path) {

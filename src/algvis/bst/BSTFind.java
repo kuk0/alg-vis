@@ -76,6 +76,5 @@ public class BSTFind extends Algorithm {
 				mysuspend();
 			}
 		}
-		finish();
 	}
 }

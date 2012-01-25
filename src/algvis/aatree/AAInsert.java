@@ -36,7 +36,6 @@ public class AAInsert extends Algorithm {
 					addStep("alreadythere");
 					v.goDown();
 					v.setColor(NodeColor.NOTFOUND);
-					finish();
 					return;
 				} else if (w.key < K) {
 					addStep("bstinsertright", K, w.key);
@@ -104,6 +103,5 @@ public class AAInsert extends Algorithm {
 		}
 		T.reposition();
 		addStep("done");
-		finish();
 	}
 }

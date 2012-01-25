@@ -36,7 +36,6 @@ public class AVLInsert extends Algorithm {
 					addStep("alreadythere");
 					v.goDown();
 					v.setColor(NodeColor.NOTFOUND);
-					finish();
 					return;
 				} else if (w.key < K) {
 					addStep("bstinsertright", K, w.key);
@@ -129,6 +128,5 @@ public class AVLInsert extends Algorithm {
 		}
 		T.reposition();
 		addNote("done");
-		finish();
 	}
 }

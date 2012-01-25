@@ -65,7 +65,7 @@ public class BST extends Dictionary implements LayoutListener { //, ClickListene
 	@Override
 	public void clear() {
 		if (root != null || v != null) {
-			scenario.addingNextStep();
+			scenario.newStep();
 			setRoot(null);
 			setNodeV(null);
 			State commState = M.C.getState();

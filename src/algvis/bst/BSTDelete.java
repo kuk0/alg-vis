@@ -26,7 +26,6 @@ public class BSTDelete extends Algorithm {
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
-			finish();
 			return;
 		} else {
 			BSTNode d = T.root;
@@ -77,7 +76,6 @@ public class BSTDelete extends Algorithm {
 			}
 
 			if (d == null) { // notfound
-				finish();
 				return;
 			}
 
@@ -157,6 +155,5 @@ public class BSTDelete extends Algorithm {
 			T.reposition();
 			addStep("done");
 		}
-		finish();
 	}
 }

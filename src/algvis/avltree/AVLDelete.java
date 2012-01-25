@@ -26,7 +26,6 @@ public class AVLDelete extends Algorithm {
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
-			finish();
 			return;
 		} else {
 			AVLNode d = (AVLNode) T.root;
@@ -62,7 +61,6 @@ public class AVLDelete extends Algorithm {
 
 			if (d == null) { // notfound
 				addStep("notfound");
-				finish();
 				return;
 			}
 
@@ -204,6 +202,5 @@ public class AVLDelete extends Algorithm {
 			T.reposition();
 			addStep("done");
 		}
-		finish();
 	}
 }

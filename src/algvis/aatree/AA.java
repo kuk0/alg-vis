@@ -37,7 +37,7 @@ public class AA extends BST {
 
 	public void setMode23(boolean set) {
 		mode23 = set;
-		scenario.addingNextStep();
+		scenario.newStep();
 		reposition();
 	}
 
