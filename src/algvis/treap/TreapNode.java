@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
-import algvis.core.Node;
 
 public class TreapNode extends BSTNode {
 	// public TreapNode left=null, right=null, parent=null;
@@ -18,7 +17,22 @@ public class TreapNode extends BSTNode {
 
 	public TreapNode(DataStructure D, int key) {
 		this(D, key, 0, 0);
-		setState(Node.UP);
+		getReady();
+	}
+
+	@Override
+	public TreapNode getLeft() {
+		return (TreapNode) super.getLeft();
+	}
+
+	@Override
+	public TreapNode getRight() {
+		return (TreapNode) super.getRight();
+	}
+
+	@Override
+	public TreapNode getParent() {
+		return (TreapNode) super.getParent();
 	}
 
 	public void bgPColor() {
@@ -26,16 +40,16 @@ public class TreapNode extends BSTNode {
 	}
 
 	public void linkleft(TreapNode v) {
-		left = v;
+		setLeft(v);
 		if (v != null) {
-			v.parent = this;
+			v.setParent(this);
 		}
 	}
 
 	public void linkright(TreapNode v) {
-		right = v;
+		setRight(v);
 		if (v != null) {
-			v.parent = this;
+			v.setParent(this);
 		}
 	}
 }

@@ -1,15 +1,14 @@
 package algvis.treap;
 
-import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
 
 public class TreapInsert extends Algorithm {
 	Treap T;
-	BSTNode v;
+	TreapNode v;
 	int K;
 
 	public TreapInsert(Treap T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		v = T.v = new TreapNode(T, K = x);
 		setHeader("insertion");
@@ -20,31 +19,31 @@ public class TreapInsert extends Algorithm {
 		if (T.root == null) {
 			T.root = v;
 			v.goToRoot();
-			setText("newroot");
+			addStep("newroot");
 			mysuspend();
 		} else {
-			BSTNode w = T.root;
+			TreapNode w = T.root;
 			v.goAboveRoot();
-			setText("bstinsertstart");
+			addStep("bstinsertstart");
 			mysuspend();
 
 			while (true) {
 				if (w.key == K) {
-					setText("alreadythere");
+					addStep("alreadythere");
 					v.goDown();
 					return;
 				} else if (w.key < K) {
-					setText("bstinsertright", K, w.key);
-					if (w.right != null) {
-						w = w.right;
+					addStep("bstinsertright", K, w.key);
+					if (w.getRight() != null) {
+						w = w.getRight();
 					} else {
 						w.linkRight(v);
 						break;
 					}
 				} else {
-					setText("bstinsertleft", K, w.key);
-					if (w.left != null) {
-						w = w.left;
+					addStep("bstinsertleft", K, w.key);
+					if (w.getLeft() != null) {
+						w = w.getLeft();
 					} else {
 						w.linkLeft(v);
 						break;
@@ -56,13 +55,13 @@ public class TreapInsert extends Algorithm {
 			T.reposition();
 			mysuspend();
 			// bubleme nahor
-			setText("treapbubbleup");
-			while (!v.isRoot() && ((TreapNode) v.parent).p < ((TreapNode) v).p) {
+			addStep("treapbubbleup");
+			while (!v.isRoot() && v.getParent().p < v.p) {
 				T.rotate(v);
 				mysuspend();
 			}
 		}
-		setText("done");
+		addStep("done");
 		T.v = null;
 	}
 }

@@ -10,10 +10,15 @@ import algvis.core.VisPanel;
 public class Heap extends PriorityQueue implements ClickListener {
 	public static String dsName = "heap";
 	int n = 0;
-	BSTNode root = null, v = null, v2 = null;
+	HeapNode root = null, v = null, v2 = null;
+
+	@Override
+	public String getName() {
+		return "heap";
+	}
 
 	public Heap(VisPanel M) {
-		super(M);
+		super(M, dsName);
 		M.screen.V.setDS(this);
 	}
 
@@ -31,12 +36,13 @@ public class Heap extends PriorityQueue implements ClickListener {
 	public void decreaseKey(Node v, int delta) {
 		if (v == null) {
 			// TODO: vypindat
-		} else start(new HeapDecrKey(this, (BSTNode)v, delta));
+		} else
+			start(new HeapDecrKey(this, (HeapNode) v, delta));
 	}
-	
+
 	@Override
 	public void clear() {
-		root = null;
+		root = v = v2 = null;
 		n = 0;
 		setStats();
 	}
@@ -44,8 +50,8 @@ public class Heap extends PriorityQueue implements ClickListener {
 	@Override
 	public String stats() {
 		if (n == 0) {
-			return M.S.L.getString("size") + ": 0 (" + M.S.L.getString("emptyheap")
-					+ ")";
+			return M.S.L.getString("size") + ": 0 ("
+					+ M.S.L.getString("emptyheap") + ")";
 		} else if (n == 1000) {
 			return M.S.L.getString("size") + ": 1000 ("
 					+ M.S.L.getString("fullheap") + ")";
@@ -76,16 +82,19 @@ public class Heap extends PriorityQueue implements ClickListener {
 			M.screen.V.setBounds(x1, y1, x2, y2);
 		}
 	}
-	
+
+	@Override
 	public void mouseClicked(int x, int y) {
-		if (root == null) return;
+		if (root == null)
+			return;
 		BSTNode v = root.find(x, y);
 		if (v != null) {
 			if (v.marked) {
 				v.unmark();
 				chosen = null;
 			} else {
-				if (chosen != null) chosen.unmark();
+				if (chosen != null)
+					chosen.unmark();
 				v.mark();
 				chosen = v;
 			}

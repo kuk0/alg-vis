@@ -19,6 +19,7 @@ import algvis.scapegoattree.GBPanel;
 import algvis.skiplist.SkipListPanel;
 import algvis.splaytree.SplayPanel;
 import algvis.treap.TreapPanel;
+import algvis.unionfind.UnionFindPanel;
 
 /**
  * The Class DataStructures. This class contains the list of all visualized data
@@ -35,7 +36,8 @@ public class DataStructures {
 			RBPanel.class, AAPanel.class, TreapPanel.class,
 			SkipListPanel.class, GBPanel.class, SplayPanel.class,
 			HeapPanel.class, LeftHeapPanel.class, BinHeapPanel.class, LazyBinHeapPanel.class,
-			FibHeapPanel.class };
+			FibHeapPanel.class, UnionFindPanel.class };
+
 	static final int N = PANEL.length;
 
 	private static boolean check_range(int i) {

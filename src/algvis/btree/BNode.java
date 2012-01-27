@@ -2,7 +2,7 @@ package algvis.btree;
 
 import java.awt.Color;
 
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.Fonts;
 import algvis.core.Node;
@@ -29,13 +29,13 @@ public class BNode extends Node {
 		this.x = tox = x;
 		this.y = toy = y;
 		steps = 0;
-		setColor(Color.black, Colors.NORMAL);
+		setColor(NodeColor.NORMAL);
 		width = _width();
 	}
 
 	public BNode(DataStructure D, int key) {
 		this(D, key, 0, 0);
-		setState(Node.UP);
+		getReady();
 	}
 
 	public BNode(BNode v) {
@@ -326,15 +326,16 @@ public class BNode extends Node {
 			t = "  " + key[i];
 		}
 		return tox - D.M.screen.V.stringWidth(toString(), 9) / 2
-				+ D.M.screen.V.stringWidth(s, 9) + D.M.screen.V.stringWidth(t, 9) / 2;
+				+ D.M.screen.V.stringWidth(s, 9)
+				+ D.M.screen.V.stringWidth(t, 9) / 2;
 	}
 
 	@Override
 	public void drawBg(View V) {
-		V.setColor(bgcolor);
+		V.setColor(getBgColor());
 		V.fillRoundRectangle(x, y, width / 2, D.radius, 2 * D.radius,
 				2 * D.radius);
-		V.setColor(fgcolor);
+		V.setColor(getFgColor());
 		V.drawRoundRectangle(x, y, width / 2, D.radius, 2 * D.radius,
 				2 * D.radius);
 		// g.drawLine (x-leftw, y+2, x+rightw, y-2);

@@ -24,7 +24,7 @@ public class BinHeapInsert extends BinHeapAlg {
 			mysuspend();
 			return;
 		}
-		
+
 		meld(i);
 	}
 }

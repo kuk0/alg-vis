@@ -1,12 +1,12 @@
 package algvis.scapegoattree;
 
 import algvis.bst.BSTNode;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class GBFind extends GBAlg {
 	public GBFind(GBTree T, int x) {
 		super(T, x);
-		v.bgColor(Colors.FIND);
+		v.setColor(NodeColor.FIND);
 		setHeader("search");
 	}
 
@@ -14,46 +14,46 @@ public class GBFind extends GBAlg {
 	public void run() {
 		if (T.root == null) {
 			v.goToRoot();
-			setText("empty");
+			addStep("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Colors.NOTFOUND);
-			setText("notfound");
+			v.setColor(NodeColor.NOTFOUND);
+			addStep("notfound");
 		} else {
 			BSTNode w = T.root;
 			v.goTo(w);
-			setText("bstfindstart");
+			addStep("bstfindstart");
 			mysuspend();
 			while (true) {
 				if (w.key == K) {
 					if (((GBNode) w).deleted) {
-						setText("gbfinddeleted");
-						v.bgColor(Colors.NOTFOUND);
+						addStep("gbfinddeleted");
+						v.setColor(NodeColor.NOTFOUND);
 						v.goDown();
 					} else {
-						setText("found");
-						v.bgColor(Colors.FOUND);
+						addStep("found");
+						v.setColor(NodeColor.FOUND);
 					}
 					break;
 				} else if (w.key < K) {
-					setText("bstfindright", K, w.key);
-					w = w.right;
+					addStep("bstfindright", K, w.key);
+					w = w.getRight();
 					if (w != null) {
 						v.goTo(w);
 					} else { // notfound
-						setText("notfound");
-						v.bgColor(Colors.NOTFOUND);
+						addStep("notfound");
+						v.setColor(NodeColor.NOTFOUND);
 						v.goRight();
 						break;
 					}
 				} else {
-					setText("bstfindleft", K, w.key);
-					w = w.left;
+					addStep("bstfindleft", K, w.key);
+					w = w.getLeft();
 					if (w != null) {
 						v.goTo(w);
 					} else { // notfound
-						setText("notfound");
-						v.bgColor(Colors.NOTFOUND);
+						addStep("notfound");
+						v.setColor(NodeColor.NOTFOUND);
 						v.goLeft();
 						break;
 					}

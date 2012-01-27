@@ -5,7 +5,7 @@ import algvis.core.DictButtons;
 import algvis.core.Settings;
 import algvis.core.VisPanel;
 
-public class a234Panel  extends VisPanel {
+public class a234Panel extends VisPanel {
 	private static final long serialVersionUID = 3849830550882705599L;
 	public static Class<? extends DataStructure> DS = a234Tree.class;
 

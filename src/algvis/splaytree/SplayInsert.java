@@ -1,53 +1,53 @@
 package algvis.splaytree;
 
-import algvis.bst.BSTNode;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class SplayInsert extends SplayAlg {
 	public SplayInsert(Splay T, int x) {
 		super(T, x);
 		T.vv = v = new SplayNode(T, x);
-		v.bgColor(Colors.INSERT);
+		v.setColor(NodeColor.INSERT);
 	}
 
 	@Override
 	public void run() {
 		if (T.root == null) {
+			setHeader("insertion");
 			T.root = v;
 			v.goToRoot();
-			setText("newroot");
+			addStep("newroot");
 			mysuspend();
 		} else {
 			v.goAboveRoot();
-			BSTNode w = find(K);
+			SplayNode w = find(K);
 			splay(w);
 
 			setHeader("insertion");
-			w.bgColor(Colors.NORMAL);
+			w.setColor(NodeColor.NORMAL);
 			if (w.key == K) {
-				setText("alreadythere");
+				addStep("alreadythere");
 				v.goDown();
-				v.bgColor(Colors.NOTFOUND);
+				v.setColor(NodeColor.NOTFOUND);
 				return;
 			} else if (w.key < K) {
-				setText("splayinsertleft");
+				addStep("splayinsertleft");
 				mysuspend();
 				v.linkLeft(w);
-				v.linkRight(w.right);
-				w.right = null;
+				v.linkRight(w.getRight());
+				w.setRight(null);
 			} else {
-				setText("splayinsertright");
+				addStep("splayinsertright");
 				mysuspend();
 				v.linkRight(w);
-				v.linkLeft(w.left);
-				w.left = null;
+				v.linkLeft(w.getLeft());
+				w.setLeft(null);
 			}
 			T.root = v;
 			T.reposition();
 			mysuspend();
 		}
-		setText("done");
-		v.bgColor(Colors.NORMAL);
+		addStep("done");
+		v.setColor(NodeColor.NORMAL);
 		T.vv = null;
 	}
 }

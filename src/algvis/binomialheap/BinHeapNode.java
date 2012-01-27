@@ -1,13 +1,17 @@
 package algvis.binomialheap;
 
 import java.awt.Color;
+
+import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.MeldablePQ;
 import algvis.core.Node;
 import algvis.core.View;
 
 public class BinHeapNode extends Node {
-	public int leftw, height, size, rank; // TODO: size -> rank (treba ale zmenit aj pomocne upratovacie pole....)
+	public int leftw, height, size, rank; // TODO: size -> rank (treba ale
+											// zmenit aj pomocne upratovacie
+											// pole....)
 	public BinHeapNode parent, left, right, child;
 	public boolean cut;
 
@@ -26,7 +30,7 @@ public class BinHeapNode extends Node {
 
 	public BinHeapNode(DataStructure D, int key) {
 		this(D, key, 0, 0);
-		setState(Node.UP);
+		getReady();
 	}
 
 	public BinHeapNode(BinHeapNode v) {
@@ -141,8 +145,7 @@ public class BinHeapNode extends Node {
 		repos(x, y, this);
 	}
 
-	public void drawTree(View v, BinHeapNode first,
-			BinHeapNode parent) {
+	public void drawTree(View v, BinHeapNode first, BinHeapNode parent) {
 		if (!isLeaf()) {
 			child.drawTree(v, child, this);
 		}
@@ -227,15 +230,15 @@ public class BinHeapNode extends Node {
 
 	@Override
 	public void draw(View v) {
-		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
+		if (state == Node.INVISIBLE || key == NULL) {
 			return;
 		}
 		drawBg(v);
 		drawKey(v);
-		//if (parent == null) {
-			v.setColor(Color.black);
-			v.drawString("" + rank, x + D.radius, y - D.radius, 8);
-		//}
+		// if (parent == null) {
+		v.setColor(Color.black);
+		v.drawString("" + rank, x + D.radius, y - D.radius, 8);
+		// }
 	}
 
 	public BinHeapNode find(BinHeapNode first, int x, int y) {
@@ -251,13 +254,12 @@ public class BinHeapNode extends Node {
 		}
 		return null;
 	}
-	
+
 	public void markCut() {
 		cut = true;
-		bgColor(Color.black);
-		fgColor(Color.white);
+		setColor(NodeColor.BLACK);
 	}
-	
+
 	public void unmarkCut() {
 		cut = false;
 		bgKeyColor();

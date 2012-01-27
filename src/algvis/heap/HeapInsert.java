@@ -1,7 +1,5 @@
 package algvis.heap;
 
-import algvis.bst.BSTNode;
-
 public class HeapInsert extends HeapAlg {
 	public HeapInsert(Heap H, int x) {
 		super(H);
@@ -12,11 +10,11 @@ public class HeapInsert extends HeapAlg {
 	@Override
 	public void run() {
 		if (H.n == 1000) {
-			setText("heapfull");
+			addStep("heapfull");
 			H.v = null;
 			return;
 		}
-		BSTNode w;
+		HeapNode w;
 
 		// link
 		++H.n;
@@ -32,7 +30,7 @@ public class HeapInsert extends HeapAlg {
 			k >>= 1;
 			w = H.root;
 			while (k > 1) {
-				w = ((n & k) == 0) ? w.left : w.right;
+				w = ((n & k) == 0) ? w.getLeft() : w.getRight();
 				k >>= 1;
 			}
 			if ((k & n) == 0) {
@@ -45,10 +43,7 @@ public class HeapInsert extends HeapAlg {
 		}
 		H.v = null;
 
-		setText("heapbubbleup");
 		// mysuspend();
 		bubbleup(v);
-
-		setText("done");
 	}
 }

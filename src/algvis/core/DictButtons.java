@@ -9,8 +9,8 @@ import javax.swing.JPanel;
 import algvis.internationalization.IButton;
 
 /**
- * The Class DictButtons.
- * All dictionary data structures need buttons "Insert", "Find", and "Delete".
+ * The Class DictButtons. All dictionary data structures need buttons "Insert",
+ * "Find", and "Delete".
  */
 public class DictButtons extends Buttons {
 	private static final long serialVersionUID = 8331529914377645715L;
@@ -45,6 +45,7 @@ public class DictButtons extends Buttons {
 		if (evt.getSource() == insertB) {
 			final Vector<Integer> args = I.getNonEmptyVI();
 			Thread t = new Thread(new Runnable() {
+				@Override
 				public void run() {
 					for (int x : args) {
 						((Dictionary) D).insert(x);
@@ -56,6 +57,7 @@ public class DictButtons extends Buttons {
 			final Vector<Integer> args = I.getVI();
 			if (args.size() > 0) {
 				Thread t = new Thread(new Runnable() {
+					@Override
 					public void run() {
 						for (int x : args) {
 							((Dictionary) D).find(x);
@@ -68,6 +70,7 @@ public class DictButtons extends Buttons {
 			final Vector<Integer> args = I.getVI();
 			if (args.size() > 0) {
 				Thread t = new Thread(new Runnable() {
+					@Override
 					public void run() {
 						for (int x : args) {
 							((Dictionary) D).delete(x);
@@ -80,18 +83,18 @@ public class DictButtons extends Buttons {
 	}
 
 	@Override
-	public void enableNext() {
-		super.enableNext();
-		insertB.setEnabled(false);
-		findB.setEnabled(false);
-		deleteB.setEnabled(false);
-	}
-
-	@Override
-	public void disableNext() {
-		super.disableNext();
+	public void enableAll() {
+		super.enableAll();
 		insertB.setEnabled(true);
 		findB.setEnabled(true);
 		deleteB.setEnabled(true);
+	}
+
+	@Override
+	public void disableAll() {
+		super.disableAll();
+		insertB.setEnabled(false);
+		findB.setEnabled(false);
+		deleteB.setEnabled(false);
 	}
 }

@@ -11,8 +11,13 @@ public class SkipList extends Dictionary {
 	SkipNode root, sent, v = null;
 	int height = 1, n = 0, e = 0;
 
+	@Override
+	public String getName() {
+		return "skiplist";
+	}
+
 	public SkipList(VisPanel M) {
-		super(M);
+		super(M, dsName);
 		M.screen.V.align = Alignment.LEFT;
 		root = new SkipNode(this, -Node.INF);
 		root.linkright(sent = new SkipNode(this, Node.INF));
@@ -38,6 +43,7 @@ public class SkipList extends Dictionary {
 	public void clear() {
 		height = 1;
 		n = e = 0;
+		v = null;
 		root = new SkipNode(this, -Node.INF);
 		root.linkright(sent = new SkipNode(this, Node.INF));
 		reposition();
@@ -47,8 +53,9 @@ public class SkipList extends Dictionary {
 	@Override
 	public String stats() {
 		if (root == null) {
-			return M.S.L.getString("size") + ": 0;   " + M.S.L.getString("height")
-					+ ": 0;   #" + M.S.L.getString("excess") + ": 0";
+			return M.S.L.getString("size") + ": 0;   "
+					+ M.S.L.getString("height") + ": 0;   #"
+					+ M.S.L.getString("excess") + ": 0";
 		} else {
 			return M.S.L.getString("size") + ": " + n + ";   "
 					+ M.S.L.getString("height") + ": " + height + ";   #"

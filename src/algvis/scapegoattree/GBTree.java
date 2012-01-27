@@ -1,6 +1,7 @@
 package algvis.scapegoattree;
 
 import algvis.bst.BST;
+import algvis.core.Layout;
 import algvis.core.StringUtils;
 import algvis.core.View;
 import algvis.core.VisPanel;
@@ -10,8 +11,14 @@ public class GBTree extends BST {
 	double alpha = 1.01;
 	int del = 0;
 
+	@Override
+	public String getName() {
+		return "scapegoat";
+	}
+
 	public GBTree(VisPanel M) {
 		super(M);
+		scenario.enable(false);
 	}
 
 	@Override
@@ -32,8 +39,7 @@ public class GBTree extends BST {
 	@Override
 	public void clear() {
 		del = 0;
-		root = null;
-		setStats();
+		super.clear();
 	}
 
 	@Override
@@ -54,8 +60,8 @@ public class GBTree extends BST {
 			return "#" + M.S.L.getString("nodes") + ": 0;   #"
 					+ M.S.L.getString("deleted") + ": 0;   "
 					+ M.S.L.getString("height") + ": 0 =  1.00\u00b7"
-					+ M.S.L.getString("opt") + ";   " + M.S.L.getString("avedepth")
-					+ ": 0";
+					+ M.S.L.getString("opt") + ";   "
+					+ M.S.L.getString("avedepth") + ": 0";
 		} else {
 			root.calcTree();
 			return "#"
@@ -71,11 +77,17 @@ public class GBTree extends BST {
 					+ ": "
 					+ root.height
 					+ " = "
-					+ StringUtils.format(root.height
-							/ (Math.floor(lg(root.size - del)) + 1), 2, 5)
-					+ "\u00b7" + M.S.L.getString("opt") + ";   "
-					+ M.S.L.getString("avedepth") + ": "
+					+ StringUtils
+							.format(root.height
+									/ (Math.floor(lg(root.size - del)) + 1), 2,
+									5) + "\u00b7" + M.S.L.getString("opt")
+					+ ";   " + M.S.L.getString("avedepth") + ": "
 					+ StringUtils.format(root.sumh / (double) root.size, 2, -5);
 		}
+	}
+	
+	@Override
+	public Layout getLayout() {
+		return Layout.COMPACT;
 	}
 }

@@ -1,7 +1,7 @@
 package algvis.bst;
 
 import algvis.core.Algorithm;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class BSTInsert extends Algorithm {
 	BST T;
@@ -9,57 +9,58 @@ public class BSTInsert extends Algorithm {
 	int K;
 
 	public BSTInsert(BST T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
-		v = T.v = new BSTNode(T, K = x);
-		v.bgColor(Colors.INSERT);
+		v = T.setNodeV(new BSTNode(T, K = x));
+		v.setColor(NodeColor.INSERT);
 		setHeader("insertion");
 	}
 
 	@Override
 	public void run() {
 		if (T.root == null) {
-			T.root = v;
+			T.setRoot(v);
 			v.goToRoot();
-			setText("newroot");
+			addStep("newroot");
 		} else {
 			BSTNode w = T.root;
 			v.goAboveRoot();
-			setText("bstinsertstart");
+			addStep("bstinsertstart");
 			mysuspend();
 
 			while (true) {
 				if (w.key == K) {
-					setText("alreadythere");
+					addStep("alreadythere");
+					v.setColor(NodeColor.NOTFOUND);
 					v.goDown();
-					v.bgColor(Colors.NOTFOUND);
+					finish();
 					return;
 				} else if (w.key < K) {
-					if (w.right == null) {
+					if (w.getRight() == null) {
 						v.pointInDir(45);
 					} else {
-						v.pointAbove(w.right);
+						v.pointAbove(w.getRight());
 					}
-					setText("bstinsertright", K, w.key);
+					addStep("bstinsertright", K, w.key);
 					mysuspend();
 					v.noArrow();
-					if (w.right != null) {
-						w = w.right;
+					if (w.getRight() != null) {
+						w = w.getRight();
 					} else {
 						w.linkRight(v);
 						break;
 					}
 				} else {
-					if (w.left == null) {
+					if (w.getLeft() == null) {
 						v.pointInDir(135);
 					} else {
-						v.pointAbove(w.left);
+						v.pointAbove(w.getLeft());
 					}
-					setText("bstinsertleft", K, w.key);
+					addStep("bstinsertleft", K, w.key);
 					mysuspend();
 					v.noArrow();
-					if (w.left != null) {
-						w = w.left;
+					if (w.getLeft() != null) {
+						w = w.getLeft();
 					} else {
 						w.linkLeft(v);
 						break;
@@ -71,8 +72,9 @@ public class BSTInsert extends Algorithm {
 		}
 		T.reposition();
 		mysuspend();
-		setText("done");
-		v.bgColor(Colors.NORMAL);
-		T.v = null;
+		addNote("done");
+		v.setColor(NodeColor.NORMAL);		
+		T.setNodeV(null);
+		finish();
 	}
 }

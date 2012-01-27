@@ -17,8 +17,13 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 	public BinHeapNode[] min;
 	public BinHeapNode d, v, v2;
 
+	@Override
+	public String getName() {
+		return "binheap";
+	}
+
 	public BinomialHeap(VisPanel M) {
-		super(M);
+		super(M, dsName);
 		root = new BinHeapNode[numHeaps + 1];
 		min = new BinHeapNode[numHeaps + 1];
 
@@ -26,7 +31,7 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 		M.screen.V.setDS(this);
 		M.screen.V.align = Alignment.LEFT;
 	}
-	
+
 	@Override
 	public void insert(int x) {
 		start(new BinHeapInsert(this, active, x));
@@ -39,7 +44,7 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 
 	@Override
 	public void decreaseKey(Node v, int delta) {
-		start(new BinHeapDecrKey(this, (BinHeapNode)v, delta));
+		start(new BinHeapDecrKey(this, (BinHeapNode) v, delta));
 	}
 
 	protected Pair chooseHeaps(int i, int j) {
@@ -79,6 +84,7 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 		for (int i = 0; i <= numHeaps; ++i) {
 			root[i] = null;
 		}
+		v = v2 = null;
 		setStats();
 	}
 
@@ -134,7 +140,7 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 		if (v2 != null) {
 			v2.move();
 			v2.draw(V);
-		}		
+		}
 	}
 
 	public void reposition() {
@@ -175,6 +181,7 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 		}
 	}
 
+	@Override
 	public void mouseClicked(int x, int y) {
 		int h = 0;
 		BinHeapNode v = null;
@@ -198,9 +205,9 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 					v.mark();
 					chosen = v;
 				} else {
-					((MeldablePQButtons)M.B).activeHeap.setValue(h);
-					//lowlight();
-					//highlight(h);
+					((MeldablePQButtons) M.B).activeHeap.setValue(h);
+					// lowlight();
+					// highlight(h);
 				}
 			}
 		}

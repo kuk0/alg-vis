@@ -3,3 +3,6 @@
 .class
 *~
 bin/
+*.pdf
+*.png
+*.pyc
