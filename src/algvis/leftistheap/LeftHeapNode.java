@@ -8,14 +8,12 @@ import algvis.core.MeldablePQ;
 import algvis.core.View;
 
 public class LeftHeapNode extends BSTNode {
-	// LeftHeapNode left, right, parent;
 	Color color = Color.yellow;
 	int height = 1;
 	int rank = 1;
 	boolean doubleArrow = false;
-	//mozno by bolo dobre spravit rightline a leftline globalnejsie, aby nemuselo cele drawTree byt prepisane 
-	boolean rightline = true; // visibility of the line leading to the right son
-	boolean leftline = true; // visibility of the line leading to the left son
+	boolean dashedrightl = false; // if true the line leading to the right son is dashed
+	boolean dashedleftl = false;  // if true the line leading to the left son is dashed
 
 	public LeftHeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
@@ -25,7 +23,6 @@ public class LeftHeapNode extends BSTNode {
 	public LeftHeapNode(DataStructure D, int key) {
 		super(D, key);
 		bgKeyColor();
-		setState(Node.UP);
 	}
 
 	public LeftHeapNode(LeftHeapNode v) {
@@ -37,6 +34,7 @@ public class LeftHeapNode extends BSTNode {
 	 * the heap v precedes w if v.key < w.key when we have a min heap, but v
 	 * precedes w if v.key > w.key when we have a max heap
 	 */
+
 	public boolean prec(Node v) {
 		if (((MeldablePQ) D).minHeap) {
 			return this.key < v.key;
@@ -56,11 +54,9 @@ public class LeftHeapNode extends BSTNode {
 		}
 	}
 
-	// pripojit this ako noveho rodica v a v dat ako praveho syna
 	public void linkup(LeftHeapNode v) {
 		if ((this.getParent() != null) && (v != null)) {
 			LeftHeapNode tmp = this.getParent();
-			// this.parent = v;
 			v.setRight(this);
 			this.setParent(v);
 			v.setParent(tmp);
@@ -68,22 +64,12 @@ public class LeftHeapNode extends BSTNode {
 		}
 	}
 
-	// vyhodi sa zo zoznamu
-	public void unlink() {
-		/*
-		 * if (parent != null) { if (parent.child == this) { if (right == this)
-		 * parent.child = null; else parent.child = right; } parent.rank--;
-		 * parent = null; } left.right = right; right.left = left; left = right
-		 * = this;
-		 */
-	}
-
 	public void swapChildren() {
 		LeftHeapNode tmp = this.getLeft();
 		this.setLeft(this.getRight());
 		this.setRight(tmp);
 	}
-	
+
 	public void setDoubleArrow(Node w) {
 		dir = w;
 		doubleArrow = true;
@@ -92,50 +78,54 @@ public class LeftHeapNode extends BSTNode {
 	public void noDoubleArrow() {
 		doubleArrow = false;
 	}
-	
+
 	private void drawDoubleArrow(View v) {
 		if (!doubleArrow || dir == null) {
 			return;
 		}
 		int x1, y1, x2, y2;
 		if (x < dir.x) {
-			x1 = x; y1 = y; x2 = dir.x; y2 = dir.y;
+			x1 = x;
+			y1 = y;
+			x2 = dir.x;
+			y2 = dir.y;
 		} else {
-			x2 = x; y2 = y; x1 = dir.x; y1 = dir.y;
+			x2 = x;
+			y2 = y;
+			x1 = dir.x;
+			y1 = dir.y;
 		}
-		v.drawDoubleArrow(x1+2*D.radius,y1,x2-2*D.radius,y2);
+		v.drawDoubleArrow(x1 + 2 * D.radius, y1, x2 - 2 * D.radius, y2);
 	}
 
-	// docasne a mozno aj navzdy skopirovane z AAtree koli vykreslovaniu ranku
 	@Override
 	public void draw(View v) {
 		super.draw(v);
 		drawDoubleArrow(v);
 		String str = new String("" + rank);
+		if (rank != -1){
 		if (this.getParent() != null && this.getParent().getLeft() == this) {
 			v.drawString(str, x - D.radius, y - D.radius, 7);
 		} else {
 			v.drawString(str, x + D.radius, y - D.radius, 7);
 		}
+		}
 
 	}
 
-	public void repos(int px, int py) { // , LeftHeapNode w) {
+	public void repos(int px, int py) {
 		this.goTo(px, py);
-		// tox = px;
-		// toy = py;
 
 		if (this.getRight() != null) {
-			this.getRight().repos(px + getRight().leftw, py
-					+ (D.yspan + 2 * D.radius));
+			this.getRight().repos(px + getRight().leftw,
+					py + (D.yspan + 2 * D.radius));
 		}
 		if (this.getLeft() != null) {
-			this.getLeft().repos(px - getLeft().rightw, py
-					+ (D.yspan + 2 * D.radius));
+			this.getLeft().repos(px - getLeft().rightw,
+					py + (D.yspan + 2 * D.radius));
 		}
 	}
 
-	// spravit nejake globalnejsie pre MPQ?
 	private void lowlight() {
 		bgColor(new Color(200, 200 - key / 10, 0));
 	}
@@ -162,34 +152,32 @@ public class LeftHeapNode extends BSTNode {
 		if (getRight() != null) {
 			getRight().highlightTree();
 		}
-		// highlightTree(this);
 	}
 
-	
 	@Override
 	public void drawTree(View v) {
-		
+
 		if (this.state != INVISIBLE) {
+
 			/*
-			if (thread) {
-				v.setColor(Color.red);
-			} else { */
-				v.setColor(Color.black);
-			//} 
-			
+			 * if (thread) { v.setColor(Color.red); } else {
+			 */
+			v.setColor(Color.black);
+			// }
+
 			if ((getLeft() != null) && (getLeft().state != INVISIBLE)) {
-				if (leftline) {
-					v.drawLine(x, y, getLeft().x, getLeft().y);
-				} else {
+				if (dashedleftl) {
 					v.drawDashedLine(x, y, getLeft().x, getLeft().y);
-				}				
+				} else {
+					v.drawLine(x, y, getLeft().x, getLeft().y);
+				}
 			}
 			if ((getRight() != null) && (getRight().state != INVISIBLE)) {
-				if (rightline) {
-					v.drawLine(x, y, getRight().x, getRight().y);
-				} else {
+				if (dashedrightl) {
 					v.drawDashedLine(x, y, getRight().x, getRight().y);
-				}				
+				} else {
+					v.drawLine(x, y, getRight().x, getRight().y);
+				}
 			}
 		}
 		if (getLeft() != null) {
@@ -201,34 +189,31 @@ public class LeftHeapNode extends BSTNode {
 		draw(v);
 	}
 
-	//@Override
-	public LeftHeapNode getRight(){
-		return (LeftHeapNode) this.right;
+	@Override
+	public LeftHeapNode getRight() {
+		return (LeftHeapNode) super.getRight();
 	}
 
-	//@Override
-	public LeftHeapNode getLeft(){
-		return (LeftHeapNode) this.left;
+	public void setRight(LeftHeapNode v) {
+		super.setRight((BSTNode) v);
 	}
 
-	//@Override
-	public void setRight(LeftHeapNode v){
-		this.right = v;
+	@Override
+	public LeftHeapNode getLeft() {
+		return (LeftHeapNode) super.getLeft();
 	}
 
-	//@Override
-	public void setLeft(LeftHeapNode v){
-		this.left = v;
+	public void setLeft(LeftHeapNode v) {
+		super.setLeft((BSTNode) v);
 	}
 
-	//@Override
-	public LeftHeapNode getParent(){
-		return (LeftHeapNode) this.parent;
+	@Override
+	public LeftHeapNode getParent() {
+		return (LeftHeapNode) super.getParent();
 	}
 
-	//@Override
-	public void setParent(LeftHeapNode v){
-		this.parent = v;
+	public void setParent(LeftHeapNode v) {
+		super.setParent((BSTNode) v);
 	}
 
 }

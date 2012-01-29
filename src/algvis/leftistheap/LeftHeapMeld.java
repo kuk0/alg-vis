@@ -30,9 +30,9 @@ public class LeftHeapMeld extends LeftHeapAlg {
 			// heap #2 is empty; done;
 			return;
 		}
-		
+
 		H.root[0] = H.root[j];
-		if (j != 0){
+		if (j != 0) {
 			H.root[j] = null;
 		}
 		H.active = i;

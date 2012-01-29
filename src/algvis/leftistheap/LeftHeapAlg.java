@@ -1,51 +1,38 @@
 package algvis.leftistheap;
 
 import algvis.core.Algorithm;
-import algvis.core.VisPanel;
+import algvis.core.Node;
 
 public class LeftHeapAlg extends Algorithm {
 	LeftHeap H;
-
-	// LeftHeapNodeNode v;
-
-	public LeftHeapAlg(VisPanel M) {
-		super(M);
-	}
+	LeftHeapNode v;
 
 	public LeftHeapAlg(LeftHeap H) {
-		super(H.M);
+		super(H);
 		this.H = H;
 	}
 
 	public void meld(int i) {
-		/*
-		 * Bude to konecny cyklus a budeme prechadzat postupne vsetkymi vrcholmi
-		 * root[i] haldy Vsetko to staci spravit raz. Kazdym prechodom cyklu sa
-		 * o jeden level nizsie posunie jedna halda.
-		 */
-
 		LeftHeapNode w = H.root[i];
-		//LeftHeapNode w = H.root[i];
 		H.root[0].mark();
 		w.mark();
-		setText("leftmeldstart");
+		addStep("leftmeldstart");
 		mysuspend();
-		while (true) { // asi by bolo lepsie kym H.root[0] != null (true){//
+		while (true) {
 			H.root[0].mark();
 			w.mark();
-			// posuvame sa dole a nic nemenime
-			if (w.prec(H.root[0])) {// (w.key < H.root[0].key){
-				if (!H.minHeap){
-					setText("leftmeldrightg", w.key, H.root[0].key);
-				}else{
-					setText("leftmeldrightl", w.key, H.root[0].key);
+			if (w.prec(H.root[0])) {
+				if (!H.minHeap) {
+					addStep("leftmeldrightg", w.key, H.root[0].key);
+				} else {
+					addStep("leftmeldrightl", w.key, H.root[0].key);
 				}
 				mysuspend();
-			} else { // vymenime w a root[0], napojime root[0] ako praveho syna.
-				if (!H.minHeap){
-					setText("leftmeldswapl", w.key, H.root[0].key);
-				}else{
-					setText("leftmeldswapg", w.key, H.root[0].key);
+			} else {
+				if (!H.minHeap) {
+					addStep("leftmeldswapl", w.key, H.root[0].key);
+				} else {
+					addStep("leftmeldswapg", w.key, H.root[0].key);
 				}
 				w.setDoubleArrow(H.root[0]);
 				mysuspend();
@@ -67,7 +54,7 @@ public class LeftHeapAlg extends Algorithm {
 			}
 
 			if (w.getParent() != null) {
-				w.getParent().rightline = true;
+				w.getParent().dashedrightl = false;
 			}
 
 			H.root[0].repos(H.root[0].tox, H.root[0].toy + H.yspan + 2
@@ -75,9 +62,8 @@ public class LeftHeapAlg extends Algorithm {
 			H.root[0].unmark();
 			w.unmark();
 
-			if (w.getRight() == null) { // jedine za tejto podmienky sa skonci cyklus
-				// povieme, ze nie je co riesit a napojime v vpravo na w
-				setText("leftmeldnoson", H.root[0].key, w.key);
+			if (w.getRight() == null) {
+				addStep("leftmeldnoson", H.root[0].key, w.key);
 				mysuspend();
 				w.linkRight(H.root[0]);
 				H.root[0] = null;
@@ -85,32 +71,28 @@ public class LeftHeapAlg extends Algorithm {
 				break;
 			}
 
-			// toto odstranenie hrany sa mi vizualne moc nepaci
-			w.rightline = false;
+			w.dashedrightl = true;
 			w = w.getRight();
 			mysuspend();
 		}
-		// uprava rankov
-		setText("leftrankupdate");
+		addStep("leftrankupdate");
 		mysuspend();
 
 		LeftHeapNode tmp = w;
 
 		while (tmp != null) {
 			if ((tmp.getLeft() != null) && (tmp.getRight() != null)) {
-				tmp.rank = Math.min(tmp.getLeft().rank,
-						tmp.getRight().rank) + 1;
+				tmp.rank = Math.min(tmp.getLeft().rank, tmp.getRight().rank) + 1;
 			} else {
 				tmp.rank = 1;
 			}
 
-			tmp =tmp.getParent();
+			tmp = tmp.getParent();
 		}
-		setText("leftrankstart"); // text ideme vymienat bratov
+		addStep("leftrankstart");
 		mysuspend();
-		// vymienanie s bratmi podla ranku
-		tmp = w;
 
+		tmp = w;
 		while (tmp != null) {
 			int l;
 			if (tmp.getLeft() == null) {
@@ -127,13 +109,9 @@ public class LeftHeapAlg extends Algorithm {
 				r = tmp.getRight().rank;
 			}
 			if (l < r) {
-				//setText("leftranksonch"); //potom vymazat z Messages
-				mysuspend();
 				tmp.swapChildren();
-			} else {
-				//setText("leftranksonok");  //potom vymazat z Messages
-				mysuspend();
 			}
+			mysuspend();
 
 			H.reposition();
 
@@ -147,9 +125,37 @@ public class LeftHeapAlg extends Algorithm {
 		}
 
 		H.reposition();
-		//mysuspend();
-		setText("done");
-
+		addNote("done");
+	}
+	
+	
+	public void bubbleup(LeftHeapNode v) {
+		if (H.minHeap) {
+			addStep("minheapbubbleup");
+		} else {
+			addStep("maxheapbubbleup");
+		}
+		LeftHeapNode w = v.getParent();
+		while (w != null && v.prec(w)) {
+			H.v = new LeftHeapNode(v);
+			H.v.rank = -1;
+			H.v2 = new LeftHeapNode(w);
+			H.v2.rank = -1;
+			v.key = Node.NOKEY;
+			w.key = Node.NOKEY;
+			H.v.goTo(w);
+			H.v2.goTo(v);
+			mysuspend();
+			v.key = H.v2.key;
+			w.key = H.v.key;
+			v.setColor(H.v2.getColor());
+			w.setColor(H.v.getColor());
+			H.v = null;
+			H.v2 = null;
+			v = w;
+			w = w.getParent();
+		}
+		addStep("done");
 	}
 
 }

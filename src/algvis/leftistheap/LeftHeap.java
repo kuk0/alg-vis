@@ -1,5 +1,6 @@
 package algvis.leftistheap;
 
+import algvis.core.ClickListener;
 import algvis.core.MeldablePQ;
 import algvis.core.MeldablePQButtons;
 import algvis.core.Node;
@@ -8,25 +9,19 @@ import algvis.core.StringUtils;
 import algvis.core.View;
 import algvis.core.VisPanel;
 
-//robene podla BinomialHeap
-public class LeftHeap extends MeldablePQ {
+public class LeftHeap extends MeldablePQ implements ClickListener{
 	public static String dsName = "leftheap";
-	int n = 0; // pocet vrcholov
 	LeftHeapNode root[] = null, v = null, v2 = null;
 
 	public LeftHeap(VisPanel M) {
-		super(M);
+		super(M, dsName);
 		root = new LeftHeapNode[numHeaps + 1];
-		
+		M.screen.V.setDS(this);
 	}
 
 	@Override
 	public void insert(int x) {
 		start(new LeftHeapInsert(this, active, x));
-		/*
-		 * active = 0; start(new LeftHeapInsert(this, 0, x+1)); active = 1;
-		 */
-		// n++;
 	}
 
 	@Override
@@ -35,7 +30,6 @@ public class LeftHeap extends MeldablePQ {
 
 	}
 
-	// pripadne to skontrolovat...
 	protected Pair chooseHeaps(int i, int j) {
 		if (i < 1 || i > numHeaps) {
 			i = -1;
@@ -61,7 +55,7 @@ public class LeftHeap extends MeldablePQ {
 
 	@Override
 	public void meld(int i, int j) {
-		Pair p = chooseHeaps(i, j); // j pripojit k i
+		Pair p = chooseHeaps(i, j);
 		i = p.first;
 		j = p.second;
 		((MeldablePQButtons) M.B).activeHeap.setValue(i);
@@ -70,10 +64,11 @@ public class LeftHeap extends MeldablePQ {
 
 	@Override
 	public String stats() {
-		
-		if (root[active] == null) { // <<---- root
-			return M.S.L.getString("size") + ": 0;   " + M.S.L.getString("height")
-					+ ": 0 =  1.00\u00b7" + M.S.L.getString("opt") + ";   "
+
+		if (root[active] == null) {
+			return M.S.L.getString("size") + ": 0;   "
+					+ M.S.L.getString("height") + ": 0 =  1.00\u00b7"
+					+ M.S.L.getString("opt") + ";   "
 					+ M.S.L.getString("avedepth") + ": 0";
 		} else {
 			root[active].calcTree();
@@ -97,8 +92,6 @@ public class LeftHeap extends MeldablePQ {
 					+ StringUtils.format(root[active].sumh
 							/ (double) root[active].size, 2, -5);
 		}
-		
-	//	return "";
 
 	}
 
@@ -108,26 +101,54 @@ public class LeftHeap extends MeldablePQ {
 			root[i] = null;
 		}
 
-		// root[active] = null;
-		// reposition();
-
 		setStats();
 
 	}
 
 	@Override
 	public void decreaseKey(Node v, int delta) {
-
+		if (v == null) {
+			// TODO: vypindat
+		} else {
+			start(new LeftHeapDecrKey(this, (LeftHeapNode) v, delta));
+		}
+	}
+	
+	@Override
+	public void mouseClicked(int x, int y) {
+		int h = 0;
+		LeftHeapNode v = null;
+		for (int i = 1; i <= numHeaps; ++i) {
+			if (root[i] != null) {
+				v = (LeftHeapNode) root[i].find(x, y);
+				if (v != null) {
+					h = i;
+					break;
+				}
+			}
+		}
+		if (v != null) {
+			if (v.marked) {
+				v.unmark();
+				chosen = null;
+			} else {
+				if (chosen != null)
+					chosen.unmark();
+				if (h == active) {
+					v.mark();
+					chosen = v;
+				} else {
+					((MeldablePQButtons) M.B).activeHeap.setValue(h);
+					// lowlight();
+					// highlight(h);
+				}
+			}
+		}
 	}
 
-	// tuto potom zmazat
-	// opravit, aby sa posuvali, uplne prerobit.
 	public void reposition() {
-		// spravit nejako tak, ze najst najlavejsi a najpravejsi vrchol
-		// a z toho sirku stromu a pridavat do plus
 
-		int sumx = 0; // - this.radius - this.xspan;
-		// je root[i].rightw + root[i].leftw sirka stromu?
+		int sumx = 0;
 		for (int i = 1; i <= numHeaps; ++i) {
 			if (root[i] != null) {
 				root[i].reposition();
@@ -141,7 +162,11 @@ public class LeftHeap extends MeldablePQ {
 					root[0].reposition();
 					root[0].reboxTree();
 					sumx += root[0].leftw;
-					root[0].repos(sumx, root[0].y);
+					if (root[0].y >= 0) { // nie je na zaciatku vkladania
+						root[0].repos(sumx, root[0].y);
+					} else {
+						root[0].repos(sumx, root[0].toy);
+					}
 					sumx += root[0].rightw;
 				}
 			}
@@ -157,17 +182,20 @@ public class LeftHeap extends MeldablePQ {
 				root[i].drawTree(V);
 			}
 		}
-		if (v != null) {
-			v.moveTree();
-			v.drawTree(V);
+		
+		if (v != null) { 
+			v.moveTree(); 
+			v.drawTree(V); 
 		}
+		
 		if (v2 != null) {
-			v2.moveTree();
-			v2.drawTree(V);
+			v2.moveTree(); 
+			v2.drawTree(V); 
 		}
+		 
 	}
 
-	// @Override
+	@Override
 	public void highlight(int i) {
 		active = i;
 		if (root[active] != null) {
@@ -175,10 +203,15 @@ public class LeftHeap extends MeldablePQ {
 		}
 	}
 
-	// @Override
+	@Override
 	public void lowlight() {
 		if (root[active] != null) {
 			root[active].lowlightTree();
 		}
+	}
+
+	@Override
+	public String getName() {
+		return "leftheap";
 	}
 }
