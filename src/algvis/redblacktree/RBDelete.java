@@ -13,7 +13,7 @@ public class RBDelete extends Algorithm {
 	public RBDelete(RB T, int x) {
 		super(T);
 		this.T = T;
-		v = T.v = new RBNode(T, K = x);
+		v = T.v = new BSTNode(T, K = x);
 		v.setColor(NodeColor.DELETE);
 		setHeader("deletion");
 	}
@@ -61,13 +61,13 @@ public class RBDelete extends Algorithm {
 			}
 
 			if (d == null) { // notfound
-				addStep("notfound");
+				addNote("notfound");
 				return;
 			}
 
 			RBNode u = d, w = (u.getLeft() != null) ? u.getLeft() : u
-					.getRight();
-			T.NULL.setParent(u.getParent());
+					.getRight2();
+			T.NULL.setParent(u.getParent2());
 			d.setColor(NodeColor.FOUND);
 			if (d.isLeaf()) { // case I - list
 				addStep("bstdeletecase1");
@@ -112,20 +112,15 @@ public class RBDelete extends Algorithm {
 					mysuspend();
 				}
 				u = s;
-				w = u.getRight();
-				T.NULL.setParent(u.getParent());
-				if (u.getParent() == d) {
-					T.NULL.setParent(v);
-				}
+				w = u.getRight2();
+				T.NULL.setParent(u.getParent2());
 				v.key = s.key;
 				((RBNode) v).red = d.red;
-				if (s.getRight() != null) {
-					s.getRight().setParent(s.getParent());
-				}
+				w.setParent(s.getParent());
 				if (s.isLeft()) {
-					s.getParent().setLeft(s.getRight());
+					s.getParent().setLeft(u.getRight());
 				} else {
-					s.getParent().setRight(s.getRight());
+					s.getParent().setRight(u.getRight());
 				}
 				v.goNextTo(d);
 				mysuspend();
@@ -147,63 +142,63 @@ public class RBDelete extends Algorithm {
 				d.goDown();
 			} // end case III
 
-			T.NULL.setLeft(T.NULL.setRight(T.NULL));
 			if (!u.red) {
 				// bubleme nahor
-				while (w.getParent() != null && !w.red) {
-					if (w.isLeft()) {
-						RBNode s = w.getParent2().getRight();
+				while (w.getParent2() != T.NULL && !w.red) {
+					T.NULL.red = false;
+					if (w.getParent2().getLeft2() == w) {
+						RBNode s = w.getParent2().getRight2();
 						if (s.red) {
 							addStep("rbdelete1");
 							mysuspend();
 							s.red = false;
 							w.getParent2().red = true;
 							T.rotate(s);
-						} else if (!s.getLeft().red && !s.getRight().red) {
+						} else if (!s.getLeft2().red && !s.getRight2().red) {
 							addStep("rbdelete2");
 							mysuspend();
 							s.red = true;
-							w = w.getParent();
-						} else if (!s.getRight().red) {
+							w = w.getParent2();
+						} else if (!s.getRight2().red) {
 							addStep("rbdelete3");
 							mysuspend();
-							s.getLeft().red = false;
+							s.getLeft2().red = false;
 							s.red = true;
 							T.rotate(s.getLeft());
 						} else {
 							addStep("rbdelete4");
 							mysuspend();
-							s.red = s.getParent().red;
-							w.getParent().red = false;
-							s.getRight().red = false;
+							s.red = s.getParent2().red;
+							w.getParent2().red = false;
+							s.getRight2().red = false;
 							T.rotate(s);
 							w = (RBNode) T.root;
 						}
 					} else {
-						RBNode s = w.getParent().getLeft();
+						RBNode s = w.getParent2().getLeft2();
 						if (s.red) {
 							addStep("rbdelete1");
 							mysuspend();
 							s.red = false;
-							w.getParent().red = true;
+							w.getParent2().red = true;
 							T.rotate(s);
-						} else if (!s.getRight().red && !s.getLeft().red) {
+						} else if (!s.getRight2().red && !s.getLeft2().red) {
 							addStep("rbdelete2");
 							mysuspend();
 							s.red = true;
-							w = w.getParent();
-						} else if (!s.getLeft().red) {
-							s.getRight().red = false;
+							w = w.getParent2();
+						} else if (!s.getLeft2().red) {
+							s.getRight2().red = false;
 							addStep("rbdelete3");
 							mysuspend();
 							s.red = true;
-							T.rotate(s.getRight());
+							T.rotate(s.getRight2());
 						} else {
 							addStep("rbdelete4");
 							mysuspend();
-							s.red = s.getParent().red;
-							w.getParent().red = false;
-							s.getLeft().red = false;
+							s.red = s.getParent2().red;
+							w.getParent2().red = false;
+							s.getLeft2().red = false;
 							T.rotate(s);
 							w = (RBNode) T.root;
 						}
