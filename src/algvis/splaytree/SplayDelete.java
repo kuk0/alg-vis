@@ -4,7 +4,7 @@ import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class SplayDelete extends SplayAlg {
-	public SplayDelete(Splay T, int x) {
+	public SplayDelete(SplayTree T, int x) {
 		super(T, x);
 	}
 

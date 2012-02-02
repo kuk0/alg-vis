@@ -3,7 +3,7 @@ package algvis.splaytree;
 import algvis.core.NodeColor;
 
 public class SplayInsert extends SplayAlg {
-	public SplayInsert(Splay T, int x) {
+	public SplayInsert(SplayTree T, int x) {
 		super(T, x);
 		T.vv = v = new SplayNode(T, x);
 		v.setColor(NodeColor.INSERT);

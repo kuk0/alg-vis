@@ -82,7 +82,7 @@ public class BSTDelete extends Algorithm {
 			}
 
 			d.setColor(NodeColor.FOUND);
-			if (d.isLeaf()) { // case I - list
+			if (d.isLeaf()) { // case I - leaf
 				addStep("bstdeletecase1");
 				mysuspend();
 				if (d.isRoot()) {
@@ -94,9 +94,8 @@ public class BSTDelete extends Algorithm {
 				}
 				v.goDown();
 
-			} else if (d.getLeft() == null || d.getRight() == null) { // case
-																		// IIa -
-																		// 1 syn
+			} else if (d.getLeft() == null || d.getRight() == null) {
+				// case II - 1 child
 				addStep("bstdeletecase2");
 				mysuspend();
 				BSTNode s;
@@ -118,7 +117,7 @@ public class BSTDelete extends Algorithm {
 				}
 				v.goDown();
 
-			} else { // case III - 2 synovia
+			} else { // case III - 2 children
 				addStep("bstdeletecase3");
 				BSTNode s = d.getRight();
 				v = T.setNodeV(new BSTNode(T, -Node.INF));
