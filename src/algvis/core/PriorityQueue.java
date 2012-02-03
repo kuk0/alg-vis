@@ -5,7 +5,7 @@ abstract public class PriorityQueue extends DataStructure {
 	public boolean minHeap = false;
 
 	public PriorityQueue(VisPanel M, String dsName) {
-		super(M, dsName);
+		super(M);
 	}
 
 	@Override

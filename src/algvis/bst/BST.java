@@ -1,5 +1,6 @@
 package algvis.bst;
 
+import algvis.core.ClickListener;
 import algvis.core.Commentary.State;
 import algvis.core.Dictionary;
 import algvis.core.Layout;
@@ -12,7 +13,7 @@ import algvis.scenario.commands.bstnode.SetBSTNodeVCommand;
 import algvis.scenario.commands.bstnode.SetBSTRootCommand;
 import algvis.scenario.commands.node.Wait4NodeCommand;
 
-public class BST extends Dictionary implements LayoutListener { //, ClickListener {
+public class BST extends Dictionary implements LayoutListener, ClickListener {
 	public static String dsName = "bst";
 	public BSTNode root = null, v = null;
 	public boolean order = false;
@@ -23,9 +24,9 @@ public class BST extends Dictionary implements LayoutListener { //, ClickListene
 	}
 
 	public BST(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		scenario.enable(true);
-		//M.screen.V.setDS(this);
+		M.screen.V.setDS(this);
 	}
 
 	public BSTNode setNodeV(BSTNode v) {
@@ -72,6 +73,7 @@ public class BST extends Dictionary implements LayoutListener { //, ClickListene
 			M.C.clear();
 			scenario.add(new SetCommentaryStateCommand(M.C, commState));
 			setStats();
+			reposition();
 			M.screen.V.resetView();
 		}
 	}
@@ -181,11 +183,11 @@ public class BST extends Dictionary implements LayoutListener { //, ClickListene
 	 * Recalculate positions of all nodes in the tree.
 	 */
 	public void reposition() {
+		x1 = x2 = y1 = y2 = 0;
 		if (root != null) {
-			x1 = x2 = y1 = y2 = 0;
 			root.reposition();
-			M.screen.V.setBounds(x1, y1, x2, y2);
 		}
+		M.screen.V.setBounds(x1, y1, x2, y2);
 	}
 
 	@Override
@@ -193,15 +195,15 @@ public class BST extends Dictionary implements LayoutListener { //, ClickListene
 		reposition();
 	}
 	
-	/*
 	public void mouseClicked(int x, int y) {
 		if (root != null) {
 			BSTNode w = root.find(x, y);
 			if (w != null) {
-				w.markSubtree = !w.markSubtree;
+				//w.markSubtree = true;
+				M.B.I.setText(""+w.key);
 			}
 		}
-	}*/
+	}
 	
 	@Override
 	public Layout getLayout() {

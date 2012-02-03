@@ -18,9 +18,9 @@ abstract public class DataStructure {
 	public static String dsName = ""; // also here? Subclasses of this also have
 										// static dsName...
 
-	public DataStructure(VisPanel M, String dsName) {
+	public DataStructure(VisPanel M) {
 		this.M = M;
-		scenario = new Scenario(dsName);
+		scenario = new Scenario(getName());
 	}
 
 	abstract public String getName();

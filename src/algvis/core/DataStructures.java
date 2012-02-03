@@ -117,6 +117,7 @@ public class DataStructures {
 			return (VisPanel) ct.newInstance(S);
 		} catch (Exception e) {
 			System.out.println("DataStructures is unable to get panel: " + i);
+			//System.out.println(((InvocationTargetException)e).getTargetException().toString());
 			return null;
 		}
 	}

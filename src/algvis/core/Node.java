@@ -302,6 +302,7 @@ public class Node {
 			x2 = x1 + 2 * D.radius * dx;
 			y2 = y1 + 2 * D.radius * dy;
 		}
+		v.setColor(Color.BLACK);
 		v.drawArrow((int) x1, (int) y1, (int) x2, (int) y2);
 	}
 
@@ -312,6 +313,7 @@ public class Node {
 		}
 		int x = dir.x, y = this.y - D.radius - D.yspan, a = Math.abs(this.x
 				- dir.x), b = Math.abs(this.y - dir.y);
+		v.setColor(Color.BLACK);
 		if (this.x > dir.x) {
 			v.drawArcArrow(x - a, y - b, 2 * a, 2 * b, 0, 90);
 		} else {

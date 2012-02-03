@@ -32,7 +32,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 	}
 
 	public UnionFind(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		M.screen.V.align = Alignment.LEFT;
 		M.screen.V.setDS(this);
 		count = 0;

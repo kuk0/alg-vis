@@ -11,7 +11,7 @@ public class TreapDelete extends Algorithm {
 	public TreapDelete(Treap T, int x) {
 		super(T);
 		this.T = T;
-		v = T.v = new TreapNode(T, K = x);
+		T.v = v = new TreapNode(T, K = x);
 		v.setColor(NodeColor.DELETE);
 		setHeader("deletion");
 	}
@@ -27,7 +27,7 @@ public class TreapDelete extends Algorithm {
 			addStep("notfound");
 			return;
 		} else {
-			TreapNode d = T.root;
+			TreapNode d = (TreapNode)T.root;
 			v.goTo(d);
 			addStep("bstdeletestart");
 			mysuspend();
