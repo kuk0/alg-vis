@@ -229,9 +229,9 @@ public class BSTNode extends Node {
 					p.addPoint(x - 7, y + 10);
 					p.addPoint(x + 7, y + 10);
 				} else {
-					int x1 = x - leftw + D.xspan + D.radius, x2 = x + rightw
-							- D.xspan - D.radius, y1 = y + 2 * D.radius + D.yspan, y2 = y
-							+ (height - 1) * (2 * D.radius + D.yspan);
+					int x1 = x - leftw + DataStructure.minsepx/2,
+						x2 = x + rightw - DataStructure.minsepx/2, y1 = y + DataStructure.minsepy,
+						y2 = y + (height - 1) * DataStructure.minsepy;
 					p.addPoint(x1, y1);
 					p.addPoint(x1, y2);
 					p.addPoint(x2, y2);
@@ -306,10 +306,10 @@ public class BSTNode extends Node {
 		 * whole left subtree, i.e., leftw+rightw; otherwise the width is the
 		 * node radius plus some additional space called xspan
 		 */
-		leftw = (getLeft() == null) ? D.xspan + D.radius : getLeft().leftw
+		leftw = (getLeft() == null) ? DataStructure.minsepx/2 : getLeft().leftw
 				+ getLeft().rightw;
 		// rightw is computed analogically
-		rightw = (getRight() == null) ? D.xspan + D.radius : getRight().leftw
+		rightw = (getRight() == null) ? DataStructure.minsepx/2 : getRight().leftw
 				+ getRight().rightw;
 	}
 
@@ -343,12 +343,12 @@ public class BSTNode extends Node {
 		}
 		if (getLeft() != null) {
 			getLeft().goTo(this.tox - getLeft().rightw,
-					this.toy + 2 * D.radius + D.yspan);
+					this.toy + DataStructure.minsepy);
 			getLeft().repos();
 		}
 		if (getRight() != null) {
 			getRight().goTo(this.tox + getRight().leftw,
-					this.toy + 2 * D.radius + D.yspan);
+					this.toy + DataStructure.minsepy);
 			getRight().repos();
 		}
 	}
@@ -357,11 +357,11 @@ public class BSTNode extends Node {
 		goTo(x, y);
 		if (getLeft() != null) {
 			getLeft().repos(this.tox - getLeft().rightw,
-					this.toy + 2 * D.radius + D.yspan);
+					this.toy + DataStructure.minsepy);
 		}
 		if (getRight() != null) {
 			getRight().repos(this.tox + getRight().leftw,
-					this.toy + 2 * D.radius + D.yspan);
+					this.toy + DataStructure.minsepy);
 		}
 		if (isRoot()) {
 			D.x1 = x-leftw;
@@ -439,7 +439,7 @@ public class BSTNode extends Node {
 		// 3. examine this node
 		if (isLeaf()) {
 			if (!isRoot()) {
-				offset = isLeft() ? -D.minsepx / 2 : +D.minsepx / 2;
+				offset = isLeft() ? -DataStructure.minsepx / 2 : +DataStructure.minsepx / 2;
 			}
 			result.left = this;
 			result.right = this;
@@ -449,14 +449,14 @@ public class BSTNode extends Node {
 			 * thread. A proper offset must be set.
 			 */
 			if (getLeft() == null) {
-				getRight().offset = D.minsepx / 2;
+				getRight().offset = DataStructure.minsepx / 2;
 				result.left = fromRightSubtree.left;
 				result.right = fromRightSubtree.right;
 				return result;
 			}
 
 			if (getRight() == null) {
-				getLeft().offset = -D.minsepx / 2;
+				getLeft().offset = -DataStructure.minsepx / 2;
 				result.left = fromLeftSubtree.left;
 				result.right = fromLeftSubtree.right;
 				return result;
@@ -485,7 +485,7 @@ public class BSTNode extends Node {
 				 * this node. Similarly, right.offset + roffset is the
 				 * horizontal distance from R to this node.
 				 */
-				int distance = (loffset + D.minsepx - roffset);
+				int distance = (loffset + DataStructure.minsepx - roffset);
 				if (distance > 0) {
 					getRight().offset += distance;
 					roffset += distance;
@@ -591,10 +591,10 @@ public class BSTNode extends Node {
 			// setRight(null);
 		}
 		if (getLeft() != null) {
-			getLeft().RTPetrification(tox, y + D.minsepy);
+			getLeft().RTPetrification(tox, y + DataStructure.minsepy);
 		}
 		if (getRight() != null) {
-			getRight().RTPetrification(tox, y + D.minsepy);
+			getRight().RTPetrification(tox, y + DataStructure.minsepy);
 		}
 	}
 

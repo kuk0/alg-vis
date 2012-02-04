@@ -6,6 +6,7 @@ import algvis.core.Node;
 public class SplayDelete extends SplayAlg {
 	public SplayDelete(SplayTree T, int x) {
 		super(T, x);
+		setHeader("deletion");
 	}
 
 	@Override
@@ -23,7 +24,6 @@ public class SplayDelete extends SplayAlg {
 		SplayNode w = find(K);
 		splay(w);
 
-		setHeader("deletion");
 		w.setColor(NodeColor.NORMAL);
 
 		if (w.key != s.key) {

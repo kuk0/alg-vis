@@ -7,12 +7,12 @@ public class SplayInsert extends SplayAlg {
 		super(T, x);
 		T.vv = v = new SplayNode(T, x);
 		v.setColor(NodeColor.INSERT);
+		setHeader("insertion");
 	}
 
 	@Override
 	public void run() {
 		if (T.root == null) {
-			setHeader("insertion");
 			T.root = v;
 			v.goToRoot();
 			addStep("newroot");
@@ -22,7 +22,6 @@ public class SplayInsert extends SplayAlg {
 			SplayNode w = find(K);
 			splay(w);
 
-			setHeader("insertion");
 			w.setColor(NodeColor.NORMAL);
 			if (w.key == K) {
 				addStep("alreadythere");

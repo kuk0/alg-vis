@@ -16,29 +16,44 @@ public class UnionFindNode extends TreeNode {
 		super(D, key);
 	}
 
+	@Override
+	public UnionFindNode getChild() {
+		return (UnionFindNode) super.getChild();
+	}
+
+	@Override
+	public UnionFindNode getRight() {
+		return (UnionFindNode) super.getRight();
+	}
+
+	@Override
+	public UnionFindNode getParent() {
+		return (UnionFindNode) super.getParent();
+	}
+
 	public void unsetGrey() {
-		TreeNode w = child;
+		TreeNode w = getChild();
 		while (w != null) {
-			((UnionFindNode)w).unsetGrey();
-			w = w.right;
+			((UnionFindNode) w).unsetGrey();
+			w = w.getRight();
 		}
 		greyPair = false;
 	}
-	
+
 	public void drawGrey(View v) {
-		TreeNode w = child;
+		TreeNode w = getChild();
 		while (w != null) {
-			((UnionFindNode)w).drawGrey(v);
-			w = w.right;
+			((UnionFindNode) w).drawGrey(v);
+			w = w.getRight();
 		}
-		if (greyPair && parent != null) {
-			v.drawWideLine(x, y, parent.x, parent.y, 10.0f);			
+		if (greyPair && getParent() != null) {
+			v.drawWideLine(x, y, getParent().x, getParent().y, 10.0f);
 		}
 	}
-	
+
 	@Override
 	public void drawTree(View v) {
 		drawGrey(v);
-		super.drawTree(v);		
+		super.drawTree(v);
 	}
 }

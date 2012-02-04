@@ -14,7 +14,6 @@ public class SplayAlg extends Algorithm {
 		if (T.root != null) {
 			T.v = s = new SplayNode(T, K = x);
 			s.setColor(NodeColor.FIND);
-			setHeader("splay");
 		}
 	}
 
