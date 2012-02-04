@@ -3,6 +3,7 @@ package algvis.internationalization;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Rectangle;
+
 import javax.swing.JButton;
 
 public class ChButton extends JButton {

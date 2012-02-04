@@ -78,7 +78,8 @@ public class InputField extends JTextField {
 	public Vector<Integer> getVI(int min, int max) {
 		boolean range = false;
 		Vector<Integer> args = new Vector<Integer>();
-		String[] tokens = this.getText().replaceAll("\\.{2,}", " .. ").split("(\\s|,)+");
+		String[] tokens = this.getText().replaceAll("\\.{2,}", " .. ")
+				.split("(\\s|,)+");
 		for (String t : tokens) {
 			if ("..".equals(t)) {
 				range = true;
@@ -95,11 +96,11 @@ public class InputField extends JTextField {
 						sb.setText("value too high; using the maximum value instead");
 					}
 					if (range) {
-						int a = args.lastElement();						
-						for (int i=a+1; i < x; ++i) {
+						int a = args.lastElement();
+						for (int i = a + 1; i < x; ++i) {
 							args.add(i);
 						}
-						for (int i=a-1; i > x; --i) {
+						for (int i = a - 1; i > x; --i) {
 							args.add(i);
 						}
 						range = false;

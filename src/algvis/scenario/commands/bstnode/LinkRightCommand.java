@@ -19,7 +19,7 @@ public class LinkRightCommand implements Command {
 	public void execute() {
 		if (linked) {
 			n1.linkRight(n2);
-		} else if (n1.right != null) {
+		} else if (n1.getRight() != null) {
 			n1.unlinkRight();
 		}
 	}
@@ -28,7 +28,7 @@ public class LinkRightCommand implements Command {
 	public void unexecute() {
 		if (!linked) {
 			n1.linkRight(n2);
-		} else if (n1.right != null) {
+		} else if (n1.getRight() != null) {
 			n1.unlinkRight();
 		}
 	}

@@ -1,31 +1,30 @@
 package algvis.aatree;
 
-import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class AAInsert extends Algorithm {
 	AA T;
-	BSTNode v;
+	AANode v;
 	int K;
 
 	public AAInsert(AA T, int x) {
 		super(T);
 		this.T = T;
-		v = T.setNodeV(new AANode(T, K = x));
-		v.bgColor(Colors.INSERT);
+		T.v = v = (AANode) T.setNodeV(new AANode(T, K = x));
+		v.setColor(NodeColor.INSERT);
 		setHeader("insertion");
 	}
 
 	@Override
 	public void run() {
-		BSTNode w = T.root;
+		AANode w = (AANode) T.root;
 		if (T.root == null) {
 			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
 			mysuspend();
-			v.bgColor(Colors.NORMAL);
+			v.setColor(NodeColor.NORMAL);
 			T.setNodeV(null);
 		} else {
 			v.goAboveRoot();
@@ -36,21 +35,21 @@ public class AAInsert extends Algorithm {
 				if (w.key == K) {
 					addStep("alreadythere");
 					v.goDown();
-					v.bgColor(Colors.NOTFOUND);
+					v.setColor(NodeColor.NOTFOUND);
 					finish();
 					return;
 				} else if (w.key < K) {
 					addStep("bstinsertright", K, w.key);
-					if (w.right != null) {
-						w = w.right;
+					if (w.getRight() != null) {
+						w = w.getRight();
 					} else {
 						w.linkRight(v);
 						break;
 					}
 				} else {
 					addStep("bstinsertleft", K, w.key);
-					if (w.left != null) {
-						w = w.left;
+					if (w.getLeft() != null) {
+						w = w.getLeft();
 					} else {
 						w.linkLeft(v);
 						break;
@@ -63,18 +62,19 @@ public class AAInsert extends Algorithm {
 			T.reposition();
 			mysuspend();
 
-			v.bgColor(Colors.NORMAL);
+			v.setColor(NodeColor.NORMAL);
 			T.setNodeV(null);
 			// bubleme nahor
 			while (w != null) {
 				w.mark();
 				addStep("aaok");
 				// skew
-				if (w.left != null && w.left.getLevel() == w.getLevel()) {
+				if (w.getLeft() != null
+						&& w.getLeft().getLevel() == w.getLevel()) {
 					addStep("aaskew");
 					mysuspend();
 					w.unmark();
-					w = w.left;
+					w = w.getLeft();
 					w.mark();
 					w.setArc();
 					mysuspend();
@@ -83,9 +83,9 @@ public class AAInsert extends Algorithm {
 					T.reposition();
 				}
 				// split
-				BSTNode r = w.right;
-				if (r != null && r.right != null
-						&& r.right.getLevel() == w.getLevel()) {
+				AANode r = w.getRight();
+				if (r != null && r.getRight() != null
+						&& r.getRight().getLevel() == w.getLevel()) {
 					addStep("aasplit");
 					w.unmark();
 					w = r;
@@ -99,7 +99,7 @@ public class AAInsert extends Algorithm {
 				}
 				mysuspend();
 				w.unmark();
-				w = w.parent;
+				w = w.getParent();
 			}
 		}
 		T.reposition();

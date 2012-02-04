@@ -3,7 +3,7 @@ package algvis.avltree;
 import java.awt.Color;
 
 import algvis.bst.BSTNode;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.View;
@@ -19,10 +19,6 @@ public class AVLNode extends BSTNode {
 		super(D, key, x, y);
 	}
 
-	public AVLNode(DataStructure D, int key, int[] pos) {
-		this(D, key, pos[0], pos[1]);
-	}
-	
 	public AVLNode(DataStructure D, int key) {
 		this(D, key, 0, 0);
 		getReady();
@@ -32,20 +28,35 @@ public class AVLNode extends BSTNode {
 		this(v.D, v.key, v.x, v.y);
 	}
 
+	@Override
+	public AVLNode getLeft() {
+		return (AVLNode) super.getLeft();
+	}
+
+	@Override
+	public AVLNode getRight() {
+		return (AVLNode) super.getRight();
+	}
+
+	@Override
+	public AVLNode getParent() {
+		return (AVLNode) super.getParent();
+	}
+
 	public int balance() {
-		int l = (left == null) ? 0 : left.height, r = (right == null) ? 0
-				: right.height;
+		int l = (getLeft() == null) ? 0 : getLeft().height, r = (getRight() == null) ? 0
+				: getRight().height;
 		setBalance(r - l);
 		return bal;
 	}
-	
+
 	public void setBalance(int bal) {
 		if (this.bal != bal) {
 			D.scenario.add(new SetBalanceCommand(this, bal));
 			this.bal = bal;
 		}
 	}
-	
+
 	public int getBalance() {
 		return bal;
 	}
@@ -65,9 +76,9 @@ public class AVLNode extends BSTNode {
 		drawArrow(V);
 		drawArc(V);
 
-		int xx = x - D.radius, yy = y - D.radius, dx = 2 * D.radius, dy = 2 * D.radius;
+		int xx = x - Node.radius, yy = y - Node.radius, dx = 2 * Node.radius, dy = 2 * Node.radius;
 		String b = "";
-		if (bgcolor == Colors.NORMAL) {
+		if (getColor() == NodeColor.NORMAL) {
 			V.setColor(Color.ORANGE);
 			switch (bal) {
 			case +2:
@@ -91,16 +102,15 @@ public class AVLNode extends BSTNode {
 				V.fillArc(xx, yy, dx, dy, 90, 180);
 				break;
 			}
-			V.setColor(fgcolor);
-			V.drawOval(x - D.radius, y - D.radius, 2 * D.radius,
-					2 * D.radius);
+			V.setColor(getFgColor());
+			V.drawOval(x - Node.radius, y - Node.radius, 2 * Node.radius, 2 * Node.radius);
 		}
 
 		drawKey(V);
-		if (parent != null && parent.left == this) {
-			V.drawString(b, x - D.radius - 1, y - D.radius - 1, 10);
+		if (getParent() != null && getParent().getLeft() == this) {
+			V.drawString(b, x - Node.radius - 1, y - Node.radius - 1, 10);
 		} else {
-			V.drawString(b, x + D.radius + 1, y - D.radius - 1, 10);
+			V.drawString(b, x + Node.radius + 1, y - Node.radius - 1, 10);
 		}
 	}
 }

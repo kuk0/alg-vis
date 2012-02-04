@@ -19,6 +19,7 @@ public class ILabel extends ChLabel implements LanguageListener {
 		refresh();
 	}
 
+	@Override
 	public void languageChanged() {
 		setText(L.getString(t));
 		refresh();

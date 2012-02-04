@@ -17,6 +17,26 @@ import algvis.internationalization.IMenuItem;
 import algvis.internationalization.Languages;
 
 public class AlgVis extends JPanel implements ActionListener {
+	/* set the default panel 
+	 * 0 - BST
+	 * 1 - Rotations
+	 * 2 - AVL
+	 * 3 - 23 tree
+	 * 4 - 234 tree
+	 * 5 - B-tree
+	 * 6 - Red-black tree
+	 * 7 - AA-tree
+	 * 8 - Treap
+	 * 9 - SkipList
+	 * 10 - Scapegoat tree
+	 * 11 - Splay tree
+	 * 12 - Heap
+	 * 13 - Binomial heap
+	 * 14 - Lazy Binomial heap
+	 * 15 - Fibonacci heap
+	 * 16 - Union-find */
+	final static int DEFAULT_DS = 0; 
+	
 	private static final long serialVersionUID = -5202486006824196688L;
 
 	JPanel cards;
@@ -90,7 +110,8 @@ public class AlgVis extends JPanel implements ActionListener {
 		langMenu.add(enItem);
 		langMenu.add(skItem);
 		menuBar.add(langMenu);
-		
+
+		/*
 		// Layout menu
 		IMenuItem sItem = new IMenuItem(L, "layout-simple", KeyEvent.VK_S);
 		IMenuItem cItem = new IMenuItem(L, "layout-compact", KeyEvent.VK_C);
@@ -98,44 +119,42 @@ public class AlgVis extends JPanel implements ActionListener {
 		cItem.setActionCommand("layout-compact");
 		sItem.addActionListener(this);
 		cItem.addActionListener(this);
-		
+
 		layoutMenu.add(sItem);
 		layoutMenu.add(cItem);
 		menuBar.add(layoutMenu);
+		*/
 
 		// Cards with data structures
 		cards = new JPanel(new CardLayout());
 		for (int i = 0; i < DataStructures.N; ++i) {
 			VisPanel P = DataStructures.getPanel(i, S);
-			if (P != null) cards.add(P, DataStructures.getName(i));
+			if (P != null)
+				cards.add(P, DataStructures.getName(i));
 		}
 
 		add(menuBar);
 		P.setJMenuBar(menuBar);
 		add(cards);
-		
+
 		CardLayout cl = (CardLayout) (cards.getLayout());
-		// set default panel for testing; TODO delete these lines
-		/* 2 - AVL
-		 * 7 - AA
-		 * 0 - BST
-		 */
-		cl.show(cards, DataStructures.getName(0));
+		cl.show(cards, DataStructures.getName(DEFAULT_DS));
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		String[] cmd = e.getActionCommand().split("-", 2);
-		
+
 		// set language
 		if ("lang".equals(cmd[0])) {
 			L.selectLanguage(cmd[1]);
 		}
-		
+
 		// set layout
 		if ("layout".equals(cmd[0])) {
 			S.setLayout(cmd[1]);
 		}
-		
+
 		// set different data structure
 		if ("ds".equals(cmd[0])) {
 			for (int i = 0; i < DataStructures.N; ++i) {

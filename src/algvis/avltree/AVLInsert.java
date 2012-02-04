@@ -1,8 +1,7 @@
 package algvis.avltree;
 
-import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class AVLInsert extends Algorithm {
 	AVL T;
@@ -13,19 +12,19 @@ public class AVLInsert extends Algorithm {
 		super(T);
 		this.T = T;
 		v = (AVLNode) T.setNodeV(new AVLNode(T, K = x));
-		v.bgColor(Colors.INSERT);
+		v.setColor(NodeColor.INSERT);
 		setHeader("insertion");
 	}
 
 	@Override
 	public void run() {
-		BSTNode w = T.root;
+		AVLNode w = (AVLNode) T.root;
 		if (T.root == null) {
 			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
 			mysuspend();
-			v.bgColor(Colors.NORMAL);
+			v.setColor(NodeColor.NORMAL);
 			T.setNodeV(null);
 		} else {
 			v.goAboveRoot();
@@ -36,21 +35,21 @@ public class AVLInsert extends Algorithm {
 				if (w.key == K) {
 					addStep("alreadythere");
 					v.goDown();
-					v.bgColor(Colors.NOTFOUND);
+					v.setColor(NodeColor.NOTFOUND);
 					finish();
 					return;
 				} else if (w.key < K) {
 					addStep("bstinsertright", K, w.key);
-					if (w.right != null) {
-						w = w.right;
+					if (w.getRight() != null) {
+						w = w.getRight();
 					} else {
 						w.linkRight(v);
 						break;
 					}
 				} else {
 					addStep("bstinsertleft", K, w.key);
-					if (w.left != null) {
-						w = w.left;
+					if (w.getLeft() != null) {
+						w = w.getLeft();
 					} else {
 						w.linkLeft(v);
 						break;
@@ -60,12 +59,12 @@ public class AVLInsert extends Algorithm {
 				mysuspend();
 			}
 
-			v.bgColor(Colors.NORMAL);
+			v.setColor(NodeColor.NORMAL);
 			T.reposition();
 			addNote("avlinsertbal");
 			mysuspend();
-			
-			v.bgColor(Colors.NORMAL);
+
+			v.setColor(NodeColor.NORMAL);
 			T.setNodeV(null);
 			// bubleme nahor
 			while (w != null) {
@@ -73,51 +72,51 @@ public class AVLInsert extends Algorithm {
 				w.calc();
 				addStep("avlupdatebal");
 				mysuspend();
-				if (((AVLNode) w).balance() == -2) {
-					if (((AVLNode) w.left).balance() != +1) { // R-rot
+				if (w.balance() == -2) {
+					if (w.getLeft().balance() != +1) { // R-rot
 						addStep("avlr");
 						w.unmark();
-						w = w.left;
+						w = w.getLeft();
 						w.mark();
-						w.setArc(w.parent);
+						w.setArc(w.getParent());
 						mysuspend();
 						w.noArc();
 						T.rotate(w);
 					} else { // LR-rot
 						addStep("avllr");
 						w.unmark();
-						w = w.left.right;
+						w = w.getLeft().getRight();
 						w.mark();
-						w.setArc(w.parent);
-						w.parent.setArc(w.parent.parent);
+						w.setArc(w.getParent());
+						w.getParent().setArc(w.getParent().getParent());
 						mysuspend();
 						w.noArc();
-						w.parent.noArc();
+						w.getParent().noArc();
 						T.rotate(w);
 						mysuspend();
 						T.rotate(w);
 					}
 					mysuspend();
-				} else if (((AVLNode) w).balance() == +2) {
-					if (((AVLNode) w.right).balance() != -1) { // L-rot
+				} else if (w.balance() == +2) {
+					if (w.getRight().balance() != -1) { // L-rot
 						addStep("avll");
 						w.unmark();
-						w = w.right;
+						w = w.getRight();
 						w.mark();
-						w.setArc(w.parent); 
+						w.setArc(w.getParent());
 						mysuspend();
 						w.noArc();
 						T.rotate(w);
 					} else { // RL-rot
 						addStep("avlrl");
 						w.unmark();
-						w = w.right.left;
+						w = w.getRight().getLeft();
 						w.mark();
-						w.setArc(w.parent);
-						w.parent.setArc(w.parent.parent);
+						w.setArc(w.getParent());
+						w.getParent().setArc(w.getParent().getParent());
 						mysuspend();
 						w.noArc();
-						w.parent.noArc();
+						w.getParent().noArc();
 						T.rotate(w);
 						mysuspend();
 						T.rotate(w);
@@ -125,7 +124,7 @@ public class AVLInsert extends Algorithm {
 					mysuspend();
 				}
 				w.unmark();
-				w = w.parent;
+				w = w.getParent();
 			}
 		}
 		T.reposition();

@@ -1,7 +1,7 @@
 package algvis.bst;
 
 import algvis.core.Algorithm;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class BSTDelete extends Algorithm {
@@ -13,7 +13,7 @@ public class BSTDelete extends Algorithm {
 		super(T);
 		this.T = T;
 		v = T.setNodeV(new BSTNode(T, K = x));
-		v.bgColor(Colors.DELETE);
+		v.setColor(NodeColor.DELETE);
 		setHeader("deletion");
 	}
 
@@ -24,7 +24,7 @@ public class BSTDelete extends Algorithm {
 			addStep("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Colors.NOTFOUND);
+			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
 			finish();
 			return;
@@ -36,18 +36,18 @@ public class BSTDelete extends Algorithm {
 
 			while (true) {
 				if (d.key == v.key) { // found
-					v.bgColor(Colors.FOUND);
+					v.setColor(NodeColor.FOUND);
 					break;
 				} else if (d.key < K) { // right
-					if (d.right == null) {
+					if (d.getRight() == null) {
 						v.pointInDir(45);
 					} else {
-						v.pointAbove(d.right);
+						v.pointAbove(d.getRight());
 					}
 					addStep("bstfindright", K, d.key);
 					mysuspend();
 					v.noArrow();
-					d = d.right;
+					d = d.getRight();
 					if (d != null) {
 						v.goTo(d);
 					} else {
@@ -56,15 +56,15 @@ public class BSTDelete extends Algorithm {
 						break;
 					}
 				} else { // left
-					if (d.left == null) {
+					if (d.getLeft() == null) {
 						v.pointInDir(135);
 					} else {
-						v.pointAbove(d.left);
+						v.pointAbove(d.getLeft());
 					}
 					addStep("bstfindleft", K, d.key);
 					mysuspend();
 					v.noArrow();
-					d = d.left;
+					d = d.getLeft();
 					if (d != null) {
 						v.goTo(d);
 					} else {
@@ -81,72 +81,73 @@ public class BSTDelete extends Algorithm {
 				return;
 			}
 
-			d.bgColor(Colors.FOUND);
-			if (d.isLeaf()) { // case I - list
+			d.setColor(NodeColor.FOUND);
+			if (d.isLeaf()) { // case I - leaf
 				addStep("bstdeletecase1");
 				mysuspend();
 				if (d.isRoot()) {
 					T.setRoot(null);
 				} else if (d.isLeft()) {
-					d.parent.unlinkLeft();
+					d.getParent().unlinkLeft();
 				} else {
-					d.parent.unlinkRight();
+					d.getParent().unlinkRight();
 				}
 				v.goDown();
 
-			} else if (d.left == null || d.right == null) { // case IIa - 1 syn
+			} else if (d.getLeft() == null || d.getRight() == null) {
+				// case II - 1 child
 				addStep("bstdeletecase2");
 				mysuspend();
 				BSTNode s;
-				if (d.left == null) {
-					s = d.right;
+				if (d.getLeft() == null) {
+					s = d.getRight();
 					d.unlinkRight();
 				} else {
-					s = d.left;
+					s = d.getLeft();
 					d.unlinkLeft();
 				}
 				if (d.isRoot()) {
 					T.setRoot(s);
 				} else {
 					if (d.isLeft()) {
-						d.parent.linkLeft(s);
+						d.getParent().linkLeft(s);
 					} else {
-						d.parent.linkRight(s);
+						d.getParent().linkRight(s);
 					}
 				}
 				v.goDown();
 
-			} else { // case III - 2 synovia
+			} else { // case III - 2 children
 				addStep("bstdeletecase3");
-				BSTNode s = d.right;
+				BSTNode s = d.getRight();
 				v = T.setNodeV(new BSTNode(T, -Node.INF));
-				v.bgColor(Colors.FIND);
+				v.setColor(NodeColor.FIND);
 				v.goTo(s);
 				mysuspend();
-				while (s.left != null) {
-					s = s.left;
+				while (s.getLeft() != null) {
+					s = s.getLeft();
 					v.goTo(s);
 					mysuspend();
 				}
 				v = T.setNodeV(s);
 				if (s.isLeft()) {
-					s.parent.linkLeft(s.right);
+					s.getParent().linkLeft(s.getRight());
 				} else {
-					s.parent.linkRight(s.right);
+					s.getParent().linkRight(s.getRight());
 				}
 				v.goNextTo(d);
 				mysuspend();
-				if (d.parent == null) {
+				if (d.getParent() == null) {
 					T.setRoot(v);
 				} else {
 					if (d.isLeft()) {
-						d.parent.linkLeft(v);
+						d.getParent().linkLeft(v);
 					} else {
-						d.parent.linkRight(v);
+						d.getParent().linkRight(v);
 					}
 				}
-				v.linkLeft(d.left);
-				v.linkRight(d.right);
+				v.linkLeft(d.getLeft());
+				v.linkRight(d.getRight());
 				v.goTo(d);
 				T.setNodeV(d);
 				d.goDown();

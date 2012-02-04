@@ -27,7 +27,6 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 	public Settings S;
 	public TitledBorder border;
 
-	int STEPS = 10;
 	public boolean pause = true, small = false;
 
 	public VisPanel(Settings S) {
@@ -140,6 +139,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 	 * public void showStatus (String t) { statusBar.setT(t); }
 	 */
 
+	@Override
 	public void languageChanged() {
 		border.setTitle("    " + S.L.getString(D.getName()) + "    ");
 	}

@@ -1,7 +1,7 @@
 package algvis.btree;
 
 import algvis.core.Algorithm;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class BDelete extends Algorithm {
@@ -14,7 +14,7 @@ public class BDelete extends Algorithm {
 		this.T = T;
 		K = x;
 		v = T.v = new BNode(T, x);
-		v.bgColor(Colors.DELETE);
+		v.setColor(NodeColor.DELETE);
 		setHeader("deletion");
 	}
 
@@ -25,7 +25,7 @@ public class BDelete extends Algorithm {
 			addStep("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Colors.NOTFOUND);
+			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
 		} else {
 			BNode d = T.root;
@@ -59,9 +59,9 @@ public class BDelete extends Algorithm {
 				return;
 			}
 
-			d.bgColor(Colors.FOUND);
+			d.setColor(NodeColor.FOUND);
 			mysuspend();
-			d.bgColor(Colors.NORMAL);
+			d.setColor(NodeColor.NORMAL);
 			if (d.isLeaf()) {
 				addStep("bdelete1");
 				if (d.isRoot() && d.numKeys == 1) {
@@ -91,12 +91,12 @@ public class BDelete extends Algorithm {
 				d.replace(K, v.key[0]);
 				T.v = null;
 				mysuspend();
-				d.bgColor(Colors.NORMAL);
+				d.setColor(NodeColor.NORMAL);
 				d = s;
 			}
 
 			while (!d.isRoot() && d.numKeys < (T.order - 1) / 2) {
-				d.bgColor(Colors.NOTFOUND);
+				d.setColor(NodeColor.NOTFOUND);
 				BNode s, s1 = null, s2 = null, p = d.parent;
 				boolean lefts = true;
 				int k = d.order(), n1 = 0, n2 = 0;
@@ -146,7 +146,7 @@ public class BDelete extends Algorithm {
 							d.c[d.numChildren - 1].parent = d;
 						}
 					}
-					d.bgColor(Colors.NORMAL);
+					d.setColor(NodeColor.NORMAL);
 					T.v = null;
 					break;
 				} else {

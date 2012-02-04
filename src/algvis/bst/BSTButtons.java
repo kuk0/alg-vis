@@ -12,7 +12,7 @@ import algvis.internationalization.ICheckBox;
 public class BSTButtons extends DictButtons {
 	private static final long serialVersionUID = -6884955717665753504L;
 	ICheckBox order;
-	
+
 	public BSTButtons(VisPanel M) {
 		super(M);
 	}

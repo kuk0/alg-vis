@@ -2,7 +2,7 @@ package algvis.redblacktree;
 
 import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class RBFind extends Algorithm {
 	RB T;
@@ -13,7 +13,7 @@ public class RBFind extends Algorithm {
 		super(T);
 		this.T = T;
 		v = T.v = new BSTNode(T, K = x);
-		v.bgColor(Colors.FIND);
+		v.setColor(NodeColor.FIND);
 		setHeader("search");
 	}
 
@@ -24,7 +24,7 @@ public class RBFind extends Algorithm {
 			addStep("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Colors.NOTFOUND);
+			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
 		} else {
 			BSTNode w = T.root;
@@ -34,27 +34,27 @@ public class RBFind extends Algorithm {
 			while (true) {
 				if (w.key == K) {
 					addStep("found");
-					v.bgColor(Colors.FOUND);
+					v.setColor(NodeColor.FOUND);
 					break;
 				} else if (w.key < K) {
 					addStep("bstfindright", K, w.key);
-					w = w.right;
+					w = w.getRight();
 					if (w != T.NULL) {
 						v.goTo(w);
 					} else { // notfound
 						addStep("notfound");
-						v.bgColor(Colors.NOTFOUND);
+						v.setColor(NodeColor.NOTFOUND);
 						v.goRight();
 						break;
 					}
 				} else {
 					addStep("bstfindleft", K, w.key);
-					w = w.left;
+					w = w.getLeft();
 					if (w != T.NULL) {
 						v.goTo(w);
 					} else { // notfound
 						addStep("notfound");
-						v.bgColor(Colors.NOTFOUND);
+						v.setColor(NodeColor.NOTFOUND);
 						v.goLeft();
 						break;
 					}

@@ -46,8 +46,15 @@ public class UnionFindButtons extends Buttons {
 	}
 
 	@Override
+	public void initRandom() {
+		random = new IButton(M.S.L, "button-random-unions");
+		random.setMnemonic(KeyEvent.VK_R);
+		random.addActionListener(this);
+	}
+	
+	@Override
 	public JPanel initThirdRow() {
-		JPanel P = new JPanel(); 
+		JPanel P = new JPanel();
 		ILabel uhLabel = new ILabel(M.S.L, "uf-union-heuristic"), fhLabel = new ILabel(
 				M.S.L, "uf-find-heuristic");
 		String[] uh = { "uf-none", "uf-byrank" }, fh = { "uf-none",
@@ -87,21 +94,22 @@ public class UnionFindButtons extends Buttons {
 				args.add(G.nextInt(count) + 1);
 			}
 			Thread t = new Thread(new Runnable() {
+				@Override
 				public void run() {
 					D.find(D.at(args.elementAt(0) - 1));
 				}
 			});
 			t.start();
 		} else if (evt.getSource() == unionB) {
-			int count = ((UnionFind) D).count;
+			int count = D.count;
 			final Vector<Integer> args = I.getVI(1, count + 1);
-			if (((UnionFind) D).firstSelected != null) {
-				args.insertElementAt(((UnionFind) D).firstSelected.key, 0);
-				((UnionFind) D).firstSelected = null;
+			if (D.firstSelected != null) {
+				args.insertElementAt(D.firstSelected.key, 0);
+				D.firstSelected = null;
 			}
-			if (((UnionFind) D).secondSelected != null) {
-				args.insertElementAt(((UnionFind) D).secondSelected.key, 1);
-				((UnionFind) D).secondSelected = null;
+			if (D.secondSelected != null) {
+				args.insertElementAt(D.secondSelected.key, 1);
+				D.secondSelected = null;
 			}
 			Random G = new Random(System.currentTimeMillis());
 			switch (args.size()) {
@@ -117,6 +125,7 @@ public class UnionFindButtons extends Buttons {
 			}
 			// is this thread necessary?
 			Thread t = new Thread(new Runnable() {
+				@Override
 				public void run() {
 					D.union(D.at(args.elementAt(0) - 1),
 							D.at(args.elementAt(1) - 1));
@@ -126,13 +135,11 @@ public class UnionFindButtons extends Buttons {
 		} else if (evt.getSource() == unionHeuristicCB) {
 			int i = unionHeuristicCB.getSelectedIndex();
 			if (i == 0 || i == 1)
-				((UnionFind) D).unionState = UnionFindUnion.UnionHeuristic
-						.values()[i];
+				D.unionState = UnionFindUnion.UnionHeuristic.values()[i];
 		} else if (evt.getSource() == findHeuristicCB) {
 			int i = findHeuristicCB.getSelectedIndex();
 			if (0 <= i && i < 4)
-				((UnionFind) D).pathCompression = UnionFindFind.FindHeuristic
-						.values()[i];
+				D.pathCompression = UnionFindFind.FindHeuristic.values()[i];
 		}
 	}
 

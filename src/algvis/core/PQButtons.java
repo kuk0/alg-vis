@@ -12,9 +12,9 @@ import algvis.internationalization.IButton;
 import algvis.internationalization.IRadioButton;
 
 /**
- * The Class PQButtons.
- * All priority queues need buttons "Insert", "Delete max/min", and "Increase/Decrease key".
- * Furthermore, the user may choose whether he wants a "min" or "max" version of the priority queue.
+ * The Class PQButtons. All priority queues need buttons "Insert",
+ * "Delete max/min", and "Increase/Decrease key". Furthermore, the user may
+ * choose whether he wants a "min" or "max" version of the priority queue.
  */
 public class PQButtons extends Buttons {
 	private static final long serialVersionUID = 5632185496171660196L;
@@ -36,7 +36,7 @@ public class PQButtons extends Buttons {
 		deleteB.setMnemonic(KeyEvent.VK_D);
 		deleteB.addActionListener(this);
 
-		if (((PriorityQueue)D).minHeap) {
+		if (((PriorityQueue) D).minHeap) {
 			decrKeyB = new IButton(M.S.L, "button-decreasekey");
 		} else {
 			decrKeyB = new IButton(M.S.L, "button-increasekey");
@@ -70,6 +70,7 @@ public class PQButtons extends Buttons {
 		if (evt.getSource() == insertB) {
 			final Vector<Integer> args = I.getNonEmptyVI();
 			Thread t = new Thread(new Runnable() {
+				@Override
 				public void run() {
 					for (int x : args) {
 						((PriorityQueue) D).insert(x);
@@ -79,6 +80,7 @@ public class PQButtons extends Buttons {
 			t.start();
 		} else if (evt.getSource() == deleteB) {
 			Thread t = new Thread(new Runnable() {
+				@Override
 				public void run() {
 					((PriorityQueue) D).delete();
 				}
@@ -86,8 +88,9 @@ public class PQButtons extends Buttons {
 			t.start();
 		} else if (evt.getSource() == decrKeyB) {
 			final int delta = Math.abs(I.getInt(1));
-			final BSTNode w = ((BSTNode)((PriorityQueue)D).chosen);
+			final BSTNode w = ((BSTNode) ((PriorityQueue) D).chosen);
 			Thread t = new Thread(new Runnable() {
+				@Override
 				public void run() {
 					((PriorityQueue) D).decreaseKey(w, delta);
 				}

@@ -1,7 +1,9 @@
 package algvis.bst;
 
+import algvis.core.ClickListener;
 import algvis.core.Commentary.State;
 import algvis.core.Dictionary;
+import algvis.core.Layout;
 import algvis.core.LayoutListener;
 import algvis.core.StringUtils;
 import algvis.core.View;
@@ -11,18 +13,20 @@ import algvis.scenario.commands.bstnode.SetBSTNodeVCommand;
 import algvis.scenario.commands.bstnode.SetBSTRootCommand;
 import algvis.scenario.commands.node.Wait4NodeCommand;
 
-public class BST extends Dictionary implements LayoutListener {
+public class BST extends Dictionary implements LayoutListener, ClickListener {
 	public static String dsName = "bst";
 	public BSTNode root = null, v = null;
-	boolean order = false;
+	public boolean order = false;
 
+	@Override
 	public String getName() {
 		return "bst";
 	}
-	
+
 	public BST(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		scenario.enable(true);
+		M.screen.V.setDS(this);
 	}
 
 	public BSTNode setNodeV(BSTNode v) {
@@ -35,7 +39,7 @@ public class BST extends Dictionary implements LayoutListener {
 		}
 		return v;
 	}
-	
+
 	public BSTNode setRoot(BSTNode root) {
 		if (this.root != root) {
 			scenario.add(new SetBSTRootCommand(this, root, this.root));
@@ -69,14 +73,17 @@ public class BST extends Dictionary implements LayoutListener {
 			M.C.clear();
 			scenario.add(new SetCommentaryStateCommand(M.C, commState));
 			setStats();
+			reposition();
+			M.screen.V.resetView();
 		}
 	}
 
 	@Override
 	public String stats() {
 		if (root == null) {
-			return M.S.L.getString("size") + ": 0;   " + M.S.L.getString("height")
-					+ ": 0 =  1.00\u00b7" + M.S.L.getString("opt") + ";   "
+			return M.S.L.getString("size") + ": 0;   "
+					+ M.S.L.getString("height") + ": 0 =  1.00\u00b7"
+					+ M.S.L.getString("opt") + ";   "
 					+ M.S.L.getString("avedepth") + ": 0";
 		} else {
 			root.calcTree();
@@ -88,20 +95,22 @@ public class BST extends Dictionary implements LayoutListener {
 					+ ": "
 					+ root.height
 					+ " = "
-					+ StringUtils.format(root.height / (Math.floor(lg(root.size)) + 1), 2,
-							5) + "\u00b7" + M.S.L.getString("opt") + ";   "
+					+ StringUtils
+							.format(root.height
+									/ (Math.floor(lg(root.size)) + 1), 2, 5)
+					+ "\u00b7" + M.S.L.getString("opt") + ";   "
 					+ M.S.L.getString("avedepth") + ": "
 					+ StringUtils.format(root.sumh / (double) root.size, 2, -5);
 		}
 	}
 
 	/**
-	 * Move and draw all the objects on the scene (in this case the BST and one auxilliary node v).
+	 * Move and draw all the objects on the scene (in this case the BST and one
+	 * auxiliary node v).
 	 */
 	@Override
 	public void draw(View V) {
 		if (root != null) {
-			BSTNode.i = 0;
 			root.moveTree();
 			root.drawTree(V);
 		}
@@ -112,47 +121,47 @@ public class BST extends Dictionary implements LayoutListener {
 	}
 
 	protected void leftrot(BSTNode v) {
-		BSTNode u = v.parent;
-		if (v.left == null) {
+		BSTNode u = v.getParent();
+		if (v.getLeft() == null) {
 			u.unlinkRight();
 		} else {
-			u.linkRight(v.left);
+			u.linkRight(v.getLeft());
 		}
 		if (u.isRoot()) {
 			setRoot(v);
 		} else {
 			if (u.isLeft()) {
-				u.parent.linkLeft(v);
+				u.getParent().linkLeft(v);
 			} else {
-				u.parent.linkRight(v);
+				u.getParent().linkRight(v);
 			}
 		}
 		v.linkLeft(u);
 	}
 
 	protected void rightrot(BSTNode v) {
-		BSTNode u = v.parent;
-		if (v.right == null) {
+		BSTNode u = v.getParent();
+		if (v.getRight() == null) {
 			u.unlinkLeft();
 		} else {
-			u.linkLeft(v.right);
+			u.linkLeft(v.getRight());
 		}
 		if (u.isRoot()) {
 			setRoot(v);
 		} else {
 			if (u.isLeft()) {
-				u.parent.linkLeft(v);
+				u.getParent().linkLeft(v);
 			} else {
-				u.parent.linkRight(v);
+				u.getParent().linkRight(v);
 			}
 		}
 		v.linkRight(u);
 	}
 
 	/**
-	 * Rotation is specified by a single vertex v; if v is a left child of its parent,
-	 * rotate right, if it is a right child, rotate left.
-	 * This method also recalculates positions of all nodes and their statistics.
+	 * Rotation is specified by a single vertex v; if v is a left child of its
+	 * parent, rotate right, if it is a right child, rotate left. This method
+	 * also recalculates positions of all nodes and their statistics.
 	 */
 	public void rotate(BSTNode v) {
 		if (v.isLeft()) {
@@ -161,11 +170,11 @@ public class BST extends Dictionary implements LayoutListener {
 			leftrot(v);
 		}
 		reposition();
-		if (v.left != null) {
-			v.left.calc();
+		if (v.getLeft() != null) {
+			v.getLeft().calc();
 		}
-		if (v.right != null) {
-			v.right.calc();
+		if (v.getRight() != null) {
+			v.getRight().calc();
 		}
 		v.calc();
 	}
@@ -174,14 +183,30 @@ public class BST extends Dictionary implements LayoutListener {
 	 * Recalculate positions of all nodes in the tree.
 	 */
 	public void reposition() {
+		x1 = x2 = y1 = y2 = 0;
 		if (root != null) {
-			x1 = x2 = y1 = y2 = 0;
 			root.reposition();
-			M.screen.V.setBounds(x1, y1, x2, y2);
+		}
+		M.screen.V.setBounds(x1, y1, x2, y2);
+	}
+
+	@Override
+	public void changeLayout() {
+		reposition();
+	}
+	
+	public void mouseClicked(int x, int y) {
+		if (root != null) {
+			BSTNode w = root.find(x, y);
+			if (w != null) {
+				//w.markSubtree = true;
+				M.B.I.setText(""+w.key);
+			}
 		}
 	}
 	
-	public void changeLayout() {
-		reposition();
+	@Override
+	public Layout getLayout() {
+		return Layout.SIMPLE;
 	}
 }

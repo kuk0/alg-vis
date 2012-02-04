@@ -35,8 +35,8 @@ public class Screen extends JPanel implements Runnable {
 		if (I == null || d.width != size.width || d.height != size.height) {
 			I = createImage(d.width, d.height);
 			G = I.getGraphics();
-			//V.setWH(d.width, d.height);
-			V.setGraphics((Graphics2D)G, d.width, d.height);
+			// V.setWH(d.width, d.height);
+			V.setGraphics((Graphics2D) G, d.width, d.height);
 			size = d;
 		}
 	}
@@ -54,7 +54,7 @@ public class Screen extends JPanel implements Runnable {
 			V.startDrawing();
 			D.draw(V);
 			V.endDrawing();
-			//V.resetView();
+			// V.resetView();
 		} else {
 			System.out.println("[DS null !]");
 		}
@@ -82,6 +82,7 @@ public class Screen extends JPanel implements Runnable {
 		}
 	}
 
+	@Override
 	public void run() {
 		// repaint();
 		try {

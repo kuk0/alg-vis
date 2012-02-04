@@ -21,19 +21,21 @@ public class Node {
 	public DataStructure D;
 	public int key;
 	/**
-	 * x, y - node position
-	 * tox, toy - the position, where the node is heading
+	 * x, y - node position tox, toy - the position, where the node is heading
 	 * steps - the number of steps to reach the destination
 	 */
 	public int x, y, tox, toy, steps;
 	/** the state of a node - either ALIVE, DOWN, LEFT, or RIGHT. */
 	public int state = ALIVE;
-	public Color fgcolor, bgcolor;
+	private NodeColor color = NodeColor.NORMAL;
 	public boolean marked = false;
 	public Node dir = null;
-	public int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S, 135=SW,
-								// 180=W)
+	public int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S,
+										// 135=SW,
+	// 180=W)
 	boolean arc = false;
+	public static int STEPS = 10;
+	public static int radius = 10;
 
 	/**
 	 * the key values are generally integers from 1 to 999 (inclusive) special
@@ -62,7 +64,6 @@ public class Node {
 		this.x = tox = x;
 		this.y = toy = y;
 		steps = 0;
-		setColor(Color.black, Colors.NORMAL);
 	}
 
 	public Node(DataStructure D, int key) {
@@ -81,15 +82,15 @@ public class Node {
 	protected void getReady() {
 		if (D.M.screen.V.at != null) {
 			Point2D p = D.M.screen.V.r2v(0, 0);
-			toy = y = (int) p.getY() - 5 * D.radius;
+			toy = y = (int) p.getY() - 5 * Node.radius;
 		} else {
-			/* TODO
-			 * because of rotations and skiplist constructor inserts (at that
-			 * time "AffineTransform at" not exists)
+			/*
+			 * TODO because of rotations and skiplist constructor inserts (at
+			 * that time "AffineTransform at" not exists)
 			 */
 			tox = x = 0;
-			toy = y = - 5 * D.radius;
-			//System.out.println(getClass().getName() + " " + key);
+			toy = y = -5 * Node.radius;
+			// System.out.println(getClass().getName() + " " + key);
 		}
 	}
 
@@ -100,27 +101,40 @@ public class Node {
 		}
 	}
 
-	public void setColor(Color fg, Color bg) {
-		fgColor(fg);
-		bgColor(bg);
+	public NodeColor getColor() {
+		return color;
+	}
+	
+	public void setColor(NodeColor color) {
+		fgColor(color.fgColor);
+		bgColor(color.bgColor);
+		this.color = color;
 	}
 
 	public void fgColor(Color fg) {
-		if (fg != fgcolor) {
+		if (fg != color.fgColor) {
 			if (D != null) {
 				D.scenario.add(new SetFgColorCommand(this, fg));
 			}
-			fgcolor = fg;
+			color = new NodeColor(fg, color.bgColor);
 		}
 	}
 
 	public void bgColor(Color bg) {
-		if (bg != bgcolor) {
+		if (bg != color.bgColor) {
 			if (D != null) {
 				D.scenario.add(new SetBgColorCommand(this, bg));
 			}
-			bgcolor = bg;
+			color = new NodeColor(color.fgColor, bg);
 		}
+	}
+	
+	public Color getFgColor() {
+		return color.fgColor;
+	}
+	
+	public Color getBgColor() {
+		return color.bgColor;
 	}
 
 	/**
@@ -228,12 +242,12 @@ public class Node {
 	 *            view
 	 */
 	protected void drawBg(View v) {
-		v.setColor(bgcolor);
-		v.fillCircle(x, y, D.radius);
+		v.setColor(getBgColor());
+		v.fillCircle(x, y, Node.radius);
 		v.setColor(Color.BLACK); // fgcolor);
-		v.drawCircle(x, y, D.radius);
+		v.drawCircle(x, y, Node.radius);
 		if (marked) {
-			v.drawCircle(x, y, D.radius + 2);
+			v.drawCircle(x, y, Node.radius + 2);
 		}
 	}
 
@@ -252,7 +266,7 @@ public class Node {
 	}
 
 	public void drawKey(View v) {
-		v.setColor(fgcolor);
+		v.setColor(getFgColor());
 		if (key != NOKEY) {
 			v.drawString(toString(), x, y, 9);
 		}
@@ -266,7 +280,7 @@ public class Node {
 		if (arrow < 0) {
 			dx = dir.x - x;
 			if (arrow == DIRARROW) {
-				dy = dir.y - 2 * D.radius - D.yspan - y;
+				dy = dir.y - DataStructure.minsepy - y;
 			} else if (arrow == TOARROW) {
 				dy = dir.y - y;
 			} else {
@@ -281,15 +295,16 @@ public class Node {
 			dy = Math.sin(arrow * Math.PI / 180);
 		}
 		double x1, y1, x2, y2;
-		x1 = x + 1.5 * D.radius * dx;
-		y1 = y + 1.5 * D.radius * dy;
+		x1 = x + 1.5 * Node.radius * dx;
+		y1 = y + 1.5 * Node.radius * dy;
 		if (arrow == TOARROW) {
-			x2 = dir.x - 1.5 * D.radius * dx;
-			y2 = dir.y - 1.5 * D.radius * dy;
+			x2 = dir.x - 1.5 * Node.radius * dx;
+			y2 = dir.y - 1.5 * Node.radius * dy;
 		} else {
-			x2 = x1 + 2 * D.radius * dx;
-			y2 = y1 + 2 * D.radius * dy;
+			x2 = x1 + 2 * Node.radius * dx;
+			y2 = y1 + 2 * Node.radius * dy;
 		}
+		v.setColor(Color.BLACK);
 		v.drawArrow((int) x1, (int) y1, (int) x2, (int) y2);
 	}
 
@@ -298,8 +313,9 @@ public class Node {
 		if (!arc || dir == null) {
 			return;
 		}
-		int x = dir.x, y = this.y - D.radius - D.yspan, a = Math.abs(this.x
+		int x = dir.x, y = this.y - DataStructure.minsepy + Node.radius, a = Math.abs(this.x
 				- dir.x), b = Math.abs(this.y - dir.y);
+		v.setColor(Color.BLACK);
 		if (this.x > dir.x) {
 			v.drawArcArrow(x - a, y - b, 2 * a, 2 * b, 0, 90);
 		} else {
@@ -322,8 +338,8 @@ public class Node {
 	 * clicked at the node.)
 	 */
 	public boolean inside(int x, int y) {
-		return (this.x - x) * (this.x - x) + (this.y - y) * (this.y - y) <= D.radius
-				* D.radius;
+		return (this.x - x) * (this.x - x) + (this.y - y) * (this.y - y) <= Node.radius
+				* Node.radius;
 	}
 
 	/**
@@ -334,7 +350,7 @@ public class Node {
 			D.scenario.add(new MoveCommand(this, tox, toy));
 			this.tox = tox;
 			this.toy = toy;
-			this.steps = D.M.STEPS;
+			this.steps = STEPS;
 		}
 	}
 
@@ -351,7 +367,7 @@ public class Node {
 	 * Go above node v (or more precisely: above the position where v is going).
 	 */
 	public void goAbove(Node v) {
-		goTo(v.tox, v.toy - 2 * D.radius - D.yspan);
+		goTo(v.tox, v.toy - DataStructure.minsepy);
 	}
 
 	// public void goNextTo (int tox, int toy) { goTo (tox + 2*D.radius +
@@ -360,22 +376,22 @@ public class Node {
 	 * Go next to node v (precisely to the right of where v is going).
 	 */
 	public void goNextTo(Node v) {
-		goTo(v.tox + 2 * D.radius + D.xspan, v.toy);
+		goTo(v.tox + DataStructure.minsepx, v.toy);
 	}
 
 	/**
 	 * Go to the root position.
 	 */
 	public void goToRoot() {
-		goTo(D.rootx, D.rooty);
+		goTo(DataStructure.rootx, DataStructure.rooty);
 	}
 
 	/**
 	 * Go above the root position.
 	 */
 	public void goAboveRoot() {
-		int toy = D.rooty - 2 * D.radius - D.yspan;
-		goTo(D.rootx, toy);
+		int toy = DataStructure.rooty - DataStructure.minsepy;
+		goTo(DataStructure.rootx, toy);
 	}
 
 	/**
@@ -398,7 +414,7 @@ public class Node {
 	public void goRight() {
 		setState(RIGHT);
 	}
-	
+
 	/**
 	 * Make one step towards the destination (tox, toy). In the special states
 	 * DOWN, LEFT, or RIGHT, go downwards off the screen.
@@ -422,7 +438,7 @@ public class Node {
 			} else if (state == Node.RIGHT) {
 				tox = x += 20;
 			}
-			if (!D.M.screen.V.inside(x, y - D.radius)) {
+			if (!D.M.screen.V.inside(x, y - Node.radius)) {
 				state = Node.INVISIBLE;
 			}
 			break;

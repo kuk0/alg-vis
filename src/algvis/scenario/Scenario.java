@@ -34,11 +34,11 @@ public class Scenario implements XMLable {
 		this.name = name;
 		enabled = false;
 	}
-	
+
 	public void enable(boolean enabled) {
 		this.enabled = enabled;
 	}
-	
+
 	public boolean isEnabled() {
 		return enabled;
 	}
