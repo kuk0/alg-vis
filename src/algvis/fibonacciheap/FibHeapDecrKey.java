@@ -9,27 +9,29 @@ public class FibHeapDecrKey extends Algorithm {
 	int delta, i;
 	BinomialHeap H;
 	BinHeapNode v;
-	
+
 	public FibHeapDecrKey(BinomialHeap H, BinHeapNode v, int delta, int i) {
-		super(H.M);
+		super(H);
 		this.H = H;
 		this.v = v;
 		this.delta = delta;
 		this.i = i;
-		//setHeader("insertion");
+		// setHeader("insertion");
 	}
 
 	@Override
 	public void run() {
 		if (H.minHeap) {
 			v.key -= delta;
-			if (v.key < 1) v.key = 1;
+			if (v.key < 1)
+				v.key = 1;
 		} else {
 			v.key += delta;
-			if (v.key > InputField.MAX) v.key = InputField.MAX;
+			if (v.key > InputField.MAX)
+				v.key = InputField.MAX;
 		}
 		BinHeapNode w = v.parent;
-		//if (w == null) return;
+		// if (w == null) return;
 		while (w != null) {
 			v.unlink();
 			v.unmarkCut();

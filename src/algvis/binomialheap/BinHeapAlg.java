@@ -6,7 +6,7 @@ public class BinHeapAlg extends Algorithm {
 	BinomialHeap H;
 
 	public BinHeapAlg(BinomialHeap H) {
-		super(H.M);
+		super(H);
 		this.H = H;
 	}
 
@@ -22,7 +22,7 @@ public class BinHeapAlg extends Algorithm {
 		H.min[0] = null;
 		mysuspend();
 		while (true) {
-			if (H.root[0] != null && v.size > H.root[0].size) {
+			if (H.root[0] != null && v.rank > H.root[0].rank) {
 				// pripojime vlavo
 				BinHeapNode u = H.root[0];
 				if (H.root[0].right == H.root[0]) {
@@ -36,8 +36,8 @@ public class BinHeapAlg extends Algorithm {
 				v.unmark();
 				v = H.root[i] = u;
 				v.mark();
-			} else if (H.root[0] != null && v.size <= H.root[0].size
-					&& (v.right == H.root[i] || H.root[0].size < v.right.size)) {
+			} else if (H.root[0] != null && v.rank <= H.root[0].rank
+					&& (v.right == H.root[i] || H.root[0].rank < v.right.rank)) {
 				// pripojime vpravo
 				BinHeapNode u = H.root[0];
 				if (H.root[0].right == H.root[0]) {
@@ -48,8 +48,8 @@ public class BinHeapAlg extends Algorithm {
 				u.unlink();
 				u.highlightTree(u);
 				v.linkRight(u);
-			} else if (v.left.size == v.size && v.left != v
-					&& (v.right == H.root[i] || v.size < v.right.size)) {
+			} else if (v.left.rank == v.rank && v.left != v
+					&& (v.right == H.root[i] || v.rank < v.right.rank)) {
 				// spojime 2 rovnakej velkosti
 				BinHeapNode u = v.left;
 				if (u.prec(v)) { // napojime v pod u

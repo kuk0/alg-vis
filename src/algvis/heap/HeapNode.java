@@ -20,17 +20,31 @@ public class HeapNode extends BSTNode {
 	public HeapNode(DataStructure D, int key) {
 		super(D, key);
 		bgKeyColor();
-		setState(Node.UP);
 	}
 
 	public HeapNode(HeapNode v) {
 		this(v.D, v.key, v.x, v.y);
 	}
 
+	@Override
+	public HeapNode getLeft() {
+		return (HeapNode) super.getLeft();
+	}
+
+	@Override
+	public HeapNode getRight() {
+		return (HeapNode) super.getRight();
+	}
+
+	@Override
+	public HeapNode getParent() {
+		return (HeapNode) super.getParent();
+	}
+
 	/**
-	 * v.prec(w) iff v precedes w in the heap order, i.e., should be higher in the heap
-	 * v precedes w if v.key < w.key when we have a min heap, but
-	 * v precedes w if v.key > w.key when we have a max heap
+	 * v.prec(w) iff v precedes w in the heap order, i.e., should be higher in
+	 * the heap v precedes w if v.key < w.key when we have a min heap, but v
+	 * precedes w if v.key > w.key when we have a max heap
 	 */
 	public boolean prec(Node v) {
 		if (((PriorityQueue) D).minHeap) {

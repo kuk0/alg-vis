@@ -28,6 +28,7 @@ public class GBButtons extends DictButtons implements ChangeListener {
 		P.add(AS);
 	}
 
+	@Override
 	public void stateChanged(ChangeEvent evt) {
 		if (evt.getSource() == AS) {
 			((GBTree) D).alpha = (Double) AS.getValue();

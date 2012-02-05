@@ -3,6 +3,7 @@ package algvis.core;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.event.MouseEvent;
@@ -21,8 +22,8 @@ public class View implements MouseListener, MouseMotionListener,
 		MouseWheelListener {
 	Graphics2D g;
 	final static double SCALE_FACTOR = 1.1, MIN_ZOOM = 0.16, MAX_ZOOM = 5.5;
-	int W, H; // display width&height
-	int minx, miny, maxx, maxy;
+	public int W, H; // display width&height
+	public int minx, miny, maxx, maxy;
 	int mouseX, mouseY; // mouse position
 	public Alignment align = Alignment.CENTER;
 
@@ -36,6 +37,8 @@ public class View implements MouseListener, MouseMotionListener,
 		P.addMouseListener(this);
 		P.addMouseMotionListener(this);
 		P.addMouseWheelListener(this);
+		at = new AffineTransform();
+		setBounds(0, 0, 0, 0);
 	}
 
 	public void setGraphics(Graphics2D g, int W, int H) {
@@ -46,8 +49,6 @@ public class View implements MouseListener, MouseMotionListener,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		at = new AffineTransform();
-		setBounds(0, 0, 0, 0);
 		resetView();
 	}
 
@@ -131,11 +132,13 @@ public class View implements MouseListener, MouseMotionListener,
 		return p;
 	}
 
+	@Override
 	public void mousePressed(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
 	}
 
+	@Override
 	public void mouseDragged(MouseEvent e) {
 		int x = e.getX(), y = e.getY();
 		at.preConcatenate(AffineTransform.getTranslateInstance(x - mouseX, y
@@ -144,18 +147,23 @@ public class View implements MouseListener, MouseMotionListener,
 		mouseY = y;
 	}
 
+	@Override
 	public void mouseReleased(MouseEvent e) {
 	}
 
+	@Override
 	public void mouseMoved(MouseEvent e) {
 	}
 
+	@Override
 	public void mouseEntered(MouseEvent e) {
 	}
 
+	@Override
 	public void mouseExited(MouseEvent e) {
 	}
 
+	@Override
 	public void mouseClicked(MouseEvent e) {
 		Point2D p = r2v(e.getX(), e.getY());
 		if (D != null) {
@@ -163,6 +171,7 @@ public class View implements MouseListener, MouseMotionListener,
 		}
 	}
 
+	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		int notches = e.getWheelRotation();
 		if (notches > 0) {
@@ -217,6 +226,25 @@ public class View implements MouseListener, MouseMotionListener,
 
 	public void drawLine(int x1, int y1, int x2, int y2) {
 		g.drawLine(x1, y1, x2, y2);
+	}
+
+	public void drawWideLine(int x1, int y1, int x2, int y2, float width, Color col) {
+		final Stroke old = g.getStroke(), wide = new BasicStroke(width,
+				BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+		final Color c = g.getColor();
+		g.setColor(col);
+		g.setStroke(wide);
+		g.drawLine(x1, y1, x2, y2);
+		g.setStroke(old);
+		g.setColor(c);
+	}
+	
+	public void drawWideLine(int x1, int y1, int x2, int y2, float width) {
+		drawWideLine(x1, y1, x2, y2, width, new Color(230, 230, 230));
+	}
+
+	public void drawWideLine(int x1, int y1, int x2, int y2) {
+		drawWideLine(x1, y1, x2, y2, 27.0f, new Color(230, 230, 230));
 	}
 
 	public void drawDashedLine(int x1, int y1, int x2, int y2) {
@@ -339,5 +367,17 @@ public class View implements MouseListener, MouseMotionListener,
 
 	public void setDS(ClickListener D) {
 		this.D = D;
+	}
+
+	public void fillPolygon(Polygon p) {
+		final Stroke old = g.getStroke(), wide = new BasicStroke(27.0f,
+				BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+		final Color c = g.getColor();
+		g.setColor(new Color(230, 230, 230));
+		g.setStroke(wide);
+		g.fillPolygon(p);
+		g.drawPolygon(p);
+		g.setStroke(old);
+		g.setColor(c);
 	}
 }

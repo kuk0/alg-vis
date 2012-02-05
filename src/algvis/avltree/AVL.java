@@ -2,11 +2,17 @@ package algvis.avltree;
 
 import algvis.bst.BST;
 import algvis.bst.BSTFind;
+import algvis.core.Layout;
 import algvis.core.VisPanel;
 
 public class AVL extends BST {
 	public static String dsName = "avltree";
-	
+
+	@Override
+	public String getName() {
+		return "avltree";
+	}
+
 	public AVL(VisPanel M) {
 		super(M);
 	}
@@ -25,10 +31,9 @@ public class AVL extends BST {
 	public void delete(int x) {
 		start(new AVLDelete(this, x));
 	}
-
+	
 	@Override
-	public void clear() {
-		root = null;
-		setStats();
+	public Layout getLayout() {
+		return Layout.COMPACT;
 	}
 }

@@ -2,7 +2,7 @@ package algvis.core;
 
 abstract public class Dictionary extends DataStructure {
 	public static String adtName = "dictionary";
-	
+
 	public Dictionary(VisPanel M) {
 		super(M);
 	}
@@ -13,4 +13,9 @@ abstract public class Dictionary extends DataStructure {
 	abstract public void find(int x);
 
 	abstract public void delete(int x);
+	
+	@Override
+	public Layout getLayout() {
+		return Layout.COMPACT;
+	}
 }

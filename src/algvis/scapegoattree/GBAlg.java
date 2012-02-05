@@ -1,28 +1,27 @@
 package algvis.scapegoattree;
 
-import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
 
 public class GBAlg extends Algorithm {
 	GBTree T;
-	BSTNode v;
+	GBNode v;
 	int K;
 
 	public GBAlg(GBTree T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		T.v = v = new GBNode(T, K = x);
 	}
 
-	public BSTNode compr(BSTNode r, int c) {
-		BSTNode w = r, x = (c > 0) ? r.right : r;
+	public GBNode compr(GBNode r, int c) {
+		GBNode w = r, x = (c > 0) ? r.getRight() : r;
 		w.mark();
 		mysuspend();
 		for (int i = 0; i < c; ++i) {
 			w.unmark();
-			w = w.right;
+			w = w.getRight();
 			T.rotate(w);
-			w = w.right;
+			w = w.getRight();
 			if (w != null) {
 				w.mark();
 			}

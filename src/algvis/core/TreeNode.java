@@ -4,11 +4,11 @@ import java.awt.Color;
 import java.util.Stack;
 
 public class TreeNode extends Node {
-	public TreeNode child = null, right = null, parent = null;
+	private TreeNode child = null, right = null, parent = null;
 
 	// variables for the Reingold-Tilford-Walker layout
 	int offset = 0; // offset from base line, base line has x-coord
-						   // equaled to x-coord of leftmost child
+					// equaled to x-coord of leftmost child
 	int level; // distance from the root
 	boolean thread = false; // is this node threaded?
 	int toExtremeSon = 0; // offset from the leftmost son
@@ -18,11 +18,14 @@ public class TreeNode extends Node {
 	int number = 1;
 
 	int change = 0, shift = 0; // for evenly spaced smaller subtrees
-	//TreeNode ancestor = this; // unused variable for now
+	// TreeNode ancestor = this; // unused variable for now
 
 	// statistics
 	public int size = 1, height = 1;
 	public int nos = 0; // number of sons, probably useless
+
+	// from binary node
+	public int leftw, rightw;
 
 	public TreeNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
@@ -33,11 +36,11 @@ public class TreeNode extends Node {
 	}
 
 	public boolean isRoot() {
-		return parent == null;
+		return getParent() == null;
 	}
 
 	public boolean isLeaf() {
-		return child == null;
+		return getChild() == null;
 	}
 
 	// calc() and calcTree() methods analogous to BSTNode ones
@@ -49,13 +52,13 @@ public class TreeNode extends Node {
 		size = 1;
 		height = 1;
 		if (!isLeaf()) {
-			TreeNode w = child;
+			TreeNode w = getChild();
 			while (w != null) {
 				size += w.size;
 				if (height <= w.height) {
 					height = w.height + 1;
 				}
-				w = w.right;
+				w = w.getRight();
 			}
 		}
 	}
@@ -65,17 +68,47 @@ public class TreeNode extends Node {
 	 */
 	public void calcTree() {
 		if (!isLeaf()) {
-			TreeNode w = child;
+			TreeNode w = getChild();
 			while (w != null) {
 				w.calcTree();
-				w = w.right;
+				w = w.getRight();
 			}
 		}
 		calc();
 	}
 
 	public void setArc() {
-		setArc(parent);
+		setArc(getParent());
+	}
+
+	public void drawEdges(View v) {
+		if (state != INVISIBLE) {
+			if (thread) {
+				v.setColor(Color.red);
+				if (getChild() != null) {
+					v.drawLine(x, y, getChild().x, getChild().y);
+				} else
+					System.out.println("child: " + getChild());
+				v.setColor(Color.black);
+			} else {
+				TreeNode w = getChild();
+				while (w != null) {
+					v.setColor(Color.black);
+					v.drawLine(x, y, w.x, w.y);
+					w.drawEdges(v);
+					w = w.getRight();
+				}
+			}
+		}
+	}
+
+	public void drawVertices(View v) {
+		TreeNode w = getChild();
+		while (w != null) {
+			w.drawVertices(v);
+			w = w.getRight();
+		}
+		draw(v);
 	}
 
 	/**
@@ -83,29 +116,15 @@ public class TreeNode extends Node {
 	 * from and to them
 	 */
 	public void drawTree(View v) {
-		if (state != INVISIBLE) {
-			if (thread) {
-				v.setColor(Color.red);
-				v.drawLine(x, y, child.x, child.y);
-				v.setColor(Color.black);
-			} else {
-				TreeNode w = child;
-				while (w != null) {
-					v.setColor(Color.black);
-					v.drawLine(x, y, w.x, w.y);
-					w.drawTree(v);
-					w = w.right;
-				}
-			}
-		}
-		draw(v);
+		drawEdges(v);
+		drawVertices(v);
 	}
 
 	public void moveTree() {
-		TreeNode w = child;
+		TreeNode w = getChild();
 		while (w != null) {
 			w.moveTree();
-			w = w.right;
+			w = w.getRight();
 		}
 		move();
 	}
@@ -117,43 +136,93 @@ public class TreeNode extends Node {
 	public TreeNode find(int x, int y) {
 		if (inside(x, y))
 			return this;
-		TreeNode w = child;
+		TreeNode w = getChild();
 		TreeNode res = null;
 		while ((w != null) && (res == null)) {
 			res = w.find(x, y);
-			w = w.right;
+			w = w.getRight();
 		}
 		return res;
 	}
 
+	public void rebox() {
+	}
+
+	/**
+	 * Rebox the whole subtree calculating the widths recursively bottom-up.
+	 */
+	public void reboxTree() {
+		int bw = DataStructure.minsepx / 2;
+		int le = 9999999; // keeps current extreme leftw value
+		int re = -9999999;
+		TreeNode T = getChild();
+		while (T != null) {
+			T.reboxTree();
+
+			int lxe = (T.tox - tox) - T.leftw;
+			if (lxe < le) {
+				le = lxe;
+			}
+			int rxe = (T.tox - tox) + T.rightw;
+			if (rxe > re) {
+				re = rxe;
+			}
+			T = T.getRight();
+		}
+		if (le > -bw) {
+			le = -bw;
+		}
+		if (re < bw) {
+			re = bw;
+		}
+		leftw = -le;
+		rightw = re;
+	}
+
 	public void addRight(TreeNode w) {
-		if (right == null) {
-			right = w;
-			w.parent = parent;
+		if (getRight() == null) {
+			setRight(w);
+			w.setParent(parent);
 		} else {
-			right.addRight(w);
+			getRight().addRight(w);
 		}
 	}
 
 	public void addChild(TreeNode w) {
-		if (child == null) {
-			child = w;
-			w.parent = this;
+		if (getChild() == null) {
+			setChild(w);
+			w.setParent(this);
 			w.D = this.D;
 		} else {
-			child.addRight(w);
+			getChild().addRight(w);
+		}
+	}
+
+	public void deleteChild(TreeNode w) {
+		if (w == getChild()) {
+			setChild(getChild().getRight());
+			w.setRight(null);
+		} else {
+			TreeNode v = getChild();
+			while ((v != null) && (v.getRight() != w)) {
+				v = v.getRight();
+			}
+			if (v != null) {
+				v.setRight(w.getRight());
+			}
+			w.setRight(null);
 		}
 	}
 
 	public TreeNode leftmostChild() {
-		return child;
+		return getChild();
 	}
 
 	public TreeNode rightmostChild() {
-		TreeNode w = child;
+		TreeNode w = getChild();
 		if (w != null) {
-			while (w.right != null) {
-				w = w.right;
+			while (w.getRight() != null) {
+				w = w.getRight();
 			}
 		}
 		return w;
@@ -163,10 +232,10 @@ public class TreeNode extends Node {
 		if (key == x) {
 			addChild(new TreeNode(D, j));
 		} else {
-			TreeNode w = child;
+			TreeNode w = getChild();
 			while (w != null) {
 				w.append(x, j);
-				w = w.right;
+				w = w.getRight();
 			}
 		}
 	}
@@ -177,6 +246,13 @@ public class TreeNode extends Node {
 		fTRDisposeThreads();
 		fTRPetrification(0);
 		fTRBounding(-tmpx);
+		reboxTree();
+		// System.out.println(key+" "+leftw+" "+rightw);
+		/*D.x1 -= D.minsepx;
+		D.x2 += D.xspan + D.radius;
+		D.y1 -= D.yspan + D.radius;
+		D.y2 += D.yspan + D.radius;*/
+		// System.out.println(D.x1 + " " + leftw + " " + D.x2 + " " + rightw);
 	}
 
 	/**
@@ -187,18 +263,19 @@ public class TreeNode extends Node {
 	 *            current level in tree
 	 */
 	private void fTRInitialization(int level) {
-		// System.out.print(level);
+		// System.out.println(level);
 		this.level = level;
 		offset = modifier = shift = change = 0;
 		toExtremeSon = 0;
 		toBaseline = 0;
-		TreeNode w = child;
+		leftw = rightw = 0;
+		TreeNode w = getChild();
 		level++;
 		int noofchild = 1;
 		while (w != null) {
 			w.fTRInitialization(level);
 			w.number = noofchild;
-			w = w.right;
+			w = w.getRight();
 			noofchild++;
 		}
 	}
@@ -219,8 +296,8 @@ public class TreeNode extends Node {
 			return result;
 		}
 
-		TreeNode LeftSubtree = child;
-		TreeNode RightSubtree = child.right;
+		TreeNode LeftSubtree = getChild();
+		TreeNode RightSubtree = getChild().getRight();
 
 		/*
 		 * So lets get result from first child
@@ -241,7 +318,7 @@ public class TreeNode extends Node {
 			int roffset = RightSubtree.offset = LeftSubtree.offset;
 
 			while ((L != null) && (R != null)) {
-				int distance = (loffset + D.minsepx - roffset);
+				int distance = (loffset + DataStructure.minsepx - roffset);
 				if (distance > 0) {
 					RightSubtree.offset += distance;
 					roffset += distance;
@@ -250,8 +327,8 @@ public class TreeNode extends Node {
 					 * set spacing for smaller subtrees
 					 */
 					TreeNode Elevator = L;
-					while (Elevator.parent != LeftSubtree.parent) {
-						Elevator = Elevator.parent;
+					while (Elevator.getParent() != LeftSubtree.getParent()) {
+						Elevator = Elevator.getParent();
 					}
 					int theta = RightSubtree.number - Elevator.number;
 					RightSubtree.change -= distance / theta;
@@ -265,13 +342,13 @@ public class TreeNode extends Node {
 					loffset += L.toExtremeSon;
 				} else {
 					loffset = 0;
-					TreeNode Elevator = L.child;
+					TreeNode Elevator = L.getChild();
 					int cursep = 0;
-					while (Elevator.parent != LeftSubtree.parent) {
+					while (Elevator.getParent() != LeftSubtree.getParent()) {
 						cursep += Elevator.offset
-								- Elevator.parent.leftmostChild().offset
-								- Elevator.parent.toExtremeSon;
-						Elevator = Elevator.parent;
+								- Elevator.getParent().leftmostChild().offset
+								- Elevator.getParent().toExtremeSon;
+						Elevator = Elevator.getParent();
 					}
 
 					loffset = Elevator.offset + cursep;
@@ -281,13 +358,13 @@ public class TreeNode extends Node {
 					roffset -= R.toExtremeSon;
 				} else {
 					roffset = 0;
-					TreeNode Elevator = R.child;
+					TreeNode Elevator = R.getChild();
 					int cursep = 0;
 					do {
 						cursep += Elevator.offset
-								- Elevator.parent.leftmostChild().offset
-								- Elevator.parent.toExtremeSon;
-						Elevator = Elevator.parent;
+								- Elevator.getParent().leftmostChild().offset
+								- Elevator.getParent().toExtremeSon;
+						Elevator = Elevator.getParent();
 					} while (Elevator != RightSubtree);
 
 					roffset = RightSubtree.offset + cursep;
@@ -307,18 +384,18 @@ public class TreeNode extends Node {
 				// left subforest is more shallow
 			} else if ((L == null) && (R != null)) {
 				fromLeftSubtree.left.thread = true;
-				fromLeftSubtree.left.child = R;
+				fromLeftSubtree.left.setChild(R);
 
 				fromLeftSubtree.left = fromRightSubtree.left;
 				fromLeftSubtree.right = fromRightSubtree.right;
 				// right subtree is more shallow
 			} else if ((L != null) && (R == null)) {
 				fromRightSubtree.right.thread = true;
-				fromRightSubtree.right.child = L;
+				fromRightSubtree.right.setChild(L);
 			}
 
-			LeftSubtree = LeftSubtree.right;
-			RightSubtree = RightSubtree.right;
+			LeftSubtree = LeftSubtree.getRight();
+			RightSubtree = RightSubtree.getRight();
 		}
 
 		/*
@@ -326,13 +403,13 @@ public class TreeNode extends Node {
 		 */
 		int distance = 0;
 		int change = 0;
-		TreeNode w = child;
+		TreeNode w = getChild();
 		Stack<TreeNode> stack = new Stack<TreeNode>();
 		while (w != null) {
 			NodePair<TreeNode> N = new NodePair<TreeNode>();
 			N.left = w;
 			stack.push(w);
-			w = w.right;
+			w = w.getRight();
 		}
 
 		while (!stack.empty()) {
@@ -358,18 +435,18 @@ public class TreeNode extends Node {
 	public void fTRDisposeThreads() {
 		if (thread) {
 			thread = false;
-			child = null;
+			setChild(null);
 		}
 
-		TreeNode w = child;
+		TreeNode w = getChild();
 		while (w != null) {
 			w.fTRDisposeThreads();
-			w = w.right;
+			w = w.getRight();
 		}
 	}
 
 	/**
-	 * Changes relative coordinates to absolute. Spacing smaller subtrees work
+	 * Changes relative coordinates to absolute. Spacing smaller subtrees works
 	 * with absolute coordinates.
 	 * 
 	 * @param baseline
@@ -377,12 +454,12 @@ public class TreeNode extends Node {
 	 */
 	private void fTRPetrification(int baseline) {
 		tmpx = baseline + offset;
-		tmpy = level * (D.minsepy);
+		tmpy = level * (DataStructure.minsepy);
 
-		TreeNode w = child;
+		TreeNode w = getChild();
 		while (w != null) {
 			w.fTRPetrification(tmpx - toBaseline);
-			w = w.right;
+			w = w.getRight();
 		}
 	}
 
@@ -394,7 +471,7 @@ public class TreeNode extends Node {
 	 *            Useful when you want make root rooted at [0,0]
 	 */
 	private void fTRBounding(int correction) {
-		goTo(tmpx+correction, tmpy);
+		goTo(tmpx + correction, tmpy);
 
 		if (tox < D.x1) {
 			D.x1 = tox;
@@ -402,28 +479,70 @@ public class TreeNode extends Node {
 		if (tox > D.x2) {
 			D.x2 = tox;
 		}
-		// this case should be always false
 		if (toy < D.y1) {
+			// this case should be always false
 			D.y1 = toy;
 		}
 		if (toy > D.y2) {
 			D.y2 = toy;
 		}
 
-		TreeNode w = child;
+		TreeNode w = getChild();
 		while (w != null) {
 			w.fTRBounding(correction);
-			w = w.right;
+			w = w.getRight();
 		}
+	}
+
+	/**
+	 * Beware! This method doesn't change bounds of the data structure!
+	 * 
+	 * @param xamount
+	 *            amount of shift in x-axis
+	 * @param yamount
+	 *            amount of shift in y-axis
+	 */
+	public void shift(int xamount, int yamount) {
+		goTo(tox + xamount, toy + yamount);
+		// System.out.println(tox);
+		TreeNode w = getChild();
+		while (w != null) {
+			w.shift(xamount, yamount);
+			w = w.getRight();
+		}
+	}
+
+	public TreeNode getChild() {
+		return child;
+	}
+
+	public void setChild(TreeNode child) {
+		this.child = child;
+	}
+
+	public TreeNode getRight() {
+		return right;
+	}
+
+	public void setRight(TreeNode right) {
+		this.right = right;
+	}
+
+	public TreeNode getParent() {
+		return parent;
+	}
+
+	public void setParent(TreeNode parent) {
+		this.parent = parent;
 	}
 
 	// private void fTRGetInfo(int phase, int variable) {
 	// System.out
-	// .print("Node: " + key + " fakex: " + fakex + " mod: "
+	// .println("Node: " + key + " fakex: " + fakex + " mod: "
 	// + modifier + " change: " + change + " shift: " + shift
 	// + " offset: " + offset + " toE: " + toExtremeSon
 	// + " toB: " + toBaseline + " thread: " + thread + " ("
-	// + phase + ")" + "\n");
+	// + phase + ")");
 	// }
 
 }

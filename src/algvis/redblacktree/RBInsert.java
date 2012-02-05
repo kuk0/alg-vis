@@ -1,6 +1,5 @@
 package algvis.redblacktree;
 
-import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
 
 public class RBInsert extends Algorithm {
@@ -9,7 +8,7 @@ public class RBInsert extends Algorithm {
 	int K;
 
 	public RBInsert(RB T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		T.v = v = new RBNode(T, K = x);
 		setHeader("insertion");
@@ -17,35 +16,35 @@ public class RBInsert extends Algorithm {
 
 	@Override
 	public void run() {
-		BSTNode w = T.root;
-		if (T.root == T.NULL) {
-			v.left = v.right = v.parent = T.NULL;
-			T.root = v;
+		RBNode w = (RBNode) T.root;
+		if (T.root == null) {
+			//v.setLeft(v.setRight(v.setParent(T.NULL)));
+			T.setRoot(v);
 			v.goToRoot();
-			setText("newroot");
+			addStep("newroot");
 			mysuspend();
 		} else {
 			v.goAboveRoot();
-			setText("bstinsertstart");
+			addStep("bstinsertstart");
 			mysuspend();
 
 			while (true) {
 				if (w.key == K) {
-					setText("alreadythere");
+					addStep("alreadythere");
 					v.goDown();
 					return;
 				} else if (w.key < K) {
-					setText("bstinsertright", K, w.key);
-					if (w.right != T.NULL) {
-						w = w.right;
+					addStep("bstinsertright", K, w.key);
+					if (w.getRight() != null) {
+						w = w.getRight();
 					} else {
 						w.linkRight(v);
 						break;
 					}
 				} else {
-					setText("bstinsertleft", K, w.key);
-					if (w.left != T.NULL) {
-						w = w.left;
+					addStep("bstinsertleft", K, w.key);
+					if (w.getLeft() != null) {
+						w = w.getLeft();
 					} else {
 						w.linkLeft(v);
 						break;
@@ -54,22 +53,23 @@ public class RBInsert extends Algorithm {
 				v.goAbove(w);
 				mysuspend();
 			}
-			v.left = v.right = T.NULL;
+			//v.setLeft(v.setRight(T.NULL));
 
 			T.reposition();
 			mysuspend();
 
 			// bubleme nahor
 			w = v;
-			RBNode pw = (RBNode) w.parent;
+			RBNode pw = w.getParent2();
 			while (!w.isRoot() && pw.red) {
 				w.mark();
 				boolean isleft = pw.isLeft();
-				RBNode ppw = (RBNode) pw.parent, y = (RBNode) (isleft ? ppw.right
-						: ppw.left);
+				RBNode ppw = pw.getParent2(), y = (isleft ? ppw.getRight() : ppw
+						.getLeft());
+				if (y == null) y = T.NULL;
 				if (y.red) {
 					// case 1
-					setText("rbinsertcase1");
+					addStep("rbinsertcase1");
 					mysuspend();
 					pw.red = false;
 					y.red = false;
@@ -77,25 +77,25 @@ public class RBInsert extends Algorithm {
 					w.unmark();
 					w = ppw;
 					w.mark();
-					pw = (RBNode) w.parent;
+					pw = w.getParent2();
 					mysuspend();
 				} else {
 					// case 2
 					if (isleft != w.isLeft()) {
-						setText("rbinsertcase2");
+						addStep("rbinsertcase2");
 						mysuspend();
 						T.rotate(w);
 						mysuspend();
 					} else {
 						w.unmark();
-						w = w.parent;
+						w = w.getParent2();
 						w.mark();
 					}
-					pw = (RBNode) w.parent;
+					pw = w.getParent2();
 					// case 3
-					setText("rbinsertcase3");
+					addStep("rbinsertcase3");
 					mysuspend();
-					((RBNode) w).red = false;
+					w.red = false;
 					pw.red = true;
 					T.rotate(w);
 					mysuspend();
@@ -104,10 +104,10 @@ public class RBInsert extends Algorithm {
 				}
 			}
 		}
-		w.unmark();
+		if (w != null) w.unmark();
 		((RBNode) T.root).red = false;
 		T.v = null;
 		T.reposition();
-		setText("done");
+		addStep("done");
 	}
 }

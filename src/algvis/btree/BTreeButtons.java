@@ -28,6 +28,7 @@ public class BTreeButtons extends DictButtons implements ChangeListener {
 		P.add(OS);
 	}
 
+	@Override
 	public void stateChanged(ChangeEvent evt) {
 		if (evt.getSource() == OS) {
 			((BTree) D).order = (Integer) OS.getValue();

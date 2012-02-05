@@ -8,23 +8,25 @@ public class BinHeapDecrKey extends Algorithm {
 	int delta;
 	BinomialHeap H;
 	BinHeapNode v;
-	
+
 	public BinHeapDecrKey(BinomialHeap H, BinHeapNode v, int delta) {
-		super(H.M);
+		super(H);
 		this.H = H;
 		this.v = v;
 		this.delta = delta;
-		//setHeader("insertion");
+		// setHeader("insertion");
 	}
-	
+
 	@Override
 	public void run() {
 		if (H.minHeap) {
 			v.key -= delta;
-			if (v.key < 1) v.key = 1;
+			if (v.key < 1)
+				v.key = 1;
 		} else {
 			v.key += delta;
-			if (v.key > InputField.MAX) v.key = InputField.MAX;
+			if (v.key > InputField.MAX)
+				v.key = InputField.MAX;
 		}
 		BinHeapNode w = v.parent;
 		while (w != null && v.prec(w)) {
@@ -37,8 +39,8 @@ public class BinHeapDecrKey extends Algorithm {
 			mysuspend();
 			v.key = H.v2.key;
 			w.key = H.v.key;
-			v.bgcolor = H.v2.bgcolor;
-			w.bgcolor = H.v.bgcolor;
+			v.setColor(H.v2.getColor());
+			w.setColor(H.v.getColor());
 			H.v = null;
 			H.v2 = null;
 			v = w;

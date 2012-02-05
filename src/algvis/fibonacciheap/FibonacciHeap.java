@@ -7,13 +7,18 @@ import algvis.lazybinomialheap.LazyBinomialHeap;
 
 public class FibonacciHeap extends LazyBinomialHeap {
 	public static String dsName = "fibheap";
-	
+
+	@Override
+	public String getName() {
+		return "fibheap";
+	}
+
 	public FibonacciHeap(VisPanel M) {
 		super(M);
 	}
 
 	@Override
 	public void decreaseKey(Node v, int delta) {
-		start(new FibHeapDecrKey(this, (BinHeapNode)v, delta, active));
+		start(new FibHeapDecrKey(this, (BinHeapNode) v, delta, active));
 	}
 }

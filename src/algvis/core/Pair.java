@@ -8,11 +8,9 @@ public class Pair {
 		second = y;
 	}
 
-	/*public int first() {
-		return first;
-	}
-
-	public int second() {
-		return second;
-	}*/
+	/*
+	 * public int first() { return first; }
+	 * 
+	 * public int second() { return second; }
+	 */
 }

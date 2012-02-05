@@ -1,23 +1,23 @@
 package algvis.skiplist;
 
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class SkipDelete extends SkipAlg {
 	public SkipDelete(SkipList L, int x) {
 		super(L, x);
-		v.bgColor(Colors.DELETE);
+		v.setColor(NodeColor.DELETE);
 		p = new SkipNode[L.height];
 		setHeader("insertion");
 	}
 
 	@Override
 	public void run() {
-		setText("bstdeletestart");
+		addStep("bstdeletestart");
 		SkipNode w = find();
-		
+
 		if (w.right.key != K) {
-			setText("notfound");
+			addStep("notfound");
 			v.goDown();
 			mysuspend();
 			return;
@@ -25,7 +25,7 @@ public class SkipDelete extends SkipAlg {
 
 		L.n--;
 		L.e++;
-		setText("skipdelete");
+		addStep("skipdelete");
 		for (int i = 0; i < L.height; ++i) {
 			if (p[i].right.key != K) {
 				break;
@@ -49,7 +49,7 @@ public class SkipDelete extends SkipAlg {
 			}
 		}
 
-		setText("done");
+		addStep("done");
 		L.reposition();
 		mysuspend();
 		L.v = null;

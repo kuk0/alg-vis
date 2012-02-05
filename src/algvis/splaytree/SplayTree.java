@@ -1,16 +1,24 @@
 package algvis.splaytree;
 
 import algvis.bst.BST;
-import algvis.bst.BSTNode;
+import algvis.core.Layout;
 import algvis.core.View;
 import algvis.core.VisPanel;
 
-public class Splay extends BST {
+public class SplayTree extends BST {
 	public static String dsName = "splaytree";
-	BSTNode root2 = null, vv = null;
+	SplayNode root2 = null, vv = null;
+	SplayNode w1 = null, w2 = null;
 
-	public Splay(VisPanel M) {
+
+	@Override
+	public String getName() {
+		return "splaytree";
+	}
+
+	public SplayTree(VisPanel M) {
 		super(M);
+		scenario.enable(false);
 	}
 
 	@Override
@@ -29,13 +37,14 @@ public class Splay extends BST {
 	}
 
 	@Override
-	public void clear() {
-		root = null;
-		setStats();
-	}
-
-	@Override
 	public void draw(View V) {
+		if (w1 != null && w1.getParent() != null) {
+			V.drawWideLine(w1.x, w1.y, w1.getParent().x, w1.getParent().y);
+		}
+		if (w2 != null && w2.getParent() != null) {
+			V.drawWideLine(w2.x, w2.y, w2.getParent().x, w2.getParent().y);
+		}
+
 		if (root != null) {
 			root.moveTree();
 			root.drawTree(V);
@@ -59,19 +68,30 @@ public class Splay extends BST {
 	 * null) ? "0" : ((SplayNode)root).pot); }
 	 */
 
-	public void rotate2(BSTNode v) {
+	public void rotate2(SplayNode v) {
 		if (v.isLeft()) {
 			rightrot(v);
 		} else {
 			leftrot(v);
 		}
 		v.reposition();
-		if (v.left != null) {
-			v.left.calc();
+		if (v.getLeft() != null) {
+			v.getLeft().calc();
 		}
-		if (v.right != null) {
-			v.right.calc();
+		if (v.getRight() != null) {
+			v.getRight().calc();
 		}
 		v.calc();
+	}
+
+	@Override
+	public void clear() {
+		super.clear();
+		vv = null;
+	}
+	
+	@Override
+	public Layout getLayout() {
+		return Layout.COMPACT;
 	}
 }

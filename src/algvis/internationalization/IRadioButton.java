@@ -14,6 +14,7 @@ public class IRadioButton extends JRadioButton implements LanguageListener {
 		L.addListener(this);
 	}
 
+	@Override
 	public void languageChanged() {
 		setText(L.getString(t));
 	}

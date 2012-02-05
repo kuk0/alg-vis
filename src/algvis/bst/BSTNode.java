@@ -1,20 +1,27 @@
 package algvis.bst;
 
 import java.awt.Color;
+import java.awt.Polygon;
+import java.util.Stack;
 
 import algvis.core.DataStructure;
 import algvis.core.Layout;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 import algvis.core.NodePair;
 import algvis.core.View;
+import algvis.scenario.commands.bstnode.LinkLeftCommand;
+import algvis.scenario.commands.bstnode.LinkRightCommand;
+import algvis.scenario.commands.bstnode.SetLevelCommand;
 
 public class BSTNode extends Node {
-	public BSTNode left = null, right = null, parent = null;
+	private BSTNode left = null, right = null, parent = null;
 	public int leftw, rightw;
+	public boolean markSubtree = false;
 
 	// variables for the Reingold-Tilford layout
-	int offset = 0; // offset from the parent node
-	int level; // distance from the root
+	int offset = 0; // offset from parent node
+	private int level; // distance to root
 	boolean thread = false; // is this node threaded?
 
 	// statistics
@@ -28,34 +35,144 @@ public class BSTNode extends Node {
 		super(D, key);
 	}
 
-	public boolean isRoot() {
-		return parent == null;
+	public BSTNode getLeft() {
+		if (thread)
+			return null;
+		else
+			return left;
 	}
 
-	public boolean isLeaf() {
-		return left == null && right == null;
+	public BSTNode setLeft(BSTNode left) {
+		if (thread) {
+			thread = false;
+			right = null;
+		}
+		this.left = left;
+		return left;
 	}
 
-	public boolean isLeft() {
-		return parent != null && parent.left == this;
+	public BSTNode getRight() {
+		if (thread)
+			return null;
+		else
+			return right;
 	}
 
-	public void linkLeft(BSTNode v) {
-		left = v;
-		if (v != null) {
-			v.parent = this;
+	public BSTNode setRight(BSTNode right) {
+		if (thread) {
+			thread = false;
+			left = null;
+		}
+		this.right = right;
+		return right;
+	}
+
+	public BSTNode getParent() {
+		return parent;
+	}
+
+	public BSTNode setParent(BSTNode parent) {
+		this.parent = parent;
+		return parent;
+	}
+
+	public void setLevel(int level) {
+		if (this.level != level) {
+			D.scenario.add(new SetLevelCommand(this, level));
+			this.level = level;
 		}
 	}
 
-	public void linkRight(BSTNode v) {
-		right = v;
-		if (v != null) {
-			v.parent = this;
+	public int getLevel() {
+		return level;
+	}
+
+	public boolean isRoot() {
+		return getParent() == null;
+	}
+
+	public boolean isLeaf() {
+		return getLeft() == null && getRight() == null;
+	}
+
+	public boolean isLeft() {
+		return getParent() != null && getParent().getLeft() == this;
+	}
+
+	/**
+	 * removes edge between this and left; removes edge between newLeft and its
+	 * parent; creates new edge between this and newLeft
+	 */
+	public void linkLeft(BSTNode newLeft) {
+		if (getLeft() != newLeft) {
+			if (getLeft() != null) {
+				// remove edge between this and left
+				unlinkLeft();
+			}
+			if (newLeft != null) {
+				if (newLeft.getParent() != null) {
+					// remove edge between newLeft and its parent
+					newLeft.unlinkParent();
+				}
+				// create new edge between this and newLeft
+				newLeft.setParent(this);
+			}
+			setLeft(newLeft);
+			D.scenario.add(new LinkLeftCommand(this, newLeft, true));
+		}
+	}
+
+	/**
+	 * removes edge between this and left
+	 */
+	public void unlinkLeft() {
+		getLeft().setParent(null);
+		D.scenario.add(new LinkLeftCommand(this, getLeft(), false));
+		setLeft(null);
+	}
+
+	/**
+	 * removes edge between this and right; removes edge between newRight and
+	 * its parent; creates new edge between this and newRight
+	 */
+	public void linkRight(BSTNode newRight) {
+		if (getRight() != newRight) {
+			if (getRight() != null) {
+				// remove edge between this and right
+				unlinkRight();
+			}
+			if (newRight != null) {
+				if (newRight.getParent() != null) {
+					// remove edge between newRight and its parent
+					newRight.unlinkParent();
+				}
+				// create new edge between this and newRight
+				newRight.setParent(this);
+			}
+			setRight(newRight);
+			D.scenario.add(new LinkRightCommand(this, newRight, true));
+		}
+	}
+
+	/**
+	 * removes edge between this and right
+	 */
+	public void unlinkRight() {
+		getRight().setParent(null);
+		D.scenario.add(new LinkRightCommand(this, getRight(), false));
+		setRight(null);
+	}
+
+	private void unlinkParent() {
+		if (isLeft()) {
+			getParent().unlinkLeft();
+		} else {
+			getParent().unlinkRight();
 		}
 	}
 
 	public void isolate() {
-		left = right = parent = null;
+		setLeft(setRight(setParent(null)));
 	}
 
 	/**
@@ -64,15 +181,15 @@ public class BSTNode extends Node {
 	 */
 	public void calc() {
 		int ls = 0, rs = 0, lh = 0, rh = 0, lsh = 0, rsh = 0;
-		if (left != null) {
-			ls = left.size;
-			lh = left.height;
-			lsh = left.sumh;
+		if (getLeft() != null) {
+			ls = getLeft().size;
+			lh = getLeft().height;
+			lsh = getLeft().sumh;
 		}
-		if (right != null) {
-			rs = right.size;
-			rh = right.height;
-			rsh = right.sumh;
+		if (getRight() != null) {
+			rs = getRight().size;
+			rh = getRight().height;
+			rsh = getRight().sumh;
 		}
 		size = ls + rs + 1;
 		height = Math.max(lh, rh) + 1;
@@ -84,26 +201,67 @@ public class BSTNode extends Node {
 	 * subtree (recursively bottom-up).
 	 */
 	public void calcTree() {
-		if (left != null) {
-			left.calcTree();
+		if (getLeft() != null) {
+			getLeft().calcTree();
 		}
-		if (right != null) {
-			right.calcTree();
+		if (getRight() != null) {
+			getRight().calcTree();
 		}
 		calc();
 	}
 
 	public void setArc() {
-		setArc(parent);
+		setArc(getParent());
 	}
 
+	static int i;
 	public void drawTree(View v) {
-		if (state != INVISIBLE) {
-			if (thread) {
-				v.setColor(Color.red);
+		i = 0;
+		drawTree2(v);
+	}
+	
+	private void drawTree2(View v) {
+		if (markSubtree) {
+			Polygon p = new Polygon();
+			p.addPoint(x - 1, y - 1);
+			if (D.getLayout() == Layout.SIMPLE) {
+				if (height == 1) {
+					p.addPoint(x - 7, y + 10);
+					p.addPoint(x + 7, y + 10);
+				} else {
+					int x1 = x - leftw + DataStructure.minsepx/2,
+						x2 = x + rightw - DataStructure.minsepx/2, y1 = y + DataStructure.minsepy,
+						y2 = y + (height - 1) * DataStructure.minsepy;
+					p.addPoint(x1, y1);
+					p.addPoint(x1, y2);
+					p.addPoint(x2, y2);
+					p.addPoint(x2, y1);
+				}
 			} else {
-				v.setColor(Color.black);
+				BSTNode u = this, w = this;
+				Stack<BSTNode> tmp = new Stack<BSTNode>();
+				while (u != null && w != null) {
+					p.addPoint(u.x - 1, u.y);
+					tmp.add(w);
+					if (u.thread && w.thread)
+						break;
+					u = (u.left != null) ? u.left : u.right;
+					w = (w.right != null) ? w.right : w.left;
+				}
+				while (!tmp.isEmpty()) {
+					w = tmp.pop();
+					p.addPoint(w.x + 1, w.y);
+				}
 			}
+			p.addPoint(x + 1, y - 1);
+			v.fillPolygon(p);
+		}
+		if (state != INVISIBLE && !thread) {
+			/*if (thread) {
+				v.setColor(Color.yellow);
+			} else {*/
+				v.setColor(Color.black);
+			//}
 			if ((left != null) && (left.state != INVISIBLE)) {
 				v.drawLine(x, y, left.x, left.y);
 				if (v.output) System.out.println("  Edge("+id+","+left.id+")");
@@ -113,25 +271,27 @@ public class BSTNode extends Node {
 				if (v.output) System.out.println("  Edge("+id+","+right.id+")");
 			}
 		}
-		if (left != null) {
-			left.drawTree(v);
+		if (getLeft() != null) {
+			getLeft().drawTree2(v);
 		}
-		if (right != null) {
-			right.drawTree(v);
-		}
-		if (false) {
+		if (D instanceof BST && ((BST) D).order) { //  && D.M.S.layout == Layout.SIMPLE
 			v.setColor(Color.LIGHT_GRAY);
-			v.drawLine(x, y, x, -100);
+			++i;
+			v.drawLine(x, y, x, -20);
+			v.drawString("" + i, x, -23, 10);
+		}
+		if (getRight() != null) {
+			getRight().drawTree2(v);
 		}
 		draw(v);
 	}
 
 	public void moveTree() {
-		if (left != null) {
-			left.moveTree();
+		if (getLeft() != null) {
+			getLeft().moveTree();
 		}
-		if (right != null) {
-			right.moveTree();
+		if (getRight() != null) {
+			getRight().moveTree();
 		}
 		move();
 	}
@@ -148,21 +308,22 @@ public class BSTNode extends Node {
 		 * whole left subtree, i.e., leftw+rightw; otherwise the width is the
 		 * node radius plus some additional space called xspan
 		 */
-		leftw = (left == null) ? D.xspan + D.radius : left.leftw + left.rightw;
+		leftw = (getLeft() == null) ? DataStructure.minsepx/2 : getLeft().leftw
+				+ getLeft().rightw;
 		// rightw is computed analogically
-		rightw = (right == null) ? D.xspan + D.radius : right.leftw
-				+ right.rightw;
+		rightw = (getRight() == null) ? DataStructure.minsepx/2 : getRight().leftw
+				+ getRight().rightw;
 	}
 
 	/**
 	 * Rebox the whole subtree calculating the widths recursively bottom-up.
 	 */
 	public void reboxTree() {
-		if (left != null) {
-			left.reboxTree();
+		if (getLeft() != null) {
+			getLeft().reboxTree();
 		}
-		if (right != null) {
-			right.reboxTree();
+		if (getRight() != null) {
+			getRight().reboxTree();
 		}
 		rebox();
 	}
@@ -182,25 +343,60 @@ public class BSTNode extends Node {
 		if (this.toy > D.y2) {
 			D.y2 = this.toy;
 		}
-		if (left != null) {
-			left.goTo(this.tox - left.rightw, this.toy + 2 * D.radius + D.yspan);
-			left.repos();
+		if (getLeft() != null) {
+			getLeft().goTo(this.tox - getLeft().rightw,
+					this.toy + DataStructure.minsepy);
+			getLeft().repos();
 		}
-		if (right != null) {
-			right.goTo(this.tox + right.leftw, this.toy + 2 * D.radius
-					+ D.yspan);
-			right.repos();
+		if (getRight() != null) {
+			getRight().goTo(this.tox + getRight().leftw,
+					this.toy + DataStructure.minsepy);
+			getRight().repos();
+		}
+	}
+
+	public void repos(int x, int y) {
+		goTo(x, y);
+		if (getLeft() != null) {
+			getLeft().repos(this.tox - getLeft().rightw,
+					this.toy + DataStructure.minsepy);
+		}
+		if (getRight() != null) {
+			getRight().repos(this.tox + getRight().leftw,
+					this.toy + DataStructure.minsepy);
+		}
+		if (isRoot()) {
+			D.x1 = x-leftw;
+			D.x2 = x+rightw;
+			D.y2 = this.toy;
+		}
+		if (this.toy > D.y2) {
+			D.y2 = this.toy;
 		}
 	}
 
 	public void reposition() {
-		if (D.M.S.layout == Layout.SIMPLE) { // simple layout
+		if (D.getLayout() == Layout.SIMPLE) { // simple layout
 			reboxTree();
 			repos();
 		} else { // Reingold-Tilford layout
+			RTThreads();
 			RTPreposition();
 			RTPetrification(0, 0);
+			reboxTree();
 		}
+	}
+
+	private void RTThreads() {
+		if (thread) {
+			thread = false;
+			setLeft(null);
+			setRight(null);
+		}
+		if (getLeft() != null)
+			left.RTThreads();
+		if (getRight() != null)
+			right.RTThreads();
 	}
 
 	/**
@@ -210,13 +406,13 @@ public class BSTNode extends Node {
 	public BSTNode find(int x, int y) {
 		if (inside(x, y))
 			return this;
-		if (left != null) {
-			BSTNode tmp = left.find(x, y);
+		if (getLeft() != null) {
+			BSTNode tmp = getLeft().find(x, y);
 			if (tmp != null)
 				return tmp;
 		}
-		if (right != null) {
-			return right.find(x, y);
+		if (getRight() != null) {
+			return getRight().find(x, y);
 		}
 		return null;
 	}
@@ -238,14 +434,14 @@ public class BSTNode extends Node {
 		offset = 0;
 
 		// 1. & 2. work out left & right subtree
-		if (left != null)
-			fromLeftSubtree = left.RTPreposition();
-		if (right != null)
-			fromRightSubtree = right.RTPreposition();
+		if (getLeft() != null)
+			fromLeftSubtree = getLeft().RTPreposition();
+		if (getRight() != null)
+			fromRightSubtree = getRight().RTPreposition();
 		// 3. examine this node
 		if (isLeaf()) {
 			if (!isRoot()) {
-				offset = isLeft() ? -D.minsepx / 2 : +D.minsepx / 2;
+				offset = isLeft() ? -DataStructure.minsepx / 2 : +DataStructure.minsepx / 2;
 			}
 			result.left = this;
 			result.right = this;
@@ -254,15 +450,15 @@ public class BSTNode extends Node {
 			 * If one subtree is empty, it is not necessary to make a new
 			 * thread. A proper offset must be set.
 			 */
-			if (left == null) {
-				right.offset = D.minsepx / 2;
+			if (getLeft() == null) {
+				getRight().offset = DataStructure.minsepx / 2;
 				result.left = fromRightSubtree.left;
 				result.right = fromRightSubtree.right;
 				return result;
 			}
 
-			if (right == null) {
-				left.offset = -D.minsepx / 2;
+			if (getRight() == null) {
+				getLeft().offset = -DataStructure.minsepx / 2;
 				result.left = fromLeftSubtree.left;
 				result.right = fromLeftSubtree.right;
 				return result;
@@ -273,15 +469,15 @@ public class BSTNode extends Node {
 								// the left subtree.
 			int roffset = 0; // offset of this node from the left contour of the
 								// right subtree.
-			BSTNode L = left;
-			BSTNode R = right;
+			BSTNode L = getLeft();
+			BSTNode R = getRight();
 			/*
 			 * First, left.offset is 0 and only right.offset accumulates. The
 			 * offsets are corrected afterwards (this way is easier to
 			 * generalize to m-ary trees). Note that offsets can be negative.
 			 */
-			left.offset = 0;
-			right.offset = 0;
+			getLeft().offset = 0;
+			getRight().offset = 0;
 
 			// traverse the right contour of the left subtree and the left
 			// counour of the right subtree
@@ -291,9 +487,9 @@ public class BSTNode extends Node {
 				 * this node. Similarly, right.offset + roffset is the
 				 * horizontal distance from R to this node.
 				 */
-				int distance = (loffset + D.minsepx - roffset);
+				int distance = (loffset + DataStructure.minsepx - roffset);
 				if (distance > 0) {
-					right.offset += distance;
+					getRight().offset += distance;
 					roffset += distance;
 				}
 				/*
@@ -318,7 +514,7 @@ public class BSTNode extends Node {
 					Elevator = L;
 					while (Elevator != this) {
 						loffset += Elevator.offset;
-						Elevator = Elevator.parent;
+						Elevator = Elevator.getParent();
 					}
 				}
 				if (RwasThread) {
@@ -326,7 +522,7 @@ public class BSTNode extends Node {
 					Elevator = R;
 					while (Elevator != this) {
 						roffset += Elevator.offset;
-						Elevator = Elevator.parent;
+						Elevator = Elevator.getParent();
 					}
 				}
 			}
@@ -336,8 +532,8 @@ public class BSTNode extends Node {
 			 * lets change it
 			 */
 
-			right.offset /= 2;
-			left.offset = -right.offset;
+			getRight().offset /= 2;
+			getLeft().offset = -getRight().offset;
 
 			/*
 			 * General switch of making a new thread: we want to make a thread
@@ -369,8 +565,8 @@ public class BSTNode extends Node {
 	}
 
 	/**
-	 * Calculate the absolute coordinates from the relative ones
-	 * and dispose the threads.
+	 * Calculate the absolute coordinates from the relative ones and dispose the
+	 * threads.
 	 * 
 	 * @param x
 	 *            real x coordinate of parent node
@@ -383,8 +579,8 @@ public class BSTNode extends Node {
 		if (tox > D.x2) {
 			D.x2 = tox;
 		}
-		// this case should be always false
 		if (toy < D.y1) {
+			// this case should be always false
 			D.y1 = toy;
 		}
 		if (toy > D.y2) {
@@ -392,15 +588,23 @@ public class BSTNode extends Node {
 		}
 
 		if (thread) {
-			thread = false;
-			left = null;
-			right = null;
+			// thread = false;
+			// setLeft(null);
+			// setRight(null);
 		}
-		if (left != null) {
-			left.RTPetrification(tox, y + D.minsepy);
+		if (getLeft() != null) {
+			getLeft().RTPetrification(tox, y + DataStructure.minsepy);
 		}
-		if (right != null) {
-			right.RTPetrification(tox, y + D.minsepy);
+		if (getRight() != null) {
+			getRight().RTPetrification(tox, y + DataStructure.minsepy);
 		}
+	}
+
+	public void subtreeColor(NodeColor color) {
+		setColor(color);
+		if (getLeft() != null)
+			getLeft().subtreeColor(color);
+		if (getRight() != null)
+			getRight().subtreeColor(color);
 	}
 }

@@ -1,6 +1,5 @@
 package algvis.internationalization;
 
-
 public class IButton extends ChButton implements LanguageListener {
 	private static final long serialVersionUID = -6020341462591231389L;
 	Languages L;
@@ -18,6 +17,7 @@ public class IButton extends ChButton implements LanguageListener {
 		refresh();
 	}
 
+	@Override
 	public void languageChanged() {
 		setText(L.getString(t));
 		super.refresh();
