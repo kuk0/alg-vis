@@ -56,8 +56,18 @@ public class RBNode extends BSTNode {
 			return;
 		}
 		setColor(red ? NodeColor.RED : NodeColor.BLACK);
-		if (v.output) System.out.println("  RBNode("+id+(red?",True,":",False,")+key+","+x+"+"+y+"*1j)");
-		else super.draw(v);
+		if (v.output) {
+			if (!marked) {
+			if (red) {
+				System.out.println("  greyline("+cpos()+","+getParent().cpos()+")");
+			} else {
+			System.out.println("  greyline("+cpos()+","+cpos()+"-1j"+")");
+			}
+			System.out.println("  RBNode("+id+(red?",True,":",False,")+key+","+cpos()+")");
+			} else {
+				System.out.println("  Node("+id+","+key+","+cpos()+",1)");
+			}
+		} else super.draw(v);
 	}
 
 	public void drawBigNodes(View v) {

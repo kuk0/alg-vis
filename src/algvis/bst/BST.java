@@ -199,8 +199,12 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 		if (root != null) {
 			BSTNode w = root.find(x, y);
 			if (w != null) {
-				//w.markSubtree = true;
-				M.B.I.setText(""+w.key);
+				if (w.marked) {
+					w.unmark();
+				} else {
+					w.mark();
+				}
+				//M.B.I.setText(""+w.key);
 			}
 		}
 	}

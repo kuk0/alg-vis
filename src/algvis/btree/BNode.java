@@ -31,6 +31,8 @@ public class BNode extends Node {
 		steps = 0;
 		setColor(NodeColor.NORMAL);
 		width = _width();
+		this.id = Node.N;
+		++Node.N;
 	}
 
 	public BNode(DataStructure D, int key) {
@@ -355,10 +357,12 @@ public class BNode extends Node {
 		}
 		drawBg(v);
 		drawKey(v);
-		if (v.output) System.out.println("  BNode("+id+",'"+toString()+"',"+x+"+"+y+"*1j)");
+		if (v.output) System.out.println("  BNode("+id+",'"+toString()+"',"+cpos()+","+numKeys+")");
 	}
 
-
+	public String pos(int x, int y) {
+		return "("+x+"+"+y+"*1j)";
+	}
 	public void drawTree(View v) {
 		for (int i = 0; i < numChildren; ++i) {
 			v.setColor(Color.black);
@@ -367,6 +371,7 @@ public class BNode extends Node {
 			 * else { xx = (pos(i-1)+pos(i))/2; yy = y+D.radius; }
 			 */
 			v.drawLine(x, y, c[i].x, c[i].y - Node.radius);
+			if (v.output) System.out.println("  Edge("+cpos()+","+pos(c[i].x,(c[i].y - Node.radius))+")");
 			c[i].drawTree(v);
 		}
 		draw(v);

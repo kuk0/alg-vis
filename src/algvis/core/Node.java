@@ -336,7 +336,9 @@ public class Node {
 		drawKey(v);
 		drawArrow(v);
 		drawArc(v);
-		if (v.output) System.out.println("  Node("+id+","+key+","+x+"+"+y+"*1j)");
+		if (v.output) {
+			System.out.println("  Node("+id+","+key+","+cpos()+","+(marked?1:0)+")");
+		}
 	}
 
 	/**
@@ -449,5 +451,9 @@ public class Node {
 			}
 			break;
 		}
+	}
+	
+	public String cpos() {
+		return "("+x+"+"+y+"*1j)";
 	}
 }

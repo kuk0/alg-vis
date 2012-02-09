@@ -271,7 +271,7 @@ public class BSTNode extends Node {
 				if (v.output) System.out.println("  Edge("+id+","+right.id+")");
 			}
 		}
-		if (getLeft() != null) {
+		if (getLeft() != null && (!v.output || !marked)) {
 			getLeft().drawTree2(v);
 		}
 		if (D instanceof BST && ((BST) D).order) { //  && D.M.S.layout == Layout.SIMPLE
@@ -280,7 +280,7 @@ public class BSTNode extends Node {
 			v.drawLine(x, y, x, -20);
 			v.drawString("" + i, x, -23, 10);
 		}
-		if (getRight() != null) {
+		if (getRight() != null && (!v.output || !marked)) {
 			getRight().drawTree2(v);
 		}
 		draw(v);
