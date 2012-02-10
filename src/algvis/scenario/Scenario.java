@@ -9,25 +9,26 @@ import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
+import algvis.core.VisPanel;
 import algvis.scenario.commands.Command;
 import algvis.scenario.commands.MacroCommand;
+import algvis.scenario.commands.ScenarioCommand;
 
 /**
  * Scenario (or history list) stores list of Commands, which are executed. It
  * enables the world to traverse through the list and save it as XML file.
  */
 public class Scenario implements XMLable {
-	private final String name;
-	private final MacroCommand scenario;
-	private MacroCommand algorithm = null, step = null;
+	private final ScenarioCommand scenario;
+	public final Traverser traverser;
+	private VisPanel V;
 	private boolean addingEnabled = true;
-	private boolean pauses = true;
 	private boolean enabled;
-	private Thread traverser = null;
 
-	public Scenario(String name) {
-		scenario = new MacroCommand(name);
-		this.name = name;
+	public Scenario(VisPanel V, String name) {
+		this.V = V;
+		scenario = new ScenarioCommand(name);
+		traverser = new Traverser();
 		enabled = false;
 	}
 
@@ -39,138 +40,102 @@ public class Scenario implements XMLable {
 		return enabled;
 	}
 
-	public void setPauses(boolean pauses) {
-		this.pauses = pauses;
-	}
-
 	public void enableAdding(boolean e) {
 		addingEnabled = e;
 	}
 
+	public boolean addingEnabled() {
+		return addingEnabled;
+	}
+
 	public void newAlgorithm() {
-		scenario.add(algorithm = new MacroCommand("algorithm"));
+		scenario.add(new MacroCommand<MacroCommand<Command>>("algorithm"));
 	}
 
 	public void newStep() {
-		algorithm.add(step = new MacroCommand("step"));
+		scenario.getCurrent().add(new MacroCommand<Command>("step"));
 	}
 
 	/**
 	 * Appends the command to current step of current algorithm of Scenario.
 	 */
-	public boolean add(Command c) {
-		if (addingEnabled && algorithm != null && step != null) {
-			step.add(c);
-			return true;
-		} else {
-			return false;
+	public void add(Command c) {
+		if (addingEnabled && !scenario.isEmpty()
+				&& !scenario.getCurrent().isEmpty()) {
+			scenario.getCurrent().getCurrent().add(c);
 		}
 	}
 
 	public boolean isAlgorithmRunning() {
-		return (step.hasNext() || algorithm.hasNext())
-				&& (step.hasPrevious() || algorithm.hasPrevious());
+		if (scenario.isEmpty()) {
+			return false;
+		} else {
+			return scenario.getCurrent().hasPrevious()
+					&& scenario.getCurrent().hasNext();
+		}
 	}
 
 	public boolean hasPrevious() {
-		return step.hasPrevious() || algorithm.hasPrevious()
-				|| scenario.hasPrevious();
+		return scenario.hasPrevious();
 	}
 
 	public boolean hasNext() {
-		return step.hasNext() || algorithm.hasNext() || scenario.hasNext();
+		return scenario.hasNext();
 	}
 
-	public void next() {
-		enableAdding(false);
-		if (pauses) {
-			if (step.hasPrevious()) {
-				if (algorithm.hasNext()) {
-					step = (MacroCommand) algorithm.next();
+	public void next(final boolean pauses, boolean visible) {
+		traverser.startNew(new Runnable() {
+			@Override
+			public void run() {
+				enableAdding(false);
+				if (pauses) {
+					scenario.executeOne();
 				} else {
-					algorithm = (MacroCommand) scenario.next();
-					step = (MacroCommand) algorithm.next();
+					scenario.execute();
 				}
-			} else {
-				algorithm.next();
-				scenario.next();
+				V.B.update();
+				enableAdding(true);
 			}
-			step.execute();
-		} else {
-			if (step.hasPrevious()) {
-				if (!algorithm.hasNext()) {
-					algorithm = (MacroCommand) scenario.next();
-				}
-			} else {
-				scenario.next();
-			}
-			algorithm.execute();
-		}
-		enableAdding(true);
+		}, visible);
 	}
 
-	public void previous() {
-		enableAdding(false);
-		if (pauses) {
-			step.unexecute();
-			algorithm.previous();
-			if (algorithm.hasPrevious()) {
-				step = (MacroCommand) algorithm.getPrevious();
-			} else {
-				scenario.previous();
-				if (scenario.hasPrevious()) {
-					algorithm = (MacroCommand) scenario.getPrevious();
-					step = (MacroCommand) algorithm.getPrevious();
+	public void previous(final boolean pauses, boolean visible) {
+		traverser.startNew(new Runnable() {
+			@Override
+			public void run() {
+				enableAdding(false);
+				if (pauses) {
+					scenario.unexecuteOne();
+				} else {
+					scenario.unexecute();
 				}
+				V.B.update();
+				enableAdding(true);
 			}
-		} else {
-			algorithm.unexecute();
-			scenario.previous();
-			if (scenario.hasPrevious()) {
-				algorithm = (MacroCommand) scenario.getPrevious();
-				step = (MacroCommand) algorithm.getPrevious();
-			}
-		}
-		enableAdding(true);
+		}, visible);
 	}
 
-	public void goToStep(int s) {
-		enableAdding(false);
-		algorithm.goTo(s);
-		if (algorithm.hasPrevious()) {
-			step = (MacroCommand) algorithm.getPrevious();
-		}
-		enableAdding(true);
+	/*
+	 * go at position in algorithm before beginning of s-th step
+	 */
+	public void goBeforeStep(final int s, boolean visible) {
+		traverser.startNew(new Runnable() {
+			@Override
+			public void run() {
+				enableAdding(false);
+				try {
+					scenario.getCurrent().goBefore(s);
+				} catch (IndexOutOfBoundsException e) {
+					e.printStackTrace();
+				}
+				V.B.update();
+				enableAdding(true);
+			}
+		}, visible);
 	}
 
 	public int getAlgPos() {
-		return algorithm.getPosIndex();
-	}
-
-	/**
-	 * returns true if new traverser has been started, else returns false
-	 */
-	public boolean startNewTraverser(Thread t) {
-		if (!killTraverser()) {
-			return false;
-		} else {
-			t.start();
-			return true;
-		}
-	}
-
-	public boolean killTraverser() {
-		if (traverser != null) {
-			while (traverser.isAlive()) {
-				traverser.interrupt();
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					return false;
-				}
-			}
-		}
-		return true;
+		return scenario.getCurrent().getPosition();
 	}
 
 	@Override
@@ -186,8 +151,66 @@ public class Scenario implements XMLable {
 			outputStream = new BufferedWriter(new FileWriter(path));
 			outp.output(doc, outputStream);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
+	public class Traverser {
+		private Thread threadInstance = new Thread();
+		private boolean interrupted = false;
+
+		public void startNew(Runnable r, boolean visible) {
+			startNew(new Thread(r), visible);
+		}
+
+		public void startNew(Thread t, boolean visible) {
+			try {
+				setThreadInstance(t);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return;
+			}
+			threadInstance.start();
+			if (!visible) {
+				threadInstance.interrupt();
+				interrupted = true;
+			} else {
+				interrupted = false;
+			}
+		}
+
+		private void setThreadInstance(Thread t) throws Exception {
+			interrupted = true;
+			threadInstance.interrupt();
+			int c = 0;
+			while (threadInstance.isAlive()) {
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				++c;
+				// old thread is alive for more than 2 seconds
+				if (c > 40) {
+					throw new Exception(
+							"Error: Traverser - cannot kill current thread within 2 seconds.");
+				}
+			}
+			threadInstance = t;
+			interrupted = false;
+		}
+
+		public boolean isInterrupted() {
+			return interrupted;
+		}
+
+		public void join() {
+			try {
+				threadInstance.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 }

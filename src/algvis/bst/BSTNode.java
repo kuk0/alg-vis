@@ -78,7 +78,9 @@ public class BSTNode extends Node {
 
 	public void setLevel(int level) {
 		if (this.level != level) {
-			D.scenario.add(new SetLevelCommand(this, level));
+			if (D.scenario.addingEnabled()) {
+				D.scenario.add(new SetLevelCommand(this, level));
+			}
 			this.level = level;
 		}
 	}
@@ -118,7 +120,9 @@ public class BSTNode extends Node {
 				newLeft.setParent(this);
 			}
 			setLeft(newLeft);
-			D.scenario.add(new LinkLeftCommand(this, newLeft, true));
+			if (D.scenario.addingEnabled()) {
+				D.scenario.add(new LinkLeftCommand(this, newLeft, true));
+			}
 		}
 	}
 
@@ -127,7 +131,9 @@ public class BSTNode extends Node {
 	 */
 	public void unlinkLeft() {
 		getLeft().setParent(null);
-		D.scenario.add(new LinkLeftCommand(this, getLeft(), false));
+		if (D.scenario.addingEnabled()) {
+			D.scenario.add(new LinkLeftCommand(this, getLeft(), false));
+		}
 		setLeft(null);
 	}
 
@@ -150,7 +156,9 @@ public class BSTNode extends Node {
 				newRight.setParent(this);
 			}
 			setRight(newRight);
-			D.scenario.add(new LinkRightCommand(this, newRight, true));
+			if (D.scenario.addingEnabled()) {
+				D.scenario.add(new LinkRightCommand(this, newRight, true));
+			}
 		}
 	}
 
@@ -159,7 +167,9 @@ public class BSTNode extends Node {
 	 */
 	public void unlinkRight() {
 		getRight().setParent(null);
-		D.scenario.add(new LinkRightCommand(this, getRight(), false));
+		if (D.scenario.addingEnabled()) {
+			D.scenario.add(new LinkRightCommand(this, getRight(), false));
+		}
 		setRight(null);
 	}
 

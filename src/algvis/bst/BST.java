@@ -1,16 +1,14 @@
 package algvis.bst;
 
-import algvis.core.Commentary.State;
 import algvis.core.Dictionary;
 import algvis.core.Layout;
 import algvis.core.LayoutListener;
 import algvis.core.StringUtils;
 import algvis.core.View;
 import algvis.core.VisPanel;
-import algvis.scenario.commands.SetCommentaryStateCommand;
 import algvis.scenario.commands.bstnode.SetBSTNodeVCommand;
 import algvis.scenario.commands.bstnode.SetBSTRootCommand;
-import algvis.scenario.commands.node.Wait4NodeCommand;
+import algvis.scenario.commands.node.WaitBackwardsCommand;
 
 public class BST extends Dictionary implements LayoutListener { //, ClickListener {
 	public static String dsName = "bst";
@@ -30,18 +28,22 @@ public class BST extends Dictionary implements LayoutListener { //, ClickListene
 
 	public BSTNode setNodeV(BSTNode v) {
 		if (this.v != v) {
-			scenario.add(new SetBSTNodeVCommand(this, v, this.v));
+			if (scenario.addingEnabled()) {
+				scenario.add(new SetBSTNodeVCommand(this, v, this.v));
+			}
 			this.v = v;
 		}
-		if (v != null) {
-			scenario.add(new Wait4NodeCommand(v));
+		if (v != null && scenario.addingEnabled()) {
+			scenario.add(new WaitBackwardsCommand(v));
 		}
 		return v;
 	}
 
 	public BSTNode setRoot(BSTNode root) {
 		if (this.root != root) {
-			scenario.add(new SetBSTRootCommand(this, root, this.root));
+			if (scenario.addingEnabled()) {
+				scenario.add(new SetBSTRootCommand(this, root, this.root));
+			}
 			this.root = root;
 		}
 		return root;
@@ -64,13 +66,12 @@ public class BST extends Dictionary implements LayoutListener { //, ClickListene
 
 	@Override
 	public void clear() {
-		if (root != null || v != null) {
+		if (root != null || v != null || scenario.hasNext()) {
+			scenario.newAlgorithm();
 			scenario.newStep();
 			setRoot(null);
 			setNodeV(null);
-			State commState = M.C.getState();
 			M.C.clear();
-			scenario.add(new SetCommentaryStateCommand(M.C, commState));
 			setStats();
 			M.screen.V.resetView();
 		}

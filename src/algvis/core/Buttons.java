@@ -172,42 +172,24 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		if (evt.getSource() == previous) {
-			D.scenario.startNewTraverser(new Thread(new Runnable() {
-				@Override
-				public void run() {
-					if (D.scenario.hasPrevious()) {
-						D.scenario.previous();
-					}
-					update();
-				}
-			}));
+			disablePrevious();
+			D.scenario.previous(M.pause, true);
 		} else if (evt.getSource() == next) {
-			if (D.scenario.isEnabled()) {
-				D.scenario.startNewTraverser(new Thread(new Runnable() {
-					@Override
-					public void run() {					
-						if (D.scenario.hasNext()) {
-							D.scenario.next();
-							update();
-						} else if (D.A.suspended) {
-							D.next();
-						}
-						// update();
-					}
-				}));
-			} else {
+			if (!D.scenario.isEnabled() || !D.scenario.hasNext()) {
 				D.next();
+			} else {
+				disableNext();
+				D.scenario.next(M.pause, true);
 			}
-			// System.out.println("next");
 			// repaint();
 		} else if (evt.getSource() == clear) {
 			D.clear();
+			update();
 			// repaint();
 		} else if (evt.getSource() == random) {
 			D.random(I.getInt(10));
 		} else if (evt.getSource() == pause) {
 			M.pause = pause.isSelected();
-			D.scenario.setPauses(pause.isSelected());
 		} else if (evt.getSource() == zoomIn) {
 			M.screen.V.zoomIn();
 		} else if (evt.getSource() == zoomOut) {
@@ -220,20 +202,22 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	public void update() {
-		if (D.scenario.isAlgorithmRunning() || D.A.suspended) {
-			disableAll();
-		} else {
-			enableAll();
-		}
-		if (D.scenario.hasNext() || D.A.suspended) {
-			enableNext();
-		} else {
-			disableNext();
-		}
-		if (D.scenario.hasPrevious()) {
-			enablePrevious();
-		} else {
-			disablePrevious();
+		if (D.A != null) {
+			if (D.scenario.isAlgorithmRunning() || D.A.suspended) {
+				disableAll();
+			} else {
+				enableAll();
+			}
+			if (D.scenario.hasNext() || D.A.suspended) {
+				enableNext();
+			} else {
+				disableNext();
+			}
+			if (D.scenario.hasPrevious()) {
+				enablePrevious();
+			} else {
+				disablePrevious();
+			}
 		}
 	}
 

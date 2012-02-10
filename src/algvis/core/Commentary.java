@@ -21,6 +21,7 @@ import javax.swing.text.html.StyleSheet;
 
 import algvis.internationalization.LanguageListener;
 import algvis.internationalization.Languages;
+import algvis.scenario.commands.SetCommentaryStateCommand;
 
 public class Commentary extends JEditorPane implements LanguageListener,
 		HyperlinkListener {
@@ -29,7 +30,6 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	Languages L;
 	JScrollPane sp;
 	private int k = 0, position = 0;
-	// private String text;
 	private List<String> s = new ArrayList<String>(),
 			pre = new ArrayList<String>(), post = new ArrayList<String>();
 	private List<String[]> param = new ArrayList<String[]>();
@@ -57,16 +57,18 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		this.sp = sp;
 		L.addListener(this);
 		addHyperlinkListener(this);
-		clear();
+		setText("<html><body></body></html>");
 	}
 
 	public void clear() {
+		State state = new State(position, s, pre, post, param);
 		position = k = 0;
 		s = new ArrayList<String>();
 		pre = new ArrayList<String>();
 		post = new ArrayList<String>();
 		param = new ArrayList<String[]>();
 		setText("<html><body></body></html>");
+		V.D.scenario.add(new SetCommentaryStateCommand(this, state));
 	}
 
 	private String str(int i) {
@@ -104,7 +106,11 @@ public class Commentary extends JEditorPane implements LanguageListener,
 			}
 		}
 		try {
-			html.setInnerHTML(body, text.toString());
+			if (text.toString().equals("")) {
+				html.setInnerHTML(body, "&nbsp;");
+			} else {
+				html.setInnerHTML(body, text.toString());
+			}
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -113,11 +119,13 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	}
 
 	public void add(String u, String v, String w, String... par) {
+		State state = new State(position, s, pre, post, param);
 		++position;
 		pre.add(u);
 		s.add(v);
 		post.add(w);
 		param.add(par);
+		V.D.scenario.add(new SetCommentaryStateCommand(this, state));
 		update();
 	}
 
@@ -152,19 +160,9 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	public void hyperlinkUpdate(HyperlinkEvent e) {
 		if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
 			if (V.D.scenario.isEnabled()) {
-				final int s = Integer.parseInt(e.getDescription());
-				boolean ok = V.D.scenario.startNewTraverser(new Thread(
-						new Runnable() {
-							@Override
-							public void run() {
-								V.D.scenario.goToStep(s);
-							}
-						}));
-				if (ok) {
-					V.D.scenario.killTraverser();
-					update();
-					V.B.update();
-				}
+				V.D.scenario.goBeforeStep(Integer.parseInt(e.getDescription()),
+						false);
+				V.D.scenario.next(true, true);
 			}
 		} else {
 			Element element = e.getSourceElement();

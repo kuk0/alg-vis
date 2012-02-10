@@ -5,10 +5,10 @@ import org.jdom.Element;
 import algvis.core.Node;
 import algvis.scenario.commands.Command;
 
-public class Wait4NodeCommand implements Command {
+public class WaitBackwardsCommand implements Command {
 	private final Node n;
 
-	public Wait4NodeCommand(Node n) {
+	public WaitBackwardsCommand(Node n) {
 		this.n = n;
 	}
 
@@ -29,6 +29,7 @@ public class Wait4NodeCommand implements Command {
 			try {
 				Thread.sleep(50);
 			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
 				n.x = n.tox;
 				n.y = n.toy;
 				break;

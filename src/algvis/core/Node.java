@@ -93,16 +93,28 @@ public class Node {
 	}
 
 	public void setState(int s) {
-		if (state != s) {
+		if ((s == Node.LEFT || s == Node.RIGHT || s == Node.DOWN)
+				&& D.scenario.traverser.isInterrupted()) {
+			int k = 0;
+			if (s == Node.LEFT) {
+				k = -1;
+			} else if (s == Node.RIGHT) {
+				k = 1;
+			}
+			while (D.M.screen.V.inside(x, y - D.radius)) {
+				toy = y += 20;
+				tox = x += k * 20;
+			}
+		} else if (state != s && D.scenario.addingEnabled()) {
 			D.scenario.add(new SetStateCommand(this, s));
-			state = s;
 		}
+		state = s;
 	}
 
 	public NodeColor getColor() {
 		return color;
 	}
-	
+
 	public void setColor(NodeColor color) {
 		fgColor(color.fgColor);
 		bgColor(color.bgColor);
@@ -111,7 +123,7 @@ public class Node {
 
 	public void fgColor(Color fg) {
 		if (fg != color.fgColor) {
-			if (D != null) {
+			if (D != null && D.scenario.addingEnabled()) {
 				D.scenario.add(new SetFgColorCommand(this, fg));
 			}
 			color = new NodeColor(fg, color.bgColor);
@@ -120,17 +132,17 @@ public class Node {
 
 	public void bgColor(Color bg) {
 		if (bg != color.bgColor) {
-			if (D != null) {
+			if (D != null && D.scenario.addingEnabled()) {
 				D.scenario.add(new SetBgColorCommand(this, bg));
 			}
 			color = new NodeColor(color.fgColor, bg);
 		}
 	}
-	
+
 	public Color getFgColor() {
 		return color.fgColor;
 	}
-	
+
 	public Color getBgColor() {
 		return color.bgColor;
 	}
@@ -145,14 +157,18 @@ public class Node {
 
 	public void mark() {
 		if (!marked) {
-			D.scenario.add(new MarkCommand(this, true));
+			if (D.scenario.addingEnabled()) {
+				D.scenario.add(new MarkCommand(this, true));
+			}
 			marked = true;
 		}
 	}
 
 	public void unmark() {
 		if (marked) {
-			D.scenario.add(new MarkCommand(this, false));
+			if (D.scenario.addingEnabled()) {
+				D.scenario.add(new MarkCommand(this, false));
+			}
 			marked = false;
 		}
 	}
@@ -166,7 +182,9 @@ public class Node {
 		if (dir != w || arrow != Node.DIRARROW) {
 			dir = w;
 			arrow = Node.DIRARROW;
-			D.scenario.add(new ArrowCommand(this, true));
+			if (D.scenario.addingEnabled()) {
+				D.scenario.add(new ArrowCommand(this, true));
+			}
 		}
 	}
 
@@ -179,7 +197,9 @@ public class Node {
 		if (dir != w || arrow != Node.TOARROW) {
 			dir = w;
 			arrow = Node.TOARROW;
-			D.scenario.add(new ArrowCommand(this, true));
+			if (D.scenario.addingEnabled()) {
+				D.scenario.add(new ArrowCommand(this, true));
+			}
 		}
 	}
 
@@ -193,7 +213,9 @@ public class Node {
 		if (dir != null || arrow != angle) {
 			dir = null;
 			arrow = angle;
-			D.scenario.add(new ArrowCommand(this, true));
+			if (D.scenario.addingEnabled()) {
+				D.scenario.add(new ArrowCommand(this, true));
+			}
 		}
 	}
 
@@ -202,7 +224,9 @@ public class Node {
 	 */
 	public void noArrow() {
 		if (dir != null || arrow != Node.NOARROW) {
-			D.scenario.add(new ArrowCommand(this, false));
+			if (D.scenario.addingEnabled()) {
+				D.scenario.add(new ArrowCommand(this, false));
+			}
 			dir = null;
 			arrow = Node.NOARROW;
 		}
@@ -217,7 +241,9 @@ public class Node {
 		if (dir != w || arc == false) {
 			dir = w;
 			arc = true;
-			D.scenario.add(new ArcCommand(this, dir, true));
+			if (D.scenario.addingEnabled()) {
+				D.scenario.add(new ArcCommand(this, dir, true));
+			}
 		}
 	}
 
@@ -227,7 +253,9 @@ public class Node {
 	public void noArc() {
 		if (arc == true) {
 			arc = false;
-			D.scenario.add(new ArcCommand(this, dir, false));
+			if (D.scenario.addingEnabled()) {
+				D.scenario.add(new ArcCommand(this, dir, false));
+			}
 		}
 	}
 
@@ -343,8 +371,13 @@ public class Node {
 	 * Set new coordinates, where the node should go.
 	 */
 	public void goTo(int tox, int toy) {
-		if (this.tox != tox || this.toy != toy) {
-			D.scenario.add(new MoveCommand(this, tox, toy));
+		if (D.scenario.traverser.isInterrupted()) {
+			x = this.tox = tox;
+			y = this.toy = toy;
+		} else if (this.tox != tox || this.toy != toy) {
+			if (D.scenario.addingEnabled()) {
+				D.scenario.add(new MoveCommand(this, tox, toy));
+			}
 			this.tox = tox;
 			this.toy = toy;
 			this.steps = D.M.STEPS;

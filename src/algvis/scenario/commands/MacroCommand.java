@@ -6,97 +6,141 @@ import java.util.ListIterator;
 
 import org.jdom.Element;
 
-public class MacroCommand implements Command {
-	private final List<Command> commands;
-	private final ListIterator<Command> position;
+public class MacroCommand<T extends Command> implements Command {
 	private final String name;
-	private int positionIndex;
+	protected final List<T> commands;
+	protected final ListIterator<T> iterator;
+	protected T current = null;
+	protected int position = -1;
 
 	public MacroCommand(String name) {
-		commands = new ArrayList<Command>();
-		position = commands.listIterator();
+		commands = new ArrayList<T>();
+		iterator = commands.listIterator();
 		this.name = name;
-		positionIndex = -1;
 	}
 
-	public void add(Command c) {
-		// remove all subsequent commands
-		while (position.hasNext()) {
-			position.next();
-			position.remove();
+	public void add(T c) {
+		while (iterator.hasNext()) {
+			iterator.next();
+			iterator.remove();
 		}
-		position.add(c);
-		positionIndex = commands.size() - 1;
+		iterator.add(c);
+		current = c;
+		position = iterator.previousIndex();
 	}
 
-	public Command next() {
-		positionIndex = position.nextIndex();
-		return position.next();
+	public void executeOne() {
+		if (current instanceof MacroCommand
+				&& ((MacroCommand<?>) current).hasNext()) {
+			current.execute();
+			if (iterator.nextIndex() == position) {
+				iterator.next();
+			}
+		} else {
+			position = iterator.nextIndex();
+			current = iterator.next();
+			current.execute();
+		}
 	}
 
-	public Command previous() {
-		positionIndex = position.previousIndex();
-		return position.previous();
+	public void unexecuteOne() {
+		if (current instanceof MacroCommand
+				&& ((MacroCommand<?>) current).hasPrevious()) {
+			current.unexecute();
+			if (iterator.previousIndex() == position) {
+				iterator.previous();
+			}
+		} else {
+			position = iterator.previousIndex();
+			current = iterator.previous();
+			current.unexecute();
+		}
 	}
 
+	/**
+	 * returns true, if macro or submacro has next element
+	 */
 	public boolean hasNext() {
-		return position.hasNext();
+		if (current instanceof MacroCommand) {
+			return ((MacroCommand<?>) current).hasNext() || iterator.hasNext();
+		} else {
+			return iterator.hasNext();
+		}
 	}
 
+	/**
+	 * returns true, if macro or submacro has previous element
+	 */
 	public boolean hasPrevious() {
-		return position.hasPrevious();
+		if (current instanceof MacroCommand) {
+			return ((MacroCommand<?>) current).hasPrevious()
+					|| iterator.hasPrevious();
+		} else {
+			return iterator.hasPrevious();
+		}
 	}
 
-	/**
-	 * This method does not change position! Use previous() to traverse macro!
-	 */
-	public Command getPrevious() {
-		Command result = null;
-		if (position.hasPrevious()) {
-			result = position.previous();
-			position.next();
+	public void goBefore(int p) throws IndexOutOfBoundsException {
+		if (p < 0 || p >= commands.size()) {
+			IndexOutOfBoundsException e = new IndexOutOfBoundsException();
+			throw e;
 		}
-		return result;
+		if (p <= position) {
+			while (p < position) {
+				unexecuteOne();
+			}
+			if (p == position && ((MacroCommand<?>) current).hasPrevious()) {
+				unexecuteOne();
+			}
+		} else {
+			while (p - 1 > position) {
+				executeOne();
+			}
+			if (p - 1 == position && ((MacroCommand<?>) current).hasNext()) {
+				executeOne();
+			}
+		}
 	}
 
-	/**
-	 * This method does not change position! Use next() to traverse macro!
-	 */
-	public Command getNext() {
-		Command result = null;
-		if (position.hasNext()) {
-			result = position.next();
-			position.previous();
-		}
-		return result;
+	public int getPosition() {
+		return position;
 	}
 
-	public int getPosIndex() {
-		return positionIndex;
+	public T getCurrent() {
+		return current;
 	}
 
-	/** go at position after executing step s */
-	public void goTo(int s) {
-		ListIterator<Command> it = commands.listIterator(s);
-		while (position.previousIndex() > it.nextIndex()) {
-			position.previous().unexecute();
-		}
-		while (position.nextIndex() <= it.nextIndex()) {
-			position.next().execute();
-		}
+	public boolean isEmpty() {
+		return current == null;
 	}
 
 	@Override
 	public void execute() {
-		while (position.hasNext()) {
-			position.next().execute();
+		if (current instanceof MacroCommand) {
+			current.execute();
+			if (iterator.nextIndex() == position) {
+				iterator.next();
+			}
+		}
+		while (iterator.hasNext()) {
+			position = iterator.nextIndex();
+			current = iterator.next();
+			current.execute();
 		}
 	}
 
 	@Override
 	public void unexecute() {
-		while (position.hasPrevious()) {
-			position.previous().unexecute();
+		if (current instanceof MacroCommand) {
+			current.unexecute();
+			if (iterator.previousIndex() == position) {
+				iterator.previous();
+			}
+		}
+		while (iterator.hasPrevious()) {
+			position = iterator.previousIndex();
+			current = iterator.previous();
+			current.unexecute();
 		}
 	}
 
@@ -111,5 +155,4 @@ public class MacroCommand implements Command {
 		}
 		return e;
 	}
-
 }

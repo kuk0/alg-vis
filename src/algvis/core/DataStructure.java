@@ -20,7 +20,7 @@ abstract public class DataStructure {
 
 	public DataStructure(VisPanel M, String dsName) {
 		this.M = M;
-		scenario = new Scenario(dsName);
+		scenario = new Scenario(M, dsName);
 	}
 
 	abstract public String getName();

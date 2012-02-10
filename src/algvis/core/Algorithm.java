@@ -1,7 +1,5 @@
 package algvis.core;
 
-import algvis.scenario.commands.SetCommentaryStateCommand;
-
 /**
  * The Class Algorithm. Each visualized data structure consists of data and
  * algorithms (such as insert, delete) that update the data. All such algorithms
@@ -14,13 +12,11 @@ import algvis.scenario.commands.SetCommentaryStateCommand;
 abstract public class Algorithm extends Thread {
 	private DataStructure D;
 	boolean suspended = false;
-	private algvis.core.Commentary.State commentaryState;
 
 	public Algorithm(DataStructure D) {
 		this.D = D;
 		D.scenario.newAlgorithm();
 		D.scenario.newStep();
-		commentaryState = D.M.C.getState();
 	}
 
 	/**
@@ -54,32 +50,22 @@ abstract public class Algorithm extends Thread {
 
 	public void setHeader(String s) {
 		D.M.C.setHeader(s);
-		saveCommentary();
 	}
 
 	public void addNote(String s) {
 		D.M.C.addNote(s);
-		saveCommentary();
 	}
 
 	public void addStep(String s) {
 		D.M.C.addStep(s);
-		saveCommentary();
 	}
 
 	public void addStep(String s, String... par) {
 		D.M.C.addStep(s, par);
-		saveCommentary();
 	}
 
 	public void addStep(String s, int... par) {
 		D.M.C.addStep(s, par);
-		saveCommentary();
-	}
-
-	private void saveCommentary() {
-		D.scenario.add(new SetCommentaryStateCommand(D.M.C, commentaryState));
-		commentaryState = D.M.C.getState();
 	}
 
 	@Override
