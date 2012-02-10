@@ -78,7 +78,7 @@ public class AVLNode extends BSTNode {
 
 		int xx = x - Node.radius, yy = y - Node.radius, dx = 2 * Node.radius, dy = 2 * Node.radius;
 		String b = "";
-		if (getColor() == NodeColor.NORMAL) {
+		if (getBgColor() == NodeColor.NORMAL.bgColor) {
 			V.setColor(Color.ORANGE);
 			switch (bal) {
 			case +2:
