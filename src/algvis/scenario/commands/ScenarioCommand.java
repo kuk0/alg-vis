@@ -22,6 +22,7 @@ public class ScenarioCommand extends
 		if (!current.hasPrevious() && iterator.hasPrevious()) {
 			position = iterator.previousIndex();
 			current = iterator.previous();
+			iterator.next();
 		}
 	}
 
@@ -68,6 +69,7 @@ public class ScenarioCommand extends
 		if (!current.hasPrevious() && iterator.hasPrevious()) {
 			position = iterator.previousIndex();
 			current = iterator.previous();
+			iterator.next();
 		}
 	}
 
