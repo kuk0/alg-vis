@@ -5,16 +5,18 @@ import algvis.core.Layout;
 import algvis.core.View;
 import algvis.core.VisPanel;
 
-public class Splay extends BST {
+public class SplayTree extends BST {
 	public static String dsName = "splaytree";
 	SplayNode root2 = null, vv = null;
+	SplayNode w1 = null, w2 = null;
+
 
 	@Override
 	public String getName() {
 		return "splaytree";
 	}
 
-	public Splay(VisPanel M) {
+	public SplayTree(VisPanel M) {
 		super(M);
 		scenario.enable(false);
 	}
@@ -36,6 +38,13 @@ public class Splay extends BST {
 
 	@Override
 	public void draw(View V) {
+		if (w1 != null && w1.getParent() != null) {
+			V.drawWideLine(w1.x, w1.y, w1.getParent().x, w1.getParent().y);
+		}
+		if (w2 != null && w2.getParent() != null) {
+			V.drawWideLine(w2.x, w2.y, w2.getParent().x, w2.getParent().y);
+		}
+
 		if (root != null) {
 			root.moveTree();
 			root.drawTree(V);
@@ -73,6 +82,12 @@ public class Splay extends BST {
 			v.getRight().calc();
 		}
 		v.calc();
+	}
+
+	@Override
+	public void clear() {
+		super.clear();
+		vv = null;
 	}
 	
 	@Override

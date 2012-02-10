@@ -17,7 +17,7 @@ public class SkipList extends Dictionary {
 	}
 
 	public SkipList(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		M.screen.V.align = Alignment.LEFT;
 		root = new SkipNode(this, -Node.INF);
 		root.linkright(sent = new SkipNode(this, Node.INF));

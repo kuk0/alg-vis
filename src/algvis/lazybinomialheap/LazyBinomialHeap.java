@@ -3,6 +3,7 @@ package algvis.lazybinomialheap;
 import algvis.binomialheap.BinHeapNode;
 import algvis.binomialheap.BinomialHeap;
 import algvis.core.MeldablePQButtons;
+import algvis.core.Node;
 import algvis.core.Pair;
 import algvis.core.View;
 import algvis.core.VisPanel;
@@ -10,6 +11,7 @@ import algvis.core.VisPanel;
 public class LazyBinomialHeap extends BinomialHeap {
 	public static String dsName = "lazybinheap";
 	BinHeapNode[] cleanup;
+	public static int arrayheight = 2 * minsepy;
 
 	@Override
 	public String getName() {
@@ -44,15 +46,16 @@ public class LazyBinomialHeap extends BinomialHeap {
 	public void draw(View V) {
 		super.draw(V);
 		if (cleanup != null && root[active] != null) {
-			int x = root[active].x, y = -4 * (radius + yspan);
+			int x = root[active].x, y = -arrayheight;
 			for (int i = 0; i < cleanup.length; ++i) {
-				V.drawSquare(x, y, radius);
-				V.drawStringTop("" + (1 << i), x, y - radius + 1, 9);
-				if (cleanup[i] != null) {
-					V.drawArrow(x, y, cleanup[i].x, cleanup[i].y - radius
-							- yspan);
+				V.drawSquare(x, y, Node.radius);
+				V.drawStringTop("" + i, x, y - Node.radius + 1, 9);
+				if (cleanup[i] == null) {
+					V.drawLine(x-Node.radius, y+Node.radius, x+Node.radius, y-Node.radius);
+				} else {
+					V.drawArrow(x, y, cleanup[i].x, cleanup[i].y - minsepy + Node.radius);
 				}
-				x += 2 * radius;
+				x += 2 * Node.radius;
 			}
 		}
 	}
@@ -60,6 +63,6 @@ public class LazyBinomialHeap extends BinomialHeap {
 	@Override
 	public void reposition() {
 		super.reposition();
-		M.screen.V.miny = -4 * (radius + yspan) - 50;
+		M.screen.V.miny = -arrayheight - 50;
 	}
 }

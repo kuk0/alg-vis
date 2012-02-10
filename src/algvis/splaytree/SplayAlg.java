@@ -4,17 +4,16 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class SplayAlg extends Algorithm {
-	Splay T;
+	SplayTree T;
 	SplayNode s, v;
 	int K;
 
-	public SplayAlg(Splay T, int x) {
+	public SplayAlg(SplayTree T, int x) {
 		super(T);
 		this.T = T;
 		if (T.root != null) {
 			T.v = s = new SplayNode(T, K = x);
 			s.setColor(NodeColor.FIND);
-			setHeader("splay");
 		}
 	}
 
@@ -51,6 +50,8 @@ public class SplayAlg extends Algorithm {
 
 	public void splay(SplayNode w) {
 		while (!w.isRoot()) {
+			T.w1 = w;
+			T.w2 = w.getParent();
 			if (w.getParent().isRoot()) {
 				addStep("splayroot");
 				w.setArc(w.getParent());
@@ -67,11 +68,14 @@ public class SplayAlg extends Algorithm {
 					w.getParent().setArc(w.getParent().getParent());
 					mysuspend();
 					w.getParent().noArc();
+					T.w2 = w.getParent().getParent();
 					T.rotate(w.getParent());
 					w.setArc(w.getParent());
 					mysuspend();
 					w.noArc();
+					T.w1 = w.getParent();
 					T.rotate(w);
+					mysuspend();
 				} else {
 					if (!w.isLeft()) {
 						addStep("splayzigzagleft");
@@ -85,10 +89,14 @@ public class SplayAlg extends Algorithm {
 					w.setArc(w.getParent());
 					mysuspend();
 					w.noArc();
+					T.w1 = w.getParent();
 					T.rotate(w);
+					mysuspend();
 				}
 			}
 		}
+		T.w1 = null;
+		T.w2 = null;
 		T.root = w;
 	}
 }

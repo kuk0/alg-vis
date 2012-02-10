@@ -194,8 +194,8 @@ public class BNode extends Node {
 		v.c[1] = w;
 		u.width = u._width();
 		w.width = w._width();
-		u.x = x - u.width / 2 - D.radius;
-		w.x = x + w.width / 2 + D.radius;
+		u.x = x - u.width / 2 - Node.radius;
+		w.x = x + w.width / 2 + Node.radius;
 		return v;
 	}
 
@@ -208,7 +208,7 @@ public class BNode extends Node {
 			key[i] = key[i + 1];
 		}
 		width = _width();
-		return new BNode(D, k, x - (numKeys + 1 - 2 * p) * D.radius, y);
+		return new BNode(D, k, x - (numKeys + 1 - 2 * p) * Node.radius, y);
 	}
 
 	public BNode delMin() {
@@ -218,7 +218,7 @@ public class BNode extends Node {
 			key[i] = key[i + 1];
 		}
 		width = _width();
-		return new BNode(D, r, x - (numKeys - 1) * D.radius, y);
+		return new BNode(D, r, x - (numKeys - 1) * Node.radius, y);
 	}
 
 	public BNode delMinCh() {
@@ -232,7 +232,7 @@ public class BNode extends Node {
 	}
 
 	public BNode delMax() {
-		BNode r = new BNode(D, key[--numKeys], x + (numKeys - 1) * D.radius, y);
+		BNode r = new BNode(D, key[--numKeys], x + (numKeys - 1) * Node.radius, y);
 		width = _width();
 		return r;
 	}
@@ -303,18 +303,18 @@ public class BNode extends Node {
 	int _width() {
 		if (key[0] != Node.NOKEY && numKeys > 0) {
 			return Math.max(Fonts.fm[9].stringWidth(toString()) + 4,
-					2 * D.radius);
+					2 * Node.radius);
 		} else {
-			return 2 * D.radius;
+			return 2 * Node.radius;
 		}
 	}
 
 	public int pos(int i) {
 		if (i < 0) {
-			return tox - D.M.screen.V.stringWidth(toString(), 9) / 2 - D.radius;
+			return tox - D.M.screen.V.stringWidth(toString(), 9) / 2 - Node.radius;
 		}
 		if (i >= numKeys) {
-			return tox + D.M.screen.V.stringWidth(toString(), 9) / 2 + D.radius;
+			return tox + D.M.screen.V.stringWidth(toString(), 9) / 2 + Node.radius;
 		}
 		if (numKeys <= 1) {
 			return x;
@@ -333,11 +333,11 @@ public class BNode extends Node {
 	@Override
 	public void drawBg(View V) {
 		V.setColor(getBgColor());
-		V.fillRoundRectangle(x, y, width / 2, D.radius, 2 * D.radius,
-				2 * D.radius);
+		V.fillRoundRectangle(x, y, width / 2, Node.radius, 2 * Node.radius,
+				2 * Node.radius);
 		V.setColor(getFgColor());
-		V.drawRoundRectangle(x, y, width / 2, D.radius, 2 * D.radius,
-				2 * D.radius);
+		V.drawRoundRectangle(x, y, width / 2, Node.radius, 2 * Node.radius,
+				2 * Node.radius);
 		// g.drawLine (x-leftw, y+2, x+rightw, y-2);
 	}
 
@@ -355,7 +355,7 @@ public class BNode extends Node {
 			 * int xx, yy; if (i==0 || i==numChildren-1) { xx = x; yy = y; }
 			 * else { xx = (pos(i-1)+pos(i))/2; yy = y+D.radius; }
 			 */
-			v.drawLine(x, y, c[i].x, c[i].y - D.radius);
+			v.drawLine(x, y, c[i].x, c[i].y - Node.radius);
 			c[i].drawTree(v);
 		}
 		draw(v);
@@ -406,7 +406,7 @@ public class BNode extends Node {
 		if (this.toy > D.y2) {
 			D.y2 = this.toy;
 		}
-		int x = this.tox, x2 = this.tox, y = this.toy + 2 * D.radius
+		int x = this.tox, x2 = this.tox, y = this.toy + 2 * Node.radius
 				+ ((BTree) D).yspan;
 		if (numChildren == 0) {
 			return;
@@ -458,11 +458,11 @@ public class BNode extends Node {
 	}
 
 	public void goAbove(BNode v) {
-		goTo(_goToX(v), v.toy - 2 * D.radius + 2);
+		goTo(_goToX(v), v.toy - 2 * Node.radius + 2);
 	}
 
 	public void goBelow(BNode v) {
-		goTo(_goToX(v), v.toy + 2 * D.radius - 2);
+		goTo(_goToX(v), v.toy + 2 * Node.radius - 2);
 	}
 
 	/*

@@ -15,7 +15,7 @@ public class LazyBinHeapDelete extends Algorithm {
 		super(H);
 		this.H = H;
 		this.i = i;
-		H.cleanup = new BinHeapNode[lg(H.size(i) + 1) + 1];
+		H.cleanup = new BinHeapNode[lg(H.size(i) + 1) + 1]; // TODO: change to rank
 	}
 
 	@Override

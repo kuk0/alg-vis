@@ -22,9 +22,21 @@ public class RBNode extends BSTNode {
 		return (RBNode) super.getLeft();
 	}
 
+	public RBNode getLeft2() {
+		RBNode r = getLeft();
+		if (r == null) return ((RB)D).NULL;
+		else return r;
+	}
+
 	@Override
 	public RBNode getRight() {
 		return (RBNode) super.getRight();
+	}
+
+	public RBNode getRight2() {
+		RBNode r = getRight();
+		if (r == null) return ((RB)D).NULL;
+		else return r;
 	}
 
 	@Override
@@ -64,7 +76,7 @@ public class RBNode extends BSTNode {
 		}
 	}
 
-	public void drawTree2(View v) {
+	public void drawRBTree(View v) {
 		if (((RB) D).mode24) {
 			drawBigNodes(v);
 		}

@@ -84,6 +84,8 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 		}
 		v = v2 = null;
 		setStats();
+		reposition();
+		M.screen.V.resetView();
 	}
 
 	// number of nodes in the i-th heap
@@ -94,7 +96,7 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 		if (w == null)
 			return 0;
 		do {
-			s += w.size;
+			s += (1 << w.rank);
 			w = w.right;
 		} while (w != v);
 		return s;
@@ -118,15 +120,15 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 				if (i > 0) {
 					V.setColor(Color.black);
 					V.drawStringLeft(M.S.L.getString("heap") + " #" + i + ":",
-							root[i].x - radius - 5, root[i].y, 9);
+							root[i].x - Node.radius - 5, root[i].y, 9);
 				}
 				if (min[i] != null) {
 					if (minHeap) {
 						V.drawStringTop(M.S.L.getString("min"), min[i].x,
-								min[i].y - radius - 2, 9);
+								min[i].y - Node.radius - 2, 9);
 					} else {
 						V.drawStringTop(M.S.L.getString("max"), min[i].x,
-								min[i].y - radius - 2, 9);
+								min[i].y - Node.radius - 2, 9);
 					}
 				}
 			}
@@ -149,19 +151,20 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 				if (active == i && root[0] != null) {
 					x0 = x;
 				}
-				maxx = root[i].left.tox + radius;
-				x = maxx + 3 * xspan;
+				maxx = root[i].left.tox + Node.radius;
+				x = maxx + 3 * minsepx;
 				if (maxheight < root[i].left.height) {
 					maxheight = root[i].left.height;
 				}
 			}
 		}
-		maxy = maxheight * (2 * radius + yspan) - yspan;
-		// height*(2*radius+yspan)-radius-yspan je sur. najnizsieho
-		maxy += 4 * (radius + yspan);
+		//  maxy = maxheight * (2 * radius + yspan) - yspan;
+		//  // height*(2*radius+yspan)-radius-yspan je sur. najnizsieho
+		// maxy += 4 * (radius + yspan);
+		maxy = (maxheight + 2) * minsepy;
 		if (root[0] != null) {
 			root[0]._reposition(x0, maxy);
-			maxy += root[0].left.height * (2 * radius + yspan) - yspan;
+			maxy += root[0].left.height * minsepy;
 		}
 		M.screen.V.setBounds(0, 0, maxx, maxy);
 	}

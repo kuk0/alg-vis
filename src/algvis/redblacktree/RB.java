@@ -47,7 +47,7 @@ public class RB extends BST {
 	public void draw(View V) {
 		if (root != null) {
 			root.moveTree();
-			((RBNode) root).drawTree2(V);
+			((RBNode) root).drawRBTree(V);
 		}
 		if (v != null) {
 			v.move();

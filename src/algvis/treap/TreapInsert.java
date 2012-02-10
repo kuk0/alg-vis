@@ -10,7 +10,7 @@ public class TreapInsert extends Algorithm {
 	public TreapInsert(Treap T, int x) {
 		super(T);
 		this.T = T;
-		v = T.v = new TreapNode(T, K = x);
+		T.v = v = new TreapNode(T, K = x);
 		setHeader("insertion");
 	}
 
@@ -22,7 +22,7 @@ public class TreapInsert extends Algorithm {
 			addStep("newroot");
 			mysuspend();
 		} else {
-			TreapNode w = T.root;
+			TreapNode w = (TreapNode)T.root;
 			v.goAboveRoot();
 			addStep("bstinsertstart");
 			mysuspend();

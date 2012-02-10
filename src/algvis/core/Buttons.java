@@ -28,7 +28,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	public VisPanel M;
 	public DataStructure D;
 	public InputField I;
-	IButton previous, next, clear, random, save;
+	public IButton previous, next, clear, random, save;
 	ICheckBox pause;
 	ChLabel stats;
 	JButton zoomIn, zoomOut, resetView;
