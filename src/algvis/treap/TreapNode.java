@@ -6,7 +6,7 @@ import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 
 public class TreapNode extends BSTNode {
-	double p;
+	final double p;
 
 	public TreapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
@@ -36,19 +36,5 @@ public class TreapNode extends BSTNode {
 
 	public void bgPColor() {
 		bgColor(new Color(255, 255 - (int) Math.round(100 * p), 0));
-	}
-
-	public void linkleft(TreapNode v) {
-		setLeft(v);
-		if (v != null) {
-			v.setParent(this);
-		}
-	}
-
-	public void linkright(TreapNode v) {
-		setRight(v);
-		if (v != null) {
-			v.setParent(this);
-		}
 	}
 }

@@ -16,7 +16,6 @@ public class Treap extends BST {
 
 	public Treap(VisPanel M) {
 		super(M);
-		scenario.enable(false);
 	}
 
 	@Override
