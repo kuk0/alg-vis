@@ -10,7 +10,7 @@ public class RBInsert extends Algorithm {
 	public RBInsert(RB T, int x) {
 		super(T);
 		this.T = T;
-		T.v = v = new RBNode(T, K = x);
+		v = (RBNode) T.setNodeV(new RBNode(T, K = x));
 		setHeader("insertion");
 	}
 
@@ -18,7 +18,7 @@ public class RBInsert extends Algorithm {
 	public void run() {
 		RBNode w = (RBNode) T.root;
 		if (T.root == null) {
-			//v.setLeft(v.setRight(v.setParent(T.NULL)));
+			// v.setLeft(v.setRight(v.setParent(T.NULL)));
 			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
@@ -53,7 +53,7 @@ public class RBInsert extends Algorithm {
 				v.goAbove(w);
 				mysuspend();
 			}
-			//v.setLeft(v.setRight(T.NULL));
+			// v.setLeft(v.setRight(T.NULL));
 
 			T.reposition();
 			mysuspend();
@@ -61,19 +61,20 @@ public class RBInsert extends Algorithm {
 			// bubleme nahor
 			w = v;
 			RBNode pw = w.getParent2();
-			while (!w.isRoot() && pw.red) {
+			while (!w.isRoot() && pw.isRed()) {
 				w.mark();
 				boolean isleft = pw.isLeft();
-				RBNode ppw = pw.getParent2(), y = (isleft ? ppw.getRight() : ppw
-						.getLeft());
-				if (y == null) y = T.NULL;
-				if (y.red) {
+				RBNode ppw = pw.getParent2(), y = (isleft ? ppw.getRight()
+						: ppw.getLeft());
+				if (y == null)
+					y = T.NULL;
+				if (y.isRed()) {
 					// case 1
 					addStep("rbinsertcase1");
 					mysuspend();
-					pw.red = false;
-					y.red = false;
-					ppw.red = true;
+					pw.setRed(false);
+					y.setRed(false);
+					ppw.setRed(true);
 					w.unmark();
 					w = ppw;
 					w.mark();
@@ -95,8 +96,8 @@ public class RBInsert extends Algorithm {
 					// case 3
 					addStep("rbinsertcase3");
 					mysuspend();
-					w.red = false;
-					pw.red = true;
+					w.setRed(false);
+					pw.setRed(true);
 					T.rotate(w);
 					mysuspend();
 					w.unmark();
@@ -104,9 +105,10 @@ public class RBInsert extends Algorithm {
 				}
 			}
 		}
-		if (w != null) w.unmark();
-		((RBNode) T.root).red = false;
-		T.v = null;
+		if (w != null)
+			w.unmark();
+		((RBNode) T.root).setRed(false);
+		T.setNodeV(null);
 		T.reposition();
 		addStep("done");
 	}

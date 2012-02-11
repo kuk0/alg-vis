@@ -44,7 +44,7 @@ public class Scenario implements XMLable {
 		addingEnabled = e;
 	}
 
-	public boolean addingEnabled() {
+	public boolean isAddingEnabled() {
 		return addingEnabled;
 	}
 

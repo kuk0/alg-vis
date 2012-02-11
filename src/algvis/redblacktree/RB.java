@@ -18,12 +18,11 @@ public class RB extends BST {
 
 	public RB(VisPanel M) {
 		super(M);
-		scenario.enable(false);
 		NULL = new RBNode(this, Node.NULL);
 		NULL.setParent(NULL);
 		NULL.setRight(NULL);
 		NULL.setLeft(NULL);	
-		NULL.red = false;
+		NULL.setRed(false);
 		NULL.size = NULL.height = NULL.sumh = 0;
 		NULL.state = Node.INVISIBLE;
 	}

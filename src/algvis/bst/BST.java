@@ -29,12 +29,12 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 
 	public BSTNode setNodeV(BSTNode v) {
 		if (this.v != v) {
-			if (scenario.addingEnabled()) {
+			if (scenario.isAddingEnabled()) {
 				scenario.add(new SetBSTNodeVCommand(this, v, this.v));
 			}
 			this.v = v;
 		}
-		if (v != null && scenario.addingEnabled()) {
+		if (v != null && scenario.isAddingEnabled()) {
 			scenario.add(new WaitBackwardsCommand(v));
 		}
 		return v;
@@ -42,7 +42,7 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 
 	public BSTNode setRoot(BSTNode root) {
 		if (this.root != root) {
-			if (scenario.addingEnabled()) {
+			if (scenario.isAddingEnabled()) {
 				scenario.add(new SetBSTRootCommand(this, root, this.root));
 			}
 			this.root = root;

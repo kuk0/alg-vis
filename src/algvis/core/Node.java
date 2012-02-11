@@ -107,7 +107,7 @@ public class Node {
 				toy = y += 20;
 				tox = x += k * 20;
 			}
-		} else if (state != s && D.scenario.addingEnabled()) {
+		} else if (state != s && D.scenario.isAddingEnabled()) {
 			D.scenario.add(new SetStateCommand(this, s));
 		}
 		state = s;
@@ -125,7 +125,7 @@ public class Node {
 
 	public void fgColor(Color fg) {
 		if (fg != color.fgColor) {
-			if (D != null && D.scenario.addingEnabled()) {
+			if (D != null && D.scenario.isAddingEnabled()) {
 				D.scenario.add(new SetFgColorCommand(this, fg));
 			}
 			color = new NodeColor(fg, color.bgColor);
@@ -134,7 +134,7 @@ public class Node {
 
 	public void bgColor(Color bg) {
 		if (bg != color.bgColor) {
-			if (D != null && D.scenario.addingEnabled()) {
+			if (D != null && D.scenario.isAddingEnabled()) {
 				D.scenario.add(new SetBgColorCommand(this, bg));
 			}
 			color = new NodeColor(color.fgColor, bg);
@@ -159,7 +159,7 @@ public class Node {
 
 	public void mark() {
 		if (!marked) {
-			if (D.scenario.addingEnabled()) {
+			if (D.scenario.isAddingEnabled()) {
 				D.scenario.add(new MarkCommand(this, true));
 			}
 			marked = true;
@@ -168,7 +168,7 @@ public class Node {
 
 	public void unmark() {
 		if (marked) {
-			if (D.scenario.addingEnabled()) {
+			if (D.scenario.isAddingEnabled()) {
 				D.scenario.add(new MarkCommand(this, false));
 			}
 			marked = false;
@@ -184,7 +184,7 @@ public class Node {
 		if (dir != w || arrow != Node.DIRARROW) {
 			dir = w;
 			arrow = Node.DIRARROW;
-			if (D.scenario.addingEnabled()) {
+			if (D.scenario.isAddingEnabled()) {
 				D.scenario.add(new ArrowCommand(this, true));
 			}
 		}
@@ -199,7 +199,7 @@ public class Node {
 		if (dir != w || arrow != Node.TOARROW) {
 			dir = w;
 			arrow = Node.TOARROW;
-			if (D.scenario.addingEnabled()) {
+			if (D.scenario.isAddingEnabled()) {
 				D.scenario.add(new ArrowCommand(this, true));
 			}
 		}
@@ -215,7 +215,7 @@ public class Node {
 		if (dir != null || arrow != angle) {
 			dir = null;
 			arrow = angle;
-			if (D.scenario.addingEnabled()) {
+			if (D.scenario.isAddingEnabled()) {
 				D.scenario.add(new ArrowCommand(this, true));
 			}
 		}
@@ -226,7 +226,7 @@ public class Node {
 	 */
 	public void noArrow() {
 		if (dir != null || arrow != Node.NOARROW) {
-			if (D.scenario.addingEnabled()) {
+			if (D.scenario.isAddingEnabled()) {
 				D.scenario.add(new ArrowCommand(this, false));
 			}
 			dir = null;
@@ -243,7 +243,7 @@ public class Node {
 		if (dir != w || arc == false) {
 			dir = w;
 			arc = true;
-			if (D.scenario.addingEnabled()) {
+			if (D.scenario.isAddingEnabled()) {
 				D.scenario.add(new ArcCommand(this, dir, true));
 			}
 		}
@@ -255,7 +255,7 @@ public class Node {
 	public void noArc() {
 		if (arc == true) {
 			arc = false;
-			if (D.scenario.addingEnabled()) {
+			if (D.scenario.isAddingEnabled()) {
 				D.scenario.add(new ArcCommand(this, dir, false));
 			}
 		}
@@ -378,7 +378,7 @@ public class Node {
 			x = this.tox = tox;
 			y = this.toy = toy;
 		} else if (this.tox != tox || this.toy != toy) {
-			if (D.scenario.addingEnabled()) {
+			if (D.scenario.isAddingEnabled()) {
 				D.scenario.add(new MoveCommand(this, tox, toy));
 			}
 			this.tox = tox;
