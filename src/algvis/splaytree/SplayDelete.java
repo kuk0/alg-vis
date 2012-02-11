@@ -50,11 +50,11 @@ public class SplayDelete extends SplayAlg {
 			mysuspend();
 		} else {
 			addStep("splaydelete");
-			T.root2 = w.getLeft();
-			T.root2.setParent(null);
+			T.setRoot2(w.getLeft());
+			T.getRoot2().setParent(null);
 			T.setRoot(w.getRight());
 			T.getRoot().setParent(null);
-			T.vv = s = new SplayNode(T, -Node.INF);
+			T.setVV(s = new SplayNode(T, -Node.INF));
 			s.setColor(NodeColor.FIND);
 			w = w.getRight();
 			s.goTo(w);
@@ -65,7 +65,7 @@ public class SplayDelete extends SplayAlg {
 				mysuspend();
 			}
 			w.setColor(NodeColor.FIND);
-			T.vv = null;
+			T.setVV(null);
 			// splay
 			while (!w.isRoot()) {
 				if (w.getParent().isRoot()) {
@@ -95,13 +95,13 @@ public class SplayDelete extends SplayAlg {
 			addStep("splaydeletelink");
 			T.setRoot(w);
 			w.setColor(NodeColor.NORMAL);
-			w.linkLeft(T.root2);
-			T.root2 = null;
+			w.linkLeft(T.getRoot2());
+			T.setRoot2(null);
 			T.reposition();
 			mysuspend();
 		}
 
 		addStep("done");
-		T.vv = null;
+		T.setVV(null);
 	}
 }

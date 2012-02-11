@@ -5,7 +5,7 @@ import algvis.core.NodeColor;
 public class SplayInsert extends SplayAlg {
 	public SplayInsert(SplayTree T, int x) {
 		super(T, x);
-		T.vv = v = new SplayNode(T, x);
+		T.setVV(v = new SplayNode(T, x));
 		v.setColor(NodeColor.INSERT);
 		setHeader("insertion");
 	}
@@ -47,6 +47,6 @@ public class SplayInsert extends SplayAlg {
 		}
 		addStep("done");
 		v.setColor(NodeColor.NORMAL);
-		T.vv = null;
+		T.setVV(null);
 	}
 }

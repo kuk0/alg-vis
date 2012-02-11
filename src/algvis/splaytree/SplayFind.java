@@ -5,7 +5,7 @@ import algvis.core.NodeColor;
 public class SplayFind extends SplayAlg {
 	public SplayFind(SplayTree T, int x) {
 		super(T, x);
-		T.vv = v = new SplayNode(T, x);
+		T.setVV(v = new SplayNode(T, x));
 		v.setColor(NodeColor.FIND);
 		setHeader("search");
 	}

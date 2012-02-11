@@ -7,8 +7,8 @@ import algvis.core.LayoutListener;
 import algvis.core.StringUtils;
 import algvis.core.View;
 import algvis.core.VisPanel;
-import algvis.scenario.commands.bstnode.SetBSTNodeVCommand;
-import algvis.scenario.commands.bstnode.SetBSTRootCommand;
+import algvis.scenario.commands.bstnode.SetVCommand;
+import algvis.scenario.commands.bstnode.SetRootCommand;
 import algvis.scenario.commands.node.WaitBackwardsCommand;
 
 public class BST extends Dictionary implements LayoutListener, ClickListener {
@@ -35,7 +35,7 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 	public BSTNode setV(BSTNode v) {
 		if (this.v != v) {
 			if (scenario.isAddingEnabled()) {
-				scenario.add(new SetBSTNodeVCommand(this, v, this.v));
+				scenario.add(new SetVCommand(this, v));
 			}
 			this.v = v;
 		}
@@ -52,7 +52,7 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 	public BSTNode setRoot(BSTNode root) {
 		if (this.root != root) {
 			if (scenario.isAddingEnabled()) {
-				scenario.add(new SetBSTRootCommand(this, root, this.root));
+				scenario.add(new SetRootCommand(this, root));
 			}
 			this.root = root;
 		}

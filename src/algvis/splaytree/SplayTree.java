@@ -4,12 +4,17 @@ import algvis.bst.BST;
 import algvis.core.Layout;
 import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.scenario.commands.node.WaitBackwardsCommand;
+import algvis.scenario.commands.splay3.SetRoot2Command;
+import algvis.scenario.commands.splay3.SetVVCommand;
+import algvis.scenario.commands.splay3.SetWCommand;
 
 public class SplayTree extends BST {
 	public static String dsName = "splaytree";
-	SplayNode root2 = null, vv = null;
-	SplayNode w1 = null, w2 = null;
-
+	private SplayNode root2 = null;
+	private SplayNode vv = null;
+	private SplayNode w1 = null;
+	private SplayNode w2 = null;
 
 	@Override
 	public String getName() {
@@ -18,7 +23,61 @@ public class SplayTree extends BST {
 
 	public SplayTree(VisPanel M) {
 		super(M);
-		scenario.enable(false);
+	}
+
+	public SplayNode getRoot2() {
+		return root2;
+	}
+
+	public void setRoot2(SplayNode root2) {
+		if (this.root2 != root2) {
+			if (scenario.isAddingEnabled()) {
+				scenario.add(new SetRoot2Command(this, root2));
+			}
+			this.root2 = root2;
+		}
+	}
+
+	public SplayNode getVV() {
+		return vv;
+	}
+
+	public void setVV(SplayNode vv) {
+		if (this.vv != vv) {
+			if (scenario.isAddingEnabled()) {
+				scenario.add(new SetVVCommand(this, vv));
+			}
+			this.vv = vv;
+		}
+		if (vv != null && scenario.isAddingEnabled()) {
+			scenario.add(new WaitBackwardsCommand(vv));
+		}
+	}
+
+	public SplayNode getW1() {
+		return w1;
+	}
+
+	public void setW1(SplayNode w1) {
+		if (this.w1 != w1) {
+			if (scenario.isAddingEnabled()) {
+				scenario.add(new SetWCommand(this, w1, 1));
+			}
+			this.w1 = w1;
+		}
+	}
+
+	public SplayNode getW2() {
+		return w2;
+	}
+
+	public void setW2(SplayNode w2) {
+		if (this.w2 != w2) {
+			if (scenario.isAddingEnabled()) {
+				scenario.add(new SetWCommand(this, w2, 2));
+			}
+			this.w2 = w2;
+		}
 	}
 
 	@Override
@@ -38,28 +97,30 @@ public class SplayTree extends BST {
 
 	@Override
 	public void draw(View V) {
-		if (w1 != null && w1.getParent() != null) {
-			V.drawWideLine(w1.x, w1.y, w1.getParent().x, w1.getParent().y);
+		if (getW1() != null && getW1().getParent() != null) {
+			V.drawWideLine(getW1().x, getW1().y, getW1().getParent().x, getW1()
+					.getParent().y);
 		}
-		if (w2 != null && w2.getParent() != null) {
-			V.drawWideLine(w2.x, w2.y, w2.getParent().x, w2.getParent().y);
+		if (getW2() != null && getW2().getParent() != null) {
+			V.drawWideLine(getW2().x, getW2().y, getW2().getParent().x, getW2()
+					.getParent().y);
 		}
 
 		if (getRoot() != null) {
 			getRoot().moveTree();
 			getRoot().drawTree(V);
 		}
-		if (root2 != null) {
-			root2.moveTree();
-			root2.drawTree(V);
+		if (getRoot2() != null) {
+			getRoot2().moveTree();
+			getRoot2().drawTree(V);
 		}
 		if (getV() != null) {
 			getV().move();
 			getV().draw(V);
 		}
-		if (vv != null) {
-			vv.move();
-			vv.draw(V);
+		if (getVV() != null) {
+			getVV().move();
+			getVV().draw(V);
 		}
 	}
 
@@ -87,9 +148,9 @@ public class SplayTree extends BST {
 	@Override
 	public void clear() {
 		super.clear();
-		vv = null;
+		setVV(null);
 	}
-	
+
 	@Override
 	public Layout getLayout() {
 		return Layout.COMPACT;
