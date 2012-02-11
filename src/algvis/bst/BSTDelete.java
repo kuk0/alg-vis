@@ -12,14 +12,14 @@ public class BSTDelete extends Algorithm {
 	public BSTDelete(BST T, int x) { // Buttons B,
 		super(T);
 		this.T = T;
-		v = T.setNodeV(new BSTNode(T, K = x));
+		v = T.setV(new BSTNode(T, K = x));
 		v.setColor(NodeColor.DELETE);
 		setHeader("deletion");
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
+		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
 			mysuspend();
@@ -28,7 +28,7 @@ public class BSTDelete extends Algorithm {
 			addStep("notfound");
 			return;
 		} else {
-			BSTNode d = T.root;
+			BSTNode d = T.getRoot();
 			v.goTo(d);
 			addStep("bstdeletestart");
 			mysuspend();
@@ -118,7 +118,7 @@ public class BSTDelete extends Algorithm {
 			} else { // case III - 2 children
 				addStep("bstdeletecase3");
 				BSTNode s = d.getRight();
-				v = T.setNodeV(new BSTNode(T, -Node.INF));
+				v = T.setV(new BSTNode(T, -Node.INF));
 				v.setColor(NodeColor.FIND);
 				v.goTo(s);
 				mysuspend();
@@ -127,7 +127,7 @@ public class BSTDelete extends Algorithm {
 					v.goTo(s);
 					mysuspend();
 				}
-				v = T.setNodeV(s);
+				v = T.setV(s);
 				if (s.isLeft()) {
 					s.getParent().linkLeft(s.getRight());
 				} else {
@@ -147,7 +147,7 @@ public class BSTDelete extends Algorithm {
 				v.linkLeft(d.getLeft());
 				v.linkRight(d.getRight());
 				v.goTo(d);
-				T.setNodeV(d);
+				T.setV(d);
 				d.goDown();
 			} // end case III
 

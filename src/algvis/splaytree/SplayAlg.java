@@ -11,14 +11,14 @@ public class SplayAlg extends Algorithm {
 	public SplayAlg(SplayTree T, int x) {
 		super(T);
 		this.T = T;
-		if (T.root != null) {
-			T.v = s = new SplayNode(T, K = x);
+		if (T.getRoot() != null) {
+			T.setV(s = new SplayNode(T, K = x));
 			s.setColor(NodeColor.FIND);
 		}
 	}
 
 	public SplayNode find(int K) {
-		SplayNode w = (SplayNode) T.root;
+		SplayNode w = (SplayNode) T.getRoot();
 		s.goTo(w);
 		addStep("splaystart");
 		mysuspend();
@@ -42,7 +42,7 @@ public class SplayAlg extends Algorithm {
 			mysuspend();
 		}
 		w.setColor(NodeColor.FIND);
-		T.v = null;
+		T.setV(null);
 		addStep("splayfound");
 		mysuspend();
 		return w;
@@ -97,6 +97,6 @@ public class SplayAlg extends Algorithm {
 		}
 		T.w1 = null;
 		T.w2 = null;
-		T.root = w;
+		T.setRoot(w);
 	}
 }

@@ -18,12 +18,12 @@ public class SetBSTNodeVCommand implements Command {
 
 	@Override
 	public void execute() {
-		T.setNodeV(newV);
+		T.setV(newV);
 	}
 
 	@Override
 	public void unexecute() {
-		T.setNodeV(oldV);
+		T.setV(oldV);
 	}
 
 	@Override

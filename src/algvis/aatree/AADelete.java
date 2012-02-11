@@ -13,14 +13,14 @@ public class AADelete extends Algorithm {
 	public AADelete(AA T, int x) {
 		super(T);
 		this.T = T;
-		v = T.setNodeV(new BSTNode(T, K = x));
+		v = T.setV(new BSTNode(T, K = x));
 		v.setColor(NodeColor.DELETE);
 		setHeader("deletion");
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
+		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
 			mysuspend();
@@ -29,7 +29,7 @@ public class AADelete extends Algorithm {
 			addStep("notfound");
 			return;
 		} else {
-			AANode d = (AANode) T.root;
+			AANode d = (AANode) T.getRoot();
 			v.goTo(d);
 			addStep("bstdeletestart");
 			mysuspend();
@@ -100,7 +100,7 @@ public class AADelete extends Algorithm {
 				addStep("bstdeletecase3");
 				int lev = d.getLevel();
 				AANode s = d.getRight();
-				v = T.setNodeV(new AANode(T, -Node.INF));
+				v = T.setV(new AANode(T, -Node.INF));
 				v.setColor(NodeColor.FIND);
 				v.goTo(s);
 				mysuspend();
@@ -113,7 +113,7 @@ public class AADelete extends Algorithm {
 				if (w == d) {
 					w = s;
 				}
-				v = T.setNodeV(s);
+				v = T.setV(s);
 				if (s.isLeft()) {
 					s.getParent().linkLeft(s.getRight());
 				} else {
@@ -135,7 +135,7 @@ public class AADelete extends Algorithm {
 				v.linkRight(d.getRight());
 				v.goTo(d);
 				v.calc();
-				T.setNodeV(d);
+				T.setV(d);
 				d.goDown();
 			} // end case III
 

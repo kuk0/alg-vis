@@ -11,21 +11,21 @@ public class AAInsert extends Algorithm {
 	public AAInsert(AA T, int x) {
 		super(T);
 		this.T = T;
-		T.v = v = (AANode) T.setNodeV(new AANode(T, K = x));
+		T.setV(v = (AANode) T.setV(new AANode(T, K = x)));
 		v.setColor(NodeColor.INSERT);
 		setHeader("insertion");
 	}
 
 	@Override
 	public void run() {
-		AANode w = (AANode) T.root;
-		if (T.root == null) {
+		AANode w = (AANode) T.getRoot();
+		if (T.getRoot() == null) {
 			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
 			mysuspend();
 			v.setColor(NodeColor.NORMAL);
-			T.setNodeV(null);
+			T.setV(null);
 		} else {
 			v.goAboveRoot();
 			addStep("bstinsertstart");
@@ -62,7 +62,7 @@ public class AAInsert extends Algorithm {
 			mysuspend();
 
 			v.setColor(NodeColor.NORMAL);
-			T.setNodeV(null);
+			T.setV(null);
 			// bubleme nahor
 			while (w != null) {
 				w.mark();

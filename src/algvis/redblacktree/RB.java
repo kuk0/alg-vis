@@ -44,13 +44,13 @@ public class RB extends BST {
 
 	@Override
 	public void draw(View V) {
-		if (root != null) {
-			root.moveTree();
-			((RBNode) root).drawRBTree(V);
+		if (getRoot() != null) {
+			getRoot().moveTree();
+			((RBNode) getRoot()).drawRBTree(V);
 		}
-		if (v != null) {
-			v.move();
-			v.draw(V);
+		if (getV() != null) {
+			getV().move();
+			getV().draw(V);
 		}
 	}
 

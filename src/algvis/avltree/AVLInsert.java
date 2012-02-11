@@ -11,21 +11,21 @@ public class AVLInsert extends Algorithm {
 	public AVLInsert(AVL T, int x) {
 		super(T);
 		this.T = T;
-		v = (AVLNode) T.setNodeV(new AVLNode(T, K = x));
+		v = (AVLNode) T.setV(new AVLNode(T, K = x));
 		v.setColor(NodeColor.INSERT);
 		setHeader("insertion");
 	}
 
 	@Override
 	public void run() {
-		AVLNode w = (AVLNode) T.root;
-		if (T.root == null) {
+		AVLNode w = (AVLNode) T.getRoot();
+		if (T.getRoot() == null) {
 			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
 			mysuspend();
 			v.setColor(NodeColor.NORMAL);
-			T.setNodeV(null);
+			T.setV(null);
 		} else {
 			v.goAboveRoot();
 			addStep("bstinsertstart");
@@ -64,7 +64,7 @@ public class AVLInsert extends Algorithm {
 			mysuspend();
 
 			v.setColor(NodeColor.NORMAL);
-			T.setNodeV(null);
+			T.setV(null);
 			// bubleme nahor
 			while (w != null) {
 				w.mark();

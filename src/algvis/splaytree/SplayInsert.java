@@ -12,8 +12,8 @@ public class SplayInsert extends SplayAlg {
 
 	@Override
 	public void run() {
-		if (T.root == null) {
-			T.root = v;
+		if (T.getRoot() == null) {
+			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
 			mysuspend();
@@ -41,7 +41,7 @@ public class SplayInsert extends SplayAlg {
 				v.linkLeft(w.getLeft());
 				w.setLeft(null);
 			}
-			T.root = v;
+			T.setRoot(v);
 			T.reposition();
 			mysuspend();
 		}

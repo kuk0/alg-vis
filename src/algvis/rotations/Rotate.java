@@ -19,7 +19,7 @@ public class Rotate extends Algorithm {
 
 	@Override
 	public void run() {
-		if (v == T.root) {
+		if (v == T.getRoot()) {
 			// vypis ze to je root...
 			return;
 		}

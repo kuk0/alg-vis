@@ -5,11 +5,12 @@ import algvis.core.Layout;
 import algvis.core.StringUtils;
 import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.scenario.commands.gbnode.SetDelCommand;
 
 public class GBTree extends BST {
 	public static String dsName = "scapegoat";
 	double alpha = 1.01;
-	int del = 0;
+	private int del = 0;
 
 	@Override
 	public String getName() {
@@ -18,7 +19,19 @@ public class GBTree extends BST {
 
 	public GBTree(VisPanel M) {
 		super(M);
-		scenario.enable(false);
+	}
+
+	public int getDel() {
+		return del;
+	}
+
+	public void setDel(int del) {
+		if (this.del != del) {
+			if (scenario.isAddingEnabled()) {
+				scenario.add(new SetDelCommand(this, del));
+			}
+			this.del = del;
+		}
 	}
 
 	@Override
@@ -38,54 +51,59 @@ public class GBTree extends BST {
 
 	@Override
 	public void clear() {
-		del = 0;
 		super.clear();
+		setDel(0);
 	}
 
 	@Override
 	public void draw(View V) {
-		if (root != null) {
-			root.moveTree();
-			root.drawTree(V);
+		if (getRoot() != null) {
+			getRoot().moveTree();
+			getRoot().drawTree(V);
 		}
-		if (v != null) {
-			v.move();
-			v.draw(V);
+		if (getV() != null) {
+			getV().move();
+			getV().draw(V);
 		}
 	}
 
 	@Override
 	public String stats() {
-		if (root == null) {
+		if (getRoot() == null) {
 			return "#" + M.S.L.getString("nodes") + ": 0;   #"
 					+ M.S.L.getString("deleted") + ": 0;   "
 					+ M.S.L.getString("height") + ": 0 =  1.00\u00b7"
 					+ M.S.L.getString("opt") + ";   "
 					+ M.S.L.getString("avedepth") + ": 0";
 		} else {
-			root.calcTree();
+			getRoot().calcTree();
 			return "#"
 					+ M.S.L.getString("nodes")
 					+ ": "
-					+ root.size
+					+ getRoot().size
 					+ ";   #"
 					+ M.S.L.getString("deleted")
 					+ ": "
-					+ del
+					+ getDel()
 					+ ";   "
 					+ M.S.L.getString("height")
 					+ ": "
-					+ root.height
+					+ getRoot().height
 					+ " = "
 					+ StringUtils
-							.format(root.height
-									/ (Math.floor(lg(root.size - del)) + 1), 2,
-									5) + "\u00b7" + M.S.L.getString("opt")
-					+ ";   " + M.S.L.getString("avedepth") + ": "
-					+ StringUtils.format(root.sumh / (double) root.size, 2, -5);
+							.format(getRoot().height
+									/ (Math.floor(lg(getRoot().size - getDel())) + 1),
+									2, 5)
+					+ "\u00b7"
+					+ M.S.L.getString("opt")
+					+ ";   "
+					+ M.S.L.getString("avedepth")
+					+ ": "
+					+ StringUtils.format(getRoot().sumh
+							/ (double) getRoot().size, 2, -5);
 		}
 	}
-	
+
 	@Override
 	public Layout getLayout() {
 		return Layout.COMPACT;

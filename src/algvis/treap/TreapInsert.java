@@ -10,19 +10,19 @@ public class TreapInsert extends Algorithm {
 	public TreapInsert(Treap T, int x) {
 		super(T);
 		this.T = T;
-		T.v = v = new TreapNode(T, K = x);
+		T.setV(v = new TreapNode(T, K = x));
 		setHeader("insertion");
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
-			T.root = v;
+		if (T.getRoot() == null) {
+			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
 			mysuspend();
 		} else {
-			TreapNode w = (TreapNode)T.root;
+			TreapNode w = (TreapNode)T.getRoot();
 			v.goAboveRoot();
 			addStep("bstinsertstart");
 			mysuspend();
@@ -62,6 +62,6 @@ public class TreapInsert extends Algorithm {
 			}
 		}
 		addStep("done");
-		T.v = null;
+		T.setV(null);
 	}
 }

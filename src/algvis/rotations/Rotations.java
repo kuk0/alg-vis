@@ -33,7 +33,7 @@ public class Rotations extends DataStructure implements ClickListener {
 	}
 
 	public void rotate(int x) {
-		v = T.root;
+		v = T.getRoot();
 		while (v != null && v.key != x) {
 			if (v.key < x) {
 				v = v.getRight();
@@ -47,15 +47,15 @@ public class Rotations extends DataStructure implements ClickListener {
 		} else {
 			start(new Rotate(this, v));
 		}
-		T.root.calcTree();
+		T.getRoot().calcTree();
 	}
 
 	@Override
 	public void insert(int x) {
 		BSTNode v = new BSTNode(T, x);
-		BSTNode w = T.root;
+		BSTNode w = T.getRoot();
 		if (w == null) {
-			T.root = v;
+			T.setRoot(v);
 		} else {
 			while (true) {
 				if (w.key == x) {
@@ -82,7 +82,7 @@ public class Rotations extends DataStructure implements ClickListener {
 
 	@Override
 	public void clear() {
-		T.root = null;
+		T.setRoot(null);
 	}
 
 	@Override
@@ -90,15 +90,15 @@ public class Rotations extends DataStructure implements ClickListener {
 		if (v != null && v.getParent() != null) {
 			V.drawWideLine(v.x, v.y, v.getParent().x, v.getParent().y);
 		}
-		if (T.root != null) {
-			T.root.moveTree();
-			T.root.drawTree(V);
+		if (T.getRoot() != null) {
+			T.getRoot().moveTree();
+			T.getRoot().drawTree(V);
 		}
 	}
 	
 	public void reposition() {
 		T.reposition();
-		T.root.repos(T.root.leftw, 0);
+		T.getRoot().repos(T.getRoot().leftw, 0);
 		M.screen.V.setBounds(T.x1, T.y1, T.x2, T.y2);
 	}
 	
@@ -115,16 +115,16 @@ public class Rotations extends DataStructure implements ClickListener {
 		for (int i = 0; i < n; ++i) {
 			insert(g.nextInt(InputField.MAX + 1));
 		}
-		T.root.calcTree();
+		T.getRoot().calcTree();
 		//M.screen.V.resetView();
 		M.pause = p;
 	}
 
 	@Override
 	public void mouseClicked(int x, int y) {
-		if (T.root == null)
+		if (T.getRoot() == null)
 			return;
-		BSTNode v = T.root.find(x, y);
+		BSTNode v = T.getRoot().find(x, y);
 		if (v != null) {
 			if (v.marked) {
 				v.unmark();

@@ -12,7 +12,7 @@ public class SplayFind extends SplayAlg {
 
 	@Override
 	public void run() {
-		if (T.root == null) {
+		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("bstfindempty");
 			mysuspend();

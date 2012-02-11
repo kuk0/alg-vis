@@ -10,14 +10,14 @@ public class RBInsert extends Algorithm {
 	public RBInsert(RB T, int x) {
 		super(T);
 		this.T = T;
-		v = (RBNode) T.setNodeV(new RBNode(T, K = x));
+		v = (RBNode) T.setV(new RBNode(T, K = x));
 		setHeader("insertion");
 	}
 
 	@Override
 	public void run() {
-		RBNode w = (RBNode) T.root;
-		if (T.root == null) {
+		RBNode w = (RBNode) T.getRoot();
+		if (T.getRoot() == null) {
 			// v.setLeft(v.setRight(v.setParent(T.NULL)));
 			T.setRoot(v);
 			v.goToRoot();
@@ -107,8 +107,8 @@ public class RBInsert extends Algorithm {
 		}
 		if (w != null)
 			w.unmark();
-		((RBNode) T.root).setRed(false);
-		T.setNodeV(null);
+		((RBNode) T.getRoot()).setRed(false);
+		T.setV(null);
 		T.reposition();
 		addStep("done");
 	}

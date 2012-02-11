@@ -13,7 +13,8 @@ import algvis.scenario.commands.node.WaitBackwardsCommand;
 
 public class BST extends Dictionary implements LayoutListener, ClickListener {
 	public static String dsName = "bst";
-	public BSTNode root = null, v = null;
+	private BSTNode root = null;
+	private BSTNode v = null;
 	public boolean order = false;
 
 	@Override
@@ -27,7 +28,11 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 		M.screen.V.setDS(this);
 	}
 
-	public BSTNode setNodeV(BSTNode v) {
+	public BSTNode getV() {
+		return v;
+	}
+
+	public BSTNode setV(BSTNode v) {
 		if (this.v != v) {
 			if (scenario.isAddingEnabled()) {
 				scenario.add(new SetBSTNodeVCommand(this, v, this.v));
@@ -38,6 +43,10 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 			scenario.add(new WaitBackwardsCommand(v));
 		}
 		return v;
+	}
+
+	public BSTNode getRoot() {
+		return root;
 	}
 
 	public BSTNode setRoot(BSTNode root) {
@@ -67,11 +76,11 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 
 	@Override
 	public void clear() {
-		if (root != null || v != null || scenario.hasNext()) {
+		if (getRoot() != null || getV() != null || scenario.hasNext()) {
 			scenario.newAlgorithm();
 			scenario.newStep();
 			setRoot(null);
-			setNodeV(null);
+			setV(null);
 			M.C.clear();
 			setStats();
 			reposition();
@@ -81,27 +90,27 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 
 	@Override
 	public String stats() {
-		if (root == null) {
+		if (getRoot() == null) {
 			return M.S.L.getString("size") + ": 0;   "
 					+ M.S.L.getString("height") + ": 0 =  1.00\u00b7"
 					+ M.S.L.getString("opt") + ";   "
 					+ M.S.L.getString("avedepth") + ": 0";
 		} else {
-			root.calcTree();
+			getRoot().calcTree();
 			return M.S.L.getString("size")
 					+ ": "
-					+ root.size
+					+ getRoot().size
 					+ ";   "
 					+ M.S.L.getString("height")
 					+ ": "
-					+ root.height
+					+ getRoot().height
 					+ " = "
 					+ StringUtils
-							.format(root.height
-									/ (Math.floor(lg(root.size)) + 1), 2, 5)
+							.format(getRoot().height
+									/ (Math.floor(lg(getRoot().size)) + 1), 2, 5)
 					+ "\u00b7" + M.S.L.getString("opt") + ";   "
 					+ M.S.L.getString("avedepth") + ": "
-					+ StringUtils.format(root.sumh / (double) root.size, 2, -5);
+					+ StringUtils.format(getRoot().sumh / (double) getRoot().size, 2, -5);
 		}
 	}
 
@@ -111,13 +120,13 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 	 */
 	@Override
 	public void draw(View V) {
-		if (root != null) {
-			root.moveTree();
-			root.drawTree(V);
+		if (getRoot() != null) {
+			getRoot().moveTree();
+			getRoot().drawTree(V);
 		}
-		if (v != null) {
-			v.move();
-			v.draw(V);
+		if (getV() != null) {
+			getV().move();
+			getV().draw(V);
 		}
 	}
 
@@ -185,8 +194,8 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 	 */
 	public void reposition() {
 		x1 = x2 = y1 = y2 = 0;
-		if (root != null) {
-			root.reposition();
+		if (getRoot() != null) {
+			getRoot().reposition();
 		}
 		M.screen.V.setBounds(x1, y1, x2, y2);
 	}
@@ -197,8 +206,8 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 	}
 	
 	public void mouseClicked(int x, int y) {
-		if (root != null) {
-			BSTNode w = root.find(x, y);
+		if (getRoot() != null) {
+			BSTNode w = getRoot().find(x, y);
 			if (w != null) {
 				//w.markSubtree = true;
 				M.B.I.setText(""+w.key);
