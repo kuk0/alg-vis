@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 import algvis.core.View;
 
 public class SkipNode extends Node {
@@ -102,6 +103,30 @@ public class SkipNode extends Node {
 		}
 		if (right != null) {
 			right._reposition();
+		}
+	}
+
+	public SkipNode find(int x, int y) {
+		if (inside(x, y))
+			return this;
+		if (left == null && down != null) {
+			SkipNode tmp = down.find(x, y);
+			if (tmp != null)
+				return tmp;
+		}
+		if (right != null) {
+			return right.find(x, y);
+		}
+		return null;
+	}
+	
+	public void succColor(NodeColor color, boolean first, int k) {
+		setColor(color);
+		if (right != null && right.key < k) {
+			right.succColor(color, false, k);
+		}
+		if (down != null && first) {
+			down.succColor(color, first, k);
 		}
 	}
 }
