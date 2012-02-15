@@ -104,4 +104,19 @@ public class SkipNode extends Node {
 			right._reposition();
 		}
 	}
+
+	public SkipNode find(int x, int y) {
+		if (inside(x, y))
+			return this;
+		if (left == null && down != null) {
+			SkipNode tmp = down.find(x, y);
+			if (tmp != null)
+				return tmp;
+		}
+		if (right != null) {
+			return right.find(x, y);
+		}
+		return null;
+	}
+
 }

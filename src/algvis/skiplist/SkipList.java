@@ -1,12 +1,13 @@
 package algvis.skiplist;
 
 import algvis.core.Alignment;
+import algvis.core.ClickListener;
 import algvis.core.Dictionary;
 import algvis.core.Node;
 import algvis.core.View;
 import algvis.core.VisPanel;
 
-public class SkipList extends Dictionary {
+public class SkipList extends Dictionary implements ClickListener {
 	public static String dsName = "skiplist";
 	SkipNode root, sent, v = null;
 	int height = 1, n = 0, e = 0;
@@ -18,6 +19,7 @@ public class SkipList extends Dictionary {
 
 	public SkipList(VisPanel M) {
 		super(M);
+		M.screen.V.setDS(this);
 		M.screen.V.align = Alignment.LEFT;
 		root = new SkipNode(this, -Node.INF);
 		root.linkright(sent = new SkipNode(this, Node.INF));
@@ -81,4 +83,14 @@ public class SkipList extends Dictionary {
 		root._reposition();
 		M.screen.V.setBounds(x1, y1, x2, y2);
 	}
+
+	public void mouseClicked(int x, int y) {
+		if (root != null) {
+			Node w = root.find(x, y);
+			if (w != null) {
+				M.B.I.setText("" + w.key);
+			}
+		}
+	}
+
 }
