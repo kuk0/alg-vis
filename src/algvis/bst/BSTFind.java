@@ -45,6 +45,8 @@ public class BSTFind extends Algorithm {
 					addStep("bstfindright", K, w.key);
 					mysuspend();
 					v.noArrow();
+					w.setColor(NodeColor.DARKER);
+					if (w.getLeft() != null) w.getLeft().subtreeColor(NodeColor.DARKER);
 					w = w.getRight();
 					if (w != null) {
 						v.goAbove(w);
@@ -63,6 +65,8 @@ public class BSTFind extends Algorithm {
 					addStep("bstfindleft", K, w.key);
 					mysuspend();
 					v.noArrow();
+					w.setColor(NodeColor.DARKER);
+					if (w.getRight() != null) w.getRight().subtreeColor(NodeColor.DARKER);
 					w = w.getLeft();
 					if (w != null) {
 						v.goAbove(w);
@@ -76,5 +80,8 @@ public class BSTFind extends Algorithm {
 				mysuspend();
 			}
 		}
+		mysuspend();
+		T.getRoot().subtreeColor(NodeColor.NORMAL);
+		T.setV(null);
 	}
 }
