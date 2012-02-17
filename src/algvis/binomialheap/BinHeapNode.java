@@ -9,7 +9,7 @@ import algvis.core.Node;
 import algvis.core.View;
 
 public class BinHeapNode extends Node {
-	public int leftw, height, size, rank; // TODO: size -> rank (treba ale
+	public int leftw, height, rank; // TODO: size -> rank (treba ale
 											// zmenit aj pomocne upratovacie
 											// pole....)
 	public BinHeapNode parent, left, right, child;
@@ -22,7 +22,6 @@ public class BinHeapNode extends Node {
 		this.y = toy = y;
 		parent = child = null;
 		left = right = this;
-		size = 1;
 		rank = 0;
 		steps = 0;
 		bgKeyColor();
@@ -74,7 +73,6 @@ public class BinHeapNode extends Node {
 		}
 		v.parent = this;
 		child = v;
-		size += v.size;
 		++height;
 		++rank;
 	}
@@ -107,14 +105,14 @@ public class BinHeapNode extends Node {
 
 	public void rebox() {
 		if (isLeaf()) {
-			leftw = D.radius + D.xspan;
+			leftw = DataStructure.minsepx / 2;
 			height = 1;
 		} else {
 			leftw = child.leftw;
 			height = child.height + 1;
 			BinHeapNode w = child, v = child.right;
 			while (v != w) {
-				leftw += D.radius + v.leftw;
+				leftw += Node.radius + v.leftw;
 				v = v.right;
 			}
 		}
@@ -133,10 +131,10 @@ public class BinHeapNode extends Node {
 	private void repos(int x, int y, BinHeapNode first) {
 		goTo(x + leftw, y);
 		if (!isLeaf()) {
-			child.repos(x, y + 2 * (D.radius + D.yspan), child);
+			child.repos(x, y + DataStructure.minsepy, child);
 		}
 		if (right != first) {
-			right.repos(x + leftw + D.radius, y, first);
+			right.repos(x + leftw + Node.radius, y, first);
 		}
 	}
 
@@ -235,10 +233,10 @@ public class BinHeapNode extends Node {
 		}
 		drawBg(v);
 		drawKey(v);
-		// if (parent == null) {
-		v.setColor(Color.black);
-		v.drawString("" + rank, x + D.radius, y - D.radius, 8);
-		// }
+		if (parent == null) {
+			v.setColor(Color.black);
+			v.drawString("" + rank, x + Node.radius, y - Node.radius, 8);
+		}
 	}
 
 	public BinHeapNode find(BinHeapNode first, int x, int y) {

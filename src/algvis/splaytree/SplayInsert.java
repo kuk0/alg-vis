@@ -3,17 +3,17 @@ package algvis.splaytree;
 import algvis.core.NodeColor;
 
 public class SplayInsert extends SplayAlg {
-	public SplayInsert(Splay T, int x) {
+	public SplayInsert(SplayTree T, int x) {
 		super(T, x);
-		T.vv = v = new SplayNode(T, x);
+		T.setVV(v = new SplayNode(T, x));
 		v.setColor(NodeColor.INSERT);
+		setHeader("insertion");
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
-			setHeader("insertion");
-			T.root = v;
+		if (T.getRoot() == null) {
+			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
 			mysuspend();
@@ -22,7 +22,6 @@ public class SplayInsert extends SplayAlg {
 			SplayNode w = find(K);
 			splay(w);
 
-			setHeader("insertion");
 			w.setColor(NodeColor.NORMAL);
 			if (w.key == K) {
 				addStep("alreadythere");
@@ -42,12 +41,12 @@ public class SplayInsert extends SplayAlg {
 				v.linkLeft(w.getLeft());
 				w.setLeft(null);
 			}
-			T.root = v;
+			T.setRoot(v);
 			T.reposition();
 			mysuspend();
 		}
 		addStep("done");
 		v.setColor(NodeColor.NORMAL);
-		T.vv = null;
+		T.setVV(null);
 	}
 }

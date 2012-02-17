@@ -11,14 +11,14 @@ public class BSTFind extends Algorithm {
 	public BSTFind(BST T, int x) {
 		super(T);
 		this.T = T;
-		v = T.setNodeV(new BSTNode(T, K = x));
+		v = T.setV(new BSTNode(T, K = x));
 		v.setColor(NodeColor.FIND);
 		setHeader("search");
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
+		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
 			mysuspend();
@@ -26,7 +26,7 @@ public class BSTFind extends Algorithm {
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
 		} else {
-			BSTNode w = T.root;
+			BSTNode w = T.getRoot();
 			v.goAbove(w);
 			addStep("bstfindstart");
 			mysuspend();
@@ -76,6 +76,5 @@ public class BSTFind extends Algorithm {
 				mysuspend();
 			}
 		}
-		finish();
 	}
 }

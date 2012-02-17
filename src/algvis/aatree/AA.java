@@ -37,7 +37,7 @@ public class AA extends BST {
 
 	public void setMode23(boolean set) {
 		mode23 = set;
-		scenario.addingNextStep();
+		scenario.newStep();
 		reposition();
 	}
 
@@ -68,13 +68,13 @@ public class AA extends BST {
 
 	@Override
 	public void draw(View V) {
-		if (root != null) {
-			root.moveTree();
-			((AANode) root).drawTree2(V);
+		if (getRoot() != null) {
+			getRoot().moveTree();
+			((AANode) getRoot()).drawTree2(V);
 		}
-		if (v != null) {
-			v.move();
-			v.draw(V);
+		if (getV() != null) {
+			getV().move();
+			getV().draw(V);
 		}
 	}
 	

@@ -6,36 +6,36 @@ import algvis.bst.BST;
 import algvis.bst.BSTNode;
 import algvis.scenario.commands.Command;
 
-public class SetBSTNodeVCommand implements Command {
+public class SetVCommand implements Command {
 	private final BST T;
 	private final BSTNode newV, oldV;
 
-	public SetBSTNodeVCommand(BST T, BSTNode newV, BSTNode oldV) {
+	public SetVCommand(BST T, BSTNode newV) {
 		this.T = T;
+		oldV = T.getV();
 		this.newV = newV;
-		this.oldV = oldV;
 	}
 
 	@Override
 	public void execute() {
-		T.setNodeV(newV);
+		T.setV(newV);
 	}
 
 	@Override
 	public void unexecute() {
-		T.setNodeV(oldV);
+		T.setV(oldV);
 	}
 
 	@Override
 	public Element getXML() {
-		Element e = new Element("setNodeV");
+		Element e = new Element("setV");
 		if (newV != null) {
-			e.setAttribute("newKey", Integer.toString(newV.key));
+			e.setAttribute("newVKey", Integer.toString(newV.key));
 		} else {
 			e.setAttribute("newV", "null");
 		}
 		if (oldV != null) {
-			e.setAttribute("oldKey", Integer.toString(oldV.key));
+			e.setAttribute("oldVKey", Integer.toString(oldV.key));
 		} else {
 			e.setAttribute("oldV", "null");
 		}

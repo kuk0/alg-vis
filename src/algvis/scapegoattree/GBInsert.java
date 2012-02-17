@@ -11,26 +11,26 @@ public class GBInsert extends GBAlg {
 
 	@Override
 	public void run() {
-		if (T.root == null) {
-			T.root = v;
+		if (T.getRoot() == null) {
+			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
 			mysuspend();
 			v.setColor(NodeColor.NORMAL);
 		} else {
-			GBNode w = (GBNode) T.root;
+			GBNode w = (GBNode) T.getRoot();
 			v.goAboveRoot();
 			addStep("bstinsertstart");
 			mysuspend();
 
 			while (true) {
 				if (w.key == K) {
-					if (w.deleted) {
+					if (w.isDeleted()) {
 						addStep("gbinsertunmark");
-						w.deleted = false;
+						w.setDeleted(false);
 						w.setColor(NodeColor.NORMAL);
-						--T.del;
-						T.v = null;
+						T.setDel(T.getDel() - 1);
+						T.setV(null);
 					} else {
 						addStep("alreadythere");
 						v.goDown();
@@ -82,21 +82,21 @@ public class GBInsert extends GBAlg {
 				while (r != null) {
 					if (r.getLeft() == null) {
 						r.unmark();
-						if (r.deleted) {
-							--T.del;
+						if (r.isDeleted()) {
+							T.setDel(T.getDel() - 1);
 							if (b == r) {
 								b = r.getRight();
 							}
-							T.v = r;
+							T.setV(r);
 							if (r.getParent() == null) {
-								T.root = r = r.getRight();
+								r = (GBNode) T.setRoot(r.getRight());
 								if (r != null) {
 									r.setParent(null);
 								}
 							} else {
 								r.getParent().linkRight(r = r.getRight());
 							}
-							T.v.goDown();
+							T.getV().goDown();
 						} else {
 							r = r.getRight();
 							++s;
@@ -134,6 +134,6 @@ public class GBInsert extends GBAlg {
 		}
 		T.reposition();
 		addStep("done");
-		T.v = null;
+		T.setV(null);
 	}
 }

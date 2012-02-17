@@ -1,17 +1,17 @@
 package algvis.core;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JEditorPane;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
@@ -21,14 +21,15 @@ import javax.swing.text.html.StyleSheet;
 
 import algvis.internationalization.LanguageListener;
 import algvis.internationalization.Languages;
+import algvis.scenario.commands.SetCommentaryStateCommand;
 
 public class Commentary extends JEditorPane implements LanguageListener,
 		HyperlinkListener {
 	private static final long serialVersionUID = 9023200331860482960L;
+	private VisPanel V;
 	Languages L;
 	JScrollPane sp;
 	private int k = 0, position = 0;
-	// private String text;
 	private List<String> s = new ArrayList<String>(),
 			pre = new ArrayList<String>(), post = new ArrayList<String>();
 	private List<String[]> param = new ArrayList<String[]>();
@@ -39,8 +40,9 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		StyleConstants.setBackground(hoverAttr, new Color(0xDB, 0xF1, 0xF9)); // #DBF1F9
 	}
 
-	public Commentary(Languages L, JScrollPane sp) {
+	public Commentary(VisPanel V, Languages L, JScrollPane sp) {
 		super();
+		this.V = V;
 		setContentType("text/html; charset=iso-8859-2");
 		setEditable(false);
 		Font font = UIManager.getFont("Label.font");
@@ -55,17 +57,18 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		this.sp = sp;
 		L.addListener(this);
 		addHyperlinkListener(this);
-		clear();
+		setText("<html><body></body></html>");
 	}
 
 	public void clear() {
-		// text = "";
+		State state = new State(position, s, pre, post, param);
 		position = k = 0;
 		s = new ArrayList<String>();
 		pre = new ArrayList<String>();
 		post = new ArrayList<String>();
 		param = new ArrayList<String[]>();
 		setText("<html><body></body></html>");
+		V.D.scenario.add(new SetCommentaryStateCommand(this, state));
 	}
 
 	private String str(int i) {
@@ -76,31 +79,21 @@ public class Commentary extends JEditorPane implements LanguageListener,
 				+ post.get(i);
 	}
 
-	private void scrollDown() {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				final JScrollBar v = sp.getVerticalScrollBar();
-				v.setValue(v.getMaximum() - v.getVisibleAmount());
-			}
-		});
-	}
-
 	@Override
 	public void languageChanged() {
-		StringBuffer text = new StringBuffer("");
-		for (int i = 0; i < position; ++i)
-			text.append(str(i));
-		setText(text.toString());
-		scrollDown();
+		update();
 	}
 
-	public void add(String u, String v, String w, String... par) {
-		++position;
-		pre.add(u);
-		s.add(v);
-		post.add(w);
-		param.add(par);
+	public synchronized void update() {
+		StringBuffer text = new StringBuffer("");
+		for (int i = 0; i < s.size(); ++i) {
+			if (i == position - 1) {
+				text.append("<B>" + str(i) + "</B");
+			} else {
+				text.append(str(i));
+			}
+		}
+
 		HTMLDocument html = (HTMLDocument) getDocument();
 		Element body = null;
 		Element[] roots = html.getRootElements();
@@ -113,12 +106,27 @@ public class Commentary extends JEditorPane implements LanguageListener,
 			}
 		}
 		try {
-			html.insertBeforeEnd(body, str(s.size() - 1));
-		} catch (Exception e) {
+			if (text.toString().equals("")) {
+				html.setInnerHTML(body, "&nbsp;");
+			} else {
+				html.setInnerHTML(body, text.toString());
+			}
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		// text += str(s.size() - 1);
-		// super.setText(text);
-		scrollDown();
+	}
+
+	public void add(String u, String v, String w, String... par) {
+		State state = new State(position, s, pre, post, param);
+		++position;
+		pre.add(u);
+		s.add(v);
+		post.add(w);
+		param.add(par);
+		V.D.scenario.add(new SetCommentaryStateCommand(this, state));
+		update();
 	}
 
 	public void setHeader(String h) {
@@ -132,8 +140,9 @@ public class Commentary extends JEditorPane implements LanguageListener,
 
 	public void addStep(String s, String... par) {
 		++k;
-		add("<ol start=\"" + k + "\"><li class=\"step\"><p><a href=\"" + k
-				+ "\"> ", s, "</a></p></li></ol>", par);
+		int scenPos = V.D.scenario.getAlgPos();
+		add("<ol start=\"" + k + "\"><li class=\"step\"><p><a href=\""
+				+ scenPos + "\"> ", s, "</a></p></li></ol>", par);
 	}
 
 	public void addStep(String s) {
@@ -150,7 +159,11 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	@Override
 	public void hyperlinkUpdate(HyperlinkEvent e) {
 		if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-			System.out.println(e.getDescription());
+			if (V.D.scenario.isEnabled()) {
+				V.D.scenario.goBeforeStep(Integer.parseInt(e.getDescription()),
+						false);
+				V.D.scenario.next(true, true);
+			}
 		} else {
 			Element element = e.getSourceElement();
 			int start = element.getStartOffset();
@@ -167,27 +180,25 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	}
 
 	public void restoreState(State state) {
-		k = state.k;
 		position = state.position;
 		s = state.s;
 		pre = state.pre;
 		post = state.post;
 		param = state.param;
-		languageChanged();
+		update();
 	}
 
 	public State getState() {
-		return new State(k, position, s, pre, post, param);
+		return new State(position, s, pre, post, param);
 	}
 
 	public static class State {
-		private final int k, position;
+		private final int position;
 		private final List<String> s, pre, post;
 		private final List<String[]> param;
 
-		public State(int k, int position, List<String> s, List<String> pre,
+		public State(int position, List<String> s, List<String> pre,
 				List<String> post, List<String[]> param) {
-			this.k = k;
 			this.position = position;
 			this.s = s;
 			this.pre = pre;

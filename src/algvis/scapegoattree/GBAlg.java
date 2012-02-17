@@ -10,7 +10,7 @@ public class GBAlg extends Algorithm {
 	public GBAlg(GBTree T, int x) {
 		super(T);
 		this.T = T;
-		T.v = v = new GBNode(T, K = x);
+		v = (GBNode) T.setV(new GBNode(T, K = x));
 	}
 
 	public GBNode compr(GBNode r, int c) {

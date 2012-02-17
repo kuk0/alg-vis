@@ -11,14 +11,14 @@ public class TreapDelete extends Algorithm {
 	public TreapDelete(Treap T, int x) {
 		super(T);
 		this.T = T;
-		v = T.v = new TreapNode(T, K = x);
+		T.setV(v = new TreapNode(T, K = x));
 		v.setColor(NodeColor.DELETE);
 		setHeader("deletion");
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
+		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
 			mysuspend();
@@ -27,7 +27,7 @@ public class TreapDelete extends Algorithm {
 			addStep("notfound");
 			return;
 		} else {
-			TreapNode d = T.root;
+			TreapNode d = (TreapNode)T.getRoot();
 			v.goTo(d);
 			addStep("bstdeletestart");
 			mysuspend();
@@ -64,7 +64,7 @@ public class TreapDelete extends Algorithm {
 			}
 
 			d.setColor(NodeColor.FOUND);
-			T.v = null;
+			T.setV(null);
 			addStep("treapbubbledown");
 			// prebubleme k listu
 			while (!d.isLeaf()) {
@@ -83,11 +83,11 @@ public class TreapDelete extends Algorithm {
 				}
 				mysuspend();
 			}
-			T.v = d;
+			T.setV(d);
 			addStep("treapdeletecase1");
 			mysuspend();
 			if (d.isRoot()) {
-				T.root = null;
+				T.setRoot(null);
 			} else if (d.isLeft()) {
 				d.getParent().setLeft(null);
 			} else {

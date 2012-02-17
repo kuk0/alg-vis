@@ -46,6 +46,13 @@ public class UnionFindButtons extends Buttons {
 	}
 
 	@Override
+	public void initRandom() {
+		random = new IButton(M.S.L, "button-random-unions");
+		random.setMnemonic(KeyEvent.VK_R);
+		random.addActionListener(this);
+	}
+	
+	@Override
 	public JPanel initThirdRow() {
 		JPanel P = new JPanel();
 		ILabel uhLabel = new ILabel(M.S.L, "uf-union-heuristic"), fhLabel = new ILabel(

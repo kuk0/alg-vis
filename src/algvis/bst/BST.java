@@ -1,20 +1,20 @@
 package algvis.bst;
 
-import algvis.core.Commentary.State;
+import algvis.core.ClickListener;
 import algvis.core.Dictionary;
 import algvis.core.Layout;
 import algvis.core.LayoutListener;
 import algvis.core.StringUtils;
 import algvis.core.View;
 import algvis.core.VisPanel;
-import algvis.scenario.commands.SetCommentaryStateCommand;
-import algvis.scenario.commands.bstnode.SetBSTNodeVCommand;
-import algvis.scenario.commands.bstnode.SetBSTRootCommand;
-import algvis.scenario.commands.node.Wait4NodeCommand;
+import algvis.scenario.commands.bstnode.SetVCommand;
+import algvis.scenario.commands.bstnode.SetRootCommand;
+import algvis.scenario.commands.node.WaitBackwardsCommand;
 
-public class BST extends Dictionary implements LayoutListener { //, ClickListener {
+public class BST extends Dictionary implements LayoutListener, ClickListener {
 	public static String dsName = "bst";
-	public BSTNode root = null, v = null;
+	private BSTNode root = null;
+	private BSTNode v = null;
 	public boolean order = false;
 
 	@Override
@@ -23,25 +23,37 @@ public class BST extends Dictionary implements LayoutListener { //, ClickListene
 	}
 
 	public BST(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		scenario.enable(true);
-		//M.screen.V.setDS(this);
+		M.screen.V.setDS(this);
 	}
 
-	public BSTNode setNodeV(BSTNode v) {
+	public BSTNode getV() {
+		return v;
+	}
+
+	public BSTNode setV(BSTNode v) {
 		if (this.v != v) {
-			scenario.add(new SetBSTNodeVCommand(this, v, this.v));
+			if (scenario.isAddingEnabled()) {
+				scenario.add(new SetVCommand(this, v));
+			}
 			this.v = v;
 		}
-		if (v != null) {
-			scenario.add(new Wait4NodeCommand(v));
+		if (v != null && scenario.isAddingEnabled()) {
+			scenario.add(new WaitBackwardsCommand(v));
 		}
 		return v;
 	}
 
+	public BSTNode getRoot() {
+		return root;
+	}
+
 	public BSTNode setRoot(BSTNode root) {
 		if (this.root != root) {
-			scenario.add(new SetBSTRootCommand(this, root, this.root));
+			if (scenario.isAddingEnabled()) {
+				scenario.add(new SetRootCommand(this, root));
+			}
 			this.root = root;
 		}
 		return root;
@@ -64,41 +76,41 @@ public class BST extends Dictionary implements LayoutListener { //, ClickListene
 
 	@Override
 	public void clear() {
-		if (root != null || v != null) {
-			scenario.addingNextStep();
+		if (getRoot() != null || getV() != null || scenario.hasNext()) {
+			scenario.newAlgorithm();
+			scenario.newStep();
 			setRoot(null);
-			setNodeV(null);
-			State commState = M.C.getState();
+			setV(null);
 			M.C.clear();
-			scenario.add(new SetCommentaryStateCommand(M.C, commState));
 			setStats();
+			reposition();
 			M.screen.V.resetView();
 		}
 	}
 
 	@Override
 	public String stats() {
-		if (root == null) {
+		if (getRoot() == null) {
 			return M.S.L.getString("size") + ": 0;   "
 					+ M.S.L.getString("height") + ": 0 =  1.00\u00b7"
 					+ M.S.L.getString("opt") + ";   "
 					+ M.S.L.getString("avedepth") + ": 0";
 		} else {
-			root.calcTree();
+			getRoot().calcTree();
 			return M.S.L.getString("size")
 					+ ": "
-					+ root.size
+					+ getRoot().size
 					+ ";   "
 					+ M.S.L.getString("height")
 					+ ": "
-					+ root.height
+					+ getRoot().height
 					+ " = "
 					+ StringUtils
-							.format(root.height
-									/ (Math.floor(lg(root.size)) + 1), 2, 5)
+							.format(getRoot().height
+									/ (Math.floor(lg(getRoot().size)) + 1), 2, 5)
 					+ "\u00b7" + M.S.L.getString("opt") + ";   "
 					+ M.S.L.getString("avedepth") + ": "
-					+ StringUtils.format(root.sumh / (double) root.size, 2, -5);
+					+ StringUtils.format(getRoot().sumh / (double) getRoot().size, 2, -5);
 		}
 	}
 
@@ -108,13 +120,13 @@ public class BST extends Dictionary implements LayoutListener { //, ClickListene
 	 */
 	@Override
 	public void draw(View V) {
-		if (root != null) {
-			root.moveTree();
-			root.drawTree(V);
+		if (getRoot() != null) {
+			getRoot().moveTree();
+			getRoot().drawTree(V);
 		}
-		if (v != null) {
-			v.move();
-			v.draw(V);
+		if (getV() != null) {
+			getV().move();
+			getV().draw(V);
 		}
 	}
 
@@ -181,11 +193,11 @@ public class BST extends Dictionary implements LayoutListener { //, ClickListene
 	 * Recalculate positions of all nodes in the tree.
 	 */
 	public void reposition() {
-		if (root != null) {
-			x1 = x2 = y1 = y2 = 0;
-			root.reposition();
-			M.screen.V.setBounds(x1, y1, x2, y2);
+		x1 = x2 = y1 = y2 = 0;
+		if (getRoot() != null) {
+			getRoot().reposition();
 		}
+		M.screen.V.setBounds(x1, y1, x2, y2);
 	}
 
 	@Override
@@ -193,16 +205,16 @@ public class BST extends Dictionary implements LayoutListener { //, ClickListene
 		reposition();
 	}
 	
-	/*
 	public void mouseClicked(int x, int y) {
-		if (root != null) {
-			BSTNode w = root.find(x, y);
+		if (getRoot() != null) {
+			BSTNode w = getRoot().find(x, y);
 			if (w != null) {
-				w.markSubtree = !w.markSubtree;
+				//w.markSubtree = true;
+				M.B.I.setText(""+w.key);
 			}
 		}
-	}*/
-	
+	}
+
 	@Override
 	public Layout getLayout() {
 		return Layout.SIMPLE;

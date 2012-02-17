@@ -7,7 +7,7 @@ import algvis.core.VisPanel;
 
 public class Treap extends BST {
 	public static String dsName = "treap";
-	TreapNode root = null, v = null;
+	//TreapNode root = null, v = null;
 
 	@Override
 	public String getName() {

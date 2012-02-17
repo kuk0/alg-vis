@@ -12,14 +12,14 @@ public class RBFind extends Algorithm {
 	public RBFind(RB T, int x) {
 		super(T);
 		this.T = T;
-		v = T.v = new BSTNode(T, K = x);
+		v = T.setV(new BSTNode(T, K = x));
 		v.setColor(NodeColor.FIND);
 		setHeader("search");
 	}
 
 	@Override
 	public void run() {
-		if (T.root == T.NULL) {
+		if (T.getRoot() == T.NULL) {
 			v.goToRoot();
 			addStep("empty");
 			mysuspend();
@@ -27,7 +27,7 @@ public class RBFind extends Algorithm {
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
 		} else {
-			BSTNode w = T.root;
+			BSTNode w = T.getRoot();
 			v.goTo(w);
 			addStep("bstfindstart");
 			mysuspend();

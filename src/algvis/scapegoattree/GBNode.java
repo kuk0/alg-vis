@@ -2,9 +2,10 @@ package algvis.scapegoattree;
 
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
+import algvis.scenario.commands.gbnode.SetDeletedCommand;
 
 public class GBNode extends BSTNode {
-	boolean deleted = false;
+	private boolean deleted = false;
 
 	public GBNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
@@ -12,6 +13,19 @@ public class GBNode extends BSTNode {
 
 	public GBNode(DataStructure D, int key) {
 		super(D, key);
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		if (this.deleted != deleted) {
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new SetDeletedCommand(this, deleted));
+			}
+			this.deleted = deleted;
+		}
 	}
 
 	@Override

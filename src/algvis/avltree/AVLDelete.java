@@ -12,24 +12,23 @@ public class AVLDelete extends Algorithm {
 	public AVLDelete(AVL T, int x) {
 		super(T);
 		this.T = T;
-		v = (AVLNode) T.setNodeV(new AVLNode(T, K = x));
+		v = (AVLNode) T.setV(new AVLNode(T, K = x));
 		v.setColor(NodeColor.DELETE);
 		setHeader("deletion");
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
+		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
 			mysuspend();
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
-			finish();
 			return;
 		} else {
-			AVLNode d = (AVLNode) T.root;
+			AVLNode d = (AVLNode) T.getRoot();
 			v.goTo(d);
 			addStep("bstdeletestart");
 			mysuspend();
@@ -62,7 +61,6 @@ public class AVLDelete extends Algorithm {
 
 			if (d == null) { // notfound
 				addStep("notfound");
-				finish();
 				return;
 			}
 
@@ -100,7 +98,7 @@ public class AVLDelete extends Algorithm {
 			} else { // case III - 2 synovia
 				addStep("bstdeletecase3");
 				AVLNode s = d.getRight();
-				v = (AVLNode) T.setNodeV(new AVLNode(T, -Node.INF));
+				v = (AVLNode) T.setV(new AVLNode(T, -Node.INF));
 				v.setColor(NodeColor.FIND);
 				v.goTo(s);
 				mysuspend();
@@ -113,7 +111,7 @@ public class AVLDelete extends Algorithm {
 				if (w == d) {
 					w = s;
 				}
-				v = (AVLNode) T.setNodeV(s);
+				v = (AVLNode) T.setV(s);
 				if (s.isLeft()) {
 					s.getParent().linkLeft(s.getRight());
 				} else {
@@ -134,7 +132,7 @@ public class AVLDelete extends Algorithm {
 				v.linkRight(d.getRight());
 				v.goTo(d);
 				v.calc();
-				T.setNodeV(d);
+				T.setV(d);
 				d.goDown();
 			} // end case III
 
@@ -204,6 +202,5 @@ public class AVLDelete extends Algorithm {
 			T.reposition();
 			addStep("done");
 		}
-		finish();
 	}
 }

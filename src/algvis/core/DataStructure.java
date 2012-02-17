@@ -10,17 +10,16 @@ abstract public class DataStructure {
 	Algorithm A;
 	public VisPanel M;
 	public Scenario scenario;
-	public int radius = 10, xspan = 15, yspan = 5, rootx = 0, rooty = 0,
+	public static int rootx = 0, rooty = 0,  
 			sheight = 600, swidth = 400, minsepx = 38, minsepy = 30;
 	public int x1, x2, y1 = -50, y2;
 	public Node chosen = null;
-	public static String adtName = ""; // unused field?
-	public static String dsName = ""; // also here? Subclasses of this also have
-										// static dsName...
+	public static String adtName = "";
+	public static String dsName = "";
 
-	public DataStructure(VisPanel M, String dsName) {
+	public DataStructure(VisPanel M) {
 		this.M = M;
-		scenario = new Scenario(dsName);
+		scenario = new Scenario(M, getName());
 	}
 
 	abstract public String getName();

@@ -3,8 +3,8 @@ package algvis.core;
 abstract public class Dictionary extends DataStructure {
 	public static String adtName = "dictionary";
 
-	public Dictionary(VisPanel M, String dsName) {
-		super(M, dsName);
+	public Dictionary(VisPanel M) {
+		super(M);
 	}
 
 	@Override

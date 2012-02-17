@@ -33,6 +33,8 @@ public class Node {
 	public int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S,
 										// 135=SW, 180=W)
 	boolean arc = false;
+	public static int STEPS = 10;
+	public static int radius = 10;
 
 	/**
 	 * the key values are generally integers from 1 to 999 (inclusive) special
@@ -79,29 +81,41 @@ public class Node {
 	protected void getReady() {
 		if (D.M.screen.V.at != null) {
 			Point2D p = D.M.screen.V.r2v(0, 0);
-			toy = y = (int) p.getY() - 5 * D.radius;
+			toy = y = (int) p.getY() - 5 * Node.radius;
 		} else {
 			/*
 			 * TODO because of rotations and skiplist constructor inserts (at
 			 * that time "AffineTransform at" not exists)
 			 */
 			tox = x = 0;
-			toy = y = -5 * D.radius;
+			toy = y = -5 * Node.radius;
 			// System.out.println(getClass().getName() + " " + key);
 		}
 	}
 
 	public void setState(int s) {
-		if (state != s) {
+		if ((s == Node.LEFT || s == Node.RIGHT || s == Node.DOWN)
+				&& D.scenario.traverser.isInterrupted()) {
+			int k = 0;
+			if (s == Node.LEFT) {
+				k = -1;
+			} else if (s == Node.RIGHT) {
+				k = 1;
+			}
+			while (D.M.screen.V.inside(x, y - Node.radius)) {
+				toy = y += 20;
+				tox = x += k * 20;
+			}
+		} else if (state != s && D.scenario.isAddingEnabled()) {
 			D.scenario.add(new SetStateCommand(this, s));
-			state = s;
 		}
+		state = s;
 	}
 
 	public NodeColor getColor() {
 		return color;
 	}
-	
+
 	public void setColor(NodeColor color) {
 		fgColor(color.fgColor);
 		bgColor(color.bgColor);
@@ -110,7 +124,7 @@ public class Node {
 
 	public void fgColor(Color fg) {
 		if (fg != color.fgColor) {
-			if (D != null) {
+			if (D != null && D.scenario.isAddingEnabled()) {
 				D.scenario.add(new SetFgColorCommand(this, fg));
 			}
 			color = new NodeColor(fg, color.bgColor);
@@ -119,17 +133,17 @@ public class Node {
 
 	public void bgColor(Color bg) {
 		if (bg != color.bgColor) {
-			if (D != null) {
+			if (D != null && D.scenario.isAddingEnabled()) {
 				D.scenario.add(new SetBgColorCommand(this, bg));
 			}
 			color = new NodeColor(color.fgColor, bg);
 		}
 	}
-	
+
 	public Color getFgColor() {
 		return color.fgColor;
 	}
-	
+
 	public Color getBgColor() {
 		return color.bgColor;
 	}
@@ -144,14 +158,18 @@ public class Node {
 
 	public void mark() {
 		if (!marked) {
-			D.scenario.add(new MarkCommand(this, true));
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new MarkCommand(this, true));
+			}
 			marked = true;
 		}
 	}
 
 	public void unmark() {
 		if (marked) {
-			D.scenario.add(new MarkCommand(this, false));
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new MarkCommand(this, false));
+			}
 			marked = false;
 		}
 	}
@@ -165,7 +183,9 @@ public class Node {
 		if (dir != w || arrow != Node.DIRARROW) {
 			dir = w;
 			arrow = Node.DIRARROW;
-			D.scenario.add(new ArrowCommand(this, true));
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new ArrowCommand(this, true));
+			}
 		}
 	}
 
@@ -178,7 +198,9 @@ public class Node {
 		if (dir != w || arrow != Node.TOARROW) {
 			dir = w;
 			arrow = Node.TOARROW;
-			D.scenario.add(new ArrowCommand(this, true));
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new ArrowCommand(this, true));
+			}
 		}
 	}
 
@@ -192,7 +214,9 @@ public class Node {
 		if (dir != null || arrow != angle) {
 			dir = null;
 			arrow = angle;
-			D.scenario.add(new ArrowCommand(this, true));
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new ArrowCommand(this, true));
+			}
 		}
 	}
 
@@ -201,7 +225,9 @@ public class Node {
 	 */
 	public void noArrow() {
 		if (dir != null || arrow != Node.NOARROW) {
-			D.scenario.add(new ArrowCommand(this, false));
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new ArrowCommand(this, false));
+			}
 			dir = null;
 			arrow = Node.NOARROW;
 		}
@@ -216,7 +242,9 @@ public class Node {
 		if (dir != w || arc == false) {
 			dir = w;
 			arc = true;
-			D.scenario.add(new ArcCommand(this, dir, true));
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new ArcCommand(this, dir, true));
+			}
 		}
 	}
 
@@ -226,7 +254,9 @@ public class Node {
 	public void noArc() {
 		if (arc == true) {
 			arc = false;
-			D.scenario.add(new ArcCommand(this, dir, false));
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new ArcCommand(this, dir, false));
+			}
 		}
 	}
 
@@ -240,11 +270,11 @@ public class Node {
 	 */
 	protected void drawBg(View v) {
 		v.setColor(getBgColor());
-		v.fillCircle(x, y, D.radius);
+		v.fillCircle(x, y, Node.radius);
 		v.setColor(Color.BLACK); // fgcolor);
-		v.drawCircle(x, y, D.radius);
+		v.drawCircle(x, y, Node.radius);
 		if (marked) {
-			v.drawCircle(x, y, D.radius + 2);
+			v.drawCircle(x, y, Node.radius + 2);
 		}
 	}
 
@@ -277,7 +307,7 @@ public class Node {
 		if (arrow < 0) {
 			dx = dir.x - x;
 			if (arrow == DIRARROW) {
-				dy = dir.y - 2 * D.radius - D.yspan - y;
+				dy = dir.y - DataStructure.minsepy - y;
 			} else if (arrow == TOARROW) {
 				dy = dir.y - y;
 			} else {
@@ -292,15 +322,16 @@ public class Node {
 			dy = Math.sin(arrow * Math.PI / 180);
 		}
 		double x1, y1, x2, y2;
-		x1 = x + 1.5 * D.radius * dx;
-		y1 = y + 1.5 * D.radius * dy;
+		x1 = x + 1.5 * Node.radius * dx;
+		y1 = y + 1.5 * Node.radius * dy;
 		if (arrow == TOARROW) {
-			x2 = dir.x - 1.5 * D.radius * dx;
-			y2 = dir.y - 1.5 * D.radius * dy;
+			x2 = dir.x - 1.5 * Node.radius * dx;
+			y2 = dir.y - 1.5 * Node.radius * dy;
 		} else {
-			x2 = x1 + 2 * D.radius * dx;
-			y2 = y1 + 2 * D.radius * dy;
+			x2 = x1 + 2 * Node.radius * dx;
+			y2 = y1 + 2 * Node.radius * dy;
 		}
+		v.setColor(Color.BLACK);
 		v.drawArrow((int) x1, (int) y1, (int) x2, (int) y2);
 	}
 
@@ -309,8 +340,9 @@ public class Node {
 		if (!arc || dir == null) {
 			return;
 		}
-		int x = dir.x, y = this.y - D.radius - D.yspan, a = Math.abs(this.x
+		int x = dir.x, y = this.y - DataStructure.minsepy + Node.radius, a = Math.abs(this.x
 				- dir.x), b = Math.abs(this.y - dir.y);
+		v.setColor(Color.BLACK);
 		if (this.x > dir.x) {
 			v.drawArcArrow(x - a, y - b, 2 * a, 2 * b, 0, 90);
 		} else {
@@ -333,19 +365,24 @@ public class Node {
 	 * clicked at the node.)
 	 */
 	public boolean inside(int x, int y) {
-		return (this.x - x) * (this.x - x) + (this.y - y) * (this.y - y) <= D.radius
-				* D.radius;
+		return (this.x - x) * (this.x - x) + (this.y - y) * (this.y - y) <= Node.radius
+				* Node.radius;
 	}
 
 	/**
 	 * Set new coordinates, where the node should go.
 	 */
 	public void goTo(int tox, int toy) {
-		if (this.tox != tox || this.toy != toy) {
-			D.scenario.add(new MoveCommand(this, tox, toy));
+		if (D.scenario.traverser.isInterrupted()) {
+			x = this.tox = tox;
+			y = this.toy = toy;
+		} else if (this.tox != tox || this.toy != toy) {
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new MoveCommand(this, tox, toy));
+			}
 			this.tox = tox;
 			this.toy = toy;
-			this.steps = D.M.STEPS;
+			this.steps = STEPS;
 		}
 	}
 
@@ -362,7 +399,7 @@ public class Node {
 	 * Go above node v (or more precisely: above the position where v is going).
 	 */
 	public void goAbove(Node v) {
-		goTo(v.tox, v.toy - 2 * D.radius - D.yspan);
+		goTo(v.tox, v.toy - DataStructure.minsepy);
 	}
 
 	// public void goNextTo (int tox, int toy) { goTo (tox + 2*D.radius +
@@ -371,22 +408,22 @@ public class Node {
 	 * Go next to node v (precisely to the right of where v is going).
 	 */
 	public void goNextTo(Node v) {
-		goTo(v.tox + 2 * D.radius + D.xspan, v.toy);
+		goTo(v.tox + DataStructure.minsepx, v.toy);
 	}
 
 	/**
 	 * Go to the root position.
 	 */
 	public void goToRoot() {
-		goTo(D.rootx, D.rooty);
+		goTo(DataStructure.rootx, DataStructure.rooty);
 	}
 
 	/**
 	 * Go above the root position.
 	 */
 	public void goAboveRoot() {
-		int toy = D.rooty - 2 * D.radius - D.yspan;
-		goTo(D.rootx, toy);
+		int toy = DataStructure.rooty - DataStructure.minsepy;
+		goTo(DataStructure.rootx, toy);
 	}
 
 	/**
@@ -433,7 +470,7 @@ public class Node {
 			} else if (state == Node.RIGHT) {
 				tox = x += 20;
 			}
-			if (!D.M.screen.V.inside(x, y - D.radius)) {
+			if (!D.M.screen.V.inside(x, y - Node.radius)) {
 				state = Node.INVISIBLE;
 			}
 			break;

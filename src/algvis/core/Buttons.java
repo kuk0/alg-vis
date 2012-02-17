@@ -28,11 +28,10 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	public VisPanel M;
 	public DataStructure D;
 	public InputField I;
-	IButton previous, next, clear, random, save;
+	public IButton previous, next, clear, random, save;
 	ICheckBox pause;
 	ChLabel stats;
 	JButton zoomIn, zoomOut, resetView;
-	private Thread scenarioTraverser;
 
 	abstract public void actionButtons(JPanel P);
 
@@ -172,56 +171,25 @@ abstract public class Buttons extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
-		if (scenarioTraverser != null) {
-			while (scenarioTraverser.isAlive()) {
-				scenarioTraverser.interrupt();
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					return;
-				}
-			}
-		}
 		if (evt.getSource() == previous) {
-			scenarioTraverser = new Thread(new Runnable() {
-				@Override
-				public void run() {
-					if (D.scenario.hasPrevious()) {
-						D.scenario.previous();
-					}
-					if (!D.scenario.hasPrevious()) {
-						disablePrevious();
-					}
-					enableNext();
-				}
-			});
-			scenarioTraverser.start();
+			disablePrevious();
+			D.scenario.previous(M.pause, true);
 		} else if (evt.getSource() == next) {
-			scenarioTraverser = new Thread(new Runnable() {
-				@Override
-				public void run() {
-					if (D.scenario.hasNext()) {
-						D.scenario.next();
-						if (!D.scenario.hasNext() && !D.A.suspended) {
-							disableNext();
-						}
-					} else if (D.A.suspended) {
-						D.next();
-					}
-					enablePrevious();
-				}
-			});
-			scenarioTraverser.start();
-			// System.out.println("next");
+			if (!D.scenario.isEnabled() || !D.scenario.hasNext()) {
+				D.next();
+			} else {
+				disableNext();
+				D.scenario.next(M.pause, true);
+			}
 			// repaint();
 		} else if (evt.getSource() == clear) {
 			D.clear();
+			update();
 			// repaint();
 		} else if (evt.getSource() == random) {
 			D.random(I.getInt(10));
 		} else if (evt.getSource() == pause) {
 			M.pause = pause.isSelected();
-			D.scenario.setPauses(pause.isSelected());
 		} else if (evt.getSource() == zoomIn) {
 			M.screen.V.zoomIn();
 		} else if (evt.getSource() == zoomOut) {
@@ -230,6 +198,26 @@ abstract public class Buttons extends JPanel implements ActionListener {
 			D.scenario.saveXML("test.xml");
 		} else if (evt.getSource() == resetView) {
 			M.screen.V.resetView();
+		}
+	}
+
+	public void update() {
+		if (D.A != null) {
+			if (D.scenario.isAlgorithmRunning() || D.A.suspended) {
+				disableAll();
+			} else {
+				enableAll();
+			}
+			if (D.scenario.hasNext() || D.A.suspended) {
+				enableNext();
+			} else {
+				disableNext();
+			}
+			if (D.scenario.hasPrevious()) {
+				enablePrevious();
+			} else {
+				disablePrevious();
+			}
 		}
 	}
 

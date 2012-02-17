@@ -3,21 +3,21 @@ package algvis.splaytree;
 import algvis.core.NodeColor;
 
 public class SplayFind extends SplayAlg {
-	public SplayFind(Splay T, int x) {
+	public SplayFind(SplayTree T, int x) {
 		super(T, x);
-		T.vv = v = new SplayNode(T, x);
+		T.setVV(v = new SplayNode(T, x));
 		v.setColor(NodeColor.FIND);
+		setHeader("search");
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
+		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("bstfindempty");
 			mysuspend();
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
-			setHeader("search");
 			addStep("bstfindnotfound");
 		} else {
 			v.goAboveRoot();
@@ -27,7 +27,6 @@ public class SplayFind extends SplayAlg {
 			addStep("splayinroot");
 			mysuspend();
 
-			setHeader("search");
 			w.setColor(NodeColor.NORMAL);
 			v.goToRoot();
 			if (w.key == v.key) {

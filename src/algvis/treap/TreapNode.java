@@ -6,7 +6,6 @@ import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 
 public class TreapNode extends BSTNode {
-	// public TreapNode left=null, right=null, parent=null;
 	double p;
 
 	public TreapNode(DataStructure D, int key, int x, int y) {

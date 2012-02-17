@@ -13,6 +13,7 @@ public class SkipAlg extends Algorithm {
 		this.L = L;
 		L.v = v = new SkipNode(L, x);
 		K = x;
+		p = new SkipNode[L.height];
 	}
 
 	public SkipNode find() {

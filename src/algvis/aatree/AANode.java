@@ -45,7 +45,7 @@ public class AANode extends BSTNode {
 		drawArrow(v);
 		drawArc(v);
 		String str = new String("" + getLevel());
-		v.drawString(str, x + D.radius, y - D.radius, 7);
+		v.drawString(str, x + Node.radius, y - Node.radius, 7);
 	}
 
 	public void drawBigNodes(View v) {

@@ -1,6 +1,7 @@
 package algvis.unionfind;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import algvis.core.Alignment;
 import algvis.core.ClickListener;
@@ -31,7 +32,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 	}
 
 	public UnionFind(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		M.screen.V.align = Alignment.LEFT;
 		M.screen.V.setDS(this);
 		count = 0;
@@ -64,6 +65,17 @@ public class UnionFind extends DataStructure implements ClickListener {
 
 	public void union(UnionFindNode u, UnionFindNode v) {
 		start(new UnionFindUnion(this, u, v));
+	}
+
+	@Override
+	public void random(int n) {
+		Random g = new Random(System.currentTimeMillis());
+		boolean p = M.pause;
+		M.pause = false;
+		for (int i = 0; i < n; ++i) {
+			union(at(g.nextInt(count)), at(g.nextInt(count)));
+		}
+		M.pause = p;
 	}
 
 	@Override

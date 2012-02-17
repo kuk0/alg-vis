@@ -12,7 +12,7 @@ public class GBFind extends GBAlg {
 
 	@Override
 	public void run() {
-		if (T.root == null) {
+		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
 			mysuspend();
@@ -20,13 +20,13 @@ public class GBFind extends GBAlg {
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
 		} else {
-			BSTNode w = T.root;
+			BSTNode w = T.getRoot();
 			v.goTo(w);
 			addStep("bstfindstart");
 			mysuspend();
 			while (true) {
 				if (w.key == K) {
-					if (((GBNode) w).deleted) {
+					if (((GBNode) w).isDeleted()) {
 						addStep("gbfinddeleted");
 						v.setColor(NodeColor.NOTFOUND);
 						v.goDown();
