@@ -1,19 +1,19 @@
-package algvis.leftistheap;
+package algvis.skewheap;
 
 import algvis.core.Algorithm;
 import algvis.core.Node;
 
-public class LeftHeapAlg extends Algorithm {
-	LeftHeap H;
-	LeftHeapNode v;
+public class SkewHeapAlg extends Algorithm {
+	SkewHeap H;
+	SkewHeapNode v;
 
-	public LeftHeapAlg(LeftHeap H) {
+	public SkewHeapAlg(SkewHeap H) {
 		super(H);
 		this.H = H;
 	}
-
+	
 	public void meld(int i) {
-		LeftHeapNode w = H.root[i];
+		SkewHeapNode w = H.root[i];
 		H.root[0].mark();
 		w.mark();
 		addStep("leftmeldstart");
@@ -37,8 +37,8 @@ public class LeftHeapAlg extends Algorithm {
 				w.setDoubleArrow(H.root[0]);
 				mysuspend();
 				w.noDoubleArrow();
-				LeftHeapNode tmp1 = w.getParent();
-				LeftHeapNode tmp2 = H.root[0];
+				SkewHeapNode tmp1 = w.getParent();
+				SkewHeapNode tmp2 = H.root[0];
 
 				H.root[0] = w;
 				if (w.getParent() != null) {
@@ -56,7 +56,8 @@ public class LeftHeapAlg extends Algorithm {
 			if (w.getParent() != null) {
 				w.getParent().dashedrightl = false;
 			}
-			H.root[0].repos(H.root[0].tox, H.root[0].toy + LeftHeap.minsepy);// + 2* LeftHeapNode.radius);
+
+			H.root[0].repos(H.root[0].tox, H.root[0].toy + SkewHeap.minsepy);// + 2* SkewHeapNode.radius);
 			H.root[0].unmark();
 			w.unmark();
 
@@ -73,44 +74,28 @@ public class LeftHeapAlg extends Algorithm {
 			w = w.getRight();
 			mysuspend();
 		}
-		addStep("leftrankupdate");
+
+		//povymiename synov, ale nie na zaklade ranku, ale vsetkych okrem synov posledneho vrcholu z pravej cesty 
+		addStep("skewheapswap");
 		mysuspend();
 
-		LeftHeapNode tmp = w;
-
-		while (tmp != null) {
-			if ((tmp.getLeft() != null) && (tmp.getRight() != null)) {
-				tmp.rank = Math.min(tmp.getLeft().rank, tmp.getRight().rank) + 1;
-			} else {
-				tmp.rank = 1;
-			}
-
-			tmp = tmp.getParent();
+		SkewHeapNode tmp = w;
+		//najdeme predposledny vrchol v pravej ceste 
+		while (tmp.getRight() != null){			
+			tmp = tmp.getRight();
 		}
-		addStep("leftrankstart");
-		mysuspend();
-
-		tmp = w;
+		tmp = tmp.getParent();
+		
 		while (tmp != null) {
-			int l;
-			if (tmp.getLeft() == null) {
-				l = -47;
-			} else {
+			if (tmp.getLeft() != null) {
 				tmp.getLeft().mark();
-				l = tmp.getLeft().rank;
 			}
-			int r;
-			if (tmp.getRight() == null) {
-				r = -47;
-			} else {
+			if (tmp.getRight() != null) {
 				tmp.getRight().mark();
-				r = tmp.getRight().rank;
 			}
-			if (l < r) {
-				tmp.swapChildren();
-			}
+			
+			tmp.swapChildren();
 			mysuspend();
-
 			H.reposition();
 
 			if (tmp.getLeft() != null) {
@@ -126,8 +111,7 @@ public class LeftHeapAlg extends Algorithm {
 		addNote("done");
 	}
 	
-	
-	public void bubbleup(LeftHeapNode v) {
+	public void bubbleup(SkewHeapNode v) {
 		if (H.minHeap) {
 			addStep("minheapbubbleup");
 		} else {
@@ -136,13 +120,11 @@ public class LeftHeapAlg extends Algorithm {
 		v.mark();
 		mysuspend();
 		v.unmark();		
-		LeftHeapNode w = v.getParent();
+		SkewHeapNode w = v.getParent();
 		while (w != null && v.prec(w)) {
-			H.v = new LeftHeapNode(v);
-			H.v.rank = -1;
-			H.v.mark();			
-			H.v2 = new LeftHeapNode(w);
-			H.v2.rank = -1;
+			H.v = new SkewHeapNode(v);
+			H.v.mark();
+			H.v2 = new SkewHeapNode(w);
 			v.key = Node.NOKEY;
 			w.key = Node.NOKEY;
 			H.v.goTo(w);
@@ -152,10 +134,10 @@ public class LeftHeapAlg extends Algorithm {
 			w.key = H.v.key;
 			v.setColor(H.v2.getColor());
 			w.setColor(H.v.getColor());
-			H.v.unmark();			
+			H.v.unmark();
 			H.v = null;
-			H.v2 = null;
-			v = w;
+			H.v2 = null;		
+			v = w;			
 			w = w.getParent();
 		}
 		addNote("done");

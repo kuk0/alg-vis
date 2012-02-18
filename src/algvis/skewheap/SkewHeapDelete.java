@@ -1,9 +1,9 @@
-package algvis.leftistheap;
+package algvis.skewheap;
 
-public class LeftHeapDelete extends LeftHeapAlg {
+public class SkewHeapDelete extends SkewHeapAlg {
 	int i;
 
-	public LeftHeapDelete(LeftHeap H, int i) {
+	public SkewHeapDelete(SkewHeap H, int i) {
 		super(H);
 		this.i = i;
 		setHeader("deletion");
@@ -23,7 +23,7 @@ public class LeftHeapDelete extends LeftHeapAlg {
 
 		mysuspend();
 
-		LeftHeapNode tmp = H.root[i];
+		SkewHeapNode tmp = H.root[i];
 		H.root[i] = tmp.getLeft();
 		H.root[0] = tmp.getRight();
 		tmp = null;
@@ -34,7 +34,7 @@ public class LeftHeapDelete extends LeftHeapAlg {
 			if (H.root[i] != null) {
 				H.root[i].highlightTree();
 				H.root[i].repos(H.root[i].x, H.root[i].y
-						- (LeftHeap.minsepy));// + 2 * LeftHeapNode.radius));
+						- (SkewHeap.minsepy));// + 2 * SkewHeapNode.radius));
 			}
 			// heap #1 is empty; done;
 			return;
@@ -42,14 +42,14 @@ public class LeftHeapDelete extends LeftHeapAlg {
 		H.root[i].setParent(null);
 
 		if (H.root[0] == null) {
-			H.root[i].repos(H.root[i].x, H.root[i].y - (LeftHeap.minsepy));// + 2 * LeftHeapNode.radius));
+			H.root[i].repos(H.root[i].x, H.root[i].y - (SkewHeap.minsepy));// + 2 * SkewHeapNode.radius));
 			// heap #2 is empty; done;
 			return;
 		}
 		H.root[0].setParent(null);
 
-		H.root[i].repos(H.root[i].x, H.root[i].y - (LeftHeap.minsepy));// + 2 * LeftHeapNode.radius));
-		H.root[0].repos(H.root[0].x, H.root[0].y - (LeftHeap.minsepy));// + 2 * H.radius));
+		H.root[i].repos(H.root[i].x, H.root[i].y - (SkewHeap.minsepy));// + 2 * SkewHeapNode.radius));
+		H.root[0].repos(H.root[0].x, H.root[0].y - (SkewHeap.minsepy));// + 2 * SkewHeapNode.radius));
 
 		mysuspend();
 		meld(i);

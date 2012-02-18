@@ -1,40 +1,35 @@
-package algvis.leftistheap;
+package algvis.skewheap;
 
 import java.awt.Color;
+
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
-import algvis.core.Node;
 import algvis.core.MeldablePQ;
+import algvis.core.Node;
 import algvis.core.View;
 
-public class LeftHeapNode extends BSTNode {
+public class SkewHeapNode extends BSTNode {
 	Color color = Color.yellow;
 	int height = 1;
-	int rank = 1;
+	//int rank = 1;   //<----<<
 	boolean doubleArrow = false;
 	boolean dashedrightl = false; // if true the line leading to the right son is dashed
 	boolean dashedleftl = false;  // if true the line leading to the left son is dashed
 
-	public LeftHeapNode(DataStructure D, int key, int x, int y) {
+	public SkewHeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 		bgKeyColor();
 	}
 
-	public LeftHeapNode(DataStructure D, int key) {
+	public SkewHeapNode(DataStructure D, int key) {
 		super(D, key);
 		bgKeyColor();
 	}
 
-	public LeftHeapNode(LeftHeapNode v) {
+	public SkewHeapNode(SkewHeapNode v) {
 		this(v.D, v.key, v.x, v.y);
 	}
-
-	/**
-	 * v.prec(w) iff v precedes w in the heap order, i.e., should be higher in
-	 * the heap v precedes w if v.key < w.key when we have a min heap, but v
-	 * precedes w if v.key > w.key when we have a max heap
-	 */
-
+	
 	public boolean prec(Node v) {
 		if (((MeldablePQ) D).minHeap) {
 			return this.key < v.key;
@@ -43,9 +38,6 @@ public class LeftHeapNode extends BSTNode {
 		}
 	}
 
-	/**
-	 * Precedes or equals (see prec).
-	 */
 	public boolean preceq(Node v) {
 		if (((MeldablePQ) D).minHeap) {
 			return this.key <= v.key;
@@ -54,9 +46,9 @@ public class LeftHeapNode extends BSTNode {
 		}
 	}
 
-	public void linkup(LeftHeapNode v) {
+	public void linkup(SkewHeapNode v) {
 		if ((this.getParent() != null) && (v != null)) {
-			LeftHeapNode tmp = this.getParent();
+			SkewHeapNode tmp = this.getParent();
 			v.setRight(this);
 			this.setParent(v);
 			v.setParent(tmp);
@@ -65,7 +57,7 @@ public class LeftHeapNode extends BSTNode {
 	}
 
 	public void swapChildren() {
-		LeftHeapNode tmp = this.getLeft();
+		SkewHeapNode tmp = this.getLeft();
 		this.setLeft(this.getRight());
 		this.setRight(tmp);
 	}
@@ -95,22 +87,13 @@ public class LeftHeapNode extends BSTNode {
 			x1 = dir.x;
 			y1 = dir.y;
 		}
-		v.drawDoubleArrow(x1 + 2 * LeftHeapNode.radius, y1, x2 - 2 * LeftHeapNode.radius, y2);
+		v.drawDoubleArrow(x1 + 2 * SkewHeapNode.radius, y1, x2 - 2 * SkewHeapNode.radius, y2);
 	}
 
 	@Override
 	public void draw(View v) {
 		super.draw(v);
 		drawDoubleArrow(v);
-		String str = new String("" + rank);
-		if (rank != -1){
-		if (this.getParent() != null && this.getParent().getLeft() == this) {
-			v.drawString(str, x - LeftHeapNode.radius, y - LeftHeapNode.radius, 7);
-		} else {
-			v.drawString(str, x + LeftHeapNode.radius, y - LeftHeapNode.radius, 7);
-		}
-		}
-
 	}
 
 	public void repos(int px, int py) {
@@ -118,11 +101,11 @@ public class LeftHeapNode extends BSTNode {
 
 		if (this.getRight() != null) {
 			this.getRight().repos(px + getRight().leftw,
-					py + (LeftHeap.minsepy));// + 2 * LeftHeapNode.radius));
+					py + (SkewHeap.minsepy));// + 2 * SkewHeapNode.radius));
 		}
 		if (this.getLeft() != null) {
 			this.getLeft().repos(px - getLeft().rightw,
-					py + (LeftHeap.minsepy));// + 2 * LeftHeapNode.radius));
+					py + (SkewHeap.minsepy));// + 2 * SkewHeapNode.radius));
 		}
 	}
 
@@ -159,11 +142,10 @@ public class LeftHeapNode extends BSTNode {
 
 		if (this.state != INVISIBLE) {
 
-			/*
-			 * if (thread) { v.setColor(Color.red); } else {
-			 */
+			
+			//if (thread) { v.setColor(Color.red); } else {			
 			v.setColor(Color.black);
-			// }
+			//}
 
 			if ((getLeft() != null) && (getLeft().state != INVISIBLE)) {
 				if (dashedleftl) {
@@ -190,30 +172,32 @@ public class LeftHeapNode extends BSTNode {
 	}
 
 	@Override
-	public LeftHeapNode getRight() {
-		return (LeftHeapNode) super.getRight();
+	public SkewHeapNode getRight() {
+		return (SkewHeapNode) super.getRight();
 	}
 
-	public void setRight(LeftHeapNode v) {
+	public void setRight(SkewHeapNode v) {
 		super.setRight((BSTNode) v);
 	}
 
 	@Override
-	public LeftHeapNode getLeft() {
-		return (LeftHeapNode) super.getLeft();
+	public SkewHeapNode getLeft() {
+		return (SkewHeapNode) super.getLeft();
 	}
 
-	public void setLeft(LeftHeapNode v) {
+	public void setLeft(SkewHeapNode v) {
 		super.setLeft((BSTNode) v);
 	}
 
 	@Override
-	public LeftHeapNode getParent() {
-		return (LeftHeapNode) super.getParent();
+	public SkewHeapNode getParent() {
+		return (SkewHeapNode) super.getParent();
 	}
 
-	public void setParent(LeftHeapNode v) {
+	public void setParent(SkewHeapNode v) {
 		super.setParent((BSTNode) v);
 	}
+
+
 
 }
