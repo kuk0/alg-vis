@@ -33,6 +33,7 @@ public class Node {
 	public int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S,
 										// 135=SW, 180=W)
 	boolean arc = false;
+	public static int radius = 10;	
 
 	/**
 	 * the key values are generally integers from 1 to 999 (inclusive) special

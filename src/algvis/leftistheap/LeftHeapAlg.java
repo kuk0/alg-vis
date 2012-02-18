@@ -56,9 +56,7 @@ public class LeftHeapAlg extends Algorithm {
 			if (w.getParent() != null) {
 				w.getParent().dashedrightl = false;
 			}
-
-			H.root[0].repos(H.root[0].tox, H.root[0].toy + H.yspan + 2
-					* H.radius);
+			H.root[0].repos(H.root[0].tox, H.root[0].toy + H.minsepy);// + 2* LeftHeapNode.radius);
 			H.root[0].unmark();
 			w.unmark();
 
@@ -135,10 +133,14 @@ public class LeftHeapAlg extends Algorithm {
 		} else {
 			addStep("maxheapbubbleup");
 		}
+		v.mark();
+		mysuspend();
+		v.unmark();		
 		LeftHeapNode w = v.getParent();
 		while (w != null && v.prec(w)) {
 			H.v = new LeftHeapNode(v);
 			H.v.rank = -1;
+			H.v.mark();			
 			H.v2 = new LeftHeapNode(w);
 			H.v2.rank = -1;
 			v.key = Node.NOKEY;
@@ -150,6 +152,7 @@ public class LeftHeapAlg extends Algorithm {
 			w.key = H.v.key;
 			v.setColor(H.v2.getColor());
 			w.setColor(H.v.getColor());
+			H.v.unmark();			
 			H.v = null;
 			H.v2 = null;
 			v = w;

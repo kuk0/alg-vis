@@ -1,6 +1,7 @@
 package algvis.skewheap;
 
 import algvis.core.Algorithm;
+import algvis.core.Node;
 
 public class SkewHeapAlg extends Algorithm {
 	SkewHeap H;
@@ -76,7 +77,7 @@ public class SkewHeapAlg extends Algorithm {
 		}
 
 		//povymiename synov, ale nie na zaklade ranku, ale vsetkych okrem synov posledneho vrcholu z pravej cesty 
-		addStep("leftrankstart");
+		addStep("skewheapswap");
 		mysuspend();
 
 		SkewHeapNode tmp = w;
@@ -109,6 +110,38 @@ public class SkewHeapAlg extends Algorithm {
 
 		H.reposition();
 		addNote("done");
+	}
+	
+	public void bubbleup(SkewHeapNode v) {
+		if (H.minHeap) {
+			addStep("minheapbubbleup");
+		} else {
+			addStep("maxheapbubbleup");
+		}
+		v.mark();
+		mysuspend();
+		v.unmark();		
+		SkewHeapNode w = v.getParent();
+		while (w != null && v.prec(w)) {
+			H.v = new SkewHeapNode(v);
+			H.v.mark();
+			H.v2 = new SkewHeapNode(w);
+			v.key = Node.NOKEY;
+			w.key = Node.NOKEY;
+			H.v.goTo(w);
+			H.v2.goTo(v);
+			mysuspend();
+			v.key = H.v2.key;
+			w.key = H.v.key;
+			v.setColor(H.v2.getColor());
+			w.setColor(H.v.getColor());
+			H.v.unmark();
+			H.v = null;
+			H.v2 = null;		
+			v = w;			
+			w = w.getParent();
+		}
+		addStep("done");
 	}
 
 }

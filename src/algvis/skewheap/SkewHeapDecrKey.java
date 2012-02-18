@@ -1,5 +1,7 @@
 package algvis.skewheap;
 
+import algvis.core.InputField;
+
 public class SkewHeapDecrKey extends SkewHeapAlg{
 int delta;
 	
@@ -16,6 +18,15 @@ int delta;
 	
 	@Override
 	public void run() {
-		
+		if (H.minHeap) {
+			v.key -= delta;
+			if (v.key < 1)
+				v.key = 1;
+		} else {
+			v.key += delta;
+			if (v.key > InputField.MAX)
+				v.key = InputField.MAX;
+		}
+		bubbleup(v);
 	}
 }

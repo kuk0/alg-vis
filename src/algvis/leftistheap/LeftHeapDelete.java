@@ -34,7 +34,7 @@ public class LeftHeapDelete extends LeftHeapAlg {
 			if (H.root[i] != null) {
 				H.root[i].highlightTree();
 				H.root[i].repos(H.root[i].x, H.root[i].y
-						- (H.yspan + 2 * H.radius));
+						- (H.minsepy));// + 2 * LeftHeapNode.radius));
 			}
 			// heap #1 is empty; done;
 			return;
@@ -42,14 +42,14 @@ public class LeftHeapDelete extends LeftHeapAlg {
 		H.root[i].setParent(null);
 
 		if (H.root[0] == null) {
-			H.root[i].repos(H.root[i].x, H.root[i].y - (H.yspan + 2 * H.radius));
+			H.root[i].repos(H.root[i].x, H.root[i].y - (H.minsepy));// + 2 * LeftHeapNode.radius));
 			// heap #2 is empty; done;
 			return;
 		}
 		H.root[0].setParent(null);
 
-		H.root[i].repos(H.root[i].x, H.root[i].y - (H.yspan + 2 * H.radius));
-		H.root[0].repos(H.root[0].x, H.root[0].y - (H.yspan + 2 * H.radius));
+		H.root[i].repos(H.root[i].x, H.root[i].y - (H.minsepy));// + 2 * LeftHeapNode.radius));
+		H.root[0].repos(H.root[0].x, H.root[0].y - (H.minsepy));// + 2 * H.radius));
 
 		mysuspend();
 		meld(i);
