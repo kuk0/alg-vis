@@ -13,7 +13,7 @@ public class BSTInsert extends Algorithm {
 		this.T = T;
 		v = T.setV(new BSTNode(T, K = x));
 		v.setColor(NodeColor.INSERT);
-		setHeader("insertion");
+		setHeader("insert", K);
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class BSTInsert extends Algorithm {
 		} else {
 			BSTNode w = T.getRoot();
 			v.goAboveRoot();
-			addStep("bstinsertstart");
+			addStep("bst-insert-start");
 			mysuspend();
 
 			while (true) {
@@ -40,7 +40,7 @@ public class BSTInsert extends Algorithm {
 					} else {
 						v.pointAbove(w.getRight());
 					}
-					addStep("bstinsertright", K, w.key);
+					addStep("bst-insert-right", K, w.key);
 					mysuspend();
 					v.noArrow();
 					if (w.getRight() != null) {
@@ -55,7 +55,7 @@ public class BSTInsert extends Algorithm {
 					} else {
 						v.pointAbove(w.getLeft());
 					}
-					addStep("bstinsertleft", K, w.key);
+					addStep("bst-insert-left", K, w.key);
 					mysuspend();
 					v.noArrow();
 					if (w.getLeft() != null) {
