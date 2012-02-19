@@ -70,16 +70,12 @@ public class TreapDelete extends Algorithm {
 			while (!d.isLeaf()) {
 				if (d.getLeft() == null) {
 					T.rotate(d.getRight());
-					// text.setPage("text/treap/delete/left.html");
 				} else if (d.getRight() == null) {
 					T.rotate(d.getLeft());
-					// text.setPage("text/treap/delete/right.html");
 				} else if (d.getRight().p > d.getLeft().p) {
 					T.rotate(d.getRight());
-					// text.setPage("text/treap/delete/left.html");
 				} else {
 					T.rotate(d.getLeft());
-					// text.setPage("text/treap/delete/right.html");
 				}
 				mysuspend();
 			}
