@@ -67,7 +67,7 @@ public class AVLDelete extends Algorithm {
 			AVLNode w = d.getParent();
 			d.setColor(NodeColor.FOUND);
 			if (d.isLeaf()) { // case I - list
-				addStep("bstdeletecase1");
+				addStep("bst-delete-case1");
 				mysuspend();
 				if (d.isRoot()) {
 					T.setRoot(null);
@@ -81,7 +81,7 @@ public class AVLDelete extends Algorithm {
 			} else if (d.getLeft() == null || d.getRight() == null) { // case
 																		// IIa -
 																		// 1 syn
-				addStep("bstdeletecase2");
+				addStep("bst-delete-case2");
 				mysuspend();
 				AVLNode s = (d.getLeft() == null) ? d.getRight() : d.getLeft();
 				if (d.isRoot()) {
@@ -96,7 +96,7 @@ public class AVLDelete extends Algorithm {
 				v.goDown();
 
 			} else { // case III - 2 synovia
-				addStep("bstdeletecase3");
+				addStep("bst-delete-case3");
 				AVLNode s = d.getRight();
 				v = (AVLNode) T.setV(new AVLNode(T, -Node.INF));
 				v.setColor(NodeColor.FIND);

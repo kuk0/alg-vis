@@ -129,13 +129,38 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		update();
 	}
 
+	private String[] int2strArray(int[] a) {
+		String[] r = new String[a.length];
+		for (int i = 0; i < a.length; ++i)
+			r[i] = "" + a[i];
+		return r;
+	}
+
 	public void setHeader(String h) {
 		clear();
 		add("<h2>", h, "</h2>");
 	}
 
+	public void setHeader(String h, String... par) {
+		clear();
+		add("<h2>", h, "</h2>", par);
+	}
+
+	public void setHeader(String h, int... par) {
+		clear();
+		setHeader(h, int2strArray(par));
+	}
+
 	public void addNote(String s) {
 		add("<p class=\"note\">", s, "</p>");
+	}
+
+	public void addNote(String s, String... par) {
+		add("<p class=\"note\">", s, "</p>", par);
+	}
+
+	public void addNote(String s, int... par) {
+		addNote(s, int2strArray(par));
 	}
 
 	public void addStep(String s, String... par) {
@@ -150,10 +175,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	}
 
 	public void addStep(String s, int... par) {
-		String[] par2 = new String[par.length];
-		for (int i = 0; i < par.length; ++i)
-			par2[i] = "" + par[i];
-		addStep(s, par2);
+		addStep(s, int2strArray(par));
 	}
 
 	@Override
