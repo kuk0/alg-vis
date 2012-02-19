@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
+import algvis.core.NodeColor;
 
 public class TreapNode extends BSTNode {
 	double p;
@@ -38,6 +39,15 @@ public class TreapNode extends BSTNode {
 		bgColor(new Color(255, 255 - (int) Math.round(100 * p), 0));
 	}
 
+	@Override
+	public void setColor(NodeColor color) {
+		if (color == NodeColor.NORMAL) {
+			bgPColor();
+		} else {
+			super.setColor(color);
+		}
+	}
+	
 	public void linkleft(TreapNode v) {
 		setLeft(v);
 		if (v != null) {

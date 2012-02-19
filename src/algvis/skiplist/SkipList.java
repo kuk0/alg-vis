@@ -83,14 +83,17 @@ public class SkipList extends Dictionary implements ClickListener {
 		root._reposition();
 		M.screen.V.setBounds(x1, y1, x2, y2);
 	}
+	
+	/*public SkipNode getRoot() {
+		return root;
+	}*/
 
 	public void mouseClicked(int x, int y) {
 		if (root != null) {
 			Node w = root.find(x, y);
 			if (w != null) {
-				M.B.I.setText("" + w.key);
+				M.B.I.setText(""+w.key);
 			}
 		}
 	}
-
 }

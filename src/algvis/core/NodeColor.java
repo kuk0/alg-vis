@@ -12,6 +12,8 @@ public class NodeColor {
 
 	public static final NodeColor NORMAL = new NodeColor(Color.BLACK,
 			Color.YELLOW);
+	public static final NodeColor DARKER = new NodeColor(Color.BLACK, new Color(0xCDCD00));
+
 	public static final NodeColor INSERT = new NodeColor(Color.WHITE,
 			new Color(0x3366ff));
 	public static final NodeColor FIND = new NodeColor(Color.BLACK,

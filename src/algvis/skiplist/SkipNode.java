@@ -118,5 +118,4 @@ public class SkipNode extends Node {
 		}
 		return null;
 	}
-
 }

@@ -37,6 +37,7 @@ public class SkipAlg extends Algorithm {
 			v.goTo(w);
 			mysuspend();
 		}
+		mysuspend();
 		return w;
 	}
 }
