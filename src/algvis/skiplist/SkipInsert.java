@@ -11,7 +11,6 @@ public class SkipInsert extends SkipAlg {
 	public SkipInsert(SkipList L, int x) { // Buttons B,
 		super(L, x);
 		v.setColor(NodeColor.INSERT);
-		p = new SkipNode[L.height];
 		setHeader("insertion");
 		R = new Random();
 	}
@@ -21,7 +20,7 @@ public class SkipInsert extends SkipAlg {
 		addStep("skipinsertstart");
 		SkipNode w = find();
 
-		if (w.right.key == v.key) {
+		if (w.getRight().key == v.key) {
 			addStep("alreadythere");
 			v.goDown();
 			mysuspend();
@@ -40,7 +39,7 @@ public class SkipInsert extends SkipAlg {
 			}
 			if (i < L.height) {
 				w = p[i++];
-				z = w.right;
+				z = w.getRight();
 				w.linkright(v);
 				z.linkleft(v);
 				if (oldv != null) {
@@ -51,10 +50,10 @@ public class SkipInsert extends SkipAlg {
 				v = new SkipNode(L, v.key, v.tox, -10);
 			} else {
 				v.linkdown(oldv);
-				SkipNode oldr = L.root, olds = L.sent;
-				v.linkleft(L.root = new SkipNode(L, -Node.INF));
+				SkipNode oldr = L.getRoot(), olds = L.sent;
+				v.linkleft(L.setRoot(new SkipNode(L, -Node.INF)));
 				v.linkright(L.sent = new SkipNode(L, Node.INF));
-				L.root.linkdown(oldr);
+				L.getRoot().linkdown(oldr);
 				L.sent.linkdown(olds);
 				L.reposition();
 				oldv = v;
@@ -69,7 +68,7 @@ public class SkipInsert extends SkipAlg {
 		mysuspend();
 
 		addStep("done");
-		L.v.setColor(NodeColor.NORMAL);
-		L.v = null;
+		L.getV().setColor(NodeColor.NORMAL);
+		L.setV(null);
 	}
 }
