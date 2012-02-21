@@ -34,8 +34,9 @@ public class AlgVis extends JPanel implements ActionListener {
 	 * 13 - Binomial heap
 	 * 14 - Lazy Binomial heap
 	 * 15 - Fibonacci heap
-	 * 16 - Union-find */
-	final static int DEFAULT_DS = 11; 
+	 * 16 - Union-find 
+	 * 17 - Trie */
+	final static int DEFAULT_DS = 17; 
 	
 	private static final long serialVersionUID = -5202486006824196688L;
 

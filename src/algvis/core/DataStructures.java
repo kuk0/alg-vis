@@ -18,6 +18,7 @@ import algvis.scapegoattree.GBPanel;
 import algvis.skiplist.SkipListPanel;
 import algvis.splaytree.SplayPanel;
 import algvis.treap.TreapPanel;
+import algvis.trie.TriePanel;
 import algvis.unionfind.UnionFindPanel;
 
 /**
@@ -35,7 +36,7 @@ public class DataStructures {
 			RBPanel.class, AAPanel.class, TreapPanel.class,
 			SkipListPanel.class, GBPanel.class, SplayPanel.class,
 			HeapPanel.class, BinHeapPanel.class, LazyBinHeapPanel.class,
-			FibHeapPanel.class, UnionFindPanel.class };
+			FibHeapPanel.class, UnionFindPanel.class, TriePanel.class };
 	static final int N = PANEL.length;
 
 	private static boolean check_range(int i) {
