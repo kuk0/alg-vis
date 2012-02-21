@@ -24,7 +24,7 @@ public class TrieButtons extends Buttons {
 		insertB.setMnemonic(KeyEvent.VK_I);
 		insertB.addActionListener(this);
 
-		findB = new IButton(M.S.L, "find");
+		findB = new IButton(M.S.L, "button-find");
 		findB.setMnemonic(KeyEvent.VK_F);
 		findB.addActionListener(this);
 

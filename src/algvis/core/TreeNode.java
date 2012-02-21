@@ -10,7 +10,7 @@ public class TreeNode extends Node {
 	int offset = 0; // offset from base line, base line has x-coord
 					// equaled to x-coord of leftmost child
 	int level; // distance from the root
-	boolean thread = false; // is this node threaded?
+	protected boolean thread = false; // is this node threaded?
 	int toExtremeSon = 0; // offset from the leftmost son
 	int toBaseline = 0; // distance to child's baseline
 	int modifier = 0;
