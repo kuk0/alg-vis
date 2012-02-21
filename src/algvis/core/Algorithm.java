@@ -52,8 +52,24 @@ abstract public class Algorithm extends Thread {
 		D.M.C.setHeader(s);
 	}
 
+	public void setHeader(String s, String... par) {
+		D.M.C.setHeader(s, par);
+	}
+
+	public void setHeader(String s, int... par) {
+		D.M.C.setHeader(s, par);
+	}
+
 	public void addNote(String s) {
 		D.M.C.addNote(s);
+	}
+
+	public void addNote(String s, String... par) {
+		D.M.C.addNote(s, par);
+	}
+
+	public void addNote(String s, int... par) {
+		D.M.C.addNote(s, par);
 	}
 
 	public void addStep(String s) {

@@ -20,7 +20,7 @@ public class GBInsert extends GBAlg {
 		} else {
 			GBNode w = (GBNode) T.getRoot();
 			v.goAboveRoot();
-			addStep("bstinsertstart");
+			addStep("bst-insert-start");
 			mysuspend();
 
 			while (true) {
@@ -38,7 +38,7 @@ public class GBInsert extends GBAlg {
 					}
 					return;
 				} else if (w.key < K) {
-					addStep("bstinsertright", K, w.key);
+					addStep("bst-insert-right", K, w.key);
 					if (w.getRight() != null) {
 						w = w.getRight();
 					} else {
@@ -46,7 +46,7 @@ public class GBInsert extends GBAlg {
 						break;
 					}
 				} else {
-					addStep("bstinsertleft", K, w.key);
+					addStep("bst-insert-left", K, w.key);
 					if (w.getLeft() != null) {
 						w = w.getLeft();
 					} else {

@@ -68,7 +68,7 @@ public class AADelete extends Algorithm {
 			AANode w = d.getParent();
 			d.setColor(NodeColor.FOUND);
 			if (d.isLeaf()) { // case I - list
-				addStep("bstdeletecase1");
+				addStep("bst-delete-case1");
 				mysuspend();
 				if (d.isRoot()) {
 					T.setRoot(null);
@@ -82,7 +82,7 @@ public class AADelete extends Algorithm {
 			} else if (d.getLeft() == null || d.getRight() == null) { // case
 																		// IIa -
 																		// 1 syn
-				addStep("bstdeletecase2");
+				addStep("bst-delete-case2");
 				mysuspend();
 				AANode s = (d.getLeft() == null) ? d.getRight() : d.getLeft();
 				if (d.isRoot()) {
@@ -97,7 +97,7 @@ public class AADelete extends Algorithm {
 				v.goDown();
 
 			} else { // case III - 2 synovia
-				addStep("bstdeletecase3");
+				addStep("bst-delete-case3");
 				int lev = d.getLevel();
 				AANode s = d.getRight();
 				v = T.setV(new AANode(T, -Node.INF));

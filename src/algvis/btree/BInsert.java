@@ -27,7 +27,7 @@ public class BInsert extends Algorithm {
 		} else {
 			BNode w = T.root;
 			v.goAbove(w);
-			addStep("bstinsertstart");
+			addStep("bst-insert-start");
 			mysuspend();
 
 			while (true) {

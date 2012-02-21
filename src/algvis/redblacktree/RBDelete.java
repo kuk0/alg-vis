@@ -70,7 +70,7 @@ public class RBDelete extends Algorithm {
 			T.NULL.setParent(u.getParent2());
 			d.setColor(NodeColor.FOUND);
 			if (d.isLeaf()) { // case I - list
-				addStep("bstdeletecase1");
+				addStep("bst-delete-case1");
 				mysuspend();
 				if (d.isRoot()) {
 					T.setRoot(null);
@@ -83,7 +83,7 @@ public class RBDelete extends Algorithm {
 
 			} else if (d.getLeft() == null || d.getRight() == null) {
 				// case IIa - 1 syn
-				addStep("bstdeletecase2");
+				addStep("bst-delete-case2");
 				mysuspend();
 				BSTNode s = (d.getLeft() == null) ? d.getRight() : d.getLeft();
 				if (d.isRoot()) {
@@ -100,7 +100,7 @@ public class RBDelete extends Algorithm {
 				v.goDown();
 
 			} else { // case III - 2 synovia
-				addStep("bstdeletecase3");
+				addStep("bst-delete-case3");
 				RBNode s = d.getRight();
 				v = T.setV(new BSTNode(T, -Node.INF));
 				v.setColor(NodeColor.FIND);
