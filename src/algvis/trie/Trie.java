@@ -12,8 +12,10 @@ public class Trie extends DataStructure {
 
 	public Trie(VisPanel M) {
 		super(M);
-		root = new TrieNode(this, 0);
+		root = new TrieNode(this);
 		root.addWord("mississippi");
+		root.addWord("vrta");
+		root.addWord("v");
 		root.addWord("missouri");
 		root.addWord("aky");
 		root.addWord("je");
@@ -28,6 +30,7 @@ public class Trie extends DataStructure {
 		root.addWord("obcas");
 		root.addWord("ano");
 		root.addWord("vrtaky");
+		root.addWord("vrtava");
 		root.addWord("nie");
 		root.reposition();
 	}
