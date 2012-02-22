@@ -95,7 +95,7 @@ public class TrieNode extends TreeNode {
 			int h = 3;
 			int w = 2;
 			Pair at = new Pair(to.first + w / 2 + 1, to.second + h / 2 + 2);
-			//v.drawArrow(from.first, from.second, to.first, to.second);
+			// v.drawArrow(from.first, from.second, to.first, to.second);
 			v.drawLine(from.first, from.second, to.first, to.second);
 			v.setColor(new Color(0xf00000));
 			v.fillRoundRectangle(at.first, at.second, w, h, 0, 0);
@@ -137,17 +137,17 @@ public class TrieNode extends TreeNode {
 		return ch;
 	}
 
-	public boolean hasChildWith(String ch) {
+	public TrieNode childWithCH(String ch) {
 		TrieNode v = (TrieNode) this.getChild();
 		if (v != null) {
 			while (v != null) {
 				if (ch.compareTo(v.ch) == 0) {
-					return true;
+					return v;
 				}
 				v = (TrieNode) v.getRight();
 			}
 		}
-		return false;
+		return null;
 	}
 
 	/**
@@ -228,4 +228,38 @@ public class TrieNode extends TreeNode {
 		}
 	}
 
+	public TrieNode find(String s) {
+		if (s.length() == 0) {
+			if (key != ordinaryNode) {
+				return this;
+			} else {
+				return null;
+			}
+		} else {
+			String ch = s.substring(0, 1);
+
+			TrieNode v = childWithCH(ch);
+			if (v == null) {
+				return null;
+			} else {
+				return v.find(s.substring(1));
+			}
+		}
+	}
+
+	public void deleteDeadBranch() {
+		TrieNode v = (TrieNode) getParent();
+		if ((v != null) && (getChild() == null)) {
+			v.deleteChild(this);
+			v.deleteDeadBranch();
+		}
+	}
+
+	public void deleteWord(String s) {
+		TrieNode v = find(s);
+		if (v != null) {
+			v.key = ordinaryNode;
+			v.deleteDeadBranch();
+		}
+	}
 }

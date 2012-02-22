@@ -8,30 +8,11 @@ public class Trie extends DataStructure {
 	public static String adtName = "triea";
 	public static String dsName = "triei";
 
-	private TrieNode root = null;
+	TrieNode root = null;
 
 	public Trie(VisPanel M) {
 		super(M);
 		root = new TrieNode(this);
-		root.addWord("mississippi");
-		root.addWord("vrta");
-		root.addWord("v");
-		root.addWord("missouri");
-		root.addWord("aky");
-		root.addWord("je");
-		root.addWord("v");
-		root.addWord("tom");
-		root.addWord("rozdiel");
-		root.addWord("robot");
-		root.addWord("nerobi");
-		root.addWord("nemravne");
-		root.addWord("veci");
-		root.addWord("vrtacky");
-		root.addWord("obcas");
-		root.addWord("ano");
-		root.addWord("vrtaky");
-		root.addWord("vrtava");
-		root.addWord("nie");
 		root.reposition();
 	}
 
