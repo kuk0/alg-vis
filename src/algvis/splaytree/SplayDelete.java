@@ -6,7 +6,7 @@ import algvis.core.Node;
 public class SplayDelete extends SplayAlg {
 	public SplayDelete(SplayTree T, int x) {
 		super(T, x);
-		setHeader("deletion");
+		setHeader("delete", x);
 	}
 
 	@Override

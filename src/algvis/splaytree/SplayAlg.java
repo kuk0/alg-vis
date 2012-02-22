@@ -20,19 +20,22 @@ public class SplayAlg extends Algorithm {
 	public SplayNode find(int K) {
 		SplayNode w = (SplayNode) T.getRoot();
 		s.goTo(w);
-		addStep("splaystart");
+		addNote("splay-start", K);
 		mysuspend();
 		while (true) {
 			if (w.key == K) {
+				addNote("splay-found");
 				break;
 			} else if (w.key < K) { // right
 				if (w.getRight() == null) {
+					addNote("splay-lower", K, w.key);
 					break;
 				}
 				w = w.getRight();
 				addStep("bstfindright", K, w.key);
 			} else { // left
 				if (w.getLeft() == null) {
+					addNote("splay-higher", K, w.key);
 					break;
 				}
 				w = w.getLeft();
@@ -43,7 +46,6 @@ public class SplayAlg extends Algorithm {
 		}
 		w.setColor(NodeColor.FIND);
 		T.setV(null);
-		addStep("splayfound");
 		mysuspend();
 		return w;
 	}
@@ -53,7 +55,7 @@ public class SplayAlg extends Algorithm {
 			T.setW1(w);
 			T.setW2(w.getParent());
 			if (w.getParent().isRoot()) {
-				addStep("splayroot");
+				addNote("splay-root");
 				w.setArc(w.getParent());
 				mysuspend();
 				w.noArc();
@@ -61,16 +63,18 @@ public class SplayAlg extends Algorithm {
 			} else {
 				if (w.isLeft() == w.getParent().isLeft()) {
 					if (w.isLeft()) {
-						addStep("splayzigzigleft");
+						addNote("splay-zig-zig-left", w.key, w.getParent().key);
 					} else {
-						addStep("splayzigzigright");
+						addNote("splay-zig-zig-right", w.key, w.getParent().key);
 					}
+					addStep("rotate", w.getParent().key);
 					w.getParent().setArc(w.getParent().getParent());
 					mysuspend();
 					w.getParent().noArc();
 					T.setW2(w.getParent().getParent());
 					T.rotate(w.getParent());
 					w.setArc(w.getParent());
+					addStep("rotate", w.key);
 					mysuspend();
 					w.noArc();
 					T.setW1(w.getParent());
@@ -78,15 +82,17 @@ public class SplayAlg extends Algorithm {
 					mysuspend();
 				} else {
 					if (!w.isLeft()) {
-						addStep("splayzigzagleft");
+						addNote("splay-zig-zag-left", w.key, w.getParent().key);
 					} else {
-						addStep("splayzigzagright");
+						addNote("splay-zig-zag-right", w.key, w.getParent().key);
 					}
 					w.setArc(w.getParent());
+					addStep("rotate", w.key);
 					mysuspend();
 					w.noArc();
 					T.rotate(w);
 					w.setArc(w.getParent());
+					addStep("rotate", w.key);
 					mysuspend();
 					w.noArc();
 					T.setW1(w.getParent());

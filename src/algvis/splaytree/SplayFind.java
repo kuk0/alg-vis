@@ -7,7 +7,7 @@ public class SplayFind extends SplayAlg {
 		super(T, x);
 		T.setVV(v = new SplayNode(T, x));
 		v.setColor(NodeColor.FIND);
-		setHeader("search");
+		setHeader("find", x);
 	}
 
 	@Override
