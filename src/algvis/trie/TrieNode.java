@@ -11,7 +11,7 @@ import algvis.core.View;
 public class TrieNode extends TreeNode {
 	public String ch; // this should be always only 1 char!
 	public int radius = 2;
-	public static final int ordinaryNode = -1;
+	public static final int ordinaryNode = -7;
 	public static final Color myGrey = new Color(0x474747);
 	public static final Color myC = new Color(0x470000);
 
@@ -91,16 +91,21 @@ public class TrieNode extends TreeNode {
 			v.setColor(myGrey);
 			Pair from = new Pair(x + radius / 4 * 7, y + radius / 4 * 7);
 			@SuppressWarnings("static-access")
-			Pair to = new Pair(x + radius + (D.minsepx / 5), y + radius + 1);
+			Pair to = new Pair(x + radius + (D.minsepx / 6), y + radius + 1);
 			int h = 3;
-			int w = 2;
+			int w = 4;
 			Pair at = new Pair(to.first + w / 2 + 1, to.second + h / 2 + 2);
 			// v.drawArrow(from.first, from.second, to.first, to.second);
 			v.drawLine(from.first, from.second, to.first, to.second);
-			v.setColor(new Color(0xf00000));
-			v.fillRoundRectangle(at.first, at.second, w, h, 0, 0);
+			v.setColor(new Color(0xba0000));
+			v.fillRoundRectangle(at.first, at.second, w, h, 2, 1);
 			v.setColor(myGrey);
-			v.drawRoundRectangle(at.first, at.second, w, h, 0, 0);
+			v.drawRoundRectangle(at.first, at.second, w, h, 2, 1);
+			/*
+			 * a preparation for a suffix tree v.setColor(Color.WHITE);
+			 * v.drawString(toString(), at.first-1, at.second, 5);
+			 * v.setColor(Color.BLACK);
+			 */
 		}
 
 	}
@@ -113,13 +118,18 @@ public class TrieNode extends TreeNode {
 			int w = 6;
 			int h = 7;
 
-			v.setColor(Color.YELLOW);
+			v.setColor(getBgColor());
 			v.fillRoundRectangle(midx, midy, w, h, 6, 10);
 			v.setColor(Color.BLACK);
 			v.drawRoundRectangle(midx, midy, w, h, 6, 10);
+			if (marked) {
+				v.drawRoundRectangle(midx, midy, w + 2, h + 2, 6, 10);
+			}
 
-			v.setColor(myC);
-			v.drawString(ch, midx, midy, 9);
+			v.setColor(getFgColor());
+			if (key != NOKEY) {
+				v.drawString(ch, midx, midy, 9);
+			}
 			v.setColor(Color.BLACK);
 		}
 	}
@@ -224,7 +234,7 @@ public class TrieNode extends TreeNode {
 		if (s.length() > 1) {
 			v.addWord(s.substring(1));
 		} else {
-			v.key = 1;
+			v.key = 0;
 		}
 	}
 
@@ -249,7 +259,7 @@ public class TrieNode extends TreeNode {
 
 	public void deleteDeadBranch() {
 		TrieNode v = (TrieNode) getParent();
-		if ((v != null) && (getChild() == null)) {
+		if ((key == ordinaryNode) && (getChild() == null) && (v != null)) {
 			v.deleteChild(this);
 			v.deleteDeadBranch();
 		}

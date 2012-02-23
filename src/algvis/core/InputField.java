@@ -145,13 +145,15 @@ public class InputField extends JTextField {
 		LinkedList<String> args = new LinkedList<String>(Arrays.asList(this.getText().split("(\\s|,)+")));
 		int noa = args.size();
 		for (int i = 0; i < noa; i++) {
-			String s = args.getFirst();
-			args.pop();
-			s.toLowerCase(Locale.ENGLISH);
-			s.replaceAll("[^a-z]", "");
-			if (s != "") {
-				args.push(s);
+			String s = args.poll();
+			s = s.toLowerCase(Locale.ENGLISH);
+			s = s.replaceAll("[^a-z]", "");
+			if (s.compareTo("") != 0) {
+				args.addLast(s);
 			}
+		}
+		if (args.size() == 0) {
+			args.add("");
 		}
 		return new Vector<String>(args);
 	}

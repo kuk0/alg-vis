@@ -10,7 +10,7 @@ public class TrieInsert extends Algorithm {
 		super(T);
 		this.T = T;
 		this.S = S;
-		setHeader("EMPTYSTR");
+		setHeader("insert", S);
 	}
 	
 	@Override
@@ -37,6 +37,9 @@ public class TrieInsert extends Algorithm {
 		T.root.deleteWord("ano");
 		T.root.addWord("nie");
 		T.root.deleteWord("v");
+		T.root.addWord("robotika");
+		T.root.deleteWord("robotika");
+		
 		T.root.reposition();
 		
 	}
