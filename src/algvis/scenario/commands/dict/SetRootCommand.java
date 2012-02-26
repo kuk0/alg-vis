@@ -1,16 +1,16 @@
-package algvis.scenario.commands.bstnode;
+package algvis.scenario.commands.dict;
 
 import org.jdom.Element;
 
-import algvis.bst.BST;
-import algvis.bst.BSTNode;
+import algvis.core.Dictionary;
+import algvis.core.Node;
 import algvis.scenario.commands.Command;
 
 public class SetRootCommand implements Command {
-	private final BST T;
-	private final BSTNode newRoot, oldRoot;
+	private final Dictionary T;
+	private final Node newRoot, oldRoot;
 
-	public SetRootCommand(BST T, BSTNode newRoot) {
+	public SetRootCommand(Dictionary T, Node newRoot) {
 		this.T = T;
 		oldRoot = T.getRoot();
 		this.newRoot = newRoot;

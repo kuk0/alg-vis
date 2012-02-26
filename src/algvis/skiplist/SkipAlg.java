@@ -11,29 +11,29 @@ public class SkipAlg extends Algorithm {
 	public SkipAlg(SkipList L, int x) {
 		super(L);
 		this.L = L;
-		L.v = v = new SkipNode(L, x);
+		L.setV(v = new SkipNode(L, x));
 		K = x;
 		p = new SkipNode[L.height];
 	}
 
 	public SkipNode find() {
-		SkipNode w = L.root;
+		SkipNode w = L.getRoot();
 		v.goToRoot();
 		mysuspend();
 
 		for (int i = L.height - 1;; --i) {
-			while (w.right.key < K) {
+			while (w.getRight().key < K) {
 				addStep("skipnext");
-				w = w.right;
+				w = w.getRight();
 				v.goTo(w);
 				mysuspend();
 			}
 			addStep("skipdown");
 			p[i] = w;
-			if (w.down == null) {
+			if (w.getDown() == null) {
 				break;
 			}
-			w = w.down;
+			w = w.getDown();
 			v.goTo(w);
 			mysuspend();
 		}

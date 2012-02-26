@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import algvis.internationalization.ChLabel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ICheckBox;
+import algvis.scenario.commands.SetStatsCommand;
 
 /**
  * The Class Buttons. This is a panel with standard buttons such as input field,
@@ -256,8 +257,14 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	public void setStats(String s) {
-		stats.setText(s);
-		stats.refresh();
+		String oldText = stats.getText();
+		if (oldText != s) {
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new SetStatsCommand(this, oldText, s));
+			}
+			stats.setText(s);
+			stats.refresh();
+		}
 	}
 
 	public void otherButtons(JPanel P) {
