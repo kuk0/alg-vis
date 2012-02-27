@@ -14,12 +14,13 @@ public class IButton extends ChButton implements LanguageListener {
 
 	public void setT(String text) {
 		t = text;
+		setText(L.getString(t));
 		refresh();
 	}
 
 	@Override
 	public void languageChanged() {
 		setText(L.getString(t));
-		super.refresh();
+		refresh();
 	}
 }
