@@ -14,7 +14,7 @@ public class SkipFind extends SkipAlg {
 		addStep("skipfindstart");
 		SkipNode w = find();
 
-		w = w.right;
+		w = w.getRight();
 		v.goTo(w);
 		if (w.key == v.key) {
 			addStep("found");
@@ -26,6 +26,6 @@ public class SkipFind extends SkipAlg {
 		}
 		mysuspend();
 
-		L.v = null;
+		L.setV(null);
 	}
 }

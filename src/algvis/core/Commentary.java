@@ -1,12 +1,14 @@
 package algvis.core;
 
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JEditorPane;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.event.HyperlinkEvent;
@@ -116,6 +118,18 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		scrollDown();
+	}
+
+	private void scrollDown() {
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				final JScrollBar v = sp.getVerticalScrollBar();
+				v.setValue(v.getMaximum() - v.getVisibleAmount());
+			}
+		});
+
 	}
 
 	public void add(String u, String v, String w, String... par) {

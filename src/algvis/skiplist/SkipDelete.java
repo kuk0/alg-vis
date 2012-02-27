@@ -16,7 +16,7 @@ public class SkipDelete extends SkipAlg {
 		addStep("bstdeletestart");
 		SkipNode w = find();
 
-		if (w.right.key != K) {
+		if (w.getRight().key != K) {
 			addStep("notfound");
 			v.goDown();
 			mysuspend();
@@ -27,23 +27,24 @@ public class SkipDelete extends SkipAlg {
 		L.e++;
 		addStep("skipdelete");
 		for (int i = 0; i < L.height; ++i) {
-			if (p[i].right.key != K) {
+			if (p[i].getRight().key != K) {
 				break;
 			}
 			L.e--;
-			L.v = p[i].right;
-			p[i].linkright(p[i].right.right);
-			if (L.v.up != null) {
-				L.v.up.down = null;
+			L.setV(p[i].getRight());
+			p[i].linkright(p[i].getRight().getRight());
+			if (L.getV().getUp() != null) {
+				L.getV().getUp().setDown(null);
 			}
-			L.v.isolate();
-			L.v.goDown();
+			L.getV().isolate();
+			L.getV().goDown();
 			mysuspend();
-			if (i > 0 && p[i].key == -Node.INF && p[i].right.key == Node.INF) {
-				L.root = p[i].down;
-				L.sent = p[i].right.down;
-				L.root.up = null;
-				L.sent.up = null;
+			if (i > 0 && p[i].key == -Node.INF
+					&& p[i].getRight().key == Node.INF) {
+				L.setRoot(p[i].getDown());
+				L.sent = p[i].getRight().getDown();
+				L.getRoot().setUp(null);
+				L.sent.setUp(null);
 				L.height = i;
 				break;
 			}
@@ -52,6 +53,6 @@ public class SkipDelete extends SkipAlg {
 		addStep("done");
 		L.reposition();
 		mysuspend();
-		L.v = null;
+		L.setV(null);
 	}
 }
