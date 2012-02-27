@@ -24,6 +24,7 @@ abstract public class Algorithm extends Thread {
 	 */
 	public void mysuspend() {
 		if (D.M.pause) {
+			D.M.C.update();
 			suspended = true;
 			synchronized (this) {
 				try {

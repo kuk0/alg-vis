@@ -82,6 +82,7 @@ abstract public class DataStructure {
 			insert(g.nextInt(InputField.MAX + 1));
 		}
 		M.pause = p;
+		M.C.update();
 	}
 
 	public void unmark() {

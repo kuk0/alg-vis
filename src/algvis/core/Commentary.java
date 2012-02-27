@@ -140,7 +140,6 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		post.add(w);
 		param.add(par);
 		V.D.scenario.add(new SetCommentaryStateCommand(this, state));
-		update();
 	}
 
 	private String[] int2strArray(int[] a) {
