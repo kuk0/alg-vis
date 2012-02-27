@@ -22,7 +22,7 @@ public class RotButtons extends Buttons {
 
 	@Override
 	public void actionButtons(JPanel P) {
-		rotB = new IButton(M.S.L, "rotate");
+		rotB = new IButton(M.S.L, "button-rotate");
 		rotB.setMnemonic(KeyEvent.VK_T);
 		rotB.addActionListener(this);
 		P.add(rotB);
