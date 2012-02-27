@@ -226,7 +226,8 @@ public class View implements MouseListener, MouseMotionListener,
 		g.drawLine(x1, y1, x2, y2);
 	}
 
-	public void drawWideLine(int x1, int y1, int x2, int y2, float width, Color col) {
+	public void drawWideLine(int x1, int y1, int x2, int y2, float width,
+			Color col) {
 		final Stroke old = g.getStroke(), wide = new BasicStroke(width,
 				BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 		final Color c = g.getColor();
@@ -236,7 +237,7 @@ public class View implements MouseListener, MouseMotionListener,
 		g.setStroke(old);
 		g.setColor(c);
 	}
-	
+
 	public void drawWideLine(int x1, int y1, int x2, int y2, float width) {
 		drawWideLine(x1, y1, x2, y2, width, new Color(230, 230, 230));
 	}
@@ -346,8 +347,46 @@ public class View implements MouseListener, MouseMotionListener,
 		arrowHead(x2, y2, x1, y1);
 	}
 
-	public void drawArcArrow(int x, int y, int w, int h, int a1, int a2) {
+	// elliptical arc
+	// x,y,w,h is the bounding rectangle
+	// a1,a2 is the starting and ending angle in degrees
+	public void drawArc(int x, int y, int w, int h, int a1, int a2) {
 		g.drawArc(x, y, w, h, a1, a2 - a1);
+	}
+
+	/* let A=[x1,y1] and B=[x2,y2]  
+	 *  B--\   /--B
+	 *      \ /
+	 *       |
+	 *       A
+	 *       |
+	 *      / \  
+	 *  B--/   \--B
+	 */
+	public void drawQuarterArc(int x1, int y1, int x2, int y2) {
+		int w = Math.abs(x1 - x2), h = Math.abs(y1 - y2), a1, a2;
+		if (y2 < y1) {
+			if (x2 < x1) {
+				a1 = 0;
+				a2 = 90;
+			} else {
+				a1 = 90;
+				a2 = 180;
+			}
+		} else {
+			if (x2 > x1) {
+				a1 = 180;
+				a2 = 270;
+			} else {
+				a1 = 270;
+				a2 = 360;
+			}
+		}
+		drawArc(x2 - w, y1 - h, 2 * w, 2 * h, a1, a2);
+	}
+
+	public void drawArcArrow(int x, int y, int w, int h, int a1, int a2) {
+		drawArc(x, y, w, h, a1, a2);
 		double a = a2 * Math.PI / 180;
 		int x2 = x + (int) Math.round(w / 2.0 * (1 + Math.cos(a))), y2 = y
 				+ (int) Math.round(h / 2.0 * (1 - Math.sin(a)));

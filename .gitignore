@@ -7,4 +7,4 @@ bin/
 *.png
 *.pyc
 *.xml
-
+!format.xml
