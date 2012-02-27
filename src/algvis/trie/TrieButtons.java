@@ -38,6 +38,13 @@ public class TrieButtons extends Buttons {
 	}
 
 	@Override
+	public void initRandom() {
+		random = new IButton(M.S.L, "button-random");
+		random.setMnemonic(KeyEvent.VK_R);
+		random.addActionListener(this);
+	}
+
+	@Override
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
 		if (evt.getSource() == insertB) {

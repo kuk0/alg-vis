@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
-import algvis.core.Pair;
 import algvis.core.TreeNode;
 import algvis.core.View;
 
@@ -13,8 +12,10 @@ public class TrieNode extends TreeNode {
 	public int radius = 2;
 	public static final int ordinaryNode = -7;
 	public static final Color myGrey = new Color(0x474747);
-	public static final Color myC = new Color(0x470000);
+	public static final Color myC = new Color(0x940000);
 
+	public boolean greyPair = false;
+	
 	public TrieNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 		ch = "";
@@ -38,6 +39,26 @@ public class TrieNode extends TreeNode {
 	public TrieNode(DataStructure D) {
 		super(D, ordinaryNode);
 		ch = "";
+	}
+
+	public void unsetGrey() {
+		TrieNode w = (TrieNode) getChild();
+		while (w != null) {
+			w.unsetGrey();
+			w = (TrieNode) w.getRight();
+		}
+		greyPair = false;
+	}
+
+	public void drawGrey(View v) {
+		TrieNode w = (TrieNode) getChild();
+		while (w != null) {
+			w.drawGrey(v);
+			w = (TrieNode) w.getRight();
+		}
+		if (greyPair && getParent() != null) {
+			v.drawWideLine(x, y, getParent().x, getParent().y, 10.0f);
+		}
 	}
 
 	public void drawEdges(View v) {
@@ -66,11 +87,9 @@ public class TrieNode extends TreeNode {
 		v.setColor(myGrey);
 		// v.setColor(getBgColor());
 		v.fillCircle(x, y, radius);
-		v.setColor(myGrey);
-		// v.setColor(Color.BLACK); // fgcolor);
-		v.drawCircle(x, y, radius);
 		if (marked) {
-			v.drawCircle(x, y, radius + 2);
+			v.setColor(Color.BLACK);
+			v.fillCircle(x, y, radius + 1);
 		}
 	}
 
@@ -78,39 +97,61 @@ public class TrieNode extends TreeNode {
 		if (state == Node.INVISIBLE || key == NULL) {
 			return;
 		}
+		
 		drawBg(v);
 		// drawKey(v);
-		drawTrieCH(v);
-		drawTrieEOW(v);
+		if (ch.compareTo("$") == 0) {
+			drawTrieEOW(v);
+		} else {
+			drawTrieCH(v);
+		}
 		drawArrow(v);
 		drawArc(v);
 	}
 
-	private void drawTrieEOW(View v) {
-		if (key != ordinaryNode) {
-			v.setColor(myGrey);
-			Pair from = new Pair(x + radius / 4 * 7, y + radius / 4 * 7);
-			@SuppressWarnings("static-access")
-			Pair to = new Pair(x + radius + (D.minsepx / 6), y + radius + 1);
-			int h = 3;
+	protected void drawTrieEOW(View v) {
+		TrieNode u = (TrieNode) getParent();
+		if (u != null) {
+			int midx = x - ((x - u.x) / 3);
+			int midy = y - ((y - u.y) / 3) - 2;
 			int w = 4;
-			Pair at = new Pair(to.first + w / 2 + 1, to.second + h / 2 + 2);
-			// v.drawArrow(from.first, from.second, to.first, to.second);
-			v.drawLine(from.first, from.second, to.first, to.second);
-			v.setColor(new Color(0xba0000));
-			v.fillRoundRectangle(at.first, at.second, w, h, 2, 1);
-			v.setColor(myGrey);
-			v.drawRoundRectangle(at.first, at.second, w, h, 2, 1);
-			/*
-			 * a preparation for a suffix tree v.setColor(Color.WHITE);
-			 * v.drawString(toString(), at.first-1, at.second, 5);
-			 * v.setColor(Color.BLACK);
-			 */
+			int h = 5;
+
+			v.setColor(myC);
+			v.fillRoundRectangle(midx, midy, w, h, 4, 8);
+			v.setColor(Color.BLACK);
+			v.drawRoundRectangle(midx, midy, w, h, 4, 8);
+			// if (marked) {
+			// v.drawRoundRectangle(midx, midy, w + 2, h + 2, 5, 9);
+			//}
+
+			v.setColor(getFgColor());
+			v.drawString(ch, midx, midy, 6);
+			v.setColor(Color.BLACK);
 		}
 
+		/*
+		 * if (key != ordinaryNode) { v.setColor(myGrey); Pair from = new Pair(x
+		 * + radius / 4 * 7, y + radius / 4 * 7);
+		 * 
+		 * @SuppressWarnings("static-access") Pair to = new Pair(x + radius +
+		 * (D.minsepx / 6), y + radius + 1); int h = 3; int w = 4; Pair at = new
+		 * Pair(to.first + w / 2 + 1, to.second + h / 2 + 2); //
+		 * v.drawArrow(from.first, from.second, to.first, to.second);
+		 * v.drawLine(from.first, from.second, to.first, to.second);
+		 * v.setColor(new Color(0xba0000)); v.fillRoundRectangle(at.first,
+		 * at.second, w, h, 2, 1); v.setColor(myGrey);
+		 * v.drawRoundRectangle(at.first, at.second, w, h, 2, 1);
+		 * 
+		 * a preparation for a suffix tree v.setColor(Color.WHITE);
+		 * v.drawString(toString(), at.first-1, at.second, 5);
+		 * v.setColor(Color.BLACK);
+		 * 
+		 * }
+		 */
 	}
 
-	private void drawTrieCH(View v) {
+	protected void drawTrieCH(View v) {
 		TrieNode u = (TrieNode) getParent();
 		if (u != null) {
 			int midx = x - ((x - u.x) / 3);
@@ -122,14 +163,12 @@ public class TrieNode extends TreeNode {
 			v.fillRoundRectangle(midx, midy, w, h, 6, 10);
 			v.setColor(Color.BLACK);
 			v.drawRoundRectangle(midx, midy, w, h, 6, 10);
-			if (marked) {
-				v.drawRoundRectangle(midx, midy, w + 2, h + 2, 6, 10);
-			}
+			// if (marked) {
+			// v.drawRoundRectangle(midx, midy, w + 2, h + 2, 6, 10);
+			// }
 
 			v.setColor(getFgColor());
-			if (key != NOKEY) {
-				v.drawString(ch, midx, midy, 9);
-			}
+			v.drawString(ch, midx, midy, 9);
 			v.setColor(Color.BLACK);
 		}
 	}
@@ -147,7 +186,7 @@ public class TrieNode extends TreeNode {
 		return ch;
 	}
 
-	public TrieNode childWithCH(String ch) {
+	public TrieNode getChildWithCH(String ch) {
 		TrieNode v = (TrieNode) this.getChild();
 		if (v != null) {
 			while (v != null) {
@@ -158,6 +197,12 @@ public class TrieNode extends TreeNode {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void drawTree(View v) {
+		drawGrey(v);
+		super.drawTree(v);
 	}
 
 	/**
@@ -248,7 +293,7 @@ public class TrieNode extends TreeNode {
 		} else {
 			String ch = s.substring(0, 1);
 
-			TrieNode v = childWithCH(ch);
+			TrieNode v = getChildWithCH(ch);
 			if (v == null) {
 				return null;
 			} else {

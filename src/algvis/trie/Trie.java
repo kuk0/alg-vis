@@ -8,12 +8,12 @@ public class Trie extends DataStructure {
 	public static String adtName = "triea";
 	public static String dsName = "triei";
 
-	TrieNode root = null;
+	private TrieNode root = null;
+	private TrieNode v = null;
 
 	public Trie(VisPanel M) {
 		super(M);
-		root = new TrieNode(this);
-		root.reposition();
+		clear();
 	}
 
 	@Override
@@ -33,8 +33,18 @@ public class Trie extends DataStructure {
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+		root = new TrieNode(this);
+		root.reposition();
+		v = null;
+	}
 
+	public TrieNode getV() {
+		return v;
+	}
+
+	public TrieNode setV(TrieNode v) {
+		this.v = v;
+		return v;
 	}
 
 	public TrieNode getRoot() {
@@ -52,6 +62,53 @@ public class Trie extends DataStructure {
 			v.moveTree();
 			v.drawTree(V);
 		}
+		v = getV();
+		if (v != null) {
+			v.move();
+			v.drawTrieCH(V);
+		}
+	}
+
+	@Override
+	public void random(int n) {
+		boolean p = M.pause;
+		M.pause = false;
+		insert("mississippi$");
+		insert("vrta$");
+		insert("v$");
+		insert("missouri$");
+		//delete("v$");
+		insert("aky$");
+		insert("je$");
+		insert("v$");
+		insert("tom$");
+		insert("rozdiel$");
+		insert("robot$");
+		insert("nerobi$");
+		insert("nemravne$");
+		insert("veci$");
+		insert("vrtacky$");
+		insert("obcas$");
+		insert("ano$");
+		insert("vrtaky$");
+		insert("vrtava$");
+		//delete("ano$");
+		insert("nie$");
+		//delete("v$");
+		insert("robotika$");
+		//delete("robotika$");
+		insert("ma$");
+		insert("mama$");
+		insert("emu$");
+		insert("she$");
+		insert("sells$");
+		insert("sea$");
+		insert("shore$");
+		insert("the$"); 
+		insert("by$");
+		insert("sheer$");
+		reposition();
+		M.pause = p;
 	}
 
 	public void insert(String s) {
@@ -64,6 +121,10 @@ public class Trie extends DataStructure {
 
 	public void delete(String s) {
 		start(new TrieDelete(this, s));
+	}
+
+	public void reposition() {
+		getRoot().reposition();
 	}
 
 }

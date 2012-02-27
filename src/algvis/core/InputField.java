@@ -149,11 +149,11 @@ public class InputField extends JTextField {
 			s = s.toLowerCase(Locale.ENGLISH);
 			s = s.replaceAll("[^a-z]", "");
 			if (s.compareTo("") != 0) {
-				args.addLast(s);
+				args.addLast(s+"$");
 			}
 		}
 		if (args.size() == 0) {
-			args.add("");
+			args.add("$");
 		}
 		return new Vector<String>(args);
 	}
