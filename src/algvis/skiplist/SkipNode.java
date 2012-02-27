@@ -5,10 +5,16 @@ import java.awt.Color;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.View;
+import algvis.scenario.commands.skipnode.SetDownCommand;
+import algvis.scenario.commands.skipnode.SetLeftCommand;
+import algvis.scenario.commands.skipnode.SetRightCommand;
+import algvis.scenario.commands.skipnode.SetUpCommand;
 
 public class SkipNode extends Node {
-	SkipNode left = null, right = null, up = null, down = null;
-	Color color = Color.yellow;
+	private SkipNode left = null;
+	private SkipNode right = null;
+	private SkipNode up = null;
+	private SkipNode down = null;
 
 	public SkipNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
@@ -19,27 +25,27 @@ public class SkipNode extends Node {
 	}
 
 	public void linkleft(SkipNode v) {
-		left = v;
-		v.right = this;
+		setLeft(v);
+		v.setRight(this);
 	}
 
 	public void linkright(SkipNode v) {
-		right = v;
-		v.left = this;
+		setRight(v);
+		v.setLeft(this);
 	}
 
 	public void linkup(SkipNode v) {
-		up = v;
-		v.down = this;
+		setUp(v);
+		v.setDown(this);
 	}
 
 	public void linkdown(SkipNode v) {
-		down = v;
-		v.up = this;
+		setDown(v);
+		v.setUp(this);
 	}
 
 	public void isolate() {
-		left = right = up = down = null;
+		setLeft(setRight(setUp(setDown(null))));
 	}
 
 	@Override
@@ -54,25 +60,25 @@ public class SkipNode extends Node {
 	}
 
 	public void drawSkipList(View V) {
-		if (left == null && down != null) {
+		if (getLeft() == null && getDown() != null) {
 			V.setColor(Color.black);
-			V.drawLine(x, y, down.x, down.y);
-			down.drawSkipList(V);
+			V.drawLine(x, y, getDown().x, getDown().y);
+			getDown().drawSkipList(V);
 		}
-		if (right != null) {
+		if (getRight() != null) {
 			V.setColor(Color.black);
-			V.drawArrow(x, y, right.x - Node.radius, right.y);
-			right.drawSkipList(V);
+			V.drawArrow(x, y, getRight().x - Node.radius, getRight().y);
+			getRight().drawSkipList(V);
 		}
 		draw(V);
 	}
 
 	public void moveSkipList() {
-		if (left == null && down != null) {
-			down.moveSkipList();
+		if (getLeft() == null && getDown() != null) {
+			getDown().moveSkipList();
 		}
-		if (right != null) {
-			right.moveSkipList();
+		if (getRight() != null) {
+			getRight().moveSkipList();
 		}
 		move();
 	}
@@ -84,38 +90,93 @@ public class SkipNode extends Node {
 		if (D.y2 < this.toy) {
 			D.y2 = this.toy;
 		}
-		if (left == null) {
-			if (up == null) {
+		if (getLeft() == null) {
+			if (getUp() == null) {
 				goToRoot();
 			} else {
-				goTo(up.tox, up.toy + DataStructure.minsepy);
+				goTo(getUp().tox, getUp().toy + DataStructure.minsepy);
 			}
-			if (down != null) {
-				down._reposition();
+			if (getDown() != null) {
+				getDown()._reposition();
 			}
 		} else {
-			if (down == null) {
-				goNextTo(left);
+			if (getDown() == null) {
+				goNextTo(getLeft());
 			} else {
-				goTo(down.tox, left.toy);
+				goTo(getDown().tox, getLeft().toy);
 			}
 		}
-		if (right != null) {
-			right._reposition();
+		if (getRight() != null) {
+			getRight()._reposition();
 		}
 	}
 
 	public SkipNode find(int x, int y) {
 		if (inside(x, y))
 			return this;
-		if (left == null && down != null) {
-			SkipNode tmp = down.find(x, y);
+		if (getLeft() == null && getDown() != null) {
+			SkipNode tmp = getDown().find(x, y);
 			if (tmp != null)
 				return tmp;
 		}
-		if (right != null) {
-			return right.find(x, y);
+		if (getRight() != null) {
+			return getRight().find(x, y);
 		}
 		return null;
+	}
+
+	public SkipNode getLeft() {
+		return left;
+	}
+
+	public void setLeft(SkipNode left) {
+		if (this.left != left) {
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new SetLeftCommand(this, left));
+			}
+			this.left = left;
+		}
+	}
+
+	public SkipNode getRight() {
+		return right;
+	}
+
+	public SkipNode setRight(SkipNode right) {
+		if (this.right != right) {
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new SetRightCommand(this, right));
+			}
+			this.right = right;
+		}
+		return right;
+	}
+
+	public SkipNode getUp() {
+		return up;
+	}
+
+	public SkipNode setUp(SkipNode up) {
+		if (this.up != up) {
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new SetUpCommand(this, up));
+			}
+			this.up = up;
+		}
+		return up;
+	}
+
+	public SkipNode getDown() {
+		return down;
+	}
+
+	public SkipNode setDown(SkipNode down) {
+		if (this.down != down) {
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new SetDownCommand(this, down));
+			}
+			this.down = down;
+		}
+		return down;
 	}
 }

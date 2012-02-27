@@ -7,7 +7,7 @@ public class SplayInsert extends SplayAlg {
 		super(T, x);
 		T.setVV(v = new SplayNode(T, x));
 		v.setColor(NodeColor.INSERT);
-		setHeader("insertion");
+		setHeader("insert", x);
 	}
 
 	@Override
@@ -29,13 +29,15 @@ public class SplayInsert extends SplayAlg {
 				v.setColor(NodeColor.NOTFOUND);
 				return;
 			} else if (w.key < K) {
-				addStep("splayinsertleft");
+				addNote("splay-insert-left", K);
+				addStep("splay-insert-left2", K);
 				mysuspend();
 				v.linkLeft(w);
 				v.linkRight(w.getRight());
 				w.setRight(null);
 			} else {
-				addStep("splayinsertright");
+				addNote("splay-insert-right", K);
+				addStep("splay-insert-right2", K);
 				mysuspend();
 				v.linkRight(w);
 				v.linkLeft(w.getLeft());
@@ -45,7 +47,7 @@ public class SplayInsert extends SplayAlg {
 			T.reposition();
 			mysuspend();
 		}
-		addStep("done");
+		addNote("done");
 		v.setColor(NodeColor.NORMAL);
 		T.setVV(null);
 	}

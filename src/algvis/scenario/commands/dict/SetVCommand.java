@@ -1,16 +1,16 @@
-package algvis.scenario.commands.bstnode;
+package algvis.scenario.commands.dict;
 
 import org.jdom.Element;
 
-import algvis.bst.BST;
-import algvis.bst.BSTNode;
+import algvis.core.Dictionary;
+import algvis.core.Node;
 import algvis.scenario.commands.Command;
 
 public class SetVCommand implements Command {
-	private final BST T;
-	private final BSTNode newV, oldV;
+	private final Dictionary T;
+	private final Node newV, oldV;
 
-	public SetVCommand(BST T, BSTNode newV) {
+	public SetVCommand(Dictionary T, Node newV) {
 		this.T = T;
 		oldV = T.getV();
 		this.newV = newV;
