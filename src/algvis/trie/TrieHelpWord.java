@@ -76,7 +76,7 @@ public class TrieHelpWord {
 		if (s.compareTo("") == 0) {
 			return;
 		}
-		FontMetrics fm = v.g.getFontMetrics();
+		FontMetrics fm = v.getGraphics().getFontMetrics();
 		int width = (fm.stringWidth(s) + 4) / 2;
 		int height = (fm.getHeight() + 4) / 2;
 		v.setColor(c.bgColor);
@@ -84,6 +84,6 @@ public class TrieHelpWord {
 		v.setColor(Color.BLACK);
 		v.drawRoundRectangle(x + width, y - height / 2, width, height, 3, 3);
 		v.setColor(c.fgColor);
-		v.g.drawString(s, x + 2, y);
+		v.drawString(s, x + width, y - height / 2, 9);
 	}
 }

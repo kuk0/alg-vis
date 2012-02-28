@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 
 public class View implements MouseListener, MouseMotionListener,
 		MouseWheelListener {
-	public Graphics2D g;
+	Graphics2D g;
 	final static double SCALE_FACTOR = 1.1, MIN_ZOOM = 0.16, MAX_ZOOM = 5.5;
 	public int W, H; // display width&height
 	public int minx, miny, maxx, maxy;
@@ -48,6 +48,10 @@ public class View implements MouseListener, MouseMotionListener,
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		resetView();
+	}
+	
+	public Graphics2D getGraphics() {
+		return g;
 	}
 
 	public void resetView() {
@@ -383,6 +387,13 @@ public class View implements MouseListener, MouseMotionListener,
 			}
 		}
 		drawArc(x2 - w, y1 - h, 2 * w, 2 * h, a1, a2);
+	}
+
+	public void drawFancyArc(int x1, int y1, int x3, int y3) {
+		int x2 = (x3 - x1) / 10 * 3 + x1;
+		int y2 = (y3 - y1) / 6 + y1;
+		drawQuarterArc(x1, y1, x2, y2);
+		drawQuarterArc(x3, y3, x2, y2);
 	}
 
 	public void drawArcArrow(int x, int y, int w, int h, int a1, int a2) {
