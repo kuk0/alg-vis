@@ -109,11 +109,6 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 	 */
 	@Override
 	public void draw(View V) {
-		V.setColor(Color.BLACK);
-		V.drawQuarterArc(50, 30, 0, 0);
-		V.drawQuarterArc(100, 30, 0, 0);
-		V.drawQuarterArc(150, 30, 0, 0);
-		V.drawQuarterArc(200, 30, 0, 0);
 		if (getRoot() != null) {
 			getRoot().moveTree();
 			getRoot().drawTree(V);
