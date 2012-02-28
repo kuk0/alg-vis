@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 import algvis.core.TreeNode;
 import algvis.core.View;
 
@@ -11,11 +12,9 @@ public class TrieNode extends TreeNode {
 	public String ch; // this should be always only 1 char!
 	public int radius = 2;
 	public static final int ordinaryNode = -7;
-	public static final Color myGrey = new Color(0x474747);
-	public static final Color myC = new Color(0x940000);
 
 	public boolean greyPair = false;
-	
+
 	public TrieNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 		ch = "";
@@ -73,7 +72,7 @@ public class TrieNode extends TreeNode {
 			} else {
 				TreeNode w = getChild();
 				while (w != null) {
-					v.setColor(myGrey);
+					v.setColor(Color.DARK_GRAY);
 					v.drawLine(x, y, w.x, w.y);
 					w.drawEdges(v);
 					w = w.getRight();
@@ -84,8 +83,7 @@ public class TrieNode extends TreeNode {
 	}
 
 	protected void drawBg(View v) {
-		v.setColor(myGrey);
-		// v.setColor(getBgColor());
+		v.setColor(Color.DARK_GRAY);
 		v.fillCircle(x, y, radius);
 		if (marked) {
 			v.setColor(Color.BLACK);
@@ -97,7 +95,7 @@ public class TrieNode extends TreeNode {
 		if (state == Node.INVISIBLE || key == NULL) {
 			return;
 		}
-		
+
 		drawBg(v);
 		// drawKey(v);
 		if (ch.compareTo("$") == 0) {
@@ -117,17 +115,16 @@ public class TrieNode extends TreeNode {
 			int w = 4;
 			int h = 5;
 
-			v.setColor(myC);
+			v.setColor(NodeColor.DARKER.bgColor);
 			v.fillRoundRectangle(midx, midy, w, h, 4, 8);
-			v.setColor(Color.BLACK);
+			v.setColor(NodeColor.DARKER.fgColor);
 			v.drawRoundRectangle(midx, midy, w, h, 4, 8);
 			// if (marked) {
 			// v.drawRoundRectangle(midx, midy, w + 2, h + 2, 5, 9);
-			//}
+			// }
 
-			v.setColor(getFgColor());
-			v.drawString(ch, midx, midy, 6);
 			v.setColor(Color.BLACK);
+			v.drawString(ch, midx, midy, 6);
 		}
 
 		/*
@@ -180,6 +177,15 @@ public class TrieNode extends TreeNode {
 			w = w.getRight();
 		}
 		draw(v);
+	}
+
+	public void clearExtraColor() {
+		TrieNode w = (TrieNode) getChild();
+		while (w != null) {
+			w.clearExtraColor();
+			w = (TrieNode) w.getRight();
+		}
+		setColor(NodeColor.NORMAL);
 	}
 
 	public String getCH() {
@@ -262,59 +268,6 @@ public class TrieNode extends TreeNode {
 			return u;
 		} else {
 			return v.addRight(ch);
-		}
-	}
-
-	/**
-	 * Probably useless as this is about to be visualised
-	 * 
-	 * @param s
-	 *            A word which will be inserted after this node
-	 */
-	public void addWord(String s) {
-		// System.out.println("addWord: " + s);
-
-		String ch = s.substring(0, 1);
-		TrieNode v = addChild(ch);
-		if (s.length() > 1) {
-			v.addWord(s.substring(1));
-		} else {
-			v.key = 0;
-		}
-	}
-
-	public TrieNode find(String s) {
-		if (s.length() == 0) {
-			if (key != ordinaryNode) {
-				return this;
-			} else {
-				return null;
-			}
-		} else {
-			String ch = s.substring(0, 1);
-
-			TrieNode v = getChildWithCH(ch);
-			if (v == null) {
-				return null;
-			} else {
-				return v.find(s.substring(1));
-			}
-		}
-	}
-
-	public void deleteDeadBranch() {
-		TrieNode v = (TrieNode) getParent();
-		if ((key == ordinaryNode) && (getChild() == null) && (v != null)) {
-			v.deleteChild(this);
-			v.deleteDeadBranch();
-		}
-	}
-
-	public void deleteWord(String s) {
-		TrieNode v = find(s);
-		if (v != null) {
-			v.key = ordinaryNode;
-			v.deleteDeadBranch();
 		}
 	}
 }

@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 
 public class View implements MouseListener, MouseMotionListener,
 		MouseWheelListener {
-	Graphics2D g;
+	public Graphics2D g;
 	final static double SCALE_FACTOR = 1.1, MIN_ZOOM = 0.16, MAX_ZOOM = 5.5;
 	public int W, H; // display width&height
 	public int minx, miny, maxx, maxy;

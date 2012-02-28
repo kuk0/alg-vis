@@ -11,7 +11,13 @@ public class TrieInsert extends Algorithm {
 		super(T);
 		this.T = T;
 		this.s = s;
-		setHeader("insert", s.substring(0, s.length() - 1));
+		setHeader("trieinsert", s.substring(0, s.length() - 1));
+	}
+
+	public void beforeReturn() {
+		T.hw = null;
+		T.clearExtraColor();
+		addStep("done");
 	}
 
 	@Override
@@ -21,44 +27,47 @@ public class TrieInsert extends Algorithm {
 			return;
 		}
 
-		TrieNode w = T.getRoot();
+		TrieNode v = T.getRoot();
+		v.mark();
 		addNote("trieinsertnote");
 		addStep("trierootstart");
-		w.mark();
 		mysuspend();
-		w.unmark();
+		v.unmark();
+		T.hw = new TrieHelpWord(s);
+		T.hw.setC(NodeColor.INSERT);
+		T.hw.goNextTo(v);
 
 		while (s.compareTo("$") != 0) {
 			String ch = s.substring(0, 1);
-			TrieNode ww = w.getChildWithCH(ch);
-			if (ww != null) {
+			T.hw.setAndGoNT(s, v);
+			TrieNode w = v.getChildWithCH(ch);
+			if (w != null) {
 				addStep("trieinsertwch", ch);
 			} else {
 				addStep("trieinsertwoch", ch);
-				ww = w.addChild(ch);
+				w = v.addChild(ch);
 			}
-			ww.setColor(NodeColor.CACHED);
+			w.setColor(NodeColor.CACHED);
 			T.reposition();
 			mysuspend();
-			w.setColor(NodeColor.NORMAL);
-			w = ww;
-			ww.setColor(NodeColor.INSERT);
+			v = w;
+			v.setColor(NodeColor.INSERT);
 			T.reposition();
 			s = s.substring(1);
 		}
-		TrieNode ww = w.getChildWithCH("$");
-		if (ww == null) {
-		addStep("trieinserteow");
+		T.hw.setAndGoNT(s, v);
+		TrieNode w = v.getChildWithCH("$");
+		if (w == null) {
+			addStep("trieinserteow");
 		} else {
 			addStep("trieinsertneow");
 		}
 		mysuspend();
-		w.setColor(NodeColor.NORMAL);
-		w = w.addChild(s);
-		w.setColor(NodeColor.INSERT);
+		v.setColor(NodeColor.NORMAL);
+		v = v.addChild(s);
 		T.reposition();
-		addStep("done");
-		w.setColor(NodeColor.NORMAL);
+		T.hw.setAndGoNT(s, v);
+		beforeReturn();
 	}
 
 }

@@ -1,10 +1,12 @@
 package algvis.core;
 
+import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 import javax.swing.JTextField;
 
@@ -142,14 +144,24 @@ public class InputField extends JTextField {
 	 * [A-Z] -> [a-z], All chars except [a-zA-Z] are lost.
 	 */
 	public Vector<String> getVS() {
-		LinkedList<String> args = new LinkedList<String>(Arrays.asList(this.getText().split("(\\s|,)+")));
+		LinkedList<String> args = new LinkedList<String>(Arrays.asList(this
+				.getText().replaceAll("'", " ").split("(\\s|,)+")));
 		int noa = args.size();
 		for (int i = 0; i < noa; i++) {
 			String s = args.poll();
-			s = s.toLowerCase(Locale.ENGLISH);
-			s = s.replaceAll("[^a-z]", "");
+			if (s.compareTo("_") != 0) {
+				Pattern p = Pattern
+						.compile("[\\p{InCombiningDiacriticalMarks}\\p{IsLm}\\p{IsSk}]+");
+				s = Normalizer.normalize(s, Normalizer.Form.NFD);
+				s = p.matcher(s).replaceAll("");
+				s = s.toUpperCase(Locale.ENGLISH);
+				s = s.replaceAll("[^A-Z]", "");
+			} else {
+				s = "\u025B"; // ɛ = 0x025B
+			}
+
 			if (s.compareTo("") != 0) {
-				args.addLast(s+"$");
+				args.addLast(s + "$");
 			}
 		}
 		if (args.size() == 0) {

@@ -11,7 +11,13 @@ public class TrieFind extends Algorithm {
 		super(T);
 		this.T = T;
 		this.s = s;
-		setHeader("find", s.substring(0, s.length() - 1));
+		setHeader("triefind", s.substring(0, s.length() - 1));
+	}
+
+	public void beforeReturn() {
+		T.hw = null;
+		T.clearExtraColor();
+		addStep("done");
 	}
 
 	@Override
@@ -21,56 +27,56 @@ public class TrieFind extends Algorithm {
 			return;
 		}
 
-		TrieNode w = T.getRoot();
+		TrieNode v = T.getRoot();
 		addNote("triefindnote");
 		addStep("trierootstart");
-		w.mark();
+		v.mark();
 		mysuspend();
-		w.unmark();
+		v.unmark();
+		T.hw = new TrieHelpWord(s);
+		T.hw.setC(NodeColor.CACHED);
+		T.hw.goNextTo(v);
 
 		while (s.compareTo("$") != 0) {
-			TrieNode wwd = (TrieNode) w.getChild();
-			while (wwd != null) {
-				wwd.setColor(NodeColor.FIND);
-				wwd = (TrieNode) wwd.getRight();
+			TrieNode wd = (TrieNode) v.getChild();
+			while (wd != null) {
+				wd.setColor(NodeColor.FIND);
+				wd = (TrieNode) wd.getRight();
 			}
-			wwd = (TrieNode) w.getChild();
+			wd = (TrieNode) v.getChild();
 
 			String ch = s.substring(0, 1);
-			TrieNode ww = w.getChildWithCH(ch);
-			if (ww == null) {
-				while (wwd != null) {
-					wwd.setColor(NodeColor.NORMAL);
-					wwd = (TrieNode) wwd.getRight();
+			T.hw.setAndGoNT(s, v);
+			TrieNode w = v.getChildWithCH(ch);
+			if (w == null) {
+				while (wd != null) {
+					wd.setColor(NodeColor.NORMAL);
+					wd = (TrieNode) wd.getRight();
 				}
 				addStep("triefindending1", ch);
 				mysuspend();
+				beforeReturn();
 				return;
 			}
 			addStep("triefindmovedown", ch);
 			mysuspend();
-			while (wwd != null) {
-				wwd.setColor(NodeColor.NORMAL);
-				wwd = (TrieNode) wwd.getRight();
+			while (wd != null) {
+				wd.setColor(NodeColor.NORMAL);
+				wd = (TrieNode) wd.getRight();
 			}
-			w.setColor(NodeColor.NORMAL);
-			w = ww;
-			w.setColor(NodeColor.CACHED);
+			v = w;
+			v.setColor(NodeColor.CACHED);
 			s = s.substring(1);
 		}
-		TrieNode ww = (TrieNode) w.getChildWithCH("$");
-		if (ww == null) {
+		T.hw.setAndGoNT(s, v);
+		TrieNode w = (TrieNode) v.getChildWithCH("$");
+		if (w == null) {
 			addStep("triefindending2");
 		} else {
 			addStep("triefindsucc");
 		}
 		mysuspend();
-		w.setColor(NodeColor.NORMAL);
-		
-		addStep("triedeletenote2");
-		mysuspend();
-		
-		
-		addStep("done");
+
+		beforeReturn();
 	}
 }
