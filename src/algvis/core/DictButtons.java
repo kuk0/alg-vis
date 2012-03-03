@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
+import algvis.bst.BST;
 import algvis.internationalization.IButton;
 
 /**
@@ -44,15 +45,26 @@ public class DictButtons extends Buttons {
 		super.actionPerformed(evt);
 		if (evt.getSource() == insertB) {
 			final Vector<Integer> args = I.getNonEmptyVI();
-			Thread t = new Thread(new Runnable() {
+			D.scenario.traverser.startNew(new Runnable() {
 				@Override
 				public void run() {
 					for (int x : args) {
+						if (D instanceof BST) {
+							D.scenario.newAlgorithm();
+							D.scenario.newStep();
+						}
 						((Dictionary) D).insert(x);
 					}
 				}
-			});
-			t.start();
+			}, false);
+			if (args.size() == 1) {
+				D.scenario.previous(false, false);
+				D.scenario.next(true, true);
+			}
+			D.scenario.traverser.join();
+			D.setStats();
+			M.C.update();
+			update();
 		} else if (evt.getSource() == findB) {
 			final Vector<Integer> args = I.getVI();
 			if (args.size() > 0) {

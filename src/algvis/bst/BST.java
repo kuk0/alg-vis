@@ -4,6 +4,7 @@ import algvis.core.ClickListener;
 import algvis.core.Dictionary;
 import algvis.core.Layout;
 import algvis.core.LayoutListener;
+import algvis.core.NodeColor;
 import algvis.core.StringUtils;
 import algvis.core.View;
 import algvis.core.VisPanel;
@@ -42,8 +43,68 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 	}
 
 	@Override
-	public void insert(int x) {
-		start(new BSTInsert(this, x));
+	public void insert(int K) {
+		BSTNode v = getV(); // TODO maybe not needed
+		v = setV(new BSTNode(this, K));
+		v.setColor(NodeColor.INSERT);
+		M.C.setHeader("insert", K);
+
+		if (getRoot() == null) {
+			setRoot(v);
+			v.goToRoot();
+			M.C.addStep("newroot");
+		} else {
+			BSTNode w = getRoot();
+			v.goAboveRoot();
+			M.C.addStep("bst-insert-start");
+			scenario.newStep();
+
+			while (true) {
+				if (w.key == K) {
+					M.C.addStep("alreadythere");
+					v.setColor(NodeColor.NOTFOUND);
+					v.goDown();
+					return;
+				} else if (w.key < K) {
+					if (w.getRight() == null) {
+						v.pointInDir(45);
+					} else {
+						v.pointAbove(w.getRight());
+					}
+					M.C.addStep("bst-insert-right", K, w.key);
+					scenario.newStep();
+					v.noArrow();
+					if (w.getRight() != null) {
+						w = w.getRight();
+					} else {
+						w.linkRight(v);
+						break;
+					}
+				} else {
+					if (w.getLeft() == null) {
+						v.pointInDir(135);
+					} else {
+						v.pointAbove(w.getLeft());
+					}
+					M.C.addStep("bst-insert-left", K, w.key);
+					scenario.newStep();
+					v.noArrow();
+					if (w.getLeft() != null) {
+						w = w.getLeft();
+					} else {
+						w.linkLeft(v);
+						break;
+					}
+				}
+				v.goAbove(w);
+				scenario.newStep();
+			}
+		}
+		reposition();
+		scenario.newStep();
+		M.C.addNote("done");
+		v.setColor(NodeColor.NORMAL);
+		setV(null);
 	}
 
 	@Override
@@ -157,8 +218,8 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 
 	/**
 	 * Rotation is specified by a single vertex v; if v is a left child of its
-	 * parent, rotate right, if it is a right child, rotate left. This method
-	 * also recalculates positions of all nodes and their statistics.
+	 * parent, rotate right, if it is a right child, rotate lef This method also
+	 * recalculates positions of all nodes and their statistics.
 	 */
 	public void rotate(BSTNode v) {
 		if (v.isLeft()) {

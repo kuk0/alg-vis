@@ -81,13 +81,13 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		initPause();
 		initClear();
 		initRandom();
-		// initSave();
+		initSave();
 		initZoom();
 		second.setLayout(new FlowLayout());
 		second.add(pause);
 		second.add(clear);
 		second.add(random);
-		// second.add(save);
+		second.add(save);
 		// second.add(zoomLabel);
 		// second.add(zoomIn);
 		// second.add(zoomOut);
@@ -203,22 +203,20 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	public void update() {
-		if (D.A != null) {
-			if (D.scenario.isAlgorithmRunning() || D.A.suspended) {
-				disableAll();
-			} else {
-				enableAll();
-			}
-			if (D.scenario.hasNext() || D.A.suspended) {
-				enableNext();
-			} else {
-				disableNext();
-			}
-			if (D.scenario.hasPrevious()) {
-				enablePrevious();
-			} else {
-				disablePrevious();
-			}
+		if (D.scenario.isAlgorithmRunning() || (D.A != null && D.A.suspended)) {
+			disableAll();
+		} else {
+			enableAll();
+		}
+		if (D.scenario.hasNext() || (D.A != null && D.A.suspended)) {
+			enableNext();
+		} else {
+			disableNext();
+		}
+		if (D.scenario.hasPrevious()) {
+			enablePrevious();
+		} else {
+			disablePrevious();
 		}
 	}
 

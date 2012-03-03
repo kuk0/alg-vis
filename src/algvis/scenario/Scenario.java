@@ -94,6 +94,7 @@ public class Scenario implements XMLable {
 					scenario.execute();
 				}
 				V.B.update();
+				V.C.update();
 				enableAdding(true);
 			}
 		}, visible);
@@ -110,6 +111,7 @@ public class Scenario implements XMLable {
 					scenario.unexecute();
 				}
 				V.B.update();
+				V.C.update();
 				enableAdding(true);
 			}
 		}, visible);
@@ -170,12 +172,14 @@ public class Scenario implements XMLable {
 				e.printStackTrace();
 				return;
 			}
-			threadInstance.start();
 			if (!visible) {
-				threadInstance.interrupt();
 				interrupted = true;
 			} else {
 				interrupted = false;
+			}
+			threadInstance.start();
+			if (!visible) {
+				threadInstance.interrupt();
 			}
 		}
 
@@ -197,7 +201,6 @@ public class Scenario implements XMLable {
 				}
 			}
 			threadInstance = t;
-			interrupted = false;
 		}
 
 		public boolean isInterrupted() {
