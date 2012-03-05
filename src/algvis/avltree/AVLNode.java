@@ -19,6 +19,7 @@ package algvis.avltree;
 import java.awt.Color;
 
 import algvis.bst.BSTNode;
+import algvis.core.Fonts;
 import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -124,9 +125,9 @@ public class AVLNode extends BSTNode {
 
 		drawKey(V);
 		if (getParent() != null && getParent().getLeft() == this) {
-			V.drawString(b, x - Node.radius - 1, y - Node.radius - 1, 10);
+			V.drawString(b, x - Node.radius - 1, y - Node.radius - 1, Fonts.NORMAL);
 		} else {
-			V.drawString(b, x + Node.radius + 1, y - Node.radius - 1, 10);
+			V.drawString(b, x + Node.radius + 1, y - Node.radius - 1, Fonts.NORMAL);
 		}
 	}
 }

@@ -18,6 +18,7 @@ package algvis.lazybinomialheap;
 
 import algvis.binomialheap.BinHeapNode;
 import algvis.binomialheap.BinomialHeap;
+import algvis.core.Fonts;
 import algvis.core.MeldablePQButtons;
 import algvis.core.Node;
 import algvis.core.Pair;
@@ -65,7 +66,7 @@ public class LazyBinomialHeap extends BinomialHeap {
 			int x = root[active].x, y = -arrayheight;
 			for (int i = 0; i < cleanup.length; ++i) {
 				V.drawSquare(x, y, Node.radius);
-				V.drawStringTop("" + i, x, y - Node.radius + 1, 9);
+				V.drawStringTop("" + i, x, y - Node.radius + 1, Fonts.NORMAL);
 				if (cleanup[i] == null) {
 					V.drawLine(x-Node.radius, y+Node.radius, x+Node.radius, y-Node.radius);
 				} else {

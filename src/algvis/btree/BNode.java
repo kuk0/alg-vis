@@ -318,7 +318,7 @@ public class BNode extends Node {
 
 	int _width() {
 		if (key[0] != Node.NOKEY && numKeys > 0) {
-			return Math.max(Fonts.fm[9].stringWidth(toString()) + 4,
+			return Math.max(Fonts.NORMAL.fm.stringWidth(toString()) + 4,
 					2 * Node.radius);
 		} else {
 			return 2 * Node.radius;
@@ -327,10 +327,10 @@ public class BNode extends Node {
 
 	public int pos(int i) {
 		if (i < 0) {
-			return tox - D.M.screen.V.stringWidth(toString(), 9) / 2 - Node.radius;
+			return tox - D.M.screen.V.stringWidth(toString(), Fonts.NORMAL) / 2 - Node.radius;
 		}
 		if (i >= numKeys) {
-			return tox + D.M.screen.V.stringWidth(toString(), 9) / 2 + Node.radius;
+			return tox + D.M.screen.V.stringWidth(toString(), Fonts.NORMAL) / 2 + Node.radius;
 		}
 		if (numKeys <= 1) {
 			return x;
@@ -341,9 +341,9 @@ public class BNode extends Node {
 		} else {
 			t = "  " + key[i];
 		}
-		return tox - D.M.screen.V.stringWidth(toString(), 9) / 2
-				+ D.M.screen.V.stringWidth(s, 9)
-				+ D.M.screen.V.stringWidth(t, 9) / 2;
+		return tox - D.M.screen.V.stringWidth(toString(), Fonts.NORMAL) / 2
+				+ D.M.screen.V.stringWidth(s, Fonts.NORMAL)
+				+ D.M.screen.V.stringWidth(t, Fonts.NORMAL) / 2;
 	}
 
 	@Override
@@ -360,7 +360,7 @@ public class BNode extends Node {
 	@Override
 	public void drawKey(View V) {
 		if (key[0] != Node.NOKEY && numKeys > 0) {
-			V.drawString(toString(), x, y, 9);
+			V.drawString(toString(), x, y, Fonts.NORMAL);
 		}
 	}
 

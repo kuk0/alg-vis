@@ -277,28 +277,28 @@ public class View implements MouseListener, MouseMotionListener,
 		g.drawRect(x - a, y - a, 2 * a, 2 * a);
 	}
 
-	public int stringWidth(String str, int fs) {
-		return Fonts.fm[fs].stringWidth(str);
+	public int stringWidth(String str, Fonts f) {
+		return f.fm.stringWidth(str);
 	}
 
-	public void drawString(String str, int x, int y, int fs) {
-		x -= Fonts.fm[fs].stringWidth(str) / 2;
-		y -= Fonts.fm[fs].getHeight() / 2 - Fonts.fm[fs].getAscent();
-		g.setFont(Fonts.f[fs]);
+	public void drawString(String str, int x, int y, Fonts f) {
+		x -= f.fm.stringWidth(str) / 2;
+		y -= f.fm.getHeight() / 2 - f.fm.getAscent();
+		g.setFont(f.font);
 		g.drawString(str, x, y);
 	}
 
-	public void drawStringLeft(String str, int x, int y, int fs) {
-		x -= Fonts.fm[fs].stringWidth(str);
-		y -= Fonts.fm[fs].getHeight() / 2 - Fonts.fm[fs].getAscent();
-		g.setFont(Fonts.f[fs]);
+	public void drawStringLeft(String str, int x, int y, Fonts f) {
+		x -= f.fm.stringWidth(str);
+		y -= f.fm.getHeight() / 2 - f.fm.getAscent();
+		g.setFont(f.font);
 		g.drawString(str, x, y);
 	}
 
-	public void drawStringTop(String str, int x, int y, int fs) {
-		x -= Fonts.fm[fs].stringWidth(str) / 2;
-		y -= Fonts.fm[fs].getHeight();
-		g.setFont(Fonts.f[fs]);
+	public void drawStringTop(String str, int x, int y, Fonts f) {
+		x -= f.fm.stringWidth(str) / 2;
+		y -= f.fm.getHeight();
+		g.setFont(f.font);
 		g.drawString(str, x, y);
 	}
 

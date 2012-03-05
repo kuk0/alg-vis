@@ -20,6 +20,7 @@ import java.awt.Color;
 
 import algvis.core.Alignment;
 import algvis.core.ClickListener;
+import algvis.core.Fonts;
 import algvis.core.MeldablePQ;
 import algvis.core.MeldablePQButtons;
 import algvis.core.Node;
@@ -136,15 +137,15 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 				if (i > 0) {
 					V.setColor(Color.black);
 					V.drawStringLeft(M.S.L.getString("heap") + " #" + i + ":",
-							root[i].x - Node.radius - 5, root[i].y, 9);
+							root[i].x - Node.radius - 5, root[i].y, Fonts.NORMAL);
 				}
 				if (min[i] != null) {
 					if (minHeap) {
 						V.drawStringTop(M.S.L.getString("min"), min[i].x,
-								min[i].y - Node.radius - 2, 9);
+								min[i].y - Node.radius - 2, Fonts.NORMAL);
 					} else {
 						V.drawStringTop(M.S.L.getString("max"), min[i].x,
-								min[i].y - Node.radius - 2, 9);
+								min[i].y - Node.radius - 2, Fonts.NORMAL);
 					}
 				}
 			}

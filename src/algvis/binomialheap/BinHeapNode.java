@@ -18,6 +18,7 @@ package algvis.binomialheap;
 
 import java.awt.Color;
 
+import algvis.core.Fonts;
 import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.MeldablePQ;
@@ -251,7 +252,7 @@ public class BinHeapNode extends Node {
 		drawKey(v);
 		if (parent == null) {
 			v.setColor(Color.black);
-			v.drawString("" + rank, x + Node.radius, y - Node.radius, 8);
+			v.drawString("" + rank, x + Node.radius, y - Node.radius, Fonts.SMALL);
 		}
 	}
 

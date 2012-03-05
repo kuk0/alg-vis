@@ -312,7 +312,7 @@ public class Node {
 	public void drawKey(View v) {
 		v.setColor(getFgColor());
 		if (key != NOKEY) {
-			v.drawString(toString(), x, y, 9);
+			v.drawString(toString(), x, y, Fonts.NORMAL);
 		}
 	}
 

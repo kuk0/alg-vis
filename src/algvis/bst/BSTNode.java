@@ -21,6 +21,7 @@ import java.awt.Polygon;
 import java.util.Stack;
 
 import algvis.core.DataStructure;
+import algvis.core.Fonts;
 import algvis.core.Layout;
 import algvis.core.Node;
 import algvis.core.NodeColor;
@@ -309,7 +310,7 @@ public class BSTNode extends Node {
 			v.setColor(Color.LIGHT_GRAY);
 			++i;
 			v.drawLine(x, y, x, -20);
-			v.drawString("" + i, x, -23, 10);
+			v.drawString("" + i, x, -23, Fonts.NORMAL);
 		}
 		if (getRight() != null) {
 			getRight().drawTree2(v);

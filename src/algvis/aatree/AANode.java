@@ -18,6 +18,7 @@ package algvis.aatree;
 
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
+import algvis.core.Fonts;
 import algvis.core.Node;
 import algvis.core.View;
 
@@ -61,7 +62,7 @@ public class AANode extends BSTNode {
 		drawArrow(v);
 		drawArc(v);
 		String str = new String("" + getLevel());
-		v.drawString(str, x + Node.radius, y - Node.radius, 7);
+		v.drawString(str, x + Node.radius, y - Node.radius, Fonts.SMALL);
 	}
 
 	public void drawBigNodes(View v) {
