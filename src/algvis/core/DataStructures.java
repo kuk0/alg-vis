@@ -9,6 +9,7 @@ import algvis.bst.BSTPanel;
 import algvis.btree.BPanel;
 import algvis.btree.a234Panel;
 import algvis.btree.a23Panel;
+import algvis.daryheap.DaryHeapPanel;
 import algvis.fibonacciheap.FibHeapPanel;
 import algvis.heap.HeapPanel;
 import algvis.lazybinomialheap.LazyBinHeapPanel;
@@ -36,7 +37,7 @@ public class DataStructures {
 			AVLPanel.class, a23Panel.class, a234Panel.class, BPanel.class,
 			RBPanel.class, AAPanel.class, TreapPanel.class,
 			SkipListPanel.class, GBPanel.class, SplayPanel.class,
-			HeapPanel.class, LeftHeapPanel.class, SkewHeapPanel.class, BinHeapPanel.class, LazyBinHeapPanel.class,
+			HeapPanel.class, DaryHeapPanel.class, LeftHeapPanel.class, SkewHeapPanel.class, BinHeapPanel.class, LazyBinHeapPanel.class,
 			FibHeapPanel.class, UnionFindPanel.class };
 
 	static final int N = PANEL.length;

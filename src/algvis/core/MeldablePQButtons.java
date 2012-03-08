@@ -141,6 +141,7 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 		deleteB.setEnabled(false);
 		decrKeyB.setEnabled(false);
 		meldB.setEnabled(false);
+		activeHeap.setEnabled(false);
 	}
 
 	@Override
@@ -151,6 +152,7 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 		decrKeyB.setEnabled(true);
 		meldB.setEnabled(true);
 		next.setEnabled(false);
+		activeHeap.setEnabled(true);
 	}
 
 	@Override
