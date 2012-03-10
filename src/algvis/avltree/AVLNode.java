@@ -1,8 +1,25 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.avltree;
 
 import java.awt.Color;
 
 import algvis.bst.BSTNode;
+import algvis.core.Fonts;
 import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -108,9 +125,9 @@ public class AVLNode extends BSTNode {
 
 		drawKey(V);
 		if (getParent() != null && getParent().getLeft() == this) {
-			V.drawString(b, x - Node.radius - 1, y - Node.radius - 1, 10);
+			V.drawString(b, x - Node.radius - 1, y - Node.radius - 1, Fonts.NORMAL);
 		} else {
-			V.drawString(b, x + Node.radius + 1, y - Node.radius - 1, 10);
+			V.drawString(b, x + Node.radius + 1, y - Node.radius - 1, Fonts.NORMAL);
 		}
 	}
 }

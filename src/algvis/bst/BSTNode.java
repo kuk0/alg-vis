@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.bst;
 
 import java.awt.Color;
@@ -5,14 +21,16 @@ import java.awt.Polygon;
 import java.util.Stack;
 
 import algvis.core.DataStructure;
+import algvis.core.Fonts;
 import algvis.core.Layout;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.NodePair;
 import algvis.core.View;
-import algvis.scenario.commands.bstnode.LinkLeftCommand;
-import algvis.scenario.commands.bstnode.LinkRightCommand;
+import algvis.scenario.commands.bstnode.SetLeftCommand;
 import algvis.scenario.commands.bstnode.SetLevelCommand;
+import algvis.scenario.commands.bstnode.SetParentCommand;
+import algvis.scenario.commands.bstnode.SetRightCommand;
 
 public class BSTNode extends Node {
 	private BSTNode left = null, right = null, parent = null;
@@ -47,7 +65,12 @@ public class BSTNode extends Node {
 			thread = false;
 			right = null;
 		}
-		this.left = left;
+		if (this.left != left) {
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new SetLeftCommand(this, left));
+			}
+			this.left = left;
+		}
 		return left;
 	}
 
@@ -63,7 +86,12 @@ public class BSTNode extends Node {
 			thread = false;
 			left = null;
 		}
-		this.right = right;
+		if (this.right != right) {
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new SetRightCommand(this, right));
+			}
+			this.right = right;
+		}
 		return right;
 	}
 
@@ -72,7 +100,12 @@ public class BSTNode extends Node {
 	}
 
 	public BSTNode setParent(BSTNode parent) {
-		this.parent = parent;
+		if (this.parent != parent) {
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new SetParentCommand(this, parent));
+			}
+			this.parent = parent;
+		}
 		return parent;
 	}
 
@@ -120,9 +153,6 @@ public class BSTNode extends Node {
 				newLeft.setParent(this);
 			}
 			setLeft(newLeft);
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new LinkLeftCommand(this, newLeft, true));
-			}
 		}
 	}
 
@@ -131,9 +161,6 @@ public class BSTNode extends Node {
 	 */
 	public void unlinkLeft() {
 		getLeft().setParent(null);
-		if (D.scenario.isAddingEnabled()) {
-			D.scenario.add(new LinkLeftCommand(this, getLeft(), false));
-		}
 		setLeft(null);
 	}
 
@@ -156,9 +183,6 @@ public class BSTNode extends Node {
 				newRight.setParent(this);
 			}
 			setRight(newRight);
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new LinkRightCommand(this, newRight, true));
-			}
 		}
 	}
 
@@ -167,9 +191,6 @@ public class BSTNode extends Node {
 	 */
 	public void unlinkRight() {
 		getRight().setParent(null);
-		if (D.scenario.isAddingEnabled()) {
-			D.scenario.add(new LinkRightCommand(this, getRight(), false));
-		}
 		setRight(null);
 	}
 
@@ -225,11 +246,12 @@ public class BSTNode extends Node {
 	}
 
 	static int i;
+
 	public void drawTree(View v) {
 		i = 0;
 		drawTree2(v);
 	}
-	
+
 	private void drawTree2(View v) {
 		if (markSubtree) {
 			Polygon p = new Polygon();
@@ -239,9 +261,10 @@ public class BSTNode extends Node {
 					p.addPoint(x - 7, y + 10);
 					p.addPoint(x + 7, y + 10);
 				} else {
-					int x1 = x - leftw + DataStructure.minsepx/2,
-						x2 = x + rightw - DataStructure.minsepx/2, y1 = y + DataStructure.minsepy,
-						y2 = y + (height - 1) * DataStructure.minsepy;
+					int x1 = x - leftw + DataStructure.minsepx / 2, x2 = x
+							+ rightw - DataStructure.minsepx / 2, y1 = y
+							+ DataStructure.minsepy, y2 = y + (height - 1)
+							* DataStructure.minsepy;
 					p.addPoint(x1, y1);
 					p.addPoint(x1, y2);
 					p.addPoint(x2, y2);
@@ -267,11 +290,11 @@ public class BSTNode extends Node {
 			v.fillPolygon(p);
 		}
 		if (state != INVISIBLE && !thread) {
-			/*if (thread) {
-				v.setColor(Color.yellow);
-			} else {*/
-				v.setColor(Color.black);
-			//}
+			/*
+			 * if (thread) { v.setColor(Color.yellow); } else {
+			 */
+			v.setColor(Color.black);
+			// }
 			if ((left != null) && (left.state != INVISIBLE)) {
 				v.drawLine(x, y, left.x, left.y);
 			}
@@ -282,11 +305,12 @@ public class BSTNode extends Node {
 		if (getLeft() != null) {
 			getLeft().drawTree2(v);
 		}
-		if (D instanceof BST && ((BST) D).order) { //  && D.M.S.layout == Layout.SIMPLE
+		if (D instanceof BST && ((BST) D).order) { // && D.M.S.layout ==
+													// Layout.SIMPLE
 			v.setColor(Color.LIGHT_GRAY);
 			++i;
 			v.drawLine(x, y, x, -20);
-			v.drawString("" + i, x, -23, 10);
+			v.drawString("" + i, x, -23, Fonts.NORMAL);
 		}
 		if (getRight() != null) {
 			getRight().drawTree2(v);
@@ -316,11 +340,11 @@ public class BSTNode extends Node {
 		 * whole left subtree, i.e., leftw+rightw; otherwise the width is the
 		 * node radius plus some additional space called xspan
 		 */
-		leftw = (getLeft() == null) ? DataStructure.minsepx/2 : getLeft().leftw
-				+ getLeft().rightw;
+		leftw = (getLeft() == null) ? DataStructure.minsepx / 2
+				: getLeft().leftw + getLeft().rightw;
 		// rightw is computed analogically
-		rightw = (getRight() == null) ? DataStructure.minsepx/2 : getRight().leftw
-				+ getRight().rightw;
+		rightw = (getRight() == null) ? DataStructure.minsepx / 2
+				: getRight().leftw + getRight().rightw;
 	}
 
 	/**
@@ -374,8 +398,8 @@ public class BSTNode extends Node {
 					this.toy + DataStructure.minsepy);
 		}
 		if (isRoot()) {
-			D.x1 = x-leftw;
-			D.x2 = x+rightw;
+			D.x1 = x - leftw;
+			D.x2 = x + rightw;
 			D.y2 = this.toy;
 		}
 		if (this.toy > D.y2) {
@@ -398,8 +422,8 @@ public class BSTNode extends Node {
 	private void RTThreads() {
 		if (thread) {
 			thread = false;
-			setLeft(null);
-			setRight(null);
+			left = null;
+			right = null;
 		}
 		if (getLeft() != null)
 			left.RTThreads();
@@ -449,7 +473,8 @@ public class BSTNode extends Node {
 		// 3. examine this node
 		if (isLeaf()) {
 			if (!isRoot()) {
-				offset = isLeft() ? -DataStructure.minsepx / 2 : +DataStructure.minsepx / 2;
+				offset = isLeft() ? -DataStructure.minsepx / 2
+						: +DataStructure.minsepx / 2;
 			}
 			result.left = this;
 			result.right = this;

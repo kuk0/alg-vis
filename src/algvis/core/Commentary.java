@@ -1,12 +1,30 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.core;
 
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JEditorPane;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.event.HyperlinkEvent;
@@ -116,6 +134,18 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		scrollDown();
+	}
+
+	private void scrollDown() {
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				final JScrollBar v = sp.getVerticalScrollBar();
+				v.setValue(v.getMaximum() - v.getVisibleAmount());
+			}
+		});
+
 	}
 
 	public void add(String u, String v, String w, String... par) {
@@ -129,13 +159,38 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		update();
 	}
 
+	private String[] int2strArray(int[] a) {
+		String[] r = new String[a.length];
+		for (int i = 0; i < a.length; ++i)
+			r[i] = "" + a[i];
+		return r;
+	}
+
 	public void setHeader(String h) {
 		clear();
 		add("<h2>", h, "</h2>");
 	}
 
+	public void setHeader(String h, String... par) {
+		clear();
+		add("<h2>", h, "</h2>", par);
+	}
+
+	public void setHeader(String h, int... par) {
+		clear();
+		setHeader(h, int2strArray(par));
+	}
+
 	public void addNote(String s) {
 		add("<p class=\"note\">", s, "</p>");
+	}
+
+	public void addNote(String s, String... par) {
+		add("<p class=\"note\">", s, "</p>", par);
+	}
+
+	public void addNote(String s, int... par) {
+		addNote(s, int2strArray(par));
 	}
 
 	public void addStep(String s, String... par) {
@@ -150,10 +205,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	}
 
 	public void addStep(String s, int... par) {
-		String[] par2 = new String[par.length];
-		for (int i = 0; i < par.length; ++i)
-			par2[i] = "" + par[i];
-		addStep(s, par2);
+		addStep(s, int2strArray(par));
 	}
 
 	@Override

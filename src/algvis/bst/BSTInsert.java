@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.bst;
 
 import algvis.core.Algorithm;
@@ -13,7 +29,7 @@ public class BSTInsert extends Algorithm {
 		this.T = T;
 		v = T.setV(new BSTNode(T, K = x));
 		v.setColor(NodeColor.INSERT);
-		setHeader("insertion");
+		setHeader("insert", K);
 	}
 
 	@Override
@@ -25,7 +41,7 @@ public class BSTInsert extends Algorithm {
 		} else {
 			BSTNode w = T.getRoot();
 			v.goAboveRoot();
-			addStep("bstinsertstart");
+			addStep("bst-insert-start");
 			mysuspend();
 
 			while (true) {
@@ -40,7 +56,7 @@ public class BSTInsert extends Algorithm {
 					} else {
 						v.pointAbove(w.getRight());
 					}
-					addStep("bstinsertright", K, w.key);
+					addStep("bst-insert-right", K, w.key);
 					mysuspend();
 					v.noArrow();
 					if (w.getRight() != null) {
@@ -55,7 +71,7 @@ public class BSTInsert extends Algorithm {
 					} else {
 						v.pointAbove(w.getLeft());
 					}
-					addStep("bstinsertleft", K, w.key);
+					addStep("bst-insert-left", K, w.key);
 					mysuspend();
 					v.noArrow();
 					if (w.getLeft() != null) {

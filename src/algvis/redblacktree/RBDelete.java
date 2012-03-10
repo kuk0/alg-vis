@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.redblacktree;
 
 import algvis.bst.BSTNode;
@@ -70,7 +86,7 @@ public class RBDelete extends Algorithm {
 			T.NULL.setParent(u.getParent2());
 			d.setColor(NodeColor.FOUND);
 			if (d.isLeaf()) { // case I - list
-				addStep("bstdeletecase1");
+				addStep("bst-delete-case1");
 				mysuspend();
 				if (d.isRoot()) {
 					T.setRoot(null);
@@ -83,7 +99,7 @@ public class RBDelete extends Algorithm {
 
 			} else if (d.getLeft() == null || d.getRight() == null) {
 				// case IIa - 1 syn
-				addStep("bstdeletecase2");
+				addStep("bst-delete-case2");
 				mysuspend();
 				BSTNode s = (d.getLeft() == null) ? d.getRight() : d.getLeft();
 				if (d.isRoot()) {
@@ -100,7 +116,7 @@ public class RBDelete extends Algorithm {
 				v.goDown();
 
 			} else { // case III - 2 synovia
-				addStep("bstdeletecase3");
+				addStep("bst-delete-case3");
 				RBNode s = d.getRight();
 				v = T.setV(new BSTNode(T, -Node.INF));
 				v.setColor(NodeColor.FIND);

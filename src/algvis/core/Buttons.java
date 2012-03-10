@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.core;
 
 import java.awt.Dimension;
@@ -15,6 +31,7 @@ import javax.swing.JPanel;
 import algvis.internationalization.ChLabel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ICheckBox;
+import algvis.scenario.commands.SetStatsCommand;
 
 /**
  * The Class Buttons. This is a panel with standard buttons such as input field,
@@ -256,8 +273,14 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	public void setStats(String s) {
-		stats.setText(s);
-		stats.refresh();
+		String oldText = stats.getText();
+		if (oldText != s) {
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new SetStatsCommand(this, oldText, s));
+			}
+			stats.setText(s);
+			stats.refresh();
+		}
 	}
 
 	public void otherButtons(JPanel P) {
