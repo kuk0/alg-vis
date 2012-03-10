@@ -177,7 +177,6 @@ public class DaryHeapNode extends HeapNode{
 			leftw = DataStructure.minsepx / 2;
 			rightw = DataStructure.minsepx / 2;
 			width = leftw + rightw;
-			//System.out.print("moje suradnice su " + tox + " a " + toy + ", moje leftw a rightw je " + leftw + " " + rightw + " a som " + nson + ". syn \n" );			
 			return;
 		}
 
@@ -191,7 +190,7 @@ public class DaryHeapNode extends HeapNode{
 			}else{
 				rightw = DataStructure.minsepx/2;
 			}
-			
+
 			width = leftw + rightw;
 			return;
 		}
@@ -199,25 +198,19 @@ public class DaryHeapNode extends HeapNode{
 		leftw = 0;
 		rightw = 0;
 		for (int i = 1; i <= ((DaryHeap)D).getOrder()/2; i++){
-			leftw += c[i - 1].width;  //<<--- mozno tutok mozu byt problemy
-			//System.out.print("pricitavam k " + nson + ". leftw " + c[i-1].width + " za " + i + ". syna \n" );
-			
+			leftw += c[i - 1].width;
 		}
 		
 		for (int i = (((DaryHeap)D).getOrder()/2) +1; i<=((DaryHeap)D).getOrder(); i++){
-			rightw += c[i - 1].width;  //<<--- mozno tutok mozu byt problemy
-			//System.out.print("pricitavam k " + nson + ". rightw " + c[i-1].width + "\n" );
+			rightw += c[i - 1].width;
 		}
 		
 		if (((DaryHeap)D).getOrder() % 2 == 1){
 			rightw -= c[(((DaryHeap)D).getOrder() / 2)].leftw;
 			leftw += c[(((DaryHeap)D).getOrder() / 2)].leftw;
 		}
-		
-		//leftw += DataStructure.minsepx / 2;
-		//rightw += DataStructure.minsepx / 2;
+
 		width = leftw + rightw;
-		//System.out.print("moje suradnice su " + tox + " a " + toy + ", moje leftw a rightw je " + leftw + " " + rightw + " a som " + nson + ". syn \n" );
 	}
 	
 	private void repos() {
@@ -238,7 +231,7 @@ public class DaryHeapNode extends HeapNode{
 
 		for (int i = 0; i < numChildren; i++){
 			if (i == 0){
-				c[0].goTo(this.tox - (this.leftw) + c[0].leftw,// - DataStructure.minsepx/2,// + c[0].leftw,
+				c[0].goTo(this.tox - (this.leftw) + c[0].leftw,
 						this.toy + DataStructure.minsepy);
 			}else{
 				c[i].goTo( c[i-1].tox + c[i-1].rightw + c[i].leftw,
@@ -246,7 +239,6 @@ public class DaryHeapNode extends HeapNode{
 			}
 			c[i].repos();
 		}
-		//System.out.print("moje suradnice su " + tox + " a " + toy + ", moje leftw a rightw je " + leftw + " " + rightw + " a som " + nson + ". syn \n" );		
 	}
 
 	public void _reposition() {
@@ -254,39 +246,6 @@ public class DaryHeapNode extends HeapNode{
 		repos();
 	}
 
-	/*
-	public int _goToX(DaryHeapNode v) {
-		int x = key, p = v.numChildren;
-		for (int i = 0; i < p; ++i) {
-			if (x <= v.c[i].key) {
-				p = i;
-			}
-		}
-		return (v.pos(p - 1) + v.pos(p)) / 2;
-	}
-
-	public void goTo(DaryHeapNode v) {
-		goTo(_goToX(v), v.toy);
-	}
-
-	public void goAbove(DaryHeapNode v) {
-		goTo(_goToX(v), v.toy - 2 * Node.radius + 2);
-	}
-
-	public void goBelow(DaryHeapNode v) {
-		goTo(_goToX(v), v.toy + 2 * Node.radius - 2);
-	}
-	*/
-
-	/*
-	 * public void goToRoot() { if (((DaryHeapTree)D).root == null) { goTo (D.rootx,
-	 * D.rooty); } else { goTo(_goToX(((DaryHeapTree)D).root), D.rooty); } }
-	 * 
-	 * public void goAboveRoot() { if (((DaryHeapTree)D).root == null) { goTo (D.rootx,
-	 * D.rooty - 2*D.radius); } else { goTo(_goToX(((DaryHeapTree)D).root),
-	 * D.rooty-2*D.radius); } }
-	 */
-	
 	public DaryHeapNode getParent() {
 		return parent;
 	}
@@ -322,7 +281,7 @@ public class DaryHeapNode extends HeapNode{
 		}
 
 		if (getParent().numChildren < ((DaryHeap) D).getOrder()){   // pre root nson == -1
-			System.out.print("malo synov kluca " + getParent().key + ", konkretne " + getParent().numChildren + " a order mame prave " + ((DaryHeap) D).getOrder() + "\n" );
+			//System.out.print("malo synov kluca " + getParent().key + ", konkretne " + getParent().numChildren + " a order mame prave " + ((DaryHeap) D).getOrder() + "\n" );
 			return getParent();
 		}
 		
@@ -357,7 +316,7 @@ public class DaryHeapNode extends HeapNode{
 		}
 
 		if (nson > 1){   // pre root nson == -1
-			System.out.print("dost synov, konkretne " + getParent().numChildren + " a order mame prave " + ((DaryHeap) D).getOrder() + "\n" );
+			//System.out.print("dost synov, konkretne " + getParent().numChildren + " a order mame prave " + ((DaryHeap) D).getOrder() + "\n" );
 			return getParent().c[nson-2];
 		}
 

@@ -51,9 +51,9 @@ public class DaryHeapDelete extends DaryHeapAlg {
 		mysuspend();
 		H.v = null;
 		if (H.minHeap) {
-			addStep("minheapbubbledown");
+			addStep("mindheapbubbledown");
 		} else {
-			addStep("maxheapbubbledown");
+			addStep("maxdheapbubbledown");
 		}
 		// mysuspend();
 		//bubble bubble bubble
