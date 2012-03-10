@@ -43,6 +43,8 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 		super(M, dsName);
 		root = new BinHeapNode[numHeaps + 1];
 		min = new BinHeapNode[numHeaps + 1];
+
+		
 		M.screen.V.setDS(this);
 		M.screen.V.align = Alignment.LEFT;
 	}
