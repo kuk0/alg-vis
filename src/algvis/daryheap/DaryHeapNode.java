@@ -1,7 +1,6 @@
 package algvis.daryheap;
 
 import java.awt.Color;
-//import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.PriorityQueue;
@@ -22,7 +21,8 @@ public class DaryHeapNode extends HeapNode{
 		bgKeyColor();
 		c = new DaryHeapNode[((DaryHeap) D).getOrder()];
 		//setColor(NodeColor.NORMAL);
-		width = DataStructure.minsepx;	
+		width = DataStructure.minsepx;
+		//mark();
 	}
 
 	public DaryHeapNode(DataStructure D, int key) {
@@ -246,7 +246,7 @@ public class DaryHeapNode extends HeapNode{
 			}
 			c[i].repos();
 		}
-		System.out.print("moje suradnice su " + tox + " a " + toy + ", moje leftw a rightw je " + leftw + " " + rightw + " a som " + nson + ". syn \n" );		
+		//System.out.print("moje suradnice su " + tox + " a " + toy + ", moje leftw a rightw je " + leftw + " " + rightw + " a som " + nson + ". syn \n" );		
 	}
 
 	public void _reposition() {
@@ -314,14 +314,15 @@ public class DaryHeapNode extends HeapNode{
 		}
 	}
 	
-	//vracia otca najblizsieho suseda vpravo
+	// vracia otca najblizsieho suseda vpravo
+	// funguje iba pre listy
 	public DaryHeapNode nextneighbour(){
 		if (isRoot()) {
-				return this;
+			return this;
 		}
 
 		if (getParent().numChildren < ((DaryHeap) D).getOrder()){   // pre root nson == -1
-			System.out.print("malo synov, konkretne " + getParent().numChildren + " a order mame prave " + ((DaryHeap) D).getOrder() + "\n" );
+			System.out.print("malo synov kluca " + getParent().key + ", konkretne " + getParent().numChildren + " a order mame prave " + ((DaryHeap) D).getOrder() + "\n" );
 			return getParent();
 		}
 		
@@ -348,67 +349,63 @@ public class DaryHeapNode extends HeapNode{
 		//return this.getParent();
 	}
 	
-	//vracia otca najblizsieho prazdneho suseda vlavo
+	// vracia najblizsieho suseda vlavo, (prerobit na otca?)
+	// funguje iba pre listy
 	public DaryHeapNode prevneighbour(){
-		if (isRoot()){
+		if (isRoot()) {
 			return null;
 		}
-		
-		if (nson > 0){
-			return this;
+
+		if (nson > 1){   // pre root nson == -1
+			System.out.print("dost synov, konkretne " + getParent().numChildren + " a order mame prave " + ((DaryHeap) D).getOrder() + "\n" );
+			return getParent().c[nson-2];
 		}
-		
-		//if (this.nson == 0){ 
-			DaryHeapNode v = this;		
-			while ( (!v.isRoot()) && (v.nson == 0) ){
-				v = v.getParent();
-			}
-			
-			if (v.isRoot()){
-				while (v.c[((DaryHeap) D).getOrder() -1] != null) {
-					v = v.c[((DaryHeap) D).getOrder() -1];
-				}
-				return v;
-			}
-			
-			v = v.getParent().c[v.nson - 1]; 
-			while (v.c[((DaryHeap) D).getOrder() -1] != null) {
-				v = v.c[((DaryHeap) D).getOrder() -1];
-			}
-			return v;
-		//}
-		
-		//return this.getParent();
+
+		DaryHeapNode v = this;
+		while ( (!v.isRoot()) && (v.nson == 1)){
+			v = v.getParent();
+		}
+		if (!v.isRoot()){
+			v = v.getParent().c[v.nson - 2];
+		}
+
+		while (!v.isLeaf()){
+			v = v.c[((DaryHeap) D).getOrder() - 1];
+		}
+
+		return v;
+
 	}
 	
 	public void linknewson(DaryHeapNode v){
-		//treba aj zmenit last
 		numChildren ++;
 		v.nson = numChildren;
-		//System.out.print("ano");
 		c[numChildren - 1] = v;
 		c[numChildren - 1].setParent(this); 
 		((DaryHeap) D).last = c[numChildren - 1];
 	}
-	
-	/*
-	public int maxWidth(){
-		int mw = 0;
-		if (isLeaf()){
-			return DataStructure.minsepx;
+
+	public DaryHeapNode find(int x, int y) {
+		if (inside(x, y))
+			return this;
+
+		for (int i = 0; i < numChildren; i++){
+			DaryHeapNode tmp = c[i].find(x, y);
+			if (tmp != null)
+				return tmp;
 		}
-		
-		for (int i = 0; i <((DaryHeap)D).getOrder(); i++){
-			
-			if (c[i] != null){
-				mw += c[i].width;
-			} else { //ked sa zisti, ze je otcom listu, tak sa vrati hodnota, akoby bol uplne naplneny
-				return ((DaryHeap)D).order * (DataStructure.minsepx); //- DataStructure.minsepx + 2*Node.radius;
+		return null;
+	}
+
+	public DaryHeapNode findMaxSon(){
+		DaryHeapNode v = c[0];
+		for (int i = 0; i < numChildren; i++){
+			if (c[i].prec(v)) {
+				v = c[i];
 			}
 		}
-		
-		return mw;
-		//return ((DaryHeap)D).order *(DataStructure.minsepx) - DataStructure.minsepx + 2*Node.radius;
-	} */
+
+		return v;
+	}
 
 }

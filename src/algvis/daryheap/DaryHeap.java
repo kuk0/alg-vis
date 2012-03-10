@@ -21,8 +21,20 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 
 	@Override
 	public void mouseClicked(int x, int y) {
-		// TODO Auto-generated method stub
-		
+		if (root == null)
+			return;
+		DaryHeapNode v = root.find(x, y);
+		if (v != null) {
+			if (v.marked) {
+				v.unmark();
+				chosen = null;
+			} else {
+				if (chosen != null)
+					chosen.unmark();
+				v.mark();
+				chosen = v;
+			}
+		}
 	}
 
 	@Override
@@ -33,14 +45,17 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 
 	@Override
 	public void delete() {
-		//start(new DaryHeapDelete(this, x));
+		start(new DaryHeapDelete(this));
 		
 	}
 
 	@Override
 	public void decreaseKey(Node v, int delta) {
-		// TODO Auto-generated method stub
-		
+		if (v == null) {
+		// TODO: vypindat
+		} else {
+			start(new DaryHeapDecrKey(this, (DaryHeapNode) v, delta));
+		}
 	}
 
 	@Override
@@ -52,15 +67,10 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 	public String stats() {
 		if (root == null) {
 			return "#" + M.S.L.getString("nodes") + ": 0;   #"
-					+ M.S.L.getString("keys") + ": 0 = 0% "
-					+ M.S.L.getString("full") + ";   "
 					+ M.S.L.getString("height") + ": 0";
 		} else {
 			root.calcTree();
 			return "#" + M.S.L.getString("nodes") + ": " + root.nnodes + ";   "
-					//+ "#" + M.S.L.getString("keys") + ": " + root.nkeys + " = "
-					//+ (100 * root.nkeys) / (root.nnodes * (order - 1)) + "% "
-					+ M.S.L.getString("full") + ";   "
 					+ M.S.L.getString("height") + ": " + root.height;
 		}
 	}
@@ -99,29 +109,5 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 	public int getOrder(){
 		return this.order;
 	}
-	
-	/*
-	public void swapwithfather(DaryHeapNode v, DaryHeapNode w){ //w je otcom v
-		if (w.isRoot()){
-			DaryHeapNode tmp1 = w;
-			DaryHeapNode tmp2 = v;
-			
-			v.parent = null;
-			v.c[v.nson -1] = tmp1;
-			w.setParent(tmp2);
-			w.c = tmp2.c;			
-		}else{
-			DaryHeapNode tmp1 = w;
-			DaryHeapNode tmp2 = v;
-			
-			v.parent = tmp1.getParent();
-			v.c[v.nson -1] = tmp1;
-			w.setParent(tmp2);
-			w.c = tmp2.c;
-			
-			
-		}		
-	}
-	*/
 
 }

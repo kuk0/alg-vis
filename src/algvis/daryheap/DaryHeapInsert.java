@@ -15,10 +15,12 @@ public class DaryHeapInsert extends DaryHeapAlg{
 	
 	@Override
 	public void run() {
-		System.out.print("last je " + ((DaryHeap) T).last.key + "\n");		
+
+		v.mark();
 		if ( (H.root != null) && (H.root.nnodes == 1000) ) {
 			addStep("heapfull");
 			H.v = null;
+			v.unmark();
 			return;
 		}		
 		DaryHeapNode w;
@@ -39,7 +41,11 @@ public class DaryHeapInsert extends DaryHeapAlg{
 		
 		++H.root.nnodes;
 		// mysuspend();
+		v.unmark();
 		bubbleup(v);
+		if (H.last != null){
+			System.out.print("last je " + ((DaryHeap) T).last.key + "\n");
+		}
 	}
 
 }
