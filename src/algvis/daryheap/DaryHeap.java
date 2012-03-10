@@ -65,13 +65,15 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 
 	@Override
 	public String stats() {
+
 		if (root == null) {
-			return "#" + M.S.L.getString("nodes") + ": 0;   #"
-					+ M.S.L.getString("height") + ": 0";
+			return M.S.L.getString("size") + ": 0 ("
+					+ M.S.L.getString("emptyheap") + ")";
+		} else if (root.nnodes == 1000) {
+			return M.S.L.getString("size") + ": 1000 ("
+					+ M.S.L.getString("fullheap") + ")";
 		} else {
-			root.calcTree();
-			return "#" + M.S.L.getString("nodes") + ": " + root.nnodes + ";   "
-					+ M.S.L.getString("height") + ": " + root.height;
+			return M.S.L.getString("size") + ": " + root.nnodes;
 		}
 	}
 

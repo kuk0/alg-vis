@@ -3,13 +3,13 @@ package algvis.leftistheap;
 import java.awt.Color;
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
+import algvis.core.Fonts;
 import algvis.core.Node;
 import algvis.core.MeldablePQ;
 import algvis.core.View;
 
 public class LeftHeapNode extends BSTNode {
 	Color color = Color.yellow;
-	int height = 1;
 	int rank = 1;
 	boolean doubleArrow = false;
 	boolean dashedrightl = false; // if true the line leading to the right son is dashed
@@ -105,9 +105,9 @@ public class LeftHeapNode extends BSTNode {
 		String str = new String("" + rank);
 		if (rank != -1){
 		if (this.getParent() != null && this.getParent().getLeft() == this) {
-			v.drawString(str, x - LeftHeapNode.radius, y - LeftHeapNode.radius, 7);
+			v.drawString(str, x - LeftHeapNode.radius, y - LeftHeapNode.radius, Fonts.SMALL);
 		} else {
-			v.drawString(str, x + LeftHeapNode.radius, y - LeftHeapNode.radius, 7);
+			v.drawString(str, x + LeftHeapNode.radius, y - LeftHeapNode.radius, Fonts.SMALL);
 		}
 		}
 
