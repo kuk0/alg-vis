@@ -39,7 +39,7 @@ import javax.swing.text.html.StyleSheet;
 
 import algvis.internationalization.LanguageListener;
 import algvis.internationalization.Languages;
-import algvis.scenario.commands.SetCommentaryStateCommand;
+import algvis.scenario.Command;
 
 public class Commentary extends JEditorPane implements LanguageListener,
 		HyperlinkListener {
@@ -86,7 +86,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		post = new ArrayList<String>();
 		param = new ArrayList<String[]>();
 		setText("<html><body></body></html>");
-		V.D.scenario.add(new SetCommentaryStateCommand(this, state));
+		V.D.scenario.add(new SetCommentaryStateCommand(state));
 	}
 
 	private String str(int i) {
@@ -155,7 +155,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		s.add(v);
 		post.add(w);
 		param.add(par);
-		V.D.scenario.add(new SetCommentaryStateCommand(this, state));
+		V.D.scenario.add(new SetCommentaryStateCommand(state));
 		update();
 	}
 
@@ -256,6 +256,31 @@ public class Commentary extends JEditorPane implements LanguageListener,
 			this.pre = pre;
 			this.post = post;
 			this.param = param;
+		}
+	}
+
+	private class SetCommentaryStateCommand implements Command {
+		private final State fromState, toState;
+
+		public SetCommentaryStateCommand(State fromState) {
+			this.fromState = fromState;
+			this.toState = getState();
+		}
+
+		@Override
+		public org.jdom.Element getXML() {
+			org.jdom.Element e = new org.jdom.Element("saveCommentary");
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			restoreState(toState);
+		}
+
+		@Override
+		public void unexecute() {
+			restoreState(fromState);
 		}
 	}
 }

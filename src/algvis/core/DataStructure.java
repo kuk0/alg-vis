@@ -20,6 +20,7 @@ import java.util.Random;
 
 import algvis.scenario.Scenario;
 
+
 abstract public class DataStructure {
 	// datova struktura musi vediet gombikom povedat, kolko ich potrebuje,
 	// kolko ma vstupov, ake to su a co treba robit

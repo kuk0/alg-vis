@@ -14,47 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.scenario.commands.skipnode;
+package algvis.scenario;
 
-import org.jdom.Element;
+public interface Command extends XMLable {
 
-import algvis.scenario.commands.Command;
-import algvis.skiplist.SkipNode;
+	public void execute();
 
-public class SetLeftCommand implements Command {
-	private final SkipNode n, oldLeft, newLeft;
-
-	public SetLeftCommand(SkipNode n, SkipNode newLeft) {
-		this.n = n;
-		oldLeft = n.getLeft();
-		this.newLeft = newLeft;
-	}
-
-	@Override
-	public Element getXML() {
-		Element e = new Element("setLeft");
-		e.setAttribute("key", Integer.toString(n.key));
-		if (newLeft != null) {
-			e.setAttribute("newLeft", Integer.toString(newLeft.key));
-		} else {
-			e.setAttribute("newLeft", "null");
-		}
-		if (oldLeft != null) {
-			e.setAttribute("oldLeft", Integer.toString(oldLeft.key));
-		} else {
-			e.setAttribute("oldLeft", "null");
-		}
-		return e;
-	}
-
-	@Override
-	public void execute() {
-		n.setLeft(newLeft);
-	}
-
-	@Override
-	public void unexecute() {
-		n.setLeft(oldLeft);
-	}
-
+	public void unexecute();
 }
