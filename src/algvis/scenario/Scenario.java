@@ -81,6 +81,10 @@ public class Scenario implements XMLable {
 			scenario.getCurrent().getCurrent().add(c);
 		}
 	}
+	
+	public void clear() {
+		scenario.clear();
+	}
 
 	public boolean isAlgorithmRunning() {
 		if (scenario.isEmpty()) {

@@ -19,11 +19,15 @@ package algvis.unionfind;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.jdom.Element;
+
 import algvis.core.Alignment;
 import algvis.core.ClickListener;
 import algvis.core.DataStructure;
 import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.scenario.commands.Command;
+import algvis.scenario.commands.node.WaitBackwardsCommand;
 import algvis.unionfind.UnionFindFind.FindHeuristic;
 import algvis.unionfind.UnionFindUnion.UnionHeuristic;
 
@@ -32,9 +36,9 @@ public class UnionFind extends DataStructure implements ClickListener {
 	public static String dsName = "ufi";
 
 	public int count = 0;
-	public ArrayList<UnionFindNode> sets = new ArrayList<UnionFindNode>();
-	public ArrayList<UnionFindNode> vertices = new ArrayList<UnionFindNode>();
-	public UnionFindNode v = null;
+	private ArrayList<UnionFindNode> sets = new ArrayList<UnionFindNode>();
+	private ArrayList<UnionFindNode> vertices = new ArrayList<UnionFindNode>();
+	private UnionFindNode v = null;
 
 	public FindHeuristic pathCompression = FindHeuristic.NONE;
 	public UnionHeuristic unionState = UnionHeuristic.NONE;
@@ -49,11 +53,41 @@ public class UnionFind extends DataStructure implements ClickListener {
 
 	public UnionFind(VisPanel M) {
 		super(M);
+		scenario.enable(true);
 		M.screen.V.align = Alignment.LEFT;
 		M.screen.V.setDS(this);
 		count = 0;
 		sets = new ArrayList<UnionFindNode>();
 		makeSet(10);
+	}
+
+	public void setV(UnionFindNode v) {
+		if (this.v != v) {
+			if (scenario.isAddingEnabled()) {
+				scenario.add(new SetVCommand(v));
+			}
+			this.v = v;
+		}
+		if (v != null && scenario.isAddingEnabled()) {
+			scenario.add(new WaitBackwardsCommand(v));
+		}
+	}
+
+	/** adds to sets and vertices */
+	public void add(UnionFindNode n) {
+		if (scenario.isAddingEnabled()) {
+			scenario.add(new AddCommand(n));
+		}
+		count++;
+		sets.add(n);
+		vertices.add(n);
+	}
+
+	public void removeFromSets(UnionFindNode n) {
+		if (scenario.isAddingEnabled()) {
+			scenario.add(new RemoveFromSetsCommand(n));
+		}
+		sets.remove(n);
 	}
 
 	@Override
@@ -67,10 +101,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 
 	public void makeSet(int N) {
 		for (int i = 0; i < N; i++) {
-			count++;
-			UnionFindNode T = new UnionFindNode(this, count);
-			sets.add(T);
-			vertices.add(T);
+			add(new UnionFindNode(this, count));
 		}
 		reposition();
 	}
@@ -101,6 +132,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 		vertices = new ArrayList<UnionFindNode>();
 		makeSet(10);
 		setStats();
+		scenario.clear();
 	}
 
 	@Override
@@ -113,10 +145,10 @@ public class UnionFind extends DataStructure implements ClickListener {
 		}
 		if (v != null) {
 			if (isSelected(v) && (v.marked == false)) {
-				v.mark();
+				// v.mark(); // TODO
 			}
 			if (!isSelected(v) && (v.marked != false)) {
-				v.unmark();
+				// v.unmark(); // TODO are these lines needed?
 			}
 			v.move();
 			v.draw(V);
@@ -176,7 +208,9 @@ public class UnionFind extends DataStructure implements ClickListener {
 		} while ((u == null) && (i < j));
 		if (u != null) {
 			if (isSelected(u)) {
+				scenario.enableAdding(false);
 				u.unmark();
+				scenario.enableAdding(true);
 				if (u == secondSelected) {
 					secondSelected = null;
 				} else if (u == firstSelected) {
@@ -184,17 +218,108 @@ public class UnionFind extends DataStructure implements ClickListener {
 					secondSelected = null;
 				}
 			} else {
+				scenario.enableAdding(false);
 				u.mark();
+				scenario.enableAdding(true);
 				if (firstSelected == null) {
 					firstSelected = u;
 				} else if (secondSelected == null) {
 					secondSelected = u;
 				} else {
+					scenario.enableAdding(false);
 					firstSelected.unmark();
+					scenario.enableAdding(true);
 					firstSelected = secondSelected;
 					secondSelected = u;
 				}
 			}
+		}
+	}
+
+	private class SetVCommand implements Command {
+		private final UnionFindNode newV, oldV;
+
+		public SetVCommand(UnionFindNode newV) {
+			oldV = v;
+			this.newV = newV;
+		}
+
+		@Override
+		public void execute() {
+			setV(newV);
+		}
+
+		@Override
+		public void unexecute() {
+			setV(oldV);
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setV");
+			if (newV != null) {
+				e.setAttribute("newVKey", Integer.toString(newV.key));
+			} else {
+				e.setAttribute("newV", "null");
+			}
+			if (oldV != null) {
+				e.setAttribute("oldVKey", Integer.toString(oldV.key));
+			} else {
+				e.setAttribute("oldV", "null");
+			}
+			return e;
+		}
+	}
+
+	private class AddCommand implements Command {
+		private final UnionFindNode n;
+
+		public AddCommand(UnionFindNode n) {
+			this.n = n;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("addNewNode");
+			e.setAttribute("key", Integer.toString(n.key));
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			add(n);
+		}
+
+		@Override
+		public void unexecute() {
+			--count;
+			sets.remove(n);
+			vertices.remove(n);
+		}
+	}
+
+	private class RemoveFromSetsCommand implements Command {
+		private final UnionFindNode n;
+
+		public RemoveFromSetsCommand(UnionFindNode n) {
+			this.n = n;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("RemoveFromSets");
+			e.setAttribute("key", Integer.toString(n.key));
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			sets.remove(n);
+		}
+
+		@Override
+		public void unexecute() {
+			sets.add(n);
 		}
 	}
 }

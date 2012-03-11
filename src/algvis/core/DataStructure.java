@@ -23,7 +23,7 @@ import algvis.scenario.Scenario;
 abstract public class DataStructure {
 	// datova struktura musi vediet gombikom povedat, kolko ich potrebuje,
 	// kolko ma vstupov, ake to su a co treba robit
-	Algorithm A;
+	protected Algorithm A;
 	public VisPanel M;
 	public Scenario scenario;
 	public static int rootx = 0, rooty = 0,  

@@ -23,6 +23,13 @@ public class ScenarioCommand extends
 		super(name);
 	}
 
+	public void clear() {
+		commands.clear();
+		iterator = commands.listIterator();
+		current = null;
+		position = -1;
+	}
+
 	@Override
 	public void unexecuteOne() {
 		if (current.hasPrevious()) {
@@ -88,5 +95,4 @@ public class ScenarioCommand extends
 			iterator.next();
 		}
 	}
-
 }
