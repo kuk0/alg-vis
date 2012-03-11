@@ -24,6 +24,7 @@ import algvis.core.ClickListener;
 import algvis.core.DataStructure;
 import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.scenario.Scenario;
 import algvis.unionfind.UnionFindFind.FindHeuristic;
 import algvis.unionfind.UnionFindUnion.UnionHeuristic;
 
@@ -88,8 +89,19 @@ public class UnionFind extends DataStructure implements ClickListener {
 		Random g = new Random(System.currentTimeMillis());
 		boolean p = M.pause;
 		M.pause = false;
-		for (int i = 0; i < n; ++i) {
-			union(at(g.nextInt(count)), at(g.nextInt(count)));
+		{
+			int i = 0;
+			scenario.enableAdding(false);
+			M.C.enableUpdating(false);
+			for (; i < n - Scenario.maxAlgorithms; ++i) {
+				union(at(g.nextInt(count)), at(g.nextInt(count)));
+			}
+			scenario.enableAdding(true);
+			for (; i < n; ++i) {
+				union(at(g.nextInt(count)), at(g.nextInt(count)));
+			}
+			M.C.enableUpdating(true);
+			M.C.update();
 		}
 		M.pause = p;
 	}

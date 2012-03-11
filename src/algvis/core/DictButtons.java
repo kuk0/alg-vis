@@ -23,6 +23,7 @@ import java.util.Vector;
 import javax.swing.JPanel;
 
 import algvis.internationalization.IButton;
+import algvis.scenario.Scenario;
 
 /**
  * The Class DictButtons. All dictionary data structures need buttons "Insert",
@@ -63,9 +64,26 @@ public class DictButtons extends Buttons {
 			Thread t = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					for (int x : args) {
-						((Dictionary) D).insert(x);
+					boolean p = M.pause;
+					int n = args.size();
+					int i = 0;
+					D.scenario.enableAdding(false);
+					M.C.enableUpdating(p);
+					for (; i < n - Scenario.maxAlgorithms; ++i) {
+						if (M.pause != p) {
+							M.C.enableUpdating(p = M.pause);
+						}
+						((Dictionary) D).insert(args.elementAt(i));
 					}
+					D.scenario.enableAdding(true);
+					for (; i < n; ++i) {
+						if (M.pause != p) {
+							M.C.enableUpdating(p = M.pause);
+						}
+						((Dictionary) D).insert(args.elementAt(i));
+					}
+					M.C.enableUpdating(true);
+					M.C.update();
 				}
 			});
 			t.start();

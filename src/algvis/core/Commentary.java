@@ -51,6 +51,8 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	private List<String> s = new ArrayList<String>(),
 			pre = new ArrayList<String>(), post = new ArrayList<String>();
 	private List<String[]> param = new ArrayList<String[]>();
+	private boolean updatingEnabled = true;
+
 	static SimpleAttributeSet normalAttr = new SimpleAttributeSet();
 	static SimpleAttributeSet hoverAttr = new SimpleAttributeSet();
 	static {
@@ -85,8 +87,12 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		pre = new ArrayList<String>();
 		post = new ArrayList<String>();
 		param = new ArrayList<String[]>();
-		setText("<html><body></body></html>");
-		V.D.scenario.add(new SetCommentaryStateCommand(state));
+		if (V.D.scenario.isAddingEnabled()) {
+			V.D.scenario.add(new SetCommentaryStateCommand(state));
+		}
+		if (updatingEnabled) {
+			setText("<html><body></body></html>");
+		}
 	}
 
 	private String str(int i) {
@@ -137,6 +143,10 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		scrollDown();
 	}
 
+	public void enableUpdating(boolean updatingEnabled) {
+		this.updatingEnabled = updatingEnabled;
+	}
+
 	private void scrollDown() {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
@@ -155,8 +165,12 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		s.add(v);
 		post.add(w);
 		param.add(par);
-		V.D.scenario.add(new SetCommentaryStateCommand(state));
-		update();
+		if (V.D.scenario.isAddingEnabled()) {
+			V.D.scenario.add(new SetCommentaryStateCommand(state));
+		}
+		if (updatingEnabled) {
+			update();
+		}
 	}
 
 	private String[] int2strArray(int[] a) {
@@ -237,7 +251,9 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		pre = state.pre;
 		post = state.post;
 		param = state.param;
-		update();
+		if (updatingEnabled) {
+			update();
+		}
 	}
 
 	public State getState() {
