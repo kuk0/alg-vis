@@ -228,4 +228,93 @@ public class Scenario implements XMLable {
 		}
 	}
 
+	private class ScenarioCommand extends
+			MacroCommand<MacroCommand<MacroCommand<Command>>> {
+		private final int maxElements;
+
+		public ScenarioCommand(String name, int maxElements) {
+			super(name);
+			this.maxElements = maxElements;
+		}
+
+		@Override
+		public void add(MacroCommand<MacroCommand<Command>> c) {
+			super.add(c);
+			if (position == maxElements) {
+				commands.remove(0);
+				iterator = commands.listIterator(commands.size());
+				current = iterator.previous();
+				iterator.next();
+				position = iterator.previousIndex();
+			}
+		}
+
+		@Override
+		public void unexecuteOne() {
+			if (current.hasPrevious()) {
+				current.unexecuteOne();
+				if (!current.hasPrevious()
+						&& iterator.previousIndex() == position) {
+					iterator.previous();
+				}
+			} else {
+				position = iterator.previousIndex();
+				current = iterator.previous();
+				current.unexecuteOne();
+			}
+			if (!current.hasPrevious() && iterator.hasPrevious()) {
+				position = iterator.previousIndex();
+				current = iterator.previous();
+				iterator.next();
+			}
+		}
+
+		@Override
+		public void executeOne() {
+			if (current.hasNext()) {
+				current.executeOne();
+				if (!current.hasNext() && iterator.nextIndex() == position) {
+					iterator.next();
+				}
+			} else {
+				position = iterator.nextIndex();
+				current = iterator.next();
+				current.executeOne();
+			}
+		}
+
+		@Override
+		public void execute() {
+			if (current.hasNext()) {
+				current.execute();
+				if (!current.hasNext() && iterator.nextIndex() == position) {
+					iterator.next();
+				}
+			} else {
+				position = iterator.nextIndex();
+				current = iterator.next();
+				current.execute();
+			}
+		}
+
+		@Override
+		public void unexecute() {
+			if (current.hasPrevious()) {
+				current.unexecute();
+				if (!current.hasPrevious()
+						&& iterator.previousIndex() == position) {
+					iterator.previous();
+				}
+			} else {
+				position = iterator.previousIndex();
+				current = iterator.previous();
+				current.unexecute();
+			}
+			if (!current.hasPrevious() && iterator.hasPrevious()) {
+				position = iterator.previousIndex();
+				current = iterator.previous();
+				iterator.next();
+			}
+		}
+	}
 }
