@@ -18,13 +18,24 @@ public class DaryHeapDelete extends DaryHeapAlg {
 		}
 		if (H.root.numChildren == 0) {
 			H.v = H.root;
+			if (H.minHeap){
+				addStep("minimum", H.root.key);
+			} else {
+				addStep("maximum", H.root.key);
+			}
 			H.root = null;
+			H.v.mark();
 			//--H.n;
-			H.v.goDown();
 			mysuspend();
+			H.v.unmark();
+			H.v.goDown();
 			return;
 		}
-		
+		if (H.minHeap){
+			addStep("minimum", H.root.key);
+		} else {
+			addStep("maximum", H.root.key);
+		}
 		H.v = new DaryHeapNode(H.last);
 		H.v2 = new DaryHeapNode(H.root);
 		H.last.key = Node.NOKEY;
@@ -48,15 +59,14 @@ public class DaryHeapDelete extends DaryHeapAlg {
 		H.root.mark();
 		H.reposition();
 		
+		if (H.minHeap) {
+			addStep("mindheapbubbledown");
+		} else {
+			addStep("maxdheapbubbledown");
+		}
 		mysuspend();
 		H.v = null;
-		if (H.minHeap) {
-			addStep("minheapbubbledown");
-		} else {
-			addStep("maxheapbubbledown");
-		}
-		// mysuspend();
-		//bubble bubble bubble
+		
 		v = H.root;
 		H.root.unmark();
 		bubbledown(v);

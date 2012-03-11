@@ -13,11 +13,7 @@ public class DaryHeapAlg extends Algorithm {
 	}
 
 	public void bubbleup(DaryHeapNode v) {
-		if (H.minHeap) {
-			addStep("minheapbubbleup");
-		} else {
-			addStep("maxheapbubbleup");
-		}
+
 		DaryHeapNode w = v.getParent();
 		while (w != null && v.prec(w)) {
 			H.v = new DaryHeapNode(v);
@@ -39,7 +35,7 @@ public class DaryHeapAlg extends Algorithm {
 			w = w.getParent();
 		}
 
-		addStep("done");
+		addNote("done");
 	}
 
 	public void bubbledown(DaryHeapNode v) {
@@ -73,7 +69,7 @@ public class DaryHeapAlg extends Algorithm {
 			v = w;
 		}
 
-		addStep("done");
+		addNote("done");
 	}
 }
 

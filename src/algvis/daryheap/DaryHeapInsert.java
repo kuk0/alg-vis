@@ -25,6 +25,12 @@ public class DaryHeapInsert extends DaryHeapAlg{
 		}		
 		DaryHeapNode w;
 
+		if (H.minHeap) {
+			addStep("minheapbubbleup");
+		} else {
+			addStep("maxheapbubbleup");
+		}
+		
 		//int n = H.root.nnodes - 1;
 		if (H.root == null) {
 			H.root = w = v;
@@ -43,9 +49,11 @@ public class DaryHeapInsert extends DaryHeapAlg{
 		// mysuspend();
 		v.unmark();
 		bubbleup(v);
+		/*
 		if (H.last != null){
 			System.out.print("last je " + ((DaryHeap) T).last.key + "\n");
 		}
+		*/
 	}
 
 }
