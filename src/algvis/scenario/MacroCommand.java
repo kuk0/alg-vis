@@ -25,7 +25,7 @@ import org.jdom.Element;
 public class MacroCommand<T extends Command> implements Command {
 	private final String name;
 	protected final List<T> commands;
-	protected final ListIterator<T> iterator;
+	protected ListIterator<T> iterator;
 	protected T current = null;
 	protected int position = -1;
 

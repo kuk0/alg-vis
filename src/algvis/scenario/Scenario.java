@@ -38,9 +38,11 @@ public class Scenario implements XMLable {
 	private boolean addingEnabled = true;
 	private boolean enabled;
 
+	private static final int maxAlgorithms = 47;
+
 	public Scenario(VisPanel V, String name) {
 		this.V = V;
-		scenario = new ScenarioCommand(name);
+		scenario = new ScenarioCommand(name, maxAlgorithms);
 		traverser = new Traverser();
 		enabled = false;
 	}

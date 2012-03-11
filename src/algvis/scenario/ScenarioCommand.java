@@ -18,9 +18,23 @@ package algvis.scenario;
 
 public class ScenarioCommand extends
 		MacroCommand<MacroCommand<MacroCommand<Command>>> {
+	private final int maxElements;
 
-	public ScenarioCommand(String name) {
+	public ScenarioCommand(String name, int maxElements) {
 		super(name);
+		this.maxElements = maxElements;
+	}
+
+	@Override
+	public void add(MacroCommand<MacroCommand<Command>> c) {
+		super.add(c);
+		if (position == maxElements) {
+			commands.remove(0);
+			iterator = commands.listIterator(commands.size());
+			current = iterator.previous();
+			iterator.next();
+			position = iterator.previousIndex();
+		}
 	}
 
 	@Override
