@@ -42,7 +42,7 @@ public class Scenario implements XMLable {
 
 	public Scenario(VisPanel V, String name) {
 		this.V = V;
-		scenario = new ScenarioCommand(name, maxAlgorithms);
+		scenario = new ScenarioCommand(name);
 		traverser = new Traverser();
 		enabled = false;
 	}
@@ -230,17 +230,15 @@ public class Scenario implements XMLable {
 
 	private class ScenarioCommand extends
 			MacroCommand<MacroCommand<MacroCommand<Command>>> {
-		private final int maxElements;
 
-		public ScenarioCommand(String name, int maxElements) {
+		public ScenarioCommand(String name) {
 			super(name);
-			this.maxElements = maxElements;
 		}
 
 		@Override
 		public void add(MacroCommand<MacroCommand<Command>> c) {
 			super.add(c);
-			if (position == maxElements) {
+			if (position == maxAlgorithms) {
 				commands.remove(0);
 				iterator = commands.listIterator(commands.size());
 				current = iterator.previous();

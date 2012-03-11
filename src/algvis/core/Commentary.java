@@ -244,7 +244,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		return new State(position, s, pre, post, param);
 	}
 
-	public static class State {
+	private class State {
 		private final int position;
 		private final List<String> s, pre, post;
 		private final List<String[]> param;
