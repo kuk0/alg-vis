@@ -92,7 +92,7 @@ public class UnionFindButtons extends Buttons {
 		final UnionFind D = (UnionFind) this.D;
 		if (evt.getSource() == makesetB) {
 			final int N = I.getInt(10, 1, 1000);
-			D.scenario.traverser.startNew(new Runnable() {
+			Thread t = new Thread(new Runnable() {
 				@Override
 				public void run() {
 					D.scenario.newAlgorithm();
@@ -100,9 +100,10 @@ public class UnionFindButtons extends Buttons {
 					D.makeSet(N);
 					M.B.update();
 				}
-			}, true);
+			});
+			t.start();
 		} else if (evt.getSource() == findB) {
-			D.scenario.traverser.startNew(new Runnable() {
+			Thread t = new Thread(new Runnable() {
 				@Override
 				public void run() {
 					int count = D.count;
@@ -124,9 +125,10 @@ public class UnionFindButtons extends Buttons {
 					}
 					D.find(D.at(args.elementAt(0)));
 				}
-			}, true);
+			});
+			t.start();
 		} else if (evt.getSource() == unionB) {
-			D.scenario.traverser.startNew(new Runnable() {
+			Thread t = new Thread(new Runnable() {
 				@Override
 				public void run() {
 					int count = D.count;
@@ -157,7 +159,8 @@ public class UnionFindButtons extends Buttons {
 					}
 					D.union(D.at(args.elementAt(0)), D.at(args.elementAt(1)));
 				}
-			}, true);
+			});
+			t.start();
 		} else if (evt.getSource() == unionHeuristicCB) {
 			int i = unionHeuristicCB.getSelectedIndex();
 			if (i == 0 || i == 1)
