@@ -39,7 +39,7 @@ import javax.swing.text.html.StyleSheet;
 
 import algvis.internationalization.LanguageListener;
 import algvis.internationalization.Languages;
-import algvis.scenario.commands.SetCommentaryStateCommand;
+import algvis.scenario.Command;
 
 public class Commentary extends JEditorPane implements LanguageListener,
 		HyperlinkListener {
@@ -51,6 +51,8 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	private List<String> s = new ArrayList<String>(),
 			pre = new ArrayList<String>(), post = new ArrayList<String>();
 	private List<String[]> param = new ArrayList<String[]>();
+	private boolean updatingEnabled = true;
+
 	static SimpleAttributeSet normalAttr = new SimpleAttributeSet();
 	static SimpleAttributeSet hoverAttr = new SimpleAttributeSet();
 	static {
@@ -85,8 +87,12 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		pre = new ArrayList<String>();
 		post = new ArrayList<String>();
 		param = new ArrayList<String[]>();
-		setText("<html><body></body></html>");
-		V.D.scenario.add(new SetCommentaryStateCommand(this, state));
+		if (V.D.scenario.isAddingEnabled()) {
+			V.D.scenario.add(new SetCommentaryStateCommand(state));
+		}
+		if (updatingEnabled) {
+			setText("<html><body></body></html>");
+		}
 	}
 
 	private String str(int i) {
@@ -137,6 +143,10 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		scrollDown();
 	}
 
+	public void enableUpdating(boolean updatingEnabled) {
+		this.updatingEnabled = updatingEnabled;
+	}
+
 	private void scrollDown() {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
@@ -155,8 +165,12 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		s.add(v);
 		post.add(w);
 		param.add(par);
-		V.D.scenario.add(new SetCommentaryStateCommand(this, state));
-		update();
+		if (V.D.scenario.isAddingEnabled()) {
+			V.D.scenario.add(new SetCommentaryStateCommand(state));
+		}
+		if (updatingEnabled) {
+			update();
+		}
 	}
 
 	private String[] int2strArray(int[] a) {
@@ -237,14 +251,16 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		pre = state.pre;
 		post = state.post;
 		param = state.param;
-		update();
+		if (updatingEnabled) {
+			update();
+		}
 	}
 
 	public State getState() {
 		return new State(position, s, pre, post, param);
 	}
 
-	public static class State {
+	private class State {
 		private final int position;
 		private final List<String> s, pre, post;
 		private final List<String[]> param;
@@ -256,6 +272,31 @@ public class Commentary extends JEditorPane implements LanguageListener,
 			this.pre = pre;
 			this.post = post;
 			this.param = param;
+		}
+	}
+
+	private class SetCommentaryStateCommand implements Command {
+		private final State fromState, toState;
+
+		public SetCommentaryStateCommand(State fromState) {
+			this.fromState = fromState;
+			this.toState = getState();
+		}
+
+		@Override
+		public org.jdom.Element getXML() {
+			org.jdom.Element e = new org.jdom.Element("saveCommentary");
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			restoreState(toState);
+		}
+
+		@Override
+		public void unexecute() {
+			restoreState(fromState);
 		}
 	}
 }

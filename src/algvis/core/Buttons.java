@@ -28,10 +28,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import org.jdom.Element;
+
 import algvis.internationalization.ChLabel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ICheckBox;
-import algvis.scenario.commands.SetStatsCommand;
+import algvis.scenario.Command;
 
 /**
  * The Class Buttons. This is a panel with standard buttons such as input field,
@@ -275,7 +277,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		String oldText = stats.getText();
 		if (oldText != s) {
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetStatsCommand(this, oldText, s));
+				D.scenario.add(new SetStatsCommand(oldText, s));
 			}
 			stats.setText(s);
 			stats.refresh();
@@ -298,5 +300,32 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	@Override
 	public Dimension getMinimumSize() {
 		return new Dimension(300, 150);
+	}
+	
+	private class SetStatsCommand implements Command {
+		private final String oldStats, newStats;
+
+		public SetStatsCommand(String oldStats, String newStats) {
+			this.oldStats = oldStats;
+			this.newStats = newStats;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setStats");
+			e.setAttribute("oldStats", oldStats);
+			e.setAttribute("newStats", newStats);
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			setStats(newStats);
+		}
+
+		@Override
+		public void unexecute() {
+			setStats(oldStats);
+		}
 	}
 }

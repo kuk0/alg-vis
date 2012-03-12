@@ -26,8 +26,8 @@ abstract public class DataStructure {
 	protected Algorithm A;
 	public VisPanel M;
 	public Scenario scenario;
-	public static int rootx = 0, rooty = 0,  
-			sheight = 600, swidth = 400, minsepx = 38, minsepy = 30;
+	public static int rootx = 0, rooty = 0, sheight = 600, swidth = 400,
+			minsepx = 38, minsepy = 30;
 	public int x1, x2, y1 = -50, y2;
 	public Node chosen = null;
 	public static String adtName = "";
@@ -94,8 +94,19 @@ abstract public class DataStructure {
 		Random g = new Random(System.currentTimeMillis());
 		boolean p = M.pause;
 		M.pause = false;
-		for (int i = 0; i < n; ++i) {
-			insert(g.nextInt(InputField.MAX + 1));
+		{
+			int i = 0;
+			scenario.enableAdding(false);
+			M.C.enableUpdating(false);
+			for (; i < n - Scenario.maxAlgorithms; ++i) {
+				insert(g.nextInt(InputField.MAX + 1));
+			}
+			scenario.enableAdding(true);
+			for (; i < n; ++i) {
+				insert(g.nextInt(InputField.MAX + 1));
+			}
+			M.C.enableUpdating(true);
+			M.C.update();
 		}
 		M.pause = p;
 	}
@@ -106,7 +117,7 @@ abstract public class DataStructure {
 			chosen = null;
 		}
 	}
-	
+
 	public Layout getLayout() {
 		return M.S.layout;
 	}

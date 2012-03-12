@@ -21,7 +21,7 @@ import java.util.Stack;
 
 import org.jdom.Element;
 
-import algvis.scenario.commands.Command;
+import algvis.scenario.Command;
 
 public class TreeNode extends Node {
 	private TreeNode child = null, right = null, parent = null;

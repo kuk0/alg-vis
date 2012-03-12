@@ -26,9 +26,6 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 import algvis.core.VisPanel;
-import algvis.scenario.commands.Command;
-import algvis.scenario.commands.MacroCommand;
-import algvis.scenario.commands.ScenarioCommand;
 
 /**
  * Scenario (or history list) stores list of Commands, which are executed. It
@@ -40,6 +37,9 @@ public class Scenario implements XMLable {
 	private VisPanel V;
 	private boolean addingEnabled = true;
 	private boolean enabled;
+
+	/** for many reasons must be at least 1 */
+	public static final int maxAlgorithms = 47;
 
 	public Scenario(VisPanel V, String name) {
 		this.V = V;
@@ -233,4 +233,98 @@ public class Scenario implements XMLable {
 		}
 	}
 
+	private class ScenarioCommand extends
+			MacroCommand<MacroCommand<MacroCommand<Command>>> {
+
+		public ScenarioCommand(String name) {
+			super(name);
+		}
+		
+		public void clear() {
+			commands.clear();
+			iterator = commands.listIterator();
+			current = null;
+			position = -1;
+		}
+
+		@Override
+		public void add(MacroCommand<MacroCommand<Command>> c) {
+			super.add(c);
+			if (position == maxAlgorithms) {
+				commands.remove(0);
+				iterator = commands.listIterator(commands.size());
+				current = iterator.previous();
+				iterator.next();
+				position = iterator.previousIndex();
+			}
+		}
+
+		@Override
+		public void unexecuteOne() {
+			if (current.hasPrevious()) {
+				current.unexecuteOne();
+				if (!current.hasPrevious()
+						&& iterator.previousIndex() == position) {
+					iterator.previous();
+				}
+			} else {
+				position = iterator.previousIndex();
+				current = iterator.previous();
+				current.unexecuteOne();
+			}
+			if (!current.hasPrevious() && iterator.hasPrevious()) {
+				position = iterator.previousIndex();
+				current = iterator.previous();
+				iterator.next();
+			}
+		}
+
+		@Override
+		public void executeOne() {
+			if (current.hasNext()) {
+				current.executeOne();
+				if (!current.hasNext() && iterator.nextIndex() == position) {
+					iterator.next();
+				}
+			} else {
+				position = iterator.nextIndex();
+				current = iterator.next();
+				current.executeOne();
+			}
+		}
+
+		@Override
+		public void execute() {
+			if (current.hasNext()) {
+				current.execute();
+				if (!current.hasNext() && iterator.nextIndex() == position) {
+					iterator.next();
+				}
+			} else {
+				position = iterator.nextIndex();
+				current = iterator.next();
+				current.execute();
+			}
+		}
+
+		@Override
+		public void unexecute() {
+			if (current.hasPrevious()) {
+				current.unexecute();
+				if (!current.hasPrevious()
+						&& iterator.previousIndex() == position) {
+					iterator.previous();
+				}
+			} else {
+				position = iterator.previousIndex();
+				current = iterator.previous();
+				current.unexecute();
+			}
+			if (!current.hasPrevious() && iterator.hasPrevious()) {
+				position = iterator.previousIndex();
+				current = iterator.previous();
+				iterator.next();
+			}
+		}
+	}
 }

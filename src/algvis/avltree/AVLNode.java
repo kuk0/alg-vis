@@ -18,13 +18,15 @@ package algvis.avltree;
 
 import java.awt.Color;
 
+import org.jdom.Element;
+
 import algvis.bst.BSTNode;
-import algvis.core.Fonts;
-import algvis.core.NodeColor;
 import algvis.core.DataStructure;
+import algvis.core.Fonts;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 import algvis.core.View;
-import algvis.scenario.commands.avlnode.SetBalanceCommand;
+import algvis.scenario.Command;
 
 //import static java.lang.Math.random;
 //import static java.lang.Math.round;
@@ -69,7 +71,7 @@ public class AVLNode extends BSTNode {
 
 	public void setBalance(int bal) {
 		if (this.bal != bal) {
-			D.scenario.add(new SetBalanceCommand(this, bal));
+			D.scenario.add(new SetBalanceCommand(bal));
 			this.bal = bal;
 		}
 	}
@@ -120,14 +122,45 @@ public class AVLNode extends BSTNode {
 				break;
 			}
 			V.setColor(getFgColor());
-			V.drawOval(x - Node.radius, y - Node.radius, 2 * Node.radius, 2 * Node.radius);
+			V.drawOval(x - Node.radius, y - Node.radius, 2 * Node.radius,
+					2 * Node.radius);
 		}
 
 		drawKey(V);
 		if (getParent() != null && getParent().getLeft() == this) {
-			V.drawString(b, x - Node.radius - 1, y - Node.radius - 1, Fonts.NORMAL);
+			V.drawString(b, x - Node.radius - 1, y - Node.radius - 1,
+					Fonts.NORMAL);
 		} else {
-			V.drawString(b, x + Node.radius + 1, y - Node.radius - 1, Fonts.NORMAL);
+			V.drawString(b, x + Node.radius + 1, y - Node.radius - 1,
+					Fonts.NORMAL);
+		}
+	}
+
+	private class SetBalanceCommand implements Command {
+		private final int fromBal, toBal;
+
+		public SetBalanceCommand(int bal) {
+			this.fromBal = getBalance();
+			this.toBal = bal;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setBalance");
+			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("fromBalance", Integer.toString(fromBal));
+			e.setAttribute("toBalance", Integer.toString(toBal));
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			setBalance(toBal);
+		}
+
+		@Override
+		public void unexecute() {
+			setBalance(fromBal);
 		}
 	}
 }
