@@ -308,8 +308,18 @@ public class BSTNode extends Node {
 													// Layout.SIMPLE
 			v.setColor(Color.LIGHT_GRAY);
 			++i;
-			v.drawLine(x, y, x, -20);
-			v.drawString("" + i, x, -23, Fonts.NORMAL);
+			if (i%10 == 0) {
+				v.drawLine(x, y, x, -22);
+			} else {
+				v.drawLine(x, y, x, -20);
+			}
+			if (i%10 == 0) {
+				v.drawString("" + i, x, -29, Fonts.NORMAL);
+			} else if (i%10 == 5) {
+				v.drawString("5", x, -27, Fonts.NORMAL);
+			} else {
+				v.drawString("" + i%10, x, -27, Fonts.SMALL);
+			}
 		}
 		if (getRight() != null) {
 			getRight().drawTree2(v);
