@@ -1,11 +1,29 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.redblacktree;
 
+import org.jdom.Element;
+
 import algvis.bst.BSTNode;
-import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 import algvis.core.View;
-import algvis.scenario.commands.rbnode.SetRedCommand;
+import algvis.scenario.Command;
 
 public class RBNode extends BSTNode {
 	private boolean red = true;
@@ -25,7 +43,7 @@ public class RBNode extends BSTNode {
 	public void setRed(boolean red) {
 		if (this.red != red) {
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetRedCommand(this, red));
+				D.scenario.add(new SetRedCommand(red));
 			}
 			this.red = red;
 		}
@@ -104,5 +122,33 @@ public class RBNode extends BSTNode {
 			drawBigNodes(v);
 		}
 		drawTree(v);
+	}
+
+	private class SetRedCommand implements Command {
+		private final boolean oldRed, newRed;
+
+		public SetRedCommand(boolean newRed) {
+			oldRed = isRed();
+			this.newRed = newRed;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setRed");
+			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("wasRed", Boolean.toString(oldRed));
+			e.setAttribute("isRed", Boolean.toString(newRed));
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			setRed(newRed);
+		}
+
+		@Override
+		public void unexecute() {
+			setRed(oldRed);
+		}
 	}
 }

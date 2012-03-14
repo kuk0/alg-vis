@@ -1,9 +1,26 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.binomialheap;
 
 import java.awt.Color;
 
 import algvis.core.Alignment;
 import algvis.core.ClickListener;
+import algvis.core.Fonts;
 import algvis.core.MeldablePQ;
 import algvis.core.MeldablePQButtons;
 import algvis.core.Node;
@@ -26,6 +43,8 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 		super(M, dsName);
 		root = new BinHeapNode[numHeaps + 1];
 		min = new BinHeapNode[numHeaps + 1];
+
+		
 		M.screen.V.setDS(this);
 		M.screen.V.align = Alignment.LEFT;
 	}
@@ -120,15 +139,15 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 				if (i > 0) {
 					V.setColor(Color.black);
 					V.drawStringLeft(M.S.L.getString("heap") + " #" + i + ":",
-							root[i].x - Node.radius - 5, root[i].y, 9);
+							root[i].x - Node.radius - 5, root[i].y, Fonts.NORMAL);
 				}
 				if (min[i] != null) {
 					if (minHeap) {
 						V.drawStringTop(M.S.L.getString("min"), min[i].x,
-								min[i].y - Node.radius - 2, 9);
+								min[i].y - Node.radius - 2, Fonts.NORMAL);
 					} else {
 						V.drawStringTop(M.S.L.getString("max"), min[i].x,
-								min[i].y - Node.radius - 2, 9);
+								min[i].y - Node.radius - 2, Fonts.NORMAL);
 					}
 				}
 			}

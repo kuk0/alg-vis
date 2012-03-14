@@ -3,6 +3,7 @@ package algvis.trie;
 import java.awt.Color;
 
 import algvis.core.DataStructure;
+import algvis.core.Fonts;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.TreeNode;
@@ -128,7 +129,7 @@ public class TrieNode extends TreeNode {
 				// }
 
 				v.setColor(Color.BLACK);
-				v.drawString(ch, midx, midy, 6);
+				v.drawString(ch, midx, midy, Fonts.TYPEWRITER);
 			} else {
 				midx = x - ((x - u.x) / 7);
 				midy = y - ((y - u.y) / 5 * 2) - 2;
@@ -141,7 +142,7 @@ public class TrieNode extends TreeNode {
 				v.drawRoundRectangle(midx, midy, w, h, 6, 10);
 
 				v.setColor(getFgColor());
-				v.drawString(ch, midx, midy, 9);
+				v.drawString(ch, midx, midy, Fonts.TYPEWRITER);
 			}
 		}
 	}

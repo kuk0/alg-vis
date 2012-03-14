@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.unionfind;
 
 import java.util.ArrayList;
@@ -8,6 +24,7 @@ import algvis.core.ClickListener;
 import algvis.core.DataStructure;
 import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.scenario.Scenario;
 import algvis.unionfind.UnionFindFind.FindHeuristic;
 import algvis.unionfind.UnionFindUnion.UnionHeuristic;
 
@@ -72,8 +89,19 @@ public class UnionFind extends DataStructure implements ClickListener {
 		Random g = new Random(System.currentTimeMillis());
 		boolean p = M.pause;
 		M.pause = false;
-		for (int i = 0; i < n; ++i) {
-			union(at(g.nextInt(count)), at(g.nextInt(count)));
+		{
+			int i = 0;
+			scenario.enableAdding(false);
+			M.C.enableUpdating(false);
+			for (; i < n - Scenario.maxAlgorithms; ++i) {
+				union(at(g.nextInt(count)), at(g.nextInt(count)));
+			}
+			scenario.enableAdding(true);
+			for (; i < n; ++i) {
+				union(at(g.nextInt(count)), at(g.nextInt(count)));
+			}
+			M.C.enableUpdating(true);
+			M.C.update();
 		}
 		M.pause = p;
 	}

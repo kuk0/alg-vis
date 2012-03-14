@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.FontMetrics;
 
 import algvis.core.DataStructure;
+import algvis.core.Fonts;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.View;
@@ -84,6 +85,6 @@ public class TrieHelpWord {
 		v.setColor(Color.BLACK);
 		v.drawRoundRectangle(x + width, y - height / 2, width, height, 3, 3);
 		v.setColor(c.fgColor);
-		v.drawString(s, x + width, y - height / 2, 9);
+		v.drawString(s, x + width, y - height / 2, Fonts.TYPEWRITER);
 	}
 }

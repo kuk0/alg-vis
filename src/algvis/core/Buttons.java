@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.core;
 
 import java.awt.Dimension;
@@ -12,10 +28,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import org.jdom.Element;
+
 import algvis.internationalization.ChLabel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ICheckBox;
-import algvis.scenario.commands.SetStatsCommand;
+import algvis.scenario.Command;
 
 /**
  * The Class Buttons. This is a panel with standard buttons such as input field,
@@ -260,7 +278,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		String oldText = stats.getText();
 		if (oldText != s) {
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetStatsCommand(this, oldText, s));
+				D.scenario.add(new SetStatsCommand(oldText, s));
 			}
 			stats.setText(s);
 			stats.refresh();
@@ -283,5 +301,32 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	@Override
 	public Dimension getMinimumSize() {
 		return new Dimension(300, 150);
+	}
+	
+	private class SetStatsCommand implements Command {
+		private final String oldStats, newStats;
+
+		public SetStatsCommand(String oldStats, String newStats) {
+			this.oldStats = oldStats;
+			this.newStats = newStats;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setStats");
+			e.setAttribute("oldStats", oldStats);
+			e.setAttribute("newStats", newStats);
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			setStats(newStats);
+		}
+
+		@Override
+		public void unexecute() {
+			setStats(oldStats);
+		}
 	}
 }

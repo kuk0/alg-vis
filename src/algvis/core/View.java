@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.core;
 
 import java.awt.BasicStroke;
@@ -265,28 +281,28 @@ public class View implements MouseListener, MouseMotionListener,
 		g.drawRect(x - a, y - a, 2 * a, 2 * a);
 	}
 
-	public int stringWidth(String str, int fs) {
-		return Fonts.fm[fs].stringWidth(str);
+	public int stringWidth(String str, Fonts f) {
+		return f.fm.stringWidth(str);
 	}
 
-	public void drawString(String str, int x, int y, int fs) {
-		x -= Fonts.fm[fs].stringWidth(str) / 2;
-		y -= Fonts.fm[fs].getHeight() / 2 - Fonts.fm[fs].getAscent();
-		g.setFont(Fonts.f[fs]);
+	public void drawString(String str, int x, int y, Fonts f) {
+		x -= f.fm.stringWidth(str) / 2;
+		y -= f.fm.getHeight() / 2 - f.fm.getAscent();
+		g.setFont(f.font);
 		g.drawString(str, x, y);
 	}
 
-	public void drawStringLeft(String str, int x, int y, int fs) {
-		x -= Fonts.fm[fs].stringWidth(str);
-		y -= Fonts.fm[fs].getHeight() / 2 - Fonts.fm[fs].getAscent();
-		g.setFont(Fonts.f[fs]);
+	public void drawStringLeft(String str, int x, int y, Fonts f) {
+		x -= f.fm.stringWidth(str);
+		y -= f.fm.getHeight() / 2 - f.fm.getAscent();
+		g.setFont(f.font);
 		g.drawString(str, x, y);
 	}
 
-	public void drawStringTop(String str, int x, int y, int fs) {
-		x -= Fonts.fm[fs].stringWidth(str) / 2;
-		y -= Fonts.fm[fs].getHeight();
-		g.setFont(Fonts.f[fs]);
+	public void drawStringTop(String str, int x, int y, Fonts f) {
+		x -= f.fm.stringWidth(str) / 2;
+		y -= f.fm.getHeight();
+		g.setFont(f.font);
 		g.drawString(str, x, y);
 	}
 
@@ -347,8 +363,8 @@ public class View implements MouseListener, MouseMotionListener,
 
 	public void drawDoubleArrow(int x1, int y1, int x2, int y2) {
 		g.drawLine(x1, y1, x2, y2);
-		arrowHead(x1, y1, x2, y2);
-		arrowHead(x2, y2, x1, y1);
+		arrowHead(x1, y1, x2 + 2, y2);
+		arrowHead(x2, y2, x1 - 2, y1);
 	}
 
 	// elliptical arc
