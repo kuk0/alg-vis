@@ -1,17 +1,36 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.core;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.TitledBorder;
 
 import algvis.internationalization.ILabel;
+import algvis.internationalization.LanguageListener;
 
-public abstract class VisPanel extends JPanel {
+public abstract class VisPanel extends JPanel implements LanguageListener {
 	private static final long serialVersionUID = 5104769085118210624L;
 	public static Class<? extends DataStructure> DS;
 
@@ -22,22 +41,13 @@ public abstract class VisPanel extends JPanel {
 	public Screen screen; // obrazovky v strede
 	public ILabel statusBar; // a status baru
 	public Settings S;
+	public TitledBorder border;
 
-	int STEPS = 10;
 	public boolean pause = true, small = false;
 
 	public VisPanel(Settings S) {
 		this.S = S;
 		init();
-	}
-
-	public String getTitle() {
-		try {
-			return (String)(DS.getDeclaredField("dsName").get(null));
-		} catch (Exception e) {
-			System.out.println ("VisPanel is unable to get field dsName - name of data structure: " + DS);
-		}
-		return "";
 	}
 
 	public void init() {
@@ -46,13 +56,13 @@ public abstract class VisPanel extends JPanel {
 		JScrollPane commentary = initCommentary();
 		statusBar = new ILabel(S.L, "EMPTYSTR");
 		initDS();
-		
+
 		GridBagConstraints cs = new GridBagConstraints();
 		cs.gridx = 0;
 		cs.gridy = 0;
 		cs.fill = GridBagConstraints.BOTH;
 		add(screenP, cs);
-		
+
 		GridBagConstraints cc = new GridBagConstraints();
 		cc.gridx = 1;
 		cc.gridy = 0;
@@ -71,9 +81,10 @@ public abstract class VisPanel extends JPanel {
 		csb.gridy = 2;
 		csb.fill = GridBagConstraints.HORIZONTAL;
 		add(statusBar, csb);
-		
+
 		screen.setDS(D);
 		screen.start();
+		languageChanged();
 	}
 
 	public JPanel initScreen() {
@@ -95,16 +106,18 @@ public abstract class VisPanel extends JPanel {
 			@Override
 			public Dimension getMinimumSize() {
 				return new Dimension(550, 400);
-//				return new Dimension(300, 100);
+				// return new Dimension(300, 100);
 			}
 		};
 		screenP.add(screen, BorderLayout.CENTER);
 
-		screenP.setBorder(BorderFactory.createCompoundBorder(BorderFactory
-				.createTitledBorder(S.L.getString("display")), BorderFactory
-				.createEmptyBorder(5, 5, 5, 5)));
+		border = BorderFactory.createTitledBorder("");
+		border.setTitleJustification(TitledBorder.CENTER);
+		border.setTitleFont(new Font("Sans-serif", Font.ITALIC, 12));
+		S.L.addListener(this);
+		screenP.setBorder(BorderFactory.createCompoundBorder(border,
+				BorderFactory.createEmptyBorder(0, 5, 5, 5)));
 		return screenP;
-		// left.add(screen, BorderLayout.CENTER);
 	}
 
 	public JScrollPane initCommentary() {
@@ -125,22 +138,25 @@ public abstract class VisPanel extends JPanel {
 			@Override
 			public Dimension getMinimumSize() {
 				return new Dimension(250, 600);
-				//return new Dimension(200, 530);
+				// return new Dimension(200, 530);
 			}
 		};
-		C = new Commentary(S.L, SP);
+		C = new Commentary(this, S.L, SP);
 		SP.setViewportView(C);
-		JPanel CP = new JPanel();
-		CP.add(SP);
-		SP.setBorder(BorderFactory.createCompoundBorder(BorderFactory
-				.createTitledBorder(S.L.getString("text")), BorderFactory
-				.createEmptyBorder(5, 5, 5, 5)));
+		// JPanel CP = new JPanel();
+		// CP.add(SP);
+		SP.setBorder(BorderFactory.createTitledBorder(""));
 		return SP;
 	}
 
 	abstract public void initDS();
 
-	/*public void showStatus (String t) {
-		statusBar.setT(t);
-	}*/
+	/*
+	 * public void showStatus (String t) { statusBar.setT(t); }
+	 */
+
+	@Override
+	public void languageChanged() {
+		border.setTitle("    " + S.L.getString(D.getName()) + "    ");
+	}
 }

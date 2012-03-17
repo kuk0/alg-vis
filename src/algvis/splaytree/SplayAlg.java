@@ -1,95 +1,124 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.splaytree;
 
-import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class SplayAlg extends Algorithm {
-	Splay T;
-	BSTNode s, v;
+	SplayTree T;
+	SplayNode s, v;
 	int K;
-	
-	public SplayAlg(Splay T, int x) {
-		super(T.M);
+
+	public SplayAlg(SplayTree T, int x) {
+		super(T);
 		this.T = T;
-		if (T.root != null) {
-			T.v = s = new SplayNode(T, K = x);
-			s.bgColor(Colors.FIND);
-			setHeader("splay");
+		if (T.getRoot() != null) {
+			T.setV(s = new SplayNode(T, K = x));
+			s.setColor(NodeColor.FIND);
 		}
 	}
-	
-	public BSTNode find(int K) {
-		BSTNode w = T.root;
+
+	public SplayNode find(int K) {
+		SplayNode w = (SplayNode) T.getRoot();
 		s.goTo(w);
-		setText("splaystart");
+		addNote("splay-start", K);
 		mysuspend();
 		while (true) {
 			if (w.key == K) {
+				addNote("splay-found");
 				break;
 			} else if (w.key < K) { // right
-				if (w.right == null) {
+				if (w.getRight() == null) {
+					addNote("splay-lower", K, w.key);
 					break;
 				}
-				w = w.right;
-				setText("bstfindright", K, w.key);
+				w = w.getRight();
+				addStep("bstfindright", K, w.key);
 			} else { // left
-				if (w.left == null) {
+				if (w.getLeft() == null) {
+					addNote("splay-higher", K, w.key);
 					break;
 				}
-				w = w.left;
-				setText("bstfindleft", K, w.key);
+				w = w.getLeft();
+				addStep("bstfindleft", K, w.key);
 			}
 			s.goTo(w);
 			mysuspend();
 		}
-		w.bgColor(Colors.FIND);
-		T.v = null;
-		setText("splayfound");
+		w.setColor(NodeColor.FIND);
+		T.setV(null);
 		mysuspend();
 		return w;
 	}
-	
-	public void splay(BSTNode w) {
+
+	public void splay(SplayNode w) {
 		while (!w.isRoot()) {
-			if (w.parent.isRoot()) {
-				setText("splayroot");
-				w.setArc(w.parent);
+			T.setW1(w);
+			T.setW2(w.getParent());
+			if (w.getParent().isRoot()) {
+				addNote("splay-root");
+				w.setArc(w.getParent());
 				mysuspend();
 				w.noArc();
 				T.rotate(w);
 			} else {
-				if (w.isLeft() == w.parent.isLeft()) {
+				if (w.isLeft() == w.getParent().isLeft()) {
 					if (w.isLeft()) {
-						setText("splayzigzigleft");
+						addNote("splay-zig-zig-left", w.key, w.getParent().key);
 					} else {
-						setText("splayzigzigright");
+						addNote("splay-zig-zig-right", w.key, w.getParent().key);
 					}
-					w.parent.setArc(w.parent.parent);
+					addStep("rotate", w.getParent().key);
+					w.getParent().setArc(w.getParent().getParent());
 					mysuspend();
-					w.parent.noArc();
-					T.rotate(w.parent);
-					w.setArc(w.parent);
+					w.getParent().noArc();
+					T.setW2(w.getParent().getParent());
+					T.rotate(w.getParent());
+					w.setArc(w.getParent());
+					addStep("rotate", w.key);
 					mysuspend();
 					w.noArc();
+					T.setW1(w.getParent());
 					T.rotate(w);
+					mysuspend();
 				} else {
 					if (!w.isLeft()) {
-						setText("splayzigzagleft");
+						addNote("splay-zig-zag-left", w.key, w.getParent().key);
 					} else {
-						setText("splayzigzagright");
+						addNote("splay-zig-zag-right", w.key, w.getParent().key);
 					}
-					w.setArc(w.parent);
+					w.setArc(w.getParent());
+					addStep("rotate", w.key);
 					mysuspend();
 					w.noArc();
 					T.rotate(w);
-					w.setArc(w.parent);
+					w.setArc(w.getParent());
+					addStep("rotate", w.key);
 					mysuspend();
 					w.noArc();
+					T.setW1(w.getParent());
 					T.rotate(w);
+					mysuspend();
 				}
 			}
 		}
-		T.root = w;
+		T.setW1(null);
+		T.setW2(null);
+		T.setRoot(w);
 	}
 }

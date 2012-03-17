@@ -1,13 +1,34 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.binomialheap;
 
 import java.awt.Color;
+
+import algvis.core.Fonts;
+import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.MeldablePQ;
 import algvis.core.Node;
 import algvis.core.View;
 
 public class BinHeapNode extends Node {
-	public int leftw, height, size, rank; // TODO: size -> rank (treba ale zmenit aj pomocne upratovacie pole....)
+	public int leftw, height, rank; // TODO: size -> rank (treba ale
+											// zmenit aj pomocne upratovacie
+											// pole....)
 	public BinHeapNode parent, left, right, child;
 	public boolean cut;
 
@@ -18,7 +39,6 @@ public class BinHeapNode extends Node {
 		this.y = toy = y;
 		parent = child = null;
 		left = right = this;
-		size = 1;
 		rank = 0;
 		steps = 0;
 		bgKeyColor();
@@ -26,7 +46,7 @@ public class BinHeapNode extends Node {
 
 	public BinHeapNode(DataStructure D, int key) {
 		this(D, key, 0, 0);
-		setState(Node.UP);
+		getReady();
 	}
 
 	public BinHeapNode(BinHeapNode v) {
@@ -70,7 +90,6 @@ public class BinHeapNode extends Node {
 		}
 		v.parent = this;
 		child = v;
-		size += v.size;
 		++height;
 		++rank;
 	}
@@ -103,14 +122,14 @@ public class BinHeapNode extends Node {
 
 	public void rebox() {
 		if (isLeaf()) {
-			leftw = D.radius + D.xspan;
+			leftw = DataStructure.minsepx / 2;
 			height = 1;
 		} else {
 			leftw = child.leftw;
 			height = child.height + 1;
 			BinHeapNode w = child, v = child.right;
 			while (v != w) {
-				leftw += D.radius + v.leftw;
+				leftw += Node.radius + v.leftw;
 				v = v.right;
 			}
 		}
@@ -129,10 +148,10 @@ public class BinHeapNode extends Node {
 	private void repos(int x, int y, BinHeapNode first) {
 		goTo(x + leftw, y);
 		if (!isLeaf()) {
-			child.repos(x, y + 2 * (D.radius + D.yspan), child);
+			child.repos(x, y + DataStructure.minsepy, child);
 		}
 		if (right != first) {
-			right.repos(x + leftw + D.radius, y, first);
+			right.repos(x + leftw + Node.radius, y, first);
 		}
 	}
 
@@ -141,8 +160,7 @@ public class BinHeapNode extends Node {
 		repos(x, y, this);
 	}
 
-	public void drawTree(View v, BinHeapNode first,
-			BinHeapNode parent) {
+	public void drawTree(View v, BinHeapNode first, BinHeapNode parent) {
 		if (!isLeaf()) {
 			child.drawTree(v, child, this);
 		}
@@ -227,15 +245,15 @@ public class BinHeapNode extends Node {
 
 	@Override
 	public void draw(View v) {
-		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
+		if (state == Node.INVISIBLE || key == NULL) {
 			return;
 		}
 		drawBg(v);
 		drawKey(v);
-		//if (parent == null) {
+		if (parent == null) {
 			v.setColor(Color.black);
-			v.drawString("" + rank, x + D.radius, y - D.radius, 8);
-		//}
+			v.drawString("" + rank, x + Node.radius, y - Node.radius, Fonts.SMALL);
+		}
 	}
 
 	public BinHeapNode find(BinHeapNode first, int x, int y) {
@@ -251,13 +269,12 @@ public class BinHeapNode extends Node {
 		}
 		return null;
 	}
-	
+
 	public void markCut() {
 		cut = true;
-		bgColor(Color.black);
-		fgColor(Color.white);
+		setColor(NodeColor.BLACK);
 	}
-	
+
 	public void unmarkCut() {
 		cut = false;
 		bgKeyColor();

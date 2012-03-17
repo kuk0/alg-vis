@@ -1,59 +1,75 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.scapegoattree;
 
 import algvis.bst.BSTNode;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class GBFind extends GBAlg {
 	public GBFind(GBTree T, int x) {
 		super(T, x);
-		v.bgColor(Colors.FIND);
+		v.setColor(NodeColor.FIND);
 		setHeader("search");
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
+		if (T.getRoot() == null) {
 			v.goToRoot();
-			setText("empty");
+			addStep("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Colors.NOTFOUND);
-			setText("notfound");
+			v.setColor(NodeColor.NOTFOUND);
+			addStep("notfound");
 		} else {
-			BSTNode w = T.root;
+			BSTNode w = T.getRoot();
 			v.goTo(w);
-			setText("bstfindstart");
+			addStep("bstfindstart");
 			mysuspend();
 			while (true) {
 				if (w.key == K) {
-					if (((GBNode) w).deleted) {
-						setText("gbfinddeleted");
-						v.bgColor(Colors.NOTFOUND);
+					if (((GBNode) w).isDeleted()) {
+						addStep("gbfinddeleted");
+						v.setColor(NodeColor.NOTFOUND);
 						v.goDown();
 					} else {
-						setText("found");
-						v.bgColor(Colors.FOUND);
+						addStep("found");
+						v.setColor(NodeColor.FOUND);
 					}
 					break;
 				} else if (w.key < K) {
-					setText("bstfindright", K, w.key);
-					w = w.right;
+					addStep("bstfindright", K, w.key);
+					w = w.getRight();
 					if (w != null) {
 						v.goTo(w);
 					} else { // notfound
-						setText("notfound");
-						v.bgColor(Colors.NOTFOUND);
+						addStep("notfound");
+						v.setColor(NodeColor.NOTFOUND);
 						v.goRight();
 						break;
 					}
 				} else {
-					setText("bstfindleft", K, w.key);
-					w = w.left;
+					addStep("bstfindleft", K, w.key);
+					w = w.getLeft();
 					if (w != null) {
 						v.goTo(w);
 					} else { // notfound
-						setText("notfound");
-						v.bgColor(Colors.NOTFOUND);
+						addStep("notfound");
+						v.setColor(NodeColor.NOTFOUND);
 						v.goLeft();
 						break;
 					}

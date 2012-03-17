@@ -1,54 +1,70 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.splaytree;
 
-import algvis.bst.BSTNode;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class SplayInsert extends SplayAlg {
-	public SplayInsert(Splay T, int x) {
+	public SplayInsert(SplayTree T, int x) {
 		super(T, x);
-		T.vv = v = new SplayNode(T, x);
-		v.bgColor(Colors.INSERT);
+		T.setVV(v = new SplayNode(T, x));
+		v.setColor(NodeColor.INSERT);
+		setHeader("insert", x);
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
-			setHeader("insertion");
-			T.root = v;
+		if (T.getRoot() == null) {
+			T.setRoot(v);
 			v.goToRoot();
-			setText("newroot");
+			addStep("newroot");
 			mysuspend();
 		} else {
 			v.goAboveRoot();
-			BSTNode w = find(K);
+			SplayNode w = find(K);
 			splay(w);
 
-			setHeader("insertion");
-			w.bgColor(Colors.NORMAL);
+			w.setColor(NodeColor.NORMAL);
 			if (w.key == K) {
-				setText("alreadythere");
+				addStep("alreadythere");
 				v.goDown();
-				v.bgColor(Colors.NOTFOUND);
+				v.setColor(NodeColor.NOTFOUND);
 				return;
 			} else if (w.key < K) {
-				setText("splayinsertleft");
+				addNote("splay-insert-left", K);
+				addStep("splay-insert-left2", K);
 				mysuspend();
 				v.linkLeft(w);
-				v.linkRight(w.right);
-				w.right = null;
+				v.linkRight(w.getRight());
+				w.setRight(null);
 			} else {
-				setText("splayinsertright");
+				addNote("splay-insert-right", K);
+				addStep("splay-insert-right2", K);
 				mysuspend();
 				v.linkRight(w);
-				v.linkLeft(w.left);
-				w.left = null;
+				v.linkLeft(w.getLeft());
+				w.setLeft(null);
 			}
-			T.root = v;
+			T.setRoot(v);
 			T.reposition();
 			mysuspend();
 		}
-		setText("done");
-		v.bgColor(Colors.NORMAL);
-		T.vv = null;
+		addNote("done");
+		v.setColor(NodeColor.NORMAL);
+		T.setVV(null);
 	}
 }

@@ -1,7 +1,23 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.bst;
 
 import algvis.core.Algorithm;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class BSTFind extends Algorithm {
 	BST T;
@@ -9,66 +25,70 @@ public class BSTFind extends Algorithm {
 	int K;
 
 	public BSTFind(BST T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
-		v = T.v = new BSTNode(T, K = x);
-		v.bgColor(Colors.FIND);
-		setHeader("search");
+		v = T.setV(new BSTNode(T, K = x));
+		v.setColor(NodeColor.FIND);
+		setHeader("find", K);
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
+		if (T.getRoot() == null) {
 			v.goToRoot();
-			setText("empty");
+			addStep("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Colors.NOTFOUND);
-			setText("notfound");
+			v.setColor(NodeColor.NOTFOUND);
+			addStep("notfound");
 		} else {
-			BSTNode w = T.root;
+			BSTNode w = T.getRoot();
 			v.goAbove(w);
-			setText("bstfindstart");
+			addStep("bstfindstart");
 			mysuspend();
 			while (true) {
 				if (w.key == K) {
 					v.goTo(w);
-					setText("found");
-					v.bgColor(Colors.FOUND);
+					addNote("found");
+					v.setColor(NodeColor.FOUND);
 					break;
 				} else if (w.key < K) {
-					if (w.right == null) {
+					if (w.getRight() == null) {
 						v.pointInDir(45);
 					} else {
-						v.pointAbove(w.right);
+						v.pointAbove(w.getRight());
 					}
-					setText("bstfindright", K, w.key);
+					addStep("bstfindright", K, w.key);
 					mysuspend();
 					v.noArrow();
-					w = w.right;
+					w.setColor(NodeColor.DARKER);
+					if (w.getLeft() != null) w.getLeft().subtreeColor(NodeColor.DARKER);
+					w = w.getRight();
 					if (w != null) {
 						v.goAbove(w);
 					} else { // not found
-						setText("notfound");
-						v.bgColor(Colors.NOTFOUND);
+						addNote("notfound");
+						v.setColor(NodeColor.NOTFOUND);
 						v.goRight();
 						break;
 					}
 				} else {
-					if (w.left == null) {
+					if (w.getLeft() == null) {
 						v.pointInDir(135);
 					} else {
-						v.pointAbove(w.left);
+						v.pointAbove(w.getLeft());
 					}
-					setText("bstfindleft", K, w.key);
+					addStep("bstfindleft", K, w.key);
 					mysuspend();
 					v.noArrow();
-					w = w.left;
+					w.setColor(NodeColor.DARKER);
+					if (w.getRight() != null) w.getRight().subtreeColor(NodeColor.DARKER);
+					w = w.getLeft();
 					if (w != null) {
 						v.goAbove(w);
 					} else { // notfound
-						setText("notfound");
-						v.bgColor(Colors.NOTFOUND);
+						addNote("notfound");
+						v.setColor(NodeColor.NOTFOUND);
 						v.goLeft();
 						break;
 					}
@@ -76,5 +96,8 @@ public class BSTFind extends Algorithm {
 				mysuspend();
 			}
 		}
+		mysuspend();
+		T.getRoot().subtreeColor(NodeColor.NORMAL);
+		T.setV(null);
 	}
 }

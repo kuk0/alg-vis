@@ -1,50 +1,65 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.treap;
 
-import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
 
 public class TreapInsert extends Algorithm {
 	Treap T;
-	BSTNode v;
+	TreapNode v;
 	int K;
 
 	public TreapInsert(Treap T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
-		v = T.v = new TreapNode(T, K = x);
+		T.setV(v = new TreapNode(T, K = x));
 		setHeader("insertion");
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
-			T.root = v;
+		if (T.getRoot() == null) {
+			T.setRoot(v);
 			v.goToRoot();
-			setText("newroot");
+			addStep("newroot");
 			mysuspend();
 		} else {
-			BSTNode w = T.root;
+			TreapNode w = (TreapNode)T.getRoot();
 			v.goAboveRoot();
-			setText("bstinsertstart");
+			addStep("bst-insert-start");
 			mysuspend();
 
 			while (true) {
 				if (w.key == K) {
-					setText("alreadythere");
+					addStep("alreadythere");
 					v.goDown();
 					return;
 				} else if (w.key < K) {
-					setText("bstinsertright", K, w.key);
-					if (w.right != null) {
-						w = w.right;
+					addStep("bst-insert-right", K, w.key);
+					if (w.getRight() != null) {
+						w = w.getRight();
 					} else {
 						w.linkRight(v);
 						break;
 					}
 				} else {
-					setText("bstinsertleft", K, w.key);
-					if (w.left != null) {
-						w = w.left;
+					addStep("bst-insert-left", K, w.key);
+					if (w.getLeft() != null) {
+						w = w.getLeft();
 					} else {
 						w.linkLeft(v);
 						break;
@@ -56,13 +71,13 @@ public class TreapInsert extends Algorithm {
 			T.reposition();
 			mysuspend();
 			// bubleme nahor
-			setText("treapbubbleup");
-			while (!v.isRoot() && ((TreapNode) v.parent).p < ((TreapNode) v).p) {
+			addStep("treapbubbleup");
+			while (!v.isRoot() && v.getParent().p < v.p) {
 				T.rotate(v);
 				mysuspend();
 			}
 		}
-		setText("done");
-		T.v = null;
+		addStep("done");
+		T.setV(null);
 	}
 }

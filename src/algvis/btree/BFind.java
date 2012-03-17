@@ -1,17 +1,33 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.btree;
 
 import algvis.core.Algorithm;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class BFind extends Algorithm {
 	BTree T;
 	BNode v;
 
 	public BFind(BTree T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
 		v = T.v = new BNode(T, x);
-		v.bgColor(Colors.FIND);
+		v.setColor(NodeColor.FIND);
 		setHeader("search");
 	}
 
@@ -19,27 +35,27 @@ public class BFind extends Algorithm {
 	public void run() {
 		if (T.root == null) {
 			v.goToRoot();
-			setText("empty");
+			addStep("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Colors.NOTFOUND);
-			setText("notfound");
+			v.setColor(NodeColor.NOTFOUND);
+			addStep("notfound");
 		} else {
 			BNode w = T.root;
 			v.goTo(w);
-			setText("bstfindstart");
+			addStep("bstfindstart");
 			mysuspend();
 
 			while (true) {
 				if (w.isIn(v.key[0])) {
-					setText("found");
+					addStep("found");
 					v.goDown();
-					v.bgColor(Colors.FOUND);
+					v.setColor(NodeColor.FOUND);
 					break;
 				}
 				if (w.isLeaf()) {
-					setText("notfound");
-					v.bgColor(Colors.NOTFOUND);
+					addStep("notfound");
+					v.setColor(NodeColor.NOTFOUND);
 					v.goDown();
 					break;
 				}

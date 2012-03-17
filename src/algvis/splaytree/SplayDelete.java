@@ -1,84 +1,99 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.splaytree;
 
-import algvis.bst.BSTNode;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class SplayDelete extends SplayAlg {
-	public SplayDelete(Splay T, int x) {
+	public SplayDelete(SplayTree T, int x) {
 		super(T, x);
+		setHeader("delete", x);
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
+		if (T.getRoot() == null) {
 			s.goToRoot();
-			setText("empty");
+			addStep("empty");
 			mysuspend();
 			s.goDown();
-			s.bgColor(Colors.NOTFOUND);
-			setText("notfound");
+			s.setColor(NodeColor.NOTFOUND);
+			addStep("notfound");
 			return;
 		}
 
-		BSTNode w = find(K);
+		SplayNode w = find(K);
 		splay(w);
 
-		setHeader("deletion");
-		w.bgColor(Colors.NORMAL);
+		w.setColor(NodeColor.NORMAL);
 
 		if (w.key != s.key) {
-			setText("notfound");
-			s.bgColor(Colors.NOTFOUND);
+			addStep("notfound");
+			s.setColor(NodeColor.NOTFOUND);
 			s.goDown();
 			return;
 		}
 
-		T.v = w;
-		T.v.goDown();
-		T.v.bgColor(Colors.DELETE);
-		if (w.left == null) {
-			setText("splaydeleteright");
-			T.root = w.right;
-			T.root.parent = null;
+		T.setV(w);
+		T.getV().goDown();
+		T.getV().setColor(NodeColor.DELETE);
+		if (w.getLeft() == null) {
+			addStep("splaydeleteright");
+			T.setRoot(w.getRight());
+			T.getRoot().setParent(null);
 			T.reposition();
 			mysuspend();
-		} else if (w.right == null) {
-			setText("splaydeleteleft");
-			T.root = w.left;
-			T.root.parent = null;
+		} else if (w.getRight() == null) {
+			addStep("splaydeleteleft");
+			T.setRoot(w.getLeft());
+			T.getRoot().setParent(null);
 			T.reposition();
 			mysuspend();
 		} else {
-			setText("splaydelete");
-			T.root2 = w.left;
-			T.root2.parent = null;
-			T.root = w.right;
-			T.root.parent = null;
-			T.vv = s = new SplayNode(T, -Node.INF);
-			s.bgColor(Colors.FIND);
-			w = w.right;
+			addStep("splaydelete");
+			T.setRoot2(w.getLeft());
+			T.getRoot2().setParent(null);
+			T.setRoot(w.getRight());
+			T.getRoot().setParent(null);
+			T.setVV(s = new SplayNode(T, -Node.INF));
+			s.setColor(NodeColor.FIND);
+			w = w.getRight();
 			s.goTo(w);
 			mysuspend();
-			while (w.left != null) {
-				w = w.left;
+			while (w.getLeft() != null) {
+				w = w.getLeft();
 				s.goTo(w);
 				mysuspend();
 			}
-			w.bgColor(Colors.FIND);
-			T.vv = null;
+			w.setColor(NodeColor.FIND);
+			T.setVV(null);
 			// splay
 			while (!w.isRoot()) {
-				if (w.parent.isRoot()) {
+				if (w.getParent().isRoot()) {
 					T.rotate2(w);
 					// setText ("splayroot");
 				} else {
-					if (w.isLeft() == w.parent.isLeft()) {
+					if (w.isLeft() == w.getParent().isLeft()) {
 						/*
 						 * if (w.isLeft()) setText ("splayzigzigleft"); else
 						 * setText ("splayzigzigright");
 						 */
-						T.rotate2(w.parent);
+						T.rotate2(w.getParent());
 						mysuspend();
 						T.rotate2(w);
 					} else {
@@ -93,16 +108,16 @@ public class SplayDelete extends SplayAlg {
 				}
 				mysuspend();
 			}
-			setText("splaydeletelink");
-			T.root = w;
-			w.bgColor(Colors.NORMAL);
-			w.linkLeft(T.root2);
-			T.root2 = null;
+			addStep("splaydeletelink");
+			T.setRoot(w);
+			w.setColor(NodeColor.NORMAL);
+			w.linkLeft(T.getRoot2());
+			T.setRoot2(null);
 			T.reposition();
 			mysuspend();
 		}
 
-		setText("done");
-		T.vv = null;
+		addStep("done");
+		T.setVV(null);
 	}
 }

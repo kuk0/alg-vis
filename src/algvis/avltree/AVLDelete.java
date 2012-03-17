@@ -1,46 +1,61 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.avltree;
 
-import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class AVLDelete extends Algorithm {
 	AVL T;
-	BSTNode v;
+	AVLNode v;
 	int K;
 
 	public AVLDelete(AVL T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
-		v = T.v = new BSTNode(T, K = x);
-		v.bgColor(Colors.DELETE);
+		v = (AVLNode) T.setV(new AVLNode(T, K = x));
+		v.setColor(NodeColor.DELETE);
 		setHeader("deletion");
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
+		if (T.getRoot() == null) {
 			v.goToRoot();
-			setText("empty");
+			addStep("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Colors.NOTFOUND);
-			setText("notfound");
+			v.setColor(NodeColor.NOTFOUND);
+			addStep("notfound");
 			return;
 		} else {
-			BSTNode d = T.root;
+			AVLNode d = (AVLNode) T.getRoot();
 			v.goTo(d);
-			setText("bstdeletestart");
+			addStep("bstdeletestart");
 			mysuspend();
 
 			while (true) {
 				if (d.key == K) { // found
-					v.bgColor(Colors.FOUND);
+					v.setColor(NodeColor.FOUND);
 					break;
 				} else if (d.key < K) { // right
-					setText("bstfindright", K, d.key);
-					d = d.right;
+					addStep("bstfindright", K, d.key);
+					d = d.getRight();
 					if (d != null) {
 						v.goTo(d);
 					} else {
@@ -48,8 +63,8 @@ public class AVLDelete extends Algorithm {
 						break;
 					}
 				} else { // left
-					setText("bstfindleft", K, d.key);
-					d = d.left;
+					addStep("bstfindleft", K, d.key);
+					d = d.getLeft();
 					if (d != null) {
 						v.goTo(d);
 					} else {
@@ -61,140 +76,135 @@ public class AVLDelete extends Algorithm {
 			}
 
 			if (d == null) { // notfound
-				setText("notfound");
+				addStep("notfound");
 				return;
 			}
 
-			BSTNode w = d.parent;
-			d.bgColor(Colors.FOUND);
+			AVLNode w = d.getParent();
+			d.setColor(NodeColor.FOUND);
 			if (d.isLeaf()) { // case I - list
-				setText("bstdeletecase1");
+				addStep("bst-delete-case1");
 				mysuspend();
 				if (d.isRoot()) {
-					T.root = null;
+					T.setRoot(null);
 				} else if (d.isLeft()) {
-					d.parent.left = null;
+					d.getParent().unlinkLeft();
 				} else {
-					d.parent.right = null;
+					d.getParent().unlinkRight();
 				}
 				v.goDown();
 
-			} else if (d.left == null || d.right == null) { // case IIa - 1 syn
-				setText("bstdeletecase2");
+			} else if (d.getLeft() == null || d.getRight() == null) { // case
+																		// IIa -
+																		// 1 syn
+				addStep("bst-delete-case2");
 				mysuspend();
-				BSTNode s = (d.left == null) ? d.right : d.left;
+				AVLNode s = (d.getLeft() == null) ? d.getRight() : d.getLeft();
 				if (d.isRoot()) {
-					T.root = s;
-					s.parent = null;
+					T.setRoot(s);
 				} else {
-					s.parent = d.parent;
 					if (d.isLeft()) {
-						d.parent.left = s;
+						d.getParent().linkLeft(s);
 					} else {
-						d.parent.right = s;
+						d.getParent().linkRight(s);
 					}
 				}
 				v.goDown();
 
 			} else { // case III - 2 synovia
-				setText("bstdeletecase3");
-				BSTNode s = d.right;
-				v = T.v = new AVLNode(T, -Node.INF);
-				v.bgColor(Colors.FIND);
+				addStep("bst-delete-case3");
+				AVLNode s = d.getRight();
+				v = (AVLNode) T.setV(new AVLNode(T, -Node.INF));
+				v.setColor(NodeColor.FIND);
 				v.goTo(s);
 				mysuspend();
-				while (s.left != null) {
-					s = s.left;
+				while (s.getLeft() != null) {
+					s = s.getLeft();
 					v.goTo(s);
 					mysuspend();
 				}
-				w = s.parent;
+				w = s.getParent();
 				if (w == d) {
-					w = v;
+					w = s;
 				}
-				v.key = s.key;
-				v.bgColor(Colors.NORMAL);
-				if (s.right != null) {
-					s.right.parent = s.parent;
-				}
+				v = (AVLNode) T.setV(s);
 				if (s.isLeft()) {
-					s.parent.left = s.right;
+					s.getParent().linkLeft(s.getRight());
 				} else {
-					s.parent.right = s.right;
+					s.getParent().linkRight(s.getRight());
 				}
 				v.goNextTo(d);
 				mysuspend();
-				if (d.parent == null) {
-					v.parent = null;
-					T.root = v;
+				if (d.getParent() == null) {
+					T.setRoot(v);
 				} else {
 					if (d.isLeft()) {
-						d.parent.linkLeft(v);
+						d.getParent().linkLeft(v);
 					} else {
-						d.parent.linkRight(v);
+						d.getParent().linkRight(v);
 					}
 				}
-				v.linkLeft(d.left);
-				v.linkRight(d.right);
+				v.linkLeft(d.getLeft());
+				v.linkRight(d.getRight());
 				v.goTo(d);
 				v.calc();
-				T.v = d;
+				T.setV(d);
 				d.goDown();
 			} // end case III
 
-			setText("avldeletebal");
+			addStep("avldeletebal");
 			mysuspend();
 			// bubleme nahor
 			while (w != null) {
 				w.mark();
 				w.calc();
-				setText("avlupdatebal");
+				addStep("avlupdatebal");
 				mysuspend();
-				if (((AVLNode) w).balance() == -2) {
-					if (((AVLNode) w.left).balance() != +1) { // R-rot
-						setText("avlr");
+				if (w.balance() == -2) {
+					if (w.getLeft().balance() != +1) { // R-rot
+						addStep("avlr");
 						w.unmark();
-						w = w.left;
+						w = w.getLeft();
 						w.mark();
-						w.setArc(w.parent);
+						w.setArc(w.getParent());
 						mysuspend();
 						w.noArc();
 						T.rotate(w);
 					} else { // LR-rot
-						setText("avllr");
+						addStep("avllr");
 						w.unmark();
-						w = w.left.right;
+						w = w.getLeft().getRight();
 						w.mark();
-						w.setArc(w.parent);
-						w.parent.setArc(w.parent.parent);
+						w.setArc(w.getParent());
+						w.getParent().setArc(w.getParent().getParent());
 						mysuspend();
 						w.noArc();
-						w.parent.noArc();
+						w.getParent().noArc();
 						T.rotate(w);
 						mysuspend();
 						T.rotate(w);
 					}
 					mysuspend();
-				} else if (((AVLNode) w).balance() == +2) {
-					if (((AVLNode) w.right).balance() != -1) { // L-rot
-						setText("avll");
+				} else if (w.balance() == +2) {
+					if (w.getRight().balance() != -1) { // L-rot
+						addStep("avll");
 						w.unmark();
-						w = w.right;
+						w = w.getRight();
 						w.mark();
-						w.setArc(w.parent);
+						w.setArc(w.getParent());
 						mysuspend();
 						w.noArc();
 						T.rotate(w);
 					} else { // RL-rot
-						setText("avlrl");
+						addStep("avlrl");
 						w.unmark();
-						w = w.right.left;
+						w = w.getRight().getLeft();
 						w.mark();
-						w.setArc(w.parent);
-						w.parent.setArc(w.parent.parent);
+						w.setArc(w.getParent());
+						w.getParent().setArc(w.getParent().getParent());
 						mysuspend();
 						w.noArc();
-						w.parent.noArc();
+						w.getParent().noArc();
 						T.rotate(w);
 						mysuspend();
 						T.rotate(w);
@@ -202,11 +212,11 @@ public class AVLDelete extends Algorithm {
 					mysuspend();
 				}
 				w.unmark();
-				w = w.parent;
+				w = w.getParent();
 			}
 
 			T.reposition();
-			setText("done");
+			addStep("done");
 		}
 	}
 }

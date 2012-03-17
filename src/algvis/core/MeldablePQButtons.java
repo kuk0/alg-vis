@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.core;
 
 import java.awt.event.ActionEvent;
@@ -11,11 +27,9 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import algvis.binomialheap.BinomialHeap;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ILabel;
 import algvis.internationalization.IRadioButton;
-
 
 public class MeldablePQButtons extends Buttons implements ChangeListener {
 	private static final long serialVersionUID = 1242711038059609653L;
@@ -39,7 +53,7 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 		deleteB.setMnemonic(KeyEvent.VK_D);
 		deleteB.addActionListener(this);
 
-		if (((MeldablePQ)D).minHeap) {
+		if (((MeldablePQ) D).minHeap) {
 			decrKeyB = new IButton(M.S.L, "button-decreasekey");
 		} else {
 			decrKeyB = new IButton(M.S.L, "button-increasekey");
@@ -84,6 +98,7 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 		if (evt.getSource() == insertB) {
 			final Vector<Integer> args = I.getNonEmptyVI();
 			Thread t = new Thread(new Runnable() {
+				@Override
 				public void run() {
 					for (int x : args) {
 						((MeldablePQ) D).insert(x);
@@ -93,6 +108,7 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 			t.start();
 		} else if (evt.getSource() == deleteB) {
 			Thread t = new Thread(new Runnable() {
+				@Override
 				public void run() {
 					((MeldablePQ) D).delete();
 				}
@@ -100,8 +116,9 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 			t.start();
 		} else if (evt.getSource() == decrKeyB) {
 			final int delta = Math.abs(I.getInt(1));
-			final Node w = ((MeldablePQ)D).chosen;
+			final Node w = ((MeldablePQ) D).chosen;
 			Thread t = new Thread(new Runnable() {
+				@Override
 				public void run() {
 					((MeldablePQ) D).decreaseKey(w, delta);
 				}
@@ -114,6 +131,7 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 			final int i = args.get(0);
 			final int j = args.get(1);
 			Thread t = new Thread(new Runnable() {
+				@Override
 				public void run() {
 					((MeldablePQ) D).meld(i, j);
 				}
@@ -139,6 +157,7 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 		deleteB.setEnabled(false);
 		decrKeyB.setEnabled(false);
 		meldB.setEnabled(false);
+		activeHeap.setEnabled(false);
 	}
 
 	@Override
@@ -149,14 +168,17 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 		decrKeyB.setEnabled(true);
 		meldB.setEnabled(true);
 		next.setEnabled(false);
+		activeHeap.setEnabled(true);
 	}
 
+	@Override
 	public void stateChanged(ChangeEvent evt) {
 		if (evt.getSource() == activeHeap) {
-			BinomialHeap H = ((BinomialHeap) D);
+			MeldablePQ H = ((MeldablePQ) D);
 			H.lowlight();
 			H.highlight((Integer) activeHeap.getValue());
-			if (H.chosen != null) H.chosen.unmark();
+			if (H.chosen != null)
+				H.chosen.unmark();
 		}
 	}
 }

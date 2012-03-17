@@ -1,82 +1,77 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.scapegoattree;
 
-import algvis.bst.BSTNode;
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 
 public class GBDelete extends GBAlg {
 	public GBDelete(GBTree T, int x) {
 		super(T, x);
-		v.bgColor(Colors.DELETE);
+		v.setColor(NodeColor.DELETE);
 		setHeader("deletion");
-	}
-
-	public BSTNode compr(BSTNode r, int c) {
-		BSTNode w = r, x = (c > 0) ? r.right : r;
-		w.mark();
-		mysuspend();
-		for (int i = 0; i < c; ++i) {
-			w.unmark();
-			w = w.right;
-			T.rotate(w);
-			w = w.right;
-			if (w != null) {
-				w.mark();
-			}
-			mysuspend();
-		}
-		if (w != null) {
-			w.unmark();
-		}
-		return x;
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
+		if (T.getRoot() == null) {
 			v.goToRoot();
-			setText("empty");
+			addStep("empty");
 			mysuspend();
 			v.goDown();
-			v.bgColor(Colors.NOTFOUND);
-			setText("notfound");
+			v.setColor(NodeColor.NOTFOUND);
+			addStep("notfound");
 		} else {
-			BSTNode w = T.root;
+			GBNode w = (GBNode) T.getRoot();
 			v.goTo(w);
-			setText("bstfindstart");
+			addStep("bstfindstart");
 			mysuspend();
 			while (true) {
 				if (w.key == K) {
-					if (((GBNode) w).deleted) {
-						setText("gbdeletedeleted");
-						v.bgColor(Colors.NOTFOUND);
+					if (w.isDeleted()) {
+						addStep("gbdeletedeleted");
+						v.setColor(NodeColor.NOTFOUND);
 						v.goDown();
 					} else {
-						setText("gbdeletemark");
-						((GBNode) w).deleted = true;
-						w.bgColor(GBNode.DELETED);
-						++T.del;
-						T.v = null;
+						addStep("gbdeletemark");
+						w.setDeleted(true);
+						w.setColor(NodeColor.DELETED);
+						T.setDel(T.getDel() + 1);
+						T.setV(null);
 					}
 					break;
 				} else if (w.key < K) {
-					setText("bstfindright", K, w.key);
-					w = w.right;
+					addStep("bstfindright", K, w.key);
+					w = w.getRight();
 					if (w != null) {
 						v.goTo(w);
 					} else { // notfound
-						setText("notfound");
-						v.bgColor(Colors.NOTFOUND);
+						addStep("notfound");
+						v.setColor(NodeColor.NOTFOUND);
 						v.goRight();
 						break;
 					}
 				} else {
-					setText("bstfindleft", K, w.key);
-					w = w.left;
+					addStep("bstfindleft", K, w.key);
+					w = w.getLeft();
 					if (w != null) {
 						v.goTo(w);
 					} else { // notfound
-						setText("notfound");
-						v.bgColor(Colors.NOTFOUND);
+						addStep("notfound");
+						v.setColor(NodeColor.NOTFOUND);
 						v.goLeft();
 						break;
 					}
@@ -85,35 +80,35 @@ public class GBDelete extends GBAlg {
 			}
 
 			// rebuilding
-			BSTNode b = T.root;
-			if (b.size < 2 * T.del) {
-				setText("gbdeleterebuild");
-				BSTNode r = b;
+			GBNode b = (GBNode) T.getRoot();
+			if (b.size < 2 * T.getDel()) {
+				addStep("gbdeleterebuild");
+				GBNode r = b;
 				int s = 0;
 				r.mark();
 				mysuspend();
 				// to vine
-				setText("gbrebuild1");
+				addStep("gbrebuild1");
 				while (r != null) {
-					if (r.left == null) {
+					if (r.getLeft() == null) {
 						r.unmark();
-						if (((GBNode) r).deleted) {
-							--T.del;
+						if (r.isDeleted()) {
+							T.setDel(T.getDel() - 1);
 							if (b == r) {
-								b = r.right;
+								b = r.getRight();
 							}
-							T.v = r;
-							if (r.parent == null) {
-								T.root = r = r.right;
+							T.setV(r);
+							if (r.getParent() == null) {
+								T.setRoot(r = r.getRight());
 								if (r != null) {
-									r.parent = null;
+									r.setParent(null);
 								}
 							} else {
-								r.parent.linkRight(r = r.right);
+								r.getParent().linkRight(r = r.getRight());
 							}
-							T.v.goDown();
+							T.getV().goDown();
 						} else {
-							r = r.right;
+							r = r.getRight();
 							++s;
 						}
 						if (r != null) {
@@ -121,10 +116,10 @@ public class GBDelete extends GBAlg {
 						}
 					} else {
 						if (b == r) {
-							b = r.left;
+							b = r.getLeft();
 						}
 						r.unmark();
-						r = r.left;
+						r = r.getLeft();
 						r.mark();
 						T.rotate(r);
 					}
@@ -133,7 +128,7 @@ public class GBDelete extends GBAlg {
 				}
 
 				// to tree
-				setText("gbrebuild2");
+				addStep("gbrebuild2");
 				int c = 1;
 				for (int i = 0, l = (int) Math.floor(T.lg(s + 1)); i < l; ++i) {
 					c *= 2;

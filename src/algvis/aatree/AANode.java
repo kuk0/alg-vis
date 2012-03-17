@@ -1,20 +1,36 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.aatree;
 
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
+import algvis.core.Fonts;
 import algvis.core.Node;
 import algvis.core.View;
 
 public class AANode extends BSTNode {
-	int level = 1;
-
 	public AANode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
+		setLevel(1);
 	}
 
 	public AANode(DataStructure D, int key) {
 		this(D, key, 0, 0);
-		setState(Node.UP);
+		getReady();
 	}
 
 	public AANode(BSTNode v) {
@@ -22,73 +38,50 @@ public class AANode extends BSTNode {
 	}
 
 	@Override
+	public AANode getLeft() {
+		return (AANode) super.getLeft();
+	}
+
+	@Override
+	public AANode getRight() {
+		return (AANode) super.getRight();
+	}
+
+	@Override
+	public AANode getParent() {
+		return (AANode) super.getParent();
+	}
+
+	@Override
 	public void draw(View v) {
-		if (state == Node.INVISIBLE || state == Node.UP || key == NULL) {
+		if (state == Node.INVISIBLE || key == NULL) {
 			return;
 		}
 		drawBg(v);
 		drawKey(v);
 		drawArrow(v);
 		drawArc(v);
-		String str = new String("" + level);
-		v.drawString(str, x + D.radius, y - D.radius, 7);
+		String str = new String("" + getLevel());
+		v.drawString(str, x + Node.radius, y - Node.radius, Fonts.SMALL);
 	}
 
-	@Override
-	public void rebox() {
-		leftw = (left == null) ? D.xspan + D.radius : left.leftw + left.rightw;
-		rightw = (right == null) ? D.xspan + D.radius : right.leftw
-				+ right.rightw;
-	}
-
-	@Override
-	public void reboxTree() {
-		if (left != null) {
-			left.reboxTree();
+	public void drawBigNodes(View v) {
+		if (getLeft() != null) {
+			getLeft().drawBigNodes(v);
 		}
-		if (right != null) {
-			right.reboxTree();
+		if (getRight() != null) {
+			getRight().drawBigNodes(v);
 		}
-		rebox();
-	}
-
-	private void repos() {
-		if (isRoot()) {
-			goToRoot();
-			D.x1 = -leftw;
-			D.x2 = rightw;
-			D.y2 = this.toy;
-		}
-		if (this.toy > D.y2) {
-			D.y2 = this.toy;
-		}
-		if (left != null) {
-			if (((AA) D).mode23) {
-				left.goTo(this.tox - left.rightw, this.toy
-						+ (((AANode) left).level == level ? D.yspan : 2
-								* D.radius + D.yspan));
-			} else {
-				left.goTo(this.tox - left.rightw, this.toy + 2 * D.radius
-						+ D.yspan);
-			}
-			((AANode) left).repos();
-		}
-		if (right != null) {
-			if (((AA) D).mode23) {
-				right.goTo(this.tox + right.leftw, this.toy
-						+ (((AANode) right).level == level ? D.yspan : 2
-								* D.radius + D.yspan));
-			} else {
-				right.goTo(this.tox + right.leftw, this.toy + 2 * D.radius
-						+ D.yspan);
-			}
-			((AANode) right).repos();
+		if (getParent() != null && getParent().getLevel() == getLevel()) {
+			v.drawWideLine(x, y, getParent().x, getParent().y);
+		} else {
+			v.drawWideLine(x - 1, y, x + 1, y);
 		}
 	}
 
-	@Override
-	public void reposition() {
-		reboxTree();
-		repos();
+	public void drawTree2(View v) {
+		if (((AA) D).mode23)
+			drawBigNodes(v);
+		drawTree(v);
 	}
 }

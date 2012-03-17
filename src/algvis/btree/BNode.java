@@ -1,8 +1,24 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.btree;
 
 import java.awt.Color;
 
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.Fonts;
 import algvis.core.Node;
@@ -29,13 +45,13 @@ public class BNode extends Node {
 		this.x = tox = x;
 		this.y = toy = y;
 		steps = 0;
-		setColor(Color.black, Colors.NORMAL);
+		setColor(NodeColor.NORMAL);
 		width = _width();
 	}
 
 	public BNode(DataStructure D, int key) {
 		this(D, key, 0, 0);
-		setState(Node.UP);
+		getReady();
 	}
 
 	public BNode(BNode v) {
@@ -194,8 +210,8 @@ public class BNode extends Node {
 		v.c[1] = w;
 		u.width = u._width();
 		w.width = w._width();
-		u.x = x - u.width / 2 - D.radius;
-		w.x = x + w.width / 2 + D.radius;
+		u.x = x - u.width / 2 - Node.radius;
+		w.x = x + w.width / 2 + Node.radius;
 		return v;
 	}
 
@@ -208,7 +224,7 @@ public class BNode extends Node {
 			key[i] = key[i + 1];
 		}
 		width = _width();
-		return new BNode(D, k, x - (numKeys + 1 - 2 * p) * D.radius, y);
+		return new BNode(D, k, x - (numKeys + 1 - 2 * p) * Node.radius, y);
 	}
 
 	public BNode delMin() {
@@ -218,7 +234,7 @@ public class BNode extends Node {
 			key[i] = key[i + 1];
 		}
 		width = _width();
-		return new BNode(D, r, x - (numKeys - 1) * D.radius, y);
+		return new BNode(D, r, x - (numKeys - 1) * Node.radius, y);
 	}
 
 	public BNode delMinCh() {
@@ -232,7 +248,7 @@ public class BNode extends Node {
 	}
 
 	public BNode delMax() {
-		BNode r = new BNode(D, key[--numKeys], x + (numKeys - 1) * D.radius, y);
+		BNode r = new BNode(D, key[--numKeys], x + (numKeys - 1) * Node.radius, y);
 		width = _width();
 		return r;
 	}
@@ -302,19 +318,19 @@ public class BNode extends Node {
 
 	int _width() {
 		if (key[0] != Node.NOKEY && numKeys > 0) {
-			return Math.max(Fonts.fm[9].stringWidth(toString()) + 4,
-					2 * D.radius);
+			return Math.max(Fonts.NORMAL.fm.stringWidth(toString()) + 4,
+					2 * Node.radius);
 		} else {
-			return 2 * D.radius;
+			return 2 * Node.radius;
 		}
 	}
 
 	public int pos(int i) {
 		if (i < 0) {
-			return tox - D.M.screen.V.stringWidth(toString(), 9) / 2 - D.radius;
+			return tox - D.M.screen.V.stringWidth(toString(), Fonts.NORMAL) / 2 - Node.radius;
 		}
 		if (i >= numKeys) {
-			return tox + D.M.screen.V.stringWidth(toString(), 9) / 2 + D.radius;
+			return tox + D.M.screen.V.stringWidth(toString(), Fonts.NORMAL) / 2 + Node.radius;
 		}
 		if (numKeys <= 1) {
 			return x;
@@ -325,25 +341,26 @@ public class BNode extends Node {
 		} else {
 			t = "  " + key[i];
 		}
-		return tox - D.M.screen.V.stringWidth(toString(), 9) / 2
-				+ D.M.screen.V.stringWidth(s, 9) + D.M.screen.V.stringWidth(t, 9) / 2;
+		return tox - D.M.screen.V.stringWidth(toString(), Fonts.NORMAL) / 2
+				+ D.M.screen.V.stringWidth(s, Fonts.NORMAL)
+				+ D.M.screen.V.stringWidth(t, Fonts.NORMAL) / 2;
 	}
 
 	@Override
 	public void drawBg(View V) {
-		V.setColor(bgcolor);
-		V.fillRoundRectangle(x, y, width / 2, D.radius, 2 * D.radius,
-				2 * D.radius);
-		V.setColor(fgcolor);
-		V.drawRoundRectangle(x, y, width / 2, D.radius, 2 * D.radius,
-				2 * D.radius);
+		V.setColor(getBgColor());
+		V.fillRoundRectangle(x, y, width / 2, Node.radius, 2 * Node.radius,
+				2 * Node.radius);
+		V.setColor(getFgColor());
+		V.drawRoundRectangle(x, y, width / 2, Node.radius, 2 * Node.radius,
+				2 * Node.radius);
 		// g.drawLine (x-leftw, y+2, x+rightw, y-2);
 	}
 
 	@Override
 	public void drawKey(View V) {
 		if (key[0] != Node.NOKEY && numKeys > 0) {
-			V.drawString(toString(), x, y, 9);
+			V.drawString(toString(), x, y, Fonts.NORMAL);
 		}
 	}
 
@@ -354,7 +371,7 @@ public class BNode extends Node {
 			 * int xx, yy; if (i==0 || i==numChildren-1) { xx = x; yy = y; }
 			 * else { xx = (pos(i-1)+pos(i))/2; yy = y+D.radius; }
 			 */
-			v.drawLine(x, y, c[i].x, c[i].y - D.radius);
+			v.drawLine(x, y, c[i].x, c[i].y - Node.radius);
 			c[i].drawTree(v);
 		}
 		draw(v);
@@ -405,7 +422,7 @@ public class BNode extends Node {
 		if (this.toy > D.y2) {
 			D.y2 = this.toy;
 		}
-		int x = this.tox, x2 = this.tox, y = this.toy + 2 * D.radius
+		int x = this.tox, x2 = this.tox, y = this.toy + 2 * Node.radius
 				+ ((BTree) D).yspan;
 		if (numChildren == 0) {
 			return;
@@ -457,11 +474,11 @@ public class BNode extends Node {
 	}
 
 	public void goAbove(BNode v) {
-		goTo(_goToX(v), v.toy - 2 * D.radius + 2);
+		goTo(_goToX(v), v.toy - 2 * Node.radius + 2);
 	}
 
 	public void goBelow(BNode v) {
-		goTo(_goToX(v), v.toy + 2 * D.radius - 2);
+		goTo(_goToX(v), v.toy + 2 * Node.radius - 2);
 	}
 
 	/*

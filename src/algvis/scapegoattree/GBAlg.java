@@ -1,28 +1,43 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.scapegoattree;
 
-import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
 
 public class GBAlg extends Algorithm {
 	GBTree T;
-	BSTNode v;
+	GBNode v;
 	int K;
 
 	public GBAlg(GBTree T, int x) {
-		super(T.M);
+		super(T);
 		this.T = T;
-		T.v = v = new GBNode(T, K = x);
+		v = (GBNode) T.setV(new GBNode(T, K = x));
 	}
 
-	public BSTNode compr(BSTNode r, int c) {
-		BSTNode w = r, x = (c > 0) ? r.right : r;
+	public GBNode compr(GBNode r, int c) {
+		GBNode w = r, x = (c > 0) ? r.getRight() : r;
 		w.mark();
 		mysuspend();
 		for (int i = 0; i < c; ++i) {
 			w.unmark();
-			w = w.right;
+			w = w.getRight();
 			T.rotate(w);
-			w = w.right;
+			w = w.getRight();
 			if (w != null) {
 				w.mark();
 			}

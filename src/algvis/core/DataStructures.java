@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.core;
 
 import java.lang.reflect.Constructor;
@@ -9,15 +25,19 @@ import algvis.bst.BSTPanel;
 import algvis.btree.BPanel;
 import algvis.btree.a234Panel;
 import algvis.btree.a23Panel;
+import algvis.daryheap.DaryHeapPanel;
 import algvis.fibonacciheap.FibHeapPanel;
 import algvis.heap.HeapPanel;
 import algvis.lazybinomialheap.LazyBinHeapPanel;
+import algvis.leftistheap.LeftHeapPanel;
 import algvis.redblacktree.RBPanel;
 import algvis.rotations.RotPanel;
 import algvis.scapegoattree.GBPanel;
+import algvis.skewheap.SkewHeapPanel;
 import algvis.skiplist.SkipListPanel;
 import algvis.splaytree.SplayPanel;
 import algvis.treap.TreapPanel;
+import algvis.unionfind.UnionFindPanel;
 
 /**
  * The Class DataStructures. This class contains the list of all visualized data
@@ -33,8 +53,9 @@ public class DataStructures {
 			AVLPanel.class, a23Panel.class, a234Panel.class, BPanel.class,
 			RBPanel.class, AAPanel.class, TreapPanel.class,
 			SkipListPanel.class, GBPanel.class, SplayPanel.class,
-			HeapPanel.class, BinHeapPanel.class, LazyBinHeapPanel.class,
-			FibHeapPanel.class };
+			HeapPanel.class, DaryHeapPanel.class, LeftHeapPanel.class, SkewHeapPanel.class, BinHeapPanel.class, LazyBinHeapPanel.class,
+			FibHeapPanel.class, UnionFindPanel.class };
+
 	static final int N = PANEL.length;
 
 	private static boolean check_range(int i) {
@@ -116,6 +137,7 @@ public class DataStructures {
 			return (VisPanel) ct.newInstance(S);
 		} catch (Exception e) {
 			System.out.println("DataStructures is unable to get panel: " + i);
+			//System.out.println(((InvocationTargetException)e).getTargetException().toString());
 			return null;
 		}
 	}

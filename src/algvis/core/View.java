@@ -1,8 +1,25 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.core;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.event.MouseEvent;
@@ -21,8 +38,8 @@ public class View implements MouseListener, MouseMotionListener,
 		MouseWheelListener {
 	Graphics2D g;
 	final static double SCALE_FACTOR = 1.1, MIN_ZOOM = 0.16, MAX_ZOOM = 5.5;
-	int W, H; // display width&height
-	int minx, miny, maxx, maxy;
+	public int W, H; // display width&height
+	public int minx, miny, maxx, maxy;
 	int mouseX, mouseY; // mouse position
 	public Alignment align = Alignment.CENTER;
 
@@ -34,6 +51,8 @@ public class View implements MouseListener, MouseMotionListener,
 		P.addMouseListener(this);
 		P.addMouseMotionListener(this);
 		P.addMouseWheelListener(this);
+		at = new AffineTransform();
+		setBounds(0, 0, 0, 0);
 	}
 
 	public void setGraphics(Graphics2D g, int W, int H) {
@@ -44,8 +63,6 @@ public class View implements MouseListener, MouseMotionListener,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		at = new AffineTransform();
-		setBounds(0, 0, 0, 0);
 		resetView();
 	}
 
@@ -129,11 +146,13 @@ public class View implements MouseListener, MouseMotionListener,
 		return p;
 	}
 
+	@Override
 	public void mousePressed(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
 	}
 
+	@Override
 	public void mouseDragged(MouseEvent e) {
 		int x = e.getX(), y = e.getY();
 		at.preConcatenate(AffineTransform.getTranslateInstance(x - mouseX, y
@@ -142,18 +161,23 @@ public class View implements MouseListener, MouseMotionListener,
 		mouseY = y;
 	}
 
+	@Override
 	public void mouseReleased(MouseEvent e) {
 	}
 
+	@Override
 	public void mouseMoved(MouseEvent e) {
 	}
 
+	@Override
 	public void mouseEntered(MouseEvent e) {
 	}
 
+	@Override
 	public void mouseExited(MouseEvent e) {
 	}
 
+	@Override
 	public void mouseClicked(MouseEvent e) {
 		Point2D p = r2v(e.getX(), e.getY());
 		if (D != null) {
@@ -161,6 +185,7 @@ public class View implements MouseListener, MouseMotionListener,
 		}
 	}
 
+	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		int notches = e.getWheelRotation();
 		if (notches > 0) {
@@ -217,6 +242,26 @@ public class View implements MouseListener, MouseMotionListener,
 		g.drawLine(x1, y1, x2, y2);
 	}
 
+	public void drawWideLine(int x1, int y1, int x2, int y2, float width,
+			Color col) {
+		final Stroke old = g.getStroke(), wide = new BasicStroke(width,
+				BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+		final Color c = g.getColor();
+		g.setColor(col);
+		g.setStroke(wide);
+		g.drawLine(x1, y1, x2, y2);
+		g.setStroke(old);
+		g.setColor(c);
+	}
+
+	public void drawWideLine(int x1, int y1, int x2, int y2, float width) {
+		drawWideLine(x1, y1, x2, y2, width, new Color(230, 230, 230));
+	}
+
+	public void drawWideLine(int x1, int y1, int x2, int y2) {
+		drawWideLine(x1, y1, x2, y2, 27.0f, new Color(230, 230, 230));
+	}
+
 	public void drawDashedLine(int x1, int y1, int x2, int y2) {
 		final float dash1[] = { 2.0f, 5.0f };
 		final Stroke old = g.getStroke(), dashed = new BasicStroke(1.0f,
@@ -232,28 +277,28 @@ public class View implements MouseListener, MouseMotionListener,
 		g.drawRect(x - a, y - a, 2 * a, 2 * a);
 	}
 
-	public int stringWidth(String str, int fs) {
-		return Fonts.fm[fs].stringWidth(str);
+	public int stringWidth(String str, Fonts f) {
+		return f.fm.stringWidth(str);
 	}
 
-	public void drawString(String str, int x, int y, int fs) {
-		x -= Fonts.fm[fs].stringWidth(str) / 2;
-		y -= Fonts.fm[fs].getHeight() / 2 - Fonts.fm[fs].getAscent();
-		g.setFont(Fonts.f[fs]);
+	public void drawString(String str, int x, int y, Fonts f) {
+		x -= f.fm.stringWidth(str) / 2;
+		y -= f.fm.getHeight() / 2 - f.fm.getAscent();
+		g.setFont(f.font);
 		g.drawString(str, x, y);
 	}
 
-	public void drawStringLeft(String str, int x, int y, int fs) {
-		x -= Fonts.fm[fs].stringWidth(str);
-		y -= Fonts.fm[fs].getHeight() / 2 - Fonts.fm[fs].getAscent();
-		g.setFont(Fonts.f[fs]);
+	public void drawStringLeft(String str, int x, int y, Fonts f) {
+		x -= f.fm.stringWidth(str);
+		y -= f.fm.getHeight() / 2 - f.fm.getAscent();
+		g.setFont(f.font);
 		g.drawString(str, x, y);
 	}
 
-	public void drawStringTop(String str, int x, int y, int fs) {
-		x -= Fonts.fm[fs].stringWidth(str) / 2;
-		y -= Fonts.fm[fs].getHeight();
-		g.setFont(Fonts.f[fs]);
+	public void drawStringTop(String str, int x, int y, Fonts f) {
+		x -= f.fm.stringWidth(str) / 2;
+		y -= f.fm.getHeight();
+		g.setFont(f.font);
 		g.drawString(str, x, y);
 	}
 
@@ -314,12 +359,50 @@ public class View implements MouseListener, MouseMotionListener,
 
 	public void drawDoubleArrow(int x1, int y1, int x2, int y2) {
 		g.drawLine(x1, y1, x2, y2);
-		arrowHead(x1, y1, x2, y2);
-		arrowHead(x2, y2, x1, y1);
+		arrowHead(x1, y1, x2 + 2, y2);
+		arrowHead(x2, y2, x1 - 2, y1);
+	}
+
+	// elliptical arc
+	// x,y,w,h is the bounding rectangle
+	// a1,a2 is the starting and ending angle in degrees
+	public void drawArc(int x, int y, int w, int h, int a1, int a2) {
+		g.drawArc(x, y, w, h, a1, a2 - a1);
+	}
+
+	/* let A=[x1,y1] and B=[x2,y2]  
+	 *  B--\   /--B
+	 *      \ /
+	 *       |
+	 *       A
+	 *       |
+	 *      / \  
+	 *  B--/   \--B
+	 */
+	public void drawQuarterArc(int x1, int y1, int x2, int y2) {
+		int w = Math.abs(x1 - x2), h = Math.abs(y1 - y2), a1, a2;
+		if (y2 < y1) {
+			if (x2 < x1) {
+				a1 = 0;
+				a2 = 90;
+			} else {
+				a1 = 90;
+				a2 = 180;
+			}
+		} else {
+			if (x2 > x1) {
+				a1 = 180;
+				a2 = 270;
+			} else {
+				a1 = 270;
+				a2 = 360;
+			}
+		}
+		drawArc(x2 - w, y1 - h, 2 * w, 2 * h, a1, a2);
 	}
 
 	public void drawArcArrow(int x, int y, int w, int h, int a1, int a2) {
-		g.drawArc(x, y, w, h, a1, a2 - a1);
+		drawArc(x, y, w, h, a1, a2);
 		double a = a2 * Math.PI / 180;
 		int x2 = x + (int) Math.round(w / 2.0 * (1 + Math.cos(a))), y2 = y
 				+ (int) Math.round(h / 2.0 * (1 - Math.sin(a)));
@@ -337,5 +420,17 @@ public class View implements MouseListener, MouseMotionListener,
 
 	public void setDS(ClickListener D) {
 		this.D = D;
+	}
+
+	public void fillPolygon(Polygon p) {
+		final Stroke old = g.getStroke(), wide = new BasicStroke(27.0f,
+				BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+		final Color c = g.getColor();
+		g.setColor(new Color(230, 230, 230));
+		g.setStroke(wide);
+		g.fillPolygon(p);
+		g.drawPolygon(p);
+		g.setStroke(old);
+		g.setColor(c);
 	}
 }

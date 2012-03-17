@@ -1,23 +1,39 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.skiplist;
 
-import algvis.core.Colors;
+import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class SkipDelete extends SkipAlg {
 	public SkipDelete(SkipList L, int x) {
 		super(L, x);
-		v.bgColor(Colors.DELETE);
+		v.setColor(NodeColor.DELETE);
 		p = new SkipNode[L.height];
 		setHeader("insertion");
 	}
 
 	@Override
 	public void run() {
-		setText("bstdeletestart");
+		addStep("bstdeletestart");
 		SkipNode w = find();
-		
-		if (w.right.key != K) {
-			setText("notfound");
+
+		if (w.getRight().key != K) {
+			addStep("notfound");
 			v.goDown();
 			mysuspend();
 			return;
@@ -25,33 +41,34 @@ public class SkipDelete extends SkipAlg {
 
 		L.n--;
 		L.e++;
-		setText("skipdelete");
+		addStep("skipdelete");
 		for (int i = 0; i < L.height; ++i) {
-			if (p[i].right.key != K) {
+			if (p[i].getRight().key != K) {
 				break;
 			}
 			L.e--;
-			L.v = p[i].right;
-			p[i].linkright(p[i].right.right);
-			if (L.v.up != null) {
-				L.v.up.down = null;
+			L.setV(p[i].getRight());
+			p[i].linkright(p[i].getRight().getRight());
+			if (L.getV().getUp() != null) {
+				L.getV().getUp().setDown(null);
 			}
-			L.v.isolate();
-			L.v.goDown();
+			L.getV().isolate();
+			L.getV().goDown();
 			mysuspend();
-			if (i > 0 && p[i].key == -Node.INF && p[i].right.key == Node.INF) {
-				L.root = p[i].down;
-				L.sent = p[i].right.down;
-				L.root.up = null;
-				L.sent.up = null;
+			if (i > 0 && p[i].key == -Node.INF
+					&& p[i].getRight().key == Node.INF) {
+				L.setRoot(p[i].getDown());
+				L.sent = p[i].getRight().getDown();
+				L.getRoot().setUp(null);
+				L.sent.setUp(null);
 				L.height = i;
 				break;
 			}
 		}
 
-		setText("done");
+		addStep("done");
 		L.reposition();
 		mysuspend();
-		L.v = null;
+		L.setV(null);
 	}
 }

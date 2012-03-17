@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.btree;
 
 import algvis.core.Dictionary;
@@ -9,6 +25,11 @@ public class BTree extends Dictionary {
 	int order = 5;
 	BNode root = null, v = null;
 	int xspan = 5, yspan = 15;
+
+	@Override
+	public String getName() {
+		return "btree";
+	}
 
 	public BTree(VisPanel M) {
 		super(M);
@@ -31,7 +52,7 @@ public class BTree extends Dictionary {
 
 	@Override
 	public void clear() {
-		root = null;
+		root = v = null;
 		setStats();
 	}
 
@@ -40,15 +61,15 @@ public class BTree extends Dictionary {
 		if (root == null) {
 			return "#" + M.S.L.getString("nodes") + ": 0;   #"
 					+ M.S.L.getString("keys") + ": 0 = 0% "
-					+ M.S.L.getString("full") + ";   " + M.S.L.getString("height")
-					+ ": 0";
+					+ M.S.L.getString("full") + ";   "
+					+ M.S.L.getString("height") + ": 0";
 		} else {
 			root.calcTree();
 			return "#" + M.S.L.getString("nodes") + ": " + root.nnodes + ";   "
 					+ "#" + M.S.L.getString("keys") + ": " + root.nkeys + " = "
 					+ (100 * root.nkeys) / (root.nnodes * (order - 1)) + "% "
-					+ M.S.L.getString("full") + ";   " + M.S.L.getString("height")
-					+ ": " + root.height;
+					+ M.S.L.getString("full") + ";   "
+					+ M.S.L.getString("height") + ": " + root.height;
 		}
 	}
 
