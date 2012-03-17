@@ -16,7 +16,6 @@ public class DaryHeapPanel extends VisPanel{
 	public void initDS() {
 		D = new DaryHeap(this);
 		B = new DaryHeapButtons(this);
+		D.random(14);
 	}
-	
-
 }

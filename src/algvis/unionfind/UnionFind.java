@@ -54,7 +54,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 		M.screen.V.setDS(this);
 		count = 0;
 		sets = new ArrayList<UnionFindNode>();
-		makeSet(10);
+		makeSet(15);
 	}
 
 	@Override

@@ -33,5 +33,6 @@ public class TreapPanel extends VisPanel {
 	public void initDS() {
 		D = new Treap(this);
 		B = new DictButtons(this);
+		D.random(20);
 	}
 }

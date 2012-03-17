@@ -32,5 +32,6 @@ public class AAPanel extends VisPanel {
 	public void initDS() {
 		D = new AA(this);
 		B = new AAButtons(this);
+		D.random(30);
 	}
 }
