@@ -19,6 +19,7 @@ package algvis.core;
 import org.jdom.Element;
 
 import algvis.scenario.Command;
+import algvis.visual.Node;
 
 
 abstract public class Dictionary extends DataStructure {

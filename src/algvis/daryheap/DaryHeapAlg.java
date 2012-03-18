@@ -1,7 +1,7 @@
 package algvis.daryheap;
 
 import algvis.core.Algorithm;
-import algvis.core.Node;
+import algvis.visual.Node;
 
 public class DaryHeapAlg extends Algorithm {
 	DaryHeap H;

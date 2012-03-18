@@ -1,10 +1,10 @@
 package algvis.daryheap;
 
 import algvis.core.ClickListener;
-import algvis.core.Node;
 import algvis.core.PriorityQueue;
-import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.visual.Node;
+import algvis.visual.View;
 
 public class DaryHeap extends PriorityQueue implements ClickListener{
 	public static String dsName = "daryheap";

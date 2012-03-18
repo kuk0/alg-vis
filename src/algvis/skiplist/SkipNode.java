@@ -21,9 +21,9 @@ import java.awt.Color;
 import org.jdom.Element;
 
 import algvis.core.DataStructure;
-import algvis.core.Node;
-import algvis.core.View;
 import algvis.scenario.Command;
+import algvis.visual.Node;
+import algvis.visual.View;
 
 public class SkipNode extends Node {
 	private SkipNode left = null;

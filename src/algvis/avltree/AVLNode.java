@@ -23,10 +23,10 @@ import org.jdom.Element;
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.Fonts;
-import algvis.core.Node;
 import algvis.core.NodeColor;
-import algvis.core.View;
 import algvis.scenario.Command;
+import algvis.visual.Node;
+import algvis.visual.View;
 
 //import static java.lang.Math.random;
 //import static java.lang.Math.round;

@@ -19,6 +19,9 @@ package algvis.core;
 import java.awt.Color;
 import java.util.Stack;
 
+import algvis.visual.Node;
+import algvis.visual.View;
+
 public class TreeNode extends Node {
 	private TreeNode child = null, right = null, parent = null;
 

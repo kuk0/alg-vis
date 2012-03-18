@@ -3,7 +3,6 @@ package algvis.visual;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-import algvis.core.View;
 
 public class Scene implements VisualElement {
 	ArrayList<VisualElement> E; // + different depths

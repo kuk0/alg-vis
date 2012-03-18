@@ -30,6 +30,7 @@ import javax.swing.event.ChangeListener;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ILabel;
 import algvis.internationalization.IRadioButton;
+import algvis.visual.Node;
 
 public class MeldablePQButtons extends Buttons implements ChangeListener {
 	private static final long serialVersionUID = 1242711038059609653L;

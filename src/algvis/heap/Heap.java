@@ -18,10 +18,10 @@ package algvis.heap;
 
 import algvis.bst.BSTNode;
 import algvis.core.ClickListener;
-import algvis.core.Node;
 import algvis.core.PriorityQueue;
-import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.visual.Node;
+import algvis.visual.View;
 
 public class Heap extends PriorityQueue implements ClickListener {
 	public static String dsName = "heap";

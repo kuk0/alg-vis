@@ -18,7 +18,7 @@ package algvis.unionfind;
 
 import algvis.core.DataStructure;
 import algvis.core.TreeNode;
-import algvis.core.View;
+import algvis.visual.View;
 
 public class UnionFindNode extends TreeNode {
 	public int rank = 0;

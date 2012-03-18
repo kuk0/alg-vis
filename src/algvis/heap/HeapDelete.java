@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.heap;
 
-import algvis.core.Node;
+import algvis.visual.Node;
 
 public class HeapDelete extends HeapAlg {
 	public HeapDelete(Heap H) {

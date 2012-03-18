@@ -20,10 +20,10 @@ import org.jdom.Element;
 
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
-import algvis.core.Node;
 import algvis.core.NodeColor;
-import algvis.core.View;
 import algvis.scenario.Command;
+import algvis.visual.Node;
+import algvis.visual.View;
 
 public class RBNode extends BSTNode {
 	private boolean red = true;

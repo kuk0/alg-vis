@@ -17,8 +17,8 @@
 package algvis.btree;
 
 import algvis.core.Dictionary;
-import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.visual.View;
 
 public class BTree extends Dictionary {
 	public static String dsName = "btree";

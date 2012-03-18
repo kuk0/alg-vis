@@ -17,9 +17,9 @@
 package algvis.fibonacciheap;
 
 import algvis.binomialheap.BinHeapNode;
-import algvis.core.Node;
 import algvis.core.VisPanel;
 import algvis.lazybinomialheap.LazyBinomialHeap;
+import algvis.visual.Node;
 
 public class FibonacciHeap extends LazyBinomialHeap {
 	public static String dsName = "fibheap";

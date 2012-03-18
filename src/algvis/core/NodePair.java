@@ -16,6 +16,8 @@
  ******************************************************************************/
 package algvis.core;
 
+import algvis.visual.Node;
+
 public class NodePair<T extends Node> {
 	public T left = null;
 	public T right = null;

@@ -18,8 +18,8 @@ package algvis.redblacktree;
 
 import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
-import algvis.core.Node;
 import algvis.core.NodeColor;
+import algvis.visual.Node;
 
 public class RBDelete extends Algorithm {
 	RB T;

@@ -19,9 +19,9 @@ package algvis.skiplist;
 import algvis.core.Alignment;
 import algvis.core.ClickListener;
 import algvis.core.Dictionary;
-import algvis.core.Node;
-import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.visual.Node;
+import algvis.visual.View;
 
 public class SkipList extends Dictionary implements ClickListener {
 	public static String dsName = "skiplist";

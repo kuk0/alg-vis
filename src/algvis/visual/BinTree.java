@@ -1,7 +1,6 @@
 package algvis.visual;
 
 import java.awt.geom.Rectangle2D;
-import algvis.core.View;
 
 public class BinTree implements VisualElement {
 

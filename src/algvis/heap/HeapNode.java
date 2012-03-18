@@ -20,8 +20,8 @@ import java.awt.Color;
 
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
-import algvis.core.Node;
 import algvis.core.PriorityQueue;
+import algvis.visual.Node;
 
 public class HeapNode extends BSTNode {
 	HeapNode left, right, parent;

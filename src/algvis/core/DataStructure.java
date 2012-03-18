@@ -19,6 +19,8 @@ package algvis.core;
 import java.util.Random;
 
 import algvis.scenario.Scenario;
+import algvis.visual.Node;
+import algvis.visual.View;
 
 abstract public class DataStructure {
 	// datova struktura musi vediet gombikom povedat, kolko ich potrebuje,

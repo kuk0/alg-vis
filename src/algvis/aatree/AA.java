@@ -20,8 +20,8 @@ import algvis.bst.BST;
 import algvis.bst.BSTFind;
 import algvis.bst.BSTNode;
 import algvis.core.Layout;
-import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.visual.View;
 
 public class AA extends BST {
 	public static String dsName = "aatree";

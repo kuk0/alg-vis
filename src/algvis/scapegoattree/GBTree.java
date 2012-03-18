@@ -21,9 +21,9 @@ import org.jdom.Element;
 import algvis.bst.BST;
 import algvis.core.Layout;
 import algvis.core.StringUtils;
-import algvis.core.View;
 import algvis.core.VisPanel;
 import algvis.scenario.Command;
+import algvis.visual.View;
 
 public class GBTree extends BST {
 	public static String dsName = "scapegoat";

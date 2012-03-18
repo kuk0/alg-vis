@@ -17,7 +17,7 @@
 package algvis.heap;
 
 import algvis.core.Algorithm;
-import algvis.core.Node;
+import algvis.visual.Node;
 
 public class HeapAlg extends Algorithm {
 	Heap H;

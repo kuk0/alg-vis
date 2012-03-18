@@ -24,6 +24,8 @@ import java.awt.Image;
 
 import javax.swing.JPanel;
 
+import algvis.visual.View;
+
 public class Screen extends JPanel implements Runnable {
 	private static final long serialVersionUID = -8279768206774288161L;
 	// obrazovka (ak nie je suspendnuta) neustale vykresluje poziciu

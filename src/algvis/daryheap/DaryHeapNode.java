@@ -2,10 +2,10 @@ package algvis.daryheap;
 
 import java.awt.Color;
 import algvis.core.DataStructure;
-import algvis.core.Node;
 import algvis.core.PriorityQueue;
-import algvis.core.View;
 import algvis.heap.HeapNode;
+import algvis.visual.Node;
+import algvis.visual.View;
 
 public class DaryHeapNode extends HeapNode{
 	int width;//, leftw, rightw;

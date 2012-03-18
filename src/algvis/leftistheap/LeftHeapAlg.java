@@ -1,7 +1,7 @@
 package algvis.leftistheap;
 
 import algvis.core.Algorithm;
-import algvis.core.Node;
+import algvis.visual.Node;
 
 public class LeftHeapAlg extends Algorithm {
 	LeftHeap H;

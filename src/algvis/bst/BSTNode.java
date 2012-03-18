@@ -25,11 +25,11 @@ import org.jdom.Element;
 import algvis.core.DataStructure;
 import algvis.core.Fonts;
 import algvis.core.Layout;
-import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.NodePair;
-import algvis.core.View;
 import algvis.scenario.Command;
+import algvis.visual.Node;
+import algvis.visual.View;
 
 public class BSTNode extends Node {
 	private BSTNode left = null, right = null, parent = null;

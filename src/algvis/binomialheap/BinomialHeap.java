@@ -23,10 +23,10 @@ import algvis.core.ClickListener;
 import algvis.core.Fonts;
 import algvis.core.MeldablePQ;
 import algvis.core.MeldablePQButtons;
-import algvis.core.Node;
 import algvis.core.Pair;
-import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.visual.Node;
+import algvis.visual.View;
 
 public class BinomialHeap extends MeldablePQ implements ClickListener {
 	public static String dsName = "binheap";

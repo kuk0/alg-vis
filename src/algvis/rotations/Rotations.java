@@ -25,8 +25,8 @@ import algvis.core.ClickListener;
 import algvis.core.DataStructure;
 import algvis.core.InputField;
 import algvis.core.Layout;
-import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.visual.View;
 
 public class Rotations extends DataStructure implements ClickListener {
 	public static String adtName = "dictionary";

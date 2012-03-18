@@ -22,11 +22,11 @@ import java.util.Random;
 import algvis.core.Alignment;
 import algvis.core.ClickListener;
 import algvis.core.DataStructure;
-import algvis.core.View;
 import algvis.core.VisPanel;
 import algvis.scenario.Scenario;
 import algvis.unionfind.UnionFindFind.FindHeuristic;
 import algvis.unionfind.UnionFindUnion.UnionHeuristic;
+import algvis.visual.View;
 
 public class UnionFind extends DataStructure implements ClickListener {
 	public static String adtName = "ufa";

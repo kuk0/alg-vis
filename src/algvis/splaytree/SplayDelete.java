@@ -17,7 +17,7 @@
 package algvis.splaytree;
 
 import algvis.core.NodeColor;
-import algvis.core.Node;
+import algvis.visual.Node;
 
 public class SplayDelete extends SplayAlg {
 	public SplayDelete(SplayTree T, int x) {

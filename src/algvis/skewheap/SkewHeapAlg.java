@@ -1,7 +1,7 @@
 package algvis.skewheap;
 
 import algvis.core.Algorithm;
-import algvis.core.Node;
+import algvis.visual.Node;
 
 public class SkewHeapAlg extends Algorithm {
 	SkewHeap H;

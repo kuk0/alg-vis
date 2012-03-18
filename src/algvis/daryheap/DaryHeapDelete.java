@@ -1,6 +1,6 @@
 package algvis.daryheap;
 
-import algvis.core.Node;
+import algvis.visual.Node;
 
 
 public class DaryHeapDelete extends DaryHeapAlg {
