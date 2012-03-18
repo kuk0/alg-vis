@@ -28,6 +28,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.CubicCurve2D;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.awt.geom.RoundRectangle2D;
@@ -418,10 +419,10 @@ public class View implements MouseListener, MouseMotionListener,
 		arrowHead(x, y, x2, y2);
 	}
 
-	public void setDS(ClickListener D) {
-		this.D = D;
+	public void drawCurve (int x1, int y1, int cx1, int cy1, int cx2, int cy2, int x2, int y2) {
+		g.draw(new CubicCurve2D.Float(x1, y1, cx1, cy1, cx2, cy2, x2, y2));
 	}
-
+	
 	public void fillPolygon(Polygon p) {
 		final Stroke old = g.getStroke(), wide = new BasicStroke(27.0f,
 				BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
@@ -432,5 +433,9 @@ public class View implements MouseListener, MouseMotionListener,
 		g.drawPolygon(p);
 		g.setStroke(old);
 		g.setColor(c);
+	}
+
+	public void setDS(ClickListener D) {
+		this.D = D;
 	}
 }
