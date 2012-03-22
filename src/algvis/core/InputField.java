@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 import javax.swing.JTextField;
 
 import algvis.internationalization.ILabel;
+import algvis.trie.Trie;
 
 /**
  * The Class InputField. This is a smart version of JTextField with methods that
@@ -171,13 +172,13 @@ public class InputField extends JTextField {
 				s = Normalizer.normalize(s, Normalizer.Form.NFD);
 				s = p.matcher(s).replaceAll("");
 				s = s.toUpperCase(Locale.ENGLISH);
-				s = s.replaceAll("[^A-Z]", "");
+				s = s.replaceAll("[^_A-Z]", "");
+				if (s.compareTo("") != 0) {
+					args.addLast(s + "$");
+				}
 			} else {
-				s = "\u025B"; // ɛ = 0x025B
-			}
-
-			if (s.compareTo("") != 0) {
-				args.addLast(s + "$");
+				args.addLast(Trie.EPSILON); // s = EPSILON; // "\u025B"; // ɛ =
+											// 0x025B
 			}
 		}
 		if (args.size() == 0) {

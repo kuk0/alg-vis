@@ -32,6 +32,7 @@ public class TriePanel extends VisPanel {
 	public void initDS() {
 		D = new Trie(this);
 		B = new TrieButtons(this);
+		D.random(10);
 	}
 
 }

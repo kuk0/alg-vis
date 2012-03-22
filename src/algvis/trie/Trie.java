@@ -1,19 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- ******************************************************************************/
 package algvis.trie;
 
 import java.text.Normalizer;
@@ -39,6 +23,8 @@ public class Trie extends DataStructure {
 	Vector<String> ven = new Vector<String>();
 
 	public TrieHelpWord hw = null;
+
+	public final static String EPSILON = "\u025B";
 
 	public Trie(VisPanel M) {
 		super(M);
@@ -108,8 +94,10 @@ public class Trie extends DataStructure {
 		Random g = new Random(System.currentTimeMillis());
 		boolean p = M.pause;
 		M.pause = false;
-		int r = g.nextInt(vsk.size());
-		insert(vsk.elementAt(r));
+		for (int i = 0; i < n; i++) {
+			int r = g.nextInt(vsk.size());
+			insert(vsk.elementAt(r));
+		}
 		M.pause = p;
 	}
 
@@ -142,12 +130,12 @@ public class Trie extends DataStructure {
 				s = p.matcher(s).replaceAll("");
 				s = s.toUpperCase(Locale.ENGLISH);
 				s = s.replaceAll("[^_A-Z]", "");
+				if (s.compareTo("") != 0) {
+					args.addLast(s + "$");
+				}
 			} else {
-				s = "\u025B"; // ɛ = 0x025B
-			}
-
-			if (s.compareTo("") != 0) {
-				args.addLast(s + "$");
+				args.addLast(Trie.EPSILON); // s = EPSILON; // "\u025B"; // ɛ =
+											// 0x025B
 			}
 		}
 		if (args.size() == 0) {

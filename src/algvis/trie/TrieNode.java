@@ -77,6 +77,7 @@ public class TrieNode extends TreeNode {
 		}
 	}
 
+	@Override
 	public void drawEdges(View v) {
 		if (state != INVISIBLE) {
 			if (thread) {
@@ -99,6 +100,7 @@ public class TrieNode extends TreeNode {
 		}
 	}
 
+	@Override
 	protected void drawBg(View v) {
 		v.setColor(Color.DARK_GRAY);
 		v.fillCircle(x, y, radius);
@@ -108,6 +110,7 @@ public class TrieNode extends TreeNode {
 		}
 	}
 
+	@Override
 	public void draw(View v) {
 		if (state == Node.INVISIBLE || key == NULL) {
 			return;
@@ -118,12 +121,6 @@ public class TrieNode extends TreeNode {
 		drawTrieCH(v);
 		drawArrow(v);
 		drawArc(v);
-	}
-
-	protected void drawTrieEOW(View v) {
-		TrieNode u = (TrieNode) getParent();
-		if (u != null) {
-		}
 	}
 
 	protected void drawTrieCH(View v) {
@@ -163,6 +160,7 @@ public class TrieNode extends TreeNode {
 		}
 	}
 
+	@Override
 	public void drawVertices(View v) {
 		TreeNode w = getChild();
 		while (w != null) {
