@@ -15,8 +15,19 @@ public class LeftHeapPanel extends VisPanel {
 
 	@Override
 	public void initDS() {
-		D = new LeftHeap(this);
+		LeftHeap L = new LeftHeap(this);
+		D = L;
 		B = new MeldablePQButtons(this);
+		L.active = 1;
+		D.random(13);
+		L.active = 2;
+		D.random(10);
+		L.lowlight();
+		L.active = 3;
+		D.random(7);
+		L.lowlight();
+		L.active = 1;
+		D.M.screen.V.resetView();
 	}
 
 }

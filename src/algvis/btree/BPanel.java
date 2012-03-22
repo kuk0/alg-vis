@@ -32,5 +32,6 @@ public class BPanel extends VisPanel {
 	public void initDS() {
 		D = new BTree(this);
 		B = new BTreeButtons(this);
+		D.random(25);
 	}
 }

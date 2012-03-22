@@ -32,5 +32,6 @@ public class RBPanel extends VisPanel {
 	public void initDS() {
 		D = new RB(this);
 		B = new RBButtons(this);
+		D.random(30);
 	}
 }

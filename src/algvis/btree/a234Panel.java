@@ -33,5 +33,6 @@ public class a234Panel extends VisPanel {
 	public void initDS() {
 		D = new a234Tree(this);
 		B = new DictButtons(this);
+		D.random(30);
 	}
 }

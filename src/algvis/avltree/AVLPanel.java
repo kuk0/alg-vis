@@ -33,5 +33,6 @@ public class AVLPanel extends VisPanel {
 	public void initDS() {
 		D = new AVL(this);
 		B = new DictButtons(this);
+		D.random(30);
 	}
 }
