@@ -43,9 +43,6 @@ public class DaryHeapInsert extends DaryHeapAlg{
 		// mysuspend();
 		v.unmark();
 		bubbleup(v);
-		if (H.last != null){
-			System.out.print("last je " + ((DaryHeap) T).last.key + "\n");
-		}
 	}
 
 }
