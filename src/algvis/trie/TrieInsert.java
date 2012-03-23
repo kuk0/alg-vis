@@ -60,7 +60,7 @@ public class TrieInsert extends Algorithm {
 				addStep("trieinsertwch", ch);
 			} else {
 				addStep("trieinsertwoch", ch);
-				w = v.addChild(ch);
+				w = v.addChild(ch, T.hw.x, T.hw.y);
 			}
 			w.setColor(NodeColor.CACHED);
 			T.reposition();
@@ -79,7 +79,7 @@ public class TrieInsert extends Algorithm {
 		}
 		mysuspend();
 		v.setColor(NodeColor.NORMAL);
-		v = v.addChild(s);
+		v = v.addChild(s, T.hw.x, T.hw.y);
 		T.reposition();
 		T.hw.setAndGoNextTo(s, v);
 		beforeReturn();

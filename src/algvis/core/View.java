@@ -407,20 +407,7 @@ public class View implements MouseListener, MouseMotionListener,
 	}
 
 	public void drawFancyArc(int x1, int y1, int x3, int y3) {
-		// int x2 = (x3 - x1) / 10 * 3 + x1;
-		// int y2 = (y3 - y1) / 6 + y1;
-		// drawQuarterArc(x1, y1, x2, y2);
-		// drawQuarterArc(x3, y3, x2, y2);
-		float kx1 = (float) 1 / 10;
-		float ky1 = (float) 5 / 7;
-		float kx2 = (float) 101/100;
-		float ky2 = -((float) 3 / 10);
-		float ctrlx1 = ((x3 - x1) * (kx1)) + x1;
-		float ctrly1 = ((y3 - y1) * (ky1)) + y1;
-		float ctrlx2 = ((x3 - x1) * (kx2)) + x1;
-		float ctrly2 = ((y3 - y1) * (ky2)) + y1;
-		g.draw(new CubicCurve2D.Float(x1, y1, ctrlx1, ctrly1, ctrlx2, ctrly2,
-				x3, y3));
+		g.draw(new CubicCurve2D.Float(x1, y1, x1, y1 + 10, x3, y3 - 40, x3, y3));
 	}
 
 	public void drawArcArrow(int x, int y, int w, int h, int a1, int a2) {
@@ -440,10 +427,11 @@ public class View implements MouseListener, MouseMotionListener,
 		arrowHead(x, y, x2, y2);
 	}
 
-	public void drawCurve (int x1, int y1, int cx1, int cy1, int cx2, int cy2, int x2, int y2) {
+	public void drawCurve(int x1, int y1, int cx1, int cy1, int cx2, int cy2,
+			int x2, int y2) {
 		g.draw(new CubicCurve2D.Float(x1, y1, cx1, cy1, cx2, cy2, x2, y2));
 	}
-	
+
 	public void fillPolygon(Polygon p) {
 		final Stroke old = g.getStroke(), wide = new BasicStroke(27.0f,
 				BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);

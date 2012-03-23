@@ -47,6 +47,11 @@ public class TrieNode extends TreeNode {
 		ch = "";
 	}
 
+	public TrieNode(DataStructure D, String ch, int x, int y) {
+		super(D, ordinaryNode, x, y);
+		this.ch = ch;
+	}
+
 	public TrieNode(DataStructure D, String ch) {
 		super(D, ordinaryNode);
 		this.ch = ch;
@@ -208,7 +213,7 @@ public class TrieNode extends TreeNode {
 	 *            A character which will be inserted in lexicographical order
 	 * @return A node with proper "ch"
 	 */
-	public TrieNode addRight(String ch) {
+	public TrieNode addRight(String ch, int x, int y) {
 		// System.out.println("addRight: " + this.ch + " " + ch);
 		if (getCH().compareTo(ch) > 0) {
 			TrieNode u = new TrieNode(D, ch);
@@ -234,7 +239,7 @@ public class TrieNode extends TreeNode {
 					setRight(u);
 					return u;
 				} else if (c < 0) {
-					return v.addRight(ch);
+					return v.addRight(ch, x, y);
 				} else {
 					// if (c == 0)
 					return v;
@@ -249,16 +254,16 @@ public class TrieNode extends TreeNode {
 	 *            A character which will be appended to this node
 	 * @return A node appended
 	 */
-	public TrieNode addChild(String ch) {
+	public TrieNode addChild(String ch, int x, int y) {
 		// System.out.println("addChild: " + ch);
 		TrieNode v = (TrieNode) getChild();
 		if (v == null) {
-			TrieNode u = new TrieNode(D, ch);
+			TrieNode u = new TrieNode(D, ch, x, y);
 			setChild(u);
 			u.setParent(this);
 			return u;
 		} else {
-			return v.addRight(ch);
+			return v.addRight(ch, x, y);
 		}
 	}
 }
