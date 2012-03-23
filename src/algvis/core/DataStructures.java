@@ -25,12 +25,15 @@ import algvis.bst.BSTPanel;
 import algvis.btree.BPanel;
 import algvis.btree.a234Panel;
 import algvis.btree.a23Panel;
+import algvis.daryheap.DaryHeapPanel;
 import algvis.fibonacciheap.FibHeapPanel;
 import algvis.heap.HeapPanel;
 import algvis.lazybinomialheap.LazyBinHeapPanel;
+import algvis.leftistheap.LeftHeapPanel;
 import algvis.redblacktree.RBPanel;
 import algvis.rotations.RotPanel;
 import algvis.scapegoattree.GBPanel;
+import algvis.skewheap.SkewHeapPanel;
 import algvis.skiplist.SkipListPanel;
 import algvis.splaytree.SplayPanel;
 import algvis.treap.TreapPanel;
@@ -51,7 +54,8 @@ public class DataStructures {
 			AVLPanel.class, a23Panel.class, a234Panel.class, BPanel.class,
 			RBPanel.class, AAPanel.class, TreapPanel.class,
 			SkipListPanel.class, GBPanel.class, SplayPanel.class,
-			HeapPanel.class, BinHeapPanel.class, LazyBinHeapPanel.class,
+			HeapPanel.class, DaryHeapPanel.class, LeftHeapPanel.class,
+			SkewHeapPanel.class, BinHeapPanel.class, LazyBinHeapPanel.class,
 			FibHeapPanel.class, UnionFindPanel.class, TriePanel.class };
 
 	static final int N = PANEL.length;
