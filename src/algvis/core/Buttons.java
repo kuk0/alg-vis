@@ -221,22 +221,21 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	public void update() {
-		if (D.A != null) {
-			if (D.scenario.isAlgorithmRunning() || D.A.suspended) {
-				disableAll();
-			} else {
-				enableAll();
-			}
-			if (D.scenario.hasNext() || D.A.suspended) {
-				enableNext();
-			} else {
-				disableNext();
-			}
-			if (D.scenario.hasPrevious()) {
-				enablePrevious();
-			} else {
-				disablePrevious();
-			}
+		if (D.scenario.isAlgorithmRunning()
+				|| (D.A != null && D.A.isSuspended())) {
+			disableAll();
+		} else {
+			enableAll();
+		}
+		if (D.scenario.hasNext() || (D.A != null && D.A.isSuspended())) {
+			enableNext();
+		} else {
+			disableNext();
+		}
+		if (D.scenario.hasPrevious()) {
+			enablePrevious();
+		} else {
+			disablePrevious();
 		}
 	}
 

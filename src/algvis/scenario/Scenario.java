@@ -81,6 +81,10 @@ public class Scenario implements XMLable {
 			scenario.getCurrent().getCurrent().add(c);
 		}
 	}
+	
+	public void clear() {
+		scenario.clear();
+	}
 
 	public boolean isAlgorithmRunning() {
 		if (scenario.isEmpty()) {
@@ -234,6 +238,13 @@ public class Scenario implements XMLable {
 
 		public ScenarioCommand(String name) {
 			super(name);
+		}
+		
+		public void clear() {
+			commands.clear();
+			iterator = commands.listIterator();
+			current = null;
+			position = -1;
 		}
 
 		@Override
