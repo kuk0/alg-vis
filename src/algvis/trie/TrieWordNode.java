@@ -25,11 +25,11 @@ import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.View;
 
-public class TrieHelpWord extends Node {
+public class TrieWordNode extends Node {
 	private String s = "";
 	private NodeColor c = NodeColor.INSERT;
 
-	public TrieHelpWord(DataStructure D, String s, int x, int y, NodeColor c) {
+	public TrieWordNode(DataStructure D, String s, int x, int y, NodeColor c) {
 		setS(s);
 		this.x = x;
 		this.y = y;
@@ -37,7 +37,7 @@ public class TrieHelpWord extends Node {
 		this.D = D;
 	}
 
-	public TrieHelpWord(DataStructure D, String s) {
+	public TrieWordNode(DataStructure D, String s) {
 		this(D, s, 0, 0, NodeColor.BLACK);
 	}
 
@@ -93,10 +93,10 @@ public class TrieHelpWord extends Node {
 		int width = (fm.stringWidth(s) + 4) / 2;
 		int height = (fm.getHeight() + 4) / 2;
 		v.setColor(c.bgColor);
-		v.fillRoundRectangle(tox + width, toy - height / 2, width, height, 3, 3);
+		v.fillRoundRectangle(x + width, y - height / 2, width, height, 3, 3);
 		v.setColor(Color.BLACK);
-		v.drawRoundRectangle(tox + width, toy - height / 2, width, height, 3, 3);
+		v.drawRoundRectangle(x + width, y - height / 2, width, height, 3, 3);
 		v.setColor(c.fgColor);
-		v.drawString(s, tox + width, toy - height / 2, Fonts.TYPEWRITER);
+		v.drawString(s, x + width, y - height / 2, Fonts.TYPEWRITER);
 	}
 }

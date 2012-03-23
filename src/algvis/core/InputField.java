@@ -16,18 +16,12 @@
  ******************************************************************************/
 package algvis.core;
 
-import java.text.Normalizer;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Locale;
 import java.util.Random;
 import java.util.Vector;
-import java.util.regex.Pattern;
 
 import javax.swing.JTextField;
 
 import algvis.internationalization.ILabel;
-import algvis.trie.Trie;
 
 /**
  * The Class InputField. This is a smart version of JTextField with methods that
@@ -40,11 +34,13 @@ public class InputField extends JTextField {
 	public final static int MAX = 999;
 	Random G;
 	ILabel sb; // status bar
+	Settings s;
 
-	public InputField(int cols, ILabel sb) {
+	public InputField(int cols, ILabel sb, Settings s) {
 		super(cols);
 		G = new Random(System.currentTimeMillis());
 		this.sb = sb;
+		this.s = s;
 	}
 
 	/**
@@ -158,32 +154,18 @@ public class InputField extends JTextField {
 
 	/**
 	 * Returns a vector of strings parsed from input line delimited by spaces.
-	 * [A-Z] -> [a-z], All chars except [a-zA-Z] are lost.
+	 * [a-z] -> [A-Z], All chars except [A-Z] are lost.
 	 */
 	public Vector<String> getVS() {
-		LinkedList<String> args = new LinkedList<String>(Arrays.asList(this
-				.getText().replaceAll("'", " ").split("(\\s|,)+")));
-		int noa = args.size();
-		for (int i = 0; i < noa; i++) {
-			String s = args.poll();
-			if (s.compareTo("_") != 0) {
-				Pattern p = Pattern
-						.compile("[\\p{InCombiningDiacriticalMarks}\\p{IsLm}\\p{IsSk}]+");
-				s = Normalizer.normalize(s, Normalizer.Form.NFD);
-				s = p.matcher(s).replaceAll("");
-				s = s.toUpperCase(Locale.ENGLISH);
-				s = s.replaceAll("[^_A-Z]", "");
-				if (s.compareTo("") != 0) {
-					args.addLast(s + "$");
-				}
-			} else {
-				args.addLast(Trie.EPSILON); // s = EPSILON; // "\u025B"; // ɛ =
-											// 0x025B
-			}
+		String ss = getText();
+		if (ss.compareTo("") == 0) {
+			Vector<String> result = new Vector<String>();
+			result.add(WordGenerator.getWord(s));
+			return result;
+		} else {
+			Vector<String> result = WordGenerator.parseString(ss);
+			return result;
 		}
-		if (args.size() == 0) {
-			args.add("$");
-		}
-		return new Vector<String>(args);
 	}
+
 }

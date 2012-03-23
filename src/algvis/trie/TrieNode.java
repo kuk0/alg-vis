@@ -128,8 +128,8 @@ public class TrieNode extends TreeNode {
 		if (u != null) {
 			int midx, midy, w, h;
 			if (ch.compareTo("$") == 0) {
-				midx = x - ((x - u.x) / 5);
-				midy = y - ((y - u.y) / 5 * 2) - 2;
+				midx = x - ((x - u.x) / 15);
+				midy = y - ((y - u.y) / 5 * 2) - 1;
 				w = 4;
 				h = 5;
 
@@ -144,8 +144,8 @@ public class TrieNode extends TreeNode {
 				v.setColor(Color.BLACK);
 				v.drawString(ch, midx, midy, Fonts.TYPEWRITER);
 			} else {
-				midx = x - ((x - u.x) / 7);
-				midy = y - ((y - u.y) / 5 * 2) - 2;
+				midx = x - ((x - u.x) / 15);
+				midy = y - ((y - u.y) / 5 * 2) - 1;
 				w = 6;
 				h = 7;
 

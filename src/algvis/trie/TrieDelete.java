@@ -27,11 +27,7 @@ public class TrieDelete extends Algorithm {
 		super(T);
 		this.T = T;
 		this.s = s;
-		if (s.compareTo(Trie.EPSILON) == 0) {
-			setHeader("triedelete", Trie.EPSILON);
-		} else {
-			setHeader("triedelete", s.substring(0, s.length() - 1));
-		}
+		setHeader("triedelete", s.substring(0, s.length() - 1));
 	}
 
 	public void beforeReturn() {
@@ -44,7 +40,6 @@ public class TrieDelete extends Algorithm {
 	public void run() {
 		if (s.compareTo("$") == 0) {
 			addNote("badword");
-			return;
 		}
 
 		TrieNode v = T.getRoot();
@@ -53,48 +48,10 @@ public class TrieDelete extends Algorithm {
 		v.mark();
 		mysuspend();
 		v.unmark();
-		T.hw = new TrieHelpWord(T, s);
+		T.hw = new TrieWordNode(T, s);
 		T.hw.setC(NodeColor.CACHED);
 		T.hw.goNextTo(v);
 
-		if (s.compareTo(Trie.EPSILON) == 0) {
-			TrieNode wd = (TrieNode) v.getChild();
-			while (wd != null) {
-				wd.setColor(NodeColor.FIND);
-				wd = (TrieNode) wd.getRight();
-			}
-
-			TrieNode w = v.getChildWithCH(Trie.EPSILON);
-			if (w != null) {
-				addStep("triewe");
-				mysuspend();
-				wd = (TrieNode) v.getChild();
-				while (wd != null) {
-					wd.setColor(NodeColor.NORMAL);
-					wd = (TrieNode) wd.getRight();
-				}
-				T.hw = null;
-				w.setColor(NodeColor.DELETE);
-				addStep("triedeletedbdb");
-				mysuspend();
-				v.deleteChild(w);
-				T.reposition();
-				T.clearExtraColor();
-				addStep("done");
-			} else {
-				addStep("triewoe");
-				mysuspend();
-
-				wd = (TrieNode) v.getChild();
-				while (wd != null) {
-					wd.setColor(NodeColor.NORMAL);
-					wd = (TrieNode) wd.getRight();
-				}
-				beforeReturn();
-			}
-			return;
-		}
-		
 		while (s.compareTo("$") != 0) {
 			TrieNode vd = (TrieNode) v.getChild();
 			while (vd != null) {

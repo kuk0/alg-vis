@@ -27,11 +27,7 @@ public class TrieInsert extends Algorithm {
 		super(T);
 		this.T = T;
 		this.s = s;
-		if (s.compareTo(Trie.EPSILON) == 0) {
-			setHeader("trieinsert", Trie.EPSILON);
-		} else {
-			setHeader("trieinsert", s.substring(0, s.length() - 1));
-		}
+		setHeader("trieinsert", s.substring(0, s.length() - 1));
 	}
 
 	public void beforeReturn() {
@@ -44,7 +40,6 @@ public class TrieInsert extends Algorithm {
 	public void run() {
 		if (s.compareTo("$") == 0) {
 			addNote("badword");
-			return;
 		}
 
 		TrieNode v = T.getRoot();
@@ -53,30 +48,10 @@ public class TrieInsert extends Algorithm {
 		addStep("trierootstart");
 		mysuspend();
 		v.unmark();
-		T.hw = new TrieHelpWord(T, s);
+		T.hw = new TrieWordNode(T, s);
 		T.hw.setC(NodeColor.INSERT);
 		T.hw.goNextTo(v);
 		
-		if (s.compareTo(Trie.EPSILON) == 0) {
-			TrieNode w = v.getChildWithCH(Trie.EPSILON);
-			if (w != null) {
-				addStep("triewe");
-			} else {
-				addStep("triewoe");
-				addStep("trieappende");
-				w = v.addChild(Trie.EPSILON);
-			}
-			w.setColor(NodeColor.CACHED);
-			T.reposition();
-			mysuspend();
-			v = w;
-			v.setColor(NodeColor.INSERT);
-			T.reposition();
-			
-			beforeReturn();
-			return;
-		}
-
 		while (s.compareTo("$") != 0) {
 			String ch = s.substring(0, 1);
 			T.hw.setAndGoNextTo(s, v);
