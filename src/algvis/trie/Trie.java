@@ -17,13 +17,14 @@
 package algvis.trie;
 
 import algvis.core.DataStructure;
+import algvis.core.Fonts;
 import algvis.core.View;
 import algvis.core.VisPanel;
 import algvis.core.WordGenerator;
 
 public class Trie extends DataStructure {
-	public static String adtName = "triea";
-	public static String dsName = "triei";
+	public static String adtName = "stringology";
+	public static String dsName = "trie";
 
 	private TrieNode root = null;
 	private TrieNode v = null;
@@ -39,7 +40,7 @@ public class Trie extends DataStructure {
 
 	@Override
 	public String getName() {
-		return "triei";
+		return "trie";
 	}
 
 	@Override
@@ -82,6 +83,7 @@ public class Trie extends DataStructure {
 		if (v != null) {
 			v.moveTree();
 			v.drawTree(V);
+			V.drawString("\u025B", v.x, v.y-8, Fonts.NORMAL);
 		}
 		v = getV();
 		if (v != null) {
