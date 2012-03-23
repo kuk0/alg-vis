@@ -16,6 +16,7 @@
  ******************************************************************************/
 package algvis.core;
 
+import algvis.trie.Trie;
 import algvis.unionfind.UnionFind;
 
 /**
@@ -31,7 +32,8 @@ public class ADTs {
 	static final Class[] ADT = { Dictionary.class, // insert, find, delete
 			PriorityQueue.class, // insert, decrease-key, delete-min
 			MeldablePQ.class, // insert, decrease-key, delete-min, meld
-			UnionFind.class // make-set, union, find
+			UnionFind.class, // make-set, union, find
+			Trie.class // insert, find, delete
 	};
 	static final int N = ADT.length;
 

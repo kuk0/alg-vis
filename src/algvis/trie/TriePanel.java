@@ -14,11 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.trie;
 
-public interface Highlighting {
+import algvis.core.DataStructure;
+import algvis.core.Settings;
+import algvis.core.VisPanel;
+
+public class TriePanel extends VisPanel {
+	private static final long serialVersionUID = -8652425842838569507L;
+	public static Class<? extends DataStructure> DS = Trie.class;
+
+	public TriePanel(Settings S) {
+		super(S);
+	}
 	
-	public void highlight(int i);
-	public void lowlight();
+	@Override
+	public void initDS() {
+		D = new Trie(this);
+		B = new TrieButtons(this);
+		D.random(10);
+	}
 
 }

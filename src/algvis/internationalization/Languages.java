@@ -83,4 +83,8 @@ public class Languages {
 			return "???";
 		}
 	}
+	
+	public int getCurrentLanguage() {
+		return current_lang;
+	}
 }

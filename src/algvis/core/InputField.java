@@ -16,9 +16,7 @@
  ******************************************************************************/
 package algvis.core;
 
-import java.util.NoSuchElementException;
 import java.util.Random;
-import java.util.StringTokenizer;
 import java.util.Vector;
 
 import javax.swing.JTextField;
@@ -36,11 +34,13 @@ public class InputField extends JTextField {
 	public final static int MAX = 999;
 	Random G;
 	ILabel sb; // status bar
+	Settings s;
 
-	public InputField(int cols, ILabel sb) {
+	public InputField(int cols, ILabel sb, Settings s) {
 		super(cols);
 		G = new Random(System.currentTimeMillis());
 		this.sb = sb;
+		this.s = s;
 	}
 
 	/**
@@ -57,9 +57,9 @@ public class InputField extends JTextField {
 	 */
 	public int getInt(int def, int min, int max) {
 		int n = def;
-		StringTokenizer st = new StringTokenizer(this.getText());
+		String firstWord = this.getText().split("(\\s|,)")[0];
 		try {
-			n = Integer.parseInt(st.nextToken());
+			n = Integer.parseInt(firstWord);
 			if (n < min) {
 				n = min;
 				sb.setText("value too small; using the minimum value " + min
@@ -71,7 +71,6 @@ public class InputField extends JTextField {
 						+ " instead");
 			}
 			sb.setText("");
-		} catch (NoSuchElementException e) {
 		} catch (NumberFormatException e) {
 			sb.setText("couldn't parse an integer; using the default value "
 					+ def);
@@ -152,4 +151,21 @@ public class InputField extends JTextField {
 		}
 		return args;
 	}
+
+	/**
+	 * Returns a vector of strings parsed from input line delimited by spaces.
+	 * [a-z] -> [A-Z], All chars except [A-Z] are lost.
+	 */
+	public Vector<String> getVS() {
+		String ss = getText();
+		if (ss.compareTo("") == 0) {
+			Vector<String> result = new Vector<String>();
+			result.add(WordGenerator.getWord(s));
+			return result;
+		} else {
+			Vector<String> result = WordGenerator.parseString(ss);
+			return result;
+		}
+	}
+
 }

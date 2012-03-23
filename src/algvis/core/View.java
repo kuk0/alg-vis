@@ -67,6 +67,10 @@ public class View implements MouseListener, MouseMotionListener,
 		resetView();
 	}
 
+	public Graphics2D getGraphics() {
+		return g;
+	}
+
 	public void resetView() {
 		at.setToIdentity();
 		double f = 1, f2 = 1;
@@ -371,15 +375,15 @@ public class View implements MouseListener, MouseMotionListener,
 		g.drawArc(x, y, w, h, a1, a2 - a1);
 	}
 
-	/* let A=[x1,y1] and B=[x2,y2]  
-	 *  B--\   /--B
-	 *      \ /
-	 *       |
-	 *       A
-	 *       |
-	 *      / \  
-	 *  B--/   \--B
-	 */
+	// let A=[x1,y1] and B=[x2,y2]
+	// _B--\___/--B
+	// _____\_/
+	// ______|
+	// ______A
+	// ______|
+	// _____/_\
+	// _B--/___\--B
+	//
 	public void drawQuarterArc(int x1, int y1, int x2, int y2) {
 		int w = Math.abs(x1 - x2), h = Math.abs(y1 - y2), a1, a2;
 		if (y2 < y1) {
@@ -400,6 +404,23 @@ public class View implements MouseListener, MouseMotionListener,
 			}
 		}
 		drawArc(x2 - w, y1 - h, 2 * w, 2 * h, a1, a2);
+	}
+
+	public void drawFancyArc(int x1, int y1, int x3, int y3) {
+		// int x2 = (x3 - x1) / 10 * 3 + x1;
+		// int y2 = (y3 - y1) / 6 + y1;
+		// drawQuarterArc(x1, y1, x2, y2);
+		// drawQuarterArc(x3, y3, x2, y2);
+		float kx1 = (float) 1 / 10;
+		float ky1 = (float) 5 / 7;
+		float kx2 = (float) 101/100;
+		float ky2 = -((float) 3 / 10);
+		float ctrlx1 = ((x3 - x1) * (kx1)) + x1;
+		float ctrly1 = ((y3 - y1) * (ky1)) + y1;
+		float ctrlx2 = ((x3 - x1) * (kx2)) + x1;
+		float ctrly2 = ((y3 - y1) * (ky2)) + y1;
+		g.draw(new CubicCurve2D.Float(x1, y1, ctrlx1, ctrly1, ctrlx2, ctrly2,
+				x3, y3));
 	}
 
 	public void drawArcArrow(int x, int y, int w, int h, int a1, int a2) {
