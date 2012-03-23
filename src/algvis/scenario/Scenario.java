@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.scenario;
 
 import java.io.BufferedWriter;
@@ -10,9 +26,6 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 import algvis.core.VisPanel;
-import algvis.scenario.commands.Command;
-import algvis.scenario.commands.MacroCommand;
-import algvis.scenario.commands.ScenarioCommand;
 
 /**
  * Scenario (or history list) stores list of Commands, which are executed. It
@@ -24,6 +37,9 @@ public class Scenario implements XMLable {
 	private VisPanel V;
 	private boolean addingEnabled = true;
 	private boolean enabled;
+
+	/** for many reasons must be at least 1 */
+	public static final int maxAlgorithms = 47;
 
 	public Scenario(VisPanel V, String name) {
 		this.V = V;
@@ -49,11 +65,15 @@ public class Scenario implements XMLable {
 	}
 
 	public void newAlgorithm() {
-		scenario.add(new MacroCommand<MacroCommand<Command>>("algorithm"));
+		if (addingEnabled) {
+			scenario.add(new MacroCommand<MacroCommand<Command>>("algorithm"));
+		}
 	}
 
 	public void newStep() {
-		scenario.getCurrent().add(new MacroCommand<Command>("step"));
+		if (addingEnabled) {
+			scenario.getCurrent().add(new MacroCommand<Command>("step"));
+		}
 	}
 
 	/**
@@ -64,6 +84,10 @@ public class Scenario implements XMLable {
 				&& !scenario.getCurrent().isEmpty()) {
 			scenario.getCurrent().getCurrent().add(c);
 		}
+	}
+
+	public void clear() {
+		scenario.clear();
 	}
 
 	public boolean isAlgorithmRunning() {
@@ -216,4 +240,98 @@ public class Scenario implements XMLable {
 		}
 	}
 
+	private class ScenarioCommand extends
+			MacroCommand<MacroCommand<MacroCommand<Command>>> {
+
+		public ScenarioCommand(String name) {
+			super(name);
+		}
+
+		public void clear() {
+			commands.clear();
+			iterator = commands.listIterator();
+			current = null;
+			position = -1;
+		}
+
+		@Override
+		public void add(MacroCommand<MacroCommand<Command>> c) {
+			super.add(c);
+			if (position == maxAlgorithms) {
+				commands.remove(0);
+				iterator = commands.listIterator(commands.size());
+				current = iterator.previous();
+				iterator.next();
+				position = iterator.previousIndex();
+			}
+		}
+
+		@Override
+		public void unexecuteOne() {
+			if (current.hasPrevious()) {
+				current.unexecuteOne();
+				if (!current.hasPrevious()
+						&& iterator.previousIndex() == position) {
+					iterator.previous();
+				}
+			} else {
+				position = iterator.previousIndex();
+				current = iterator.previous();
+				current.unexecuteOne();
+			}
+			if (!current.hasPrevious() && iterator.hasPrevious()) {
+				position = iterator.previousIndex();
+				current = iterator.previous();
+				iterator.next();
+			}
+		}
+
+		@Override
+		public void executeOne() {
+			if (current.hasNext()) {
+				current.executeOne();
+				if (!current.hasNext() && iterator.nextIndex() == position) {
+					iterator.next();
+				}
+			} else {
+				position = iterator.nextIndex();
+				current = iterator.next();
+				current.executeOne();
+			}
+		}
+
+		@Override
+		public void execute() {
+			if (current.hasNext()) {
+				current.execute();
+				if (!current.hasNext() && iterator.nextIndex() == position) {
+					iterator.next();
+				}
+			} else {
+				position = iterator.nextIndex();
+				current = iterator.next();
+				current.execute();
+			}
+		}
+
+		@Override
+		public void unexecute() {
+			if (current.hasPrevious()) {
+				current.unexecute();
+				if (!current.hasPrevious()
+						&& iterator.previousIndex() == position) {
+					iterator.previous();
+				}
+			} else {
+				position = iterator.previousIndex();
+				current = iterator.previous();
+				current.unexecute();
+			}
+			if (!current.hasPrevious() && iterator.hasPrevious()) {
+				position = iterator.previousIndex();
+				current = iterator.previous();
+				iterator.next();
+			}
+		}
+	}
 }

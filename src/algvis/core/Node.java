@@ -1,15 +1,27 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.core;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
 
-import algvis.scenario.commands.node.ArcCommand;
-import algvis.scenario.commands.node.ArrowCommand;
-import algvis.scenario.commands.node.MarkCommand;
-import algvis.scenario.commands.node.MoveCommand;
-import algvis.scenario.commands.node.SetBgColorCommand;
-import algvis.scenario.commands.node.SetFgColorCommand;
-import algvis.scenario.commands.node.SetStateCommand;
+import org.jdom.Element;
+
+import algvis.scenario.Command;
 
 /**
  * The Class Node. This is a basic element of the visualization. Nodes can be
@@ -31,9 +43,9 @@ public class Node {
 	public boolean marked = false;
 	public Node dir = null;
 	public int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S,
-										// 135=SW,
-	// 180=W)
+										// 135=SW, 180=W)
 	boolean arc = false;
+
 	public static int STEPS = 10;
 	public static int radius = 10;
 
@@ -96,7 +108,7 @@ public class Node {
 
 	public void setState(int s) {
 		if (state != s && D.scenario.isAddingEnabled()) {
-			D.scenario.add(new SetStateCommand(this, s));
+			D.scenario.add(new SetStateCommand(s));
 		}
 		state = s;
 		if ((s == Node.LEFT || s == Node.RIGHT || s == Node.DOWN)
@@ -128,7 +140,7 @@ public class Node {
 	public void fgColor(Color fg) {
 		if (fg != color.fgColor) {
 			if (D != null && D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetFgColorCommand(this, fg));
+				D.scenario.add(new SetFgColorCommand(fg));
 			}
 			color = new NodeColor(fg, color.bgColor);
 		}
@@ -137,7 +149,7 @@ public class Node {
 	public void bgColor(Color bg) {
 		if (bg != color.bgColor) {
 			if (D != null && D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetBgColorCommand(this, bg));
+				D.scenario.add(new SetBgColorCommand(bg));
 			}
 			color = new NodeColor(color.fgColor, bg);
 		}
@@ -162,7 +174,7 @@ public class Node {
 	public void mark() {
 		if (!marked) {
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new MarkCommand(this, true));
+				D.scenario.add(new MarkCommand(true));
 			}
 			marked = true;
 		}
@@ -171,7 +183,7 @@ public class Node {
 	public void unmark() {
 		if (marked) {
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new MarkCommand(this, false));
+				D.scenario.add(new MarkCommand(false));
 			}
 			marked = false;
 		}
@@ -187,7 +199,7 @@ public class Node {
 			dir = w;
 			arrow = Node.DIRARROW;
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new ArrowCommand(this, true));
+				D.scenario.add(new ArrowCommand(true));
 			}
 		}
 	}
@@ -202,7 +214,7 @@ public class Node {
 			dir = w;
 			arrow = Node.TOARROW;
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new ArrowCommand(this, true));
+				D.scenario.add(new ArrowCommand(true));
 			}
 		}
 	}
@@ -218,7 +230,7 @@ public class Node {
 			dir = null;
 			arrow = angle;
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new ArrowCommand(this, true));
+				D.scenario.add(new ArrowCommand(true));
 			}
 		}
 	}
@@ -229,7 +241,7 @@ public class Node {
 	public void noArrow() {
 		if (dir != null || arrow != Node.NOARROW) {
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new ArrowCommand(this, false));
+				D.scenario.add(new ArrowCommand(false));
 			}
 			dir = null;
 			arrow = Node.NOARROW;
@@ -246,7 +258,7 @@ public class Node {
 			dir = w;
 			arc = true;
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new ArcCommand(this, dir, true));
+				D.scenario.add(new ArcCommand(dir, true));
 			}
 		}
 	}
@@ -258,7 +270,7 @@ public class Node {
 		if (arc == true) {
 			arc = false;
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new ArcCommand(this, dir, false));
+				D.scenario.add(new ArcCommand(dir, false));
 			}
 		}
 	}
@@ -298,7 +310,7 @@ public class Node {
 	public void drawKey(View v) {
 		v.setColor(getFgColor());
 		if (key != NOKEY) {
-			v.drawString(toString(), x, y, 9);
+			v.drawString(toString(), x, y, Fonts.NORMAL);
 		}
 	}
 
@@ -378,7 +390,7 @@ public class Node {
 	public void goTo(int tox, int toy) {
 		if (this.tox != tox || this.toy != toy) {
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new MoveCommand(this, tox, toy));
+				D.scenario.add(new MoveCommand(tox, toy));
 			}
 			if (D.scenario.traverser.isInterrupted()) {
 				steps = 0;
@@ -480,6 +492,281 @@ public class Node {
 				state = Node.INVISIBLE;
 			}
 			break;
+		}
+	}
+
+	private class ArcCommand implements Command {
+		private final Node toNode;
+		private final boolean setted;
+
+		public ArcCommand(Node toNode, boolean setted) {
+			this.toNode = toNode;
+			this.setted = setted;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("Arc");
+			e.setAttribute("fromNode", Integer.toString(key));
+			e.setAttribute("toNode", Integer.toString(toNode.key));
+			e.setAttribute("setted", Boolean.toString(setted));
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			if (setted) {
+				setArc(toNode);
+			} else {
+				noArc();
+			}
+		}
+
+		@Override
+		public void unexecute() {
+			if (setted) {
+				noArc();
+			} else {
+				setArc(toNode);
+			}
+		}
+	}
+
+	private class ArrowCommand implements Command {
+		private final Node dir;
+		private final int arrow;
+		private final boolean drawArrow;
+		private final String name;
+
+		public ArrowCommand(boolean drawArrow) {
+			dir = Node.this.dir;
+			arrow = Node.this.arrow;
+			this.drawArrow = drawArrow;
+			if (drawArrow) {
+				name = "arrow";
+			} else {
+				name = "noArrow";
+			}
+		}
+
+		@Override
+		public void execute() {
+			if (drawArrow) {
+				Node.this.dir = dir;
+				Node.this.arrow = arrow;
+			} else {
+				noArrow();
+			}
+		}
+
+		@Override
+		public void unexecute() {
+			if (drawArrow) {
+				noArrow();
+			} else {
+				Node.this.arrow = arrow;
+				Node.this.dir = dir;
+			}
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("node");
+			e.setAttribute("action", name);
+			e.setAttribute("key", Integer.toString(key));
+			if (dir != null) {
+				e.setAttribute("toNode", Integer.toString(dir.key));
+			} else {
+				e.setAttribute("angle", Integer.toString(arrow));
+			}
+			return e;
+		}
+	}
+
+	private class MarkCommand implements Command {
+		private final boolean marked;
+
+		public MarkCommand(boolean marked) {
+			this.marked = marked;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("mark");
+			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("marked", Boolean.toString(marked));
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			if (marked) {
+				mark();
+			} else {
+				unmark();
+			}
+		}
+
+		@Override
+		public void unexecute() {
+			if (marked) {
+				unmark();
+			} else {
+				mark();
+			}
+		}
+	}
+
+	private class MoveCommand implements Command {
+		private final int fromX, fromY, toX, toY;
+
+		public MoveCommand(int toX, int toY) {
+			fromX = tox;
+			fromY = toy;
+			this.toX = toX;
+			this.toY = toY;
+		}
+
+		@Override
+		public void execute() {
+			goTo(toX, toY);
+		}
+
+		@Override
+		public void unexecute() {
+			goTo(fromX, fromY);
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("node");
+			e.setAttribute("action", "move");
+			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("posX", Integer.toString(toX));
+			e.setAttribute("posY", Integer.toString(toY));
+			e.setAttribute("fromPosX", Integer.toString(fromX));
+			e.setAttribute("fromPosY", Integer.toString(fromY));
+			return e;
+		}
+	}
+
+	private class SetBgColorCommand implements Command {
+		private final Color oldBgColor, newBgColor;
+
+		public SetBgColorCommand(Color newBgColor) {
+			oldBgColor = getBgColor();
+			this.newBgColor = newBgColor;
+		}
+
+		@Override
+		public void execute() {
+			bgColor(newBgColor);
+		}
+
+		@Override
+		public void unexecute() {
+			bgColor(oldBgColor);
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("node");
+			e.setAttribute("action", "changeColor");
+			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("bgColor", newBgColor.toString());
+			return e;
+		}
+	}
+
+	private class SetFgColorCommand implements Command {
+		private final Color oldFgColor, newFgColor;
+
+		public SetFgColorCommand(Color newfgColor) {
+			oldFgColor = getFgColor();
+			this.newFgColor = newfgColor;
+		}
+
+		@Override
+		public void execute() {
+			fgColor(newFgColor);
+		}
+
+		@Override
+		public void unexecute() {
+			fgColor(oldFgColor);
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("node");
+			e.setAttribute("action", "changeColor");
+			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("fgColor", newFgColor.toString());
+			return e;
+		}
+	}
+
+	private class SetStateCommand implements Command {
+		private final int fromState, toState;
+		private final int fromX, fromY;
+
+		public SetStateCommand(int toState) {
+			this.toState = toState;
+			fromState = state;
+			fromX = tox;
+			fromY = toy;
+		}
+
+		@Override
+		public void execute() {
+			setState(toState);
+		}
+
+		@Override
+		public void unexecute() {
+			if (toState == Node.LEFT || toState == Node.DOWN
+					|| toState == Node.RIGHT) {
+				goTo(fromX, fromY);
+			}
+			setState(fromState);
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("node");
+			e.setAttribute("action", "changeState");
+			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("toState", Integer.toString(toState));
+			e.setAttribute("fromState", Integer.toString(fromState));
+			return e;
+		}
+	}
+
+	public class WaitBackwardsCommand implements Command {
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("waitBackwards");
+			e.setAttribute("nodeKey", Integer.toString(key));
+			return e;
+		}
+
+		@Override
+		public void execute() {
+		}
+
+		@Override
+		public void unexecute() {
+			while (x != tox || y != toy) {
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+					x = tox;
+					y = toy;
+					break;
+				}
+			}
 		}
 	}
 }

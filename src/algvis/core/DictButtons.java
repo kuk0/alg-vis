@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.core;
 
 import java.awt.event.ActionEvent;
@@ -8,6 +24,7 @@ import javax.swing.JPanel;
 
 import algvis.bst.BST;
 import algvis.internationalization.IButton;
+import algvis.scenario.Scenario;
 
 /**
  * The Class DictButtons. All dictionary data structures need buttons "Insert",
@@ -48,13 +65,30 @@ public class DictButtons extends Buttons {
 			D.scenario.traverser.startNew(new Runnable() {
 				@Override
 				public void run() {
-					for (int x : args) {
+					boolean p = M.pause;
+					int n = args.size();
+					int i = 0;
+					D.scenario.enableAdding(false);
+					M.C.enableUpdating(p);
+					for (; i < n - Scenario.maxAlgorithms; ++i) {
+						if (M.pause != p) {
+							M.C.enableUpdating(p = M.pause);
+						}
+						((Dictionary) D).insert(args.elementAt(i));
+					}
+					D.scenario.enableAdding(true);
+					for (; i < n; ++i) {
+						if (M.pause != p) {
+							M.C.enableUpdating(p = M.pause);
+						}
 						if (D instanceof BST) {
 							D.scenario.newAlgorithm();
 							D.scenario.newStep();
 						}
-						((Dictionary) D).insert(x);
+						((Dictionary) D).insert(args.elementAt(i));
 					}
+					M.C.enableUpdating(true);
+					M.C.update();
 				}
 			}, false);
 			if (args.size() == 1) {

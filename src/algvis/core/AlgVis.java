@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.core;
 
 import java.awt.CardLayout;
@@ -31,10 +47,14 @@ public class AlgVis extends JPanel implements ActionListener {
 	 * 10 - Scapegoat tree
 	 * 11 - Splay tree
 	 * 12 - Heap
-	 * 13 - Binomial heap
-	 * 14 - Lazy Binomial heap
-	 * 15 - Fibonacci heap
-	 * 16 - Union-find */
+	 * 13 - d-ary heap
+	 * 14 - Leftist heap
+	 * 15 - Skew heap
+	 * 16 - Binomial heap
+	 * 17 - Lazy Binomial heap
+	 * 18 - Fibonacci heap
+	 * 19 - Union-find 
+	 * 20 - Trie */
 	final static int DEFAULT_DS = 0;
 	
 	private static final long serialVersionUID = -5202486006824196688L;

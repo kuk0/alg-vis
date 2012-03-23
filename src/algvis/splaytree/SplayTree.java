@@ -1,13 +1,28 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.splaytree;
+
+import org.jdom.Element;
 
 import algvis.bst.BST;
 import algvis.core.Layout;
 import algvis.core.View;
 import algvis.core.VisPanel;
-import algvis.scenario.commands.node.WaitBackwardsCommand;
-import algvis.scenario.commands.splay3.SetRoot2Command;
-import algvis.scenario.commands.splay3.SetVVCommand;
-import algvis.scenario.commands.splay3.SetWCommand;
+import algvis.scenario.Command;
 
 public class SplayTree extends BST {
 	public static String dsName = "splaytree";
@@ -32,7 +47,7 @@ public class SplayTree extends BST {
 	public void setRoot2(SplayNode root2) {
 		if (this.root2 != root2) {
 			if (scenario.isAddingEnabled()) {
-				scenario.add(new SetRoot2Command(this, root2));
+				scenario.add(new SetRoot2Command(root2));
 			}
 			this.root2 = root2;
 		}
@@ -45,12 +60,12 @@ public class SplayTree extends BST {
 	public void setVV(SplayNode vv) {
 		if (this.vv != vv) {
 			if (scenario.isAddingEnabled()) {
-				scenario.add(new SetVVCommand(this, vv));
+				scenario.add(new SetVVCommand(vv));
 			}
 			this.vv = vv;
 		}
 		if (vv != null && scenario.isAddingEnabled()) {
-			scenario.add(new WaitBackwardsCommand(vv));
+			scenario.add(vv.new WaitBackwardsCommand());
 		}
 	}
 
@@ -61,7 +76,7 @@ public class SplayTree extends BST {
 	public void setW1(SplayNode w1) {
 		if (this.w1 != w1) {
 			if (scenario.isAddingEnabled()) {
-				scenario.add(new SetWCommand(this, w1, 1));
+				scenario.add(new SetWCommand(w1, 1));
 			}
 			this.w1 = w1;
 		}
@@ -74,7 +89,7 @@ public class SplayTree extends BST {
 	public void setW2(SplayNode w2) {
 		if (this.w2 != w2) {
 			if (scenario.isAddingEnabled()) {
-				scenario.add(new SetWCommand(this, w2, 2));
+				scenario.add(new SetWCommand(w2, 2));
 			}
 			this.w2 = w2;
 		}
@@ -154,5 +169,131 @@ public class SplayTree extends BST {
 	@Override
 	public Layout getLayout() {
 		return Layout.COMPACT;
+	}
+
+	private class SetRoot2Command implements Command {
+		private final SplayNode oldRoot2, newRoot2;
+
+		public SetRoot2Command(SplayNode newRoot2) {
+			oldRoot2 = getRoot2();
+			this.newRoot2 = newRoot2;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setRoot2");
+			if (newRoot2 != null) {
+				e.setAttribute("newRoot2Key", Integer.toString(newRoot2.key));
+			} else {
+				e.setAttribute("newRoot2", "null");
+			}
+			if (oldRoot2 != null) {
+				e.setAttribute("oldRoot2Key", Integer.toString(oldRoot2.key));
+			} else {
+				e.setAttribute("oldRoot2", "null");
+			}
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			setRoot2(newRoot2);
+		}
+
+		@Override
+		public void unexecute() {
+			setRoot2(oldRoot2);
+		}
+	}
+
+	private class SetVVCommand implements Command {
+		private final SplayNode newVV, oldVV;
+
+		public SetVVCommand(SplayNode newVV) {
+			oldVV = getVV();
+			this.newVV = newVV;
+		}
+
+		@Override
+		public void execute() {
+			setVV(newVV);
+		}
+
+		@Override
+		public void unexecute() {
+			setVV(oldVV);
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setVV");
+			if (newVV != null) {
+				e.setAttribute("newVVKey", Integer.toString(newVV.key));
+			} else {
+				e.setAttribute("newVV", "null");
+			}
+			if (oldVV != null) {
+				e.setAttribute("oldVVKey", Integer.toString(oldVV.key));
+			} else {
+				e.setAttribute("oldVV", "null");
+			}
+			return e;
+		}
+	}
+
+	private class SetWCommand implements Command {
+		private final SplayNode oldW, newW;
+		private final int order;
+
+		public SetWCommand(SplayNode newW, int order) {
+			this.order = order;
+			switch (order) {
+			case 1:
+				oldW = getW1();
+				break;
+			case 2:
+				oldW = getW2();
+				break;
+			default:
+				oldW = null;
+				System.err
+						.println("SetWCommand bad \"order\" argument (must be 1 or 2)");
+			}
+			this.newW = newW;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setW" + order);
+			if (newW != null) {
+				e.setAttribute("newWKey", Integer.toString(newW.key));
+			} else {
+				e.setAttribute("newW", "null");
+			}
+			if (oldW != null) {
+				e.setAttribute("oldWKey", Integer.toString(oldW.key));
+			} else {
+				e.setAttribute("oldW", "null");
+			}
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			if (order == 1) {
+				setW1(newW);
+			} else {
+				setW2(newW);
+			}
+		}
+
+		@Override
+		public void unexecute() {
+			if (order == 1) {
+				setW1(oldW);
+			} else {
+				setW2(oldW);
+			}
+		}
 	}
 }

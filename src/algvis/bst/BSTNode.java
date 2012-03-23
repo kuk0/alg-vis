@@ -1,19 +1,35 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.bst;
 
 import java.awt.Color;
 import java.awt.Polygon;
 import java.util.Stack;
 
+import org.jdom.Element;
+
 import algvis.core.DataStructure;
+import algvis.core.Fonts;
 import algvis.core.Layout;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.NodePair;
 import algvis.core.View;
-import algvis.scenario.commands.bstnode.SetLeftCommand;
-import algvis.scenario.commands.bstnode.SetLevelCommand;
-import algvis.scenario.commands.bstnode.SetParentCommand;
-import algvis.scenario.commands.bstnode.SetRightCommand;
+import algvis.scenario.Command;
 
 public class BSTNode extends Node {
 	private BSTNode left = null, right = null, parent = null;
@@ -50,7 +66,7 @@ public class BSTNode extends Node {
 		}
 		if (this.left != left) {
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetLeftCommand(this, left));
+				D.scenario.add(new SetLeftCommand(left));
 			}
 			this.left = left;
 		}
@@ -71,7 +87,7 @@ public class BSTNode extends Node {
 		}
 		if (this.right != right) {
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetRightCommand(this, right));
+				D.scenario.add(new SetRightCommand(right));
 			}
 			this.right = right;
 		}
@@ -85,7 +101,7 @@ public class BSTNode extends Node {
 	public BSTNode setParent(BSTNode parent) {
 		if (this.parent != parent) {
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetParentCommand(this, parent));
+				D.scenario.add(new SetParentCommand(parent));
 			}
 			this.parent = parent;
 		}
@@ -95,7 +111,7 @@ public class BSTNode extends Node {
 	public void setLevel(int level) {
 		if (this.level != level) {
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetLevelCommand(this, level));
+				D.scenario.add(new SetLevelCommand(level));
 			}
 			this.level = level;
 		}
@@ -292,8 +308,18 @@ public class BSTNode extends Node {
 													// Layout.SIMPLE
 			v.setColor(Color.LIGHT_GRAY);
 			++i;
-			v.drawLine(x, y, x, -20);
-			v.drawString("" + i, x, -23, 10);
+			if (i%10 == 0) {
+				v.drawLine(x, y, x, -22);
+			} else {
+				v.drawLine(x, y, x, -20);
+			}
+			if (i%10 == 0) {
+				v.drawString("" + i, x, -29, Fonts.NORMAL);
+			} else if (i%10 == 5) {
+				v.drawString("5", x, -27, Fonts.NORMAL);
+			} else {
+				v.drawString("" + i%10, x, -27, Fonts.SMALL);
+			}
 		}
 		if (getRight() != null) {
 			getRight().drawTree2(v);
@@ -622,5 +648,142 @@ public class BSTNode extends Node {
 			getLeft().subtreeColor(color);
 		if (getRight() != null)
 			getRight().subtreeColor(color);
+	}
+
+	private class SetLeftCommand implements Command {
+		private final BSTNode oldLeft, newLeft;
+
+		public SetLeftCommand(BSTNode newLeft) {
+			oldLeft = getLeft();
+			this.newLeft = newLeft;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setLeft");
+			e.setAttribute("key", Integer.toString(key));
+			if (newLeft != null) {
+				e.setAttribute("newLeft", Integer.toString(newLeft.key));
+			} else {
+				e.setAttribute("newLeft", "null");
+			}
+			if (oldLeft != null) {
+				e.setAttribute("oldLeft", Integer.toString(oldLeft.key));
+			} else {
+				e.setAttribute("oldLeft", "null");
+			}
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			setLeft(newLeft);
+		}
+
+		@Override
+		public void unexecute() {
+			setLeft(oldLeft);
+		}
+	}
+
+	private class SetRightCommand implements Command {
+		private final BSTNode oldRight, newRight;
+
+		public SetRightCommand(BSTNode newRight) {
+			oldRight = getRight();
+			this.newRight = newRight;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setRight");
+			e.setAttribute("key", Integer.toString(key));
+			if (newRight != null) {
+				e.setAttribute("newRight", Integer.toString(newRight.key));
+			} else {
+				e.setAttribute("newRight", "null");
+			}
+			if (oldRight != null) {
+				e.setAttribute("oldRight", Integer.toString(oldRight.key));
+			} else {
+				e.setAttribute("oldRight", "null");
+			}
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			setRight(newRight);
+		}
+
+		@Override
+		public void unexecute() {
+			setRight(oldRight);
+		}
+
+	}
+
+	private class SetParentCommand implements Command {
+		private final BSTNode oldParent, newParent;
+
+		public SetParentCommand(BSTNode newParent) {
+			oldParent = getParent();
+			this.newParent = newParent;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setParent");
+			e.setAttribute("key", Integer.toString(key));
+			if (newParent != null) {
+				e.setAttribute("newParent", Integer.toString(newParent.key));
+			} else {
+				e.setAttribute("newParent", "null");
+			}
+			if (oldParent != null) {
+				e.setAttribute("oldParent", Integer.toString(oldParent.key));
+			} else {
+				e.setAttribute("oldParent", "null");
+			}
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			setParent(newParent);
+		}
+
+		@Override
+		public void unexecute() {
+			setParent(oldParent);
+		}
+	}
+
+	private class SetLevelCommand implements Command {
+		private final int fromLevel, toLevel;
+
+		public SetLevelCommand(int toLevel) {
+			this.fromLevel = getLevel();
+			this.toLevel = toLevel;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setLevel");
+			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("fromLevel", Integer.toString(fromLevel));
+			e.setAttribute("toLevel", Integer.toString(toLevel));
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			setLevel(toLevel);
+		}
+
+		@Override
+		public void unexecute() {
+			setLevel(fromLevel);
+		}
 	}
 }

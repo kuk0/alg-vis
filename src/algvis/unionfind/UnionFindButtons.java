@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.unionfind;
 
 import java.awt.event.ActionEvent;
@@ -51,7 +67,7 @@ public class UnionFindButtons extends Buttons {
 		random.setMnemonic(KeyEvent.VK_R);
 		random.addActionListener(this);
 	}
-	
+
 	@Override
 	public JPanel initThirdRow() {
 		JPanel P = new JPanel();
@@ -75,60 +91,73 @@ public class UnionFindButtons extends Buttons {
 		super.actionPerformed(evt);
 		final UnionFind D = (UnionFind) this.D;
 		if (evt.getSource() == makesetB) {
-			int N = I.getInt(10, 1, 1000);
-			D.makeSet(N);
-		} else if (evt.getSource() == findB) {
-			int count = D.count;
-			final Vector<Integer> args = I.getVI(1, count + 1);
-			if (D.firstSelected != null) {
-				args.insertElementAt(D.firstSelected.key, 0);
-				D.firstSelected = null;
-			}
-			if (D.secondSelected != null) {
-				args.insertElementAt(D.secondSelected.key, 1);
-				D.secondSelected.unmark();
-				D.secondSelected = null;
-			}
-			if (args.size() == 0) {
-				Random G = new Random(System.currentTimeMillis());
-				args.add(G.nextInt(count) + 1);
-			}
+			final int N = I.getInt(10, 1, 1000);
 			Thread t = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					D.find(D.at(args.elementAt(0) - 1));
+					D.scenario.newAlgorithm();
+					D.scenario.newStep();
+					D.makeSet(N);
+					M.B.update();
+				}
+			});
+			t.start();
+		} else if (evt.getSource() == findB) {
+			Thread t = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					int count = D.count;
+					final Vector<Integer> args = I.getVI(1, count);
+					if (D.firstSelected != null) {
+						args.insertElementAt(D.firstSelected.key, 0);
+						D.firstSelected = null;
+					}
+					if (D.secondSelected != null) {
+						args.insertElementAt(D.secondSelected.key, 1);
+						D.scenario.enableAdding(false);
+						D.secondSelected.unmark();
+						D.scenario.enableAdding(true);
+						D.secondSelected = null;
+					}
+					if (args.size() == 0) {
+						Random G = new Random(System.currentTimeMillis());
+						args.add(G.nextInt(count));
+					}
+					D.find(D.at(args.elementAt(0)));
 				}
 			});
 			t.start();
 		} else if (evt.getSource() == unionB) {
-			int count = D.count;
-			final Vector<Integer> args = I.getVI(1, count + 1);
-			if (D.firstSelected != null) {
-				args.insertElementAt(D.firstSelected.key, 0);
-				D.firstSelected = null;
-			}
-			if (D.secondSelected != null) {
-				args.insertElementAt(D.secondSelected.key, 1);
-				D.secondSelected = null;
-			}
-			Random G = new Random(System.currentTimeMillis());
-			switch (args.size()) {
-			case 0:
-				args.add(G.nextInt(count) + 1);
-			case 1:
-				int i;
-				int ii = args.elementAt(0);
-				do {
-					i = G.nextInt(count) + 1;
-				} while (i == ii);
-				args.add(i);
-			}
-			// is this thread necessary?
 			Thread t = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					D.union(D.at(args.elementAt(0) - 1),
-							D.at(args.elementAt(1) - 1));
+					int count = D.count;
+					final Vector<Integer> args = I.getVI(1, count);
+					D.scenario.enableAdding(false);
+					if (D.firstSelected != null) {
+						args.insertElementAt(D.firstSelected.key, 0);
+						D.firstSelected.unmark();
+						D.firstSelected = null;
+					}
+					if (D.secondSelected != null) {
+						args.insertElementAt(D.secondSelected.key, 1);
+						D.secondSelected.unmark();
+						D.secondSelected = null;
+					}
+					D.scenario.enableAdding(true);
+					Random G = new Random(System.currentTimeMillis());
+					switch (args.size()) {
+					case 0:
+						args.add(G.nextInt(count));
+					case 1:
+						int i;
+						int ii = args.elementAt(0);
+						do {
+							i = G.nextInt(count);
+						} while (i == ii);
+						args.add(i);
+					}
+					D.union(D.at(args.elementAt(0)), D.at(args.elementAt(1)));
 				}
 			});
 			t.start();
@@ -144,16 +173,16 @@ public class UnionFindButtons extends Buttons {
 	}
 
 	@Override
-	public void enableNext() {
-		super.enableNext();
+	public void disableAll() {
+		super.disableAll();
 		makesetB.setEnabled(false);
 		findB.setEnabled(false);
 		unionB.setEnabled(false);
 	}
 
 	@Override
-	public void disableNext() {
-		super.disableNext();
+	public void enableAll() {
+		super.enableAll();
 		makesetB.setEnabled(true);
 		findB.setEnabled(true);
 		unionB.setEnabled(true);

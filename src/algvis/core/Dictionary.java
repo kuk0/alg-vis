@@ -1,8 +1,25 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.core;
 
-import algvis.scenario.commands.dict.SetRootCommand;
-import algvis.scenario.commands.dict.SetVCommand;
-import algvis.scenario.commands.node.WaitBackwardsCommand;
+import org.jdom.Element;
+
+import algvis.scenario.Command;
+
 
 abstract public class Dictionary extends DataStructure {
 	public static String adtName = "dictionary";
@@ -27,7 +44,7 @@ abstract public class Dictionary extends DataStructure {
 	public void setRoot(Node root) {
 		if (this.root != root) {
 			if (scenario.isAddingEnabled()) {
-				scenario.add(new SetRootCommand(this, root));
+				scenario.add(new SetRootCommand(root));
 			}
 			this.root = root;
 		}
@@ -40,17 +57,87 @@ abstract public class Dictionary extends DataStructure {
 	public void setV(Node v) {
 		if (this.v != v) {
 			if (scenario.isAddingEnabled()) {
-				scenario.add(new SetVCommand(this, v));
+				scenario.add(new SetVCommand(v));
 			}
 			this.v = v;
 		}
 		if (v != null && scenario.isAddingEnabled()) {
-			scenario.add(new WaitBackwardsCommand(v));
+			scenario.add(v.new WaitBackwardsCommand());
 		}
 	}
 
 	@Override
 	public Layout getLayout() {
 		return Layout.COMPACT;
+	}
+
+	private class SetRootCommand implements Command {
+		private final Node newRoot, oldRoot;
+
+		public SetRootCommand(Node newRoot) {
+			oldRoot = getRoot();
+			this.newRoot = newRoot;
+		}
+
+		@Override
+		public void execute() {
+			setRoot(newRoot);
+		}
+
+		@Override
+		public void unexecute() {
+			setRoot(oldRoot);
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setRoot");
+			if (newRoot != null) {
+				e.setAttribute("newRootKey", Integer.toString(newRoot.key));
+			} else {
+				e.setAttribute("newRoot", "null");
+			}
+			if (oldRoot != null) {
+				e.setAttribute("oldRootKey", Integer.toString(oldRoot.key));
+			} else {
+				e.setAttribute("oldRoot", "null");
+			}
+			return e;
+		}
+	}
+
+	private class SetVCommand implements Command {
+		private final Node newV, oldV;
+
+		public SetVCommand(Node newV) {
+			oldV = getV();
+			this.newV = newV;
+		}
+
+		@Override
+		public void execute() {
+			setV(newV);
+		}
+
+		@Override
+		public void unexecute() {
+			setV(oldV);
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setV");
+			if (newV != null) {
+				e.setAttribute("newVKey", Integer.toString(newV.key));
+			} else {
+				e.setAttribute("newV", "null");
+			}
+			if (oldV != null) {
+				e.setAttribute("oldVKey", Integer.toString(oldV.key));
+			} else {
+				e.setAttribute("oldV", "null");
+			}
+			return e;
+		}
 	}
 }
