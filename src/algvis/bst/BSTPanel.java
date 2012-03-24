@@ -18,6 +18,7 @@ package algvis.bst;
 
 import algvis.core.DataStructure;
 import algvis.core.LayoutListener;
+import algvis.core.Scene;
 import algvis.core.Settings;
 import algvis.core.VisPanel;
 
@@ -35,5 +36,8 @@ public class BSTPanel extends VisPanel {
 		B = new BSTButtons(this);
 		S.addLayoutListener((LayoutListener) D);
 		D.random(20);
+		Scene s = new Scene();
+		s.add((BST)D, Scene.MIDZ);
+		screen.setScene(s);
 	}
 }

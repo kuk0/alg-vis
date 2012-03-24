@@ -16,6 +16,8 @@
  ******************************************************************************/
 package algvis.bst;
 
+import java.awt.geom.Rectangle2D;
+
 import algvis.core.ClickListener;
 import algvis.core.Dictionary;
 import algvis.core.Layout;
@@ -23,8 +25,9 @@ import algvis.core.LayoutListener;
 import algvis.core.StringUtils;
 import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.core.VisualElement;
 
-public class BST extends Dictionary implements LayoutListener, ClickListener {
+public class BST extends Dictionary implements LayoutListener, ClickListener, VisualElement {
 	public static String dsName = "bst";
 	public boolean order = false;
 
@@ -123,16 +126,17 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 	 */
 	@Override
 	public void draw(View V) {
-		if (getRoot() != null) {
-			getRoot().moveTree();
-			getRoot().drawTree(V);
-		}
-		if (getV() != null) {
-			getV().move();
-			getV().draw(V);
-		}
+		getRoot().drawTree(V);
+	}
+	
+	public void move() {
+		getRoot().moveTree();
 	}
 
+	public Rectangle2D getBoundingBox() {
+		return new Rectangle2D.Float(x1, y1, x2-x1, y2-y1);
+	}
+	
 	protected void leftrot(BSTNode v) {
 		BSTNode u = v.getParent();
 		if (v.getLeft() == null) {

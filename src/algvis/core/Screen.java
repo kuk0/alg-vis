@@ -30,6 +30,7 @@ public class Screen extends JPanel implements Runnable {
 	Thread t = null;
 	boolean suspended;
 	DataStructure D = null;
+	public Scene S;
 
 	VisPanel P;
 	Image I;
@@ -44,6 +45,10 @@ public class Screen extends JPanel implements Runnable {
 
 	public void setDS(DataStructure D) {
 		this.D = D;
+	}
+
+	public void setScene(Scene S) {
+		this.S = S;
 	}
 
 	void check_size() {
@@ -65,17 +70,23 @@ public class Screen extends JPanel implements Runnable {
 	@Override
 	public void paint(Graphics g) {
 		check_size();
-		if (V==null) System.out.println("bu");
-		if (G==null) System.out.println("ba");
+		//if (V==null) System.out.println("bu");
+		//if (G==null) System.out.println("ba");
 		clear();
-		if (D != null) {
+		if (S != null) {
+			V.startDrawing();
+			S.move();
+			S.draw(V);
+			V.endDrawing();
+		}
+		/*if (D != null) {
 			V.startDrawing();
 			D.draw(V);
 			V.endDrawing();
 			// V.resetView();
 		} else {
 			System.out.println("[DS null !]");
-		}
+		}*/
 		g.drawImage(I, 0, 0, null);
 	}
 

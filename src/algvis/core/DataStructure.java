@@ -47,6 +47,9 @@ abstract public class DataStructure {
 	abstract public void clear();
 
 	abstract public void draw(View v);
+	//abstract public void move();
+	//abstract public Rectangle2D getBoundingBox();
+	
 
 	public void next() {
 		A.myresume();

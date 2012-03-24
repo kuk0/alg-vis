@@ -18,6 +18,7 @@ package algvis.core;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 import org.jdom.Element;
 
@@ -29,7 +30,7 @@ import algvis.scenario.Command;
  * direction. Nodes are by default drawn as circles with their key in the
  * middle.
  */
-public class Node {
+public class Node implements VisualElement {
 	public DataStructure D;
 	public int key;
 	/**
@@ -490,6 +491,10 @@ public class Node {
 		}
 	}
 
+	public Rectangle2D getBoundingBox() {
+		return new Rectangle2D.Float(x - Node.radius, y - Node.radius, 2*Node.radius, 2*Node.radius);
+	}
+	
 	private class ArcCommand implements Command {
 		private final Node toNode;
 		private final boolean setted;

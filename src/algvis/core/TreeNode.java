@@ -19,7 +19,7 @@ package algvis.core;
 import java.awt.Color;
 import java.util.Stack;
 
-public class TreeNode extends Node {
+public class TreeNode extends Node implements VisualElement {
 	private TreeNode child = null, right = null, parent = null;
 
 	// variables for the Reingold-Tilford-Walker layout
