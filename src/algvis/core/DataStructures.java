@@ -36,6 +36,7 @@ import algvis.scapegoattree.GBPanel;
 import algvis.skewheap.SkewHeapPanel;
 import algvis.skiplist.SkipListPanel;
 import algvis.splaytree.SplayPanel;
+import algvis.suffixtree.SuffixTreePanel;
 import algvis.treap.TreapPanel;
 import algvis.trie.TriePanel;
 import algvis.unionfind.UnionFindPanel;
@@ -56,7 +57,8 @@ public class DataStructures {
 			SkipListPanel.class, GBPanel.class, SplayPanel.class,
 			HeapPanel.class, DaryHeapPanel.class, LeftHeapPanel.class,
 			SkewHeapPanel.class, BinHeapPanel.class, LazyBinHeapPanel.class,
-			FibHeapPanel.class, UnionFindPanel.class, TriePanel.class };
+			FibHeapPanel.class, UnionFindPanel.class, TriePanel.class,
+			SuffixTreePanel.class };
 
 	static final int N = PANEL.length;
 
