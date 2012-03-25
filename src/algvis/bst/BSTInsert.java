@@ -30,6 +30,7 @@ public class BSTInsert extends Algorithm {
 		this.T = T;
 		v = new BSTNode(T, K = x);
 		// TODO: we don't want this T.M.bla.bla.bla....
+		if (T.M.screen.S == null) System.out.println("ha");
 		vi = T.M.screen.S.add(v, Scene.MIDZ+1); // higher than the data structure
 		v.setColor(NodeColor.INSERT);
 		setHeader("insert", K);
@@ -92,7 +93,5 @@ public class BSTInsert extends Algorithm {
 		mysuspend();
 		addNote("done");
 		v.setColor(NodeColor.NORMAL);
-		//T.setV(null);
-		T.M.screen.S.remove(Scene.MIDZ+1, vi);
 	}
 }

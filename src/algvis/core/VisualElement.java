@@ -6,4 +6,5 @@ public interface VisualElement {
 	public void draw(View v);
 	public void move();
 	Rectangle2D getBoundingBox();
+	public boolean toRemove();
 }

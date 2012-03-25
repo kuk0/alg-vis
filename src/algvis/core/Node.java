@@ -63,7 +63,7 @@ public class Node implements VisualElement {
 	 * down, or diagonally left or right until it gets out of the screen, and
 	 * then turns INVISIBLE)
 	 */
-	public static final int INVISIBLE = -1, ALIVE = 0, DOWN = 2, LEFT = 3,
+	public static final int REMOVED = -2, INVISIBLE = -1, ALIVE = 0, DOWN = 2, LEFT = 3,
 			RIGHT = 4;
 	public static final int NOARROW = -10000, DIRARROW = -10001,
 			TOARROW = -10002;
@@ -365,7 +365,7 @@ public class Node implements VisualElement {
 	}
 
 	public void draw(View v) {
-		if (state == Node.INVISIBLE || key == NULL) {
+		if (state == Node.INVISIBLE || state == Node.REMOVED || key == NULL) {
 			return;
 		}
 		drawBg(v);
@@ -485,7 +485,7 @@ public class Node implements VisualElement {
 				tox = x += 20;
 			}
 			if (!D.M.screen.V.inside(x, y - Node.radius)) {
-				state = Node.INVISIBLE;
+				state = Node.REMOVED;
 			}
 			break;
 		}
@@ -493,6 +493,10 @@ public class Node implements VisualElement {
 
 	public Rectangle2D getBoundingBox() {
 		return new Rectangle2D.Float(x - Node.radius, y - Node.radius, 2*Node.radius, 2*Node.radius);
+	}
+	
+	public boolean toRemove() {
+		return state == Node.REMOVED;
 	}
 	
 	private class ArcCommand implements Command {

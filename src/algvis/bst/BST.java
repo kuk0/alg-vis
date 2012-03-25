@@ -137,6 +137,10 @@ public class BST extends Dictionary implements LayoutListener, ClickListener, Vi
 		return new Rectangle2D.Float(x1, y1, x2-x1, y2-y1);
 	}
 	
+	public boolean toRemove() {
+		return false;
+	}
+	
 	protected void leftrot(BSTNode v) {
 		BSTNode u = v.getParent();
 		if (v.getLeft() == null) {

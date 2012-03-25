@@ -130,6 +130,7 @@ public class DataStructures {
 	}
 
 	public static VisPanel getPanel(int i, Settings S) {
+		if (i==0) return new BSTPanel(S);
 		if (!check_range(i))
 			return null;
 		try {
