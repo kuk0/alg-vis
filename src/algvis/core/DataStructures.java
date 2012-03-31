@@ -130,6 +130,9 @@ public class DataStructures {
 	}
 
 	public static VisPanel getPanel(int i, Settings S) {
+		if (i == 18) {
+			return new FibHeapPanel(S);
+		}
 		if (!check_range(i))
 			return null;
 		try {
