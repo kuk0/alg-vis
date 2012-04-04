@@ -40,6 +40,7 @@ public class SkipInsert extends SkipAlg {
 			addStep("alreadythere");
 			v.goDown();
 			mysuspend();
+			// System.out.println("dupl");
 			return;
 		}
 
