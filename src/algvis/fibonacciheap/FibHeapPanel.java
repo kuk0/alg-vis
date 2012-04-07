@@ -34,15 +34,6 @@ public class FibHeapPanel extends VisPanel {
 		FibonacciHeap H = new FibonacciHeap(this);
 		D = H;
 		B = new MeldablePQButtons(this);
-		H.active = 1;
-		D.random(7);
-		H.active = 2;
-		D.random(3);
-		H.lowlight();
-		H.active = 3;
-		D.random(5);
-		H.lowlight();
-		H.active = 1;
 		D.M.screen.V.resetView();
 	}
 

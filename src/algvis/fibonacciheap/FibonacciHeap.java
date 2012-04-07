@@ -18,12 +18,14 @@ package algvis.fibonacciheap;
 
 import algvis.binomialheap.BinHeapNode;
 import algvis.core.Node;
+import algvis.core.View;
 import algvis.core.VisPanel;
 import algvis.lazybinomialheap.LazyBinomialHeap;
 
 public class FibonacciHeap extends LazyBinomialHeap {
 	public static String dsName = "fibheap";
-
+	FibNode root, u, v;
+	
 	@Override
 	public String getName() {
 		return "fibheap";
@@ -31,10 +33,31 @@ public class FibonacciHeap extends LazyBinomialHeap {
 
 	public FibonacciHeap(VisPanel M) {
 		super(M);
+		root = new FibNode();
+		u = new FibNode();
+		u.x = 200; u.y = 150; u.vx = 11;
+		v = new FibNode();
+		v.x = 300; v.y = 50; v.vx = 5;
 	}
 
 	@Override
 	public void decreaseKey(Node v, int delta) {
 		start(new FibHeapDecrKey(this, (BinHeapNode) v, delta, active));
+	}
+	
+	@Override
+	public void draw(View V) {
+		if (root != null) {
+			root.move();
+			root.draw(V);
+		}
+		if (u != null) {
+			u.move();
+			u.draw(V);
+		}
+		if (v != null) {
+			v.move();
+			v.draw(V);
+		}
 	}
 }
