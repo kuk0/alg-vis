@@ -129,8 +129,8 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 			getRoot().drawTree(V);
 		}
 		
-		V.drawTextBubble("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo, neque id accumsan imperdiet, metus felis pharetra est, nec molestie diam elit a lectus. Maecenas erat purus, tempor nec aliquam id, tincidunt vel dui. Cras fermentum suscipit porta. Aenean vel magna vestibulum augue hendrerit tincidunt et nec magna. Aliquam at metus et quam vehicula iaculis. Curabitur sapien est, ultrices id auctor vel, ullamcorper at ipsum. Mauris sodales adipiscing dignissim.",
-				0, 0, 200);
+		//V.drawTextBubble("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo, neque id accumsan imperdiet, metus felis pharetra est, nec molestie diam elit a lectus. Maecenas erat purus, tempor nec aliquam id, tincidunt vel dui. Cras fermentum suscipit porta. Aenean vel magna vestibulum augue hendrerit tincidunt et nec magna. Aliquam at metus et quam vehicula iaculis. Curabitur sapien est, ultrices id auctor vel, ullamcorper at ipsum. Mauris sodales adipiscing dignissim.",
+				//0, 0, 200);
 	}
 
 	public void move() {

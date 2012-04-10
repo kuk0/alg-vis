@@ -454,7 +454,7 @@ public class View implements MouseListener, MouseMotionListener,
 		g.drawImage(img, x, y, w, h, null);
 	}
 
-	public void drawTextBubble(String s, int x, int y, int w) {
+	public void drawTextBubble(String s, int x, int y, int w, int alpha) {
 		int y0 = y;
 		FontRenderContext frc = g.getFontRenderContext();
 		LineBreakMeasurer measurer = new LineBreakMeasurer(
@@ -465,10 +465,10 @@ public class View implements MouseListener, MouseMotionListener,
 			L.add(l);
 			y += l.getAscent() + l.getDescent() + l.getLeading();
 		}
-		g.setColor(new Color(0xf0fffeed, true));
+		g.setColor(new Color(((alpha << 24) | 0xfffeed), true));
 		g.fill(new RoundRectangle2D.Double(x - 5, y0 - 5, w + 10, y - y0 + 10,
 				10, 10));
-		g.setColor(Color.BLACK);
+		g.setColor(new Color((alpha << 24), true));
 		g.draw(new RoundRectangle2D.Double(x - 5, y0 - 5, w + 10, y - y0 + 10,
 				15, 15));
 		y = y0;

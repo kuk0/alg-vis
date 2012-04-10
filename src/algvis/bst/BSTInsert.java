@@ -19,11 +19,13 @@ package algvis.bst;
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.core.Scene;
+import algvis.core.TextBubble;
 
 public class BSTInsert extends Algorithm {
 	BST T;
 	BSTNode v;
 	int K;
+	TextBubble b = new TextBubble("halo", (int)Math.round(Math.random()*200-100),(int)Math.round(Math.random()*100),100);
 
 	public BSTInsert(BST T, int x) {
 		super(T);
@@ -34,6 +36,7 @@ public class BSTInsert extends Algorithm {
 		if (T.M.screen.S == null) System.out.println("ha");
 		T.M.screen.S.add(v, Scene.MIDZ+1); // higher than the data structure
 		setHeader("insert", K);
+		T.M.screen.S.add(b, Scene.MAXZ);		
 	}
 
 	@Override
@@ -43,6 +46,7 @@ public class BSTInsert extends Algorithm {
 			v.goToRoot();
 			addStep("newroot");
 			v.unlink();
+			b.hide();
 		} else {
 			BSTNode w = T.getRoot();
 			v.goAboveRoot();
@@ -95,5 +99,6 @@ public class BSTInsert extends Algorithm {
 		addNote("done");
 		v.setColor(NodeColor.NORMAL);
 		v.unlink();
+		b.hide();
 	}
 }
