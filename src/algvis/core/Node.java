@@ -30,7 +30,7 @@ import algvis.scenario.Command;
  * direction. Nodes are by default drawn as circles with their key in the
  * middle.
  */
-public class Node implements VisualElement {
+public class Node extends VisualElement {
 	public DataStructure D;
 	public int key;
 	/**

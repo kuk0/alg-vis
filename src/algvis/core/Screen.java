@@ -70,8 +70,6 @@ public class Screen extends JPanel implements Runnable {
 	@Override
 	public void paint(Graphics g) {
 		check_size();
-		//if (V==null) System.out.println("bu");
-		//if (G==null) System.out.println("ba");
 		clear();
 		if (S != null) {
 			V.startDrawing();

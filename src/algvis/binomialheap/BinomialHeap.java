@@ -17,6 +17,7 @@
 package algvis.binomialheap;
 
 import java.awt.Color;
+import java.awt.geom.Rectangle2D;
 
 import algvis.core.Alignment;
 import algvis.core.ClickListener;
@@ -230,5 +231,17 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void move() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Rectangle2D getBoundingBox() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

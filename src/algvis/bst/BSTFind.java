@@ -18,6 +18,7 @@ package algvis.bst;
 
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
+import algvis.core.Scene;
 
 public class BSTFind extends Algorithm {
 	BST T;
@@ -29,6 +30,7 @@ public class BSTFind extends Algorithm {
 		this.T = T;
 		v = T.setV(new BSTNode(T, K = x));
 		v.setColor(NodeColor.FIND);
+		T.M.screen.S.add(v, Scene.MIDZ+1); // higher than the data structure
 		setHeader("find", K);
 	}
 
@@ -40,6 +42,7 @@ public class BSTFind extends Algorithm {
 			mysuspend();
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
+			v.unlink();
 			addStep("notfound");
 		} else {
 			BSTNode w = T.getRoot();
@@ -98,6 +101,6 @@ public class BSTFind extends Algorithm {
 		}
 		mysuspend();
 		T.getRoot().subtreeColor(NodeColor.NORMAL);
-		T.setV(null);
+		v.unlink();
 	}
 }

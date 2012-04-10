@@ -19,6 +19,7 @@ package algvis.bst;
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.core.Node;
+import algvis.core.Scene;
 
 public class BSTDelete extends Algorithm {
 	BST T;
@@ -30,6 +31,7 @@ public class BSTDelete extends Algorithm {
 		this.T = T;
 		v = T.setV(new BSTNode(T, K = x));
 		v.setColor(NodeColor.DELETE);
+		T.M.screen.S.add(v, Scene.MIDZ+1); // higher than the data structure
 		setHeader("delete", x);
 	}
 
@@ -42,6 +44,7 @@ public class BSTDelete extends Algorithm {
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
+			v.unlink();
 			return;
 		} else {
 			BSTNode d = T.getRoot();
@@ -212,6 +215,7 @@ public class BSTDelete extends Algorithm {
 			d.goDown();
 			T.reposition();
 			addNote("done");
+			d.unlink();
 		}
 	}
 }

@@ -16,6 +16,7 @@
  ******************************************************************************/
 package algvis.rotations;
 
+import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
 import algvis.bst.BST;
@@ -43,7 +44,6 @@ public class Rotations extends DataStructure implements ClickListener {
 	public Rotations(VisPanel M) {
 		super(M);
 		T = new BST(M);
-		random(20);
 		M.screen.V.setDS(this);
 		M.screen.V.align = Alignment.LEFT;
 	}
@@ -120,7 +120,7 @@ public class Rotations extends DataStructure implements ClickListener {
 	
 	@Override
 	public String stats() {
-		return "";
+		return T.stats();
 	}
 
 	@Override
@@ -132,6 +132,7 @@ public class Rotations extends DataStructure implements ClickListener {
 			insert(g.nextInt(InputField.MAX + 1));
 		}
 		T.getRoot().calcTree();
+		setStats();
 		//M.screen.V.resetView();
 		M.pause = p;
 	}
@@ -160,5 +161,17 @@ public class Rotations extends DataStructure implements ClickListener {
 	@Override
 	public Layout getLayout() {
 		return Layout.SIMPLE;
+	}
+
+	@Override
+	public void move() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Rectangle2D getBoundingBox() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

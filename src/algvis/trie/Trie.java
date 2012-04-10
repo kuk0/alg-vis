@@ -16,6 +16,8 @@
  ******************************************************************************/
 package algvis.trie;
 
+import java.awt.geom.Rectangle2D;
+
 import algvis.core.DataStructure;
 import algvis.core.Fonts;
 import algvis.core.View;
@@ -131,6 +133,18 @@ public class Trie extends DataStructure {
 		if (r != null) {
 			getRoot().clearExtraColor();
 		}
+	}
+
+	@Override
+	public void move() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Rectangle2D getBoundingBox() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

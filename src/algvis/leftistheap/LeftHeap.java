@@ -1,5 +1,7 @@
 package algvis.leftistheap;
 
+import java.awt.geom.Rectangle2D;
+
 import algvis.core.ClickListener;
 import algvis.core.MeldablePQ;
 import algvis.core.MeldablePQButtons;
@@ -213,5 +215,17 @@ public class LeftHeap extends MeldablePQ implements ClickListener{
 	@Override
 	public String getName() {
 		return "leftheap";
+	}
+
+	@Override
+	public void move() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Rectangle2D getBoundingBox() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

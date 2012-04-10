@@ -16,6 +16,7 @@
  ******************************************************************************/
 package algvis.unionfind;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -208,5 +209,17 @@ public class UnionFind extends DataStructure implements ClickListener {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void move() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Rectangle2D getBoundingBox() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

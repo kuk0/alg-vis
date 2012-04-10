@@ -16,6 +16,8 @@
  ******************************************************************************/
 package algvis.btree;
 
+import java.awt.geom.Rectangle2D;
+
 import algvis.core.Dictionary;
 import algvis.core.View;
 import algvis.core.VisPanel;
@@ -90,5 +92,17 @@ public class BTree extends Dictionary {
 			root._reposition();
 			M.screen.V.setBounds(x1, y1, x2, y2);
 		}
+	}
+
+	@Override
+	public void move() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Rectangle2D getBoundingBox() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

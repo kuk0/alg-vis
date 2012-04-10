@@ -25,9 +25,8 @@ import algvis.core.LayoutListener;
 import algvis.core.StringUtils;
 import algvis.core.View;
 import algvis.core.VisPanel;
-import algvis.core.VisualElement;
 
-public class BST extends Dictionary implements LayoutListener, ClickListener, VisualElement {
+public class BST extends Dictionary implements LayoutListener, ClickListener {
 	public static String dsName = "bst";
 	public boolean order = false;
 
@@ -126,21 +125,25 @@ public class BST extends Dictionary implements LayoutListener, ClickListener, Vi
 	 */
 	@Override
 	public void draw(View V) {
-		getRoot().drawTree(V);
+		if (getRoot() != null) {
+			getRoot().drawTree(V);
+		}
 	}
-	
+
 	public void move() {
-		getRoot().moveTree();
+		if (getRoot() != null) {
+			getRoot().moveTree();
+		}
 	}
 
 	public Rectangle2D getBoundingBox() {
-		return new Rectangle2D.Float(x1, y1, x2-x1, y2-y1);
+		return new Rectangle2D.Float(x1, y1, x2 - x1, y2 - y1);
 	}
-	
+
 	public boolean toRemove() {
 		return false;
 	}
-	
+
 	protected void leftrot(BSTNode v) {
 		BSTNode u = v.getParent();
 		if (v.getLeft() == null) {

@@ -1,5 +1,7 @@
 package algvis.skewheap;
 
+import java.awt.geom.Rectangle2D;
+
 import algvis.core.ClickListener;
 import algvis.core.MeldablePQ;
 import algvis.core.MeldablePQButtons;
@@ -215,6 +217,18 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 			}
 		}
 		M.screen.V.setBounds(0, 0, sumx, y2);
+	}
+
+	@Override
+	public void move() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Rectangle2D getBoundingBox() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

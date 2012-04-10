@@ -16,6 +16,8 @@
  ******************************************************************************/
 package algvis.heap;
 
+import java.awt.geom.Rectangle2D;
+
 import algvis.bst.BSTNode;
 import algvis.core.ClickListener;
 import algvis.core.Node;
@@ -115,5 +117,17 @@ public class Heap extends PriorityQueue implements ClickListener {
 				chosen = v;
 			}
 		}
+	}
+
+	@Override
+	public void move() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Rectangle2D getBoundingBox() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -1,5 +1,7 @@
 package algvis.daryheap;
 
+import java.awt.geom.Rectangle2D;
+
 import algvis.core.ClickListener;
 import algvis.core.Node;
 import algvis.core.PriorityQueue;
@@ -108,6 +110,18 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 
 	public int getOrder(){
 		return this.order;
+	}
+
+	@Override
+	public void move() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Rectangle2D getBoundingBox() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -130,7 +130,50 @@ public class DataStructures {
 	}
 
 	public static VisPanel getPanel(int i, Settings S) {
-		if (i==0) return new BSTPanel(S);
+		switch (i) {
+		case 0:
+			return new BSTPanel(S);
+		case 1:
+			return new RotPanel(S);
+		case 2:
+			return new AVLPanel(S);
+		case 3:
+			return new a23Panel(S);
+		case 4:
+			return new a234Panel(S);
+		case 5:
+			return new BPanel(S);
+		case 6:
+			return new RBPanel(S);
+		case 7:
+			return new AAPanel(S);
+		case 8:
+			return new TreapPanel(S);
+		case 9:
+			return new SkipListPanel(S);
+		case 10:
+			return new GBPanel(S);
+		case 11:
+			return new SplayPanel(S);
+		case 12:
+			return new HeapPanel(S);
+		case 13:
+			return new DaryHeapPanel(S);
+		case 14:
+			return new LeftHeapPanel(S);
+		case 15:
+			return new SkewHeapPanel(S);
+		case 16:
+			return new BinHeapPanel(S);
+		case 17:
+			return new LazyBinHeapPanel(S);
+		case 18:
+			return new FibHeapPanel(S);
+		case 19:
+			return new UnionFindPanel(S);
+		case 20:
+			return new TriePanel(S);
+		}
 		if (!check_range(i))
 			return null;
 		try {

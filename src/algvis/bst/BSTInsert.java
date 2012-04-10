@@ -23,16 +23,16 @@ import algvis.core.Scene;
 public class BSTInsert extends Algorithm {
 	BST T;
 	BSTNode v;
-	int K, vi;
+	int K;
 
 	public BSTInsert(BST T, int x) {
 		super(T);
 		this.T = T;
 		v = new BSTNode(T, K = x);
+		v.setColor(NodeColor.INSERT);
 		// TODO: we don't want this T.M.bla.bla.bla....
 		if (T.M.screen.S == null) System.out.println("ha");
-		vi = T.M.screen.S.add(v, Scene.MIDZ+1); // higher than the data structure
-		v.setColor(NodeColor.INSERT);
+		T.M.screen.S.add(v, Scene.MIDZ+1); // higher than the data structure
 		setHeader("insert", K);
 	}
 
@@ -42,6 +42,7 @@ public class BSTInsert extends Algorithm {
 			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
+			v.unlink();
 		} else {
 			BSTNode w = T.getRoot();
 			v.goAboveRoot();
@@ -93,5 +94,6 @@ public class BSTInsert extends Algorithm {
 		mysuspend();
 		addNote("done");
 		v.setColor(NodeColor.NORMAL);
+		v.unlink();
 	}
 }
