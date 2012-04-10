@@ -43,7 +43,6 @@ public class Rotations extends DataStructure implements ClickListener {
 	public Rotations(VisPanel M) {
 		super(M);
 		T = new BST(M);
-		random(20);
 		M.screen.V.setDS(this);
 		M.screen.V.align = Alignment.LEFT;
 	}
@@ -120,7 +119,7 @@ public class Rotations extends DataStructure implements ClickListener {
 	
 	@Override
 	public String stats() {
-		return "";
+		return T.stats();
 	}
 
 	@Override
@@ -132,6 +131,7 @@ public class Rotations extends DataStructure implements ClickListener {
 			insert(g.nextInt(InputField.MAX + 1));
 		}
 		T.getRoot().calcTree();
+		setStats();
 		//M.screen.V.resetView();
 		M.pause = p;
 	}

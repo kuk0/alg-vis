@@ -103,8 +103,7 @@ public class TreeNode extends Node {
 				v.setColor(Color.red);
 				if (getChild() != null) {
 					v.drawLine(x, y, getChild().x, getChild().y);
-				} else
-					System.out.println("child: " + getChild());
+				}
 				v.setColor(Color.black);
 			} else {
 				TreeNode w = getChild();

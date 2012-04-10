@@ -322,7 +322,7 @@ public class DaryHeapNode extends HeapNode{
 		}
 
 		if (getParent().numChildren < ((DaryHeap) D).getOrder()){   // pre root nson == -1
-			System.out.print("malo synov kluca " + getParent().key + ", konkretne " + getParent().numChildren + " a order mame prave " + ((DaryHeap) D).getOrder() + "\n" );
+			//System.out.print("malo synov kluca " + getParent().key + ", konkretne " + getParent().numChildren + " a order mame prave " + ((DaryHeap) D).getOrder() + "\n" );
 			return getParent();
 		}
 		
@@ -357,7 +357,7 @@ public class DaryHeapNode extends HeapNode{
 		}
 
 		if (nson > 1){   // pre root nson == -1
-			System.out.print("dost synov, konkretne " + getParent().numChildren + " a order mame prave " + ((DaryHeap) D).getOrder() + "\n" );
+			//System.out.print("dost synov, konkretne " + getParent().numChildren + " a order mame prave " + ((DaryHeap) D).getOrder() + "\n" );
 			return getParent().c[nson-2];
 		}
 
