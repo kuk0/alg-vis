@@ -28,11 +28,16 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineBreakMeasurer;
+import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.awt.geom.RoundRectangle2D;
+import java.text.AttributedString;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -447,6 +452,31 @@ public class View implements MouseListener, MouseMotionListener,
 
 	public void drawImage(Image img, int x, int y, int w, int h) {
 		g.drawImage(img, x, y, w, h, null);
+	}
+
+	public void drawTextBubble(String s, int x, int y, int w) {
+		int y0 = y;
+		FontRenderContext frc = g.getFontRenderContext();
+		LineBreakMeasurer measurer = new LineBreakMeasurer(
+				new AttributedString(s).getIterator(), frc);
+		ArrayList<TextLayout> L = new ArrayList<TextLayout>();
+		while (measurer.getPosition() < s.length()) {
+			TextLayout l = measurer.nextLayout(w);
+			L.add(l);
+			y += l.getAscent() + l.getDescent() + l.getLeading();
+		}
+		g.setColor(new Color(0xf0fffeed, true));
+		g.fill(new RoundRectangle2D.Double(x - 5, y0 - 5, w + 10, y - y0 + 10,
+				10, 10));
+		g.setColor(Color.BLACK);
+		g.draw(new RoundRectangle2D.Double(x - 5, y0 - 5, w + 10, y - y0 + 10,
+				15, 15));
+		y = y0;
+		for (TextLayout l : L) {
+			y += l.getAscent();
+			l.draw(g, x, y);
+			y += l.getDescent() + l.getLeading();
+		}
 	}
 
 	public void setDS(ClickListener D) {
