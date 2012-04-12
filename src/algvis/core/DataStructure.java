@@ -62,16 +62,16 @@ abstract public class DataStructure {
 		try {
 			A.start();
 		} catch (IllegalThreadStateException e) {
-			System.out.println("LOL");
+			System.err.println("LOL");
 			M.B.disableNext();
 			M.B.enableAll();
 			return;
 		}
 		try {
 			A.join();
-			// System.out.println("join");
+			// System.err.println("join");
 		} catch (InterruptedException e) {
-			System.out.println("AJAJAJ");
+			System.err.println("AJAJAJ");
 		}
 		setStats();
 		M.B.disableNext();

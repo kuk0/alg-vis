@@ -190,6 +190,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
+		I.sb.setText(" ");
 		if (evt.getSource() == previous) {
 			disablePrevious();
 			D.scenario.previous(M.pause, true);
@@ -246,6 +247,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 
 	public void disableNext() {
 		next.setEnabled(false);
+		I.requestFocusInWindow();
 	}
 
 	public void enablePrevious() {

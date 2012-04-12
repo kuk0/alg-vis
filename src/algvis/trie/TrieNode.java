@@ -89,8 +89,7 @@ public class TrieNode extends TreeNode {
 				v.setColor(Color.red);
 				if (getChild() != null) {
 					v.drawFancyArc(x, y, getChild().x, getChild().y);
-				} else
-					System.out.println("child: " + getChild());
+				}
 				v.setColor(Color.black);
 			} else {
 				TreeNode w = getChild();
@@ -214,7 +213,6 @@ public class TrieNode extends TreeNode {
 	 * @return A node with proper "ch"
 	 */
 	public TrieNode addRight(String ch, int x, int y) {
-		// System.out.println("addRight: " + this.ch + " " + ch);
 		if (getCH().compareTo(ch) > 0) {
 			TrieNode u = new TrieNode(D, ch);
 			u.setParent(getParent());
@@ -255,7 +253,6 @@ public class TrieNode extends TreeNode {
 	 * @return A node appended
 	 */
 	public TrieNode addChild(String ch, int x, int y) {
-		// System.out.println("addChild: " + ch);
 		TrieNode v = (TrieNode) getChild();
 		if (v == null) {
 			TrieNode u = new TrieNode(D, ch, x, y);

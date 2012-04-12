@@ -370,7 +370,6 @@ public class BSTNode extends Node {
 			D.x1 = -leftw;
 			D.x2 = rightw;
 			D.y2 = this.toy;
-			// System.out.println ("r" + key + " " +leftw +"  "+ rightw);
 		}
 		if (this.toy > D.y2) {
 			D.y2 = this.toy;
