@@ -192,7 +192,6 @@ public class UnionFind extends DataStructure implements ClickListener {
 				shift += sets.get(i).rightw;
 			}
 			x2 = shift;
-			// System.out.println(x1 + " " + x2 + " " + y1 + " " + y2);
 			M.screen.V.setBounds(x1, y1, x2, y2);
 		}
 	}

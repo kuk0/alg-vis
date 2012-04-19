@@ -32,5 +32,6 @@ public class RotPanel extends VisPanel {
 	public void initDS() {
 		D = new Rotations(this);
 		B = new RotButtons(this);
+		D.random(20);
 	}
 }

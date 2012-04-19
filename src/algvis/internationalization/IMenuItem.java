@@ -44,10 +44,6 @@ public class IMenuItem extends JMenuItem implements LanguageListener {
 
 	@Override
 	public void languageChanged() {
-		if (t.equals("bst"))
-			System.out.println("bst");
-		if (t.equals("layout-simple"))
-			System.out.println("tu");
 		setText(L.getString(t));
 	}
 }

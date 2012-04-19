@@ -85,6 +85,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 		screen.setDS(D);
 		screen.start();
 		languageChanged();
+		B.I.requestFocusInWindow();
 	}
 
 	public JPanel initScreen() {
