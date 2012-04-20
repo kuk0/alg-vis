@@ -26,7 +26,7 @@ abstract public class DataStructure {
 	protected Algorithm A;
 	public VisPanel M;
 	public Scenario scenario;
-	public static int rootx = 0, rooty = 0, sheight = 600, swidth = 400,
+	public static final int rootx = 0, rooty = 0, sheight = 600, swidth = 400,
 			minsepx = 38, minsepy = 30;
 	public int x1, x2, y1 = -50, y2;
 	public Node chosen = null;

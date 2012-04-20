@@ -21,7 +21,7 @@ public class DaryHeapNode extends HeapNode{
 		bgKeyColor();
 		c = new DaryHeapNode[((DaryHeap) D).getOrder()];
 		//setColor(NodeColor.NORMAL);
-		width = DataStructure.minsepx;
+		width = DaryHeap.minsepx;
 		//mark();
 	}
 
@@ -85,7 +85,7 @@ public class DaryHeapNode extends HeapNode{
 	int _width() {
 		
 		if (key != Node.NOKEY && numChildren > 0) {
-			return (2 * Node.radius + DataStructure.minsepx)*numChildren - DataStructure.minsepx;		
+			return (2 * Node.radius + DaryHeap.minsepx)*numChildren - DaryHeap.minsepx;		
 		} else {
 			return 2*Node.radius;
 		}
@@ -171,25 +171,25 @@ public class DaryHeapNode extends HeapNode{
 	@Override
 	public void rebox() {
 
-		leftw = 0; //-DataStructure.minsepx / 2;
-		rightw = 0; //-DataStructure.minsepx / 2;		
+		leftw = 0; //-DaryHeap.minsepx / 2;
+		rightw = 0; //-DaryHeap.minsepx / 2;		
 		if (isLeaf()){
-			leftw = DataStructure.minsepx / 2;
-			rightw = DataStructure.minsepx / 2;
+			leftw = DaryHeap.minsepx / 2;
+			rightw = DaryHeap.minsepx / 2;
 			width = leftw + rightw;
 			//System.out.print("moje suradnice su " + tox + " a " + toy + ", moje leftw a rightw je " + leftw + " " + rightw + " a som " + nson + ". syn \n" );			
 			return;
 		}
 
 		if (numChildren < ((DaryHeap)D).getOrder()){
-			leftw =  (((DaryHeap)D).getOrder() / 2) * DataStructure.minsepx;
+			leftw =  (((DaryHeap)D).getOrder() / 2) * DaryHeap.minsepx;
 			if (((DaryHeap)D).getOrder() % 2 == 1){
-				leftw += (DataStructure.minsepx / 2); 
+				leftw += (DaryHeap.minsepx / 2); 
 			}
 			if (numChildren > ((DaryHeap)D).getOrder() / 2){
-				rightw = leftw - (((DaryHeap)D).getOrder() - numChildren) * DataStructure.minsepx;
+				rightw = leftw - (((DaryHeap)D).getOrder() - numChildren) * DaryHeap.minsepx;
 			}else{
-				rightw = DataStructure.minsepx/2;
+				rightw = DaryHeap.minsepx/2;
 			}
 			
 			width = leftw + rightw;
@@ -214,8 +214,8 @@ public class DaryHeapNode extends HeapNode{
 			leftw += c[(((DaryHeap)D).getOrder() / 2)].leftw;
 		}
 		
-		//leftw += DataStructure.minsepx / 2;
-		//rightw += DataStructure.minsepx / 2;
+		//leftw += DaryHeap.minsepx / 2;
+		//rightw += DaryHeap.minsepx / 2;
 		width = leftw + rightw;
 		//System.out.print("moje suradnice su " + tox + " a " + toy + ", moje leftw a rightw je " + leftw + " " + rightw + " a som " + nson + ". syn \n" );
 	}
@@ -238,7 +238,7 @@ public class DaryHeapNode extends HeapNode{
 
 		for (int i = 0; i < numChildren; i++){
 			if (i == 0){
-				c[0].goTo(this.tox - (this.leftw) + c[0].leftw,// - DataStructure.minsepx/2,// + c[0].leftw,
+				c[0].goTo(this.tox - (this.leftw) + c[0].leftw,// - DaryHeap.minsepx/2,// + c[0].leftw,
 						this.toy + DataStructure.minsepy);
 			}else{
 				c[i].goTo( c[i-1].tox + c[i-1].rightw + c[i].leftw,
