@@ -16,6 +16,7 @@ public class DaryHeapDelete extends DaryHeapAlg {
 			H.last = null;
 			return;
 		}
+		
 		if (H.root.numChildren == 0) {
 			H.v = H.root;
 			if (H.minHeap){
@@ -36,6 +37,13 @@ public class DaryHeapDelete extends DaryHeapAlg {
 		} else {
 			addStep("maximum", H.root.key);
 		}
+		H.root.mark();
+		mysuspend();
+		//H.root.unmark();
+		addStep("heapchange");
+		mysuspend();
+		H.root.unmark();
+		
 		H.v = new DaryHeapNode(H.last);
 		H.v2 = new DaryHeapNode(H.root);
 		H.last.key = Node.NOKEY;

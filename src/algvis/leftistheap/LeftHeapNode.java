@@ -9,7 +9,6 @@ import algvis.core.MeldablePQ;
 import algvis.core.View;
 
 public class LeftHeapNode extends BSTNode {
-	Color color = Color.yellow;
 	int rank = 1;
 	boolean doubleArrow = false;
 	boolean dashedrightl = false; // if true the line leading to the right son is dashed

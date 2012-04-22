@@ -30,6 +30,7 @@ import algvis.fibonacciheap.FibHeapPanel;
 import algvis.heap.HeapPanel;
 import algvis.lazybinomialheap.LazyBinHeapPanel;
 import algvis.leftistheap.LeftHeapPanel;
+import algvis.pairingheap.PairHeapPanel;
 import algvis.redblacktree.RBPanel;
 import algvis.rotations.RotPanel;
 import algvis.scapegoattree.GBPanel;
@@ -54,7 +55,7 @@ public class DataStructures {
 			RBPanel.class, AAPanel.class, TreapPanel.class,
 			SkipListPanel.class, GBPanel.class, SplayPanel.class,
 			HeapPanel.class, DaryHeapPanel.class, LeftHeapPanel.class, SkewHeapPanel.class, BinHeapPanel.class, LazyBinHeapPanel.class,
-			FibHeapPanel.class, UnionFindPanel.class };
+			FibHeapPanel.class, UnionFindPanel.class, PairHeapPanel.class };
 
 	static final int N = PANEL.length;
 

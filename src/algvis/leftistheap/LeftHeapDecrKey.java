@@ -27,6 +27,7 @@ public class LeftHeapDecrKey extends LeftHeapAlg{
 			if (v.key > InputField.MAX)
 				v.key = InputField.MAX;
 		}
+		
 		bubbleup(v);
 	}
 }

@@ -11,8 +11,10 @@ public class DaryHeapDecrKey extends DaryHeapAlg{
 		this.delta = delta;
 		if (H.minHeap) {
 			setHeader("decreasekey");
+			addStep("decrkeymin");
 		} else {
 			setHeader("increasekey");
+			addStep("incrkeymax");
 		}
 	}
 
@@ -26,6 +28,12 @@ public class DaryHeapDecrKey extends DaryHeapAlg{
 			v.key += delta;
 			if (v.key > InputField.MAX)
 				v.key = InputField.MAX;
+		}
+		
+		if (H.minHeap) {
+			addStep("minheapbubbleup");
+		} else {
+			addStep("maxheapbubbleup");
 		}
 		bubbleup(v);
 	}
