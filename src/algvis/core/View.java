@@ -19,6 +19,7 @@ package algvis.core;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
@@ -28,6 +29,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.CubicCurve2D;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.awt.geom.RoundRectangle2D;
@@ -64,6 +66,10 @@ public class View implements MouseListener, MouseMotionListener,
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		resetView();
+	}
+
+	public Graphics2D getGraphics() {
+		return g;
 	}
 
 	public void resetView() {
@@ -370,15 +376,15 @@ public class View implements MouseListener, MouseMotionListener,
 		g.drawArc(x, y, w, h, a1, a2 - a1);
 	}
 
-	/* let A=[x1,y1] and B=[x2,y2]  
-	 *  B--\   /--B
-	 *      \ /
-	 *       |
-	 *       A
-	 *       |
-	 *      / \  
-	 *  B--/   \--B
-	 */
+	// let A=[x1,y1] and B=[x2,y2]
+	// _B--\___/--B
+	// _____\_/
+	// ______|
+	// ______A
+	// ______|
+	// _____/_\
+	// _B--/___\--B
+	//
 	public void drawQuarterArc(int x1, int y1, int x2, int y2) {
 		int w = Math.abs(x1 - x2), h = Math.abs(y1 - y2), a1, a2;
 		if (y2 < y1) {
@@ -401,6 +407,10 @@ public class View implements MouseListener, MouseMotionListener,
 		drawArc(x2 - w, y1 - h, 2 * w, 2 * h, a1, a2);
 	}
 
+	public void drawFancyArc(int x1, int y1, int x3, int y3) {
+		g.draw(new CubicCurve2D.Float(x1, y1, x1, y1 + 10, x3, y3 - 40, x3, y3));
+	}
+
 	public void drawArcArrow(int x, int y, int w, int h, int a1, int a2) {
 		drawArc(x, y, w, h, a1, a2);
 		double a = a2 * Math.PI / 180;
@@ -418,8 +428,9 @@ public class View implements MouseListener, MouseMotionListener,
 		arrowHead(x, y, x2, y2);
 	}
 
-	public void setDS(ClickListener D) {
-		this.D = D;
+	public void drawCurve(int x1, int y1, int cx1, int cy1, int cx2, int cy2,
+			int x2, int y2) {
+		g.draw(new CubicCurve2D.Float(x1, y1, cx1, cy1, cx2, cy2, x2, y2));
 	}
 
 	public void fillPolygon(Polygon p) {
@@ -432,5 +443,13 @@ public class View implements MouseListener, MouseMotionListener,
 		g.drawPolygon(p);
 		g.setStroke(old);
 		g.setColor(c);
+	}
+
+	public void drawImage(Image img, int x, int y, int w, int h) {
+		g.drawImage(img, x, y, w, h, null);
+	}
+
+	public void setDS(ClickListener D) {
+		this.D = D;
 	}
 }

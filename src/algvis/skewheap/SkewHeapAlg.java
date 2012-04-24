@@ -92,7 +92,7 @@ public class SkewHeapAlg extends Algorithm {
 		}
 
 		//povymiename synov, ale nie na zaklade ranku, ale vsetkych okrem synov posledneho vrcholu z pravej cesty 
-		addStep("skewheapswap");
+		addNote("skewheapswap");
 		mysuspend();
 
 		SkewHeapNode tmp = w;

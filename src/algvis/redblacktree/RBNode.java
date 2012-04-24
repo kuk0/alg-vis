@@ -16,12 +16,14 @@
  ******************************************************************************/
 package algvis.redblacktree;
 
+import org.jdom.Element;
+
 import algvis.bst.BSTNode;
-import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 import algvis.core.View;
-import algvis.scenario.commands.rbnode.SetRedCommand;
+import algvis.scenario.Command;
 
 public class RBNode extends BSTNode {
 	private boolean red = true;
@@ -41,7 +43,7 @@ public class RBNode extends BSTNode {
 	public void setRed(boolean red) {
 		if (this.red != red) {
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetRedCommand(this, red));
+				D.scenario.add(new SetRedCommand(red));
 			}
 			this.red = red;
 		}
@@ -120,5 +122,33 @@ public class RBNode extends BSTNode {
 			drawBigNodes(v);
 		}
 		drawTree(v);
+	}
+
+	private class SetRedCommand implements Command {
+		private final boolean oldRed, newRed;
+
+		public SetRedCommand(boolean newRed) {
+			oldRed = isRed();
+			this.newRed = newRed;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setRed");
+			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("wasRed", Boolean.toString(oldRed));
+			e.setAttribute("isRed", Boolean.toString(newRed));
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			setRed(newRed);
+		}
+
+		@Override
+		public void unexecute() {
+			setRed(oldRed);
+		}
 	}
 }

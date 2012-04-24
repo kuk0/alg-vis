@@ -28,7 +28,7 @@ public class LeftHeapNode extends BSTNode {
 	int rank = 1;
 	boolean doubleArrow = false;
 	boolean dashedrightl = false; // if true the line leading to the right son is dashed
-	boolean dashedleftl = false;  // if true the line leading to the left son is dashed
+	boolean dashedleftl = false; // if true the line leading to the left son is dashed
 
 	public LeftHeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
@@ -110,7 +110,8 @@ public class LeftHeapNode extends BSTNode {
 			x1 = dir.x;
 			y1 = dir.y;
 		}
-		v.drawDoubleArrow(x1 + 2 * LeftHeapNode.radius, y1, x2 - 2 * LeftHeapNode.radius, y2);
+		v.drawDoubleArrow(x1 + 2 * LeftHeapNode.radius, y1, x2 - 2
+				* LeftHeapNode.radius, y2);
 	}
 
 	@Override
@@ -118,14 +119,15 @@ public class LeftHeapNode extends BSTNode {
 		super.draw(v);
 		drawDoubleArrow(v);
 		String str = new String("" + rank);
-		if (rank != -1){
-		if (this.getParent() != null && this.getParent().getLeft() == this) {
-			v.drawString(str, x - LeftHeapNode.radius, y - LeftHeapNode.radius, Fonts.SMALL);
-		} else {
-			v.drawString(str, x + LeftHeapNode.radius, y - LeftHeapNode.radius, Fonts.SMALL);
+		if (rank != -1) {
+			if (this.getParent() != null && this.getParent().getLeft() == this) {
+				v.drawString(str, x - LeftHeapNode.radius, y
+						- LeftHeapNode.radius, Fonts.SMALL);
+			} else {
+				v.drawString(str, x + LeftHeapNode.radius, y
+						- LeftHeapNode.radius, Fonts.SMALL);
+			}
 		}
-		}
-
 	}
 
 	public void repos(int px, int py) {
@@ -136,8 +138,8 @@ public class LeftHeapNode extends BSTNode {
 					py + (LeftHeap.minsepy));// + 2 * LeftHeapNode.radius));
 		}
 		if (this.getLeft() != null) {
-			this.getLeft().repos(px - getLeft().rightw,
-					py + (LeftHeap.minsepy));// + 2 * LeftHeapNode.radius));
+			this.getLeft()
+					.repos(px - getLeft().rightw, py + (LeftHeap.minsepy));// + 2 * LeftHeapNode.radius));
 		}
 	}
 

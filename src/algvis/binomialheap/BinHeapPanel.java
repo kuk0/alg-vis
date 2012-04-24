@@ -31,7 +31,18 @@ public class BinHeapPanel extends VisPanel {
 
 	@Override
 	public void initDS() {
-		D = new BinomialHeap(this);
+		BinomialHeap H = new BinomialHeap(this);
+		D = H;
 		B = new MeldablePQButtons(this);
+		H.active = 1;
+		D.random(13);
+		H.active = 2;
+		D.random(10);
+		H.lowlight();
+		H.active = 3;
+		D.random(7);
+		H.lowlight();
+		H.active = 1;
+		D.M.screen.V.resetView();		
 	}
 }

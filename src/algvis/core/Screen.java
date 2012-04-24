@@ -72,7 +72,7 @@ public class Screen extends JPanel implements Runnable {
 			V.endDrawing();
 			// V.resetView();
 		} else {
-			System.out.println("[DS null !]");
+			System.err.println("[DS null !]");
 		}
 		g.drawImage(I, 0, 0, null);
 	}

@@ -89,7 +89,7 @@ public class LeftHeapAlg extends Algorithm {
 			w = w.getRight();
 			mysuspend();
 		}
-		addStep("leftrankupdate");
+		addNote("leftrankupdate");
 		mysuspend();
 
 		LeftHeapNode tmp = w;
@@ -103,7 +103,7 @@ public class LeftHeapAlg extends Algorithm {
 
 			tmp = tmp.getParent();
 		}
-		addStep("leftrankstart");
+		addNote("leftrankstart");
 		mysuspend();
 
 		tmp = w;

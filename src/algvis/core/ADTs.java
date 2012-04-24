@@ -16,6 +16,7 @@
  ******************************************************************************/
 package algvis.core;
 
+import algvis.trie.Trie;
 import algvis.unionfind.UnionFind;
 
 /**
@@ -31,20 +32,21 @@ public class ADTs {
 	static final Class[] ADT = { Dictionary.class, // insert, find, delete
 			PriorityQueue.class, // insert, decrease-key, delete-min
 			MeldablePQ.class, // insert, decrease-key, delete-min, meld
-			UnionFind.class // make-set, union, find
+			UnionFind.class, // make-set, union, find
+			Trie.class // insert, find, delete
 	};
 	static final int N = ADT.length;
 
 	public static String getName(int i) {
 		if (i < 0 || i >= ADT.length) {
-			System.out.println("ADTs.getName - index out of range.");
+			System.err.println("ADTs.getName - index out of range.");
 			return "";
 		}
 		String r = "";
 		try {
 			r = (String) (ADT[i].getDeclaredField("adtName").get(null));
 		} catch (Exception e) {
-			System.out.println("Unable to get field adtName - name of ADT: "
+			System.err.println("Unable to get field adtName - name of ADT: "
 					+ ADT[i]);
 		}
 		return r;

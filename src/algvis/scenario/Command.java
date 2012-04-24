@@ -14,48 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.scenario.commands.splay3;
+package algvis.scenario;
 
-import org.jdom.Element;
+public interface Command extends XMLable {
 
-import algvis.scenario.commands.Command;
-import algvis.splaytree.SplayNode;
-import algvis.splaytree.SplayTree;
+	public void execute();
 
-public class SetVVCommand implements Command {
-	private final SplayTree T;
-	private final SplayNode newVV, oldVV;
-
-	public SetVVCommand(SplayTree T, SplayNode newVV) {
-		this.T = T;
-		oldVV = T.getVV();
-		this.newVV = newVV;
-	}
-
-	@Override
-	public void execute() {
-		T.setVV(newVV);
-	}
-
-	@Override
-	public void unexecute() {
-		T.setVV(oldVV);
-	}
-
-	@Override
-	public Element getXML() {
-		Element e = new Element("setVV");
-		if (newVV != null) {
-			e.setAttribute("newVVKey", Integer.toString(newVV.key));
-		} else {
-			e.setAttribute("newVV", "null");
-		}
-		if (oldVV != null) {
-			e.setAttribute("oldVVKey", Integer.toString(oldVV.key));
-		} else {
-			e.setAttribute("oldVV", "null");
-		}
-		return e;
-	}
-
+	public void unexecute();
 }

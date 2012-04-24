@@ -27,10 +27,12 @@ import algvis.internationalization.Languages;
 
 public class AlgVisApplet extends JApplet {
 	private static final long serialVersionUID = -76009301274562874L;
-	static final int WIDTH = 900, HEIGHT = 600;
+	static final int WIDTH = 1080, HEIGHT = 680;
 
 	@Override
 	public void init() {
+		MyParserDelegator.workaround();
+		Fonts.init(getGraphics());
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -76,7 +78,6 @@ public class AlgVisApplet extends JApplet {
 			P.setSize(WIDTH, HEIGHT); // same size as defined in the HTML APPLET
 			if (P != null)
 				add(P);
-			Fonts.init(getGraphics());
 		}
 	}
 }

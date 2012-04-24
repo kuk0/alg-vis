@@ -32,5 +32,6 @@ public class GBPanel extends VisPanel {
 	public void initDS() {
 		D = new GBTree(this);
 		B = new GBButtons(this);
+		D.random(25);
 	}
 }

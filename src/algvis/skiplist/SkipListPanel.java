@@ -33,5 +33,6 @@ public class SkipListPanel extends VisPanel {
 	public void initDS() {
 		D = new SkipList(this);
 		B = new DictButtons(this);
+		D.random(10);
 	}
 }

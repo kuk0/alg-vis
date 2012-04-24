@@ -26,7 +26,8 @@ public class TreeNode extends Node {
 	int offset = 0; // offset from base line, base line has x-coord
 					// equaled to x-coord of leftmost child
 	int level; // distance from the root
-	public boolean thread = false; // is this node threaded? //<<---- public
+	protected boolean thread = false; // is this node threaded?
+
 	int toExtremeSon = 0; // offset from the leftmost son
 	int toBaseline = 0; // distance to child's baseline
 	int modifier = 0;
@@ -103,8 +104,7 @@ public class TreeNode extends Node {
 				v.setColor(Color.red);
 				if (getChild() != null) {
 					v.drawLine(x, y, getChild().x, getChild().y);
-				} else
-					System.out.println("child: " + getChild());
+				}
 				v.setColor(Color.black);
 			} else {
 				TreeNode w = getChild();
@@ -263,12 +263,10 @@ public class TreeNode extends Node {
 		fTRPetrification(0);
 		fTRBounding(-tmpx);
 		reboxTree();
-		// System.out.println(key+" "+leftw+" "+rightw);
 		/*D.x1 -= D.minsepx;
 		D.x2 += D.xspan + D.radius;
 		D.y1 -= D.yspan + D.radius;
 		D.y2 += D.yspan + D.radius;*/
-		// System.out.println(D.x1 + " " + leftw + " " + D.x2 + " " + rightw);
 	}
 
 	/**
@@ -279,7 +277,6 @@ public class TreeNode extends Node {
 	 *            current level in tree
 	 */
 	private void fTRInitialization(int level) {
-		// System.out.println(level);
 		this.level = level;
 		offset = modifier = shift = change = 0;
 		toExtremeSon = 0;
@@ -520,7 +517,6 @@ public class TreeNode extends Node {
 	 */
 	public void shift(int xamount, int yamount) {
 		goTo(tox + xamount, toy + yamount);
-		// System.out.println(tox);
 		TreeNode w = getChild();
 		while (w != null) {
 			w.shift(xamount, yamount);

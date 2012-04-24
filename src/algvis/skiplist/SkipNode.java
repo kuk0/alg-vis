@@ -18,13 +18,12 @@ package algvis.skiplist;
 
 import java.awt.Color;
 
+import org.jdom.Element;
+
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.View;
-import algvis.scenario.commands.skipnode.SetDownCommand;
-import algvis.scenario.commands.skipnode.SetLeftCommand;
-import algvis.scenario.commands.skipnode.SetRightCommand;
-import algvis.scenario.commands.skipnode.SetUpCommand;
+import algvis.scenario.Command;
 
 public class SkipNode extends Node {
 	private SkipNode left = null;
@@ -148,7 +147,7 @@ public class SkipNode extends Node {
 	public void setLeft(SkipNode left) {
 		if (this.left != left) {
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetLeftCommand(this, left));
+				D.scenario.add(new SetLeftCommand(left));
 			}
 			this.left = left;
 		}
@@ -161,7 +160,7 @@ public class SkipNode extends Node {
 	public SkipNode setRight(SkipNode right) {
 		if (this.right != right) {
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetRightCommand(this, right));
+				D.scenario.add(new SetRightCommand(right));
 			}
 			this.right = right;
 		}
@@ -175,7 +174,7 @@ public class SkipNode extends Node {
 	public SkipNode setUp(SkipNode up) {
 		if (this.up != up) {
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetUpCommand(this, up));
+				D.scenario.add(new SetUpCommand(up));
 			}
 			this.up = up;
 		}
@@ -189,10 +188,154 @@ public class SkipNode extends Node {
 	public SkipNode setDown(SkipNode down) {
 		if (this.down != down) {
 			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetDownCommand(this, down));
+				D.scenario.add(new SetDownCommand(down));
 			}
 			this.down = down;
 		}
 		return down;
+	}
+	
+	private class SetDownCommand implements Command {
+		private final SkipNode oldDown, newDown;
+
+		public SetDownCommand(SkipNode newDown) {
+			oldDown = getDown();
+			this.newDown = newDown;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setDown");
+			e.setAttribute("key", Integer.toString(key));
+			if (newDown != null) {
+				e.setAttribute("newDown", Integer.toString(newDown.key));
+			} else {
+				e.setAttribute("newDown", "null");
+			}
+			if (oldDown != null) {
+				e.setAttribute("oldDown", Integer.toString(oldDown.key));
+			} else {
+				e.setAttribute("oldDown", "null");
+			}
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			setDown(newDown);
+		}
+
+		@Override
+		public void unexecute() {
+			setDown(oldDown);
+		}
+	}
+	
+	private class SetLeftCommand implements Command {
+		private final SkipNode oldLeft, newLeft;
+
+		public SetLeftCommand(SkipNode newLeft) {
+			oldLeft = getLeft();
+			this.newLeft = newLeft;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setLeft");
+			e.setAttribute("key", Integer.toString(key));
+			if (newLeft != null) {
+				e.setAttribute("newLeft", Integer.toString(newLeft.key));
+			} else {
+				e.setAttribute("newLeft", "null");
+			}
+			if (oldLeft != null) {
+				e.setAttribute("oldLeft", Integer.toString(oldLeft.key));
+			} else {
+				e.setAttribute("oldLeft", "null");
+			}
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			setLeft(newLeft);
+		}
+
+		@Override
+		public void unexecute() {
+			setLeft(oldLeft);
+		}
+	}
+
+	private class SetRightCommand implements Command {
+		private final SkipNode oldRight, newRight;
+
+		public SetRightCommand(SkipNode newRight) {
+			oldRight = getRight();
+			this.newRight = newRight;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setRight");
+			e.setAttribute("key", Integer.toString(key));
+			if (newRight != null) {
+				e.setAttribute("newRight", Integer.toString(newRight.key));
+			} else {
+				e.setAttribute("newRight", "null");
+			}
+			if (oldRight != null) {
+				e.setAttribute("oldRight", Integer.toString(oldRight.key));
+			} else {
+				e.setAttribute("oldRight", "null");
+			}
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			setRight(newRight);
+		}
+
+		@Override
+		public void unexecute() {
+			setRight(oldRight);
+		}
+	}
+
+	private class SetUpCommand implements Command {
+		private final SkipNode oldUp, newUp;
+
+		public SetUpCommand(SkipNode newUp) {
+			oldUp = getUp();
+			this.newUp = newUp;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setUp");
+			e.setAttribute("key", Integer.toString(key));
+			if (newUp != null) {
+				e.setAttribute("newUp", Integer.toString(newUp.key));
+			} else {
+				e.setAttribute("newUp", "null");
+			}
+			if (oldUp != null) {
+				e.setAttribute("oldUp", Integer.toString(oldUp.key));
+			} else {
+				e.setAttribute("oldUp", "null");
+			}
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			setUp(newUp);
+		}
+
+		@Override
+		public void unexecute() {
+			setUp(oldUp);
+		}
 	}
 }

@@ -14,47 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.scenario.commands.skipnode;
+package algvis.trie;
 
-import org.jdom.Element;
+import algvis.core.DataStructure;
+import algvis.core.Settings;
+import algvis.core.VisPanel;
 
-import algvis.scenario.commands.Command;
-import algvis.skiplist.SkipNode;
+public class TriePanel extends VisPanel {
+	private static final long serialVersionUID = -8652425842838569507L;
+	public static Class<? extends DataStructure> DS = Trie.class;
 
-public class SetLeftCommand implements Command {
-	private final SkipNode n, oldLeft, newLeft;
-
-	public SetLeftCommand(SkipNode n, SkipNode newLeft) {
-		this.n = n;
-		oldLeft = n.getLeft();
-		this.newLeft = newLeft;
+	public TriePanel(Settings S) {
+		super(S);
 	}
-
+	
 	@Override
-	public Element getXML() {
-		Element e = new Element("setLeft");
-		e.setAttribute("key", Integer.toString(n.key));
-		if (newLeft != null) {
-			e.setAttribute("newLeft", Integer.toString(newLeft.key));
-		} else {
-			e.setAttribute("newLeft", "null");
-		}
-		if (oldLeft != null) {
-			e.setAttribute("oldLeft", Integer.toString(oldLeft.key));
-		} else {
-			e.setAttribute("oldLeft", "null");
-		}
-		return e;
-	}
-
-	@Override
-	public void execute() {
-		n.setLeft(newLeft);
-	}
-
-	@Override
-	public void unexecute() {
-		n.setLeft(oldLeft);
+	public void initDS() {
+		D = new Trie(this);
+		B = new TrieButtons(this);
+		D.random(10);
 	}
 
 }
