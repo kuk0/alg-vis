@@ -165,7 +165,7 @@ public class Node {
 	 * the color).
 	 */
 	public void bgKeyColor() {
-		bgColor(new Color(255, 255 - key / 10, 0));
+		bgColor(new Color(255, 255 - key / 20, 0));
 	}
 
 	public void mark() {

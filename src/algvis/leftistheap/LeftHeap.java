@@ -2,7 +2,7 @@ package algvis.leftistheap;
 
 import algvis.core.ClickListener;
 import algvis.core.MeldablePQ;
-import algvis.core.MeldablePQButtons;
+import algvis.core.MeldablePQButtonsNoDecr;
 import algvis.core.Node;
 import algvis.core.Pair;
 import algvis.core.StringUtils;
@@ -58,7 +58,7 @@ public class LeftHeap extends MeldablePQ implements ClickListener{
 		Pair p = chooseHeaps(i, j);
 		i = p.first;
 		j = p.second;
-		((MeldablePQButtons) M.B).activeHeap.setValue(i);
+		((MeldablePQButtonsNoDecr) M.B).activeHeap.setValue(i);
 		start(new LeftHeapMeld(this, i, j));
 	}
 
@@ -138,7 +138,7 @@ public class LeftHeap extends MeldablePQ implements ClickListener{
 					v.mark();
 					chosen = v;
 				} else {
-					((MeldablePQButtons) M.B).activeHeap.setValue(h);
+					((MeldablePQButtonsNoDecr) M.B).activeHeap.setValue(h);
 					// lowlight();
 					// highlight(h);
 				}
