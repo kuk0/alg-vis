@@ -26,43 +26,43 @@ public class HeapDelete extends HeapAlg {
 
 	@Override
 	public void run() {
-		if (H.n == 0) {
+		if (H.getN() == 0) {
 			addStep("heapempty");
 			return;
 		}
-		if (H.n == 1) {
-			H.v = H.root;
-			H.root = null;
-			--H.n;
-			H.v.goDown();
+		if (H.getN() == 1) {
+			H.setV(H.getRoot());
+			H.setRoot(null);
+			H.setN(H.getN() - 1);
+			H.getV().goDown();
 			mysuspend();
 			return;
 		}
 		HeapNode v, w;
 
-		int n = H.n, k = 1 << 10;
+		int n = H.getN(), k = 1 << 10;
 		while ((k & n) == 0) {
 			k >>= 1;
 		}
 		k >>= 1;
-		w = H.root;
+		w = H.getRoot();
 		while (k > 0) {
 			w = ((n & k) == 0) ? w.getLeft() : w.getRight();
 			k >>= 1;
 		}
-		H.v = w;
-		--H.n;
+		H.setV(w);
+		H.setN(H.getN() - 1);
 		if ((n & 1) == 0) {
 			w.getParent().setLeft(null);
 		} else {
 			w.getParent().setRight(null);
 		}
-		H.v.goToRoot();
+		H.getV().goToRoot();
 		H.reposition();
 		mysuspend();
 
-		H.root.key = H.v.key;
-		H.v = null;
+		H.getRoot().key = H.getV().key;
+		H.setV(null);
 		if (H.minHeap) {
 			addStep("minheapbubbledown");
 		} else {
@@ -70,7 +70,7 @@ public class HeapDelete extends HeapAlg {
 		}
 		// mysuspend();
 
-		v = H.root;
+		v = H.getRoot();
 		while (true) {
 			w = null;
 			if (v.getLeft() != null) {
@@ -82,19 +82,19 @@ public class HeapDelete extends HeapAlg {
 			if (w == null || v.prec(w)) {
 				break;
 			}
-			H.v = new HeapNode(v);
-			H.v2 = new HeapNode(w);
+			H.setV(new HeapNode(v));
+			H.setV2(new HeapNode(w));
 			v.key = Node.NOKEY;
 			w.key = Node.NOKEY;
-			H.v.goTo(w);
-			H.v2.goTo(v);
+			H.getV().goTo(w);
+			H.getV2().goTo(v);
 			mysuspend();
-			v.key = H.v2.key;
-			w.key = H.v.key;
-			v.setColor(H.v2.getColor());
-			w.setColor(H.v.getColor());
-			H.v = null;
-			H.v2 = null;
+			v.key = H.getV2().key;
+			w.key = H.getV().key;
+			v.setColor(H.getV2().getColor());
+			w.setColor(H.getV().getColor());
+			H.setV(null);
+			H.setV2(null);
 			v = w;
 		}
 

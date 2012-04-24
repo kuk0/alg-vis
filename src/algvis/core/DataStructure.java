@@ -16,8 +16,11 @@
  ******************************************************************************/
 package algvis.core;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import algvis.scenario.Command;
 import algvis.scenario.Scenario;
 
 abstract public class DataStructure {
@@ -32,10 +35,19 @@ abstract public class DataStructure {
 	public Node chosen = null;
 	public static String adtName = "";
 	public static String dsName = "";
+	protected List<Node> nodes; // root, v, v2, vv,...
 
 	public DataStructure(VisPanel M) {
 		this.M = M;
 		scenario = new Scenario(M, getName());
+	}
+
+	public DataStructure(VisPanel M, int nodesCount) {
+		this(M);
+		nodes = new ArrayList<Node>();
+		for (int i = 0; i < nodesCount; ++i) {
+			nodes.add(null);
+		}
 	}
 
 	abstract public String getName();
@@ -120,5 +132,18 @@ abstract public class DataStructure {
 
 	public Layout getLayout() {
 		return M.S.layout;
+	}
+
+	public void setNode(int i, Node v, boolean waitBack) {
+		if (nodes.get(i) != v) {
+			if (scenario.isAddingEnabled()) {
+				scenario.add(new Command.SetNodeCommand(this, i, nodes.get(i),
+						v));
+			}
+			nodes.set(i, v);
+		}
+		if (waitBack && v != null && scenario.isAddingEnabled()) {
+			scenario.add(v.new WaitBackwardsCommand());
+		}
 	}
 }

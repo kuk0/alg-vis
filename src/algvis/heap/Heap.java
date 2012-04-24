@@ -16,17 +16,19 @@
  ******************************************************************************/
 package algvis.heap;
 
+import org.jdom.Element;
+
 import algvis.bst.BSTNode;
 import algvis.core.ClickListener;
 import algvis.core.Node;
 import algvis.core.PriorityQueue;
 import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.scenario.Command;
 
 public class Heap extends PriorityQueue implements ClickListener {
 	public static String dsName = "heap";
-	int n = 0;
-	HeapNode root = null, v = null, v2 = null;
+	private int n = 0;
 
 	@Override
 	public String getName() {
@@ -34,7 +36,7 @@ public class Heap extends PriorityQueue implements ClickListener {
 	}
 
 	public Heap(VisPanel M) {
-		super(M, dsName);
+		super(M, 3, dsName); // root (0), v (1), v2 (2)
 		M.screen.V.setDS(this);
 	}
 
@@ -58,52 +60,52 @@ public class Heap extends PriorityQueue implements ClickListener {
 
 	@Override
 	public void clear() {
-		root = v = v2 = null;
-		n = 0;
+		setRoot(setV(setV2(null)));
+		setN(0);
 		setStats();
 	}
 
 	@Override
 	public String stats() {
-		if (n == 0) {
+		if (getN() == 0) {
 			return M.S.L.getString("size") + ": 0 ("
 					+ M.S.L.getString("emptyheap") + ")";
-		} else if (n == 1000) {
+		} else if (getN() == 1000) {
 			return M.S.L.getString("size") + ": 1000 ("
 					+ M.S.L.getString("fullheap") + ")";
 		} else {
-			return M.S.L.getString("size") + ": " + n;
+			return M.S.L.getString("size") + ": " + getN();
 		}
 	}
 
 	@Override
 	public void draw(View V) {
-		if (root != null) {
-			root.moveTree();
-			root.drawTree(V);
+		if (getRoot() != null) {
+			getRoot().moveTree();
+			getRoot().drawTree(V);
 		}
-		if (v != null) {
-			v.move();
-			v.draw(V);
+		if (getV() != null) {
+			getV().move();
+			getV().draw(V);
 		}
-		if (v2 != null) {
-			v2.move();
-			v2.draw(V);
+		if (getV2() != null) {
+			getV2().move();
+			getV2().draw(V);
 		}
 	}
 
 	public void reposition() {
-		if (root != null) {
-			root.reposition();
+		if (getRoot() != null) {
+			getRoot().reposition();
 			M.screen.V.setBounds(x1, y1, x2, y2);
 		}
 	}
 
 	@Override
 	public void mouseClicked(int x, int y) {
-		if (root == null)
+		if (getRoot() == null)
 			return;
-		BSTNode v = root.find(x, y);
+		BSTNode v = getRoot().find(x, y);
 		if (v != null) {
 			if (v.marked) {
 				v.unmark();
@@ -114,6 +116,72 @@ public class Heap extends PriorityQueue implements ClickListener {
 				v.mark();
 				chosen = v;
 			}
+		}
+	}
+
+	public HeapNode getRoot() {
+		return (HeapNode) nodes.get(0);
+	}
+
+	public void setRoot(HeapNode root) {
+		setNode(0, root, false);
+	}
+
+	public HeapNode getV() {
+		return (HeapNode) nodes.get(1);
+	}
+
+	public HeapNode setV(HeapNode v) {
+		setNode(1, v, true);
+		return v;
+	}
+
+	public HeapNode getV2() {
+		return (HeapNode) nodes.get(2);
+	}
+
+	public HeapNode setV2(HeapNode v2) {
+		setNode(2, v2, true);
+		return v2;
+	}
+
+	public int getN() {
+		return n;
+	}
+
+	public void setN(int n) {
+		if (this.n != n) {
+			if (scenario.isAddingEnabled()) {
+				scenario.add(new SetNCommand(n));
+			}
+			this.n = n;
+		}
+	}
+
+	private class SetNCommand implements Command {
+		private final int fromN, toN;
+
+		public SetNCommand(int toN) {
+			this.fromN = getN();
+			this.toN = toN;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setN");
+			e.setAttribute("fromN", Integer.toString(fromN));
+			e.setAttribute("toN", Integer.toString(toN));
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			setN(toN);
+		}
+
+		@Override
+		public void unexecute() {
+			setN(fromN);
 		}
 	}
 }
