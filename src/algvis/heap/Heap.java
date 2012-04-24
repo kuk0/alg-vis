@@ -36,7 +36,8 @@ public class Heap extends PriorityQueue implements ClickListener {
 	}
 
 	public Heap(VisPanel M) {
-		super(M, 3, dsName); // root (0), v (1), v2 (2)
+		super(M, dsName);
+		addNodes(3); // root (0), v (1), v2 (2)
 		M.screen.V.setDS(this);
 	}
 
@@ -120,7 +121,7 @@ public class Heap extends PriorityQueue implements ClickListener {
 	}
 
 	public HeapNode getRoot() {
-		return (HeapNode) nodes.get(0);
+		return (HeapNode) getNode(0);
 	}
 
 	public void setRoot(HeapNode root) {
@@ -128,7 +129,7 @@ public class Heap extends PriorityQueue implements ClickListener {
 	}
 
 	public HeapNode getV() {
-		return (HeapNode) nodes.get(1);
+		return (HeapNode) getNode(1);
 	}
 
 	public HeapNode setV(HeapNode v) {
@@ -137,7 +138,7 @@ public class Heap extends PriorityQueue implements ClickListener {
 	}
 
 	public HeapNode getV2() {
-		return (HeapNode) nodes.get(2);
+		return (HeapNode) getNode(2);
 	}
 
 	public HeapNode setV2(HeapNode v2) {

@@ -31,14 +31,11 @@ public class SplayTree extends BST {
 
 	public SplayTree(VisPanel M) {
 		super(M);
-		nodes.add(null); // root2 (2)
-		nodes.add(null); // vv (3)
-		nodes.add(null); // w1 (4)
-		nodes.add(null); // w2 (5)
+		addNodes(4); // root2 (2), vv (3), w1 (4), w2 (5)
 	}
 
 	public SplayNode getRoot2() {
-		return (SplayNode) nodes.get(2);
+		return (SplayNode) getNode(2);
 	}
 
 	public void setRoot2(SplayNode root2) {
@@ -46,7 +43,7 @@ public class SplayTree extends BST {
 	}
 
 	public SplayNode getVV() {
-		return (SplayNode) nodes.get(3);
+		return (SplayNode) getNode(3);
 	}
 
 	public void setVV(SplayNode vv) {
@@ -54,7 +51,7 @@ public class SplayTree extends BST {
 	}
 
 	public SplayNode getW1() {
-		return (SplayNode) nodes.get(4);
+		return (SplayNode) getNode(4);
 	}
 
 	public void setW1(SplayNode w1) {
@@ -62,7 +59,7 @@ public class SplayTree extends BST {
 	}
 
 	public SplayNode getW2() {
-		return (SplayNode) nodes.get(5);
+		return (SplayNode) getNode(5);
 	}
 
 	public void setW2(SplayNode w2) {

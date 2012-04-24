@@ -35,19 +35,12 @@ abstract public class DataStructure {
 	public Node chosen = null;
 	public static String adtName = "";
 	public static String dsName = "";
-	protected List<Node> nodes; // root, v, v2, vv,...
+	private List<Node> nodes; // root, v, v2, vv,...
 
 	public DataStructure(VisPanel M) {
 		this.M = M;
 		scenario = new Scenario(M, getName());
-	}
-
-	public DataStructure(VisPanel M, int nodesCount) {
-		this(M);
 		nodes = new ArrayList<Node>();
-		for (int i = 0; i < nodesCount; ++i) {
-			nodes.add(null);
-		}
 	}
 
 	abstract public String getName();
@@ -144,6 +137,16 @@ abstract public class DataStructure {
 		}
 		if (waitBack && v != null && scenario.isAddingEnabled()) {
 			scenario.add(v.new WaitBackwardsCommand());
+		}
+	}
+
+	public Node getNode(int i) {
+		return nodes.get(i);
+	}
+
+	protected void addNodes(int count) {
+		for (int i = 0; i < count; ++i) {
+			nodes.add(null);
 		}
 	}
 }

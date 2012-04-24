@@ -20,7 +20,8 @@ abstract public class Dictionary extends DataStructure {
 	public static String adtName = "dictionary";
 
 	public Dictionary(VisPanel M) {
-		super(M, 2); // root (0), v (1)
+		super(M);
+		addNodes(2); // root (0), v (1)
 	}
 
 	@Override
@@ -31,7 +32,7 @@ abstract public class Dictionary extends DataStructure {
 	abstract public void delete(int x);
 
 	public Node getRoot() {
-		return nodes.get(0);
+		return getNode(0);
 	}
 
 	public void setRoot(Node root) {
@@ -39,7 +40,7 @@ abstract public class Dictionary extends DataStructure {
 	}
 
 	public Node getV() {
-		return nodes.get(1);
+		return getNode(1);
 	}
 
 	public void setV(Node v) {

@@ -24,10 +24,6 @@ abstract public class PriorityQueue extends DataStructure {
 		super(M);
 	}
 
-	public PriorityQueue(VisPanel M, int nodesCount, String dsName) {
-		super(M, nodesCount);
-	}
-
 	@Override
 	abstract public void insert(int x);
 
