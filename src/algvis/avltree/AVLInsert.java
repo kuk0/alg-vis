@@ -29,7 +29,7 @@ public class AVLInsert extends Algorithm {
 		this.T = T;
 		v = (AVLNode) T.setV(new AVLNode(T, K = x));
 		v.setColor(NodeColor.INSERT);
-		setHeader("insertion");
+		setHeader("insert", K);
 	}
 
 	@Override
