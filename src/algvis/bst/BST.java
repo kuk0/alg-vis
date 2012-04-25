@@ -213,7 +213,7 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 			BSTNode w = getRoot().find(x, y);
 			if (w != null) {
 				// w.markSubtree = true;
-				M.B.I.setText("" + w.key);
+				M.B.I.setText("" + w.getKey());
 			}
 		}
 	}

@@ -49,8 +49,8 @@ public class Rotations extends DataStructure implements ClickListener {
 
 	public void rotate(int x) {
 		v = T.getRoot();
-		while (v != null && v.key != x) {
-			if (v.key < x) {
+		while (v != null && v.getKey() != x) {
+			if (v.getKey() < x) {
 				v = v.getRight();
 			} else {
 				v = v.getLeft();
@@ -73,9 +73,9 @@ public class Rotations extends DataStructure implements ClickListener {
 			T.setRoot(v);
 		} else {
 			while (true) {
-				if (w.key == x) {
+				if (w.getKey() == x) {
 					break;
-				} else if (w.key < x) {
+				} else if (w.getKey() < x) {
 					if (w.getRight() == null) {
 						w.linkRight(v);
 						break;
@@ -151,7 +151,7 @@ public class Rotations extends DataStructure implements ClickListener {
 					chosen.unmark();
 				v.mark();
 				chosen = v;
-				M.B.I.setText("" + chosen.key);
+				M.B.I.setText("" + chosen.getKey());
 			}
 		}
 	}

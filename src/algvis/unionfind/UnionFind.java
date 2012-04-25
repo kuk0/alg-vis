@@ -268,12 +268,12 @@ public class UnionFind extends DataStructure implements ClickListener {
 		public Element getXML() {
 			Element e = new Element("setV");
 			if (newV != null) {
-				e.setAttribute("newVKey", Integer.toString(newV.key));
+				e.setAttribute("newVKey", Integer.toString(newV.getKey()));
 			} else {
 				e.setAttribute("newV", "null");
 			}
 			if (oldV != null) {
-				e.setAttribute("oldVKey", Integer.toString(oldV.key));
+				e.setAttribute("oldVKey", Integer.toString(oldV.getKey()));
 			} else {
 				e.setAttribute("oldV", "null");
 			}
@@ -291,7 +291,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 		@Override
 		public Element getXML() {
 			Element e = new Element("addNewNode");
-			e.setAttribute("key", Integer.toString(n.key));
+			e.setAttribute("key", Integer.toString(n.getKey()));
 			return e;
 		}
 
@@ -318,7 +318,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 		@Override
 		public Element getXML() {
 			Element e = new Element("RemoveFromSets");
-			e.setAttribute("key", Integer.toString(n.key));
+			e.setAttribute("key", Integer.toString(n.getKey()));
 			return e;
 		}
 

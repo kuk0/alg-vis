@@ -34,7 +34,7 @@ public class AANode extends BSTNode {
 	}
 
 	public AANode(BSTNode v) {
-		this(v.D, v.key, v.x, v.y);
+		this(v.D, v.getKey(), v.x, v.y);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class AANode extends BSTNode {
 
 	@Override
 	public void draw(View v) {
-		if (state == Node.INVISIBLE || key == NULL) {
+		if (state == Node.INVISIBLE || getKey() == NULL) {
 			return;
 		}
 		drawBg(v);

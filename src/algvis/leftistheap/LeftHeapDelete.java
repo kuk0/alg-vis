@@ -16,9 +16,9 @@ public class LeftHeapDelete extends LeftHeapAlg {
 		}
 
 		if (!H.minHeap) {
-			addStep("maximum", H.root[i].key);
+			addStep("maximum", H.root[i].getKey());
 		} else {
-			addStep("minimum", H.root[i].key);
+			addStep("minimum", H.root[i].getKey());
 		}
 
 		mysuspend();

@@ -109,11 +109,11 @@ public class UnionFindButtons extends Buttons {
 					int count = D.count;
 					final Vector<Integer> args = I.getVI(1, count);
 					if (D.firstSelected != null) {
-						args.insertElementAt(D.firstSelected.key, 0);
+						args.insertElementAt(D.firstSelected.getKey(), 0);
 						D.firstSelected = null;
 					}
 					if (D.secondSelected != null) {
-						args.insertElementAt(D.secondSelected.key, 1);
+						args.insertElementAt(D.secondSelected.getKey(), 1);
 						D.scenario.enableAdding(false);
 						D.secondSelected.unmark();
 						D.scenario.enableAdding(true);
@@ -135,12 +135,12 @@ public class UnionFindButtons extends Buttons {
 					final Vector<Integer> args = I.getVI(1, count);
 					D.scenario.enableAdding(false);
 					if (D.firstSelected != null) {
-						args.insertElementAt(D.firstSelected.key, 0);
+						args.insertElementAt(D.firstSelected.getKey(), 0);
 						D.firstSelected.unmark();
 						D.firstSelected = null;
 					}
 					if (D.secondSelected != null) {
-						args.insertElementAt(D.secondSelected.key, 1);
+						args.insertElementAt(D.secondSelected.getKey(), 1);
 						D.secondSelected.unmark();
 						D.secondSelected = null;
 					}

@@ -38,13 +38,13 @@ public class FibHeapDecrKey extends Algorithm {
 	@Override
 	public void run() {
 		if (H.minHeap) {
-			v.key -= delta;
-			if (v.key < 1)
-				v.key = 1;
+			v.setKey(v.getKey() - delta);
+			if (v.getKey() < 1)
+				v.setKey(1);
 		} else {
-			v.key += delta;
-			if (v.key > InputField.MAX)
-				v.key = InputField.MAX;
+			v.setKey(v.getKey() + delta);
+			if (v.getKey() > InputField.MAX)
+				v.setKey(InputField.MAX);
 		}
 		BinHeapNode w = v.parent;
 		// if (w == null) return;

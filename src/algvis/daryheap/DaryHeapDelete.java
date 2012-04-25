@@ -27,14 +27,14 @@ public class DaryHeapDelete extends DaryHeapAlg {
 		
 		H.v = new DaryHeapNode(H.last);
 		H.v2 = new DaryHeapNode(H.root);
-		H.last.key = Node.NOKEY;
-		H.root.key = Node.NOKEY;
+		H.last.setKey(Node.NOKEY);
+		H.root.setKey(Node.NOKEY);
 		H.v.goToRoot();
 		H.v2.goTo(H.last);
 		H.v2.mark();
 		mysuspend();
-		H.last.key = H.v2.key;
-		H.root.key = H.v.key;
+		H.last.setKey(H.v2.getKey());
+		H.root.setKey(H.v.getKey());
 		H.last.setColor(H.v2.getColor());
 		H.root.setColor(H.v.getColor());
 		H.v = null;

@@ -30,3 +30,7 @@ tana:
 *
 katka:
 * posunut leftist heap od seba; +label Heap #1: Heap #2:... ako vo Fib.heap
+
+NIEKTO:
+* lepsie komentare pre Heap. napr.: 1. Prvok vlozime na koniec haldy. 2. ...
+* oddelit tlacidla previous, next, a pause od ostatnych?

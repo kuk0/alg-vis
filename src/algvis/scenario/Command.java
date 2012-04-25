@@ -55,12 +55,12 @@ public interface Command extends XMLable {
 			e.setAttribute("DS", D.getClass().getName());
 			e.setAttribute("orderOfNode", Integer.toString(i));
 			if (newNode != null) {
-				e.setAttribute("newNodeKey", Integer.toString(newNode.key));
+				e.setAttribute("newNodeKey", Integer.toString(newNode.getKey()));
 			} else {
 				e.setAttribute("newNode", "null");
 			}
 			if (oldNode != null) {
-				e.setAttribute("oldNodeKey", Integer.toString(oldNode.key));
+				e.setAttribute("oldNodeKey", Integer.toString(oldNode.getKey()));
 			} else {
 				e.setAttribute("oldNode", "null");
 			}

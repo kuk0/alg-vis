@@ -126,19 +126,22 @@ public class PQButtons extends Buttons {
 	}
 
 	@Override
-	public void enableNext() {
-		super.enableNext();
-		insertB.setEnabled(false);
-		deleteB.setEnabled(false);
-		decrKeyB.setEnabled(false);
-	}
-
-	@Override
-	public void disableNext() {
-		super.disableNext();
+	public void enableAll() {
+		super.enableAll();
 		insertB.setEnabled(true);
 		deleteB.setEnabled(true);
 		decrKeyB.setEnabled(true);
-		next.setEnabled(false);
+		minB.setEnabled(true);
+		maxB.setEnabled(true);
+	}
+
+	@Override
+	public void disableAll() {
+		super.disableAll();
+		insertB.setEnabled(false);
+		deleteB.setEnabled(false);
+		decrKeyB.setEnabled(false);
+		minB.setEnabled(false);
+		maxB.setEnabled(false);
 	}
 }

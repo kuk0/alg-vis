@@ -90,7 +90,7 @@ public class RBNode extends BSTNode {
 
 	@Override
 	public void draw(View v) {
-		if (state == Node.INVISIBLE || key == NULL) {
+		if (state == Node.INVISIBLE || getKey() == NULL) {
 			return;
 		}
 		boolean a = D.scenario.isAddingEnabled();
@@ -101,7 +101,7 @@ public class RBNode extends BSTNode {
 	}
 
 	public void drawBigNodes(View v) {
-		if (key == NULL) {
+		if (getKey() == NULL) {
 			return;
 		}
 		if (getLeft() != null) {
@@ -135,7 +135,7 @@ public class RBNode extends BSTNode {
 		@Override
 		public Element getXML() {
 			Element e = new Element("setRed");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			e.setAttribute("wasRed", Boolean.toString(oldRed));
 			e.setAttribute("isRed", Boolean.toString(newRed));
 			return e;

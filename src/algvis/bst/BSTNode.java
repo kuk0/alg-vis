@@ -651,14 +651,14 @@ public class BSTNode extends Node {
 		@Override
 		public Element getXML() {
 			Element e = new Element("setLeft");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			if (newLeft != null) {
-				e.setAttribute("newLeft", Integer.toString(newLeft.key));
+				e.setAttribute("newLeft", Integer.toString(newLeft.getKey()));
 			} else {
 				e.setAttribute("newLeft", "null");
 			}
 			if (oldLeft != null) {
-				e.setAttribute("oldLeft", Integer.toString(oldLeft.key));
+				e.setAttribute("oldLeft", Integer.toString(oldLeft.getKey()));
 			} else {
 				e.setAttribute("oldLeft", "null");
 			}
@@ -687,14 +687,14 @@ public class BSTNode extends Node {
 		@Override
 		public Element getXML() {
 			Element e = new Element("setRight");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			if (newRight != null) {
-				e.setAttribute("newRight", Integer.toString(newRight.key));
+				e.setAttribute("newRight", Integer.toString(newRight.getKey()));
 			} else {
 				e.setAttribute("newRight", "null");
 			}
 			if (oldRight != null) {
-				e.setAttribute("oldRight", Integer.toString(oldRight.key));
+				e.setAttribute("oldRight", Integer.toString(oldRight.getKey()));
 			} else {
 				e.setAttribute("oldRight", "null");
 			}
@@ -724,14 +724,14 @@ public class BSTNode extends Node {
 		@Override
 		public Element getXML() {
 			Element e = new Element("setParent");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			if (newParent != null) {
-				e.setAttribute("newParent", Integer.toString(newParent.key));
+				e.setAttribute("newParent", Integer.toString(newParent.getKey()));
 			} else {
 				e.setAttribute("newParent", "null");
 			}
 			if (oldParent != null) {
-				e.setAttribute("oldParent", Integer.toString(oldParent.key));
+				e.setAttribute("oldParent", Integer.toString(oldParent.getKey()));
 			} else {
 				e.setAttribute("oldParent", "null");
 			}
@@ -760,7 +760,7 @@ public class BSTNode extends Node {
 		@Override
 		public Element getXML() {
 			Element e = new Element("setLevel");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			e.setAttribute("fromLevel", Integer.toString(fromLevel));
 			e.setAttribute("toLevel", Integer.toString(toLevel));
 			return e;

@@ -128,15 +128,23 @@ abstract public class DataStructure {
 	}
 
 	public void setNode(int i, Node v, boolean waitBack) {
-		if (nodes.get(i) != v) {
+		Node oldV = nodes.get(i);
+		if (oldV != v) {
+			// TODO potential EXCEPTION
+			// tak toto bude urcite hadzat nejaku vynimku... (aj ked zatial nie)
+			// (Node.move() tiez meni tieto premenne a vola sa v inom vlakne)
+			if (oldV != null && (oldV.x != oldV.tox || oldV.y != oldV.toy)) {
+				oldV.steps = 0;
+				oldV.x = oldV.tox;
+				oldV.y = oldV.toy;
+			}
 			if (scenario.isAddingEnabled()) {
-				scenario.add(new Command.SetNodeCommand(this, i, nodes.get(i),
-						v));
+				scenario.add(new Command.SetNodeCommand(this, i, oldV, v));
 			}
 			nodes.set(i, v);
-		}
-		if (waitBack && v != null && scenario.isAddingEnabled()) {
-			scenario.add(v.new WaitBackwardsCommand());
+			if (waitBack && v != null && scenario.isAddingEnabled()) {
+				scenario.add(v.new WaitBackwardsCommand());
+			}
 		}
 	}
 

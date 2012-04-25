@@ -44,7 +44,7 @@ public class AVLNode extends BSTNode {
 	}
 
 	public AVLNode(BSTNode v) {
-		this(v.D, v.key, v.x, v.y);
+		this(v.D, v.getKey(), v.x, v.y);
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class AVLNode extends BSTNode {
 
 	@Override
 	public void draw(View V) {
-		if (state == Node.INVISIBLE || key == NULL) {
+		if (state == Node.INVISIBLE || getKey() == NULL) {
 			return;
 		}
 		drawBg(V);
@@ -147,7 +147,7 @@ public class AVLNode extends BSTNode {
 		@Override
 		public Element getXML() {
 			Element e = new Element("setBalance");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			e.setAttribute("fromBalance", Integer.toString(fromBal));
 			e.setAttribute("toBalance", Integer.toString(toBal));
 			return e;

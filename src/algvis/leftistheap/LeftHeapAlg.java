@@ -23,16 +23,16 @@ public class LeftHeapAlg extends Algorithm {
 			w.mark();
 			if (w.prec(H.root[0])) {
 				if (!H.minHeap) {
-					addStep("leftmeldrightg", w.key, H.root[0].key);
+					addStep("leftmeldrightg", w.getKey(), H.root[0].getKey());
 				} else {
-					addStep("leftmeldrightl", w.key, H.root[0].key);
+					addStep("leftmeldrightl", w.getKey(), H.root[0].getKey());
 				}
 				mysuspend();
 			} else {
 				if (!H.minHeap) {
-					addStep("leftmeldswapl", w.key, H.root[0].key);
+					addStep("leftmeldswapl", w.getKey(), H.root[0].getKey());
 				} else {
-					addStep("leftmeldswapg", w.key, H.root[0].key);
+					addStep("leftmeldswapg", w.getKey(), H.root[0].getKey());
 				}
 				w.setDoubleArrow(H.root[0]);
 				mysuspend();
@@ -61,7 +61,7 @@ public class LeftHeapAlg extends Algorithm {
 			w.unmark();
 
 			if (w.getRight() == null) {
-				addStep("leftmeldnoson", H.root[0].key, w.key);
+				addStep("leftmeldnoson", H.root[0].getKey(), w.getKey());
 				mysuspend();
 				w.linkRight(H.root[0]);
 				H.root[0] = null;
@@ -143,13 +143,13 @@ public class LeftHeapAlg extends Algorithm {
 			H.v.mark();			
 			H.v2 = new LeftHeapNode(w);
 			H.v2.rank = -1;
-			v.key = Node.NOKEY;
-			w.key = Node.NOKEY;
+			v.setKey(Node.NOKEY);
+			w.setKey(Node.NOKEY);
 			H.v.goTo(w);
 			H.v2.goTo(v);
 			mysuspend();
-			v.key = H.v2.key;
-			w.key = H.v.key;
+			v.setKey(H.v2.getKey());
+			w.setKey(H.v.getKey());
 			v.setColor(H.v2.getColor());
 			w.setColor(H.v.getColor());
 			H.v.unmark();			

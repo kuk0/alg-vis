@@ -111,7 +111,7 @@ public class SkipList extends Dictionary implements ClickListener {
 		if (getRoot() != null) {
 			Node w = getRoot().find(x, y);
 			if (w != null) {
-				M.B.I.setText("" + w.key);
+				M.B.I.setText("" + w.getKey());
 			}
 		}
 	}

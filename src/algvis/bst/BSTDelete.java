@@ -51,16 +51,16 @@ public class BSTDelete extends Algorithm {
 			mysuspend();
 
 			while (true) {
-				if (d.key == v.key) { // found
+				if (d.getKey() == v.getKey()) { // found
 					// v.setColor(NodeColor.FOUND);
 					break;
-				} else if (d.key < K) { // right
+				} else if (d.getKey() < K) { // right
 					if (d.getRight() == null) {
 						v.pointInDir(45);
 					} else {
 						v.pointAbove(d.getRight());
 					}
-					addStep("bstfindright", K, d.key);
+					addStep("bstfindright", K, d.getKey());
 					mysuspend();
 					v.noArrow();
 					d = d.getRight();
@@ -77,7 +77,7 @@ public class BSTDelete extends Algorithm {
 					} else {
 						v.pointAbove(d.getLeft());
 					}
-					addStep("bstfindleft", K, d.key);
+					addStep("bstfindleft", K, d.getKey());
 					mysuspend();
 					v.noArrow();
 					d = d.getLeft();
@@ -125,9 +125,9 @@ public class BSTDelete extends Algorithm {
 					s.pointTo(d.getParent());
 				}
 				if (d.isRoot()) {
-					addStep("bst-delete-newroot", K, s.key);
+					addStep("bst-delete-newroot", K, s.getKey());
 				} else {
-					addStep("bst-delete-linkpar", K, s.key, d.getParent().key);
+					addStep("bst-delete-linkpar", K, s.getKey(), d.getParent().getKey());
 				}
 				mysuspend();
 				s.noArc();
@@ -167,11 +167,11 @@ public class BSTDelete extends Algorithm {
 				v.goTo(s);
 				BSTNode p = s.getParent(), r = s.getRight();
 				v.setColor(NodeColor.FOUND);
-				addNote("bst-delete-succ", K, s.key);
+				addNote("bst-delete-succ", K, s.getKey());
 				if (r == null) {
 					addStep("bst-delete-succ-unlink");
 				} else {
-					addStep("bst-delete-succ-link", r.key, p.key);
+					addStep("bst-delete-succ-link", r.getKey(), p.getKey());
 					if (s.isLeft()) {
 						r.pointTo(p);
 					} else {
@@ -191,7 +191,7 @@ public class BSTDelete extends Algorithm {
 				}
 				v.goNextTo(d);
 				mysuspend();
-				addStep("bst-delete-replace", K, s.key);
+				addStep("bst-delete-replace", K, s.getKey());
 				mysuspend();
 				if (d.getParent() == null) {
 					T.setRoot(v);

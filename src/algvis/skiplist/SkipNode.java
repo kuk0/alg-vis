@@ -206,14 +206,14 @@ public class SkipNode extends Node {
 		@Override
 		public Element getXML() {
 			Element e = new Element("setDown");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			if (newDown != null) {
-				e.setAttribute("newDown", Integer.toString(newDown.key));
+				e.setAttribute("newDown", Integer.toString(newDown.getKey()));
 			} else {
 				e.setAttribute("newDown", "null");
 			}
 			if (oldDown != null) {
-				e.setAttribute("oldDown", Integer.toString(oldDown.key));
+				e.setAttribute("oldDown", Integer.toString(oldDown.getKey()));
 			} else {
 				e.setAttribute("oldDown", "null");
 			}
@@ -242,14 +242,14 @@ public class SkipNode extends Node {
 		@Override
 		public Element getXML() {
 			Element e = new Element("setLeft");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			if (newLeft != null) {
-				e.setAttribute("newLeft", Integer.toString(newLeft.key));
+				e.setAttribute("newLeft", Integer.toString(newLeft.getKey()));
 			} else {
 				e.setAttribute("newLeft", "null");
 			}
 			if (oldLeft != null) {
-				e.setAttribute("oldLeft", Integer.toString(oldLeft.key));
+				e.setAttribute("oldLeft", Integer.toString(oldLeft.getKey()));
 			} else {
 				e.setAttribute("oldLeft", "null");
 			}
@@ -278,14 +278,14 @@ public class SkipNode extends Node {
 		@Override
 		public Element getXML() {
 			Element e = new Element("setRight");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			if (newRight != null) {
-				e.setAttribute("newRight", Integer.toString(newRight.key));
+				e.setAttribute("newRight", Integer.toString(newRight.getKey()));
 			} else {
 				e.setAttribute("newRight", "null");
 			}
 			if (oldRight != null) {
-				e.setAttribute("oldRight", Integer.toString(oldRight.key));
+				e.setAttribute("oldRight", Integer.toString(oldRight.getKey()));
 			} else {
 				e.setAttribute("oldRight", "null");
 			}
@@ -314,14 +314,14 @@ public class SkipNode extends Node {
 		@Override
 		public Element getXML() {
 			Element e = new Element("setUp");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			if (newUp != null) {
-				e.setAttribute("newUp", Integer.toString(newUp.key));
+				e.setAttribute("newUp", Integer.toString(newUp.getKey()));
 			} else {
 				e.setAttribute("newUp", "null");
 			}
 			if (oldUp != null) {
-				e.setAttribute("oldUp", Integer.toString(oldUp.key));
+				e.setAttribute("oldUp", Integer.toString(oldUp.getKey()));
 			} else {
 				e.setAttribute("oldUp", "null");
 			}

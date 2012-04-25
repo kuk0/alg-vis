@@ -41,7 +41,7 @@ public class GBFind extends GBAlg {
 			addStep("bstfindstart");
 			mysuspend();
 			while (true) {
-				if (w.key == K) {
+				if (w.getKey() == K) {
 					if (((GBNode) w).isDeleted()) {
 						addStep("gbfinddeleted");
 						v.setColor(NodeColor.NOTFOUND);
@@ -51,8 +51,8 @@ public class GBFind extends GBAlg {
 						v.setColor(NodeColor.FOUND);
 					}
 					break;
-				} else if (w.key < K) {
-					addStep("bstfindright", K, w.key);
+				} else if (w.getKey() < K) {
+					addStep("bstfindright", K, w.getKey());
 					w = w.getRight();
 					if (w != null) {
 						v.goTo(w);
@@ -63,7 +63,7 @@ public class GBFind extends GBAlg {
 						break;
 					}
 				} else {
-					addStep("bstfindleft", K, w.key);
+					addStep("bstfindleft", K, w.getKey());
 					w = w.getLeft();
 					if (w != null) {
 						v.goTo(w);
