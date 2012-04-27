@@ -16,8 +16,11 @@
  ******************************************************************************/
 package algvis.bst;
 
+import java.awt.Color;
+
 import algvis.core.ClickListener;
 import algvis.core.Dictionary;
+import algvis.core.Fonts;
 import algvis.core.Layout;
 import algvis.core.LayoutListener;
 import algvis.core.StringUtils;
@@ -126,6 +129,15 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 		if (getRoot() != null) {
 			getRoot().moveTree();
 			getRoot().drawTree(V);
+			V.setColor(new Color(150,150,150));
+			double opth = lg(getRoot().size) + 1;
+			V.drawLine(x1-20, y1, x1-20, y1+(int)opth*minsepy*2);
+			V.drawLine(x1-22, y1, x1-18, y1);
+			V.drawLine(x1-22, y1+(int)opth*minsepy, x1-18, y1+(int)opth*minsepy);
+			V.drawLine(x1-22, y1+(int)opth*minsepy*2, x1-18, y1+(int)opth*minsepy*2);
+			V.drawStringLeft("0", x1-25, y1, Fonts.SMALL);
+			V.drawStringLeft("lg n", x1-25, y1+(int)opth*minsepy, Fonts.SMALL);
+			V.drawStringLeft("2lg n", x1-25, y1+(int)opth*minsepy*2, Fonts.SMALL);
 		}
 		if (getV() != null) {
 			getV().move();
