@@ -33,7 +33,7 @@ import algvis.internationalization.IMenuItem;
 import algvis.internationalization.Languages;
 
 public class AlgVis extends JPanel implements ActionListener {
-	/* set the default panel 
+	/* set the default panel
      * 0 - BST ("bst")
      * 1 - Rotations ("rotations")
      * 2 - AVL ("avltree")
@@ -55,7 +55,7 @@ public class AlgVis extends JPanel implements ActionListener {
      * 18 - Fibonacci heap ("fibheap")
      * 19 - Union-find ("ufi")
      * 20 - Trie ("trie") */
-	final static int DEFAULT_DS = 0; 
+	final static int DEFAULT_DS = 0;
 	
 	private static final long serialVersionUID = -5202486006824196688L;
 

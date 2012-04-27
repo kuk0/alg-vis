@@ -18,7 +18,7 @@ package algvis.leftistheap;
 
 import algvis.core.ClickListener;
 import algvis.core.MeldablePQ;
-import algvis.core.MeldablePQButtons;
+import algvis.core.MeldablePQButtonsNoDecr;
 import algvis.core.Node;
 import algvis.core.Pair;
 import algvis.core.StringUtils;
@@ -74,7 +74,7 @@ public class LeftHeap extends MeldablePQ implements ClickListener{
 		Pair p = chooseHeaps(i, j);
 		i = p.first;
 		j = p.second;
-		((MeldablePQButtons) M.B).activeHeap.setValue(i);
+		((MeldablePQButtonsNoDecr) M.B).activeHeap.setValue(i);
 		start(new LeftHeapMeld(this, i, j));
 	}
 
@@ -154,7 +154,7 @@ public class LeftHeap extends MeldablePQ implements ClickListener{
 					v.mark();
 					chosen = v;
 				} else {
-					((MeldablePQButtons) M.B).activeHeap.setValue(h);
+					((MeldablePQButtonsNoDecr) M.B).activeHeap.setValue(h);
 					// lowlight();
 					// highlight(h);
 				}
@@ -169,21 +169,21 @@ public class LeftHeap extends MeldablePQ implements ClickListener{
 			if (root[i] != null) {
 				root[i].reposition();
 				root[i].reboxTree();
-				sumx += root[i].leftw + 20;		// 20 = vzdialenost medzi haldami 
+				sumx += root[i].leftw;
 				root[i].repos(sumx, root[i].toy);
-				sumx += root[i].rightw;
+				sumx += root[i].rightw + 20; //vzdialenost hald
 			}
 			if (i == active) {
 				if (root[0] != null) {
 					root[0].reposition();
 					root[0].reboxTree();
-					sumx += root[0].leftw + 20;		//20
+					sumx += root[0].leftw;
 					if (root[0].y >= 0) { // nie je na zaciatku vkladania
 						root[0].repos(sumx, root[0].y);
 					} else {
 						root[0].repos(sumx, root[0].toy);
 					}
-					sumx += root[0].rightw;
+					sumx += root[0].rightw + 20;
 				}
 			}
 		}
@@ -231,3 +231,4 @@ public class LeftHeap extends MeldablePQ implements ClickListener{
 		return "leftheap";
 	}
 }
+

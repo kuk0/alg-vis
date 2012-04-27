@@ -27,12 +27,16 @@ package algvis.core;
  */
 abstract public class Algorithm extends Thread {
 	private DataStructure D;
-	boolean suspended = false;
+	private boolean suspended = false;
 
 	public Algorithm(DataStructure D) {
 		this.D = D;
 		D.scenario.newAlgorithm();
 		D.scenario.newStep();
+	}
+
+	public boolean isSuspended() {
+		return suspended;
 	}
 
 	/**

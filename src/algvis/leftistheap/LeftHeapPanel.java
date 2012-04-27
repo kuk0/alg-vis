@@ -18,9 +18,9 @@
 package algvis.leftistheap;
 
 import algvis.core.DataStructure;
-import algvis.core.VisPanel;
-import algvis.core.MeldablePQButtons;
+import algvis.core.MeldablePQButtonsNoDecr;
 import algvis.core.Settings;
+import algvis.core.VisPanel;
 
 public class LeftHeapPanel extends VisPanel {
 	private static final long serialVersionUID = -6885107230514971633L;
@@ -34,7 +34,7 @@ public class LeftHeapPanel extends VisPanel {
 	public void initDS() {
 		LeftHeap L = new LeftHeap(this);
 		D = L;
-		B = new MeldablePQButtons(this);
+		B = new MeldablePQButtonsNoDecr(this);
 		L.active = 1;
 		D.random(13);
 		L.active = 2;
