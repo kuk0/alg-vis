@@ -20,9 +20,9 @@ import java.awt.Color;
 
 import algvis.core.NodeColor;
 import algvis.core.DataStructure;
-import algvis.core.Fonts;
 import algvis.core.Node;
-import algvis.core.View;
+import algvis.gui.Fonts;
+import algvis.gui.view.View;
 
 public class BNode extends Node {
 	int width, leftw, rightw;

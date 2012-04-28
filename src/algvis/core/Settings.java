@@ -19,6 +19,8 @@ package algvis.core;
 import java.util.LinkedList;
 import java.util.List;
 
+import algvis.gui.view.Layout;
+import algvis.gui.view.LayoutListener;
 import algvis.internationalization.Languages;
 
 public class Settings {

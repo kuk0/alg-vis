@@ -1,6 +1,6 @@
 package algvis.leftistheap;
 
-import algvis.core.InputField;
+import algvis.gui.InputField;
 
 public class LeftHeapDecrKey extends LeftHeapAlg{
 	int delta;

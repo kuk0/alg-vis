@@ -2,7 +2,7 @@ package algvis.daryheap;
 
 import algvis.core.DataStructure;
 import algvis.core.Settings;
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
 
 public class DaryHeapPanel extends VisPanel{
 	private static final long serialVersionUID = 5387116424458217311L;

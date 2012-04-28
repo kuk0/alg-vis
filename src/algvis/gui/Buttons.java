@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -30,6 +30,7 @@ import javax.swing.JPanel;
 
 import org.jdom.Element;
 
+import algvis.core.DataStructure;
 import algvis.internationalization.ChLabel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ICheckBox;
@@ -223,12 +224,12 @@ abstract public class Buttons extends JPanel implements ActionListener {
 
 	public void update() {
 		if (D.scenario.isAlgorithmRunning()
-				|| (D.A != null && D.A.isSuspended())) {
+				|| (D.getA() != null && D.getA().isSuspended())) {
 			disableAll();
 		} else {
 			enableAll();
 		}
-		if (D.scenario.hasNext() || (D.A != null && D.A.isSuspended())) {
+		if (D.scenario.hasNext() || (D.getA() != null && D.getA().isSuspended())) {
 			enableNext();
 		} else {
 			disableNext();

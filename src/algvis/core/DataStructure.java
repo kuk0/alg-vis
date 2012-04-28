@@ -20,13 +20,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import algvis.gui.InputField;
+import algvis.gui.VisPanel;
+import algvis.gui.view.Layout;
+import algvis.gui.view.View;
 import algvis.scenario.Command;
 import algvis.scenario.Scenario;
 
 abstract public class DataStructure {
 	// datova struktura musi vediet gombikom povedat, kolko ich potrebuje,
 	// kolko ma vstupov, ake to su a co treba robit
-	protected Algorithm A;
+	private Algorithm A;
 	public VisPanel M;
 	public Scenario scenario;
 	public static final int rootx = 0, rooty = 0, sheight = 600, swidth = 400,
@@ -156,5 +160,9 @@ abstract public class DataStructure {
 		for (int i = 0; i < count; ++i) {
 			nodes.add(null);
 		}
+	}
+
+	public Algorithm getA() {
+		return A;
 	}
 }

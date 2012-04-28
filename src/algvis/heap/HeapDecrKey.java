@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.heap;
 
-import algvis.core.InputField;
+import algvis.gui.InputField;
 
 public class HeapDecrKey extends HeapAlg {
 	int delta;

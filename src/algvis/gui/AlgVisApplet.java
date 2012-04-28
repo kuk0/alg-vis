@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui;
 
 import java.awt.Color;
 
@@ -23,6 +23,9 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.TitledBorder;
 
+import algvis.core.DataStructures;
+import algvis.core.MyParserDelegator;
+import algvis.core.Settings;
 import algvis.internationalization.Languages;
 
 public class AlgVisApplet extends JApplet {

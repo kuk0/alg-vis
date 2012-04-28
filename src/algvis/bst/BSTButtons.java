@@ -21,8 +21,8 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JPanel;
 
-import algvis.core.DictButtons;
-import algvis.core.VisPanel;
+import algvis.gui.DictButtons;
+import algvis.gui.VisPanel;
 import algvis.internationalization.ICheckBox;
 
 public class BSTButtons extends DictButtons {

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui;
 
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
@@ -28,6 +28,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 
+import algvis.core.ADTs;
+import algvis.core.DataStructures;
+import algvis.core.Settings;
 import algvis.internationalization.IMenu;
 import algvis.internationalization.IMenuItem;
 import algvis.internationalization.Languages;

@@ -22,7 +22,7 @@ import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
-import algvis.core.View;
+import algvis.gui.view.View;
 import algvis.scenario.Command;
 
 public class RBNode extends BSTNode {

@@ -21,6 +21,8 @@ import java.awt.geom.Point2D;
 
 import org.jdom.Element;
 
+import algvis.gui.Fonts;
+import algvis.gui.view.View;
 import algvis.scenario.Command;
 
 /**

@@ -16,6 +16,9 @@
  ******************************************************************************/
 package algvis.core;
 
+import algvis.gui.VisPanel;
+import algvis.gui.view.Layout;
+
 abstract public class Dictionary extends DataStructure {
 	public static String adtName = "dictionary";
 

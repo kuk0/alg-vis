@@ -19,11 +19,11 @@ package algvis.heap;
 import org.jdom.Element;
 
 import algvis.bst.BSTNode;
-import algvis.core.ClickListener;
 import algvis.core.Node;
 import algvis.core.PriorityQueue;
-import algvis.core.View;
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
+import algvis.gui.view.ClickListener;
+import algvis.gui.view.View;
 import algvis.scenario.Command;
 
 public class Heap extends PriorityQueue implements ClickListener {

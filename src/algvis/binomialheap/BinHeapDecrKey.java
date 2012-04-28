@@ -17,8 +17,8 @@
 package algvis.binomialheap;
 
 import algvis.core.Algorithm;
-import algvis.core.InputField;
 import algvis.core.Node;
+import algvis.gui.InputField;
 
 public class BinHeapDecrKey extends Algorithm {
 	int delta;

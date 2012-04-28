@@ -20,7 +20,7 @@ import org.jdom.Element;
 
 import algvis.core.DataStructure;
 import algvis.core.TreeNode;
-import algvis.core.View;
+import algvis.gui.view.View;
 import algvis.scenario.Command;
 
 public class UnionFindNode extends TreeNode {

@@ -20,13 +20,13 @@ import java.util.Random;
 
 import algvis.bst.BST;
 import algvis.bst.BSTNode;
-import algvis.core.Alignment;
-import algvis.core.ClickListener;
 import algvis.core.DataStructure;
-import algvis.core.InputField;
-import algvis.core.Layout;
-import algvis.core.View;
-import algvis.core.VisPanel;
+import algvis.gui.InputField;
+import algvis.gui.VisPanel;
+import algvis.gui.view.Alignment;
+import algvis.gui.view.ClickListener;
+import algvis.gui.view.Layout;
+import algvis.gui.view.View;
 
 public class Rotations extends DataStructure implements ClickListener {
 	public static String adtName = "dictionary";

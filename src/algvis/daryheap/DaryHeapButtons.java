@@ -6,8 +6,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import algvis.core.PQButtons;
-import algvis.core.VisPanel;
+import algvis.gui.PQButtons;
+import algvis.gui.VisPanel;
 import algvis.internationalization.ILabel;
 
 public class DaryHeapButtons extends PQButtons implements ChangeListener {

@@ -1,6 +1,6 @@
 package algvis.daryheap;
 
-import algvis.core.InputField;
+import algvis.gui.InputField;
 
 public class DaryHeapDecrKey extends DaryHeapAlg{
 	int delta;

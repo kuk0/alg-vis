@@ -16,6 +16,8 @@
  ******************************************************************************/
 package algvis.core;
 
+import algvis.gui.VisPanel;
+
 abstract public class PriorityQueue extends DataStructure {
 	public static String adtName = "pq";
 	public boolean minHeap = false;

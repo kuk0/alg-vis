@@ -17,9 +17,9 @@
 package algvis.lazybinomialheap;
 
 import algvis.core.DataStructure;
-import algvis.core.MeldablePQButtons;
 import algvis.core.Settings;
-import algvis.core.VisPanel;
+import algvis.gui.MeldablePQButtons;
+import algvis.gui.VisPanel;
 
 public class LazyBinHeapPanel extends VisPanel {
 	private static final long serialVersionUID = 1997265264400223983L;

@@ -23,8 +23,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import algvis.core.DictButtons;
-import algvis.core.VisPanel;
+import algvis.gui.DictButtons;
+import algvis.gui.VisPanel;
 
 public class GBButtons extends DictButtons implements ChangeListener {
 	private static final long serialVersionUID = -4200856610929537432L;

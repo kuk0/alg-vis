@@ -19,7 +19,7 @@ package algvis.fibonacciheap;
 import algvis.binomialheap.BinHeapNode;
 import algvis.binomialheap.BinomialHeap;
 import algvis.core.Algorithm;
-import algvis.core.InputField;
+import algvis.gui.InputField;
 
 public class FibHeapDecrKey extends Algorithm {
 	int delta, i;

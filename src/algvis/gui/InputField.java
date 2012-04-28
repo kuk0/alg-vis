@@ -14,13 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui;
 
 import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.JTextField;
 
+import algvis.core.Settings;
+import algvis.core.WordGenerator;
 import algvis.internationalization.ILabel;
 
 /**
@@ -33,7 +35,7 @@ public class InputField extends JTextField {
 	private static final long serialVersionUID = -1263697952255226926L;
 	public final static int MAX = 999;
 	Random G;
-	ILabel sb; // status bar
+	final ILabel sb; // status bar
 	Settings s;
 
 	public InputField(int cols, ILabel sb, Settings s) {

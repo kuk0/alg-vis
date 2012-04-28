@@ -27,6 +27,7 @@ import algvis.btree.a234Panel;
 import algvis.btree.a23Panel;
 import algvis.daryheap.DaryHeapPanel;
 import algvis.fibonacciheap.FibHeapPanel;
+import algvis.gui.VisPanel;
 import algvis.heap.HeapPanel;
 import algvis.lazybinomialheap.LazyBinHeapPanel;
 import algvis.leftistheap.LeftHeapPanel;
@@ -58,7 +59,7 @@ public class DataStructures {
 			SkewHeapPanel.class, BinHeapPanel.class, LazyBinHeapPanel.class,
 			FibHeapPanel.class, UnionFindPanel.class, TriePanel.class };
 
-	static final int N = PANEL.length;
+	public static final int N = PANEL.length;
 
 	private static boolean check_range(int i) {
 		if (i < 0 || i >= N) {

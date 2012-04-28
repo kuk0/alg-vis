@@ -1,6 +1,6 @@
 package algvis.skewheap;
 
-import algvis.core.InputField;
+import algvis.gui.InputField;
 
 public class SkewHeapDecrKey extends SkewHeapAlg{
 int delta;

@@ -25,7 +25,7 @@ import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
 
 /**
  * Scenario (or history list) stores list of Commands, which are executed. It

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,6 +23,9 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 
 import javax.swing.JPanel;
+
+import algvis.core.DataStructure;
+import algvis.gui.view.View;
 
 public class Screen extends JPanel implements Runnable {
 	private static final long serialVersionUID = -8279768206774288161L;

@@ -16,13 +16,13 @@
  ******************************************************************************/
 package algvis.bst;
 
-import algvis.core.ClickListener;
 import algvis.core.Dictionary;
-import algvis.core.Layout;
-import algvis.core.LayoutListener;
 import algvis.core.StringUtils;
-import algvis.core.View;
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
+import algvis.gui.view.ClickListener;
+import algvis.gui.view.Layout;
+import algvis.gui.view.LayoutListener;
+import algvis.gui.view.View;
 
 public class BST extends Dictionary implements LayoutListener, ClickListener {
 	public static String dsName = "bst";

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -22,6 +22,7 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
+import algvis.core.Dictionary;
 import algvis.internationalization.IButton;
 import algvis.scenario.Scenario;
 

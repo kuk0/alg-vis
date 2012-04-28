@@ -23,12 +23,12 @@ import java.util.Stack;
 import org.jdom.Element;
 
 import algvis.core.DataStructure;
-import algvis.core.Fonts;
-import algvis.core.Layout;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.NodePair;
-import algvis.core.View;
+import algvis.gui.Fonts;
+import algvis.gui.view.Layout;
+import algvis.gui.view.View;
 import algvis.scenario.Command;
 
 public class BSTNode extends Node {

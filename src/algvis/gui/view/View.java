@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui.view;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -36,6 +36,9 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JPanel;
 
+import algvis.gui.Fonts;
+
+
 public class View implements MouseListener, MouseMotionListener,
 		MouseWheelListener {
 	Graphics2D g;
@@ -46,7 +49,8 @@ public class View implements MouseListener, MouseMotionListener,
 	public Alignment align = Alignment.CENTER;
 
 	double x, y, f;
-	AffineTransform at, oldTransform;
+	public final AffineTransform at;
+	AffineTransform oldTransform;
 	ClickListener D;
 
 	public View(JPanel P) {

@@ -21,11 +21,11 @@ import java.util.Random;
 
 import org.jdom.Element;
 
-import algvis.core.Alignment;
-import algvis.core.ClickListener;
 import algvis.core.DataStructure;
-import algvis.core.View;
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
+import algvis.gui.view.Alignment;
+import algvis.gui.view.ClickListener;
+import algvis.gui.view.View;
 import algvis.scenario.Command;
 import algvis.scenario.Scenario;
 import algvis.unionfind.UnionFindFind.FindHeuristic;

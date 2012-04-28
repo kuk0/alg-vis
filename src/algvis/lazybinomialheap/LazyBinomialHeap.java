@@ -18,12 +18,12 @@ package algvis.lazybinomialheap;
 
 import algvis.binomialheap.BinHeapNode;
 import algvis.binomialheap.BinomialHeap;
-import algvis.core.Fonts;
-import algvis.core.MeldablePQButtons;
 import algvis.core.Node;
 import algvis.core.Pair;
-import algvis.core.View;
-import algvis.core.VisPanel;
+import algvis.gui.Fonts;
+import algvis.gui.MeldablePQButtons;
+import algvis.gui.VisPanel;
+import algvis.gui.view.View;
 
 public class LazyBinomialHeap extends BinomialHeap {
 	public static String dsName = "lazybinheap";

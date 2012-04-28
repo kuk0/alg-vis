@@ -4,7 +4,7 @@ import java.awt.Color;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.PriorityQueue;
-import algvis.core.View;
+import algvis.gui.view.View;
 import algvis.heap.HeapNode;
 
 public class DaryHeapNode extends HeapNode{

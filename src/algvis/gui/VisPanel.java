@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -27,6 +27,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
+import algvis.core.DataStructure;
+import algvis.core.Settings;
 import algvis.internationalization.ILabel;
 import algvis.internationalization.LanguageListener;
 

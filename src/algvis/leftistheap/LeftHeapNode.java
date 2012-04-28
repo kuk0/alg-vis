@@ -3,10 +3,10 @@ package algvis.leftistheap;
 import java.awt.Color;
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
-import algvis.core.Fonts;
 import algvis.core.Node;
 import algvis.core.MeldablePQ;
-import algvis.core.View;
+import algvis.gui.Fonts;
+import algvis.gui.view.View;
 
 public class LeftHeapNode extends BSTNode {
 	Color color = Color.yellow;

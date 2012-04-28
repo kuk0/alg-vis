@@ -18,12 +18,12 @@ package algvis.binomialheap;
 
 import java.awt.Color;
 
-import algvis.core.Fonts;
 import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.MeldablePQ;
 import algvis.core.Node;
-import algvis.core.View;
+import algvis.gui.Fonts;
+import algvis.gui.view.View;
 
 public class BinHeapNode extends Node {
 	public int leftw, height, rank; // TODO: size -> rank (treba ale

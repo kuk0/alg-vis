@@ -19,11 +19,11 @@ package algvis.trie;
 import java.awt.Color;
 
 import algvis.core.DataStructure;
-import algvis.core.Fonts;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.TreeNode;
-import algvis.core.View;
+import algvis.gui.Fonts;
+import algvis.gui.view.View;
 
 public class TrieNode extends TreeNode {
 	public String ch; // this should be always only 1 char!

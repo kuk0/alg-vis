@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -22,23 +22,25 @@ import java.util.Vector;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-import algvis.bst.BSTNode;
+import algvis.core.MeldablePQ;
 import algvis.internationalization.IButton;
+import algvis.internationalization.ILabel;
 import algvis.internationalization.IRadioButton;
 
-/**
- * The Class PQButtons. All priority queues need buttons "Insert",
- * "Delete max/min", and "Increase/Decrease key". Furthermore, the user may
- * choose whether he wants a "min" or "max" version of the priority queue.
- */
-public class PQButtons extends Buttons {
-	private static final long serialVersionUID = 5632185496171660196L;
-	IButton insertB, deleteB, decrKeyB;
+public class MeldablePQButtonsNoDecr extends Buttons implements ChangeListener {
+	private static final long serialVersionUID = 1242711038059609653L;
+	IButton insertB, deleteB, meldB;
+	public JSpinner activeHeap;
+	ILabel activeLabel;
 	IRadioButton minB, maxB;
 	ButtonGroup minMaxGroup;
 
-	public PQButtons(VisPanel M) {
+	public MeldablePQButtonsNoDecr(VisPanel M) {
 		super(M);
 	}
 
@@ -52,21 +54,21 @@ public class PQButtons extends Buttons {
 		deleteB.setMnemonic(KeyEvent.VK_D);
 		deleteB.addActionListener(this);
 
-		if (((PriorityQueue) D).minHeap) {
-			decrKeyB = new IButton(M.S.L, "button-decreasekey");
-		} else {
-			decrKeyB = new IButton(M.S.L, "button-increasekey");
-		}
-		decrKeyB.setMnemonic(KeyEvent.VK_K);
-		decrKeyB.addActionListener(this);
+		meldB = new IButton(M.S.L, "button-meld");
+		deleteB.setMnemonic(KeyEvent.VK_M);
+		meldB.addActionListener(this);
 
 		P.add(insertB);
 		P.add(deleteB);
-		P.add(decrKeyB);
+		P.add(meldB);
 	}
 
 	@Override
 	public void otherButtons(JPanel P) {
+		activeHeap = new JSpinner(new SpinnerNumberModel(1, 1,
+				MeldablePQ.numHeaps, 1));
+		activeHeap.addChangeListener(this);
+		activeLabel = new ILabel(M.S.L, "activeheap");
 		minB = new IRadioButton(M.S.L, "min");
 		minB.setSelected(false);
 		minB.addActionListener(this);
@@ -76,6 +78,8 @@ public class PQButtons extends Buttons {
 		minMaxGroup = new ButtonGroup();
 		minMaxGroup.add(minB);
 		minMaxGroup.add(maxB);
+		P.add(activeLabel);
+		P.add(activeHeap);
 		P.add(minB);
 		P.add(maxB);
 	}
@@ -89,7 +93,7 @@ public class PQButtons extends Buttons {
 				@Override
 				public void run() {
 					for (int x : args) {
-						((PriorityQueue) D).insert(x);
+						((MeldablePQ) D).insert(x);
 					}
 				}
 			});
@@ -98,50 +102,61 @@ public class PQButtons extends Buttons {
 			Thread t = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					((PriorityQueue) D).delete();
+					((MeldablePQ) D).delete();
 				}
 			});
 			t.start();
-		} else if (evt.getSource() == decrKeyB) {
-			final int delta = Math.abs(I.getInt(1));
-			final BSTNode w = ((BSTNode) ((PriorityQueue) D).chosen);
+		} else if (evt.getSource() == meldB) {
+			Vector<Integer> args = I.getVI();
+			args.add(-1);
+			args.add(-1);
+			final int i = args.get(0);
+			final int j = args.get(1);
 			Thread t = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					((PriorityQueue) D).decreaseKey(w, delta);
+					((MeldablePQ) D).meld(i, j);
 				}
 			});
 			t.start();
-		} else if (evt.getSource() == minB && !((PriorityQueue) D).minHeap) {
+		} else if (evt.getSource() == minB && !((MeldablePQ) D).minHeap) {
 			D.clear();
 			deleteB.setT("button-deletemin");
-			decrKeyB.setT("button-decreasekey");
-			((PriorityQueue) D).minHeap = true;
-		} else if (evt.getSource() == maxB && ((PriorityQueue) D).minHeap) {
+			((MeldablePQ) D).minHeap = true;
+		} else if (evt.getSource() == maxB && ((MeldablePQ) D).minHeap) {
 			D.clear();
 			deleteB.setT("button-deletemax");
-			decrKeyB.setT("button-increasekey");
-			((PriorityQueue) D).minHeap = false;
+			((MeldablePQ) D).minHeap = false;
 		}
 	}
 
 	@Override
-	public void enableAll() {
-		super.enableAll();
-		insertB.setEnabled(true);
-		deleteB.setEnabled(true);
-		decrKeyB.setEnabled(true);
-		minB.setEnabled(true);
-		maxB.setEnabled(true);
+	public void enableNext() {
+		super.enableNext();
+		insertB.setEnabled(false);
+		deleteB.setEnabled(false);
+		meldB.setEnabled(false);
+		activeHeap.setEnabled(false);
 	}
 
 	@Override
-	public void disableAll() {
-		super.disableAll();
-		insertB.setEnabled(false);
-		deleteB.setEnabled(false);
-		decrKeyB.setEnabled(false);
-		minB.setEnabled(false);
-		maxB.setEnabled(false);
+	public void disableNext() {
+		super.disableNext();
+		insertB.setEnabled(true);
+		deleteB.setEnabled(true);
+		meldB.setEnabled(true);
+		next.setEnabled(false);
+		activeHeap.setEnabled(true);
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent evt) {
+		if (evt.getSource() == activeHeap) {
+			MeldablePQ H = ((MeldablePQ) D);
+			H.lowlight();
+			H.highlight((Integer) activeHeap.getValue());
+			if (H.chosen != null)
+				H.chosen.unmark();
+		}
 	}
 }
