@@ -44,7 +44,7 @@ public class AlgVisStandalone {
 			// and feel.
 		}
 
-		JFrame f = new JFrame("Gnarled trees");
+		JFrame f = new JFrame("Gnarley Trees");
 		f.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent e) {
