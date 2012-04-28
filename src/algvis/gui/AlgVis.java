@@ -62,10 +62,13 @@ public class AlgVis extends JPanel implements ActionListener {
 	
 	private static final long serialVersionUID = -5202486006824196688L;
 
-	JPanel cards;
-	JRootPane P;
-	Languages L;
-	Settings S;
+	/** Cards with data structures */
+	private final JPanel cards;
+	private final VisPanel[] panels;
+	private int activePanel = -1;
+	private final JRootPane P;
+	private final Languages L;
+	private final Settings S;
 
 	Map<String, IMenu> adtItems = new HashMap<String, IMenu>();
 	IMenuItem[] dsItems;
@@ -78,6 +81,8 @@ public class AlgVis extends JPanel implements ActionListener {
 		this.P = P;
 		L = new Languages(s);
 		S = new Settings(L);
+		cards = new JPanel(new CardLayout());
+		panels = new VisPanel[DataStructures.N];
 	}
 
 	public void init() {
@@ -148,20 +153,17 @@ public class AlgVis extends JPanel implements ActionListener {
 		menuBar.add(layoutMenu);
 		*/
 
-		// Cards with data structures
-		cards = new JPanel(new CardLayout());
 		for (int i = 0; i < DataStructures.N; ++i) {
-			VisPanel P = DataStructures.getPanel(i, S);
-			if (P != null)
-				cards.add(P, DataStructures.getName(i));
+			panels[i] = DataStructures.createPanel(i, S);
+			if (panels[i] != null)
+				cards.add(panels[i], DataStructures.getName(i));
 		}
 
 		add(menuBar);
 		P.setJMenuBar(menuBar);
 		add(cards);
 
-		CardLayout cl = (CardLayout) (cards.getLayout());
-		cl.show(cards, DataStructures.getName(DEFAULT_DS));
+		showCard(DEFAULT_DS);
 	}
 
 	@Override
@@ -182,11 +184,20 @@ public class AlgVis extends JPanel implements ActionListener {
 		if ("ds".equals(cmd[0])) {
 			for (int i = 0; i < DataStructures.N; ++i) {
 				if (DataStructures.getName(i).equals(cmd[1])) {
-					CardLayout cl = (CardLayout) (cards.getLayout());
-					cl.show(cards, DataStructures.getName(i));
+					showCard(i);
 					break;
 				}
 			}
 		}
+	}
+	
+	private void showCard(int i) {
+		CardLayout cl = (CardLayout) (cards.getLayout());
+		if (activePanel != -1) {
+			panels[activePanel].setOnAir(false);
+		}
+		activePanel = i;
+		panels[i].setOnAir(true);
+		cl.show(cards, DataStructures.getName(i));
 	}
 }

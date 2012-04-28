@@ -77,7 +77,7 @@ public class AlgVisApplet extends JApplet {
 			// data structure ds
 			Languages L = new Languages(getParameter("lang"));
 			Settings S = new Settings(L);
-			VisPanel P = DataStructures.getPanel(ds, S);
+			VisPanel P = DataStructures.createPanel(ds, S);
 			P.setSize(WIDTH, HEIGHT); // same size as defined in the HTML APPLET
 			if (P != null)
 				add(P);

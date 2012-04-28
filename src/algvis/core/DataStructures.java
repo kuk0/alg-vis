@@ -130,7 +130,10 @@ public class DataStructures {
 		}
 	}
 
-	public static VisPanel getPanel(int i, Settings S) {
+	/**
+	 * create new VisPanel for DS i (should be called once for each i)
+	 */
+	public static VisPanel createPanel(int i, Settings S) {
 		switch (i) {
 		case 0:
 			return new BSTPanel(S);
