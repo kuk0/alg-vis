@@ -65,11 +65,15 @@ public class Scenario implements XMLable {
 	}
 
 	public void newAlgorithm() {
-		scenario.add(new MacroCommand<MacroCommand<Command>>("algorithm"));
+		if (addingEnabled) {
+			scenario.add(new MacroCommand<MacroCommand<Command>>("algorithm"));
+		}
 	}
 
 	public void newStep() {
-		scenario.getCurrent().add(new MacroCommand<Command>("step"));
+		if (addingEnabled) {
+			scenario.getCurrent().add(new MacroCommand<Command>("step"));
+		}
 	}
 
 	/**
@@ -81,7 +85,7 @@ public class Scenario implements XMLable {
 			scenario.getCurrent().getCurrent().add(c);
 		}
 	}
-	
+
 	public void clear() {
 		scenario.clear();
 	}
@@ -114,6 +118,7 @@ public class Scenario implements XMLable {
 					scenario.execute();
 				}
 				V.B.update();
+				V.C.update();
 				enableAdding(true);
 			}
 		}, visible);
@@ -130,6 +135,7 @@ public class Scenario implements XMLable {
 					scenario.unexecute();
 				}
 				V.B.update();
+				V.C.update();
 				enableAdding(true);
 			}
 		}, visible);
@@ -190,12 +196,14 @@ public class Scenario implements XMLable {
 				e.printStackTrace();
 				return;
 			}
-			threadInstance.start();
 			if (!visible) {
-				threadInstance.interrupt();
 				interrupted = true;
 			} else {
 				interrupted = false;
+			}
+			threadInstance.start();
+			if (!visible) {
+				threadInstance.interrupt();
 			}
 		}
 
@@ -217,7 +225,6 @@ public class Scenario implements XMLable {
 				}
 			}
 			threadInstance = t;
-			interrupted = false;
 		}
 
 		public boolean isInterrupted() {
@@ -239,7 +246,7 @@ public class Scenario implements XMLable {
 		public ScenarioCommand(String name) {
 			super(name);
 		}
-		
+
 		public void clear() {
 			commands.clear();
 			iterator = commands.listIterator();

@@ -100,13 +100,13 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		initPause();
 		initClear();
 		initRandom();
-		// initSave();
+		initSave();
 		initZoom();
 		second.setLayout(new FlowLayout());
 		second.add(pause);
 		second.add(clear);
 		second.add(random);
-		// second.add(save);
+		second.add(save);
 		// second.add(zoomLabel);
 		// second.add(zoomIn);
 		// second.add(zoomOut);
@@ -304,7 +304,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	public Dimension getMinimumSize() {
 		return new Dimension(300, 150);
 	}
-	
+
 	private class SetStatsCommand implements Command {
 		private final String oldStats, newStats;
 

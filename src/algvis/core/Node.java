@@ -108,6 +108,10 @@ public class Node {
 	}
 
 	public void setState(int s) {
+		if (state != s && D.scenario.isAddingEnabled()) {
+			D.scenario.add(new SetStateCommand(s));
+		}
+		state = s;
 		if ((s == Node.LEFT || s == Node.RIGHT || s == Node.DOWN)
 				&& D.scenario.traverser.isInterrupted()) {
 			int k = 0;
@@ -120,10 +124,8 @@ public class Node {
 				toy = y += 20;
 				tox = x += k * 20;
 			}
-		} else if (state != s && D.scenario.isAddingEnabled()) {
-			D.scenario.add(new SetStateCommand(s));
+			state = INVISIBLE;
 		}
-		state = s;
 	}
 
 	public NodeColor getColor() {
@@ -387,16 +389,19 @@ public class Node {
 	 * Set new coordinates, where the node should go.
 	 */
 	public void goTo(int tox, int toy) {
-		if (D.scenario.traverser.isInterrupted()) {
-			x = this.tox = tox;
-			y = this.toy = toy;
-		} else if (this.tox != tox || this.toy != toy) {
+		if (this.tox != tox || this.toy != toy) {
 			if (D.scenario.isAddingEnabled()) {
 				D.scenario.add(new MoveCommand(tox, toy));
 			}
-			this.tox = tox;
-			this.toy = toy;
-			this.steps = STEPS;
+			if (D.scenario.traverser.isInterrupted()) {
+				steps = 0;
+				x = this.tox = tox;
+				y = this.toy = toy;
+			} else {
+				this.tox = tox;
+				this.toy = toy;
+				this.steps = STEPS;
+			}
 		}
 	}
 

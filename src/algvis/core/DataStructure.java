@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import algvis.bst.BST;
 import algvis.gui.InputField;
 import algvis.gui.VisPanel;
 import algvis.gui.view.Layout;
@@ -87,7 +88,7 @@ abstract public class DataStructure {
 		M.B.enableAll();
 	}
 
-	protected void setStats() {
+	public void setStats() {
 		M.B.setStats(stats());
 	}
 
@@ -112,10 +113,15 @@ abstract public class DataStructure {
 			}
 			scenario.enableAdding(true);
 			for (; i < n; ++i) {
+				if (this instanceof BST) {
+					scenario.newAlgorithm();
+					scenario.newStep();
+				}
 				insert(g.nextInt(InputField.MAX + 1));
 			}
 			M.C.enableUpdating(true);
 			M.C.update();
+			M.B.update();
 		}
 		M.pause = p;
 	}
