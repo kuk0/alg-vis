@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import algvis.bst.BST;
 import algvis.gui.InputField;
 import algvis.gui.VisPanel;
 import algvis.gui.view.Layout;
@@ -65,27 +64,42 @@ abstract public class DataStructure {
 	protected void start(Algorithm a) {
 		unmark();
 		A = a;
-		M.B.enableNext();
-		M.B.enablePrevious();
-		M.B.disableAll();
+		if (scenario.isEnabled()) {
+			// ak je povoleny scenario, tak sa vykona cely algoritmus, nevytvara
+			// (=nespusta) sa nove vlakno na krokovanie
+			// TODO skarede riesenie, spravit lepsie
+			a.run();
+		} else {
+			M.B.enableNext();
+			M.B.enablePrevious();
+			M.B.disableAll();
 
-		try {
-			A.start();
-		} catch (IllegalThreadStateException e) {
-			System.err.println("LOL");
+			try {
+				A.start();
+			} catch (IllegalThreadStateException e) {
+				System.err.println("LOL");
+				M.B.disableNext();
+				M.B.enableAll();
+				return;
+			}
+			try {
+				A.join();
+				// System.err.println("join");
+			} catch (InterruptedException e) {
+				// TODO ak sa napr. viac randomov zavola za sebou, tak sa
+				// interruptne
+				Thread.interrupted();
+				try {
+					A.join();
+				} catch (InterruptedException e1) {
+					System.err.println("AJAJAJ");
+					e.printStackTrace();
+				}
+			}
 			M.B.disableNext();
 			M.B.enableAll();
-			return;
-		}
-		try {
-			A.join();
-			// System.err.println("join");
-		} catch (InterruptedException e) {
-			System.err.println("AJAJAJ");
 		}
 		setStats();
-		M.B.disableNext();
-		M.B.enableAll();
 	}
 
 	public void setStats() {
@@ -100,30 +114,31 @@ abstract public class DataStructure {
 		return Math.log(x) / Math.log(2);
 	}
 
-	public void random(int n) {
-		Random g = new Random(System.currentTimeMillis());
-		boolean p = M.pause;
-		M.pause = false;
-		{
-			int i = 0;
-			scenario.enableAdding(false);
-			M.C.enableUpdating(false);
-			for (; i < n - Scenario.maxAlgorithms; ++i) {
-				insert(g.nextInt(InputField.MAX + 1));
-			}
-			scenario.enableAdding(true);
-			for (; i < n; ++i) {
-				if (this instanceof BST) {
-					scenario.newAlgorithm();
-					scenario.newStep();
+	public void random(final int n) {
+		scenario.traverser.startNew(new Runnable() {
+			@Override
+			public void run() {
+				Random g = new Random(System.currentTimeMillis());
+				boolean p = M.pause;
+				M.pause = false;
+				{
+					int i = 0;
+					scenario.enableAdding(false);
+					M.C.enableUpdating(false);
+					for (; i < n - Scenario.maxAlgorithms; ++i) {
+						insert(g.nextInt(InputField.MAX + 1));
+					}
+					scenario.enableAdding(true);
+					for (; i < n; ++i) {
+						insert(g.nextInt(InputField.MAX + 1));
+					}
+					M.C.enableUpdating(true);
+					M.C.update();
+					M.B.update();
 				}
-				insert(g.nextInt(InputField.MAX + 1));
+				M.pause = p;
 			}
-			M.C.enableUpdating(true);
-			M.C.update();
-			M.B.update();
-		}
-		M.pause = p;
+		}, true);
 	}
 
 	public void unmark() {

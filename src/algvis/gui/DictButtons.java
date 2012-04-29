@@ -23,8 +23,6 @@ import java.util.Vector;
 import javax.swing.JPanel;
 
 import algvis.core.Dictionary;
-
-import algvis.bst.BST;
 import algvis.internationalization.IButton;
 import algvis.scenario.Scenario;
 
@@ -83,49 +81,44 @@ public class DictButtons extends Buttons {
 						if (M.pause != p) {
 							M.C.enableUpdating(p = M.pause);
 						}
-						if (D instanceof BST) {
-							D.scenario.newAlgorithm();
-							D.scenario.newStep();
-						}
 						((Dictionary) D).insert(args.elementAt(i));
 					}
 					M.C.enableUpdating(true);
 					M.C.update();
 				}
-			}, false);
-			if (args.size() == 1) {
-				D.scenario.previous(false, false);
-				D.scenario.next(true, true);
+			}, true);
+			if (D.scenario.isEnabled() && args.size() == 1) {
+				startLastAlg();
 			}
-			D.scenario.traverser.join();
-			D.setStats();
-			M.C.update();
-			update();
 		} else if (evt.getSource() == findB) {
 			final Vector<Integer> args = I.getVI();
 			if (args.size() > 0) {
-				Thread t = new Thread(new Runnable() {
-					@Override
-					public void run() {
-						for (int x : args) {
+				for (final int x : args) {
+					D.scenario.traverser.startNew(new Runnable() {
+						@Override
+						public void run() {
 							((Dictionary) D).find(x);
 						}
+					}, true);
+					if (D.scenario.isEnabled()) {
+						startLastAlg();
 					}
-				});
-				t.start();
+				}
 			}
 		} else if (evt.getSource() == deleteB) {
 			final Vector<Integer> args = I.getVI();
 			if (args.size() > 0) {
-				Thread t = new Thread(new Runnable() {
-					@Override
-					public void run() {
-						for (int x : args) {
+				for (final int x : args) {
+					D.scenario.traverser.startNew(new Runnable() {
+						@Override
+						public void run() {
 							((Dictionary) D).delete(x);
 						}
+					}, true);
+					if (D.scenario.isEnabled()) {
+						startLastAlg();
 					}
-				});
-				t.start();
+				}
 			}
 		}
 	}

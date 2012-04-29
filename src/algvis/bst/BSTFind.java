@@ -97,7 +97,9 @@ public class BSTFind extends Algorithm {
 			}
 		}
 		mysuspend();
-		T.getRoot().subtreeColor(NodeColor.NORMAL);
+		if (T.getRoot() != null) {
+			T.getRoot().subtreeColor(NodeColor.NORMAL);
+		}
 		T.setV(null);
 	}
 }

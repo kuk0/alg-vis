@@ -161,7 +161,11 @@ public class Scenario implements XMLable {
 	}
 
 	public int getAlgPos() {
-		return scenario.getCurrent().getPosition();
+		if (scenario.isEmpty()) {
+			return -1;
+		} else {
+			return scenario.getCurrent().getPosition();
+		}
 	}
 
 	@Override

@@ -204,9 +204,14 @@ abstract public class Buttons extends JPanel implements ActionListener {
 			}
 			// repaint();
 		} else if (evt.getSource() == clear) {
-			D.clear();
-			update();
-			// repaint();
+			D.scenario.traverser.startNew(new Runnable() {
+				@Override
+				public void run() {
+					D.clear();
+					update();
+					// repaint();
+				}
+			}, false);
 		} else if (evt.getSource() == random) {
 			D.random(I.getInt(10));
 		} else if (evt.getSource() == pause) {
@@ -303,6 +308,19 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	@Override
 	public Dimension getMinimumSize() {
 		return new Dimension(300, 150);
+	}
+	
+	/**
+	 * if D.scenario is enabled, all algorithm is done, so we must go at start
+	 * (in scenario) of algorithm to watch it
+	 */
+	protected void startLastAlg() {
+		D.scenario.previous(false, false);
+		D.scenario.next(M.pause, true);
+		D.scenario.traverser.join();
+		D.setStats();
+		M.C.update();
+		update();
 	}
 
 	private class SetStatsCommand implements Command {
