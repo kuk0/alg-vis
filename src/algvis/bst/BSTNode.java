@@ -288,18 +288,9 @@ public class BSTNode extends Node {
 			p.addPoint(x + 1, y - 1);
 			v.fillPolygon(p);
 		}
-		if (state != INVISIBLE && !thread) {
-			/*
-			 * if (thread) { v.setColor(Color.yellow); } else {
-			 */
+		if (state != INVISIBLE && parent != null) {
 			v.setColor(Color.black);
-			// }
-			if ((left != null) && (left.state != INVISIBLE)) {
-				v.drawLine(x, y, left.x, left.y);
-			}
-			if ((right != null) && (right.state != INVISIBLE)) {
-				v.drawLine(x, y, right.x, right.y);
-			}
+			v.drawLine(x, y, parent.x, parent.y);
 		}
 		if (getLeft() != null) {
 			getLeft().drawTree2(v);
@@ -379,7 +370,6 @@ public class BSTNode extends Node {
 			D.x1 = -leftw;
 			D.x2 = rightw;
 			D.y2 = this.toy;
-			// System.out.println ("r" + key + " " +leftw +"  "+ rightw);
 		}
 		if (this.toy > D.y2) {
 			D.y2 = this.toy;

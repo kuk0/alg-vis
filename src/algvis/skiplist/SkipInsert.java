@@ -27,7 +27,7 @@ public class SkipInsert extends SkipAlg {
 	public SkipInsert(SkipList L, int x) { // Buttons B,
 		super(L, x);
 		v.setColor(NodeColor.INSERT);
-		setHeader("insertion");
+		setHeader("insert", K);
 		R = new Random();
 	}
 

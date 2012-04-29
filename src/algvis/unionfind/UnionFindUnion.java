@@ -33,6 +33,8 @@ public class UnionFindUnion extends UnionFindFind {
 		this.unionState = UF.unionState;
 		this.u = u;
 		this.v = v;
+		u.mark();
+		v.mark();
 		setHeader("ufunion");
 	}
 
@@ -63,7 +65,7 @@ public class UnionFindUnion extends UnionFindFind {
 		} else {
 			addStep("ufunionsimple");
 			mysuspend();
-			UF.sets.remove(r2);
+			UF.removeFromSets(r2);
 			r1.addChild(r2);
 		}
 
@@ -86,23 +88,23 @@ public class UnionFindUnion extends UnionFindFind {
 			addStep("ufsameset");
 			mysuspend();
 		} else {
-			addStep("ufunionbyrank", r1.rank, r2.rank);
-			if (r1.rank > r2.rank) {
+			addStep("ufunionbyrank", r1.getRank(), r2.getRank());
+			if (r1.getRank() > r2.getRank()) {
 				addStep("ufunionfirstsecond");
 				mysuspend();
-				UF.sets.remove(r2);
+				UF.removeFromSets(r2);
 				r1.addChild(r2);
-			} else if (r1.rank < r2.rank) {
+			} else if (r1.getRank() < r2.getRank()) {
 				addStep("ufunionsecondfirst");
 				mysuspend();
-				UF.sets.remove(r1);
+				UF.removeFromSets(r1);
 				r2.addChild(r1);
 			} else {
 				addStep("ufunionsamerank");
 				mysuspend();
-				UF.sets.remove(r2);
+				UF.removeFromSets(r2);
 				r1.addChild(r2);
-				r1.rank++;
+				r1.setRank(r1.getRank() + 1);
 			}
 		}
 

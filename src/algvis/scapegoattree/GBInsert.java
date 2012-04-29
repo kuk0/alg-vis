@@ -22,7 +22,7 @@ public class GBInsert extends GBAlg {
 	public GBInsert(GBTree T, int x) {
 		super(T, x);
 		v.setColor(NodeColor.INSERT);
-		setHeader("insertion");
+		setHeader("insert", K);
 	}
 
 	@Override

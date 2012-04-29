@@ -11,12 +11,12 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 	DaryHeapNode root = null, v = null, v2 = null;
 	DaryHeapNode last = null;
 	int order = 5;
+	public static final int minsepx = 30;  //zmenit na mensie
 
 	public DaryHeap(VisPanel M) {
 		super(M, dsName);
 		last = new DaryHeapNode(this, 47); 
 		M.screen.V.setDS(this);
-		DaryHeap.minsepx = 30;  //zmenit na mensie
 	}
 
 	@Override

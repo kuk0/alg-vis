@@ -1,7 +1,7 @@
 package algvis.skewheap;
 
 import algvis.core.DataStructure;
-import algvis.core.MeldablePQButtons;
+import algvis.core.MeldablePQButtonsNoDecr;
 import algvis.core.Settings;
 import algvis.core.VisPanel;
 
@@ -17,7 +17,7 @@ public class SkewHeapPanel extends VisPanel {
 	public void initDS() {
 		SkewHeap H = new SkewHeap(this);
 		D = H;
-		B = new MeldablePQButtons(this);
+		B = new MeldablePQButtonsNoDecr(this);
 		H.active = 1;
 		D.random(13);
 		H.active = 2;

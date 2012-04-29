@@ -33,29 +33,29 @@ import algvis.internationalization.IMenuItem;
 import algvis.internationalization.Languages;
 
 public class AlgVis extends JPanel implements ActionListener {
-	/* set the default panel 
-	 * 0 - BST
-	 * 1 - Rotations
-	 * 2 - AVL
-	 * 3 - 23 tree
-	 * 4 - 234 tree
-	 * 5 - B-tree
-	 * 6 - Red-black tree
-	 * 7 - AA-tree
-	 * 8 - Treap
-	 * 9 - SkipList
-	 * 10 - Scapegoat tree
-	 * 11 - Splay tree
-	 * 12 - Heap
-	 * 13 - d-ary heap
-	 * 14 - Leftist heap
-	 * 15 - Skew heap
-	 * 16 - Binomial heap
-	 * 17 - Lazy Binomial heap
-	 * 18 - Fibonacci heap
-	 * 19 - Union-find 
-	 * 20 - Trie */
-	final static int DEFAULT_DS = 0; 
+	/* set the default panel
+     * 0 - BST ("bst")
+     * 1 - Rotations ("rotations")
+     * 2 - AVL ("avltree")
+     * 3 - 23 tree ("23tree")
+     * 4 - 234 tree ("234tree")
+     * 5 - B-tree ("btree")
+     * 6 - Red-black tree ("redblack")
+     * 7 - AA-tree ("aatree")
+     * 8 - Treap ("treap")
+     * 9 - SkipList ("skiplist")
+     * 10 - Scapegoat tree ("scapegoat")
+     * 11 - Splay tree ("splaytree")
+     * 12 - Heap ("heap")
+     * 13 - d-ary heap ("daryheap")
+     * 14 - Leftist heap ("leftheap")
+     * 15 - Skew heap ("skewheap")
+     * 16 - Binomial heap ("binheap")
+     * 17 - Lazy Binomial heap ("lazybinheap")
+     * 18 - Fibonacci heap ("fibheap")
+     * 19 - Union-find ("ufi")
+     * 20 - Trie ("trie") */
+	final static int DEFAULT_DS = 0;
 	
 	private static final long serialVersionUID = -5202486006824196688L;
 

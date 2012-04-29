@@ -29,7 +29,7 @@ public class BInsert extends Algorithm {
 		this.T = T;
 		v = T.v = new BNode(T, K = x);
 		v.setColor(NodeColor.INSERT);
-		setHeader("insertion");
+		setHeader("insert", K);
 	}
 
 	@Override

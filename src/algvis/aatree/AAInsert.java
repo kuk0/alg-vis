@@ -29,7 +29,7 @@ public class AAInsert extends Algorithm {
 		this.T = T;
 		T.setV(v = (AANode) T.setV(new AANode(T, K = x)));
 		v.setColor(NodeColor.INSERT);
-		setHeader("insertion");
+		setHeader("insert", K);
 	}
 
 	@Override

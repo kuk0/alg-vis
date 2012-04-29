@@ -102,7 +102,6 @@ public class Node {
 			 */
 			tox = x = 0;
 			toy = y = -5 * Node.radius;
-			// System.out.println(getClass().getName() + " " + key);
 		}
 	}
 
@@ -166,7 +165,7 @@ public class Node {
 	 * the color).
 	 */
 	public void bgKeyColor() {
-		bgColor(new Color(255, 255 - key / 10, 0));
+		bgColor(new Color(255, 255 - key / 20, 0));
 	}
 
 	public void mark() {

@@ -23,10 +23,10 @@ import algvis.scenario.Scenario;
 abstract public class DataStructure {
 	// datova struktura musi vediet gombikom povedat, kolko ich potrebuje,
 	// kolko ma vstupov, ake to su a co treba robit
-	Algorithm A;
+	protected Algorithm A;
 	public VisPanel M;
 	public Scenario scenario;
-	public static int rootx = 0, rooty = 0, sheight = 600, swidth = 400,
+	public static final int rootx = 0, rooty = 0, sheight = 600, swidth = 400,
 			minsepx = 38, minsepy = 30;
 	public int x1, x2, y1 = -50, y2;
 	public Node chosen = null;
@@ -62,16 +62,16 @@ abstract public class DataStructure {
 		try {
 			A.start();
 		} catch (IllegalThreadStateException e) {
-			System.out.println("LOL");
+			System.err.println("LOL");
 			M.B.disableNext();
 			M.B.enableAll();
 			return;
 		}
 		try {
 			A.join();
-			// System.out.println("join");
+			// System.err.println("join");
 		} catch (InterruptedException e) {
-			System.out.println("AJAJAJ");
+			System.err.println("AJAJAJ");
 		}
 		setStats();
 		M.B.disableNext();

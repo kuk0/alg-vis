@@ -27,7 +27,7 @@ public class TreapInsert extends Algorithm {
 		super(T);
 		this.T = T;
 		T.setV(v = new TreapNode(T, K = x));
-		setHeader("insertion");
+		setHeader("insert", K);
 	}
 
 	@Override

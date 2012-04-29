@@ -27,7 +27,7 @@ public class RBInsert extends Algorithm {
 		super(T);
 		this.T = T;
 		v = (RBNode) T.setV(new RBNode(T, K = x));
-		setHeader("insertion");
+		setHeader("insert", K);
 	}
 
 	@Override

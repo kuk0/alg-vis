@@ -31,6 +31,8 @@ public class AlgVisApplet extends JApplet {
 
 	@Override
 	public void init() {
+		MyParserDelegator.workaround();
+		Fonts.init(getGraphics());
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -76,7 +78,6 @@ public class AlgVisApplet extends JApplet {
 			P.setSize(WIDTH, HEIGHT); // same size as defined in the HTML APPLET
 			if (P != null)
 				add(P);
-			Fonts.init(getGraphics());
 		}
 	}
 }

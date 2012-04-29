@@ -70,11 +70,12 @@ public class InputField extends JTextField {
 				sb.setText("value too high; using the maximum value " + max
 						+ " instead");
 			}
-			sb.setText("");
+			sb.setText(" ");
 		} catch (NumberFormatException e) {
 			sb.setText("couldn't parse an integer; using the default value "
 					+ def);
 		}
+		setText("");
 		return n;
 	}
 
@@ -126,6 +127,7 @@ public class InputField extends JTextField {
 				}
 			}
 		}
+		setText("");
 		return args;
 	}
 
@@ -158,14 +160,14 @@ public class InputField extends JTextField {
 	 */
 	public Vector<String> getVS() {
 		String ss = getText();
+		Vector<String> result = new Vector<String>();
 		if (ss.compareTo("") == 0) {
-			Vector<String> result = new Vector<String>();
 			result.add(WordGenerator.getWord(s));
-			return result;
 		} else {
-			Vector<String> result = WordGenerator.parseString(ss);
-			return result;
+			result = WordGenerator.parseString(ss);
 		}
+		setText("");
+		return result;
 	}
 
 }
