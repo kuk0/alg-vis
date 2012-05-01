@@ -35,7 +35,7 @@ public class Languages {
 		all_locales[0] = new Locale("en");
 		all_msgs[0] = ResourceBundle.getBundle("Messages", all_locales[0]);
 		all_locales[1] = new Locale("sk");
-		all_msgs[1] = ResourceBundle.getBundle("Messages_sk", all_locales[1]);
+		all_msgs[1] = ResourceBundle.getBundle("Messages", all_locales[1]);
 	}
 
 	public Languages(int i) {
