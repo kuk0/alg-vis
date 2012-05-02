@@ -39,15 +39,36 @@ public class SuffixTreeInsert extends Algorithm {
 		if (s.compareTo("$") == 0) {
 			addNote("badword");
 		}
-/*
+
+		T.text = s;
 		SuffixTreeNode v = T.getRoot();
 		v.mark();
 		addNote("trieinsertnote");
 		addStep("trierootstart");
 		mysuspend();
 		v.unmark();
-*/
+
+		int length = T.text.length();
+		// insert a char at pos. 1
+		/*
+		 * SuffixTreeNode w = (new SuffixTreeNode(T, 0, length)); w.parent = v;
+		 * v.child = w;
+		 */
+		T.getRoot().reposition();
+		addStep("trierootstart");
+		mysuspend();
+		if (length == 1) {
+			// jump to end
+			beforeReturn();
+			return;
+		}
+		// insert a char at pos. 2
+
+		for (int i = 3; i < length; i++) {
+			// for (;;) ;
+		}
+
 		beforeReturn();
-		
+
 	}
 }

@@ -29,9 +29,17 @@ public class SuffixTree extends DataStructure {
 	private SuffixTreeNode root = null;
 	private SuffixTreeNode v = null;
 
+	public String text;
+
 	public SuffixTree(VisPanel M) {
 		super(M);
 		clear();
+	}
+
+	public SuffixTree(VisPanel M, String text) {
+		super(M);
+		clear();
+		this.text = text;
 	}
 
 	@Override
@@ -79,12 +87,12 @@ public class SuffixTree extends DataStructure {
 		if (v != null) {
 			v.moveTree();
 			v.drawTree(V);
-			V.drawString("\u025B", v.x, v.y-8, Fonts.NORMAL);
+			V.drawString("\u025B", v.x, v.y - 8, Fonts.NORMAL);
 		}
 		v = getV();
 		if (v != null) {
 			v.move();
-			v.drawTrieCH(V);
+			v.drawLabel(V);
 		}
 	}
 
@@ -103,6 +111,7 @@ public class SuffixTree extends DataStructure {
 	}
 
 	public void insert(String s) {
+		text = s;
 		start(new SuffixTreeInsert(this, s));
 	}
 
@@ -120,5 +129,4 @@ public class SuffixTree extends DataStructure {
 			getRoot().clearExtraColor();
 		}
 	}
-
 }

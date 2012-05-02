@@ -122,12 +122,12 @@ public class TrieNode extends TreeNode {
 
 		drawBg(v);
 		// drawKey(v);
-		drawTrieCH(v);
+		drawLabel(v);
 		drawArrow(v);
 		drawArc(v);
 	}
 
-	protected void drawTrieCH(View v) {
+	protected void drawLabel(View v) {
 		TrieNode u = (TrieNode) getParent();
 		if (u != null) {
 			int midx, midy, w, h;
@@ -183,7 +183,7 @@ public class TrieNode extends TreeNode {
 		setColor(NodeColor.NORMAL);
 	}
 
-	public String getCH() {
+	public String getLabel() {
 		return ch;
 	}
 
@@ -213,13 +213,13 @@ public class TrieNode extends TreeNode {
 	 * @return A node with proper "ch"
 	 */
 	public TrieNode addRight(String ch, int x, int y) {
-		if (getCH().compareTo(ch) > 0) {
+		if (getLabel().compareTo(ch) > 0) {
 			TrieNode u = new TrieNode(D, ch);
 			u.setParent(getParent());
 			u.setRight(this);
 			getParent().setChild(u);
 			return u;
-		} else if (getCH().compareTo(ch) == 0) {
+		} else if (getLabel().compareTo(ch) == 0) {
 			return this;
 		} else {
 			TrieNode v = (TrieNode) getRight();
@@ -229,7 +229,7 @@ public class TrieNode extends TreeNode {
 				setRight(u);
 				return u;
 			} else {
-				int c = v.getCH().compareTo(ch);
+				int c = v.getLabel().compareTo(ch);
 				if (c > 0) {
 					TrieNode u = new TrieNode(D, ch);
 					u.setRight(getRight());

@@ -88,7 +88,7 @@ public class Trie extends DataStructure {
 		v = getV();
 		if (v != null) {
 			v.move();
-			v.drawTrieCH(V);
+			v.drawLabel(V);
 		}
 		if (hw != null) {
 			hw.move();
