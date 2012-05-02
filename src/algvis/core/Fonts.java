@@ -35,8 +35,8 @@ public enum Fonts {
 	public static Font initTT() {
 		Font f = null;
 		try {
-			f = Font.createFont(Font.TRUETYPE_FONT, new java.io.File(
-					Fonts.class.getResource("FreeMonoBold.ttf").toURI()));
+			f = Font.createFont(Font.TRUETYPE_FONT,
+					Fonts.class.getResourceAsStream("FreeMonoBold.ttf"));
 			f = f.deriveFont(10.0f);
 		} catch (Exception e) {
 			System.err.println(e.toString());

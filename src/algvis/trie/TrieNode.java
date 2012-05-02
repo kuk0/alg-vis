@@ -146,7 +146,7 @@ public class TrieNode extends TreeNode {
 				// }
 
 				v.setColor(Color.BLACK);
-				v.drawString(ch, midx, midy, Fonts.TYPEWRITER);
+				v.drawString(ch, midx, midy-1, Fonts.TYPEWRITER);
 			} else {
 				midx = x - ((x - u.x) / 15);
 				midy = y - ((y - u.y) / 5 * 2) - 1;
@@ -159,7 +159,7 @@ public class TrieNode extends TreeNode {
 				v.drawRoundRectangle(midx, midy, w, h, 6, 10);
 
 				v.setColor(getFgColor());
-				v.drawString(ch, midx, midy, Fonts.TYPEWRITER);
+				v.drawString(ch, midx, midy-1, Fonts.TYPEWRITER);
 			}
 		}
 	}
