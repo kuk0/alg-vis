@@ -169,10 +169,15 @@ public class LeftHeap extends MeldablePQ implements ClickListener{
 			if (root[i] != null) {
 				root[i].reposition();
 				root[i].reboxTree();
-				sumx += root[i].leftw;
 				root[i].repos(sumx, root[i].toy);
 				sumx += root[i].rightw + 20; //vzdialenost hald
 			}
+			if (i+1 <= numHeaps){
+				if (root[i+1] != null) {
+					sumx += root[i+1].leftw;
+				}
+			}
+
 			if (i == active) {
 				if (root[0] != null) {
 					root[0].reposition();

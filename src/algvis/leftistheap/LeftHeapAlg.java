@@ -122,10 +122,10 @@ public class LeftHeapAlg extends Algorithm {
 				tmp.getRight().mark();
 				r = tmp.getRight().rank;
 			}
+			mysuspend();
 			if (l < r) {
 				tmp.swapChildren();
 			}
-			mysuspend();
 
 			H.reposition();
 
