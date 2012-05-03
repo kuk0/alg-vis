@@ -225,9 +225,7 @@ public class DaryHeapNode extends HeapNode{
 			rightw -= c[(((DaryHeap)D).getOrder() / 2)].leftw;
 			leftw += c[(((DaryHeap)D).getOrder() / 2)].leftw;
 		}
-		
-		//leftw += DaryHeap.minsepx / 2;
-		//rightw += DaryHeap.minsepx / 2;
+
 		width = leftw + rightw;
 	}
 	
@@ -249,8 +247,7 @@ public class DaryHeapNode extends HeapNode{
 
 		for (int i = 0; i < numChildren; i++){
 			if (i == 0){
-				c[0].goTo(this.tox - (this.leftw) + c[0].leftw,// - DaryHeap.minsepx/2,// + c[0].leftw,
-
+				c[0].goTo(this.tox - (this.leftw) + c[0].leftw,
 						this.toy + DataStructure.minsepy);
 			}else{
 				c[i].goTo( c[i-1].tox + c[i-1].rightw + c[i].leftw,
