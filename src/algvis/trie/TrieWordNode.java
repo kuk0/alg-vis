@@ -27,13 +27,12 @@ import algvis.core.View;
 
 public class TrieWordNode extends Node {
 	private String s = "";
-	private NodeColor c = NodeColor.INSERT;
 
 	public TrieWordNode(DataStructure D, String s, int x, int y, NodeColor c) {
 		setS(s);
 		this.x = x;
 		this.y = y;
-		this.c = c;
+		setColor(c);
 		this.D = D;
 	}
 
@@ -48,14 +47,6 @@ public class TrieWordNode extends Node {
 	public String setS(String s) {
 		this.s = s;
 		return s;
-	}
-
-	public NodeColor getC() {
-		return c;
-	}
-
-	public void setC(NodeColor c) {
-		this.c = c;
 	}
 
 	/**
@@ -92,11 +83,11 @@ public class TrieWordNode extends Node {
 		FontMetrics fm = v.getGraphics().getFontMetrics();
 		int width = (fm.stringWidth(s) + 4) / 2;
 		int height = (fm.getHeight() + 4) / 2;
-		v.setColor(c.bgColor);
+		v.setColor(getColor().bgColor);
 		v.fillRoundRectangle(x + width, y - height / 2, width, height, 3, 3);
 		v.setColor(Color.BLACK);
 		v.drawRoundRectangle(x + width, y - height / 2, width, height, 3, 3);
-		v.setColor(c.fgColor);
+		v.setColor(getColor().fgColor);
 		v.drawString(s, x + width, y - height / 2, Fonts.TYPEWRITER);
 	}
 }

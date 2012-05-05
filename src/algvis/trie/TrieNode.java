@@ -27,7 +27,7 @@ import algvis.core.View;
 
 public class TrieNode extends TreeNode {
 	public String ch; // this should be always only 1 char!
-	public int radius = 2;
+	public int radius = 3;
 	public static final int ordinaryNode = -7;
 
 	public boolean greyPair = false;
@@ -127,7 +127,7 @@ public class TrieNode extends TreeNode {
 		drawArc(v);
 	}
 
-	protected void drawLabel(View v) {
+	public void drawLabel(View v) {
 		TrieNode u = (TrieNode) getParent();
 		if (u != null) {
 			int midx, midy, w, h;
@@ -210,7 +210,7 @@ public class TrieNode extends TreeNode {
 	 * 
 	 * @param ch
 	 *            A character which will be inserted in lexicographical order
-	 * @return A node with proper "ch"
+	 * @return A node with proper label
 	 */
 	public TrieNode addRight(String ch, int x, int y) {
 		if (getLabel().compareTo(ch) > 0) {

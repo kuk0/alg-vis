@@ -21,6 +21,7 @@ import algvis.core.Fonts;
 import algvis.core.View;
 import algvis.core.VisPanel;
 import algvis.core.WordGenerator;
+import algvis.trie.TrieWordNode;
 
 public class SuffixTree extends DataStructure {
 	public static String adtName = "stringology";
@@ -28,6 +29,8 @@ public class SuffixTree extends DataStructure {
 
 	private SuffixTreeNode root = null;
 	private SuffixTreeNode v = null;
+
+	public TrieWordNode hw = null;
 
 	public String text;
 

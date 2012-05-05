@@ -49,7 +49,7 @@ public class TrieFind extends Algorithm {
 		mysuspend();
 		v.unmark();
 		T.hw = new TrieWordNode(T, s);
-		T.hw.setC(NodeColor.CACHED);
+		T.hw.setColor(NodeColor.CACHED);
 		T.hw.goNextTo(v);
 
 		while (s.compareTo("$") != 0) {
