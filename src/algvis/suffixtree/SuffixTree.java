@@ -31,6 +31,7 @@ public class SuffixTree extends DataStructure {
 	private SuffixTreeNode v = null;
 
 	public TrieWordNode hw = null;
+	public TrieWordNode cs = null;
 
 	public String text;
 
@@ -96,6 +97,12 @@ public class SuffixTree extends DataStructure {
 		if (v != null) {
 			v.move();
 			v.drawLabel(V);
+		}
+		if (hw != null) {
+			hw.draw(V);
+		}
+		if (cs != null) {
+			cs.draw(V);
 		}
 	}
 

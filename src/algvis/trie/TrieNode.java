@@ -27,7 +27,7 @@ import algvis.core.View;
 
 public class TrieNode extends TreeNode {
 	public String ch; // this should be always only 1 char!
-	public int radius = 3;
+	public int radius = 2;
 	public static final int ordinaryNode = -7;
 
 	public boolean greyPair = false;
@@ -262,5 +262,10 @@ public class TrieNode extends TreeNode {
 		} else {
 			return v.addRight(ch, x, y);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return ch;
 	}
 }

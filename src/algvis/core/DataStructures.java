@@ -175,6 +175,8 @@ public class DataStructures {
 			return new UnionFindPanel(S);
 		case 20:
 			return new TriePanel(S);
+		case 21:
+			return new SuffixTreePanel(S);
 		}
 		if (!check_range(i))
 			return null;

@@ -19,6 +19,7 @@ package algvis.suffixtree;
 import java.awt.Color;
 
 import algvis.core.DataStructure;
+import algvis.core.Node;
 import algvis.core.View;
 import algvis.trie.TrieNode;
 
@@ -75,7 +76,7 @@ public class SuffixTreeNode extends TrieNode {
 		super.drawBg(v);
 		if (isPacked()) {
 			v.setColor(Color.WHITE);
-			v.fillCircle(x, y, radius-1);
+			v.fillCircle(x, y, radius - 1);
 		}
 	}
 
@@ -133,4 +134,38 @@ public class SuffixTreeNode extends TrieNode {
 		this.suffixLink = suffixLink;
 	}
 
+	@Override
+	public void draw(View v) {
+		if (state == Node.INVISIBLE || key == NULL) {
+			return;
+		}
+		drawBg(v);
+		drawLabel(v);
+		drawArrow(v);
+		drawArc(v);
+	}
+
+	public void drawSuffixLinks(View v) {
+		SuffixTreeNode child = (SuffixTreeNode) getChild();
+		while (child != null) {
+			child.drawSuffixLinks(v);
+			child = (SuffixTreeNode) child.getRight();
+		}
+		
+		if (getSuffixLink() != null) {
+			if (isPacked()) {
+				v.setColor(new Color(0xffaaaa));
+			} else {
+				v.setColor(new Color(0xcccccc));
+			}
+			v.drawArrow(x, y, getSuffixLink().x, getSuffixLink().y);
+			v.setColor(Color.BLACK);
+		}
+	}
+
+	@Override
+	public void drawTree(View v) {
+		drawSuffixLinks(v);
+		super.drawTree(v);
+	}
 }
