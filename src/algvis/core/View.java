@@ -220,6 +220,11 @@ public class View implements MouseListener, MouseMotionListener,
 		g.setTransform(oldTransform);
 	}
 
+	public Point2D cut (int x, int y, int x2, int y2, int c) {
+		double d = new Point2D.Double(x, y).distance(x2, y2);
+		return new Point2D.Double(x + (x2-x)*(d-c)/d, y + (y2-y)*(d-c)/d);
+	}
+
 	public void fillSqr(int x, int y, int a) {
 		g.fillRect(x - a, y - a, 2 * a, 2 * a);
 	}

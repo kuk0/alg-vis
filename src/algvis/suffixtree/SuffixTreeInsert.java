@@ -68,7 +68,7 @@ public class SuffixTreeInsert extends Algorithm {
 			if (!ch.equals("$"))
 				addStep("sxbfirstrule", ch);
 			else
-				addStep("sxbfirstrule", "!");
+				addStep("sxbfirstrule", "\\$");
 			T.reposition();
 			mysuspend();
 			// in real implementation this is done in O(1) both time & space

@@ -32,7 +32,7 @@ public class SuffixTreePanel extends VisPanel {
 	public void initDS() {
 		D = new SuffixTree(this);
 		B = new SuffixTreeButtons(this);
-		D.random(10);
+		//D.random(10);
 	}
 
 }

@@ -17,6 +17,7 @@
 package algvis.suffixtree;
 
 import java.awt.Color;
+import java.awt.geom.Point2D;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -158,7 +159,9 @@ public class SuffixTreeNode extends TrieNode {
 			} else {
 				v.setColor(new Color(0xcccccc));
 			}
-			v.drawArrow(x, y, getSuffixLink().x, getSuffixLink().y);
+			SuffixTreeNode w = getSuffixLink();
+			Point2D p = v.cut(x,y, w.x, w.y, 10);
+			v.drawArrow(x, y, (int)p.getX(), (int)p.getY());
 			v.setColor(Color.BLACK);
 		}
 	}
