@@ -21,6 +21,7 @@ import java.awt.geom.Point2D;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
+import algvis.core.TreeNode;
 import algvis.core.View;
 import algvis.trie.TrieNode;
 

@@ -28,7 +28,7 @@ import algvis.internationalization.IButton;
 
 public class SuffixTreeButtons extends Buttons {
 	private static final long serialVersionUID = -368670840648549217L;
-	IButton insertB/* , findB */;
+	IButton insertB, findB;
 
 	public SuffixTreeButtons(VisPanel M) {
 		super(M);
@@ -36,30 +36,30 @@ public class SuffixTreeButtons extends Buttons {
 
 	@Override
 	public void actionButtons(JPanel P) {
-		insertB = new IButton(M.S.L, "button-insert");
+		insertB = new IButton(M.S.L, "button-create-st");
 		insertB.setMnemonic(KeyEvent.VK_I);
 		insertB.addActionListener(this);
 
-		/*
-		 * findB = new IButton(M.S.L, "button-find");
-		 * findB.setMnemonic(KeyEvent.VK_F); findB.addActionListener(this);
-		 */
+		findB = new IButton(M.S.L, "button-find");
+		findB.setMnemonic(KeyEvent.VK_F);
+		findB.addActionListener(this);
+
 		P.add(insertB);
-		// P.add(findB);
+		P.add(findB);
 	}
 
 	@Override
 	public void initRandom() {
-		random = new IButton(M.S.L, "button-random");
+		/*random = new IButton(M.S.L, "button-random");
 		random.setMnemonic(KeyEvent.VK_R);
-		random.addActionListener(this);
+		random.addActionListener(this);*/
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
 		if (evt.getSource() == insertB) {
-			final Vector<String> args = I.getVS();
+			final Vector<String> args = I.getVABS();
 			Thread t = new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -69,28 +69,34 @@ public class SuffixTreeButtons extends Buttons {
 				}
 			});
 			t.start();
+		} else if (evt.getSource() == findB) {
+			final Vector<String> args = I.getVS();
+			if (args.size() > 0) {
+				Thread t = new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						for (String s : args) {
+							((SuffixTree) D).find(s);
+						}
+					}
+				});
+				t.start();
+			}
 		}
-		/*
-		 * else if (evt.getSource() == findB) { final Vector<String> args =
-		 * I.getVS(); if (args.size() > 0) { Thread t = new Thread(new
-		 * Runnable() {
-		 * 
-		 * @Override public void run() { for (String s : args) { ((SuffixTree)
-		 * D).find(s); } } }); t.start(); } }
-		 */
 	}
 
 	@Override
 	public void enableAll() {
 		super.enableAll();
 		insertB.setEnabled(true);
-		// findB.setEnabled(true);
+		findB.setEnabled(true);
 	}
 
 	@Override
 	public void disableAll() {
 		super.disableAll();
 		insertB.setEnabled(false);
-		// findB.setEnabled(false);
+		findB.setEnabled(false);
 	}
 }

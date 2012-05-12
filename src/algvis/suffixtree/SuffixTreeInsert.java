@@ -86,7 +86,7 @@ public class SuffixTreeInsert extends Algorithm {
 			if (!ch.equals("$"))
 				addStep("sxbcontinue", ch);
 			else
-				addStep("sxbcontinue", "!");
+				addStep("sxbcontinue", "\\$");
 			T.reposition();
 			mysuspend();
 			Vector<SuffixTreeNode> upWalk = new Vector<SuffixTreeNode>();
@@ -135,7 +135,7 @@ public class SuffixTreeInsert extends Algorithm {
 				if (!ch.equals("$"))
 					addStep("sxbdownwalk", ch);
 				else
-					addStep("sxbdownwalk", "!");
+					addStep("sxbdownwalk", "\\$");
 				T.hw = new TrieWordNode(T, cachedUpWalk, current.x, current.y,
 						NodeColor.INSERT);
 				T.hw.goNextTo(current);
@@ -192,11 +192,10 @@ public class SuffixTreeInsert extends Algorithm {
 					if (!ch.equals("$"))
 						addStep("sxbsecondrule", ch);
 					else
-						addStep("sxbsecondrule", "!");
+						addStep("sxbsecondrule", "\\$");
 					T.reposition();
 					mysuspend();
 					if (current != T.getRoot()) {
-
 						setUpSuffixLinkOnThis = current;
 					} else {
 						pathEnded = true;
