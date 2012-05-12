@@ -20,8 +20,8 @@ import java.awt.Color;
 import java.awt.geom.Point2D;
 
 import algvis.core.DataStructure;
+import algvis.core.Fonts;
 import algvis.core.Node;
-import algvis.core.TreeNode;
 import algvis.core.View;
 import algvis.trie.TrieNode;
 
@@ -75,11 +75,16 @@ public class SuffixTreeNode extends TrieNode {
 
 	@Override
 	protected void drawBg(View v) {
+		if (!isPacked()) {
+			super.drawBg(v);
+		}
+		/*
 		super.drawBg(v);
 		if (isPacked()) {
 			v.setColor(Color.WHITE);
 			v.fillCircle(x, y, radius - 1);
 		}
+		*/
 	}
 
 	public SuffixTreeNode addRight(String ch, int x, int y, boolean packed) {
@@ -153,7 +158,7 @@ public class SuffixTreeNode extends TrieNode {
 			child.drawSuffixLinks(v);
 			child = (SuffixTreeNode) child.getRight();
 		}
-		
+
 		if (getSuffixLink() != null) {
 			if (isPacked()) {
 				v.setColor(new Color(0xffaaaa));
@@ -161,8 +166,8 @@ public class SuffixTreeNode extends TrieNode {
 				v.setColor(new Color(0xcccccc));
 			}
 			SuffixTreeNode w = getSuffixLink();
-			Point2D p = v.cut(x,y, w.x, w.y, 10);
-			v.drawArrow(x, y, (int)p.getX(), (int)p.getY());
+			Point2D p = v.cut(x, y, w.x, w.y, 10);
+			v.drawArrow(x, y, (int) p.getX(), (int) p.getY());
 			v.setColor(Color.BLACK);
 		}
 	}
@@ -172,4 +177,34 @@ public class SuffixTreeNode extends TrieNode {
 		drawSuffixLinks(v);
 		super.drawTree(v);
 	}
+
+	@Override
+	public void drawLabel(View v) {
+		if (getParent() == null)
+			return;
+		TrieNode u = this;
+		StringBuffer s = new StringBuffer("");
+		if (getChild() == null || getChild().getRight() != null) {
+			while (u != null && u.getParent() != null
+					&& u.getParent().getChild() == u && u.getRight() == null) {
+				s.append(u.ch);
+				u = u.getParent();
+			}
+			if (u != null) {
+				s.append(u.ch);
+			}
+			s.reverse();
+			int midy = (y + u.y) / 2, w = 6, h = s.length() * Fonts.TYPEWRITER.fm.getHeight() / 2;
+
+			v.setColor(getBgColor());
+			v.fillRoundRectangle(x, midy - 12, w, h, 6, 10);
+			v.setColor(Color.BLACK);
+			v.drawRoundRectangle(x, midy - 12, w, h, 6, 10);
+
+			v.setColor(getFgColor());
+			v.drawVerticalString(s.toString(), x - 3, midy - 1,
+					Fonts.TYPEWRITER);
+		}
+	}
+
 }

@@ -315,6 +315,16 @@ public class View implements MouseListener, MouseMotionListener,
 		g.drawString(str, (int) x, (int) y);
 	}
 
+	public void drawVerticalString(String str, double x, double y, Fonts f) {
+		int xx = (int)x;
+		int yy = (int)y - str.length() * f.fm.getHeight() / 2;
+		g.setFont(f.font);
+		for (int i=0; i<str.length(); ++i) {
+			g.drawString(""+str.charAt(i), xx, yy);
+			yy += f.fm.getHeight();
+		}
+	}
+
 	public void fillArc(double x, double y, double w, double h, double a1,
 			double a2) {
 		g.fillArc((int) x, (int) y, (int) w, (int) h, (int) a1, (int) a2);

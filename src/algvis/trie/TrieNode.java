@@ -62,6 +62,10 @@ public class TrieNode extends TreeNode {
 		ch = "";
 	}
 
+	public TrieNode getParent() {
+		return (TrieNode)super.getParent();
+	}
+	
 	public void unsetGrey() {
 		TrieNode w = (TrieNode) getChild();
 		while (w != null) {
