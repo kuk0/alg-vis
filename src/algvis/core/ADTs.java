@@ -33,7 +33,8 @@ public class ADTs {
 			PriorityQueue.class, // insert, decrease-key, delete-min
 			MeldablePQ.class, // insert, decrease-key, delete-min, meld
 			UnionFind.class, // make-set, union, find
-			Trie.class // insert, find, delete
+			Trie.class, // insert, find, delete
+			IntervalTrees.class //insert, find sum/min/max of interval, decrease-key
 	};
 	static final int N = ADT.length;
 

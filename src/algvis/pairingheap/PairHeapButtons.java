@@ -74,7 +74,7 @@ public class PairHeapButtons extends MeldablePQButtons implements ChangeListener
 		if (evt.getSource() == pairVariant) {
 			int i = pairVariant.getSelectedIndex();
 
-			if ((i >= 0) || (i < 2)){	//(i < 6)){
+			if ((i >= 0) && (i < 2)){	//(i < 6)){
 				((PairingHeap)D).pairState = PairHeapDelete.Pairing.values()[i];
 			}
 		}

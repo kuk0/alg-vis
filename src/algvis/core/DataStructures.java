@@ -28,6 +28,7 @@ import algvis.btree.a23Panel;
 import algvis.daryheap.DaryHeapPanel;
 import algvis.fibonacciheap.FibHeapPanel;
 import algvis.heap.HeapPanel;
+import algvis.intervaltree.IntervalPanel;
 import algvis.lazybinomialheap.LazyBinHeapPanel;
 import algvis.leftistheap.LeftHeapPanel;
 import algvis.pairingheap.PairHeapPanel;
@@ -57,7 +58,8 @@ public class DataStructures {
 			SkipListPanel.class, GBPanel.class, SplayPanel.class,
 			HeapPanel.class, DaryHeapPanel.class, LeftHeapPanel.class,
 			SkewHeapPanel.class, BinHeapPanel.class, LazyBinHeapPanel.class,
-			FibHeapPanel.class, UnionFindPanel.class, TriePanel.class, PairHeapPanel.class };
+			FibHeapPanel.class, UnionFindPanel.class, TriePanel.class, PairHeapPanel.class, 
+			IntervalPanel.class};
 
 
 	static final int N = PANEL.length;
@@ -177,6 +179,8 @@ public class DataStructures {
 			return new TriePanel(S);
 		case 21:
 			return new PairHeapPanel(S);
+		case 22:
+			return new IntervalPanel(S);
 		}
 		if (!check_range(i))
 			return null;
