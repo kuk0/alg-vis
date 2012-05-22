@@ -5,15 +5,17 @@ import algvis.core.IntervalTrees;
 import algvis.core.Node;
 import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.intervaltree.IntervalNode.focusType;
 
 public class IntervalTree extends IntervalTrees implements ClickListener{
 	public static String dsName = "intervaltree";
 	IntervalNode root = null, v = null, v2 = null;
 	int numLeafs = 0; //pocet obsadenych listov
+	public static final int minsepx = 22;
 
 	public IntervalTree(VisPanel M) {
 		super(M);
-		//IntervalTree.minsepx = 10;
+		M.screen.V.setDS(this);
 	}
 
 	@Override
@@ -30,7 +32,6 @@ public class IntervalTree extends IntervalTrees implements ClickListener{
 	@Override
 	public void insert(int x) {
 		start(new IntervalInsert(this, x));
-		
 	}
 
 	
@@ -44,29 +45,51 @@ public class IntervalTree extends IntervalTrees implements ClickListener{
 	
 
 	@Override
-	public void draw(View v) {
+	public void draw(View V) {
 		if (getRoot() != null) {
 			getRoot().moveTree();
-			getRoot().drawTree(v);
+			getRoot().drawTree(V);
 		}
 		
-		if (getV() != null) {
-			getV().move();
-			getV().draw(v);
+		if (v != null) {
+			v.move();
+			v.draw(V);
 		}
-		
-		
+		if (v2 != null) {
+			v2.move();
+			v2.draw(V);
+		}
 	}
 
 	@Override
 	public void mouseClicked(int x, int y) {
-		// TODO Auto-generated method stub
+		//System.out.println("bolo kliknute");
+		if (root == null)
+			return;
+		IntervalNode v = root.find(x, y);
+		if (v != null){// && v.isLeaf()) {
+			if (v.marked) {
+				v.unmark();
+				chosen = null;
+			} else {
+				if (chosen != null)
+					chosen.unmark();
+				v.mark();
+				chosen = v;
+				//System.out.println(v.key + " tento je vybraty");
+			}
+		}
 		
 	}
+	
 
 	@Override
-	public void decreaseKey(Node v, int delta) {
-		// TODO Auto-generated method stub
+	public void changeKey(Node v, int value) {
+		if (v == null) {
+		// TODO: vypindat
+		} else {
+			start(new IntervalChangeKey(this, (IntervalNode) v, value));
+		}
 		
 	}
 
@@ -116,8 +139,7 @@ public class IntervalTree extends IntervalTrees implements ClickListener{
 		}
 	}
 	
-	int numL = numLeafs + 2;
-	
+	int numL;	
 	public IntervalNode generateEmpty(int h){
 		IntervalNode w = new IntervalNode(this, Node.NOKEY);
 		if (h>0){
@@ -145,6 +167,7 @@ public class IntervalTree extends IntervalTrees implements ClickListener{
 		w2.setParent(w);
 		root = w;
 		
+		numL = numLeafs + 1;
 		IntervalNode tmp = generateEmpty(getHeight() - 1);
 		root.setRight(tmp);
 		tmp.setParent(root);
@@ -153,4 +176,31 @@ public class IntervalTree extends IntervalTrees implements ClickListener{
 		//root.add();
 		
 	}
+	
+	public int getMinsepx(){
+		return IntervalTree.minsepx;
+	}
+	
+	public void unfocus(IntervalNode w){
+		if (w == null){
+			return;
+		}
+		w.focused = focusType.FALSE;
+		w.unmark();
+		w.unmarkColor(); 
+		unfocus(w.getLeft());
+		unfocus(w.getRight());
+	}
+	
+	public void markColor(IntervalNode w, int i, int j){
+		if (w == null){
+			return;
+		}
+		if (w.isLeaf() && w.b >= i && w.e <= j){
+			w.markColor();
+		}
+		markColor(w.getLeft(), i, j);
+		markColor(w.getRight(), i, j);
+	}
+
 }

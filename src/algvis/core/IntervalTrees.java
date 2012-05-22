@@ -11,7 +11,7 @@ public abstract class IntervalTrees extends DataStructure{
 	@Override
 	abstract public void insert(int x);
 
-	abstract public void decreaseKey(Node v, int delta);
+	abstract public void changeKey(Node v, int value);
 	
 	abstract public void ofinterval(int b, int e);
 

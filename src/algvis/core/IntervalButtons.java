@@ -14,7 +14,7 @@ import algvis.internationalization.IRadioButton;
 public class IntervalButtons extends Buttons{
 
 	private static final long serialVersionUID = 6383200811481633404L;
-	IButton insertB, findsumB, decrKeyB;
+	IButton insertB, findsumB, changeKeyB;
 	IRadioButton minB, maxB;
 	ButtonGroup minMaxGroup;
 
@@ -40,17 +40,17 @@ public class IntervalButtons extends Buttons{
 		
 
 		if (((IntervalTrees) D).minTree) {
-			decrKeyB = new IButton(M.S.L, "button-decreasekey");
+			changeKeyB = new IButton(M.S.L, "button-changekey");
 		} else {
-			decrKeyB = new IButton(M.S.L, "button-increasekey");
+			changeKeyB = new IButton(M.S.L, "button-changekey");
 		}
-		decrKeyB.setMnemonic(KeyEvent.VK_K);
-		decrKeyB.addActionListener(this);
+		changeKeyB.setMnemonic(KeyEvent.VK_K);
+		changeKeyB.addActionListener(this);
 
 		P.add(insertB);
 		//P.add(deleteB);
 		P.add(findsumB);
-		P.add(decrKeyB);
+		P.add(changeKeyB);
 		
 	}
 
@@ -79,25 +79,25 @@ public class IntervalButtons extends Buttons{
 				});
 				t.start();
 			}
-		} else if (evt.getSource() == decrKeyB) {
+		} else if (evt.getSource() == changeKeyB) {
 			final int delta = Math.abs(I.getInt(1));
 			final BSTNode w = ((BSTNode) ((IntervalTrees) D).chosen);
 			Thread t = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					((IntervalTrees) D).decreaseKey(w, delta);
+					((IntervalTrees) D).changeKey(w, delta);
 				}
 			});
 			t.start();
 		} else if (evt.getSource() == minB && !((IntervalTrees) D).minTree) {
 			D.clear();
 			//deleteB.setT("button-deletemin");
-			decrKeyB.setT("button-decreasekey");
+			changeKeyB.setT("button-changekey");
 			((PriorityQueue) D).minHeap = true;
 		} else if (evt.getSource() == maxB && ((IntervalTrees) D).minTree) {
 			D.clear();
 			//deleteB.setT("button-deletemax");
-			decrKeyB.setT("button-increasekey");
+			changeKeyB.setT("button-changekey");
 			((PriorityQueue) D).minHeap = false;
 		}
 	}
@@ -108,7 +108,7 @@ public class IntervalButtons extends Buttons{
 		insertB.setEnabled(false);
 		findsumB.setEnabled(false);
 		//deleteB.setEnabled(false);
-		decrKeyB.setEnabled(false);
+		changeKeyB.setEnabled(false);
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class IntervalButtons extends Buttons{
 		insertB.setEnabled(true);
 		findsumB.setEnabled(true);
 		//deleteB.setEnabled(true);
-		decrKeyB.setEnabled(true);
+		changeKeyB.setEnabled(true);
 		next.setEnabled(false);
 	}
 

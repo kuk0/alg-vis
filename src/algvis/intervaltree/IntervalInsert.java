@@ -36,9 +36,11 @@ public class IntervalInsert extends IntervalAlg{
 		
 		if (tmp == 1){
 			T.extend();
+			addStep("intervalextend");
+			mysuspend();
 		}
 		T.reposition();
-		mysuspend();
+		//mysuspend();
 		
 		/*
 		T.root.linkRight(v);
@@ -74,64 +76,16 @@ public class IntervalInsert extends IntervalAlg{
 		}
 		
 		T.numLeafs++;
-		
+		addStep("intervalinsert");
+		v.mark();
 		mysuspend();
-		
+		v.unmark();
 		/*
 		uprav strom na min/max z intervalu;
 		*/
 		//w = w.getParent();
 		//toto prerobit na iba prechod od prave pridaneho vrcholu po koren
-		while (w != null){
-			if ((w.getRight() != null) && (w.getLeft() != null)){
-				
-				if (T.minTree){
-					if (w.getRight().key < 1) {
-						w.key = w.getLeft().key;
-					} else {
-						w.key = Math.min(w.getRight().key, w.getLeft().key);
-					}
-				} else {
-					w.key = Math.max(w.getRight().key, w.getLeft().key);
-				}
-				//if (w.getRight().key < 1){
-					//w.setInterval(w.getLeft().b, T.numLeafs);
-				//} else {
-					w.setInterval(w.getLeft().b, w.getRight().e);
-				//}
-				System.out.println(w.key + " " + w.b + " " + w.e);
-				mysuspend();
-				//System.out.println(w.b + " " + w.e);
-			}
-			w = w.getParent();
-		}
-		//uprav(w);
-		System.out.println("hotovo");
-		mysuspend();
-	}
-	
-	public void uprav(IntervalNode w){
-		if (w.getLeft() != null){
-			uprav(w.getLeft());
-		}
-		
-		if (w.getRight() != null){
-			uprav(w.getRight());
-		}
-
-		/*
-		if ((w.getRight() != null) && (w.getLeft() != null)){
-			w.key = w.getRight().key + w.getLeft().key;
-		}
-		*/
-
-		if ((w.getRight() != null) && (w.getLeft() != null)){
-			if (T.minTree){
-				w.key = Math.min(w.getRight().key, w.getLeft().key);
-			} else {
-				w.key = Math.max(w.getRight().key, w.getLeft().key);
-			}
-		}
-		
+		adjustValues(w);
+		addNote("done");
 	}
 }
