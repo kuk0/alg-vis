@@ -6,6 +6,9 @@ public class IntervalInsert extends IntervalAlg{
 	public IntervalInsert(IntervalTree T, int x) {
 		super(T);
 		this.T = T;
+		if (x > 333){
+			x = x/3;
+		}
 		v = new IntervalNode(T, K = x);
 		v.setInterval(T.numLeafs+1, T.numLeafs+1);
 		//v.setColor(NodeColor.INSERT);
@@ -76,7 +79,7 @@ public class IntervalInsert extends IntervalAlg{
 		}
 		
 		T.numLeafs++;
-		addStep("intervalinsert");
+		addNote("intervalinsert");
 		v.mark();
 		mysuspend();
 		v.unmark();

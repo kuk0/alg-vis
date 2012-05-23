@@ -8,6 +8,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 
 import algvis.bst.BSTNode;
+import algvis.core.IntervalTrees.mimasuType;
 import algvis.internationalization.IButton;
 import algvis.internationalization.IRadioButton;
 
@@ -15,8 +16,8 @@ public class IntervalButtons extends Buttons{
 
 	private static final long serialVersionUID = 6383200811481633404L;
 	IButton insertB, findsumB, changeKeyB;
-	IRadioButton minB, maxB;
-	ButtonGroup minMaxGroup;
+	IRadioButton minB, maxB, sumB;
+	ButtonGroup minMaxSumGroup;
 
 	public IntervalButtons(VisPanel M) {
 		super(M);
@@ -34,16 +35,17 @@ public class IntervalButtons extends Buttons{
 		deleteB.addActionListener(this);
 		*/
 		
-		findsumB = new IButton(M.S.L, "button-findmax");
+		if (((IntervalTrees) D).minTree == mimasuType.MIN) {
+			findsumB = new IButton(M.S.L, "button-findmin");
+		} else if (((IntervalTrees) D).minTree == mimasuType.MAX){
+			findsumB = new IButton(M.S.L, "button-findmax");
+		} else {
+			findsumB = new IButton(M.S.L, "button-findsum");
+		}
 		findsumB.setMnemonic(KeyEvent.VK_I);
 		findsumB.addActionListener(this);
 		
-
-		if (((IntervalTrees) D).minTree) {
-			changeKeyB = new IButton(M.S.L, "button-changekey");
-		} else {
-			changeKeyB = new IButton(M.S.L, "button-changekey");
-		}
+		changeKeyB = new IButton(M.S.L, "button-changekey");
 		changeKeyB.setMnemonic(KeyEvent.VK_K);
 		changeKeyB.addActionListener(this);
 
@@ -52,6 +54,26 @@ public class IntervalButtons extends Buttons{
 		P.add(findsumB);
 		P.add(changeKeyB);
 		
+	}
+	
+	@Override
+	public void otherButtons(JPanel P) {
+		minB = new IRadioButton(M.S.L, "min");
+		minB.setSelected(false);
+		minB.addActionListener(this);
+		maxB = new IRadioButton(M.S.L, "max");
+		maxB.setSelected(true);
+		maxB.addActionListener(this);
+		sumB = new IRadioButton(M.S.L, "sum");
+		sumB.setSelected(false);
+		sumB.addActionListener(this);
+		minMaxSumGroup = new ButtonGroup();
+		minMaxSumGroup.add(minB);
+		minMaxSumGroup.add(maxB);
+		minMaxSumGroup.add(sumB);
+		P.add(minB);
+		P.add(maxB);
+		P.add(sumB);		
 	}
 
 	@Override
@@ -89,16 +111,18 @@ public class IntervalButtons extends Buttons{
 				}
 			});
 			t.start();
-		} else if (evt.getSource() == minB && !((IntervalTrees) D).minTree) {
+		} else if (evt.getSource() == minB && ((IntervalTrees) D).minTree != mimasuType.MIN) {
 			D.clear();
-			//deleteB.setT("button-deletemin");
-			changeKeyB.setT("button-changekey");
-			((PriorityQueue) D).minHeap = true;
-		} else if (evt.getSource() == maxB && ((IntervalTrees) D).minTree) {
+			findsumB.setT("button-findmin");
+			((IntervalTrees) D).minTree = mimasuType.MIN;
+		} else if (evt.getSource() == maxB && ((IntervalTrees) D).minTree != mimasuType.MAX) {
 			D.clear();
-			//deleteB.setT("button-deletemax");
-			changeKeyB.setT("button-changekey");
-			((PriorityQueue) D).minHeap = false;
+			findsumB.setT("button-findmax");
+			((IntervalTrees) D).minTree = mimasuType.MAX;
+		} else if (evt.getSource() == sumB && ((IntervalTrees) D).minTree != mimasuType.SUM) {
+			D.clear();
+			findsumB.setT("button-findsum");
+			((IntervalTrees) D).minTree = mimasuType.SUM;
 		}
 	}
 

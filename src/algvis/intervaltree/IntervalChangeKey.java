@@ -23,7 +23,7 @@ public class IntervalChangeKey extends IntervalAlg{
 			v.key = InputField.MAX;
 		
 		//if (H.minHeap) { //<<------
-		addStep("intervalchangev");
+		addNote("intervalchangev");
 		v.mark();
 		mysuspend();
 		v.unmark();

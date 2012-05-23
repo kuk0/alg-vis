@@ -1,6 +1,7 @@
 package algvis.intervaltree;
 
 import algvis.core.Algorithm;
+import algvis.core.IntervalTrees.mimasuType;
 import algvis.core.Node;
 
 public class IntervalAlg extends Algorithm{
@@ -16,7 +17,7 @@ public class IntervalAlg extends Algorithm{
 		while (w != null){
 			w.mark();
 			if ((w.getRight() != null) && (w.getLeft() != null)){
-				if (T.minTree){
+				if (T.minTree == mimasuType.MIN){
 					if (w.getRight().key == Node.NOKEY) {
 						w.key = w.getLeft().key;
 						addStep("intervalkeyempty", w.getLeft().key);
@@ -24,11 +25,19 @@ public class IntervalAlg extends Algorithm{
 						w.key = Math.min(w.getRight().key, w.getLeft().key);
 						addStep("intervalmin", w.getRight().key, w.getLeft().key);
 					}
-				} else {
+				} else if (T.minTree == mimasuType.MAX){
 					w.key = Math.max(w.getRight().key, w.getLeft().key);
 					if (w.getRight().key != Node.NOKEY) {
 						addStep("intervalmax", w.getRight().key, w.getLeft().key);
 					} else {
+						addStep("intervalkeyempty", w.getLeft().key);
+					}
+				}else if (T.minTree == mimasuType.SUM){
+					if (w.getRight().key != Node.NOKEY) {
+						w.key = w.getRight().key + w.getLeft().key;
+						addStep("intervalsum", w.getRight().key, w.getLeft().key);
+					} else {
+						w.key = w.getLeft().key;
 						addStep("intervalkeyempty", w.getLeft().key);
 					}
 				}

@@ -1,18 +1,18 @@
 package algvis.intervaltree;
 
+import algvis.core.IntervalTrees.mimasuType;
 import algvis.core.Node;
 import algvis.intervaltree.IntervalNode.focusType;
 
 public class IntervalFindMin extends IntervalAlg{
 	int i,j;
 	IntervalNode maxi;
-	static final int ninf = -2147483647;
+	static final int ninf = -2147483648;
 	static final int pinf = 2147483647;
 
 	public IntervalFindMin(IntervalTree T, int i, int j) {
 		super(T);
 		this.T = T;
-		maxi = new IntervalNode(T, ninf);
 		if (i>j){
 			int tmp = j;
 			j = i;
@@ -26,10 +26,19 @@ public class IntervalFindMin extends IntervalAlg{
 		}
 		this.i = i;
 		this.j = j;
+		if (T.minTree == mimasuType.MAX){
+			maxi = new IntervalNode(T, ninf);
+			setHeader("findmax", i, j);
+		} else if (T.minTree == mimasuType.MIN){
+			maxi = new IntervalNode(T, pinf);
+			setHeader("findmin", i, j);
+		} else {
+			maxi = new IntervalNode(T, 0);
+			setHeader("findsum", i, j);
+		}
 		T.markColor(T.root,i,j);
-		setHeader("findmax", i, j);
-		System.out.println(i + " " + j);
-		System.out.println(T.root.b + " " + T.root.e);
+		//System.out.println(i + " " + j);
+		//System.out.println(T.root.b + " " + T.root.e);
 	}
 	
 	
@@ -37,18 +46,31 @@ public class IntervalFindMin extends IntervalAlg{
 		// kazdy vrchol ma zapamatany interval, ktory reprezentuje (je to b-e+1=2^k
 
 		if (T.root != null){
-			//addNote("intervalfind"); //vysvetlenie - bfs, porovnavanie intervalov - 3 pripady
+			//We have to find the nodes that represent the 
+			//interval &lt;#1,#2&gt;. We will search for these nodes with DFS.
+			//Budeme h¾ada vrcholy, ktoré reprezentujú interval &lt;#1,#2&gt pomocou DFS. 
+			addNote("intervalfind", i, j); //vysvetlenie
 			find(T.root,i,j);
 			mysuspend();
-			addStep("maximum", maxi.key);
-			T.unfocus(T.root);
-			maxi.mark();
-			T.markColor(T.root, i, j);
+			if (T.minTree == mimasuType.MAX){
+				addStep("maximum", maxi.key);
+			} else if (T.minTree == mimasuType.MIN){
+				addStep("minimum", maxi.key);
+			} else if (T.minTree == mimasuType.SUM){
+				addStep("sumimum", maxi.key);
+			}
+			if (T.minTree != mimasuType.SUM){
+				T.unfocus(T.root);
+				maxi.mark();
+				T.markColor(T.root, i, j);
+			}
 			mysuspend();
+			//if (T.minTree == mimasuType.SUM){
+			//}
 			T.unfocus(T.root);
 			addNote("done");
 		} else {
-			//addStep(); //strom je prazdny/zly interval
+			//addNote(); //strom je prazdny/zly interval
 		}
 	}
 	
@@ -71,8 +93,12 @@ public class IntervalFindMin extends IntervalAlg{
 		}
 		
 		if ((w.b >= b) && (w.e <= e)){
-			if(w.key > maxi.key){
-				maxi = w;
+			if (T.minTree != mimasuType.SUM){
+				if(w.prec(maxi)){
+					maxi = w;
+				}
+			} else {
+				maxi.key += w.key;
 			}
 			addStep("intervalin", i, j, w.key, w.b, w.e); //dnu intervalu
 			w.focused = focusType.TIN;

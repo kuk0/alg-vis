@@ -67,7 +67,7 @@ public class IntervalTree extends IntervalTrees implements ClickListener{
 		if (root == null)
 			return;
 		IntervalNode v = root.find(x, y);
-		if (v != null){// && v.isLeaf()) {
+		if (v != null && v.isLeaf()) {
 			if (v.marked) {
 				v.unmark();
 				chosen = null;

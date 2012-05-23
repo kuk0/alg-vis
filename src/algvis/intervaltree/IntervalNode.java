@@ -5,6 +5,7 @@ import algvis.bst.BST;
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.Fonts;
+import algvis.core.IntervalTrees.mimasuType;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.View;
@@ -179,7 +180,7 @@ public class IntervalNode extends BSTNode{
 	
 	
 	public boolean prec(IntervalNode v) {
-		if (((IntervalTree) D).minTree) {
+		if (((IntervalTree) D).minTree == mimasuType.MIN) {
 			return this.key < v.key;
 		} else {
 			return this.key > v.key;
@@ -190,7 +191,7 @@ public class IntervalNode extends BSTNode{
 	 * Precedes or equals (see prec).
 	 */
 	public boolean preceq(IntervalNode v) {
-		if (((IntervalTree) D).minTree) {
+		if (((IntervalTree) D).minTree == mimasuType.MIN) {
 			return this.key <= v.key;
 		} else {
 			return this.key >= v.key;

@@ -2,7 +2,10 @@ package algvis.core;
 
 public abstract class IntervalTrees extends DataStructure{
 	public static String adtName = "intervaltrees";
-	public boolean minTree = false;
+	public enum mimasuType {
+		MIN, MAX, SUM
+	}
+	public mimasuType minTree = mimasuType.MAX;
 	
 	public IntervalTrees(VisPanel M) {
 		super(M);
