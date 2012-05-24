@@ -48,6 +48,7 @@ public class SuffixTreeInsert extends Algorithm {
 		Vector<SuffixTreeNode> ruleOneBuffer = new Vector<SuffixTreeNode>();
 
 		T.setRoot(new SuffixTreeNode(T, false));
+		T.getRoot().ch=":";
 		T.text = s;
 		SuffixTreeNode v = T.getRoot();
 		v.mark();
@@ -80,6 +81,7 @@ public class SuffixTreeInsert extends Algorithm {
 				w.setColor(NodeColor.CACHED);
 				newRuleOneBuffer.add(w);
 				starting = w;
+				w.key = newRuleOneBuffer.size();
 			}
 			ruleOneBuffer = newRuleOneBuffer;
 			starting.setColor(NodeColor.FOUND);
@@ -204,7 +206,9 @@ public class SuffixTreeInsert extends Algorithm {
 					SuffixTreeNode u = new SuffixTreeNode(T, ch, current.x,
 							current.y, true);
 					current.addChild(u);
+					u.setParent(current);
 					ruleOneBuffer.add(u);
+					u.key = ruleOneBuffer.size();
 					starting.setColor(NodeColor.CACHED);
 					starting = u;
 					startingJ++;
@@ -234,6 +238,7 @@ public class SuffixTreeInsert extends Algorithm {
 		mysuspend();
 		for (SuffixTreeNode u : ruleOneBuffer) {
 			u.setPacked(false);
+			u.setColor(NodeColor.NORMAL);
 		}
 
 		T.reposition();

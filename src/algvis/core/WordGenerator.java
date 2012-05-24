@@ -75,6 +75,7 @@ public class WordGenerator {
 			if (r.nextBoolean()) s.append("A");
 			else s.append("B");
 		}
+		s.append("$");
 		return s.toString();
 	}
 	

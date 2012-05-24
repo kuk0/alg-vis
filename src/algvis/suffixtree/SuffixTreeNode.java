@@ -78,13 +78,6 @@ public class SuffixTreeNode extends TrieNode {
 		if (!isPacked()) {
 			super.drawBg(v);
 		}
-		/*
-		super.drawBg(v);
-		if (isPacked()) {
-			v.setColor(Color.WHITE);
-			v.fillCircle(x, y, radius - 1);
-		}
-		*/
 	}
 
 	public SuffixTreeNode addRight(String ch, int x, int y, boolean packed) {
@@ -150,6 +143,9 @@ public class SuffixTreeNode extends TrieNode {
 		drawLabel(v);
 		drawArrow(v);
 		drawArc(v);
+		if ((isLeaf()) && (!isRoot())) {
+			v.drawString(String.valueOf(key), x, y + 10, Fonts.TYPEWRITER);
+		}
 	}
 
 	public void drawSuffixLinks(View v) {
@@ -166,7 +162,7 @@ public class SuffixTreeNode extends TrieNode {
 				v.setColor(new Color(0xcccccc));
 			}
 			SuffixTreeNode w = getSuffixLink();
-			Point2D p = v.cut(x, y, w.x, w.y, 10);
+			Point2D p = v.cut(x, y, w.x, w.y + 1, 10);
 			v.drawArrow(x, y, (int) p.getX(), (int) p.getY());
 			v.setColor(Color.BLACK);
 		}
@@ -190,11 +186,21 @@ public class SuffixTreeNode extends TrieNode {
 				s.append(u.ch);
 				u = u.getParent();
 			}
-			if (u != null) {
+			if (u != null && u.getParent() != null) {
 				s.append(u.ch);
 			}
+			if (u == null) {
+				System.out.println("Something went wrong at [" + x + "," + y
+						+ "]");
+				return;
+			}
+			int py = u.y;
+			if (u.getParent() == null) {
+				py += 30;
+			}
 			s.reverse();
-			int midy = (y + u.y) / 2, w = 6, h = s.length() * Fonts.TYPEWRITER.fm.getHeight() / 2;
+			int midy = (py + y) / 2, w = 6, h = s.length()
+					* Fonts.TYPEWRITER.fm.getHeight() / 2;
 
 			v.setColor(getBgColor());
 			v.fillRoundRectangle(x, midy - 12, w, h, 6, 10);
@@ -204,6 +210,7 @@ public class SuffixTreeNode extends TrieNode {
 			v.setColor(getFgColor());
 			v.drawVerticalString(s.toString(), x - 3, midy - 1,
 					Fonts.TYPEWRITER);
+			// System.out.println(u.y + " " + py + " " + midy + " " + y);
 		}
 	}
 
