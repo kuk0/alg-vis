@@ -25,10 +25,12 @@ import javax.swing.JPanel;
 import algvis.core.Buttons;
 import algvis.core.VisPanel;
 import algvis.internationalization.IButton;
+import algvis.internationalization.ICheckBox;
 
 public class SuffixTreeButtons extends Buttons {
 	private static final long serialVersionUID = -368670840648549217L;
 	IButton insertB, findB;
+	ICheckBox implicitB;
 
 	public SuffixTreeButtons(VisPanel M) {
 		super(M);
@@ -46,6 +48,14 @@ public class SuffixTreeButtons extends Buttons {
 
 		P.add(insertB);
 		P.add(findB);
+	}
+
+	@Override
+	public void otherButtons(JPanel P) {
+		implicitB = new ICheckBox(M.S.L, "implicit", false);
+		implicitB.setMnemonic(KeyEvent.VK_I);
+		implicitB.addActionListener(this);
+		P.add(implicitB);
 	}
 
 	@Override
@@ -83,7 +93,10 @@ public class SuffixTreeButtons extends Buttons {
 				});
 				t.start();
 			}
+		} else if (evt.getSource() == implicitB) {
+			SuffixTreeNode.implicitNodes = implicitB.isSelected();
 		}
+
 	}
 
 	@Override

@@ -28,6 +28,7 @@ import algvis.trie.TrieNode;
 public class SuffixTreeNode extends TrieNode {
 	private SuffixTreeNode suffixLink = null; // also called suffixNode
 	private boolean packed;
+	static boolean implicitNodes = false;
 
 	public SuffixTreeNode(DataStructure D, int key, int x, int y, boolean packed) {
 		super(D, key, x, y);
@@ -75,8 +76,16 @@ public class SuffixTreeNode extends TrieNode {
 
 	@Override
 	protected void drawBg(View v) {
-		if (!isPacked()) {
+		if (implicitNodes) {
 			super.drawBg(v);
+			if (isPacked()) {
+				v.setColor(Color.WHITE);
+				v.fillCircle(x, y, radius - 1);
+			}
+		} else {
+			if (!isPacked()) {
+				super.drawBg(v);
+			}
 		}
 	}
 
@@ -176,41 +185,46 @@ public class SuffixTreeNode extends TrieNode {
 
 	@Override
 	public void drawLabel(View v) {
-		if (getParent() == null)
-			return;
-		TrieNode u = this;
-		StringBuffer s = new StringBuffer("");
-		if (getChild() == null || getChild().getRight() != null) {
-			while (u != null && u.getParent() != null
-					&& u.getParent().getChild() == u && u.getRight() == null) {
-				s.append(u.ch);
-				u = u.getParent();
-			}
-			if (u != null && u.getParent() != null) {
-				s.append(u.ch);
-			}
-			if (u == null) {
-				System.out.println("Something went wrong at [" + x + "," + y
-						+ "]");
+		if (implicitNodes) {
+			super.drawLabel(v);
+		} else {
+			if (getParent() == null)
 				return;
-			}
-			int py = u.y;
-			if (u.getParent() == null) {
-				py += 30;
-			}
-			s.reverse();
-			int midy = (py + y) / 2, w = 6, h = s.length()
-					* Fonts.TYPEWRITER.fm.getHeight() / 2;
+			TrieNode u = this;
+			StringBuffer s = new StringBuffer("");
+			if (getChild() == null || getChild().getRight() != null) {
+				while (u != null && u.getParent() != null
+						&& u.getParent().getChild() == u
+						&& u.getRight() == null) {
+					s.append(u.ch);
+					u = u.getParent();
+				}
+				if (u != null && u.getParent() != null) {
+					s.append(u.ch);
+				}
+				if (u == null) {
+					System.out.println("Something went wrong at [" + x + ","
+							+ y + "]");
+					return;
+				}
+				int py = u.y;
+				if (u.getParent() == null) {
+					py += 30;
+				}
+				s.reverse();
+				int midy = (py + y) / 2, w = 6, h = s.length()
+						* Fonts.TYPEWRITER.fm.getHeight() / 2;
 
-			v.setColor(getBgColor());
-			v.fillRoundRectangle(x, midy - 12, w, h, 6, 10);
-			v.setColor(Color.BLACK);
-			v.drawRoundRectangle(x, midy - 12, w, h, 6, 10);
+				v.setColor(getBgColor());
+				v.fillRoundRectangle(x, midy - 12, w, h, 6, 10);
+				v.setColor(Color.BLACK);
+				v.drawRoundRectangle(x, midy - 12, w, h, 6, 10);
 
-			v.setColor(getFgColor());
-			v.drawVerticalString(s.toString(), x - 3, midy - 1,
-					Fonts.TYPEWRITER);
-			// System.out.println(u.y + " " + py + " " + midy + " " + y);
+				v.setColor(getFgColor());
+				v.drawVerticalString(s.toString(), x - 3, midy - 1,
+						Fonts.TYPEWRITER);
+				// System.out.println(u.y + " " + py + " " + midy + " " + y);
+			}
 		}
 	}
 
