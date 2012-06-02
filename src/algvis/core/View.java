@@ -301,6 +301,12 @@ public class View implements MouseListener, MouseMotionListener,
 		g.drawString(str, x, y);
 	}
 
+	public void drawStringRight(String str, int x, int y, Fonts f) {
+		y -= f.fm.getHeight() / 2 - f.fm.getAscent();
+		g.setFont(f.font);
+		g.drawString(str, x, y);
+	}
+
 	public void drawStringTop(String str, int x, int y, Fonts f) {
 		x -= f.fm.stringWidth(str) / 2;
 		y -= f.fm.getHeight();

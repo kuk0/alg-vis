@@ -18,7 +18,7 @@ public class IntervalPanel extends VisPanel{
 		IntervalTree L = new IntervalTree(this);
 		D = L;
 		B = new IntervalButtons(this);
-		
+		L.random(16);
 	}
 
 }

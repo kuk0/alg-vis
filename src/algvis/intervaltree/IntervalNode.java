@@ -10,15 +10,17 @@ import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.View;
 
-public class IntervalNode extends BSTNode{
+public class IntervalNode extends BSTNode {
 	//boolean leaf = true;
-	int b=1, e=1; // zaciatok a koniec intervalu, ktory reprezentuje
+	int b = 1, e = 1; // zaciatok a koniec intervalu, ktory reprezentuje
+
 	public enum focusType {
-	    FALSE, // ziadny obdlznik 
-	    TIN, // zeleny obdlznik
-	    TOUT, // cerveny obdlznik
-	    TWAIT // iba obvod obdlznika
+		FALSE, // ziadny obdlznik 
+		TIN, // zeleny obdlznik
+		TOUT, // cerveny obdlznik
+		TWAIT // iba obvod obdlznika
 	}
+
 	focusType focused;
 	boolean markedColor = false;
 
@@ -26,7 +28,7 @@ public class IntervalNode extends BSTNode{
 		super(D, key);
 		focused = focusType.FALSE;
 	}
-	
+
 	public IntervalNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 		bgKeyColor();
@@ -35,39 +37,42 @@ public class IntervalNode extends BSTNode{
 	public IntervalNode(IntervalNode v) {
 		this(v.D, v.key, v.x, v.y);
 	}
-	
+
 	@Override
 	public void drawKey(View v) {
 		v.setColor(getFgColor());
 		if (key != NOKEY) {
 			v.drawString(toString(), x, y, Fonts.NORMAL);
 		}
-		
-		if (!isLeaf()){
-			String str = new String("" + this.e);
-			v.drawString(str, x + Node.radius, y - Node.radius, Fonts.SMALL);
-			str = new String("" + this.b);
-			v.drawString(str, x - Node.radius, y - Node.radius, Fonts.SMALL);
+
+		if (!isLeaf()) {
+			/*v.drawStringRight("" + this.e, x + Node.radius - 1,
+					y - Node.radius, Fonts.SMALL);
+			v.drawStringLeft("" + this.b, x - Node.radius + 1, y - Node.radius,
+					Fonts.SMALL);*/
+			v.drawString(this.b + ".." + this.e, x, y - Node.radius - 5,
+					Fonts.SMALL);
 		} else {
-			String str = new String("" + this.e);
-			v.drawString(str, x, y + Node.radius + 5, Fonts.SMALL);
+			v.drawString("" + this.e, x, y + Node.radius + 5, Fonts.SMALL);
 		}
 	}
-	
 
-	public static final NodeColor TREE = new NodeColor(Color.BLACK, new Color(0xFDFF9A));//0xFEFFC3));
-	public static final NodeColor EMPTY = new NodeColor(Color.BLACK, new Color(0xF0F0F0));
+	public static final NodeColor TREE = new NodeColor(Color.BLACK, new Color(
+			0xFDFF9A));//0xFEFFC3));
+	public static final NodeColor EMPTY = new NodeColor(Color.BLACK, new Color(
+			0xF0F0F0));
+
 	@Override
 	protected void drawBg(View v) {
 		if (key != NOKEY) {
-			if (!isLeaf()){
+			if (!isLeaf()) {
 				this.setColor(TREE);
 			}
 		} else {
 			this.setColor(EMPTY);
 		}
-		
-		if (!isLeaf()){
+
+		if (!isLeaf()) {
 			v.setColor(this.getBgColor());
 			v.fillCircle(x, y, Node.radius);
 			v.setColor(this.getFgColor());
@@ -77,7 +82,7 @@ public class IntervalNode extends BSTNode{
 			}
 		} else {
 			if (key != NOKEY) {
-				if (this.markedColor){
+				if (this.markedColor) {
 					this.setColor(IN);
 				} else {
 					this.setColor(NodeColor.NORMAL);
@@ -95,17 +100,21 @@ public class IntervalNode extends BSTNode{
 			}
 		}
 	}
-	
+
 	int i;
+
 	@Override
 	public void drawTree(View v) {
 		i = 0;
 		drawTree2(v);
 	}
-	
-	public static final NodeColor IN = new NodeColor(Color.BLACK, new Color(0xAAFF95));
-	public static final NodeColor OUT = new NodeColor(Color.BLACK, new Color(0xFC9A79));
-	public static final NodeColor WAIT = new NodeColor(Color.BLACK, new Color(0xFFFFFF));
+
+	public static final NodeColor IN = new NodeColor(Color.BLACK, new Color(
+			0xAAFF95));
+	public static final NodeColor OUT = new NodeColor(Color.BLACK, new Color(
+			0xFC9A79));
+	public static final NodeColor WAIT = new NodeColor(Color.BLACK, new Color(
+			0xFFFFFF));
 
 	private void drawTree2(View v) {
 		switch (focused) {
@@ -121,18 +130,24 @@ public class IntervalNode extends BSTNode{
 		case FALSE:
 			break;
 		}
-		switch(focused){
-		case TIN: case TOUT: case TWAIT:
+		switch (focused) {
+		case TIN:
+		case TOUT:
+		case TWAIT:
 			v.setColor(this.getFgColor());
 			int c = (e - b + 1);
-			int d = (int)(Math.log10(c)/Math.log10(2));
-			System.out.println(d + " =vyska-1, minsepy= " +IntervalTree.minsepy);
-			int width = (c)*IntervalTree.minsepx;
-			int height = (d)*IntervalTree.minsepy + 4 + 2*Node.radius;
-			v.drawRoundRectangle(x, y + height/2 - Node.radius - 3, width/2, height/2, 8, 8);
+			int d = (int) (Math.log10(c) / Math.log10(2));
+			System.out.println(d + " =vyska-1, minsepy= "
+					+ IntervalTree.minsepy);
+			int width = (c) * IntervalTree.minsepx;
+			int height = (d) * IntervalTree.minsepy + 4 + 2 * Node.radius;
+			v.drawRoundRectangle(x, y + height / 2 - Node.radius - 3,
+					width / 2, height / 2, 8, 8);
 			v.setColor(this.getBgColor());
-			v.fillRoundRectangle(x, y + height/2 - Node.radius - 3, width/2, height/2, 8, 8);
-		default: break;
+			v.fillRoundRectangle(x, y + height / 2 - Node.radius - 3,
+					width / 2, height / 2, 8, 8);
+		default:
+			break;
 		}
 		if (state != INVISIBLE && getParent() != null) {
 			v.setColor(Color.black);
@@ -146,17 +161,17 @@ public class IntervalNode extends BSTNode{
 													// Layout.SIMPLE
 			v.setColor(Color.LIGHT_GRAY);
 			++i;
-			if (i%10 == 0) {
+			if (i % 10 == 0) {
 				v.drawLine(x, y, x, -22);
 			} else {
 				v.drawLine(x, y, x, -20);
 			}
-			if (i%10 == 0) {
+			if (i % 10 == 0) {
 				v.drawString("" + i, x, -29, Fonts.NORMAL);
-			} else if (i%10 == 5) {
+			} else if (i % 10 == 5) {
 				v.drawString("5", x, -27, Fonts.NORMAL);
 			} else {
-				v.drawString("" + i%10, x, -27, Fonts.SMALL);
+				v.drawString("" + i % 10, x, -27, Fonts.SMALL);
 			}
 		}
 		if (getRight() != null) {
@@ -164,21 +179,20 @@ public class IntervalNode extends BSTNode{
 		}
 		draw(v);
 	}
-	
+
 	public void rebox() {
 		/*
 		 * if there is a left child, leftw = width of the box enclosing the
 		 * whole left subtree, i.e., leftw+rightw; otherwise the width is the
 		 * node radius plus some additional space called xspan
 		 */
-		leftw = (getLeft() == null) ? ((IntervalTree)D).getMinsepx() / 2
+		leftw = (getLeft() == null) ? ((IntervalTree) D).getMinsepx() / 2
 				: getLeft().leftw + getLeft().rightw;
 		// rightw is computed analogically
-		rightw = (getRight() == null) ? ((IntervalTree)D).getMinsepx() / 2
+		rightw = (getRight() == null) ? ((IntervalTree) D).getMinsepx() / 2
 				: getRight().leftw + getRight().rightw;
 	}
-	
-	
+
 	public boolean prec(IntervalNode v) {
 		if (((IntervalTree) D).minTree == mimasuType.MIN) {
 			return this.key < v.key;
@@ -198,13 +212,11 @@ public class IntervalNode extends BSTNode{
 		}
 	}
 
-	
-	
 	@Override
 	public IntervalNode getRight() {
 		return (IntervalNode) super.getRight();
 	}
-	
+
 	public void setRight(IntervalNode v) {
 		super.setRight((BSTNode) v);
 	}
@@ -226,20 +238,20 @@ public class IntervalNode extends BSTNode{
 	public void setParent(IntervalNode v) {
 		super.setParent((BSTNode) v);
 	}
-	
-	public void setInterval(int i, int j){
+
+	public void setInterval(int i, int j) {
 		b = i;
 		e = j;
 	}
-	
-	public void markColor(){
+
+	public void markColor() {
 		markedColor = true;
 	}
-	
-	public void unmarkColor(){
+
+	public void unmarkColor() {
 		markedColor = false;
 	}
-	
+
 	public IntervalNode find(int x, int y) {
 		if (inside(x, y))
 			return this;
