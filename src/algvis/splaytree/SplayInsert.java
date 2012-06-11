@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.splaytree;
 
 import algvis.core.NodeColor;
@@ -5,15 +21,15 @@ import algvis.core.NodeColor;
 public class SplayInsert extends SplayAlg {
 	public SplayInsert(SplayTree T, int x) {
 		super(T, x);
-		T.vv = v = new SplayNode(T, x);
+		T.setVV(v = new SplayNode(T, x));
 		v.setColor(NodeColor.INSERT);
-		setHeader("insertion");
+		setHeader("insert", x);
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
-			T.root = v;
+		if (T.getRoot() == null) {
+			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
 			mysuspend();
@@ -29,24 +45,26 @@ public class SplayInsert extends SplayAlg {
 				v.setColor(NodeColor.NOTFOUND);
 				return;
 			} else if (w.key < K) {
-				addStep("splayinsertleft");
+				addNote("splay-insert-left", K);
+				addStep("splay-insert-left2", K);
 				mysuspend();
 				v.linkLeft(w);
 				v.linkRight(w.getRight());
 				w.setRight(null);
 			} else {
-				addStep("splayinsertright");
+				addNote("splay-insert-right", K);
+				addStep("splay-insert-right2", K);
 				mysuspend();
 				v.linkRight(w);
 				v.linkLeft(w.getLeft());
 				w.setLeft(null);
 			}
-			T.root = v;
+			T.setRoot(v);
 			T.reposition();
 			mysuspend();
 		}
-		addStep("done");
+		addNote("done");
 		v.setColor(NodeColor.NORMAL);
-		T.vv = null;
+		T.setVV(null);
 	}
 }

@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.scapegoattree;
 
 import algvis.bst.BSTNode;
@@ -12,7 +28,7 @@ public class GBFind extends GBAlg {
 
 	@Override
 	public void run() {
-		if (T.root == null) {
+		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
 			mysuspend();
@@ -20,13 +36,13 @@ public class GBFind extends GBAlg {
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
 		} else {
-			BSTNode w = T.root;
+			BSTNode w = T.getRoot();
 			v.goTo(w);
 			addStep("bstfindstart");
 			mysuspend();
 			while (true) {
 				if (w.key == K) {
-					if (((GBNode) w).deleted) {
+					if (((GBNode) w).isDeleted()) {
 						addStep("gbfinddeleted");
 						v.setColor(NodeColor.NOTFOUND);
 						v.goDown();

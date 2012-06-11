@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.avltree;
 
 import algvis.core.Algorithm;
@@ -12,24 +28,23 @@ public class AVLDelete extends Algorithm {
 	public AVLDelete(AVL T, int x) {
 		super(T);
 		this.T = T;
-		v = (AVLNode) T.setNodeV(new AVLNode(T, K = x));
+		v = (AVLNode) T.setV(new AVLNode(T, K = x));
 		v.setColor(NodeColor.DELETE);
 		setHeader("deletion");
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
+		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
 			mysuspend();
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
-			finish();
 			return;
 		} else {
-			AVLNode d = (AVLNode) T.root;
+			AVLNode d = (AVLNode) T.getRoot();
 			v.goTo(d);
 			addStep("bstdeletestart");
 			mysuspend();
@@ -62,14 +77,13 @@ public class AVLDelete extends Algorithm {
 
 			if (d == null) { // notfound
 				addStep("notfound");
-				finish();
 				return;
 			}
 
 			AVLNode w = d.getParent();
 			d.setColor(NodeColor.FOUND);
 			if (d.isLeaf()) { // case I - list
-				addStep("bstdeletecase1");
+				addStep("bst-delete-case1");
 				mysuspend();
 				if (d.isRoot()) {
 					T.setRoot(null);
@@ -83,7 +97,7 @@ public class AVLDelete extends Algorithm {
 			} else if (d.getLeft() == null || d.getRight() == null) { // case
 																		// IIa -
 																		// 1 syn
-				addStep("bstdeletecase2");
+				addStep("bst-delete-case2");
 				mysuspend();
 				AVLNode s = (d.getLeft() == null) ? d.getRight() : d.getLeft();
 				if (d.isRoot()) {
@@ -98,9 +112,9 @@ public class AVLDelete extends Algorithm {
 				v.goDown();
 
 			} else { // case III - 2 synovia
-				addStep("bstdeletecase3");
+				addStep("bst-delete-case3");
 				AVLNode s = d.getRight();
-				v = (AVLNode) T.setNodeV(new AVLNode(T, -Node.INF));
+				v = (AVLNode) T.setV(new AVLNode(T, -Node.INF));
 				v.setColor(NodeColor.FIND);
 				v.goTo(s);
 				mysuspend();
@@ -113,7 +127,7 @@ public class AVLDelete extends Algorithm {
 				if (w == d) {
 					w = s;
 				}
-				v = (AVLNode) T.setNodeV(s);
+				v = (AVLNode) T.setV(s);
 				if (s.isLeft()) {
 					s.getParent().linkLeft(s.getRight());
 				} else {
@@ -134,7 +148,7 @@ public class AVLDelete extends Algorithm {
 				v.linkRight(d.getRight());
 				v.goTo(d);
 				v.calc();
-				T.setNodeV(d);
+				T.setV(d);
 				d.goDown();
 			} // end case III
 
@@ -204,6 +218,5 @@ public class AVLDelete extends Algorithm {
 			T.reposition();
 			addStep("done");
 		}
-		finish();
 	}
 }

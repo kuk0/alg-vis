@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.treap;
 
 import algvis.core.Algorithm;
@@ -11,14 +27,14 @@ public class TreapDelete extends Algorithm {
 	public TreapDelete(Treap T, int x) {
 		super(T);
 		this.T = T;
-		T.v = v = new TreapNode(T, K = x);
+		T.setV(v = new TreapNode(T, K = x));
 		v.setColor(NodeColor.DELETE);
 		setHeader("deletion");
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
+		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
 			mysuspend();
@@ -27,7 +43,7 @@ public class TreapDelete extends Algorithm {
 			addStep("notfound");
 			return;
 		} else {
-			TreapNode d = (TreapNode)T.root;
+			TreapNode d = (TreapNode)T.getRoot();
 			v.goTo(d);
 			addStep("bstdeletestart");
 			mysuspend();
@@ -64,30 +80,26 @@ public class TreapDelete extends Algorithm {
 			}
 
 			d.setColor(NodeColor.FOUND);
-			T.v = null;
+			T.setV(null);
 			addStep("treapbubbledown");
 			// prebubleme k listu
 			while (!d.isLeaf()) {
 				if (d.getLeft() == null) {
 					T.rotate(d.getRight());
-					// text.setPage("text/treap/delete/left.html");
 				} else if (d.getRight() == null) {
 					T.rotate(d.getLeft());
-					// text.setPage("text/treap/delete/right.html");
 				} else if (d.getRight().p > d.getLeft().p) {
 					T.rotate(d.getRight());
-					// text.setPage("text/treap/delete/left.html");
 				} else {
 					T.rotate(d.getLeft());
-					// text.setPage("text/treap/delete/right.html");
 				}
 				mysuspend();
 			}
-			T.v = d;
+			T.setV(d);
 			addStep("treapdeletecase1");
 			mysuspend();
 			if (d.isRoot()) {
-				T.root = null;
+				T.setRoot(null);
 			} else if (d.isLeft()) {
 				d.getParent().setLeft(null);
 			} else {

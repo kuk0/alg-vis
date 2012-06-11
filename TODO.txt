@@ -1,0 +1,32 @@
+* idealne + popis toho stromu, invarianty, a pod.
+* v bst; arrowTo namiesto arrow Above
+* focus na inpute; este lepsie placeholder "input data"
+* vypindat, kde treba...
+
+* drawable objects a scena
+* aj text (a mozno vsetko drawable) moze mat "steps"
+  a napr. po 50 tikoch zmiznut...
+
+* komentar k rotate
+* opravit binomial heaps; +komentare
+* delegovat prikazy ako M.V.a....
+* v.rotate by bolo lepsie ako T.rotate(v); co s korenom?
+* pozriet B-strom; vykreslovanie; zjednodusit
+
+* gui: invitation
+* tooltips
+* redesign historie - komentare priamo vedla toho, kde sa to deje
+  z hisorie mozno len nejake body / heslovite / timeline / slider
+* cele tie 3 casti integrovat do jedneho
+
+friker:
+* layout v O(n)
+
+tana:
+* finger tree -- vytmavit tie vrcholy, ktore "nevidime"; ako stupame hore,
+     nas podstrom sa vysvecuje; ako stupame dole, opaet sa stmavuje to,
+     co je mimo podstromu (pozri vyhladavanie v bst)
+* reversal tree -- este stale tie prvky nie su pod sebou
+*
+katka:
+* posunut leftist heap od seba; +label Heap #1: Heap #2:... ako vo Fib.heap

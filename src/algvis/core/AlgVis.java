@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.core;
 
 import java.awt.CardLayout;
@@ -17,25 +33,29 @@ import algvis.internationalization.IMenuItem;
 import algvis.internationalization.Languages;
 
 public class AlgVis extends JPanel implements ActionListener {
-	/* set the default panel 
-	 * 0 - BST
-	 * 1 - Rotations
-	 * 2 - AVL
-	 * 3 - 23 tree
-	 * 4 - 234 tree
-	 * 5 - B-tree
-	 * 6 - Red-black tree
-	 * 7 - AA-tree
-	 * 8 - Treap
-	 * 9 - SkipList
-	 * 10 - Scapegoat tree
-	 * 11 - Splay tree
-	 * 12 - Heap
-	 * 13 - Binomial heap
-	 * 14 - Lazy Binomial heap
-	 * 15 - Fibonacci heap
-	 * 16 - Union-find */
-	final static int DEFAULT_DS = 0; 
+	/* set the default panel
+     * 0 - BST ("bst")
+     * 1 - Rotations ("rotations")
+     * 2 - AVL ("avltree")
+     * 3 - 23 tree ("23tree")
+     * 4 - 234 tree ("234tree")
+     * 5 - B-tree ("btree")
+     * 6 - Red-black tree ("redblack")
+     * 7 - AA-tree ("aatree")
+     * 8 - Treap ("treap")
+     * 9 - SkipList ("skiplist")
+     * 10 - Scapegoat tree ("scapegoat")
+     * 11 - Splay tree ("splaytree")
+     * 12 - Heap ("heap")
+     * 13 - d-ary heap ("daryheap")
+     * 14 - Leftist heap ("leftheap")
+     * 15 - Skew heap ("skewheap")
+     * 16 - Binomial heap ("binheap")
+     * 17 - Lazy Binomial heap ("lazybinheap")
+     * 18 - Fibonacci heap ("fibheap")
+     * 19 - Union-find ("ufi")
+     * 20 - Trie ("trie") */
+	final static int DEFAULT_DS = 0;
 	
 	private static final long serialVersionUID = -5202486006824196688L;
 

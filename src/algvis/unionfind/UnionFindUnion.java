@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.unionfind;
 
 import algvis.core.NodeColor;
@@ -17,6 +33,8 @@ public class UnionFindUnion extends UnionFindFind {
 		this.unionState = UF.unionState;
 		this.u = u;
 		this.v = v;
+		u.mark();
+		v.mark();
 		setHeader("ufunion");
 	}
 
@@ -47,7 +65,7 @@ public class UnionFindUnion extends UnionFindFind {
 		} else {
 			addStep("ufunionsimple");
 			mysuspend();
-			UF.sets.remove(r2);
+			UF.removeFromSets(r2);
 			r1.addChild(r2);
 		}
 
@@ -70,23 +88,23 @@ public class UnionFindUnion extends UnionFindFind {
 			addStep("ufsameset");
 			mysuspend();
 		} else {
-			addStep("ufunionbyrank", r1.rank, r2.rank);
-			if (r1.rank > r2.rank) {
+			addStep("ufunionbyrank", r1.getRank(), r2.getRank());
+			if (r1.getRank() > r2.getRank()) {
 				addStep("ufunionfirstsecond");
 				mysuspend();
-				UF.sets.remove(r2);
+				UF.removeFromSets(r2);
 				r1.addChild(r2);
-			} else if (r1.rank < r2.rank) {
+			} else if (r1.getRank() < r2.getRank()) {
 				addStep("ufunionsecondfirst");
 				mysuspend();
-				UF.sets.remove(r1);
+				UF.removeFromSets(r1);
 				r2.addChild(r1);
 			} else {
 				addStep("ufunionsamerank");
 				mysuspend();
-				UF.sets.remove(r2);
+				UF.removeFromSets(r2);
 				r1.addChild(r2);
-				r1.rank++;
+				r1.setRank(r1.getRank() + 1);
 			}
 		}
 

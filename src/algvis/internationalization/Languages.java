@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.internationalization;
 
 import java.util.LinkedList;
@@ -19,7 +35,7 @@ public class Languages {
 		all_locales[0] = new Locale("en");
 		all_msgs[0] = ResourceBundle.getBundle("Messages", all_locales[0]);
 		all_locales[1] = new Locale("sk");
-		all_msgs[1] = ResourceBundle.getBundle("Messages_sk", all_locales[1]);
+		all_msgs[1] = ResourceBundle.getBundle("Messages", all_locales[1]);
 	}
 
 	public Languages(int i) {
@@ -63,8 +79,12 @@ public class Languages {
 		try {
 			return all_msgs[current_lang].getString(s);
 		} catch (MissingResourceException e) {
-			System.out.println(e.getMessage() + ": " + s);
+			System.err.println(e.getMessage() + ": " + s);
 			return "???";
 		}
+	}
+	
+	public int getCurrentLanguage() {
+		return current_lang;
 	}
 }

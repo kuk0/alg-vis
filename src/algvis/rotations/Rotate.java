@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.rotations;
 
 import algvis.bst.BST;
@@ -15,47 +31,48 @@ public class Rotate extends Algorithm {
 		this.R = R;
 		this.T = R.T;
 		this.v = v;
+		setHeader("rotate-header", v.key);
 	}
 
 	@Override
 	public void run() {
-		if (v == T.root) {
-			// vypis ze to je root...
+		if (v == T.getRoot()) {
+			addNote("rotate-root", v.key);
 			return;
 		}
-		BSTNode u = v.getParent();
+		BSTNode u = v.getParent(), a, b, c;
 		boolean rotR = v.isLeft();
+		if (rotR) {
+			a = v.getLeft();
+			b = v.getRight();
+			c = u.getRight();
+		} else {
+			a = u.getLeft();
+			b = v.getLeft();
+			c = v.getRight();
+		}
 		if (R.subtrees) {
-			if (rotR) {
-				if (v.getLeft() != null) {
-					v.getLeft().subtreeColor(NodeColor.RED);
-					v.getLeft().markSubtree = true;
-				}
-				if (v.getRight() != null) {
-					v.getRight().subtreeColor(NodeColor.GREEN);
-					v.getRight().markSubtree = true;
-				}
-				if (u.getRight() != null) {
-					u.getRight().subtreeColor(NodeColor.BLUE);
-					u.getRight().markSubtree = true;
-				}
-			} else {
-				if (u.getLeft() != null) {
-					u.getLeft().subtreeColor(NodeColor.RED);
-					u.getLeft().markSubtree = true;
-				}
-				if (v.getLeft() != null) {
-					v.getLeft().subtreeColor(NodeColor.GREEN);
-					v.getLeft().markSubtree = true;
-				}
-				if (v.getRight() != null) {
-					v.getRight().subtreeColor(NodeColor.BLUE);
-					v.getRight().markSubtree = true;
-				}
+			if (a != null) {
+				a.subtreeColor(NodeColor.RED);
+				a.markSubtree = true;
+			}
+			if (b != null) {
+				b.subtreeColor(NodeColor.GREEN);
+				b.markSubtree = true;
+			}
+			if (c != null) {
+				c.subtreeColor(NodeColor.BLUE);
+				c.markSubtree = true;
 			}
 		}
-		mysuspend();
 
+		if (u == T.getRoot() && b != null) {
+			addNote("rotate-newroot", v.key, b.key, u.key);
+		} else {
+			addNote("rotate-changes", v.key, b.key, u.key, u.getParent().key);
+		}
+		mysuspend();
+		
 		T.rotate(v);
 		R.v = u;
 		R.reposition();

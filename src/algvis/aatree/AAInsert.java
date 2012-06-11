@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.aatree;
 
 import algvis.core.Algorithm;
@@ -11,24 +27,24 @@ public class AAInsert extends Algorithm {
 	public AAInsert(AA T, int x) {
 		super(T);
 		this.T = T;
-		T.v = v = (AANode) T.setNodeV(new AANode(T, K = x));
+		T.setV(v = (AANode) T.setV(new AANode(T, K = x)));
 		v.setColor(NodeColor.INSERT);
-		setHeader("insertion");
+		setHeader("insert", K);
 	}
 
 	@Override
 	public void run() {
-		AANode w = (AANode) T.root;
-		if (T.root == null) {
+		AANode w = (AANode) T.getRoot();
+		if (T.getRoot() == null) {
 			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
 			mysuspend();
 			v.setColor(NodeColor.NORMAL);
-			T.setNodeV(null);
+			T.setV(null);
 		} else {
 			v.goAboveRoot();
-			addStep("bstinsertstart");
+			addStep("bst-insert-start");
 			mysuspend();
 
 			while (true) {
@@ -36,10 +52,9 @@ public class AAInsert extends Algorithm {
 					addStep("alreadythere");
 					v.goDown();
 					v.setColor(NodeColor.NOTFOUND);
-					finish();
 					return;
 				} else if (w.key < K) {
-					addStep("bstinsertright", K, w.key);
+					addStep("bst-insert-right", K, w.key);
 					if (w.getRight() != null) {
 						w = w.getRight();
 					} else {
@@ -47,7 +62,7 @@ public class AAInsert extends Algorithm {
 						break;
 					}
 				} else {
-					addStep("bstinsertleft", K, w.key);
+					addStep("bst-insert-left", K, w.key);
 					if (w.getLeft() != null) {
 						w = w.getLeft();
 					} else {
@@ -63,7 +78,7 @@ public class AAInsert extends Algorithm {
 			mysuspend();
 
 			v.setColor(NodeColor.NORMAL);
-			T.setNodeV(null);
+			T.setV(null);
 			// bubleme nahor
 			while (w != null) {
 				w.mark();
@@ -104,6 +119,5 @@ public class AAInsert extends Algorithm {
 		}
 		T.reposition();
 		addStep("done");
-		finish();
 	}
 }

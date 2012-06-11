@@ -1,7 +1,20 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.core;
-
-import algvis.scenario.commands.HardPauseCommand;
-import algvis.scenario.commands.SetCommentaryStateCommand;
 
 /**
  * The Class Algorithm. Each visualized data structure consists of data and
@@ -14,14 +27,16 @@ import algvis.scenario.commands.SetCommentaryStateCommand;
  */
 abstract public class Algorithm extends Thread {
 	private DataStructure D;
-	boolean suspended = false;
-	private algvis.core.Commentary.State commentaryState;
+	private boolean suspended = false;
 
 	public Algorithm(DataStructure D) {
 		this.D = D;
-		D.scenario.addingNextStep();
-		D.scenario.add(new HardPauseCommand(D, false));
-		commentaryState = D.M.C.getState();
+		D.scenario.newAlgorithm();
+		D.scenario.newStep();
+	}
+
+	public boolean isSuspended() {
+		return suspended;
 	}
 
 	/**
@@ -39,7 +54,7 @@ abstract public class Algorithm extends Thread {
 				}
 			}
 		}
-		D.scenario.addingNextStep();
+		D.scenario.newStep();
 	}
 
 	/**
@@ -53,38 +68,40 @@ abstract public class Algorithm extends Thread {
 		}
 	}
 
-	protected void finish() {
-		D.scenario.add(new HardPauseCommand(D, true));
-	}
-
 	public void setHeader(String s) {
 		D.M.C.setHeader(s);
-		saveCommentary();
+	}
+
+	public void setHeader(String s, String... par) {
+		D.M.C.setHeader(s, par);
+	}
+
+	public void setHeader(String s, int... par) {
+		D.M.C.setHeader(s, par);
 	}
 
 	public void addNote(String s) {
 		D.M.C.addNote(s);
-		saveCommentary();
+	}
+
+	public void addNote(String s, String... par) {
+		D.M.C.addNote(s, par);
+	}
+
+	public void addNote(String s, int... par) {
+		D.M.C.addNote(s, par);
 	}
 
 	public void addStep(String s) {
 		D.M.C.addStep(s);
-		saveCommentary();
 	}
 
 	public void addStep(String s, String... par) {
 		D.M.C.addStep(s, par);
-		saveCommentary();
 	}
 
 	public void addStep(String s, int... par) {
 		D.M.C.addStep(s, par);
-		saveCommentary();
-	}
-
-	private void saveCommentary() {
-		D.scenario.add(new SetCommentaryStateCommand(D.M.C, commentaryState));
-		commentaryState = D.M.C.getState();
 	}
 
 	@Override

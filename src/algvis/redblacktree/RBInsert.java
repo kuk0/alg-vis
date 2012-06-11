@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.redblacktree;
 
 import algvis.core.Algorithm;
@@ -10,22 +26,22 @@ public class RBInsert extends Algorithm {
 	public RBInsert(RB T, int x) {
 		super(T);
 		this.T = T;
-		T.v = v = new RBNode(T, K = x);
-		setHeader("insertion");
+		v = (RBNode) T.setV(new RBNode(T, K = x));
+		setHeader("insert", K);
 	}
 
 	@Override
 	public void run() {
-		RBNode w = (RBNode) T.root;
-		if (T.root == null) {
-			//v.setLeft(v.setRight(v.setParent(T.NULL)));
+		RBNode w = (RBNode) T.getRoot();
+		if (T.getRoot() == null) {
+			// v.setLeft(v.setRight(v.setParent(T.NULL)));
 			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
 			mysuspend();
 		} else {
 			v.goAboveRoot();
-			addStep("bstinsertstart");
+			addStep("bst-insert-start");
 			mysuspend();
 
 			while (true) {
@@ -34,7 +50,7 @@ public class RBInsert extends Algorithm {
 					v.goDown();
 					return;
 				} else if (w.key < K) {
-					addStep("bstinsertright", K, w.key);
+					addStep("bst-insert-right", K, w.key);
 					if (w.getRight() != null) {
 						w = w.getRight();
 					} else {
@@ -42,7 +58,7 @@ public class RBInsert extends Algorithm {
 						break;
 					}
 				} else {
-					addStep("bstinsertleft", K, w.key);
+					addStep("bst-insert-left", K, w.key);
 					if (w.getLeft() != null) {
 						w = w.getLeft();
 					} else {
@@ -53,7 +69,7 @@ public class RBInsert extends Algorithm {
 				v.goAbove(w);
 				mysuspend();
 			}
-			//v.setLeft(v.setRight(T.NULL));
+			// v.setLeft(v.setRight(T.NULL));
 
 			T.reposition();
 			mysuspend();
@@ -61,19 +77,20 @@ public class RBInsert extends Algorithm {
 			// bubleme nahor
 			w = v;
 			RBNode pw = w.getParent2();
-			while (!w.isRoot() && pw.red) {
+			while (!w.isRoot() && pw.isRed()) {
 				w.mark();
 				boolean isleft = pw.isLeft();
-				RBNode ppw = pw.getParent2(), y = (isleft ? ppw.getRight() : ppw
-						.getLeft());
-				if (y == null) y = T.NULL;
-				if (y.red) {
+				RBNode ppw = pw.getParent2(), y = (isleft ? ppw.getRight()
+						: ppw.getLeft());
+				if (y == null)
+					y = T.NULL;
+				if (y.isRed()) {
 					// case 1
 					addStep("rbinsertcase1");
 					mysuspend();
-					pw.red = false;
-					y.red = false;
-					ppw.red = true;
+					pw.setRed(false);
+					y.setRed(false);
+					ppw.setRed(true);
 					w.unmark();
 					w = ppw;
 					w.mark();
@@ -95,8 +112,8 @@ public class RBInsert extends Algorithm {
 					// case 3
 					addStep("rbinsertcase3");
 					mysuspend();
-					w.red = false;
-					pw.red = true;
+					w.setRed(false);
+					pw.setRed(true);
 					T.rotate(w);
 					mysuspend();
 					w.unmark();
@@ -104,9 +121,10 @@ public class RBInsert extends Algorithm {
 				}
 			}
 		}
-		if (w != null) w.unmark();
-		((RBNode) T.root).red = false;
-		T.v = null;
+		if (w != null)
+			w.unmark();
+		((RBNode) T.getRoot()).setRed(false);
+		T.setV(null);
 		T.reposition();
 		addStep("done");
 	}

@@ -1,17 +1,33 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.splaytree;
 
-import algvis.core.Node;
 import algvis.core.NodeColor;
+import algvis.core.Node;
 
 public class SplayDelete extends SplayAlg {
 	public SplayDelete(SplayTree T, int x) {
 		super(T, x);
-		setHeader("deletion");
+		setHeader("delete", x);
 	}
 
 	@Override
 	public void run() {
-		if (T.root == null) {
+		if (T.getRoot() == null) {
 			s.goToRoot();
 			addStep("empty");
 			mysuspend();
@@ -33,28 +49,28 @@ public class SplayDelete extends SplayAlg {
 			return;
 		}
 
-		T.v = w;
-		T.v.goDown();
-		T.v.setColor(NodeColor.DELETE);
+		T.setV(w);
+		T.getV().goDown();
+		T.getV().setColor(NodeColor.DELETE);
 		if (w.getLeft() == null) {
 			addStep("splaydeleteright");
-			T.root = w.getRight();
-			T.root.setParent(null);
+			T.setRoot(w.getRight());
+			T.getRoot().setParent(null);
 			T.reposition();
 			mysuspend();
 		} else if (w.getRight() == null) {
 			addStep("splaydeleteleft");
-			T.root = w.getLeft();
-			T.root.setParent(null);
+			T.setRoot(w.getLeft());
+			T.getRoot().setParent(null);
 			T.reposition();
 			mysuspend();
 		} else {
 			addStep("splaydelete");
-			T.root2 = w.getLeft();
-			T.root2.setParent(null);
-			T.root = w.getRight();
-			T.root.setParent(null);
-			T.vv = s = new SplayNode(T, -Node.INF);
+			T.setRoot2(w.getLeft());
+			T.getRoot2().setParent(null);
+			T.setRoot(w.getRight());
+			T.getRoot().setParent(null);
+			T.setVV(s = new SplayNode(T, -Node.INF));
 			s.setColor(NodeColor.FIND);
 			w = w.getRight();
 			s.goTo(w);
@@ -65,7 +81,7 @@ public class SplayDelete extends SplayAlg {
 				mysuspend();
 			}
 			w.setColor(NodeColor.FIND);
-			T.vv = null;
+			T.setVV(null);
 			// splay
 			while (!w.isRoot()) {
 				if (w.getParent().isRoot()) {
@@ -93,15 +109,15 @@ public class SplayDelete extends SplayAlg {
 				mysuspend();
 			}
 			addStep("splaydeletelink");
-			T.root = w;
+			T.setRoot(w);
 			w.setColor(NodeColor.NORMAL);
-			w.linkLeft(T.root2);
-			T.root2 = null;
+			w.linkLeft(T.getRoot2());
+			T.setRoot2(null);
 			T.reposition();
 			mysuspend();
 		}
 
 		addStep("done");
-		T.vv = null;
+		T.setVV(null);
 	}
 }

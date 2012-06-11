@@ -1,7 +1,27 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.core;
 
 import java.awt.Color;
 import java.util.Stack;
+
+import org.jdom.Element;
+
+import algvis.scenario.Command;
 
 public class TreeNode extends Node {
 	private TreeNode child = null, right = null, parent = null;
@@ -10,7 +30,7 @@ public class TreeNode extends Node {
 	int offset = 0; // offset from base line, base line has x-coord
 					// equaled to x-coord of leftmost child
 	int level; // distance from the root
-	boolean thread = false; // is this node threaded?
+	protected boolean thread = false; // is this node threaded?
 	int toExtremeSon = 0; // offset from the leftmost son
 	int toBaseline = 0; // distance to child's baseline
 	int modifier = 0;
@@ -84,16 +104,16 @@ public class TreeNode extends Node {
 	public void drawEdges(View v) {
 		if (state != INVISIBLE) {
 			if (thread) {
-				v.setColor(Color.red);
+				v.setColor(Color.red); // TODO
 				if (getChild() != null) {
 					v.drawLine(x, y, getChild().x, getChild().y);
-				} else
-					System.out.println("child: " + getChild());
+				}
 				v.setColor(Color.black);
 			} else {
 				TreeNode w = getChild();
 				while (w != null) {
-					v.setColor(Color.black);
+					v.setColor(Color.black); // TODO maybe these lines would
+												// make problems
 					v.drawLine(x, y, w.x, w.y);
 					w.drawEdges(v);
 					w = w.getRight();
@@ -247,12 +267,10 @@ public class TreeNode extends Node {
 		fTRPetrification(0);
 		fTRBounding(-tmpx);
 		reboxTree();
-		// System.out.println(key+" "+leftw+" "+rightw);
 		/*D.x1 -= D.minsepx;
 		D.x2 += D.xspan + D.radius;
 		D.y1 -= D.yspan + D.radius;
 		D.y2 += D.yspan + D.radius;*/
-		// System.out.println(D.x1 + " " + leftw + " " + D.x2 + " " + rightw);
 	}
 
 	/**
@@ -263,7 +281,6 @@ public class TreeNode extends Node {
 	 *            current level in tree
 	 */
 	private void fTRInitialization(int level) {
-		// System.out.println(level);
 		this.level = level;
 		offset = modifier = shift = change = 0;
 		toExtremeSon = 0;
@@ -504,7 +521,6 @@ public class TreeNode extends Node {
 	 */
 	public void shift(int xamount, int yamount) {
 		goTo(tox + xamount, toy + yamount);
-		// System.out.println(tox);
 		TreeNode w = getChild();
 		while (w != null) {
 			w.shift(xamount, yamount);
@@ -517,7 +533,12 @@ public class TreeNode extends Node {
 	}
 
 	public void setChild(TreeNode child) {
-		this.child = child;
+		if (this.child != child) {
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new SetChildCommand(child));
+			}
+			this.child = child;
+		}
 	}
 
 	public TreeNode getRight() {
@@ -525,7 +546,12 @@ public class TreeNode extends Node {
 	}
 
 	public void setRight(TreeNode right) {
-		this.right = right;
+		if (this.right != right) {
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new SetRightCommand(right));
+			}
+			this.right = right;
+		}
 	}
 
 	public TreeNode getParent() {
@@ -533,7 +559,12 @@ public class TreeNode extends Node {
 	}
 
 	public void setParent(TreeNode parent) {
-		this.parent = parent;
+		if (this.parent != parent) {
+			if (D.scenario.isAddingEnabled()) {
+				D.scenario.add(new SetParentCommand(parent));
+			}
+			this.parent = parent;
+		}
 	}
 
 	// private void fTRGetInfo(int phase, int variable) {
@@ -544,5 +575,113 @@ public class TreeNode extends Node {
 	// + " toB: " + toBaseline + " thread: " + thread + " ("
 	// + phase + ")");
 	// }
+
+	private class SetRightCommand implements Command {
+		private final TreeNode oldRight, newRight;
+
+		public SetRightCommand(TreeNode newRight) {
+			oldRight = getRight();
+			this.newRight = newRight;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setRight");
+			e.setAttribute("key", Integer.toString(key));
+			if (newRight != null) {
+				e.setAttribute("newRight", Integer.toString(newRight.key));
+			} else {
+				e.setAttribute("newRight", "null");
+			}
+			if (oldRight != null) {
+				e.setAttribute("oldRight", Integer.toString(oldRight.key));
+			} else {
+				e.setAttribute("oldRight", "null");
+			}
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			setRight(newRight);
+		}
+
+		@Override
+		public void unexecute() {
+			setRight(oldRight);
+		}
+	}
+
+	private class SetParentCommand implements Command {
+		private final TreeNode oldParent, newParent;
+
+		public SetParentCommand(TreeNode newParent) {
+			oldParent = getParent();
+			this.newParent = newParent;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setParent");
+			e.setAttribute("key", Integer.toString(key));
+			if (newParent != null) {
+				e.setAttribute("newParent", Integer.toString(newParent.key));
+			} else {
+				e.setAttribute("newParent", "null");
+			}
+			if (oldParent != null) {
+				e.setAttribute("oldParent", Integer.toString(oldParent.key));
+			} else {
+				e.setAttribute("oldParent", "null");
+			}
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			setParent(newParent);
+		}
+
+		@Override
+		public void unexecute() {
+			setParent(oldParent);
+		}
+	}
+
+	private class SetChildCommand implements Command {
+		private final TreeNode oldChild, newChild;
+
+		public SetChildCommand(TreeNode newChild) {
+			oldChild = getChild();
+			this.newChild = newChild;
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setChild");
+			e.setAttribute("key", Integer.toString(key));
+			if (newChild != null) {
+				e.setAttribute("newChild", Integer.toString(newChild.key));
+			} else {
+				e.setAttribute("newChild", "null");
+			}
+			if (oldChild != null) {
+				e.setAttribute("oldChild", Integer.toString(oldChild.key));
+			} else {
+				e.setAttribute("oldChild", "null");
+			}
+			return e;
+		}
+
+		@Override
+		public void execute() {
+			setChild(newChild);
+		}
+
+		@Override
+		public void unexecute() {
+			setChild(oldChild);
+		}
+	}
 
 }

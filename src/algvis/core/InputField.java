@@ -1,8 +1,22 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.core;
 
-import java.util.NoSuchElementException;
 import java.util.Random;
-import java.util.StringTokenizer;
 import java.util.Vector;
 
 import javax.swing.JTextField;
@@ -20,11 +34,13 @@ public class InputField extends JTextField {
 	public final static int MAX = 999;
 	Random G;
 	ILabel sb; // status bar
+	Settings s;
 
-	public InputField(int cols, ILabel sb) {
+	public InputField(int cols, ILabel sb, Settings s) {
 		super(cols);
 		G = new Random(System.currentTimeMillis());
 		this.sb = sb;
+		this.s = s;
 	}
 
 	/**
@@ -41,9 +57,9 @@ public class InputField extends JTextField {
 	 */
 	public int getInt(int def, int min, int max) {
 		int n = def;
-		StringTokenizer st = new StringTokenizer(this.getText());
+		String firstWord = this.getText().split("(\\s|,)")[0];
 		try {
-			n = Integer.parseInt(st.nextToken());
+			n = Integer.parseInt(firstWord);
 			if (n < min) {
 				n = min;
 				sb.setText("value too small; using the minimum value " + min
@@ -54,12 +70,12 @@ public class InputField extends JTextField {
 				sb.setText("value too high; using the maximum value " + max
 						+ " instead");
 			}
-			sb.setText("");
-		} catch (NoSuchElementException e) {
+			sb.setText(" ");
 		} catch (NumberFormatException e) {
 			sb.setText("couldn't parse an integer; using the default value "
 					+ def);
 		}
+		setText("");
 		return n;
 	}
 
@@ -111,6 +127,7 @@ public class InputField extends JTextField {
 				}
 			}
 		}
+		setText("");
 		return args;
 	}
 
@@ -136,4 +153,21 @@ public class InputField extends JTextField {
 		}
 		return args;
 	}
+
+	/**
+	 * Returns a vector of strings parsed from input line delimited by spaces.
+	 * [a-z] -> [A-Z], All chars except [A-Z] are lost.
+	 */
+	public Vector<String> getVS() {
+		String ss = getText();
+		Vector<String> result = new Vector<String>();
+		if (ss.compareTo("") == 0) {
+			result.add(WordGenerator.getWord(s));
+		} else {
+			result = WordGenerator.parseString(ss);
+		}
+		setText("");
+		return result;
+	}
+
 }
