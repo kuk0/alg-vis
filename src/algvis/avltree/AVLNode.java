@@ -3,9 +3,9 @@ package algvis.avltree;
 import java.awt.Color;
 
 import algvis.bst.BSTNode;
-import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 import algvis.core.View;
 import algvis.scenario.commands.avlnode.SetBalanceCommand;
 

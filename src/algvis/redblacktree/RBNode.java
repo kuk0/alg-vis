@@ -1,9 +1,9 @@
 package algvis.redblacktree;
 
 import algvis.bst.BSTNode;
-import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 import algvis.core.View;
 
 public class RBNode extends BSTNode {

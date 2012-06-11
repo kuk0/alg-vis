@@ -2,8 +2,8 @@ package algvis.aatree;
 
 import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
-import algvis.core.NodeColor;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 
 public class AADelete extends Algorithm {
 	AA T;

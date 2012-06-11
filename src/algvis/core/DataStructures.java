@@ -11,7 +11,6 @@ import algvis.btree.a234Panel;
 import algvis.btree.a23Panel;
 import algvis.fibonacciheap.FibHeapPanel;
 import algvis.heap.HeapPanel;
-import algvis.internationalization.Languages;
 import algvis.lazybinomialheap.LazyBinHeapPanel;
 import algvis.redblacktree.RBPanel;
 import algvis.rotations.RotPanel;

@@ -2,10 +2,10 @@ package algvis.binomialheap;
 
 import java.awt.Color;
 
-import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.MeldablePQ;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 import algvis.core.View;
 
 public class BinHeapNode extends Node {

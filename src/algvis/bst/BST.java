@@ -1,13 +1,13 @@
 package algvis.bst;
 
 import algvis.core.ClickListener;
-import algvis.core.Commentary.State;
 import algvis.core.Dictionary;
 import algvis.core.Layout;
 import algvis.core.LayoutListener;
 import algvis.core.StringUtils;
 import algvis.core.View;
 import algvis.core.VisPanel;
+import algvis.core.Commentary.State;
 import algvis.scenario.commands.SetCommentaryStateCommand;
 import algvis.scenario.commands.bstnode.SetBSTNodeVCommand;
 import algvis.scenario.commands.bstnode.SetBSTRootCommand;

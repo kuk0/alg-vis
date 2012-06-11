@@ -2,8 +2,8 @@ package algvis.skiplist;
 
 import java.util.Random;
 
-import algvis.core.NodeColor;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 
 public class SkipInsert extends SkipAlg {
 	Random R;

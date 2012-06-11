@@ -1,8 +1,8 @@
 package algvis.bst;
 
 import algvis.core.Algorithm;
-import algvis.core.NodeColor;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 
 public class BSTDelete extends Algorithm {
 	BST T;
