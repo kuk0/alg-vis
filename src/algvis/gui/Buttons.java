@@ -283,7 +283,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 
 	public void setStats(String s) {
 		String oldText = stats.getText();
-		if (oldText != s) {
+		if (!oldText.equals(s)) {
 			if (D.scenario.isAddingEnabled()) {
 				D.scenario.add(new SetStatsCommand(oldText, s));
 			}

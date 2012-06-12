@@ -23,7 +23,7 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class Languages {
-	final int N = 2;
+	final static int N = 2;
 	int current_lang;
 	Locale[] all_locales = new Locale[N];
 	ResourceBundle[] all_msgs = new ResourceBundle[N];
