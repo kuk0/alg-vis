@@ -14,49 +14,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.skewheap;
+package algvis.pairingheap;
 
+import algvis.core.ClickListener;
+import algvis.core.DataStructure;
 import algvis.core.MeldablePQ;
+import algvis.core.MeldablePQButtons;
 import algvis.core.Node;
 import algvis.core.Pair;
-import algvis.core.StringUtils;
-import algvis.gui.MeldablePQButtonsNoDecr;
-import algvis.gui.VisPanel;
-import algvis.gui.view.ClickListener;
-import algvis.gui.view.View;
+import algvis.core.View;
+import algvis.core.VisPanel;
+import algvis.pairingheap.PairHeapAlg.Pairing;
 
-public class SkewHeap extends MeldablePQ implements ClickListener{
-	public static String dsName = "skewheap";
-	SkewHeapNode root[] = null, v = null, v2 = null;
+public class PairingHeap extends MeldablePQ implements ClickListener{
+	public static String dsName = "pairingheap";
+	PairHeapNode root[] = null, v = null, v2 = null;
+	public Pairing pairState = Pairing.NAIVE;
+	//public PairHeapNode children[] = null;
 	
-	public SkewHeap(VisPanel M) {
+	public PairingHeap(VisPanel M) {
 		super(M, dsName);
-		root = new SkewHeapNode[numHeaps + 1];
-		M.screen.V.setDS(this);
-	}	
+		root = new PairHeapNode[numHeaps + 1];
+		M.screen.V.setDS(this); 
+	}
 	
-	@Override
-	public void highlight(int i) {
-		active = i;
-		if (root[active] != null) {
-			root[active].highlightTree();
-		}		
-	}
-
-	@Override
-	public void lowlight() {
-		if (root[active] != null) {
-			root[active].lowlightTree();
-		}		
-	}
-
 	@Override
 	public void mouseClicked(int x, int y) {
 		int h = 0;
-		SkewHeapNode v = null;
+		PairHeapNode v = null;
 		for (int i = 1; i <= numHeaps; ++i) {
 			if (root[i] != null) {
-				v = (SkewHeapNode) root[i].find(x, y);
+				v = (PairHeapNode) root[i].find(x, y);
 				if (v != null) {
 					h = i;
 					break;
@@ -74,7 +62,7 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 					v.mark();
 					chosen = v;
 				} else {
-					((MeldablePQButtonsNoDecr) M.B).activeHeap.setValue(h);
+					((MeldablePQButtons) M.B).activeHeap.setValue(h);
 					// lowlight();
 					// highlight(h);
 				}
@@ -85,15 +73,90 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 
 	@Override
 	public void insert(int x) {
-		start(new SkewHeapInsert(this, active, x));
+		start(new PairHeapInsert(this, active, x));
 		
 	}
 
 	@Override
 	public void delete() {
-		start(new SkewHeapDelete(this, active));
+		start(new PairHeapDelete(this, active));
+	}
+
+	
+	@Override
+	public void meld(int i, int j) {
+		Pair p = chooseHeaps(i, j);
+		i = p.first;
+		j = p.second;
+		((MeldablePQButtons) M.B).activeHeap.setValue(i);
+		start(new PairHeapMeld(this, i, j));
+	}
+
+	@Override
+	public void decreaseKey(Node v, int delta) {
+		if (v == null) {
+			// TODO: vypindat
+		} else {
+			start(new PairHeapDecrKey(this, (PairHeapNode) v, delta));
+		}
 		
 	}
+
+	@Override
+	public String getName() {
+		return "pairingheap";
+	}
+
+	@Override
+	public String stats() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void clear() {
+		for(int i = 0; i <= numHeaps; i++){
+			root[i] = null;
+		}
+		
+	}
+
+	@Override
+	public void draw(View V) {
+		for (int i = 0; i <= numHeaps; ++i) {
+			if (root[i] != null) {
+				root[i].moveTree();
+				root[i].drawTree(V);
+			}
+		}
+		
+		if (v != null) { 
+			v.moveTree(); 
+			v.drawTree(V); 
+		}
+		
+		if (v2 != null) {
+			v2.moveTree(); 
+			v2.drawTree(V); 
+		}
+		 
+	}
+
+	@Override
+	public void highlight(int i) {
+		active = i;
+		if (root[active] != null) {
+			root[active].highlightTree();
+		}
+	}
+
+	@Override
+	public void lowlight() {
+		if (root[active] != null) {
+			root[active].lowlightTree();
+		}
+	}
+	
 	protected Pair chooseHeaps(int i, int j) {
 		if (i < 1 || i > numHeaps) {
 			i = -1;
@@ -116,107 +179,22 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 		}
 		return new Pair(i, j);
 	}
-
-	@Override
-	public void meld(int i, int j) {
-		Pair p = chooseHeaps(i, j);
-		i = p.first;
-		j = p.second;
-		((MeldablePQButtonsNoDecr) M.B).activeHeap.setValue(i);
-		start(new SkewHeapMeld(this, i, j));
-		
-	}
-
-	@Override
-	public void decreaseKey(Node v, int delta) {
-		if (v == null) {
-		} else {
-			start(new SkewHeapDecrKey(this, (SkewHeapNode) v, delta));
-		}
-		
-	}
-
-	@Override
-	public String getName() {
-		return "skewheap";
-	}
-
-	@Override
-	public String stats() {
-
-		if (root[active] == null) {
-			return M.S.L.getString("size") + ": 0;   "
-					+ M.S.L.getString("height") + ": 0 =  1.00\u00b7"
-					+ M.S.L.getString("opt") + ";   "
-					+ M.S.L.getString("avedepth") + ": 0";
-		} else {
-			root[active].calcTree();
-			return M.S.L.getString("size")
-					+ ": "
-					+ root[active].size
-					+ ";   "
-					+ M.S.L.getString("height")
-					+ ": "
-					+ root[active].height
-					+ " = "
-					+ StringUtils.format(
-							root[active].height
-									/ (Math.floor(lg(root[active].size)) + 1),
-							2, 5)
-					+ "\u00b7"
-					+ M.S.L.getString("opt")
-					+ ";   "
-					+ M.S.L.getString("avedepth")
-					+ ": "
-					+ StringUtils.format(root[active].sumh
-							/ (double) root[active].size, 2, -5);
-		}
-
-	}
-
-	@Override
-	public void clear() {
-		for (int i = 0; i <= numHeaps; i++) {
-			root[i] = null;
-		}
-
-		setStats();
-		
-	}
-
-	@Override
-	public void draw(View V) {
-		for (int i = 0; i <= numHeaps; ++i) {
-			if (root[i] != null) {
-				root[i].moveTree();
-				root[i].drawTree(V);
-			}
-		}
-		
-		if (v != null) { 
-			v.moveTree(); 
-			v.drawTree(V); 
-		}
-		
-		if (v2 != null) {
-			v2.moveTree(); 
-			v2.drawTree(V); 
-		}
-		
-	}
 	
 	public void reposition() {
-
 		int sumx = 0;
 		for (int i = 1; i <= numHeaps; ++i) {
 			if (root[i] != null) {
 				root[i].reposition();
 				root[i].reboxTree();
-				//sumx += root[i].leftw;
-				root[i].repos(sumx, root[i].toy);
-				sumx += root[i].rightw + 20;
+				//sumx += root[i].leftw; 
+				//root[i].reposition();			//(sumx, root[i].toy);
+				if (root[i].state == -1){
+					root[i].shift(sumx, -1*(DataStructure.minsepy));
+				}else{
+					root[i].shift(sumx, 0);
+				}
+				sumx += root[i].rightw + 20;	// 20 + minsepx = vzdialenost medzi haldami
 			}
-			
 			if (i+1 <= numHeaps){
 				if (root[i+1] != null) {
 					sumx += root[i+1].leftw;
@@ -227,15 +205,25 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 				if (root[0] != null) {
 					root[0].reposition();
 					root[0].reboxTree();
-					sumx += root[0].leftw;
-					if (root[0].y >= 0) { // nie je na zaciatku vkladania
-						root[0].repos(sumx, root[0].y);
+					sumx += root[0].leftw + 20;	//20
+					/*
+					if (root[0].y >= 0) { 		// nie je na zaciatku vkladania
+						//root[0].reposition();	//(sumx, root[0].y);
+						root[0].shift(sumx, 0);
 					} else {
-						root[0].repos(sumx, root[0].toy);
+						//root[0].reposition();	//(sumx, root[0].toy);
+						root[0].shift(sumx, 0);
+					}
+					*/
+					if (root[0].state == -1){
+						root[0].shift(sumx, -1*(DataStructure.minsepy));
+					}else{
+						root[0].shift(sumx, 0);
 					}
 					sumx += root[0].rightw;
 				}
 			}
+			
 		}
 		M.screen.V.setBounds(0, 0, sumx, y2);
 	}

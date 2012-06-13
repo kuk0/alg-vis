@@ -32,6 +32,7 @@ public class TreeNode extends Node {
 					// equaled to x-coord of leftmost child
 	int level; // distance from the root
 	protected boolean thread = false; // is this node threaded?
+
 	int toExtremeSon = 0; // offset from the leftmost son
 	int toBaseline = 0; // distance to child's baseline
 	int modifier = 0;

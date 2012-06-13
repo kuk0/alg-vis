@@ -14,43 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.daryheap;
+package algvis.pairingheap;
 
-import algvis.gui.InputField;
 
-public class DaryHeapDecrKey extends DaryHeapAlg{
-	int delta;
+import algvis.core.DataStructure;
+import algvis.core.Settings;
+import algvis.core.VisPanel;
 
-	public DaryHeapDecrKey(DaryHeap H, DaryHeapNode v, int delta) {
-		super(H);
-		this.v = v;
-		this.delta = delta;
-		if (H.minHeap) {
-			setHeader("decreasekey");
-			addStep("decrkeymin");
-		} else {
-			setHeader("increasekey");
-			addStep("incrkeymax");
-		}
+public class PairHeapPanel extends VisPanel{
+	private static final long serialVersionUID = 7766114341156126683L;
+	public static Class<? extends DataStructure> DS = PairingHeap.class;
+
+	public PairHeapPanel(Settings S) {
+		super(S);
 	}
 
 	@Override
-	public void run() {
-		if (H.minHeap) {
-			v.setKey(v.getKey() - delta);
-			if (v.getKey() < 1)
-				v.setKey(1);
-		} else {
-			v.setKey(v.getKey() + delta);
-			if (v.getKey() > InputField.MAX)
-				v.setKey(InputField.MAX);
-		}
-		
-		if (H.minHeap) {
-			addStep("minheapbubbleup");
-		} else {
-			addStep("maxheapbubbleup");
-		}
-		bubbleup(v);
+	public void initDS() {
+		D = new PairingHeap(this);
+		B = new PairHeapButtons(this);
 	}
+
 }

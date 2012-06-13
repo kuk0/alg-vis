@@ -14,43 +14,69 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.daryheap;
+package algvis.pairingheap;
 
-import algvis.gui.InputField;
+import algvis.core.DataStructure;
 
-public class DaryHeapDecrKey extends DaryHeapAlg{
-	int delta;
+public class PairHeapDelete extends PairHeapAlg{
 
-	public DaryHeapDecrKey(DaryHeap H, DaryHeapNode v, int delta) {
+	int i;
+	public Pairing pairState;
+	
+	public PairHeapDelete(DataStructure H, int i) {
 		super(H);
-		this.v = v;
-		this.delta = delta;
-		if (H.minHeap) {
-			setHeader("decreasekey");
-			addStep("decrkeymin");
-		} else {
-			setHeader("increasekey");
-			addStep("incrkeymax");
-		}
+		this.i = i;
+		setHeader("deletion");
+		this.pairState = this.H.pairState;
 	}
-
+	
+	public void setState(Pairing state) {
+		this.pairState = state;
+	}
+	
 	@Override
 	public void run() {
-		if (H.minHeap) {
-			v.setKey(v.getKey() - delta);
-			if (v.getKey() < 1)
-				v.setKey(1);
-		} else {
-			v.setKey(v.getKey() + delta);
-			if (v.getKey() > InputField.MAX)
-				v.setKey(InputField.MAX);
+		if (H.root[i] == null) {
+			return;
 		}
+
+		if (!H.minHeap) {
+			addStep("maximum", H.root[i].key);
+		} else {
+			addStep("minimum", H.root[i].key);
+		}
+
+		H.v = new PairHeapNode(H.root[i]);
+		H.v.mark();
 		
-		if (H.minHeap) {
-			addStep("minheapbubbleup");
-		} else {
-			addStep("maxheapbubbleup");
+		mysuspend();
+		
+		//spravime neviditelneho roota (vymazane minimum) a posunieme to o minsepy hore.
+		
+		H.v.goDown();
+
+		H.root[i].state = -1; //<<----- potom odkomentovat
+		H.root[i].shift(0, - PairingHeap.minsepy);
+		
+		switch (pairState) {
+		case NAIVE:
+			pairNaive(i);
+			break;
+		case LRRL:
+			pairLRRL(i);
+			break;
+		/*
+		case FB:
+			break;
+		case BF:
+			break;
+		case MULTI:
+			break;
+		case LAZYM:
+			break;
+		*/
+		default:
+			break;
 		}
-		bubbleup(v);
 	}
 }

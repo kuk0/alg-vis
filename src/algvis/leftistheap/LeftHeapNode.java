@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováè, Katarína Kotrlová, Pavol Lukèa, Viktor Tomkoviè, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.leftistheap;
 
 import java.awt.Color;
@@ -9,8 +25,6 @@ import algvis.gui.Fonts;
 import algvis.gui.view.View;
 
 public class LeftHeapNode extends BSTNode {
-	Color color = Color.yellow;
-	int height = 1;
 	int rank = 1;
 	boolean doubleArrow = false;
 	boolean dashedrightl = false; // if true the line leading to the right son is dashed

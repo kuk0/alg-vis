@@ -14,29 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.skewheap;
+package algvis.pairingheap;
 
-public class SkewHeapInsert extends SkewHeapAlg {
-	int K;
-	int i;
+import algvis.core.DataStructure;
 
-	public SkewHeapInsert(SkewHeap H, int i, int x) {
+public class PairHeapMeld extends PairHeapAlg{
+	int i, j;
+	
+	public PairHeapMeld(DataStructure H, int i, int j) {
 		super(H);
 		this.i = i;
-		H.root[0] = new SkewHeapNode(H, K = x);
-		setHeader("insertion");
+		this.j = j;
+		setHeader("melding");
 	}
 	
 	@Override
 	public void run() {
-
-		H.reposition();
-
+		if (i == j) {
+			return;
+		}
 		if (H.root[i] == null) {
-			H.root[i] = H.root[0];
-			H.root[0] = null;
+			H.root[i] = H.root[j];
+			H.root[j] = null;
 			if (H.root[i] != null) {
-				addStep("newroot");
 				H.root[i].highlightTree();
 			}
 			H.reposition();
@@ -44,16 +44,40 @@ public class SkewHeapInsert extends SkewHeapAlg {
 			return;
 		}
 
-		if (H.root[0] == null) {
+		if (H.root[j] == null) {
 			// heap #2 is empty; done;
 			return;
 		}
-
+		
+		H.root[0] = H.root[j];
+		if (j != 0) {
+			H.root[j] = null;
+		}
 		H.active = i;
 		H.root[0].highlightTree();
-		H.reposition();
-
+		H.root[i].highlightTree();
+		H.root[0].mark();
+		H.root[i].mark();
+		if (H.root[i].key < H.root[0].key){
+			if(H.minHeap){
+				addStep("pairlinkmin", H.root[i].key, H.root[0].key);
+			} else {
+				addStep("pairlinkmax", H.root[i].key, H.root[0].key);
+			}
+		} else {
+			if(H.minHeap){
+				addStep("pairlinkmin", H.root[0].key, H.root[i].key);
+			} else {
+				addStep("pairlinkmax", H.root[0].key, H.root[i].key);
+			}
+		}
 		mysuspend();
-		meld(i);
+		H.root[0].unmark();
+		H.root[i].unmark();
+		link(i,0);
+		H.root[0] = null;
+		H.reposition();
+		addNote("done");
 	}
+
 }

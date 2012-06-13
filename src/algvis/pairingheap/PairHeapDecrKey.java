@@ -14,43 +14,58 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.daryheap;
+package algvis.pairingheap;
 
-import algvis.gui.InputField;
+import algvis.core.InputField;
 
-public class DaryHeapDecrKey extends DaryHeapAlg{
+public class PairHeapDecrKey extends PairHeapAlg{
 	int delta;
-
-	public DaryHeapDecrKey(DaryHeap H, DaryHeapNode v, int delta) {
-		super(H);
+	
+	public PairHeapDecrKey(PairingHeap D, PairHeapNode v, int delta) {
+		super(D);
 		this.v = v;
 		this.delta = delta;
 		if (H.minHeap) {
 			setHeader("decreasekey");
-			addStep("decrkeymin");
 		} else {
 			setHeader("increasekey");
-			addStep("incrkeymax");
 		}
 	}
-
+	
 	@Override
 	public void run() {
 		if (H.minHeap) {
-			v.setKey(v.getKey() - delta);
-			if (v.getKey() < 1)
-				v.setKey(1);
+			v.key -= delta;
+			if (v.key < 1)
+				v.key = 1;
 		} else {
-			v.setKey(v.getKey() + delta);
-			if (v.getKey() > InputField.MAX)
-				v.setKey(InputField.MAX);
+			v.key += delta;
+			if (v.key > InputField.MAX)
+				v.key = InputField.MAX;
+		}
+		if (!v.isRoot()){
+			if (H.minHeap){
+				addStep("pairdecr"); //zvysili sme hodnotu, dieta odtrhneme a prilinkujeme
+			} else {
+				addStep("pairincr"); 
+			}
+			H.root[0] = v;
+			H.root[0].mark();
+			mysuspend();
+			v.getParent().deleteChild(v);
+			
+			H.root[H.active].mark();
+			H.reposition();
+			mysuspend();
+			H.root[0].unmark();
+			H.root[H.active].unmark();
+			link(H.active, 0);
+			H.root[0] = null;
+			H.reposition();
 		}
 		
-		if (H.minHeap) {
-			addStep("minheapbubbleup");
-		} else {
-			addStep("maxheapbubbleup");
-		}
-		bubbleup(v);
+		addNote("done");
+		
 	}
+
 }

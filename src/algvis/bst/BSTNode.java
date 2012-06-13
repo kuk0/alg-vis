@@ -293,6 +293,7 @@ public class BSTNode extends Node {
 			v.drawLine(x, y, parent.x, parent.y);
 		}
 		if (getLeft() != null) {
+			//System.out.println("kreslim lavy " + getLeft().key + " " + this.key);
 			getLeft().drawTree2(v);
 		}
 		if (D instanceof BST && ((BST) D).order) { // && D.M.S.layout ==
