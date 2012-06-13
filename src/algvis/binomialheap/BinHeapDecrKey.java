@@ -17,8 +17,8 @@
 package algvis.binomialheap;
 
 import algvis.core.Algorithm;
-import algvis.core.InputField;
 import algvis.core.Node;
+import algvis.gui.InputField;
 
 public class BinHeapDecrKey extends Algorithm {
 	int delta;
@@ -36,25 +36,25 @@ public class BinHeapDecrKey extends Algorithm {
 	@Override
 	public void run() {
 		if (H.minHeap) {
-			v.key -= delta;
-			if (v.key < 1)
-				v.key = 1;
+			v.setKey(v.getKey() - delta);
+			if (v.getKey() < 1)
+				v.setKey(1);
 		} else {
-			v.key += delta;
-			if (v.key > InputField.MAX)
-				v.key = InputField.MAX;
+			v.setKey(v.getKey() + delta);
+			if (v.getKey() > InputField.MAX)
+				v.setKey(InputField.MAX);
 		}
 		BinHeapNode w = v.parent;
 		while (w != null && v.prec(w)) {
 			H.v = new BinHeapNode(v);
 			H.v2 = new BinHeapNode(w);
-			v.key = Node.NOKEY;
-			w.key = Node.NOKEY;
+			v.setKey(Node.NOKEY);
+			w.setKey(Node.NOKEY);
 			H.v.goTo(w);
 			H.v2.goTo(v);
 			mysuspend();
-			v.key = H.v2.key;
-			w.key = H.v.key;
+			v.setKey(H.v2.getKey());
+			w.setKey(H.v.getKey());
 			v.setColor(H.v2.getColor());
 			w.setColor(H.v.getColor());
 			H.v = null;

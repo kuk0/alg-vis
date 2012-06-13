@@ -14,19 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui;
 
 import java.awt.Color;
 
-import javax.swing.JFrame;
+import javax.swing.JApplet;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.TitledBorder;
 
-public class AlgVisStandalone {
+import algvis.core.DataStructures;
+import algvis.core.MyParserDelegator;
+import algvis.core.Settings;
+import algvis.internationalization.Languages;
+
+public class AlgVisApplet extends JApplet {
+	private static final long serialVersionUID = -76009301274562874L;
 	static final int WIDTH = 1080, HEIGHT = 680;
 
-	public static void main(String[] args) {
+	@Override
+	public void init() {
+		MyParserDelegator.workaround();
+		Fonts.init(getGraphics());
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -44,20 +53,34 @@ public class AlgVisStandalone {
 			// and feel.
 		}
 
-		JFrame f = new JFrame("Gnarled trees");
-		f.addWindowListener(new java.awt.event.WindowAdapter() {
-			@Override
-			public void windowClosing(java.awt.event.WindowEvent e) {
-				System.exit(0);
-			};
-		});
-
-		AlgVis A = new AlgVis(f.getRootPane());
-		A.setSize(WIDTH, HEIGHT);
-		f.getContentPane().add(A);
-		f.pack();
-		A.init();
-		f.setSize(WIDTH, HEIGHT + 20); // add 20 for the frame title
-		f.setVisible(true);
+		/**
+		 * choose data structure depending on the "ds" parameter in the <applet>
+		 * tag if ds is a number from 0 to N-1, we will have an applet with just
+		 * a single data structure, otherwise, include all of them
+		 */
+		int ds = -1;
+		String dsp = getParameter("ds");
+		try {
+			ds = Integer.parseInt(dsp);
+			if (ds < 0 || ds >= DataStructures.N)
+				ds = -1;
+		} catch (NumberFormatException e) {
+			ds = DataStructures.getIndex(dsp);
+		}
+		if (ds == -1) {
+			// all data structures
+			AlgVis A = new AlgVis(this.getRootPane(), getParameter("lang"));
+			A.setSize(WIDTH, HEIGHT); // same size as defined in the HTML APPLET
+			add(A);
+			A.init();
+		} else {
+			// data structure ds
+			Languages L = new Languages(getParameter("lang"));
+			Settings S = new Settings(L);
+			VisPanel P = DataStructures.createPanel(ds, S);
+			P.setSize(WIDTH, HEIGHT); // same size as defined in the HTML APPLET
+			if (P != null)
+				add(P);
+		}
 	}
 }

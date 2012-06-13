@@ -45,7 +45,7 @@ public class SplayFind extends SplayAlg {
 
 			w.setColor(NodeColor.NORMAL);
 			v.goToRoot();
-			if (w.key == v.key) {
+			if (w.getKey() == v.getKey()) {
 				addStep("found");
 				v.setColor(NodeColor.FOUND);
 			} else {

@@ -17,9 +17,9 @@
 package algvis.bst;
 
 import algvis.core.DataStructure;
-import algvis.core.LayoutListener;
 import algvis.core.Settings;
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
+import algvis.gui.view.LayoutListener;
 
 public class BSTPanel extends VisPanel {
 	private static final long serialVersionUID = 2619694930536571557L;

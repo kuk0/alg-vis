@@ -16,14 +16,21 @@
  ******************************************************************************/
 package algvis.core;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import algvis.gui.InputField;
+import algvis.gui.VisPanel;
+import algvis.gui.view.Layout;
+import algvis.gui.view.View;
+import algvis.scenario.Command;
 import algvis.scenario.Scenario;
 
 abstract public class DataStructure {
 	// datova struktura musi vediet gombikom povedat, kolko ich potrebuje,
 	// kolko ma vstupov, ake to su a co treba robit
-	protected Algorithm A;
+	private Algorithm A;
 	public VisPanel M;
 	public Scenario scenario;
 	public static final int rootx = 0, rooty = 0, sheight = 600, swidth = 400,
@@ -32,10 +39,12 @@ abstract public class DataStructure {
 	public Node chosen = null;
 	public static String adtName = "";
 	public static String dsName = "";
+	private List<Node> nodes; // root, v, v2, vv,...
 
 	public DataStructure(VisPanel M) {
 		this.M = M;
 		scenario = new Scenario(M, getName());
+		nodes = new ArrayList<Node>();
 	}
 
 	abstract public String getName();
@@ -55,30 +64,45 @@ abstract public class DataStructure {
 	protected void start(Algorithm a) {
 		unmark();
 		A = a;
-		M.B.enableNext();
-		M.B.enablePrevious();
-		M.B.disableAll();
+		if (scenario.isEnabled()) {
+			// ak je povoleny scenario, tak sa vykona cely algoritmus, nevytvara
+			// (=nespusta) sa nove vlakno na krokovanie
+			// TODO skarede riesenie, spravit lepsie
+			a.run();
+		} else {
+			M.B.enableNext();
+			M.B.enablePrevious();
+			M.B.disableAll();
 
-		try {
-			A.start();
-		} catch (IllegalThreadStateException e) {
-			System.err.println("LOL");
+			try {
+				A.start();
+			} catch (IllegalThreadStateException e) {
+				System.err.println("LOL");
+				M.B.disableNext();
+				M.B.enableAll();
+				return;
+			}
+			try {
+				A.join();
+				// System.err.println("join");
+			} catch (InterruptedException e) {
+				// TODO ak sa napr. viac randomov zavola za sebou, tak sa
+				// interruptne
+				Thread.interrupted();
+				try {
+					A.join();
+				} catch (InterruptedException e1) {
+					System.err.println("AJAJAJ");
+					e.printStackTrace();
+				}
+			}
 			M.B.disableNext();
 			M.B.enableAll();
-			return;
-		}
-		try {
-			A.join();
-			// System.err.println("join");
-		} catch (InterruptedException e) {
-			System.err.println("AJAJAJ");
 		}
 		setStats();
-		M.B.disableNext();
-		M.B.enableAll();
 	}
 
-	protected void setStats() {
+	public void setStats() {
 		M.B.setStats(stats());
 	}
 
@@ -90,25 +114,31 @@ abstract public class DataStructure {
 		return Math.log(x) / Math.log(2);
 	}
 
-	public void random(int n) {
-		Random g = new Random(System.currentTimeMillis());
-		boolean p = M.pause;
-		M.pause = false;
-		{
-			int i = 0;
-			scenario.enableAdding(false);
-			M.C.enableUpdating(false);
-			for (; i < n - Scenario.maxAlgorithms; ++i) {
-				insert(g.nextInt(InputField.MAX + 1));
+	public void random(final int n) {
+		scenario.traverser.startNew(new Runnable() {
+			@Override
+			public void run() {
+				Random g = new Random(System.currentTimeMillis());
+				boolean p = M.pause;
+				M.pause = false;
+				{
+					int i = 0;
+					scenario.enableAdding(false);
+					M.C.enableUpdating(false);
+					for (; i < n - Scenario.maxAlgorithms; ++i) {
+						insert(g.nextInt(InputField.MAX + 1));
+					}
+					scenario.enableAdding(true);
+					for (; i < n; ++i) {
+						insert(g.nextInt(InputField.MAX + 1));
+					}
+					M.C.enableUpdating(true);
+					M.C.update();
+					M.B.update();
+				}
+				M.pause = p;
 			}
-			scenario.enableAdding(true);
-			for (; i < n; ++i) {
-				insert(g.nextInt(InputField.MAX + 1));
-			}
-			M.C.enableUpdating(true);
-			M.C.update();
-		}
-		M.pause = p;
+		}, true);
 	}
 
 	public void unmark() {
@@ -120,5 +150,40 @@ abstract public class DataStructure {
 
 	public Layout getLayout() {
 		return M.S.layout;
+	}
+
+	public void setNode(int i, Node v, boolean waitBack) {
+		Node oldV = nodes.get(i);
+		if (oldV != v) {
+			// TODO potential EXCEPTION
+			// tak toto bude urcite hadzat nejaku vynimku... (aj ked zatial nie)
+			// (Node.move() tiez meni tieto premenne a vola sa v inom vlakne)
+			if (oldV != null && (oldV.x != oldV.tox || oldV.y != oldV.toy)) {
+				oldV.steps = 0;
+				oldV.x = oldV.tox;
+				oldV.y = oldV.toy;
+			}
+			if (scenario.isAddingEnabled()) {
+				scenario.add(new Command.SetNodeCommand(this, i, oldV, v));
+			}
+			nodes.set(i, v);
+			if (waitBack && v != null && scenario.isAddingEnabled()) {
+				scenario.add(v.new WaitBackwardsCommand());
+			}
+		}
+	}
+
+	public Node getNode(int i) {
+		return nodes.get(i);
+	}
+
+	protected void addNodes(int count) {
+		for (int i = 0; i < count; ++i) {
+			nodes.add(null);
+		}
+	}
+
+	public Algorithm getA() {
+		return A;
 	}
 }

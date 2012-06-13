@@ -16,18 +16,15 @@
  ******************************************************************************/
 package algvis.core;
 
-import org.jdom.Element;
-
-import algvis.scenario.Command;
-
+import algvis.gui.VisPanel;
+import algvis.gui.view.Layout;
 
 abstract public class Dictionary extends DataStructure {
 	public static String adtName = "dictionary";
-	private Node root = null;
-	private Node v = null;
 
 	public Dictionary(VisPanel M) {
 		super(M);
+		addNodes(2); // root (0), v (1)
 	}
 
 	@Override
@@ -38,32 +35,19 @@ abstract public class Dictionary extends DataStructure {
 	abstract public void delete(int x);
 
 	public Node getRoot() {
-		return root;
+		return getNode(0);
 	}
 
 	public void setRoot(Node root) {
-		if (this.root != root) {
-			if (scenario.isAddingEnabled()) {
-				scenario.add(new SetRootCommand(root));
-			}
-			this.root = root;
-		}
+		setNode(0, root, false);
 	}
 
 	public Node getV() {
-		return v;
+		return getNode(1);
 	}
 
 	public void setV(Node v) {
-		if (this.v != v) {
-			if (scenario.isAddingEnabled()) {
-				scenario.add(new SetVCommand(v));
-			}
-			this.v = v;
-		}
-		if (v != null && scenario.isAddingEnabled()) {
-			scenario.add(v.new WaitBackwardsCommand());
-		}
+		setNode(1, v, true);
 	}
 
 	@Override
@@ -71,73 +55,4 @@ abstract public class Dictionary extends DataStructure {
 		return Layout.COMPACT;
 	}
 
-	private class SetRootCommand implements Command {
-		private final Node newRoot, oldRoot;
-
-		public SetRootCommand(Node newRoot) {
-			oldRoot = getRoot();
-			this.newRoot = newRoot;
-		}
-
-		@Override
-		public void execute() {
-			setRoot(newRoot);
-		}
-
-		@Override
-		public void unexecute() {
-			setRoot(oldRoot);
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setRoot");
-			if (newRoot != null) {
-				e.setAttribute("newRootKey", Integer.toString(newRoot.key));
-			} else {
-				e.setAttribute("newRoot", "null");
-			}
-			if (oldRoot != null) {
-				e.setAttribute("oldRootKey", Integer.toString(oldRoot.key));
-			} else {
-				e.setAttribute("oldRoot", "null");
-			}
-			return e;
-		}
-	}
-
-	private class SetVCommand implements Command {
-		private final Node newV, oldV;
-
-		public SetVCommand(Node newV) {
-			oldV = getV();
-			this.newV = newV;
-		}
-
-		@Override
-		public void execute() {
-			setV(newV);
-		}
-
-		@Override
-		public void unexecute() {
-			setV(oldV);
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setV");
-			if (newV != null) {
-				e.setAttribute("newVKey", Integer.toString(newV.key));
-			} else {
-				e.setAttribute("newV", "null");
-			}
-			if (oldV != null) {
-				e.setAttribute("oldVKey", Integer.toString(oldV.key));
-			} else {
-				e.setAttribute("oldV", "null");
-			}
-			return e;
-		}
-	}
 }

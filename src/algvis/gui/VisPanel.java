@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -27,6 +27,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
+import algvis.core.DataStructure;
+import algvis.core.Settings;
 import algvis.internationalization.ILabel;
 import algvis.internationalization.LanguageListener;
 
@@ -50,7 +52,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 		init();
 	}
 
-	public void init() {
+	private void init() {
 		this.setLayout(new GridBagLayout());
 		JPanel screenP = initScreen();
 		JScrollPane commentary = initCommentary();
@@ -88,7 +90,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 		B.I.requestFocusInWindow();
 	}
 
-	public JPanel initScreen() {
+	private JPanel initScreen() {
 		JPanel screenP = new JPanel();
 		screenP.setLayout(new BorderLayout());
 		screen = new Screen(this) {
@@ -121,7 +123,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 		return screenP;
 	}
 
-	public JScrollPane initCommentary() {
+	private JScrollPane initCommentary() {
 		// Commentary
 		JScrollPane SP = new JScrollPane() {
 			private static final long serialVersionUID = -8618469733328277117L;
@@ -159,5 +161,13 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 	@Override
 	public void languageChanged() {
 		border.setTitle("    " + S.L.getString(D.getName()) + "    ");
+	}
+	
+	public void setOnAir(boolean onAir) {
+		if (onAir == false) {
+			screen.suspend();
+		} else {
+			screen.resume();
+		}
 	}
 }

@@ -50,11 +50,11 @@ public class AVLDelete extends Algorithm {
 			mysuspend();
 
 			while (true) {
-				if (d.key == K) { // found
+				if (d.getKey() == K) { // found
 					v.setColor(NodeColor.FOUND);
 					break;
-				} else if (d.key < K) { // right
-					addStep("bstfindright", K, d.key);
+				} else if (d.getKey() < K) { // right
+					addStep("bstfindright", K, d.getKey());
 					d = d.getRight();
 					if (d != null) {
 						v.goTo(d);
@@ -63,7 +63,7 @@ public class AVLDelete extends Algorithm {
 						break;
 					}
 				} else { // left
-					addStep("bstfindleft", K, d.key);
+					addStep("bstfindleft", K, d.getKey());
 					d = d.getLeft();
 					if (d != null) {
 						v.goTo(d);

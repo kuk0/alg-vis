@@ -31,13 +31,13 @@ public class Rotate extends Algorithm {
 		this.R = R;
 		this.T = R.T;
 		this.v = v;
-		setHeader("rotate-header", v.key);
+		setHeader("rotate-header", v.getKey());
 	}
 
 	@Override
 	public void run() {
 		if (v == T.getRoot()) {
-			addNote("rotate-root", v.key);
+			addNote("rotate-root", v.getKey());
 			return;
 		}
 		BSTNode u = v.getParent(), a, b, c;
@@ -67,9 +67,9 @@ public class Rotate extends Algorithm {
 		}
 
 		if (u == T.getRoot() && b != null) {
-			addNote("rotate-newroot", v.key, b.key, u.key);
+			addNote("rotate-newroot", v.getKey(), b.getKey(), u.getKey());
 		} else {
-			addNote("rotate-changes", v.key, b.key, u.key, u.getParent().key);
+			addNote("rotate-changes", v.getKey(), b.getKey(), u.getKey(), u.getParent().getKey());
 		}
 		mysuspend();
 		

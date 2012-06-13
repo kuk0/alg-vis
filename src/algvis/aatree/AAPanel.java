@@ -18,7 +18,7 @@ package algvis.aatree;
 
 import algvis.core.DataStructure;
 import algvis.core.Settings;
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
 
 public class AAPanel extends VisPanel {
 	private static final long serialVersionUID = 7589910312644830227L;

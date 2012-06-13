@@ -3,10 +3,10 @@ package algvis.leftistheap;
 import java.awt.Color;
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
-import algvis.core.Fonts;
 import algvis.core.Node;
 import algvis.core.MeldablePQ;
-import algvis.core.View;
+import algvis.gui.Fonts;
+import algvis.gui.view.View;
 
 public class LeftHeapNode extends BSTNode {
 	Color color = Color.yellow;
@@ -27,7 +27,7 @@ public class LeftHeapNode extends BSTNode {
 	}
 
 	public LeftHeapNode(LeftHeapNode v) {
-		this(v.D, v.key, v.x, v.y);
+		this(v.D, v.getKey(), v.x, v.y);
 	}
 
 	/**
@@ -38,9 +38,9 @@ public class LeftHeapNode extends BSTNode {
 
 	public boolean prec(Node v) {
 		if (((MeldablePQ) D).minHeap) {
-			return this.key < v.key;
+			return this.getKey() < v.getKey();
 		} else {
-			return this.key > v.key;
+			return this.getKey() > v.getKey();
 		}
 	}
 
@@ -49,9 +49,9 @@ public class LeftHeapNode extends BSTNode {
 	 */
 	public boolean preceq(Node v) {
 		if (((MeldablePQ) D).minHeap) {
-			return this.key <= v.key;
+			return this.getKey() <= v.getKey();
 		} else {
-			return this.key >= v.key;
+			return this.getKey() >= v.getKey();
 		}
 	}
 
@@ -130,7 +130,7 @@ public class LeftHeapNode extends BSTNode {
 	}
 
 	private void lowlight() {
-		bgColor(new Color(200, 200 - key / 10, 0));
+		bgColor(new Color(200, 200 - getKey() / 10, 0));
 	}
 
 	private void highlight() {

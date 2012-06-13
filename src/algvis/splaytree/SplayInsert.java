@@ -39,12 +39,12 @@ public class SplayInsert extends SplayAlg {
 			splay(w);
 
 			w.setColor(NodeColor.NORMAL);
-			if (w.key == K) {
+			if (w.getKey() == K) {
 				addStep("alreadythere");
 				v.goDown();
 				v.setColor(NodeColor.NOTFOUND);
 				return;
-			} else if (w.key < K) {
+			} else if (w.getKey() < K) {
 				addNote("splay-insert-left", K);
 				addStep("splay-insert-left2", K);
 				mysuspend();

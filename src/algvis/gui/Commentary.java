@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -37,6 +37,7 @@ import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.StyleSheet;
 
+import algvis.core.StringUtils;
 import algvis.internationalization.LanguageListener;
 import algvis.internationalization.Languages;
 import algvis.scenario.Command;

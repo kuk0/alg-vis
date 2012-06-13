@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -27,19 +27,21 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import algvis.core.MeldablePQ;
+import algvis.core.Node;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ILabel;
 import algvis.internationalization.IRadioButton;
 
-public class MeldablePQButtonsNoDecr extends Buttons implements ChangeListener {
+public class MeldablePQButtons extends Buttons implements ChangeListener {
 	private static final long serialVersionUID = 1242711038059609653L;
-	IButton insertB, deleteB, meldB;
+	IButton insertB, deleteB, decrKeyB, meldB;
 	public JSpinner activeHeap;
 	ILabel activeLabel;
 	IRadioButton minB, maxB;
 	ButtonGroup minMaxGroup;
 
-	public MeldablePQButtonsNoDecr(VisPanel M) {
+	public MeldablePQButtons(VisPanel M) {
 		super(M);
 	}
 
@@ -53,12 +55,21 @@ public class MeldablePQButtonsNoDecr extends Buttons implements ChangeListener {
 		deleteB.setMnemonic(KeyEvent.VK_D);
 		deleteB.addActionListener(this);
 
+		if (((MeldablePQ) D).minHeap) {
+			decrKeyB = new IButton(M.S.L, "button-decreasekey");
+		} else {
+			decrKeyB = new IButton(M.S.L, "button-increasekey");
+		}
+		decrKeyB.setMnemonic(KeyEvent.VK_K);
+		decrKeyB.addActionListener(this);
+
 		meldB = new IButton(M.S.L, "button-meld");
 		deleteB.setMnemonic(KeyEvent.VK_M);
 		meldB.addActionListener(this);
 
 		P.add(insertB);
 		P.add(deleteB);
+		P.add(decrKeyB);
 		P.add(meldB);
 	}
 
@@ -105,6 +116,16 @@ public class MeldablePQButtonsNoDecr extends Buttons implements ChangeListener {
 				}
 			});
 			t.start();
+		} else if (evt.getSource() == decrKeyB) {
+			final int delta = Math.abs(I.getInt(1));
+			final Node w = ((MeldablePQ) D).chosen;
+			Thread t = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					((MeldablePQ) D).decreaseKey(w, delta);
+				}
+			});
+			t.start();
 		} else if (evt.getSource() == meldB) {
 			Vector<Integer> args = I.getVI();
 			args.add(-1);
@@ -121,10 +142,12 @@ public class MeldablePQButtonsNoDecr extends Buttons implements ChangeListener {
 		} else if (evt.getSource() == minB && !((MeldablePQ) D).minHeap) {
 			D.clear();
 			deleteB.setT("button-deletemin");
+			decrKeyB.setT("button-decreasekey");
 			((MeldablePQ) D).minHeap = true;
 		} else if (evt.getSource() == maxB && ((MeldablePQ) D).minHeap) {
 			D.clear();
 			deleteB.setT("button-deletemax");
+			decrKeyB.setT("button-increasekey");
 			((MeldablePQ) D).minHeap = false;
 		}
 	}
@@ -134,6 +157,7 @@ public class MeldablePQButtonsNoDecr extends Buttons implements ChangeListener {
 		super.enableNext();
 		insertB.setEnabled(false);
 		deleteB.setEnabled(false);
+		decrKeyB.setEnabled(false);
 		meldB.setEnabled(false);
 		activeHeap.setEnabled(false);
 	}
@@ -143,6 +167,7 @@ public class MeldablePQButtonsNoDecr extends Buttons implements ChangeListener {
 		super.disableNext();
 		insertB.setEnabled(true);
 		deleteB.setEnabled(true);
+		decrKeyB.setEnabled(true);
 		meldB.setEnabled(true);
 		next.setEnabled(false);
 		activeHeap.setEnabled(true);

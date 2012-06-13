@@ -18,7 +18,7 @@ package algvis.rotations;
 
 import algvis.core.DataStructure;
 import algvis.core.Settings;
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
 
 public class RotPanel extends VisPanel {
 	private static final long serialVersionUID = -5154501209600594791L;

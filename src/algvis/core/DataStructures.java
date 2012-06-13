@@ -27,6 +27,7 @@ import algvis.btree.a234Panel;
 import algvis.btree.a23Panel;
 import algvis.daryheap.DaryHeapPanel;
 import algvis.fibonacciheap.FibHeapPanel;
+import algvis.gui.VisPanel;
 import algvis.heap.HeapPanel;
 import algvis.lazybinomialheap.LazyBinHeapPanel;
 import algvis.leftistheap.LeftHeapPanel;
@@ -58,7 +59,7 @@ public class DataStructures {
 			SkewHeapPanel.class, BinHeapPanel.class, LazyBinHeapPanel.class,
 			FibHeapPanel.class, UnionFindPanel.class, TriePanel.class };
 
-	static final int N = PANEL.length;
+	public static final int N = PANEL.length;
 
 	private static boolean check_range(int i) {
 		if (i < 0 || i >= N) {
@@ -129,7 +130,10 @@ public class DataStructures {
 		}
 	}
 
-	public static VisPanel getPanel(int i, Settings S) {
+	/**
+	 * create new VisPanel for DS i (should be called once for each i)
+	 */
+	public static VisPanel createPanel(int i, Settings S) {
 		switch (i) {
 		case 0:
 			return new BSTPanel(S);
@@ -183,6 +187,7 @@ public class DataStructures {
 			return (VisPanel) ct.newInstance(S);
 		} catch (Exception e) {
 			System.out.println("DataStructures is unable to get panel: " + i);
+			e.printStackTrace();
 			// System.out.println(((InvocationTargetException)e).getTargetException().toString());
 			return null;
 		}

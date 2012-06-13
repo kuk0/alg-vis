@@ -38,7 +38,7 @@ public class SkipAlg extends Algorithm {
 		mysuspend();
 
 		for (int i = L.height - 1;; --i) {
-			while (w.getRight().key < K) {
+			while (w.getRight().getKey() < K) {
 				addStep("skipnext");
 				w = w.getRight();
 				v.goTo(w);

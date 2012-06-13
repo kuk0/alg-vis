@@ -40,7 +40,7 @@ public class GBDelete extends GBAlg {
 			addStep("bstfindstart");
 			mysuspend();
 			while (true) {
-				if (w.key == K) {
+				if (w.getKey() == K) {
 					if (w.isDeleted()) {
 						addStep("gbdeletedeleted");
 						v.setColor(NodeColor.NOTFOUND);
@@ -53,8 +53,8 @@ public class GBDelete extends GBAlg {
 						T.setV(null);
 					}
 					break;
-				} else if (w.key < K) {
-					addStep("bstfindright", K, w.key);
+				} else if (w.getKey() < K) {
+					addStep("bstfindright", K, w.getKey());
 					w = w.getRight();
 					if (w != null) {
 						v.goTo(w);
@@ -65,7 +65,7 @@ public class GBDelete extends GBAlg {
 						break;
 					}
 				} else {
-					addStep("bstfindleft", K, w.key);
+					addStep("bstfindleft", K, w.getKey());
 					w = w.getLeft();
 					if (w != null) {
 						v.goTo(w);

@@ -48,12 +48,12 @@ public class RBFind extends Algorithm {
 			addStep("bstfindstart");
 			mysuspend();
 			while (true) {
-				if (w.key == K) {
+				if (w.getKey() == K) {
 					addStep("found");
 					v.setColor(NodeColor.FOUND);
 					break;
-				} else if (w.key < K) {
-					addStep("bstfindright", K, w.key);
+				} else if (w.getKey() < K) {
+					addStep("bstfindright", K, w.getKey());
 					w = w.getRight();
 					if (w != T.NULL) {
 						v.goTo(w);
@@ -64,7 +64,7 @@ public class RBFind extends Algorithm {
 						break;
 					}
 				} else {
-					addStep("bstfindleft", K, w.key);
+					addStep("bstfindleft", K, w.getKey());
 					w = w.getLeft();
 					if (w != T.NULL) {
 						v.goTo(w);

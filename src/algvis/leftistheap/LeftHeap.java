@@ -1,13 +1,13 @@
 package algvis.leftistheap;
 
-import algvis.core.ClickListener;
 import algvis.core.MeldablePQ;
-import algvis.core.MeldablePQButtonsNoDecr;
 import algvis.core.Node;
 import algvis.core.Pair;
 import algvis.core.StringUtils;
-import algvis.core.View;
-import algvis.core.VisPanel;
+import algvis.gui.MeldablePQButtonsNoDecr;
+import algvis.gui.VisPanel;
+import algvis.gui.view.ClickListener;
+import algvis.gui.view.View;
 
 public class LeftHeap extends MeldablePQ implements ClickListener{
 	public static String dsName = "leftheap";

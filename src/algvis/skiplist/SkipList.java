@@ -16,12 +16,12 @@
  ******************************************************************************/
 package algvis.skiplist;
 
-import algvis.core.Alignment;
-import algvis.core.ClickListener;
 import algvis.core.Dictionary;
 import algvis.core.Node;
-import algvis.core.View;
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
+import algvis.gui.view.Alignment;
+import algvis.gui.view.ClickListener;
+import algvis.gui.view.View;
 
 public class SkipList extends Dictionary implements ClickListener {
 	public static String dsName = "skiplist";
@@ -111,7 +111,7 @@ public class SkipList extends Dictionary implements ClickListener {
 		if (getRoot() != null) {
 			Node w = getRoot().find(x, y);
 			if (w != null) {
-				M.B.I.setText("" + w.key);
+				M.B.I.setText("" + w.getKey());
 			}
 		}
 	}

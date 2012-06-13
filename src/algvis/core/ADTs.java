@@ -35,7 +35,7 @@ public class ADTs {
 			UnionFind.class, // make-set, union, find
 			Trie.class // insert, find, delete
 	};
-	static final int N = ADT.length;
+	public static final int N = ADT.length;
 
 	public static String getName(int i) {
 		if (i < 0 || i >= ADT.length) {

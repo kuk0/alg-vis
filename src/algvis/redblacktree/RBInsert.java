@@ -45,12 +45,12 @@ public class RBInsert extends Algorithm {
 			mysuspend();
 
 			while (true) {
-				if (w.key == K) {
+				if (w.getKey() == K) {
 					addStep("alreadythere");
 					v.goDown();
 					return;
-				} else if (w.key < K) {
-					addStep("bst-insert-right", K, w.key);
+				} else if (w.getKey() < K) {
+					addStep("bst-insert-right", K, w.getKey());
 					if (w.getRight() != null) {
 						w = w.getRight();
 					} else {
@@ -58,7 +58,7 @@ public class RBInsert extends Algorithm {
 						break;
 					}
 				} else {
-					addStep("bst-insert-left", K, w.key);
+					addStep("bst-insert-left", K, w.getKey());
 					if (w.getLeft() != null) {
 						w = w.getLeft();
 					} else {

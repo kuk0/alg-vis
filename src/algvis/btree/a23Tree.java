@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.btree;
 
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
 
 public class a23Tree extends BTree {
 	public static String dsName = "23tree";

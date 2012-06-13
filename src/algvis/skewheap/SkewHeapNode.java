@@ -6,7 +6,7 @@ import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.MeldablePQ;
 import algvis.core.Node;
-import algvis.core.View;
+import algvis.gui.view.View;
 
 public class SkewHeapNode extends BSTNode {
 	Color color = Color.yellow;
@@ -27,22 +27,22 @@ public class SkewHeapNode extends BSTNode {
 	}
 
 	public SkewHeapNode(SkewHeapNode v) {
-		this(v.D, v.key, v.x, v.y);
+		this(v.D, v.getKey(), v.x, v.y);
 	}
 	
 	public boolean prec(Node v) {
 		if (((MeldablePQ) D).minHeap) {
-			return this.key < v.key;
+			return this.getKey() < v.getKey();
 		} else {
-			return this.key > v.key;
+			return this.getKey() > v.getKey();
 		}
 	}
 
 	public boolean preceq(Node v) {
 		if (((MeldablePQ) D).minHeap) {
-			return this.key <= v.key;
+			return this.getKey() <= v.getKey();
 		} else {
-			return this.key >= v.key;
+			return this.getKey() >= v.getKey();
 		}
 	}
 
@@ -110,7 +110,7 @@ public class SkewHeapNode extends BSTNode {
 	}
 
 	private void lowlight() {
-		bgColor(new Color(200, 200 - key / 10, 0));
+		bgColor(new Color(200, 200 - getKey() / 10, 0));
 	}
 
 	private void highlight() {

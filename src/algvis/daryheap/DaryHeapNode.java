@@ -4,7 +4,7 @@ import java.awt.Color;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.PriorityQueue;
-import algvis.core.View;
+import algvis.gui.view.View;
 import algvis.heap.HeapNode;
 
 public class DaryHeapNode extends HeapNode{
@@ -31,7 +31,7 @@ public class DaryHeapNode extends HeapNode{
 	}
 
 	public DaryHeapNode(DaryHeapNode v) {
-		this(v.D, v.key, v.x, v.y);
+		this(v.D, v.getKey(), v.x, v.y);
 	}
 
 	public boolean isRoot() {
@@ -94,7 +94,7 @@ public class DaryHeapNode extends HeapNode{
 	
 	@Override
 	public void draw(View v) {
-		if (state == Node.INVISIBLE || key == NULL) {
+		if (state == Node.INVISIBLE || getKey() == NULL) {
 			return;
 		}
 		
@@ -297,9 +297,9 @@ public class DaryHeapNode extends HeapNode{
 	
 	public boolean prec(DaryHeapNode v) {
 		if (((PriorityQueue) D).minHeap) {
-			return this.key < v.key;
+			return this.getKey() < v.getKey();
 		} else {
-			return this.key > v.key;
+			return this.getKey() > v.getKey();
 		}
 	}
 
@@ -308,9 +308,9 @@ public class DaryHeapNode extends HeapNode{
 	 */
 	public boolean preceq(DaryHeapNode v) {
 		if (((PriorityQueue) D).minHeap) {
-			return this.key <= v.key;
+			return this.getKey() <= v.getKey();
 		} else {
-			return this.key >= v.key;
+			return this.getKey() >= v.getKey();
 		}
 	}
 	

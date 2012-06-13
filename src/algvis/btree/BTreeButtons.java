@@ -22,8 +22,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import algvis.core.DictButtons;
-import algvis.core.VisPanel;
+import algvis.gui.DictButtons;
+import algvis.gui.VisPanel;
 import algvis.internationalization.ILabel;
 
 public class BTreeButtons extends DictButtons implements ChangeListener {

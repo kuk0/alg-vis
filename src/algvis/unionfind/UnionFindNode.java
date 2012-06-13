@@ -20,7 +20,7 @@ import org.jdom.Element;
 
 import algvis.core.DataStructure;
 import algvis.core.TreeNode;
-import algvis.core.View;
+import algvis.gui.view.View;
 import algvis.scenario.Command;
 
 public class UnionFindNode extends TreeNode {
@@ -111,7 +111,7 @@ public class UnionFindNode extends TreeNode {
 		@Override
 		public Element getXML() {
 			Element e = new Element("setRank");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			e.setAttribute("oldRank", Integer.toString(oldRank));
 			e.setAttribute("newRank", Integer.toString(newRank));
 			return e;
@@ -139,7 +139,7 @@ public class UnionFindNode extends TreeNode {
 		@Override
 		public Element getXML() {
 			Element e = new Element("setGrey");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			e.setAttribute("wasGrey", Boolean.toString(oldGrey));
 			e.setAttribute("isGrey", Boolean.toString(newGrey));
 			return e;

@@ -32,7 +32,7 @@ public class SkipFind extends SkipAlg {
 
 		w = w.getRight();
 		v.goTo(w);
-		if (w.key == v.key) {
+		if (w.getKey() == v.getKey()) {
 			addStep("found");
 			v.setColor(NodeColor.FOUND);
 		} else {

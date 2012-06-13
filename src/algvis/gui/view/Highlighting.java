@@ -14,8 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui.view;
 
-public enum Layout {
-	SIMPLE, COMPACT;
+public interface Highlighting {
+	
+	public void highlight(int i);
+	public void lowlight();
+
 }

@@ -17,9 +17,9 @@
 package algvis.avltree;
 
 import algvis.core.DataStructure;
-import algvis.core.DictButtons;
 import algvis.core.Settings;
-import algvis.core.VisPanel;
+import algvis.gui.DictButtons;
+import algvis.gui.VisPanel;
 
 public class AVLPanel extends VisPanel {
 	private static final long serialVersionUID = 9157486805598407776L;

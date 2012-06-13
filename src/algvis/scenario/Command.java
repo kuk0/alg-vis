@@ -16,9 +16,55 @@
  ******************************************************************************/
 package algvis.scenario;
 
+import org.jdom.Element;
+
+import algvis.core.DataStructure;
+import algvis.core.Node;
+
 public interface Command extends XMLable {
 
 	public void execute();
 
 	public void unexecute();
+	
+	public static class SetNodeCommand implements Command {
+		private final DataStructure D;
+		private final int i;
+		private final Node newNode, oldNode;
+
+		public SetNodeCommand(DataStructure D, int i, Node oldNode, Node newNode) {
+			this.D = D;
+			this.i = i;
+			this.oldNode = oldNode;
+			this.newNode = newNode;
+		}
+
+		@Override
+		public void execute() {
+			D.setNode(i, newNode, false);
+		}
+
+		@Override
+		public void unexecute() {
+			D.setNode(i, oldNode, false);
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("setNode");
+			e.setAttribute("DS", D.getClass().getName());
+			e.setAttribute("orderOfNode", Integer.toString(i));
+			if (newNode != null) {
+				e.setAttribute("newNodeKey", Integer.toString(newNode.getKey()));
+			} else {
+				e.setAttribute("newNode", "null");
+			}
+			if (oldNode != null) {
+				e.setAttribute("oldNodeKey", Integer.toString(oldNode.getKey()));
+			} else {
+				e.setAttribute("oldNode", "null");
+			}
+			return e;
+		}
+	}
 }

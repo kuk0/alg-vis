@@ -16,13 +16,13 @@
  ******************************************************************************/
 package algvis.bst;
 
-import algvis.core.ClickListener;
 import algvis.core.Dictionary;
-import algvis.core.Layout;
-import algvis.core.LayoutListener;
 import algvis.core.StringUtils;
-import algvis.core.View;
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
+import algvis.gui.view.ClickListener;
+import algvis.gui.view.Layout;
+import algvis.gui.view.LayoutListener;
+import algvis.gui.view.View;
 
 public class BST extends Dictionary implements LayoutListener, ClickListener {
 	public static String dsName = "bst";
@@ -129,6 +129,7 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 		}
 		if (getV() != null) {
 			getV().move();
+			// TODO toto hodilo nullPointerException pri vlozeni 1000 prvkov
 			getV().draw(V);
 		}
 	}
@@ -173,8 +174,8 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 
 	/**
 	 * Rotation is specified by a single vertex v; if v is a left child of its
-	 * parent, rotate right, if it is a right child, rotate left. This method
-	 * also recalculates positions of all nodes and their statistics.
+	 * parent, rotate right, if it is a right child, rotate lef This method also
+	 * recalculates positions of all nodes and their statistics.
 	 */
 	public void rotate(BSTNode v) {
 		if (v.isLeft()) {
@@ -213,7 +214,7 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 			BSTNode w = getRoot().find(x, y);
 			if (w != null) {
 				// w.markSubtree = true;
-				M.B.I.setText("" + w.key);
+				M.B.I.setText("" + w.getKey());
 			}
 		}
 	}

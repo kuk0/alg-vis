@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -22,6 +22,7 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
+import algvis.core.Dictionary;
 import algvis.internationalization.IButton;
 import algvis.scenario.Scenario;
 
@@ -61,7 +62,7 @@ public class DictButtons extends Buttons {
 		super.actionPerformed(evt);
 		if (evt.getSource() == insertB) {
 			final Vector<Integer> args = I.getNonEmptyVI();
-			Thread t = new Thread(new Runnable() {
+			D.scenario.traverser.startNew(new Runnable() {
 				@Override
 				public void run() {
 					boolean p = M.pause;
@@ -85,33 +86,39 @@ public class DictButtons extends Buttons {
 					M.C.enableUpdating(true);
 					M.C.update();
 				}
-			});
-			t.start();
+			}, true);
+			if (D.scenario.isEnabled() && args.size() == 1) {
+				startLastAlg();
+			}
 		} else if (evt.getSource() == findB) {
 			final Vector<Integer> args = I.getVI();
 			if (args.size() > 0) {
-				Thread t = new Thread(new Runnable() {
-					@Override
-					public void run() {
-						for (int x : args) {
+				for (final int x : args) {
+					D.scenario.traverser.startNew(new Runnable() {
+						@Override
+						public void run() {
 							((Dictionary) D).find(x);
 						}
+					}, true);
+					if (D.scenario.isEnabled()) {
+						startLastAlg();
 					}
-				});
-				t.start();
+				}
 			}
 		} else if (evt.getSource() == deleteB) {
 			final Vector<Integer> args = I.getVI();
 			if (args.size() > 0) {
-				Thread t = new Thread(new Runnable() {
-					@Override
-					public void run() {
-						for (int x : args) {
+				for (final int x : args) {
+					D.scenario.traverser.startNew(new Runnable() {
+						@Override
+						public void run() {
 							((Dictionary) D).delete(x);
 						}
+					}, true);
+					if (D.scenario.isEnabled()) {
+						startLastAlg();
 					}
-				});
-				t.start();
+				}
 			}
 		}
 	}

@@ -17,9 +17,9 @@
 package algvis.treap;
 
 import algvis.core.DataStructure;
-import algvis.core.DictButtons;
 import algvis.core.Settings;
-import algvis.core.VisPanel;
+import algvis.gui.DictButtons;
+import algvis.gui.VisPanel;
 
 public class TreapPanel extends VisPanel {
 	private static final long serialVersionUID = -6193823024855399059L;

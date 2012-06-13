@@ -17,10 +17,10 @@
 package algvis.redblacktree;
 
 import algvis.bst.BST;
-import algvis.core.Layout;
 import algvis.core.Node;
-import algvis.core.View;
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
+import algvis.gui.view.Layout;
+import algvis.gui.view.View;
 
 public class RB extends BST {
 	public static String dsName = "redblack";
