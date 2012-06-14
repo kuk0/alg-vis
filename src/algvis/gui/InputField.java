@@ -172,4 +172,15 @@ public class InputField extends JTextField {
 		return result;
 	}
 
+	public Vector<String> getVABS() {
+		String ss = getText();
+		Vector<String> result = new Vector<String>();
+		if (ss.compareTo("") == 0) {
+			result.add(WordGenerator.getABWord(20));
+		} else {
+			result = WordGenerator.parseString(ss);
+		}
+		setText("");
+		return result;
+	}
 }

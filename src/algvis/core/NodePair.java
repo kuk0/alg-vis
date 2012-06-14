@@ -22,4 +22,23 @@ public class NodePair<T extends Node> {
 
 	public NodePair() {
 	}
+
+	public NodePair(T left, T right) {
+		this.left = left;
+		this.right = right;
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof NodePair<?>) {
+			NodePair<?> that = (NodePair<?>) other;
+			if ((left.equals(that.left)) && (right.equals(that.right))) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
 }

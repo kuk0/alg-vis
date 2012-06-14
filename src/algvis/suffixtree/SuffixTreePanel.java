@@ -14,22 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.suffixtree;
 
-public class Pair {
-	public int first, second;
+import algvis.core.DataStructure;
+import algvis.core.Settings;
+import algvis.gui.VisPanel;
 
-	public Pair() {
+public class SuffixTreePanel extends VisPanel {
+	private static final long serialVersionUID = -8652425842838569507L;
+	public static Class<? extends DataStructure> DS = SuffixTree.class;
+
+	public SuffixTreePanel(Settings S) {
+		super(S);
+	}
+	
+	@Override
+	public void initDS() {
+		D = new SuffixTree(this);
+		B = new SuffixTreeButtons(this);
+		//D.random(10);
 	}
 
-	public Pair(int x, int y) {
-		first = x;
-		second = y;
-	}
-
-	/*
-	 * public int first() { return first; }
-	 * 
-	 * public int second() { return second; }
-	 */
 }

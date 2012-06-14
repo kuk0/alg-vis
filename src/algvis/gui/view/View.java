@@ -224,6 +224,11 @@ public class View implements MouseListener, MouseMotionListener,
 		g.setTransform(oldTransform);
 	}
 
+	public Point2D cut (double x, double y, double x2, double y2, double c) {
+		double d = new Point2D.Double(x, y).distance(x2, y2);
+		return new Point2D.Double(x + (x2-x)*(d-c)/d, y + (y2-y)*(d-c)/d);
+	}
+
 	public void fillSqr(double x, double y, double a) {
 		g.fillRect((int) (x - a), (int) (y - a), 2 * (int) a, 2 * (int) a);
 	}
@@ -311,6 +316,16 @@ public class View implements MouseListener, MouseMotionListener,
 		y -= f.fm.getHeight();
 		g.setFont(f.font);
 		g.drawString(str, (int) x, (int) y);
+	}
+
+	public void drawVerticalString(String str, double x, double y, Fonts f) {
+		int xx = (int)x;
+		int yy = (int)y - str.length() * f.fm.getHeight() / 2;
+		g.setFont(f.font);
+		for (int i=0; i<str.length(); ++i) {
+			g.drawString(""+str.charAt(i), xx, yy);
+			yy += f.fm.getHeight();
+		}
 	}
 
 	public void fillArc(double x, double y, double w, double h, double a1,

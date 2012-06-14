@@ -49,7 +49,7 @@ public class TrieInsert extends Algorithm {
 		mysuspend();
 		v.unmark();
 		T.hw = new TrieWordNode(T, s);
-		T.hw.setC(NodeColor.INSERT);
+		T.hw.setColor(NodeColor.INSERT);
 		T.hw.goNextTo(v);
 		
 		while (s.compareTo("$") != 0) {

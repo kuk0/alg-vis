@@ -14,33 +14,41 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.trie;
+package algvis.suffixtree;
 
 import algvis.core.DataStructure;
 import algvis.core.WordGenerator;
 import algvis.gui.Fonts;
 import algvis.gui.VisPanel;
 import algvis.gui.view.View;
+import algvis.trie.TrieWordNode;
 
-public class Trie extends DataStructure {
+public class SuffixTree extends DataStructure {
 	public static String adtName = "stringology";
-	public static String dsName = "trie";
+	public static String dsName = "suffixtree";
 
-	private TrieNode root = null;
-	private TrieNode v = null;
+	private SuffixTreeNode root = null;
+	private SuffixTreeNode v = null;
 
 	public TrieWordNode hw = null;
+	public TrieWordNode cs = null;
 
-	// public final static String EPSILON = "\u025B";
+	public String text;
 
-	public Trie(VisPanel M) {
+	public SuffixTree(VisPanel M) {
 		super(M);
 		clear();
 	}
 
+	public SuffixTree(VisPanel M, String text) {
+		super(M);
+		clear();
+		this.text = text;
+	}
+
 	@Override
 	public String getName() {
-		return "trie";
+		return "suffixtree";
 	}
 
 	@Override
@@ -55,35 +63,35 @@ public class Trie extends DataStructure {
 
 	@Override
 	public void clear() {
-		root = new TrieNode(this);
+		root = new SuffixTreeNode(this);
 		root.reposition();
 		v = null;
 	}
 
-	public TrieNode getV() {
+	public SuffixTreeNode getV() {
 		return v;
 	}
 
-	public TrieNode setV(TrieNode v) {
+	public SuffixTreeNode setV(SuffixTreeNode v) {
 		this.v = v;
 		return v;
 	}
 
-	public TrieNode getRoot() {
+	public SuffixTreeNode getRoot() {
 		return root;
 	}
 
-	public void setRoot(TrieNode root) {
+	public void setRoot(SuffixTreeNode root) {
 		this.root = root;
 	}
 
 	@Override
 	public void draw(View V) {
-		TrieNode v = getRoot();
+		SuffixTreeNode v = getRoot();
 		if (v != null) {
 			v.moveTree();
 			v.drawTree(V);
-			V.drawString("\u025B", v.x, v.y-8, Fonts.NORMAL);
+			V.drawString("\u025B", v.x, v.y - 8, Fonts.NORMAL);
 		}
 		v = getV();
 		if (v != null) {
@@ -91,8 +99,10 @@ public class Trie extends DataStructure {
 			v.drawLabel(V);
 		}
 		if (hw != null) {
-			hw.move();
 			hw.draw(V);
+		}
+		if (cs != null) {
+			cs.draw(V);
 		}
 	}
 
@@ -111,15 +121,12 @@ public class Trie extends DataStructure {
 	}
 
 	public void insert(String s) {
-		start(new TrieInsert(this, s));
+		text = s;
+		start(new SuffixTreeInsert(this, s));
 	}
 
 	public void find(String s) {
-		start(new TrieFind(this, s));
-	}
-
-	public void delete(String s) {
-		start(new TrieDelete(this, s));
+		start(new SuffixTreeFind(this, s));
 	}
 
 	public void reposition() {
@@ -127,10 +134,9 @@ public class Trie extends DataStructure {
 	}
 
 	public void clearExtraColor() {
-		TrieNode r = getRoot();
+		SuffixTreeNode r = getRoot();
 		if (r != null) {
 			getRoot().clearExtraColor();
 		}
 	}
-
 }

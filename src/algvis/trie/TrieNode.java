@@ -62,6 +62,10 @@ public class TrieNode extends TreeNode {
 		ch = "";
 	}
 
+	public TrieNode getParent() {
+		return (TrieNode)super.getParent();
+	}
+	
 	public void unsetGrey() {
 		TrieNode w = (TrieNode) getChild();
 		while (w != null) {
@@ -122,12 +126,12 @@ public class TrieNode extends TreeNode {
 
 		drawBg(v);
 		// drawKey(v);
-		drawTrieCH(v);
+		drawLabel(v);
 		drawArrow(v);
 		drawArc(v);
 	}
 
-	protected void drawTrieCH(View v) {
+	public void drawLabel(View v) {
 		TrieNode u = (TrieNode) getParent();
 		if (u != null) {
 			int midx, midy, w, h;
@@ -183,7 +187,7 @@ public class TrieNode extends TreeNode {
 		setColor(NodeColor.NORMAL);
 	}
 
-	public String getCH() {
+	public String getLabel() {
 		return ch;
 	}
 
@@ -210,16 +214,16 @@ public class TrieNode extends TreeNode {
 	 * 
 	 * @param ch
 	 *            A character which will be inserted in lexicographical order
-	 * @return A node with proper "ch"
+	 * @return A node with proper label
 	 */
 	public TrieNode addRight(String ch, int x, int y) {
-		if (getCH().compareTo(ch) > 0) {
+		if (getLabel().compareTo(ch) > 0) {
 			TrieNode u = new TrieNode(D, ch);
 			u.setParent(getParent());
 			u.setRight(this);
 			getParent().setChild(u);
 			return u;
-		} else if (getCH().compareTo(ch) == 0) {
+		} else if (getLabel().compareTo(ch) == 0) {
 			return this;
 		} else {
 			TrieNode v = (TrieNode) getRight();
@@ -229,7 +233,7 @@ public class TrieNode extends TreeNode {
 				setRight(u);
 				return u;
 			} else {
-				int c = v.getCH().compareTo(ch);
+				int c = v.getLabel().compareTo(ch);
 				if (c > 0) {
 					TrieNode u = new TrieNode(D, ch);
 					u.setRight(getRight());
@@ -262,5 +266,10 @@ public class TrieNode extends TreeNode {
 		} else {
 			return v.addRight(ch, x, y);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return ch;
 	}
 }

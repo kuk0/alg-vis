@@ -39,6 +39,7 @@ import algvis.scapegoattree.GBPanel;
 import algvis.skewheap.SkewHeapPanel;
 import algvis.skiplist.SkipListPanel;
 import algvis.splaytree.SplayPanel;
+import algvis.suffixtree.SuffixTreePanel;
 import algvis.treap.TreapPanel;
 import algvis.trie.TriePanel;
 import algvis.unionfind.UnionFindPanel;
@@ -58,10 +59,9 @@ public class DataStructures {
 			RBPanel.class, AAPanel.class, TreapPanel.class,
 			SkipListPanel.class, GBPanel.class, SplayPanel.class,
 			HeapPanel.class, DaryHeapPanel.class, LeftHeapPanel.class,
-			SkewHeapPanel.class, BinHeapPanel.class, LazyBinHeapPanel.class,
-			FibHeapPanel.class, UnionFindPanel.class, TriePanel.class, PairHeapPanel.class, 
-			IntervalPanel.class};
-
+			SkewHeapPanel.class, PairHeapPanel.class, BinHeapPanel.class,
+			LazyBinHeapPanel.class, FibHeapPanel.class, UnionFindPanel.class,
+			IntervalPanel.class, TriePanel.class, SuffixTreePanel.class };
 
 	public static final int N = PANEL.length;
 
@@ -172,19 +172,21 @@ public class DataStructures {
 		case 15:
 			return new SkewHeapPanel(S);
 		case 16:
-			return new BinHeapPanel(S);
-		case 17:
-			return new LazyBinHeapPanel(S);
-		case 18:
-			return new FibHeapPanel(S);
-		case 19:
-			return new UnionFindPanel(S);
-		case 20:
-			return new TriePanel(S);
-		case 21:
 			return new PairHeapPanel(S);
-		case 22:
+		case 17:
+			return new BinHeapPanel(S);
+		case 18:
+			return new LazyBinHeapPanel(S);
+		case 19:
+			return new FibHeapPanel(S);
+		case 20:
+			return new UnionFindPanel(S);
+		case 21:
 			return new IntervalPanel(S);
+		case 22:
+			return new TriePanel(S);
+		case 23:
+			return new SuffixTreePanel(S);
 		}
 		if (!check_range(i))
 			return null;
