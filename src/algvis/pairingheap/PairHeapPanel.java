@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kováè, Katarína Kotrlová, Pavol Lukèa, Viktor Tomkoviè, Tatiana Tóthová
+ * Copyright (c) 2012 Jakub Kovï¿½ï¿½, Katarï¿½na Kotrlovï¿½, Pavol Lukï¿½a, Viktor Tomkoviï¿½, Tatiana Tï¿½thovï¿½
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ package algvis.pairingheap;
 
 import algvis.core.DataStructure;
 import algvis.core.Settings;
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
 
 public class PairHeapPanel extends VisPanel{
 	private static final long serialVersionUID = 7766114341156126683L;

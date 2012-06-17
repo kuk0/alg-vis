@@ -53,13 +53,15 @@ public class AlgVis extends JPanel implements ActionListener {
      * 13 - d-ary heap ("daryheap")
      * 14 - Leftist heap ("leftheap")
      * 15 - Skew heap ("skewheap")
-     * 16 - Binomial heap ("binheap")
-     * 17 - Lazy Binomial heap ("lazybinheap")
-     * 18 - Fibonacci heap ("fibheap")
-     * 19 - Union-find ("ufi")
-     * 20 - Trie ("trie") 
-     * 21 - Suffix Tree ("suffixtree") */
-	final static int DEFAULT_DS = 21;
+     * 16 - Pairing heap ("pairheap")
+     * 17 - Binomial heap ("binheap")
+     * 18 - Lazy Binomial heap ("lazybinheap")
+     * 19 - Fibonacci heap ("fibheap")
+     * 20 - Union-find ("ufi")
+     * 21 - Interval tree ("intervaltree")
+     * 22 - Trie ("trie") 
+     * 23 - Suffix Tree ("suffixtree") */
+	final static int DEFAULT_DS = 0;
 	
 	private static final long serialVersionUID = -5202486006824196688L;
 

@@ -1,6 +1,6 @@
 package algvis.intervaltree;
 
-import algvis.core.InputField;
+import algvis.gui.InputField;
 
 public class IntervalChangeKey extends IntervalAlg{
 	int value;
@@ -16,11 +16,11 @@ public class IntervalChangeKey extends IntervalAlg{
 	
 	@Override
 	public void run() {
-		v.key = value;
-		if (v.key < 1)
-			v.key = 1;
-		if (v.key > InputField.MAX)
-			v.key = InputField.MAX;
+		v.setKey(value);
+		if (v.getKey() < 1)
+			v.setKey(1);
+		if (v.getKey() > InputField.MAX)
+			v.setKey(InputField.MAX);
 		
 		//if (H.minHeap) { //<<------
 		addNote("intervalchangev");

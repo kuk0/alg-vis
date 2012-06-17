@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kováè, Katarína Kotrlová, Pavol Lukèa, Viktor Tomkoviè, Tatiana Tóthová
+ * Copyright (c) 2012 Jakub Kovï¿½ï¿½, Katarï¿½na Kotrlovï¿½, Pavol Lukï¿½a, Viktor Tomkoviï¿½, Tatiana Tï¿½thovï¿½
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,14 @@
  ******************************************************************************/
 package algvis.pairingheap;
 
-import algvis.core.ClickListener;
 import algvis.core.DataStructure;
 import algvis.core.MeldablePQ;
-import algvis.core.MeldablePQButtons;
 import algvis.core.Node;
 import algvis.core.Pair;
-import algvis.core.View;
-import algvis.core.VisPanel;
+import algvis.gui.MeldablePQButtons;
+import algvis.gui.VisPanel;
+import algvis.gui.view.ClickListener;
+import algvis.gui.view.View;
 import algvis.pairingheap.PairHeapAlg.Pairing;
 
 public class PairingHeap extends MeldablePQ implements ClickListener{
@@ -110,7 +110,7 @@ public class PairingHeap extends MeldablePQ implements ClickListener{
 	@Override
 	public String stats() {
 		// TODO Auto-generated method stub
-		return null;
+		return "";
 	}
 
 	@Override

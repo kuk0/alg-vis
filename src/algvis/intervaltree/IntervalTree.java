@@ -1,16 +1,15 @@
 package algvis.intervaltree;
 
-import algvis.core.ClickListener;
-import algvis.core.IntervalTrees;
 import algvis.core.Node;
-import algvis.core.View;
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
+import algvis.gui.view.ClickListener;
+import algvis.gui.view.View;
 import algvis.intervaltree.IntervalNode.focusType;
 
-public class IntervalTree extends IntervalTrees implements ClickListener{
+public class IntervalTree extends IntervalTrees implements ClickListener {
 	public static String dsName = "intervaltree";
 	IntervalNode root = null, v = null, v2 = null;
-	int numLeafs = 0; //pocet obsadenych listov
+	int numLeafs = 0; // pocet obsadenych listov
 	public static final int minsepx = 22;
 
 	public IntervalTree(VisPanel M) {
@@ -25,8 +24,7 @@ public class IntervalTree extends IntervalTrees implements ClickListener{
 
 	@Override
 	public String stats() {
-		// TODO Auto-generated method stub
-		return null;
+		return "";
 	}
 
 	@Override
@@ -34,15 +32,13 @@ public class IntervalTree extends IntervalTrees implements ClickListener{
 		start(new IntervalInsert(this, x));
 	}
 
-	
 	@Override
 	public void clear() {
 		root = null;
-		v = null; 
+		v = null;
 		v2 = null;
 		numLeafs = 0;
 	}
-	
 
 	@Override
 	public void draw(View V) {
@@ -50,7 +46,7 @@ public class IntervalTree extends IntervalTrees implements ClickListener{
 			getRoot().moveTree();
 			getRoot().drawTree(V);
 		}
-		
+
 		if (v != null) {
 			v.move();
 			v.draw(V);
@@ -63,7 +59,7 @@ public class IntervalTree extends IntervalTrees implements ClickListener{
 
 	@Override
 	public void mouseClicked(int x, int y) {
-		//System.out.println("bolo kliknute");
+		// System.out.println("bolo kliknute");
 		if (root == null)
 			return;
 		IntervalNode v = root.find(x, y);
@@ -76,29 +72,28 @@ public class IntervalTree extends IntervalTrees implements ClickListener{
 					chosen.unmark();
 				v.mark();
 				chosen = v;
-				//System.out.println(v.key + " tento je vybraty");
+				// System.out.println(v.key + " tento je vybraty");
 			}
 		}
-		
+
 	}
-	
 
 	@Override
 	public void changeKey(Node v, int value) {
 		if (v == null) {
-		// TODO: vypindat
+			// TODO: vypindat
 		} else {
 			start(new IntervalChangeKey(this, (IntervalNode) v, value));
 		}
-		
+
 	}
 
 	@Override
 	public void ofinterval(int b, int e) {
 		start(new IntervalFindMin(this, b, e));
-		//start(new IntervalInsert(this, b));
+		// start(new IntervalInsert(this, b));
 	}
-	
+
 	public IntervalNode getRoot() {
 		return root;
 	}
@@ -107,7 +102,7 @@ public class IntervalTree extends IntervalTrees implements ClickListener{
 		this.root = root;
 		return this.root;
 	}
-	
+
 	public IntervalNode getV() {
 		return (IntervalNode) v;
 	}
@@ -116,7 +111,7 @@ public class IntervalTree extends IntervalTrees implements ClickListener{
 		this.v = v;
 		return v;
 	}
-	
+
 	public void reposition() {
 		x1 = x2 = y1 = y2 = 0;
 		if (getRoot() != null) {
@@ -125,26 +120,27 @@ public class IntervalTree extends IntervalTrees implements ClickListener{
 		M.screen.V.setBounds(x1, y1, x2, y2);
 	}
 
-	public int getHeight(){
+	public int getHeight() {
 		int tmp = numLeafs;
 		int res = 1;
-		while (tmp > 1){
+		while (tmp > 1) {
 			tmp /= 2;
 			res++;
-		} 
-		if (numLeafs > 0){
+		}
+		if (numLeafs > 0) {
 			return res;
-		}else{
+		} else {
 			return 0;
 		}
 	}
-	
-	int numL;	
-	public IntervalNode generateEmpty(int h){
+
+	int numL;
+
+	public IntervalNode generateEmpty(int h) {
 		IntervalNode w = new IntervalNode(this, Node.NOKEY);
-		if (h>0){
-			IntervalNode tmp1 = generateEmpty(h-1);
-			IntervalNode tmp2 = generateEmpty(h-1);
+		if (h > 0) {
+			IntervalNode tmp1 = generateEmpty(h - 1);
+			IntervalNode tmp2 = generateEmpty(h - 1);
 			w.setLeft(tmp1);
 			tmp1.setParent(w);
 			w.setRight(tmp2);
@@ -154,49 +150,50 @@ public class IntervalTree extends IntervalTrees implements ClickListener{
 			w.setInterval(numL, numL);
 			numL++;
 		}
-		
+
 		return w;
-		
+
 	}
-	
-	public void extend(){
-		IntervalNode w = new IntervalNode(this, 0); //pre suctovy strom je 0, min je +inf, max je -inf
-		w.key = Node.NOKEY;
+
+	public void extend() {
+		IntervalNode w = new IntervalNode(this, 0); // pre suctovy strom je 0,
+													// min je +inf, max je -inf
+		w.setKey(Node.NOKEY);
 		IntervalNode w2 = root;
 		w.setLeft(w2);
 		w2.setParent(w);
 		root = w;
-		
+
 		numL = numLeafs + 1;
 		IntervalNode tmp = generateEmpty(getHeight() - 1);
 		root.setRight(tmp);
 		tmp.setParent(root);
 		System.out.println(this.getHeight());
 		reposition();
-		//root.add();
-		
+		// root.add();
+
 	}
-	
-	public int getMinsepx(){
+
+	public int getMinsepx() {
 		return IntervalTree.minsepx;
 	}
-	
-	public void unfocus(IntervalNode w){
-		if (w == null){
+
+	public void unfocus(IntervalNode w) {
+		if (w == null) {
 			return;
 		}
 		w.focused = focusType.FALSE;
 		w.unmark();
-		w.unmarkColor(); 
+		w.unmarkColor();
 		unfocus(w.getLeft());
 		unfocus(w.getRight());
 	}
-	
-	public void markColor(IntervalNode w, int i, int j){
-		if (w == null){
+
+	public void markColor(IntervalNode w, int i, int j) {
+		if (w == null) {
 			return;
 		}
-		if (w.isLeaf() && w.b >= i && w.e <= j){
+		if (w.isLeaf() && w.b >= i && w.e <= j) {
 			w.markColor();
 		}
 		markColor(w.getLeft(), i, j);

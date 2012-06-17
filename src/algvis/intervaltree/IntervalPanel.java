@@ -1,9 +1,8 @@
 package algvis.intervaltree;
 
 import algvis.core.DataStructure;
-import algvis.core.IntervalButtons;
 import algvis.core.Settings;
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
 
 public class IntervalPanel extends VisPanel{
 	private static final long serialVersionUID = -5655533916806349111L;

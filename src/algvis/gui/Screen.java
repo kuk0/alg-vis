@@ -34,7 +34,7 @@ public class Screen extends JPanel implements Runnable {
 	private boolean suspended = true;
 	private DataStructure D = null;
 
-	private final VisPanel P; // TODO not needed 120429
+	//private final VisPanel P; // TODO not needed 120429
 	private Image I;
 	private Graphics G;
 	private Dimension size;
@@ -42,7 +42,7 @@ public class Screen extends JPanel implements Runnable {
 	public final View V;
 
 	public Screen(VisPanel P) {
-		this.P = P;
+		//this.P = P;
 		V = new View(this);
 		t = new Thread(this);
 	}

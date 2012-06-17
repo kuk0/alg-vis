@@ -1,8 +1,8 @@
 package algvis.intervaltree;
 
 import algvis.core.Algorithm;
-import algvis.core.IntervalTrees.mimasuType;
 import algvis.core.Node;
+import algvis.intervaltree.IntervalTrees.mimasuType;
 
 public class IntervalAlg extends Algorithm{
 	IntervalTree T;
@@ -18,31 +18,31 @@ public class IntervalAlg extends Algorithm{
 			w.mark();
 			if ((w.getRight() != null) && (w.getLeft() != null)){
 				if (T.minTree == mimasuType.MIN){
-					if (w.getRight().key == Node.NOKEY) {
-						w.key = w.getLeft().key;
-						addStep("intervalkeyempty", w.getLeft().key);
+					if (w.getRight().getKey() == Node.NOKEY) {
+						w.setKey(w.getLeft().getKey());
+						addStep("intervalkeyempty", w.getLeft().getKey());
 					} else {
-						w.key = Math.min(w.getRight().key, w.getLeft().key);
-						addStep("intervalmin", w.getRight().key, w.getLeft().key);
+						w.setKey(Math.min(w.getRight().getKey(), w.getLeft().getKey()));
+						addStep("intervalmin", w.getRight().getKey(), w.getLeft().getKey());
 					}
 				} else if (T.minTree == mimasuType.MAX){
-					w.key = Math.max(w.getRight().key, w.getLeft().key);
-					if (w.getRight().key != Node.NOKEY) {
-						addStep("intervalmax", w.getRight().key, w.getLeft().key);
+					w.setKey(Math.max(w.getRight().getKey(), w.getLeft().getKey()));
+					if (w.getRight().getKey() != Node.NOKEY) {
+						addStep("intervalmax", w.getRight().getKey(), w.getLeft().getKey());
 					} else {
-						addStep("intervalkeyempty", w.getLeft().key);
+						addStep("intervalkeyempty", w.getLeft().getKey());
 					}
 				}else if (T.minTree == mimasuType.SUM){
-					if (w.getRight().key != Node.NOKEY) {
-						w.key = w.getRight().key + w.getLeft().key;
-						addStep("intervalsum", w.getRight().key, w.getLeft().key);
+					if (w.getRight().getKey() != Node.NOKEY) {
+						w.setKey(w.getRight().getKey() + w.getLeft().getKey());
+						addStep("intervalsum", w.getRight().getKey(), w.getLeft().getKey());
 					} else {
-						w.key = w.getLeft().key;
-						addStep("intervalkeyempty", w.getLeft().key);
+						w.setKey(w.getLeft().getKey());
+						addStep("intervalkeyempty", w.getLeft().getKey());
 					}
 				}
 				w.setInterval(w.getLeft().b, w.getRight().e);
-				System.out.println(w.key + " " + w.b + " " + w.e);
+				//System.out.println(w.getKey() + " " + w.b + " " + w.e);
 				mysuspend();
 				//System.out.println(w.b + " " + w.e);
 			}

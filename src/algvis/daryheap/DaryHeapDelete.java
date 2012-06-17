@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kováè, Katarína Kotrlová, Pavol Lukèa, Viktor Tomkoviè, Tatiana Tóthová
+ * Copyright (c) 2012 Jakub Kovï¿½ï¿½, Katarï¿½na Kotrlovï¿½, Pavol Lukï¿½a, Viktor Tomkoviï¿½, Tatiana Tï¿½thovï¿½
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,9 +36,9 @@ public class DaryHeapDelete extends DaryHeapAlg {
 		if (H.root.numChildren == 0) {
 			H.v = H.root;
 			if (H.minHeap){
-				addStep("minimum", H.root.key);
+				addStep("minimum", H.root.getKey());
 			} else {
-				addStep("maximum", H.root.key);
+				addStep("maximum", H.root.getKey());
 			}
 			H.root = null;
 			H.v.mark();
@@ -49,9 +49,9 @@ public class DaryHeapDelete extends DaryHeapAlg {
 			return;
 		}
 		if (H.minHeap){
-			addStep("minimum", H.root.key);
+			addStep("minimum", H.root.getKey());
 		} else {
-			addStep("maximum", H.root.key);
+			addStep("maximum", H.root.getKey());
 		}
 		H.root.mark();
 		mysuspend();

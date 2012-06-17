@@ -16,6 +16,7 @@
  ******************************************************************************/
 package algvis.core;
 
+import algvis.intervaltree.IntervalTrees;
 import algvis.trie.Trie;
 import algvis.unionfind.UnionFind;
 

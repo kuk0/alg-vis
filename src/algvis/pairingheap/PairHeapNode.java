@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kováè, Katarína Kotrlová, Pavol Lukèa, Viktor Tomkoviè, Tatiana Tóthová
+ * Copyright (c) 2012 Jakub Kovï¿½ï¿½, Katarï¿½na Kotrlovï¿½, Pavol Lukï¿½a, Viktor Tomkoviï¿½, Tatiana Tï¿½thovï¿½
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ import java.awt.Color;
 import algvis.core.DataStructure;
 import algvis.core.MeldablePQ;
 import algvis.core.TreeNode;
-import algvis.core.View;
+import algvis.gui.view.View;
 
 public class PairHeapNode extends TreeNode{
 
@@ -36,12 +36,12 @@ public class PairHeapNode extends TreeNode{
 	}
 	
 	public PairHeapNode(PairHeapNode v) {
-		this(v.D, v.key, v.x, v.y);
+		this(v.D, v.getKey(), v.x, v.y);
 		this.setColor(v.getColor());
 	}
 	
 	private void lowlight() {
-		bgColor(new Color(200, 200 - key / 10, 0));
+		bgColor(new Color(200, 200 - getKey() / 10, 0));
 	}
 
 	private void highlight() {
@@ -134,9 +134,9 @@ public class PairHeapNode extends TreeNode{
 	
 	public boolean prec(PairHeapNode v) {
 		if (((MeldablePQ) D).minHeap) {
-			return this.key < v.key;
+			return getKey() < v.getKey();
 		} else {
-			return this.key > v.key;
+			return getKey() > v.getKey();
 		}
 
 	}
@@ -170,9 +170,9 @@ public class PairHeapNode extends TreeNode{
 	 */
 	public boolean preceq(PairHeapNode v) {
 		if (((MeldablePQ) D).minHeap) {
-			return this.key <= v.key;
+			return getKey() <= v.getKey();
 		} else {
-			return this.key >= v.key;
+			return getKey() >= v.getKey();
 		}
 	}
 }

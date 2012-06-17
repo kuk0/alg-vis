@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kováè, Katarína Kotrlová, Pavol Lukèa, Viktor Tomkoviè, Tatiana Tóthová
+ * Copyright (c) 2012 Jakub Kovï¿½ï¿½, Katarï¿½na Kotrlovï¿½, Pavol Lukï¿½a, Viktor Tomkoviï¿½, Tatiana Tï¿½thovï¿½
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,12 +22,10 @@ import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import algvis.core.MeldablePQButtons;
-import algvis.core.VisPanel;
+import algvis.gui.MeldablePQButtons;
+import algvis.gui.VisPanel;
 import algvis.internationalization.IComboBox;
 import algvis.internationalization.ILabel;
-//import algvis.unionfind.UnionFindUnion;
-//import algvis.pairingheap.PairHeapDelete.Pairing;
 
 public class PairHeapButtons extends MeldablePQButtons implements ChangeListener{
 	private static final long serialVersionUID = -5692673269308125662L;

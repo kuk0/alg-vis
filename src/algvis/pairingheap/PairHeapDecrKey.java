@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kováè, Katarína Kotrlová, Pavol Lukèa, Viktor Tomkoviè, Tatiana Tóthová
+ * Copyright (c) 2012 Jakub Kovï¿½ï¿½, Katarï¿½na Kotrlovï¿½, Pavol Lukï¿½a, Viktor Tomkoviï¿½, Tatiana Tï¿½thovï¿½
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,11 +16,11 @@
  ******************************************************************************/
 package algvis.pairingheap;
 
-import algvis.core.InputField;
+import algvis.gui.InputField;
 
-public class PairHeapDecrKey extends PairHeapAlg{
+public class PairHeapDecrKey extends PairHeapAlg {
 	int delta;
-	
+
 	public PairHeapDecrKey(PairingHeap D, PairHeapNode v, int delta) {
 		super(D);
 		this.v = v;
@@ -31,29 +31,30 @@ public class PairHeapDecrKey extends PairHeapAlg{
 			setHeader("increasekey");
 		}
 	}
-	
+
 	@Override
 	public void run() {
 		if (H.minHeap) {
-			v.key -= delta;
-			if (v.key < 1)
-				v.key = 1;
+			v.setKey(v.getKey() - delta);
+			if (v.getKey() < 1)
+				v.setKey(1);
 		} else {
-			v.key += delta;
-			if (v.key > InputField.MAX)
-				v.key = InputField.MAX;
+			v.setKey(v.getKey() + delta);
+			if (v.getKey() > InputField.MAX)
+				v.setKey(InputField.MAX);
 		}
-		if (!v.isRoot()){
-			if (H.minHeap){
-				addStep("pairdecr"); //zvysili sme hodnotu, dieta odtrhneme a prilinkujeme
+		if (!v.isRoot()) {
+			if (H.minHeap) {
+				addStep("pairdecr"); // zvysili sme hodnotu, dieta odtrhneme a
+									 // prilinkujeme
 			} else {
-				addStep("pairincr"); 
+				addStep("pairincr");
 			}
 			H.root[0] = v;
 			H.root[0].mark();
 			mysuspend();
 			v.getParent().deleteChild(v);
-			
+
 			H.root[H.active].mark();
 			H.reposition();
 			mysuspend();
@@ -63,9 +64,9 @@ public class PairHeapDecrKey extends PairHeapAlg{
 			H.root[0] = null;
 			H.reposition();
 		}
-		
+
 		addNote("done");
-		
+
 	}
 
 }

@@ -60,7 +60,7 @@ public class TrieFind extends Algorithm {
 			}
 			wd = (TrieNode) v.getChild();
 
-			String ch = s.substring(0, 1);
+			char ch = s.charAt(0);
 			T.hw.setAndGoNextTo(s, v);
 			TrieNode w = v.getChildWithCH(ch);
 			if (w == null) {
@@ -68,12 +68,12 @@ public class TrieFind extends Algorithm {
 					wd.setColor(NodeColor.NORMAL);
 					wd = (TrieNode) wd.getRight();
 				}
-				addStep("triefindending1", ch);
+				addStep("triefindending1", ""+ch);
 				mysuspend();
 				beforeReturn();
 				return;
 			}
-			addStep("triefindmovedown", ch);
+			addStep("triefindmovedown", ""+ch);
 			mysuspend();
 			while (wd != null) {
 				wd.setColor(NodeColor.NORMAL);
@@ -84,7 +84,7 @@ public class TrieFind extends Algorithm {
 			s = s.substring(1);
 		}
 		T.hw.setAndGoNextTo(s, v);
-		TrieNode w = (TrieNode) v.getChildWithCH("$");
+		TrieNode w = (TrieNode) v.getChildWithCH('$');
 		if (w == null) {
 			addStep("triefindending2");
 		} else {

@@ -1,4 +1,8 @@
-package algvis.core;
+package algvis.intervaltree;
+
+import algvis.core.DataStructure;
+import algvis.core.Node;
+import algvis.gui.VisPanel;
 
 public abstract class IntervalTrees extends DataStructure{
 	public static String adtName = "intervaltrees";

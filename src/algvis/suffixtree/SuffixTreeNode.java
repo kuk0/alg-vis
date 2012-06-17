@@ -35,7 +35,7 @@ public class SuffixTreeNode extends TrieNode {
 		setPacked(packed);
 	}
 
-	public SuffixTreeNode(DataStructure D, int key, String ch, boolean packed) {
+	public SuffixTreeNode(DataStructure D, int key, char ch, boolean packed) {
 		super(D, key, ch);
 		setPacked(packed);
 	}
@@ -45,13 +45,13 @@ public class SuffixTreeNode extends TrieNode {
 		setPacked(packed);
 	}
 
-	public SuffixTreeNode(DataStructure D, String ch, int x, int y,
+	public SuffixTreeNode(DataStructure D, char ch, int x, int y,
 			boolean packed) {
 		super(D, ch, x, y);
 		setPacked(packed);
 	}
 
-	public SuffixTreeNode(DataStructure D, String ch, boolean packed) {
+	public SuffixTreeNode(DataStructure D, char ch, boolean packed) {
 		super(D, ch);
 		setPacked(packed);
 	}
@@ -89,14 +89,14 @@ public class SuffixTreeNode extends TrieNode {
 		}
 	}
 
-	public SuffixTreeNode addRight(String ch, int x, int y, boolean packed) {
-		if (getLabel().compareTo(ch) > 0) {
+	public SuffixTreeNode addRight(char ch, int x, int y, boolean packed) {
+		if (getLabel() > ch) {
 			SuffixTreeNode u = new SuffixTreeNode(D, ch, packed);
 			u.setParent(getParent());
 			u.setRight(this);
 			getParent().setChild(u);
 			return u;
-		} else if (getLabel().compareTo(ch) == 0) {
+		} else if (getLabel() == ch) {
 			return this;
 		} else {
 			SuffixTreeNode v = (SuffixTreeNode) getRight();
@@ -106,24 +106,23 @@ public class SuffixTreeNode extends TrieNode {
 				setRight(u);
 				return u;
 			} else {
-				int c = v.getLabel().compareTo(ch);
-				if (c > 0) {
+				if (v.getLabel() > ch) {
 					SuffixTreeNode u = new SuffixTreeNode(D, ch, packed);
 					u.setRight(getRight());
 					u.setParent(getParent());
 					setRight(u);
 					return u;
-				} else if (c < 0) {
+				} else if (v.getLabel() < ch) {
 					return v.addRight(ch, x, y, packed);
 				} else {
-					// if (c == 0)
+					// if (v.getLabel() == ch)
 					return v;
 				}
 			}
 		}
 	}
 
-	public TrieNode addChild(String ch, int x, int y, boolean packed) {
+	public TrieNode addChild(char ch, int x, int y, boolean packed) {
 		SuffixTreeNode v = (SuffixTreeNode) getChild();
 		if (v == null) {
 			SuffixTreeNode u = new SuffixTreeNode(D, ch, x, y, packed);

@@ -1,14 +1,15 @@
 package algvis.intervaltree;
 
 import java.awt.Color;
+
 import algvis.bst.BST;
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
-import algvis.core.Fonts;
-import algvis.core.IntervalTrees.mimasuType;
 import algvis.core.Node;
 import algvis.core.NodeColor;
-import algvis.core.View;
+import algvis.gui.Fonts;
+import algvis.gui.view.View;
+import algvis.intervaltree.IntervalTrees.mimasuType;
 
 public class IntervalNode extends BSTNode{
 	//boolean leaf = true;
@@ -33,13 +34,13 @@ public class IntervalNode extends BSTNode{
 	}
 
 	public IntervalNode(IntervalNode v) {
-		this(v.D, v.key, v.x, v.y);
+		this(v.D, v.getKey(), v.x, v.y);
 	}
 	
 	@Override
 	public void drawKey(View v) {
 		v.setColor(getFgColor());
-		if (key != NOKEY) {
+		if (getKey() != NOKEY) {
 			v.drawString(toString(), x, y, Fonts.NORMAL);
 		}
 		
@@ -59,7 +60,7 @@ public class IntervalNode extends BSTNode{
 	public static final NodeColor EMPTY = new NodeColor(Color.BLACK, new Color(0xF0F0F0));
 	@Override
 	protected void drawBg(View v) {
-		if (key != NOKEY) {
+		if (getKey() != NOKEY) {
 			if (!isLeaf()){
 				this.setColor(TREE);
 			}
@@ -76,7 +77,7 @@ public class IntervalNode extends BSTNode{
 				v.drawCircle(x, y, Node.radius + 2);
 			}
 		} else {
-			if (key != NOKEY) {
+			if (getKey() != NOKEY) {
 				if (this.markedColor){
 					this.setColor(IN);
 				} else {
@@ -181,9 +182,9 @@ public class IntervalNode extends BSTNode{
 	
 	public boolean prec(IntervalNode v) {
 		if (((IntervalTree) D).minTree == mimasuType.MIN) {
-			return this.key < v.key;
+			return getKey() < v.getKey();
 		} else {
-			return this.key > v.key;
+			return getKey() > v.getKey();
 		}
 	}
 
@@ -192,9 +193,9 @@ public class IntervalNode extends BSTNode{
 	 */
 	public boolean preceq(IntervalNode v) {
 		if (((IntervalTree) D).minTree == mimasuType.MIN) {
-			return this.key <= v.key;
+			return getKey() <= v.getKey();
 		} else {
-			return this.key >= v.key;
+			return getKey() >= v.getKey();
 		}
 	}
 

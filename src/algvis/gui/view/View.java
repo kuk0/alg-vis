@@ -48,7 +48,7 @@ public class View implements MouseListener, MouseMotionListener,
 	private int mouseX, mouseY; // mouse position
 	public Alignment align = Alignment.CENTER;
 
-	private double x, y, f; // TODO not needed 120429
+	//private double x, y, f; // TODO not needed 120429
 	public final AffineTransform at;
 	private AffineTransform oldTransform;
 	private ClickListener D;

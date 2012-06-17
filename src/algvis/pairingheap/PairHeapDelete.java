@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kováè, Katarína Kotrlová, Pavol Lukèa, Viktor Tomkoviè, Tatiana Tóthová
+ * Copyright (c) 2012 Jakub Kovï¿½ï¿½, Katarï¿½na Kotrlovï¿½, Pavol Lukï¿½a, Viktor Tomkoviï¿½, Tatiana Tï¿½thovï¿½
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,9 +41,9 @@ public class PairHeapDelete extends PairHeapAlg{
 		}
 
 		if (!H.minHeap) {
-			addStep("maximum", H.root[i].key);
+			addStep("maximum", H.root[i].getKey());
 		} else {
-			addStep("minimum", H.root[i].key);
+			addStep("minimum", H.root[i].getKey());
 		}
 
 		H.v = new PairHeapNode(H.root[i]);

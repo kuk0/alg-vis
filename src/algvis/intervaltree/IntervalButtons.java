@@ -1,4 +1,4 @@
-package algvis.core;
+package algvis.intervaltree;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -8,9 +8,11 @@ import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 
 import algvis.bst.BSTNode;
-import algvis.core.IntervalTrees.mimasuType;
+import algvis.gui.Buttons;
+import algvis.gui.VisPanel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.IRadioButton;
+import algvis.intervaltree.IntervalTrees.mimasuType;
 
 public class IntervalButtons extends Buttons{
 

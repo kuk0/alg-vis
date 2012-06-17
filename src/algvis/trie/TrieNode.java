@@ -26,7 +26,7 @@ import algvis.gui.Fonts;
 import algvis.gui.view.View;
 
 public class TrieNode extends TreeNode {
-	public String ch; // this should be always only 1 char!
+	public char ch;
 	public int radius = 2;
 	public static final int ordinaryNode = -7;
 
@@ -34,32 +34,32 @@ public class TrieNode extends TreeNode {
 
 	public TrieNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
-		ch = "";
+		ch = '?';
 	}
 
-	public TrieNode(DataStructure D, int key, String ch) {
+	public TrieNode(DataStructure D, int key, char ch) {
 		super(D, key);
 		this.ch = ch;
 	}
 
 	public TrieNode(DataStructure D, int key) {
 		super(D, key);
-		ch = "";
+		ch = '?';
 	}
 
-	public TrieNode(DataStructure D, String ch, int x, int y) {
+	public TrieNode(DataStructure D, char ch, int x, int y) {
 		super(D, ordinaryNode, x, y);
 		this.ch = ch;
 	}
 
-	public TrieNode(DataStructure D, String ch) {
+	public TrieNode(DataStructure D, char ch) {
 		super(D, ordinaryNode);
 		this.ch = ch;
 	}
 
 	public TrieNode(DataStructure D) {
 		super(D, ordinaryNode);
-		ch = "";
+		ch = '?';
 	}
 
 	public TrieNode getParent() {
@@ -135,7 +135,7 @@ public class TrieNode extends TreeNode {
 		TrieNode u = (TrieNode) getParent();
 		if (u != null) {
 			int midx, midy, w, h;
-			if (ch.compareTo("$") == 0) {
+			if (ch == '$') {
 				midx = x - ((x - u.x) / 15);
 				midy = y - ((y - u.y) / 5 * 2) - 1;
 				w = 4;
@@ -150,7 +150,7 @@ public class TrieNode extends TreeNode {
 				// }
 
 				v.setColor(Color.BLACK);
-				v.drawString(ch, midx, midy-1, Fonts.TYPEWRITER);
+				v.drawString(""+ch, midx, midy-1, Fonts.TYPEWRITER);
 			} else {
 				midx = x - ((x - u.x) / 15);
 				midy = y - ((y - u.y) / 5 * 2) - 1;
@@ -163,7 +163,7 @@ public class TrieNode extends TreeNode {
 				v.drawRoundRectangle(midx, midy, w, h, 6, 10);
 
 				v.setColor(getFgColor());
-				v.drawString(ch, midx, midy-1, Fonts.TYPEWRITER);
+				v.drawString(""+ch, midx, midy-1, Fonts.TYPEWRITER);
 			}
 		}
 	}
@@ -187,15 +187,15 @@ public class TrieNode extends TreeNode {
 		setColor(NodeColor.NORMAL);
 	}
 
-	public String getLabel() {
+	public char getLabel() {
 		return ch;
 	}
 
-	public TrieNode getChildWithCH(String ch) {
+	public TrieNode getChildWithCH(char ch) {
 		TrieNode v = (TrieNode) this.getChild();
 		if (v != null) {
 			while (v != null) {
-				if (ch.compareTo(v.ch) == 0) {
+				if (ch == v.ch) {
 					return v;
 				}
 				v = (TrieNode) v.getRight();
@@ -216,14 +216,14 @@ public class TrieNode extends TreeNode {
 	 *            A character which will be inserted in lexicographical order
 	 * @return A node with proper label
 	 */
-	public TrieNode addRight(String ch, int x, int y) {
-		if (getLabel().compareTo(ch) > 0) {
+	public TrieNode addRight(char ch, int x, int y) {
+		if (getLabel() > ch) {
 			TrieNode u = new TrieNode(D, ch);
 			u.setParent(getParent());
 			u.setRight(this);
 			getParent().setChild(u);
 			return u;
-		} else if (getLabel().compareTo(ch) == 0) {
+		} else if (getLabel() == ch) {
 			return this;
 		} else {
 			TrieNode v = (TrieNode) getRight();
@@ -233,14 +233,13 @@ public class TrieNode extends TreeNode {
 				setRight(u);
 				return u;
 			} else {
-				int c = v.getLabel().compareTo(ch);
-				if (c > 0) {
+				if (v.getLabel() > ch) {
 					TrieNode u = new TrieNode(D, ch);
 					u.setRight(getRight());
 					u.setParent(getParent());
 					setRight(u);
 					return u;
-				} else if (c < 0) {
+				} else if (v.getLabel() < ch) {
 					return v.addRight(ch, x, y);
 				} else {
 					// if (c == 0)
@@ -256,7 +255,7 @@ public class TrieNode extends TreeNode {
 	 *            A character which will be appended to this node
 	 * @return A node appended
 	 */
-	public TrieNode addChild(String ch, int x, int y) {
+	public TrieNode addChild(char ch, int x, int y) {
 		TrieNode v = (TrieNode) getChild();
 		if (v == null) {
 			TrieNode u = new TrieNode(D, ch, x, y);
@@ -270,6 +269,6 @@ public class TrieNode extends TreeNode {
 
 	@Override
 	public String toString() {
-		return ch;
+		return ""+ch;
 	}
 }

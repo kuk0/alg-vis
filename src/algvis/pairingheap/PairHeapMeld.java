@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kováè, Katarína Kotrlová, Pavol Lukèa, Viktor Tomkoviè, Tatiana Tóthová
+ * Copyright (c) 2012 Jakub Kovï¿½ï¿½, Katarï¿½na Kotrlovï¿½, Pavol Lukï¿½a, Viktor Tomkoviï¿½, Tatiana Tï¿½thovï¿½
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,17 +58,17 @@ public class PairHeapMeld extends PairHeapAlg{
 		H.root[i].highlightTree();
 		H.root[0].mark();
 		H.root[i].mark();
-		if (H.root[i].key < H.root[0].key){
+		if (H.root[i].getKey() < H.root[0].getKey()){
 			if(H.minHeap){
-				addStep("pairlinkmin", H.root[i].key, H.root[0].key);
+				addStep("pairlinkmin", H.root[i].getKey(), H.root[0].getKey());
 			} else {
-				addStep("pairlinkmax", H.root[i].key, H.root[0].key);
+				addStep("pairlinkmax", H.root[i].getKey(), H.root[0].getKey());
 			}
 		} else {
 			if(H.minHeap){
-				addStep("pairlinkmin", H.root[0].key, H.root[i].key);
+				addStep("pairlinkmin", H.root[0].getKey(), H.root[i].getKey());
 			} else {
-				addStep("pairlinkmax", H.root[0].key, H.root[i].key);
+				addStep("pairlinkmax", H.root[0].getKey(), H.root[i].getKey());
 			}
 		}
 		mysuspend();

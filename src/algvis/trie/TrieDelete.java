@@ -60,7 +60,7 @@ public class TrieDelete extends Algorithm {
 			}
 			vd = (TrieNode) v.getChild();
 
-			String ch = s.substring(0, 1);
+			char ch = s.charAt(0);
 			T.hw.setAndGoNextTo(s, v);
 			TrieNode ww = v.getChildWithCH(ch);
 			if (ww == null) {
@@ -68,14 +68,14 @@ public class TrieDelete extends Algorithm {
 					vd.setColor(NodeColor.NORMAL);
 					vd = (TrieNode) vd.getRight();
 				}
-				addStep("triefindending1", ch);
+				addStep("triefindending1", ""+ch);
 				mysuspend();
 				addStep("triedeletefindunsu");
 				mysuspend();
 				beforeReturn();
 				return;
 			}
-			addStep("triefindmovedown", ch);
+			addStep("triefindmovedown", ""+ch);
 			mysuspend();
 			while (vd != null) {
 				vd.setColor(NodeColor.NORMAL);
@@ -87,7 +87,7 @@ public class TrieDelete extends Algorithm {
 			s = s.substring(1);
 		}
 		T.hw.setAndGoNextTo(s, v);
-		TrieNode w = (TrieNode) v.getChildWithCH("$");
+		TrieNode w = (TrieNode) v.getChildWithCH('$');
 		if (w == null) {
 			addStep("triefindending2");
 			mysuspend();
