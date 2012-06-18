@@ -21,11 +21,11 @@ import java.util.Random;
 
 import org.jdom.Element;
 
-import algvis.core.Alignment;
-import algvis.core.ClickListener;
 import algvis.core.DataStructure;
-import algvis.core.View;
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
+import algvis.gui.view.Alignment;
+import algvis.gui.view.ClickListener;
+import algvis.gui.view.View;
 import algvis.scenario.Command;
 import algvis.scenario.Scenario;
 import algvis.unionfind.UnionFindFind.FindHeuristic;
@@ -115,25 +115,31 @@ public class UnionFind extends DataStructure implements ClickListener {
 	}
 
 	@Override
-	public void random(int n) {
-		Random g = new Random(System.currentTimeMillis());
-		boolean p = M.pause;
-		M.pause = false;
-		{
-			int i = 0;
-			scenario.enableAdding(false);
-			M.C.enableUpdating(false);
-			for (; i < n - Scenario.maxAlgorithms; ++i) {
-				union(at(g.nextInt(count)), at(g.nextInt(count)));
+	public void random(final int n) {
+		scenario.traverser.startNew(new Runnable() {
+			@Override
+			public void run() {
+				Random g = new Random(System.currentTimeMillis());
+				boolean p = M.pause;
+				M.pause = false;
+				{
+					int i = 0;
+					scenario.enableAdding(false);
+					M.C.enableUpdating(false);
+					for (; i < n - Scenario.maxAlgorithms; ++i) {
+						union(at(g.nextInt(count)), at(g.nextInt(count)));
+					}
+					scenario.enableAdding(true);
+					for (; i < n; ++i) {
+						union(at(g.nextInt(count)), at(g.nextInt(count)));
+					}
+					M.C.enableUpdating(true);
+					M.C.update();
+					M.B.update();
+				}
+				M.pause = p;				
 			}
-			scenario.enableAdding(true);
-			for (; i < n; ++i) {
-				union(at(g.nextInt(count)), at(g.nextInt(count)));
-			}
-			M.C.enableUpdating(true);
-			M.C.update();
-		}
-		M.pause = p;
+		}, true);
 	}
 
 	@Override
@@ -268,12 +274,12 @@ public class UnionFind extends DataStructure implements ClickListener {
 		public Element getXML() {
 			Element e = new Element("setV");
 			if (newV != null) {
-				e.setAttribute("newVKey", Integer.toString(newV.key));
+				e.setAttribute("newVKey", Integer.toString(newV.getKey()));
 			} else {
 				e.setAttribute("newV", "null");
 			}
 			if (oldV != null) {
-				e.setAttribute("oldVKey", Integer.toString(oldV.key));
+				e.setAttribute("oldVKey", Integer.toString(oldV.getKey()));
 			} else {
 				e.setAttribute("oldV", "null");
 			}
@@ -291,7 +297,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 		@Override
 		public Element getXML() {
 			Element e = new Element("addNewNode");
-			e.setAttribute("key", Integer.toString(n.key));
+			e.setAttribute("key", Integer.toString(n.getKey()));
 			return e;
 		}
 
@@ -318,7 +324,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 		@Override
 		public Element getXML() {
 			Element e = new Element("RemoveFromSets");
-			e.setAttribute("key", Integer.toString(n.key));
+			e.setAttribute("key", Integer.toString(n.getKey()));
 			return e;
 		}
 

@@ -17,10 +17,10 @@
 package algvis.trie;
 
 import algvis.core.DataStructure;
-import algvis.core.Fonts;
-import algvis.core.View;
-import algvis.core.VisPanel;
 import algvis.core.WordGenerator;
+import algvis.gui.Fonts;
+import algvis.gui.VisPanel;
+import algvis.gui.view.View;
 
 public class Trie extends DataStructure {
 	public static String adtName = "stringology";
@@ -88,7 +88,7 @@ public class Trie extends DataStructure {
 		v = getV();
 		if (v != null) {
 			v.move();
-			v.drawTrieCH(V);
+			v.drawLabel(V);
 		}
 		if (hw != null) {
 			hw.move();

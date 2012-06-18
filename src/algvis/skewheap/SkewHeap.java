@@ -1,13 +1,29 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kov��, Katar�na Kotrlov�, Pavol Luk�a, Viktor Tomkovi�, Tatiana T�thov�
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.skewheap;
 
-import algvis.core.ClickListener;
 import algvis.core.MeldablePQ;
-import algvis.core.MeldablePQButtonsNoDecr;
 import algvis.core.Node;
 import algvis.core.Pair;
 import algvis.core.StringUtils;
-import algvis.core.View;
-import algvis.core.VisPanel;
+import algvis.gui.MeldablePQButtonsNoDecr;
+import algvis.gui.VisPanel;
+import algvis.gui.view.ClickListener;
+import algvis.gui.view.View;
 
 public class SkewHeap extends MeldablePQ implements ClickListener{
 	public static String dsName = "skewheap";
@@ -196,10 +212,17 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 			if (root[i] != null) {
 				root[i].reposition();
 				root[i].reboxTree();
-				sumx += root[i].leftw;
+				//sumx += root[i].leftw;
 				root[i].repos(sumx, root[i].toy);
-				sumx += root[i].rightw;
+				sumx += root[i].rightw + 20;
 			}
+			
+			if (i+1 <= numHeaps){
+				if (root[i+1] != null) {
+					sumx += root[i+1].leftw;
+				}
+			}
+			
 			if (i == active) {
 				if (root[0] != null) {
 					root[0].reposition();

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.suffixtree;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -22,24 +22,23 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
+import algvis.gui.Buttons;
+import algvis.gui.VisPanel;
 import algvis.internationalization.IButton;
-import algvis.scenario.Scenario;
+import algvis.internationalization.ICheckBox;
 
-/**
- * The Class DictButtons. All dictionary data structures need buttons "Insert",
- * "Find", and "Delete".
- */
-public class DictButtons extends Buttons {
-	private static final long serialVersionUID = 8331529914377645715L;
-	IButton insertB, findB, deleteB;
+public class SuffixTreeButtons extends Buttons {
+	private static final long serialVersionUID = -368670840648549217L;
+	IButton insertB, findB;
+	ICheckBox implicitB;
 
-	public DictButtons(VisPanel M) {
+	public SuffixTreeButtons(VisPanel M) {
 		super(M);
 	}
 
 	@Override
 	public void actionButtons(JPanel P) {
-		insertB = new IButton(M.S.L, "button-insert");
+		insertB = new IButton(M.S.L, "button-create-st");
 		insertB.setMnemonic(KeyEvent.VK_I);
 		insertB.addActionListener(this);
 
@@ -47,73 +46,57 @@ public class DictButtons extends Buttons {
 		findB.setMnemonic(KeyEvent.VK_F);
 		findB.addActionListener(this);
 
-		deleteB = new IButton(M.S.L, "button-delete");
-		deleteB.setMnemonic(KeyEvent.VK_D);
-		deleteB.addActionListener(this);
-
 		P.add(insertB);
 		P.add(findB);
-		P.add(deleteB);
+	}
+
+	@Override
+	public void otherButtons(JPanel P) {
+		implicitB = new ICheckBox(M.S.L, "implicit", false);
+		implicitB.setMnemonic(KeyEvent.VK_I);
+		implicitB.addActionListener(this);
+		P.add(implicitB);
+	}
+
+	@Override
+	public void initRandom() {
+		/*random = new IButton(M.S.L, "button-random");
+		random.setMnemonic(KeyEvent.VK_R);
+		random.addActionListener(this);*/
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
 		if (evt.getSource() == insertB) {
-			final Vector<Integer> args = I.getNonEmptyVI();
+			final Vector<String> args = I.getVABS();
 			Thread t = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					boolean p = M.pause;
-					int n = args.size();
-					int i = 0;
-					D.scenario.enableAdding(false);
-					M.C.enableUpdating(p);
-					for (; i < n - Scenario.maxAlgorithms; ++i) {
-						if (M.pause != p) {
-							M.C.enableUpdating(p = M.pause);
-						}
-						((Dictionary) D).insert(args.elementAt(i));
+					for (String s : args) {
+						((SuffixTree) D).insert(s);
 					}
-					D.scenario.enableAdding(true);
-					for (; i < n; ++i) {
-						if (M.pause != p) {
-							M.C.enableUpdating(p = M.pause);
-						}
-						((Dictionary) D).insert(args.elementAt(i));
-					}
-					M.C.enableUpdating(true);
-					M.C.update();
 				}
 			});
 			t.start();
 		} else if (evt.getSource() == findB) {
-			final Vector<Integer> args = I.getVI();
+			final Vector<String> args = I.getVS();
 			if (args.size() > 0) {
 				Thread t = new Thread(new Runnable() {
+
 					@Override
 					public void run() {
-						for (int x : args) {
-							((Dictionary) D).find(x);
+						for (String s : args) {
+							((SuffixTree) D).find(s);
 						}
 					}
 				});
 				t.start();
 			}
-		} else if (evt.getSource() == deleteB) {
-			final Vector<Integer> args = I.getVI();
-			if (args.size() > 0) {
-				Thread t = new Thread(new Runnable() {
-					@Override
-					public void run() {
-						for (int x : args) {
-							((Dictionary) D).delete(x);
-						}
-					}
-				});
-				t.start();
-			}
+		} else if (evt.getSource() == implicitB) {
+			SuffixTreeNode.implicitNodes = implicitB.isSelected();
 		}
+
 	}
 
 	@Override
@@ -121,7 +104,6 @@ public class DictButtons extends Buttons {
 		super.enableAll();
 		insertB.setEnabled(true);
 		findB.setEnabled(true);
-		deleteB.setEnabled(true);
 	}
 
 	@Override
@@ -129,6 +111,5 @@ public class DictButtons extends Buttons {
 		super.disableAll();
 		insertB.setEnabled(false);
 		findB.setEnabled(false);
-		deleteB.setEnabled(false);
 	}
 }

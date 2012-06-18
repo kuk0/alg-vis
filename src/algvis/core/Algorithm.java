@@ -43,7 +43,8 @@ abstract public class Algorithm extends Thread {
 	 * Mysuspend.
 	 */
 	public void mysuspend() {
-		if (D.M.pause) {
+		if (D.M.pause && !D.scenario.isEnabled()) {
+			D.M.C.update();
 			suspended = true;
 			synchronized (this) {
 				try {

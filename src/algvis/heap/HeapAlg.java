@@ -36,19 +36,19 @@ public class HeapAlg extends Algorithm {
 		}
 		HeapNode w = v.getParent();
 		while (w != null && v.prec(w)) {
-			H.v = new HeapNode(v);
-			H.v2 = new HeapNode(w);
-			v.key = Node.NOKEY;
-			w.key = Node.NOKEY;
-			H.v.goTo(w);
-			H.v2.goTo(v);
+			H.setV(new HeapNode(v));
+			H.setV2(new HeapNode(w));
+			v.setKey(Node.NOKEY);
+			w.setKey(Node.NOKEY);
+			H.getV().goTo(w);
+			H.getV2().goTo(v);
 			mysuspend();
-			v.key = H.v2.key;
-			w.key = H.v.key;
-			v.setColor(H.v2.getColor());
-			w.setColor(H.v.getColor());
-			H.v = null;
-			H.v2 = null;
+			v.setKey(H.getV2().getKey());
+			w.setKey(H.getV().getKey());
+			v.setColor(H.getV2().getColor());
+			w.setColor(H.getV().getColor());
+			H.setV(null);
+			H.setV2(null);
 			v = w;
 			w = w.getParent();
 		}

@@ -18,8 +18,8 @@ package algvis.avltree;
 
 import algvis.bst.BST;
 import algvis.bst.BSTFind;
-import algvis.core.Layout;
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
+import algvis.gui.view.Layout;
 
 public class AVL extends BST {
 	public static String dsName = "avltree";

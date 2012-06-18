@@ -17,9 +17,9 @@
 package algvis.skiplist;
 
 import algvis.core.DataStructure;
-import algvis.core.DictButtons;
 import algvis.core.Settings;
-import algvis.core.VisPanel;
+import algvis.gui.DictButtons;
+import algvis.gui.VisPanel;
 
 public class SkipListPanel extends VisPanel {
 	private static final long serialVersionUID = -283805545295164774L;

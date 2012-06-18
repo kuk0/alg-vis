@@ -1,10 +1,26 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kov��, Katar�na Kotrlov�, Pavol Luk�a, Viktor Tomkovi�, Tatiana T�thov�
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.daryheap;
 
 import java.awt.Color;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.PriorityQueue;
-import algvis.core.View;
+import algvis.gui.view.View;
 import algvis.heap.HeapNode;
 
 public class DaryHeapNode extends HeapNode{
@@ -31,7 +47,7 @@ public class DaryHeapNode extends HeapNode{
 	}
 
 	public DaryHeapNode(DaryHeapNode v) {
-		this(v.D, v.key, v.x, v.y);
+		this(v.D, v.getKey(), v.x, v.y);
 	}
 
 	public boolean isRoot() {
@@ -94,7 +110,7 @@ public class DaryHeapNode extends HeapNode{
 	
 	@Override
 	public void draw(View v) {
-		if (state == Node.INVISIBLE || key == NULL) {
+		if (state == Node.INVISIBLE || getKey() == NULL) {
 			return;
 		}
 		
@@ -177,7 +193,6 @@ public class DaryHeapNode extends HeapNode{
 			leftw = DaryHeap.minsepx / 2;
 			rightw = DaryHeap.minsepx / 2;
 			width = leftw + rightw;
-			//System.out.print("moje suradnice su " + tox + " a " + toy + ", moje leftw a rightw je " + leftw + " " + rightw + " a som " + nson + ". syn \n" );			
 			return;
 		}
 
@@ -191,7 +206,7 @@ public class DaryHeapNode extends HeapNode{
 			}else{
 				rightw = DaryHeap.minsepx/2;
 			}
-			
+
 			width = leftw + rightw;
 			return;
 		}
@@ -199,25 +214,19 @@ public class DaryHeapNode extends HeapNode{
 		leftw = 0;
 		rightw = 0;
 		for (int i = 1; i <= ((DaryHeap)D).getOrder()/2; i++){
-			leftw += c[i - 1].width;  //<<--- mozno tutok mozu byt problemy
-			//System.out.print("pricitavam k " + nson + ". leftw " + c[i-1].width + " za " + i + ". syna \n" );
-			
+			leftw += c[i - 1].width;
 		}
 		
 		for (int i = (((DaryHeap)D).getOrder()/2) +1; i<=((DaryHeap)D).getOrder(); i++){
-			rightw += c[i - 1].width;  //<<--- mozno tutok mozu byt problemy
-			//System.out.print("pricitavam k " + nson + ". rightw " + c[i-1].width + "\n" );
+			rightw += c[i - 1].width;
 		}
 		
 		if (((DaryHeap)D).getOrder() % 2 == 1){
 			rightw -= c[(((DaryHeap)D).getOrder() / 2)].leftw;
 			leftw += c[(((DaryHeap)D).getOrder() / 2)].leftw;
 		}
-		
-		//leftw += DaryHeap.minsepx / 2;
-		//rightw += DaryHeap.minsepx / 2;
+
 		width = leftw + rightw;
-		//System.out.print("moje suradnice su " + tox + " a " + toy + ", moje leftw a rightw je " + leftw + " " + rightw + " a som " + nson + ". syn \n" );
 	}
 	
 	private void repos() {
@@ -238,7 +247,7 @@ public class DaryHeapNode extends HeapNode{
 
 		for (int i = 0; i < numChildren; i++){
 			if (i == 0){
-				c[0].goTo(this.tox - (this.leftw) + c[0].leftw,// - DaryHeap.minsepx/2,// + c[0].leftw,
+				c[0].goTo(this.tox - (this.leftw) + c[0].leftw,
 						this.toy + DataStructure.minsepy);
 			}else{
 				c[i].goTo( c[i-1].tox + c[i-1].rightw + c[i].leftw,
@@ -246,7 +255,6 @@ public class DaryHeapNode extends HeapNode{
 			}
 			c[i].repos();
 		}
-		//System.out.print("moje suradnice su " + tox + " a " + toy + ", moje leftw a rightw je " + leftw + " " + rightw + " a som " + nson + ". syn \n" );		
 	}
 
 	public void _reposition() {
@@ -254,39 +262,6 @@ public class DaryHeapNode extends HeapNode{
 		repos();
 	}
 
-	/*
-	public int _goToX(DaryHeapNode v) {
-		int x = key, p = v.numChildren;
-		for (int i = 0; i < p; ++i) {
-			if (x <= v.c[i].key) {
-				p = i;
-			}
-		}
-		return (v.pos(p - 1) + v.pos(p)) / 2;
-	}
-
-	public void goTo(DaryHeapNode v) {
-		goTo(_goToX(v), v.toy);
-	}
-
-	public void goAbove(DaryHeapNode v) {
-		goTo(_goToX(v), v.toy - 2 * Node.radius + 2);
-	}
-
-	public void goBelow(DaryHeapNode v) {
-		goTo(_goToX(v), v.toy + 2 * Node.radius - 2);
-	}
-	*/
-
-	/*
-	 * public void goToRoot() { if (((DaryHeapTree)D).root == null) { goTo (D.rootx,
-	 * D.rooty); } else { goTo(_goToX(((DaryHeapTree)D).root), D.rooty); } }
-	 * 
-	 * public void goAboveRoot() { if (((DaryHeapTree)D).root == null) { goTo (D.rootx,
-	 * D.rooty - 2*D.radius); } else { goTo(_goToX(((DaryHeapTree)D).root),
-	 * D.rooty-2*D.radius); } }
-	 */
-	
 	public DaryHeapNode getParent() {
 		return parent;
 	}
@@ -297,9 +272,9 @@ public class DaryHeapNode extends HeapNode{
 	
 	public boolean prec(DaryHeapNode v) {
 		if (((PriorityQueue) D).minHeap) {
-			return this.key < v.key;
+			return this.getKey() < v.getKey();
 		} else {
-			return this.key > v.key;
+			return this.getKey() > v.getKey();
 		}
 	}
 
@@ -308,9 +283,9 @@ public class DaryHeapNode extends HeapNode{
 	 */
 	public boolean preceq(DaryHeapNode v) {
 		if (((PriorityQueue) D).minHeap) {
-			return this.key <= v.key;
+			return this.getKey() <= v.getKey();
 		} else {
-			return this.key >= v.key;
+			return this.getKey() >= v.getKey();
 		}
 	}
 	
@@ -369,7 +344,7 @@ public class DaryHeapNode extends HeapNode{
 			v = v.getParent().c[v.nson - 2];
 		}
 
-		while (!v.isLeaf()){
+		while ((v.c[((DaryHeap) D).getOrder() - 1] != null)){ //!v.isLeaf()
 			v = v.c[((DaryHeap) D).getOrder() - 1];
 		}
 

@@ -36,7 +36,7 @@ public class SkipInsert extends SkipAlg {
 		addStep("skipinsertstart");
 		SkipNode w = find();
 
-		if (w.getRight().key == v.key) {
+		if (w.getRight().getKey() == v.getKey()) {
 			addStep("alreadythere");
 			v.goDown();
 			mysuspend();
@@ -62,7 +62,7 @@ public class SkipInsert extends SkipAlg {
 				}
 				L.reposition();
 				oldv = v;
-				v = new SkipNode(L, v.key, v.tox, -10);
+				v = new SkipNode(L, v.getKey(), v.tox, -10);
 			} else {
 				v.linkdown(oldv);
 				SkipNode oldr = L.getRoot(), olds = L.sent;
@@ -72,7 +72,7 @@ public class SkipInsert extends SkipAlg {
 				L.sent.linkdown(olds);
 				L.reposition();
 				oldv = v;
-				v = new SkipNode(L, v.key, v.tox, -10);
+				v = new SkipNode(L, v.getKey(), v.tox, -10);
 				++i;
 				++L.height;
 			}

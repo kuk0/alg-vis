@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -37,6 +37,7 @@ import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.StyleSheet;
 
+import algvis.core.StringUtils;
 import algvis.internationalization.LanguageListener;
 import algvis.internationalization.Languages;
 import algvis.scenario.Command;
@@ -112,7 +113,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		StringBuffer text = new StringBuffer("");
 		for (int i = 0; i < s.size(); ++i) {
 			if (i == position - 1) {
-				text.append("<B>" + str(i) + "</B");
+				text.append("<B>" + str(i) + "</B>");
 			} else {
 				text.append(str(i));
 			}

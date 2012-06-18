@@ -42,7 +42,7 @@ public class SplayDelete extends SplayAlg {
 
 		w.setColor(NodeColor.NORMAL);
 
-		if (w.key != s.key) {
+		if (w.getKey() != s.getKey()) {
 			addStep("notfound");
 			s.setColor(NodeColor.NOTFOUND);
 			s.goDown();

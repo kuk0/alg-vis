@@ -22,8 +22,8 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
-import algvis.core.Buttons;
-import algvis.core.VisPanel;
+import algvis.gui.Buttons;
+import algvis.gui.VisPanel;
 import algvis.internationalization.IButton;
 
 public class TrieButtons extends Buttons {

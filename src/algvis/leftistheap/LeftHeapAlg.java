@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kov��, Katar�na Kotrlov�, Pavol Luk�a, Viktor Tomkovi�, Tatiana T�thov�
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.leftistheap;
 
 import algvis.core.Algorithm;
@@ -23,16 +39,16 @@ public class LeftHeapAlg extends Algorithm {
 			w.mark();
 			if (w.prec(H.root[0])) {
 				if (!H.minHeap) {
-					addStep("leftmeldrightg", w.key, H.root[0].key);
+					addStep("leftmeldrightg", w.getKey(), H.root[0].getKey());
 				} else {
-					addStep("leftmeldrightl", w.key, H.root[0].key);
+					addStep("leftmeldrightl", w.getKey(), H.root[0].getKey());
 				}
 				mysuspend();
 			} else {
 				if (!H.minHeap) {
-					addStep("leftmeldswapl", w.key, H.root[0].key);
+					addStep("leftmeldswapl", w.getKey(), H.root[0].getKey());
 				} else {
-					addStep("leftmeldswapg", w.key, H.root[0].key);
+					addStep("leftmeldswapg", w.getKey(), H.root[0].getKey());
 				}
 				w.setDoubleArrow(H.root[0]);
 				mysuspend();
@@ -61,7 +77,7 @@ public class LeftHeapAlg extends Algorithm {
 			w.unmark();
 
 			if (w.getRight() == null) {
-				addStep("leftmeldnoson", H.root[0].key, w.key);
+				addStep("leftmeldnoson", H.root[0].getKey(), w.getKey());
 				mysuspend();
 				w.linkRight(H.root[0]);
 				H.root[0] = null;
@@ -106,10 +122,10 @@ public class LeftHeapAlg extends Algorithm {
 				tmp.getRight().mark();
 				r = tmp.getRight().rank;
 			}
+			mysuspend();
 			if (l < r) {
 				tmp.swapChildren();
 			}
-			mysuspend();
 
 			H.reposition();
 
@@ -143,13 +159,13 @@ public class LeftHeapAlg extends Algorithm {
 			H.v.mark();			
 			H.v2 = new LeftHeapNode(w);
 			H.v2.rank = -1;
-			v.key = Node.NOKEY;
-			w.key = Node.NOKEY;
+			v.setKey(Node.NOKEY);
+			w.setKey(Node.NOKEY);
 			H.v.goTo(w);
 			H.v2.goTo(v);
 			mysuspend();
-			v.key = H.v2.key;
-			w.key = H.v.key;
+			v.setKey(H.v2.getKey());
+			w.setKey(H.v.getKey());
 			v.setColor(H.v2.getColor());
 			w.setColor(H.v.getColor());
 			H.v.unmark();			

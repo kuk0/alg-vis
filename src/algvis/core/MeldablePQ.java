@@ -16,6 +16,9 @@
  ******************************************************************************/
 package algvis.core;
 
+import algvis.gui.VisPanel;
+import algvis.gui.view.Highlighting;
+
 abstract public class MeldablePQ extends DataStructure implements Highlighting{
 	public static String adtName = "meldable-pq";
 

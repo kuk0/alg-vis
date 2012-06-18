@@ -72,7 +72,7 @@ public class GBNode extends BSTNode {
 		@Override
 		public Element getXML() {
 			Element e = new Element("setDeleted");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			e.setAttribute("wasDeleted", Boolean.toString(oldDeleted));
 			e.setAttribute("isDeleted", Boolean.toString(newDeleted));
 			return e;

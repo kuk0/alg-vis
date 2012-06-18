@@ -25,7 +25,7 @@ import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
 
 /**
  * Scenario (or history list) stores list of Commands, which are executed. It
@@ -65,11 +65,15 @@ public class Scenario implements XMLable {
 	}
 
 	public void newAlgorithm() {
-		scenario.add(new MacroCommand<MacroCommand<Command>>("algorithm"));
+		if (addingEnabled) {
+			scenario.add(new MacroCommand<MacroCommand<Command>>("algorithm"));
+		}
 	}
 
 	public void newStep() {
-		scenario.getCurrent().add(new MacroCommand<Command>("step"));
+		if (addingEnabled) {
+			scenario.getCurrent().add(new MacroCommand<Command>("step"));
+		}
 	}
 
 	/**
@@ -81,7 +85,7 @@ public class Scenario implements XMLable {
 			scenario.getCurrent().getCurrent().add(c);
 		}
 	}
-	
+
 	public void clear() {
 		scenario.clear();
 	}
@@ -114,6 +118,7 @@ public class Scenario implements XMLable {
 					scenario.execute();
 				}
 				V.B.update();
+				V.C.update();
 				enableAdding(true);
 			}
 		}, visible);
@@ -130,6 +135,7 @@ public class Scenario implements XMLable {
 					scenario.unexecute();
 				}
 				V.B.update();
+				V.C.update();
 				enableAdding(true);
 			}
 		}, visible);
@@ -155,7 +161,11 @@ public class Scenario implements XMLable {
 	}
 
 	public int getAlgPos() {
-		return scenario.getCurrent().getPosition();
+		if (scenario.isEmpty()) {
+			return -1;
+		} else {
+			return scenario.getCurrent().getPosition();
+		}
 	}
 
 	@Override
@@ -190,12 +200,14 @@ public class Scenario implements XMLable {
 				e.printStackTrace();
 				return;
 			}
-			threadInstance.start();
 			if (!visible) {
-				threadInstance.interrupt();
 				interrupted = true;
 			} else {
 				interrupted = false;
+			}
+			threadInstance.start();
+			if (!visible) {
+				threadInstance.interrupt();
 			}
 		}
 
@@ -217,7 +229,6 @@ public class Scenario implements XMLable {
 				}
 			}
 			threadInstance = t;
-			interrupted = false;
 		}
 
 		public boolean isInterrupted() {
@@ -239,7 +250,7 @@ public class Scenario implements XMLable {
 		public ScenarioCommand(String name) {
 			super(name);
 		}
-		
+
 		public void clear() {
 			commands.clear();
 			iterator = commands.listIterator();

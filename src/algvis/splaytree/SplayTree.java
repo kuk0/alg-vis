@@ -16,20 +16,13 @@
  ******************************************************************************/
 package algvis.splaytree;
 
-import org.jdom.Element;
-
 import algvis.bst.BST;
-import algvis.core.Layout;
-import algvis.core.View;
-import algvis.core.VisPanel;
-import algvis.scenario.Command;
+import algvis.gui.VisPanel;
+import algvis.gui.view.Layout;
+import algvis.gui.view.View;
 
 public class SplayTree extends BST {
 	public static String dsName = "splaytree";
-	private SplayNode root2 = null;
-	private SplayNode vv = null;
-	private SplayNode w1 = null;
-	private SplayNode w2 = null;
 
 	@Override
 	public String getName() {
@@ -38,61 +31,39 @@ public class SplayTree extends BST {
 
 	public SplayTree(VisPanel M) {
 		super(M);
+		addNodes(4); // root2 (2), vv (3), w1 (4), w2 (5)
 	}
 
 	public SplayNode getRoot2() {
-		return root2;
+		return (SplayNode) getNode(2);
 	}
 
 	public void setRoot2(SplayNode root2) {
-		if (this.root2 != root2) {
-			if (scenario.isAddingEnabled()) {
-				scenario.add(new SetRoot2Command(root2));
-			}
-			this.root2 = root2;
-		}
+		setNode(2, root2, false);
 	}
 
 	public SplayNode getVV() {
-		return vv;
+		return (SplayNode) getNode(3);
 	}
 
 	public void setVV(SplayNode vv) {
-		if (this.vv != vv) {
-			if (scenario.isAddingEnabled()) {
-				scenario.add(new SetVVCommand(vv));
-			}
-			this.vv = vv;
-		}
-		if (vv != null && scenario.isAddingEnabled()) {
-			scenario.add(vv.new WaitBackwardsCommand());
-		}
+		setNode(3, vv, true);
 	}
 
 	public SplayNode getW1() {
-		return w1;
+		return (SplayNode) getNode(4);
 	}
 
 	public void setW1(SplayNode w1) {
-		if (this.w1 != w1) {
-			if (scenario.isAddingEnabled()) {
-				scenario.add(new SetWCommand(w1, 1));
-			}
-			this.w1 = w1;
-		}
+		setNode(4, w1, true);
 	}
 
 	public SplayNode getW2() {
-		return w2;
+		return (SplayNode) getNode(5);
 	}
 
 	public void setW2(SplayNode w2) {
-		if (this.w2 != w2) {
-			if (scenario.isAddingEnabled()) {
-				scenario.add(new SetWCommand(w2, 2));
-			}
-			this.w2 = w2;
-		}
+		setNode(5, w2, false);
 	}
 
 	@Override
@@ -171,129 +142,4 @@ public class SplayTree extends BST {
 		return Layout.COMPACT;
 	}
 
-	private class SetRoot2Command implements Command {
-		private final SplayNode oldRoot2, newRoot2;
-
-		public SetRoot2Command(SplayNode newRoot2) {
-			oldRoot2 = getRoot2();
-			this.newRoot2 = newRoot2;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setRoot2");
-			if (newRoot2 != null) {
-				e.setAttribute("newRoot2Key", Integer.toString(newRoot2.key));
-			} else {
-				e.setAttribute("newRoot2", "null");
-			}
-			if (oldRoot2 != null) {
-				e.setAttribute("oldRoot2Key", Integer.toString(oldRoot2.key));
-			} else {
-				e.setAttribute("oldRoot2", "null");
-			}
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setRoot2(newRoot2);
-		}
-
-		@Override
-		public void unexecute() {
-			setRoot2(oldRoot2);
-		}
-	}
-
-	private class SetVVCommand implements Command {
-		private final SplayNode newVV, oldVV;
-
-		public SetVVCommand(SplayNode newVV) {
-			oldVV = getVV();
-			this.newVV = newVV;
-		}
-
-		@Override
-		public void execute() {
-			setVV(newVV);
-		}
-
-		@Override
-		public void unexecute() {
-			setVV(oldVV);
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setVV");
-			if (newVV != null) {
-				e.setAttribute("newVVKey", Integer.toString(newVV.key));
-			} else {
-				e.setAttribute("newVV", "null");
-			}
-			if (oldVV != null) {
-				e.setAttribute("oldVVKey", Integer.toString(oldVV.key));
-			} else {
-				e.setAttribute("oldVV", "null");
-			}
-			return e;
-		}
-	}
-
-	private class SetWCommand implements Command {
-		private final SplayNode oldW, newW;
-		private final int order;
-
-		public SetWCommand(SplayNode newW, int order) {
-			this.order = order;
-			switch (order) {
-			case 1:
-				oldW = getW1();
-				break;
-			case 2:
-				oldW = getW2();
-				break;
-			default:
-				oldW = null;
-				System.err
-						.println("SetWCommand bad \"order\" argument (must be 1 or 2)");
-			}
-			this.newW = newW;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setW" + order);
-			if (newW != null) {
-				e.setAttribute("newWKey", Integer.toString(newW.key));
-			} else {
-				e.setAttribute("newW", "null");
-			}
-			if (oldW != null) {
-				e.setAttribute("oldWKey", Integer.toString(oldW.key));
-			} else {
-				e.setAttribute("oldW", "null");
-			}
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			if (order == 1) {
-				setW1(newW);
-			} else {
-				setW2(newW);
-			}
-		}
-
-		@Override
-		public void unexecute() {
-			if (order == 1) {
-				setW1(oldW);
-			} else {
-				setW2(oldW);
-			}
-		}
-	}
 }

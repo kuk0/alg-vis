@@ -18,15 +18,15 @@ package algvis.binomialheap;
 
 import java.awt.Color;
 
-import algvis.core.Alignment;
-import algvis.core.ClickListener;
-import algvis.core.Fonts;
 import algvis.core.MeldablePQ;
-import algvis.core.MeldablePQButtons;
 import algvis.core.Node;
 import algvis.core.Pair;
-import algvis.core.View;
-import algvis.core.VisPanel;
+import algvis.gui.Fonts;
+import algvis.gui.MeldablePQButtons;
+import algvis.gui.VisPanel;
+import algvis.gui.view.Alignment;
+import algvis.gui.view.ClickListener;
+import algvis.gui.view.View;
 
 public class BinomialHeap extends MeldablePQ implements ClickListener {
 	public static String dsName = "binheap";

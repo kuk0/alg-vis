@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -30,6 +30,7 @@ import javax.swing.JPanel;
 
 import org.jdom.Element;
 
+import algvis.core.DataStructure;
 import algvis.internationalization.ChLabel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ICheckBox;
@@ -104,7 +105,8 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		second.setLayout(new FlowLayout());
 		second.add(pause);
 		second.add(clear);
-		second.add(random);
+		if (random != null)
+			second.add(random);
 		// second.add(save);
 		// second.add(zoomLabel);
 		// second.add(zoomIn);
@@ -203,9 +205,14 @@ abstract public class Buttons extends JPanel implements ActionListener {
 			}
 			// repaint();
 		} else if (evt.getSource() == clear) {
-			D.clear();
-			update();
-			// repaint();
+			D.scenario.traverser.startNew(new Runnable() {
+				@Override
+				public void run() {
+					D.clear();
+					update();
+					// repaint();
+				}
+			}, false);
 		} else if (evt.getSource() == random) {
 			D.random(I.getInt(10));
 		} else if (evt.getSource() == pause) {
@@ -223,12 +230,12 @@ abstract public class Buttons extends JPanel implements ActionListener {
 
 	public void update() {
 		if (D.scenario.isAlgorithmRunning()
-				|| (D.A != null && D.A.isSuspended())) {
+				|| (D.getA() != null && D.getA().isSuspended())) {
 			disableAll();
 		} else {
 			enableAll();
 		}
-		if (D.scenario.hasNext() || (D.A != null && D.A.isSuspended())) {
+		if (D.scenario.hasNext() || (D.getA() != null && D.getA().isSuspended())) {
 			enableNext();
 		} else {
 			disableNext();
@@ -264,7 +271,8 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	 */
 	public void enableAll() {
 		clear.setEnabled(true);
-		random.setEnabled(true);
+		if (random != null)
+			random.setEnabled(true);
 	}
 
 	/**
@@ -272,12 +280,13 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	 */
 	public void disableAll() {
 		clear.setEnabled(false);
-		random.setEnabled(false);
+		if (random != null)
+			random.setEnabled(false);
 	}
 
 	public void setStats(String s) {
 		String oldText = stats.getText();
-		if (oldText != s) {
+		if (!oldText.equals(s)) {
 			if (D.scenario.isAddingEnabled()) {
 				D.scenario.add(new SetStatsCommand(oldText, s));
 			}
@@ -304,6 +313,19 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		return new Dimension(300, 150);
 	}
 	
+	/**
+	 * if D.scenario is enabled, all algorithm is done, so we must go at start
+	 * (in scenario) of algorithm to watch it
+	 */
+	protected void startLastAlg() {
+		D.scenario.previous(false, false);
+		D.scenario.next(M.pause, true);
+		D.scenario.traverser.join();
+		D.setStats();
+		M.C.update();
+		update();
+	}
+
 	private class SetStatsCommand implements Command {
 		private final String oldStats, newStats;
 

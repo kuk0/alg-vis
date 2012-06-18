@@ -16,17 +16,16 @@
  ******************************************************************************/
 package algvis.heap;
 
-import java.awt.Color;
-
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.PriorityQueue;
 
 public class HeapNode extends BSTNode {
-	HeapNode left, right, parent;
-	Color color = Color.yellow;
-	int height = 1;
+	// TODO not needed?
+	// HeapNode left, right, parent;
+	// Color color = Color.yellow;
+	// int height = 1;
 
 	public HeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
@@ -39,7 +38,13 @@ public class HeapNode extends BSTNode {
 	}
 
 	public HeapNode(HeapNode v) {
-		this(v.D, v.key, v.x, v.y);
+		this(v.D, v.getKey(), v.tox, v.toy);
+		// TODO !!! v tychto konstruktoroch (mozno aj na inych miestach v
+		// programe) by malo byt tox a toy, lebo pri vykonavani algoritmu
+		// (vytvarani scenara) este vrchol nie je na [tox,toy], lebo sa na nom
+		// ani raz nezavola move(); je stale na [x,y]
+		// - s tymto je problem (len) ked nekrokujeme prve spustenie algoritmu;
+		// aj pri rychlom krokovani, ked sa v este nedostane na [tox,toy]
 	}
 
 	@Override
@@ -64,9 +69,9 @@ public class HeapNode extends BSTNode {
 	 */
 	public boolean prec(Node v) {
 		if (((PriorityQueue) D).minHeap) {
-			return this.key < v.key;
+			return this.getKey() < v.getKey();
 		} else {
-			return this.key > v.key;
+			return this.getKey() > v.getKey();
 		}
 	}
 
@@ -75,9 +80,9 @@ public class HeapNode extends BSTNode {
 	 */
 	public boolean preceq(Node v) {
 		if (((PriorityQueue) D).minHeap) {
-			return this.key <= v.key;
+			return this.getKey() <= v.getKey();
 		} else {
-			return this.key >= v.key;
+			return this.getKey() >= v.getKey();
 		}
 	}
 }

@@ -66,7 +66,17 @@ public class WordGenerator {
 		WordGenerator wg = WordGenerator.getInstance();
 		return wg.getSkWords().get(
 				wg.getGenerator().nextInt(wg.getSkWords().size()));
-		
+	}
+	
+	public static String getABWord(int n) {
+		Random r = WordGenerator.getInstance().getGenerator();
+		StringBuffer s = new StringBuffer("");
+		for (int i=0; i<n; ++i) {
+			if (r.nextBoolean()) s.append("A");
+			else s.append("B");
+		}
+		s.append("$");
+		return s.toString();
 	}
 	
 	public static String getWord(Settings s) {

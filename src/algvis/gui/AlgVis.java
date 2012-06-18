@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui;
 
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
@@ -28,6 +28,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 
+import algvis.core.ADTs;
+import algvis.core.DataStructures;
+import algvis.core.Settings;
 import algvis.internationalization.IMenu;
 import algvis.internationalization.IMenuItem;
 import algvis.internationalization.Languages;
@@ -50,19 +53,25 @@ public class AlgVis extends JPanel implements ActionListener {
      * 13 - d-ary heap ("daryheap")
      * 14 - Leftist heap ("leftheap")
      * 15 - Skew heap ("skewheap")
-     * 16 - Binomial heap ("binheap")
-     * 17 - Lazy Binomial heap ("lazybinheap")
-     * 18 - Fibonacci heap ("fibheap")
-     * 19 - Union-find ("ufi")
-     * 20 - Trie ("trie") */
+     * 16 - Pairing heap ("pairheap")
+     * 17 - Binomial heap ("binheap")
+     * 18 - Lazy Binomial heap ("lazybinheap")
+     * 19 - Fibonacci heap ("fibheap")
+     * 20 - Union-find ("ufi")
+     * 21 - Interval tree ("intervaltree")
+     * 22 - Trie ("trie") 
+     * 23 - Suffix Tree ("suffixtree") */
 	final static int DEFAULT_DS = 0;
 	
 	private static final long serialVersionUID = -5202486006824196688L;
 
-	JPanel cards;
-	JRootPane P;
-	Languages L;
-	Settings S;
+	/** Cards with data structures */
+	private final JPanel cards;
+	private final VisPanel[] panels;
+	private int activePanel = -1;
+	private final JRootPane P;
+	private final Languages L;
+	private final Settings S;
 
 	Map<String, IMenu> adtItems = new HashMap<String, IMenu>();
 	IMenuItem[] dsItems;
@@ -75,6 +84,8 @@ public class AlgVis extends JPanel implements ActionListener {
 		this.P = P;
 		L = new Languages(s);
 		S = new Settings(L);
+		cards = new JPanel(new CardLayout());
+		panels = new VisPanel[DataStructures.N];
 	}
 
 	public void init() {
@@ -145,20 +156,17 @@ public class AlgVis extends JPanel implements ActionListener {
 		menuBar.add(layoutMenu);
 		*/
 
-		// Cards with data structures
-		cards = new JPanel(new CardLayout());
 		for (int i = 0; i < DataStructures.N; ++i) {
-			VisPanel P = DataStructures.getPanel(i, S);
-			if (P != null)
-				cards.add(P, DataStructures.getName(i));
+			panels[i] = DataStructures.createPanel(i, S);
+			if (panels[i] != null)
+				cards.add(panels[i], DataStructures.getName(i));
 		}
 
 		add(menuBar);
 		P.setJMenuBar(menuBar);
 		add(cards);
 
-		CardLayout cl = (CardLayout) (cards.getLayout());
-		cl.show(cards, DataStructures.getName(DEFAULT_DS));
+		showCard(DEFAULT_DS);
 	}
 
 	@Override
@@ -179,11 +187,20 @@ public class AlgVis extends JPanel implements ActionListener {
 		if ("ds".equals(cmd[0])) {
 			for (int i = 0; i < DataStructures.N; ++i) {
 				if (DataStructures.getName(i).equals(cmd[1])) {
-					CardLayout cl = (CardLayout) (cards.getLayout());
-					cl.show(cards, DataStructures.getName(i));
+					showCard(i);
 					break;
 				}
 			}
 		}
+	}
+	
+	private void showCard(int i) {
+		CardLayout cl = (CardLayout) (cards.getLayout());
+		if (activePanel != -1) {
+			panels[activePanel].setOnAir(false);
+		}
+		activePanel = i;
+		panels[i].setOnAir(true);
+		cl.show(cards, DataStructures.getName(i));
 	}
 }

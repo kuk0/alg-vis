@@ -18,12 +18,12 @@ package algvis.binomialheap;
 
 import java.awt.Color;
 
-import algvis.core.Fonts;
 import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.MeldablePQ;
 import algvis.core.Node;
-import algvis.core.View;
+import algvis.gui.Fonts;
+import algvis.gui.view.View;
 
 public class BinHeapNode extends Node {
 	public int leftw, height, rank; // TODO: size -> rank (treba ale
@@ -33,7 +33,7 @@ public class BinHeapNode extends Node {
 	public boolean cut;
 
 	public BinHeapNode(DataStructure D, int key, int x, int y) {
-		this.key = key;
+		this.setKey(key);
 		this.D = D;
 		this.x = tox = x;
 		this.y = toy = y;
@@ -50,7 +50,7 @@ public class BinHeapNode extends Node {
 	}
 
 	public BinHeapNode(BinHeapNode v) {
-		this(v.D, v.key, v.x, v.y);
+		this(v.D, v.getKey(), v.x, v.y);
 	}
 
 	public boolean isRoot() {
@@ -192,7 +192,7 @@ public class BinHeapNode extends Node {
 	}
 
 	public void lowlight() {
-		bgColor(new Color(200, 200 - key / 10, 0));
+		bgColor(new Color(200, 200 - getKey() / 10, 0));
 	}
 
 	public void highlight() {
@@ -229,23 +229,23 @@ public class BinHeapNode extends Node {
 
 	public boolean prec(Node v) {
 		if (((MeldablePQ) D).minHeap) {
-			return this.key < v.key;
+			return this.getKey() < v.getKey();
 		} else {
-			return this.key > v.key;
+			return this.getKey() > v.getKey();
 		}
 	}
 
 	public boolean preceq(Node v) {
 		if (((MeldablePQ) D).minHeap) {
-			return this.key <= v.key;
+			return this.getKey() <= v.getKey();
 		} else {
-			return this.key >= v.key;
+			return this.getKey() >= v.getKey();
 		}
 	}
 
 	@Override
 	public void draw(View v) {
-		if (state == Node.INVISIBLE || key == NULL) {
+		if (state == Node.INVISIBLE || getKey() == NULL) {
 			return;
 		}
 		drawBg(v);

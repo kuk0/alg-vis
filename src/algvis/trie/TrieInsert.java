@@ -49,17 +49,17 @@ public class TrieInsert extends Algorithm {
 		mysuspend();
 		v.unmark();
 		T.hw = new TrieWordNode(T, s);
-		T.hw.setC(NodeColor.INSERT);
+		T.hw.setColor(NodeColor.INSERT);
 		T.hw.goNextTo(v);
 		
 		while (s.compareTo("$") != 0) {
-			String ch = s.substring(0, 1);
+			char ch = s.charAt(0);
 			T.hw.setAndGoNextTo(s, v);
 			TrieNode w = v.getChildWithCH(ch);
 			if (w != null) {
-				addStep("trieinsertwch", ch);
+				addStep("trieinsertwch", ""+ch);
 			} else {
-				addStep("trieinsertwoch", ch);
+				addStep("trieinsertwoch", ""+ch);
 				w = v.addChild(ch, T.hw.x, T.hw.y);
 			}
 			w.setColor(NodeColor.CACHED);
@@ -71,7 +71,7 @@ public class TrieInsert extends Algorithm {
 			s = s.substring(1);
 		}
 		T.hw.setAndGoNextTo(s, v);
-		TrieNode w = v.getChildWithCH("$");
+		TrieNode w = v.getChildWithCH('$');
 		if (w == null) {
 			addStep("trieinserteow");
 		} else {
@@ -79,7 +79,7 @@ public class TrieInsert extends Algorithm {
 		}
 		mysuspend();
 		v.setColor(NodeColor.NORMAL);
-		v = v.addChild(s, T.hw.x, T.hw.y);
+		v = v.addChild('$', T.hw.x, T.hw.y);
 		T.reposition();
 		T.hw.setAndGoNextTo(s, v);
 		beforeReturn();

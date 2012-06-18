@@ -19,10 +19,10 @@ package algvis.scapegoattree;
 import org.jdom.Element;
 
 import algvis.bst.BST;
-import algvis.core.Layout;
 import algvis.core.StringUtils;
-import algvis.core.View;
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
+import algvis.gui.view.Layout;
+import algvis.gui.view.View;
 import algvis.scenario.Command;
 
 public class GBTree extends BST {

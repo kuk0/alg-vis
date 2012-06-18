@@ -45,18 +45,18 @@ public class BSTInsert extends Algorithm {
 			mysuspend();
 
 			while (true) {
-				if (w.key == K) {
+				if (w.getKey() == K) {
 					addStep("alreadythere");
 					v.setColor(NodeColor.NOTFOUND);
 					v.goDown();
 					return;
-				} else if (w.key < K) {
+				} else if (w.getKey() < K) {
 					if (w.getRight() == null) {
 						v.pointInDir(45);
 					} else {
 						v.pointAbove(w.getRight());
 					}
-					addStep("bst-insert-right", K, w.key);
+					addStep("bst-insert-right", K, w.getKey());
 					mysuspend();
 					v.noArrow();
 					if (w.getRight() != null) {
@@ -71,7 +71,7 @@ public class BSTInsert extends Algorithm {
 					} else {
 						v.pointAbove(w.getLeft());
 					}
-					addStep("bst-insert-left", K, w.key);
+					addStep("bst-insert-left", K, w.getKey());
 					mysuspend();
 					v.noArrow();
 					if (w.getLeft() != null) {

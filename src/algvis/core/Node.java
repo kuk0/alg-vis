@@ -21,6 +21,8 @@ import java.awt.geom.Point2D;
 
 import org.jdom.Element;
 
+import algvis.gui.Fonts;
+import algvis.gui.view.View;
 import algvis.scenario.Command;
 
 /**
@@ -31,7 +33,7 @@ import algvis.scenario.Command;
  */
 public class Node {
 	public DataStructure D;
-	public int key;
+	private int key;
 	/**
 	 * x, y - node position tox, toy - the position, where the node is heading
 	 * steps - the number of steps to reach the destination
@@ -72,7 +74,7 @@ public class Node {
 
 	public Node(DataStructure D, int key, int x, int y) {
 		this.D = D;
-		this.key = key;
+		this.setKey(key);
 		this.x = tox = x;
 		this.y = toy = y;
 		steps = 0;
@@ -84,7 +86,7 @@ public class Node {
 	}
 
 	public Node(Node v) {
-		this(v.D, v.key, v.x, v.y);
+		this(v.D, v.getKey(), v.x, v.y);
 	}
 
 	/**
@@ -106,6 +108,10 @@ public class Node {
 	}
 
 	public void setState(int s) {
+		if (state != s && D.scenario.isAddingEnabled()) {
+			D.scenario.add(new SetStateCommand(s));
+		}
+		state = s;
 		if ((s == Node.LEFT || s == Node.RIGHT || s == Node.DOWN)
 				&& D.scenario.traverser.isInterrupted()) {
 			int k = 0;
@@ -118,8 +124,7 @@ public class Node {
 				toy = y += 20;
 				tox = x += k * 20;
 			}
-		} else if (state != s && D.scenario.isAddingEnabled()) {
-			D.scenario.add(new SetStateCommand(s));
+			state = INVISIBLE;
 		}
 		state = s;
 	}
@@ -165,7 +170,7 @@ public class Node {
 	 * the color).
 	 */
 	public void bgKeyColor() {
-		bgColor(new Color(255, 255 - key / 20, 0));
+		bgColor(new Color(255, 255 - getKey() / 20, 0));
 	}
 
 	public void mark() {
@@ -295,18 +300,18 @@ public class Node {
 	 */
 	@Override
 	public String toString() {
-		if (key == INF) {
+		if (getKey() == INF) {
 			return "\u221e";
-		} else if (key == -INF) {
+		} else if (getKey() == -INF) {
 			return "-\u221e";
 		} else {
-			return "" + key;
+			return "" + getKey();
 		}
 	}
 
 	public void drawKey(View v) {
 		v.setColor(getFgColor());
-		if (key != NOKEY) {
+		if (getKey() != NOKEY) {
 			v.drawString(toString(), x, y, Fonts.NORMAL);
 		}
 	}
@@ -363,7 +368,7 @@ public class Node {
 	}
 
 	public void draw(View v) {
-		if (state == Node.INVISIBLE || key == NULL) {
+		if (state == Node.INVISIBLE || getKey() == NULL) {
 			return;
 		}
 		drawBg(v);
@@ -385,16 +390,19 @@ public class Node {
 	 * Set new coordinates, where the node should go.
 	 */
 	public void goTo(int tox, int toy) {
-		if (D.scenario.traverser.isInterrupted()) {
-			x = this.tox = tox;
-			y = this.toy = toy;
-		} else if (this.tox != tox || this.toy != toy) {
+		if (this.tox != tox || this.toy != toy) {
 			if (D.scenario.isAddingEnabled()) {
 				D.scenario.add(new MoveCommand(tox, toy));
 			}
-			this.tox = tox;
-			this.toy = toy;
-			this.steps = STEPS;
+			if (D.scenario.traverser.isInterrupted()) {
+				steps = 0;
+				x = this.tox = tox;
+				y = this.toy = toy;
+			} else {
+				this.tox = tox;
+				this.toy = toy;
+				this.steps = STEPS;
+			}
 		}
 	}
 
@@ -489,6 +497,19 @@ public class Node {
 		}
 	}
 
+	public int getKey() {
+		return key;
+	}
+
+	public void setKey(int key) {
+		if (this.key != key) {
+			if (D != null && D.scenario.isAddingEnabled()) {
+				D.scenario.add(new SetKeyCommand(key));
+			}
+			this.key = key;
+		}
+	}
+
 	private class ArcCommand implements Command {
 		private final Node toNode;
 		private final boolean setted;
@@ -501,8 +522,8 @@ public class Node {
 		@Override
 		public Element getXML() {
 			Element e = new Element("Arc");
-			e.setAttribute("fromNode", Integer.toString(key));
-			e.setAttribute("toNode", Integer.toString(toNode.key));
+			e.setAttribute("fromNode", Integer.toString(getKey()));
+			e.setAttribute("toNode", Integer.toString(toNode.getKey()));
 			e.setAttribute("setted", Boolean.toString(setted));
 			return e;
 		}
@@ -567,9 +588,9 @@ public class Node {
 		public Element getXML() {
 			Element e = new Element("node");
 			e.setAttribute("action", name);
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			if (dir != null) {
-				e.setAttribute("toNode", Integer.toString(dir.key));
+				e.setAttribute("toNode", Integer.toString(dir.getKey()));
 			} else {
 				e.setAttribute("angle", Integer.toString(arrow));
 			}
@@ -587,7 +608,7 @@ public class Node {
 		@Override
 		public Element getXML() {
 			Element e = new Element("mark");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			e.setAttribute("marked", Boolean.toString(marked));
 			return e;
 		}
@@ -635,7 +656,7 @@ public class Node {
 		public Element getXML() {
 			Element e = new Element("node");
 			e.setAttribute("action", "move");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			e.setAttribute("posX", Integer.toString(toX));
 			e.setAttribute("posY", Integer.toString(toY));
 			e.setAttribute("fromPosX", Integer.toString(fromX));
@@ -666,7 +687,7 @@ public class Node {
 		public Element getXML() {
 			Element e = new Element("node");
 			e.setAttribute("action", "changeColor");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			e.setAttribute("bgColor", newBgColor.toString());
 			return e;
 		}
@@ -694,7 +715,7 @@ public class Node {
 		public Element getXML() {
 			Element e = new Element("node");
 			e.setAttribute("action", "changeColor");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			e.setAttribute("fgColor", newFgColor.toString());
 			return e;
 		}
@@ -729,9 +750,37 @@ public class Node {
 		public Element getXML() {
 			Element e = new Element("node");
 			e.setAttribute("action", "changeState");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			e.setAttribute("toState", Integer.toString(toState));
 			e.setAttribute("fromState", Integer.toString(fromState));
+			return e;
+		}
+	}
+
+	private class SetKeyCommand implements Command {
+		private final int fromKey, toKey;
+
+		public SetKeyCommand(int toKey) {
+			this.toKey = toKey;
+			fromKey = key;
+		}
+
+		@Override
+		public void execute() {
+			setKey(toKey);
+		}
+
+		@Override
+		public void unexecute() {
+			setKey(fromKey);
+		}
+
+		@Override
+		public Element getXML() {
+			Element e = new Element("node");
+			e.setAttribute("action", "changeKey");
+			e.setAttribute("fromKey", Integer.toString(fromKey));
+			e.setAttribute("toKey", Integer.toString(toKey));
 			return e;
 		}
 	}
@@ -741,7 +790,7 @@ public class Node {
 		@Override
 		public Element getXML() {
 			Element e = new Element("waitBackwards");
-			e.setAttribute("nodeKey", Integer.toString(key));
+			e.setAttribute("nodeKey", Integer.toString(getKey()));
 			return e;
 		}
 

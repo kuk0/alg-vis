@@ -78,7 +78,7 @@ public class UnionFindFind extends Algorithm {
 
 		u.setColor(NodeColor.FIND);
 		u.mark();
-		addStep("uffindstart", u.key);
+		addStep("uffindstart", u.getKey());
 		mysuspend();
 
 		// u is a representative
@@ -104,7 +104,7 @@ public class UnionFindFind extends Algorithm {
 		// root found
 		result = v;
 		v.setColor(NodeColor.FOUND);
-		addStep("ufrootfound", result.key);
+		addStep("ufrootfound", result.getKey());
 		mysuspend();
 
 		// traveling back
@@ -126,7 +126,7 @@ public class UnionFindFind extends Algorithm {
 
 		u.setColor(NodeColor.FIND);
 		u.mark();
-		addStep("uffindstart", u.key);
+		addStep("uffindstart", u.getKey());
 		mysuspend();
 
 		// u is a representative
@@ -153,7 +153,7 @@ public class UnionFindFind extends Algorithm {
 		// root found
 		result = v;
 		v.setColor(NodeColor.FOUND);
-		addStep("ufrootfound", result.key);
+		addStep("ufrootfound", result.getKey());
 		addStep("ufdownstart");
 		mysuspend();
 
@@ -201,7 +201,7 @@ public class UnionFindFind extends Algorithm {
 		}
 		
 		u.mark();
-		addStep("uffindstart", u.key);
+		addStep("uffindstart", u.getKey());
 		mysuspend();
 
 		// u is a representative
@@ -265,7 +265,7 @@ public class UnionFindFind extends Algorithm {
 			child.setColor(NodeColor.NORMAL);
 		v.setColor(NodeColor.FOUND);
 		result = v;
-		addStep("ufrootfound", result.key);
+		addStep("ufrootfound", result.getKey());
 		mysuspend();
 
 		u.unmark();
@@ -279,7 +279,7 @@ public class UnionFindFind extends Algorithm {
 
 		u.setColor(NodeColor.FIND);
 		u.mark();
-		addStep("uffindstart", u.key);
+		addStep("uffindstart", u.getKey());
 
 		// grey path
 		UnionFindNode t = u;
@@ -344,7 +344,7 @@ public class UnionFindFind extends Algorithm {
 			child.setColor(NodeColor.NORMAL);
 		v.setColor(NodeColor.FOUND);
 		result = v;
-		addStep("ufrootfound", result.key);
+		addStep("ufrootfound", result.getKey());
 		mysuspend();
 
 		u.unmark();

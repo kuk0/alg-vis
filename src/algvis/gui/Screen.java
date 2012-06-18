@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.core;
+package algvis.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,22 +24,27 @@ import java.awt.Image;
 
 import javax.swing.JPanel;
 
+import algvis.core.DataStructure;
+import algvis.gui.view.View;
+
 public class Screen extends JPanel implements Runnable {
 	private static final long serialVersionUID = -8279768206774288161L;
 	// obrazovka (ak nie je suspendnuta) neustale vykresluje poziciu
-	Thread t = null;
-	boolean suspended;
-	DataStructure D = null;
+	private final Thread t;
+	private boolean suspended = true;
+	private DataStructure D = null;
 
-	VisPanel P;
-	Image I;
-	Graphics G;
-	public View V;
-	Dimension size;
+	//private final VisPanel P; // TODO not needed 120429
+	private Image I;
+	private Graphics G;
+	private Dimension size;
+	
+	public final View V;
 
 	public Screen(VisPanel P) {
-		this.P = P;
+		//this.P = P;
 		V = new View(this);
+		t = new Thread(this);
 	}
 
 	public void setDS(DataStructure D) {
@@ -91,9 +96,8 @@ public class Screen extends JPanel implements Runnable {
 	}
 
 	public void start() {
-		if (t == null) {
-			t = new Thread(this);
-			suspended = false;
+		//suspended = false;
+		if (!t.isAlive()) {
 			t.start();
 		}
 	}

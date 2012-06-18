@@ -17,9 +17,9 @@
 package algvis.binomialheap;
 
 import algvis.core.DataStructure;
-import algvis.core.MeldablePQButtons;
 import algvis.core.Settings;
-import algvis.core.VisPanel;
+import algvis.gui.MeldablePQButtons;
+import algvis.gui.VisPanel;
 
 public class BinHeapPanel extends VisPanel {
 	private static final long serialVersionUID = 2070258718656241421L;
@@ -34,6 +34,7 @@ public class BinHeapPanel extends VisPanel {
 		BinomialHeap H = new BinomialHeap(this);
 		D = H;
 		B = new MeldablePQButtons(this);
+		/*
 		H.active = 1;
 		D.random(13);
 		H.active = 2;
@@ -43,6 +44,7 @@ public class BinHeapPanel extends VisPanel {
 		D.random(7);
 		H.lowlight();
 		H.active = 1;
+		*/
 		D.M.screen.V.resetView();		
 	}
 }

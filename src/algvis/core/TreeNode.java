@@ -21,6 +21,7 @@ import java.util.Stack;
 
 import org.jdom.Element;
 
+import algvis.gui.view.View;
 import algvis.scenario.Command;
 
 public class TreeNode extends Node {
@@ -31,6 +32,7 @@ public class TreeNode extends Node {
 					// equaled to x-coord of leftmost child
 	int level; // distance from the root
 	protected boolean thread = false; // is this node threaded?
+
 	int toExtremeSon = 0; // offset from the leftmost son
 	int toBaseline = 0; // distance to child's baseline
 	int modifier = 0;
@@ -249,7 +251,7 @@ public class TreeNode extends Node {
 	}
 
 	public void append(int x, int j) {
-		if (key == x) {
+		if (getKey() == x) {
 			addChild(new TreeNode(D, j));
 		} else {
 			TreeNode w = getChild();
@@ -587,14 +589,14 @@ public class TreeNode extends Node {
 		@Override
 		public Element getXML() {
 			Element e = new Element("setRight");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			if (newRight != null) {
-				e.setAttribute("newRight", Integer.toString(newRight.key));
+				e.setAttribute("newRight", Integer.toString(newRight.getKey()));
 			} else {
 				e.setAttribute("newRight", "null");
 			}
 			if (oldRight != null) {
-				e.setAttribute("oldRight", Integer.toString(oldRight.key));
+				e.setAttribute("oldRight", Integer.toString(oldRight.getKey()));
 			} else {
 				e.setAttribute("oldRight", "null");
 			}
@@ -623,14 +625,14 @@ public class TreeNode extends Node {
 		@Override
 		public Element getXML() {
 			Element e = new Element("setParent");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			if (newParent != null) {
-				e.setAttribute("newParent", Integer.toString(newParent.key));
+				e.setAttribute("newParent", Integer.toString(newParent.getKey()));
 			} else {
 				e.setAttribute("newParent", "null");
 			}
 			if (oldParent != null) {
-				e.setAttribute("oldParent", Integer.toString(oldParent.key));
+				e.setAttribute("oldParent", Integer.toString(oldParent.getKey()));
 			} else {
 				e.setAttribute("oldParent", "null");
 			}
@@ -659,14 +661,14 @@ public class TreeNode extends Node {
 		@Override
 		public Element getXML() {
 			Element e = new Element("setChild");
-			e.setAttribute("key", Integer.toString(key));
+			e.setAttribute("key", Integer.toString(getKey()));
 			if (newChild != null) {
-				e.setAttribute("newChild", Integer.toString(newChild.key));
+				e.setAttribute("newChild", Integer.toString(newChild.getKey()));
 			} else {
 				e.setAttribute("newChild", "null");
 			}
 			if (oldChild != null) {
-				e.setAttribute("oldChild", Integer.toString(oldChild.key));
+				e.setAttribute("oldChild", Integer.toString(oldChild.getKey()));
 			} else {
 				e.setAttribute("oldChild", "null");
 			}

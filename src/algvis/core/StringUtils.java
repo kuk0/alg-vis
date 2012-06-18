@@ -54,9 +54,9 @@ public class StringUtils {
 		} else if (n2 > n) {
 			s = s.substring(0, n1 + n + 1);
 		}
-		if (w > 0 & w > s.length()) {
+		if (w > 0 && w > s.length()) {
 			s = BLANKS.substring(0, w - s.length()) + s;
-		} else if (w < 0 & (-w) > s.length()) {
+		} else if (w < 0 && (-w) > s.length()) {
 			w = -w;
 			s = s + BLANKS.substring(0, w - s.length());
 		}

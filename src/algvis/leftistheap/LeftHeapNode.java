@@ -1,16 +1,30 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kov��, Katar�na Kotrlov�, Pavol Luk�a, Viktor Tomkovi�, Tatiana T�thov�
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.leftistheap;
 
 import java.awt.Color;
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
-import algvis.core.Fonts;
 import algvis.core.Node;
 import algvis.core.MeldablePQ;
-import algvis.core.View;
+import algvis.gui.Fonts;
+import algvis.gui.view.View;
 
 public class LeftHeapNode extends BSTNode {
-	Color color = Color.yellow;
-	int height = 1;
 	int rank = 1;
 	boolean doubleArrow = false;
 	boolean dashedrightl = false; // if true the line leading to the right son is dashed
@@ -27,7 +41,7 @@ public class LeftHeapNode extends BSTNode {
 	}
 
 	public LeftHeapNode(LeftHeapNode v) {
-		this(v.D, v.key, v.x, v.y);
+		this(v.D, v.getKey(), v.x, v.y);
 	}
 
 	/**
@@ -38,9 +52,9 @@ public class LeftHeapNode extends BSTNode {
 
 	public boolean prec(Node v) {
 		if (((MeldablePQ) D).minHeap) {
-			return this.key < v.key;
+			return this.getKey() < v.getKey();
 		} else {
-			return this.key > v.key;
+			return this.getKey() > v.getKey();
 		}
 	}
 
@@ -49,9 +63,9 @@ public class LeftHeapNode extends BSTNode {
 	 */
 	public boolean preceq(Node v) {
 		if (((MeldablePQ) D).minHeap) {
-			return this.key <= v.key;
+			return this.getKey() <= v.getKey();
 		} else {
-			return this.key >= v.key;
+			return this.getKey() >= v.getKey();
 		}
 	}
 
@@ -130,7 +144,7 @@ public class LeftHeapNode extends BSTNode {
 	}
 
 	private void lowlight() {
-		bgColor(new Color(200, 200 - key / 10, 0));
+		bgColor(new Color(200, 200 - getKey() / 10, 0));
 	}
 
 	private void highlight() {
