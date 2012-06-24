@@ -17,6 +17,7 @@
 package algvis.suffixtree;
 
 import algvis.core.DataStructure;
+import algvis.core.StringElem;
 import algvis.core.WordGenerator;
 import algvis.gui.Fonts;
 import algvis.gui.VisPanel;
@@ -24,6 +25,7 @@ import algvis.gui.view.View;
 import algvis.trie.TrieWordNode;
 
 public class SuffixTree extends DataStructure {
+	static final int textpos = -40; 
 	public static String adtName = "stringology";
 	public static String dsName = "suffixtree";
 
@@ -34,6 +36,7 @@ public class SuffixTree extends DataStructure {
 	public TrieWordNode cs = null;
 
 	public String text;
+	StringElem str;
 
 	public SuffixTree(VisPanel M) {
 		super(M);
@@ -44,6 +47,7 @@ public class SuffixTree extends DataStructure {
 		super(M);
 		clear();
 		this.text = text;
+		this.str = new StringElem(this, text, 0, textpos);
 	}
 
 	@Override
@@ -57,15 +61,14 @@ public class SuffixTree extends DataStructure {
 	}
 
 	@Override
-	public void insert(int x) {
-		//
-	}
+	public void insert(int x) {}
 
 	@Override
 	public void clear() {
 		root = new SuffixTreeNode(this);
 		root.reposition();
 		v = null;
+		str = null;
 	}
 
 	public SuffixTreeNode getV() {
@@ -87,6 +90,8 @@ public class SuffixTree extends DataStructure {
 
 	@Override
 	public void draw(View V) {
+		if (str != null)
+			str.draw(V);
 		SuffixTreeNode v = getRoot();
 		if (v != null) {
 			v.moveTree();
@@ -122,6 +127,7 @@ public class SuffixTree extends DataStructure {
 
 	public void insert(String s) {
 		text = s;
+		str = new StringElem(this, text, 0, textpos);
 		start(new SuffixTreeInsert(this, s));
 	}
 

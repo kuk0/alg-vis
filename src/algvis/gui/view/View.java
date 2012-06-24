@@ -229,12 +229,20 @@ public class View implements MouseListener, MouseMotionListener,
 		return new Point2D.Double(x + (x2-x)*(d-c)/d, y + (y2-y)*(d-c)/d);
 	}
 
+	public void fillRect(double x, double y, double a, double b) {
+		g.fillRect((int) (x - a), (int) (y - b), 2 * (int) a, 2 * (int) b);
+	}
+
+	public void drawRect(double x, double y, double a, double b) {
+		g.drawRect((int) (x - a), (int) (y - b), 2 * (int) a, 2 * (int) b);
+	}
+
 	public void fillSqr(double x, double y, double a) {
-		g.fillRect((int) (x - a), (int) (y - a), 2 * (int) a, 2 * (int) a);
+		fillRect(x, y, a, a);
 	}
 
 	public void drawSqr(double x, double y, double a) {
-		g.drawRect((int) (x - a), (int) (y - a), 2 * (int) a, 2 * (int) a);
+		drawRect(x, y, a, a);
 	}
 
 	public void fillOval(double x, double y, double a, double b) {

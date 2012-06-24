@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kováè, Katarína Kotrlová, Pavol Lukèa, Viktor Tomkoviè, Tatiana Tóthová
+ * Copyright (c) 2012 Jakub Kovï¿½ï¿½, Katarï¿½na Kotrlovï¿½, Pavol Lukï¿½a, Viktor Tomkoviï¿½, Tatiana Tï¿½thovï¿½
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,68 +19,69 @@ package algvis.pairingheap;
 import algvis.core.Algorithm;
 import algvis.core.DataStructure;
 
-public class PairHeapAlg extends Algorithm{
+public class PairHeapAlg extends Algorithm {
 	public enum Pairing {
-		NAIVE, LRRL//, FB, BF, MULTI, LAZYM
+		NAIVE, LRRL // , FB, BF, MULTI, LAZYM
 	}
-	
+
 	PairingHeap H;
 	PairHeapNode v;
 
 	public PairHeapAlg(DataStructure D) {
 		super(D);
-		this.H = (PairingHeap)D;
+		this.H = (PairingHeap) D;
 	}
 
-	public void link (int i, int j){
-		
-		if (!H.root[i].prec(H.root[j])){
+	public void link(int i, int j) {
+
+		if (!H.root[i].prec(H.root[j])) {
 			PairHeapNode w = H.root[i];
 			H.root[i] = H.root[j];
 			H.root[j] = w;
-		} 
+		}
 		H.root[i].addChildLeft(H.root[j]);
 		H.reposition();
 	}
-	
-	public void linkchlr (int i, int j){
-		//if (H.root[j].state == -1){
-			PairHeapNode w = H.root[j].getChild();
-			H.root[j].deleteChild(H.root[j].leftmostChild());
-			if (!H.root[i].prec(w)){
-				PairHeapNode w1 = H.root[i];
-				H.root[i] = w;
-				w = w1;
-			}
-			H.root[i].addChildLeft(w);
-			H.reposition();
-		//}
+
+	public void linkchlr(int i, int j) {
+		// if (H.root[j].state == -1){
+		PairHeapNode w = H.root[j].getChild();
+		H.root[j].deleteChild(H.root[j].leftmostChild());
+		if (!H.root[i].prec(w)) {
+			PairHeapNode w1 = H.root[i];
+			H.root[i] = w;
+			w = w1;
+		}
+		H.root[i].addChildLeft(w);
+		H.reposition();
+		// }
 	}
-	
-	//H.root[i].shift(0, - PairingHeap.minsepy);
-	//problemy s posunutim
-	//zobereme hocake dieta a ostatne k nemu prilinkujeme.
-	public void pairNaive(int i){
+
+	// H.root[i].shift(0, - PairingHeap.minsepy);
+	// problemy s posunutim
+	// zobereme hocake dieta a ostatne k nemu prilinkujeme.
+	public void pairNaive(int i) {
 		int j = H.root[i].numChildren();
-		if (j > 0){
-			if (j == 1){
+		if (j > 0) {
+			if (j == 1) {
 				H.root[i] = H.root[i].getChild();
 				H.root[i].setState(0);
 				return;
 			}
-			addStep("pairnaive"); //pri naive sa vyberie hocktory a prilinkuju sa k nemu ostatne
+			addStep("pairnaive"); // pri naive sa vyberie hocktory a prilinkuju
+									// sa k nemu ostatne
 			mysuspend();
-			
+
 			H.root[0] = H.root[i];
 			H.root[i] = H.root[i].getChild();
 			H.root[i].setParent(null);
 			H.root[i].setState(0);
-			H.root[0].deleteChild(H.root[0].leftmostChild());//getChild().setParent(null);
+			H.root[0].deleteChild(H.root[0].leftmostChild());// getChild().setParent(null);
 
 			H.reposition();
 			mysuspend();
-			for (int k = 1; k < j; k++){
-				linkchlr(i,0);	
+			for (int k = 1; k < j; k++) {
+				linkchlr(i, 0);
 				mysuspend();
 			}
 		} else {
@@ -88,85 +89,85 @@ public class PairHeapAlg extends Algorithm{
 			H.root[i] = null;
 		}
 	}
-	
-	
-	public void linkchrl (int i, int j){
-		//if (H.root[j].state == -1){
-			PairHeapNode w = (PairHeapNode) H.root[j].rightmostChild();
-			H.root[j].deleteChild(H.root[j].rightmostChild());
-			if (!H.root[i].prec(w)){
-				PairHeapNode w1 = H.root[i];
-				H.root[i] = w;
-				w = w1;
-			}
-			H.root[i].addChildLeft(w);
-			H.reposition();
-		//}
+
+	public void linkchrl(int i, int j) {
+		// if (H.root[j].state == -1){
+		PairHeapNode w = (PairHeapNode) H.root[j].rightmostChild();
+		H.root[j].deleteChild(H.root[j].rightmostChild());
+		if (!H.root[i].prec(w)) {
+			PairHeapNode w1 = H.root[i];
+			H.root[i] = w;
+			w = w1;
+		}
+		H.root[i].addChildLeft(w);
+		H.reposition();
+		// }
 	}
-	
-	public void pairLRRL(int i){
+
+	public void pairLRRL(int i) {
 		int j = H.root[i].numChildren();
-		if (j > 0){
-			if (j == 1){
+		if (j > 0) {
+			if (j == 1) {
 				H.root[i] = H.root[i].getChild();
 				H.root[i].setState(0);
 				return;
 			}
-			
-			//najprv pri parovani sa pracuje len s root[i]
-			
+
+			// najprv pri parovani sa pracuje len s root[i]
+
 			/*
-			H.root[0] = H.root[i];
-			H.root[i] = H.root[i].getChild();
-			H.root[i].setParent(null);
-			H.root[i].setState(0);
-			H.root[0].deleteChild(H.root[0].leftmostChild());//getChild().setParent(null);
-			*/
+			 * H.root[0] = H.root[i]; H.root[i] = H.root[i].getChild();
+			 * H.root[i].setParent(null); H.root[i].setState(0);
+			 * H.root[0].deleteChild
+			 * (H.root[0].leftmostChild());//getChild().setParent(null);
+			 */
 
 			H.reposition();
 			addStep("pairlrrl1");
 			mysuspend();
 			PairHeapNode w = H.root[i].getChild();
 			PairHeapNode wr = H.root[i].getChild().getRight();
-			
-			for (int k = 1; k <= j / 2; k++){
-				if (w.prec(wr)){
+
+			for (int k = 1; k <= j / 2; k++) {
+				if (w.prec(wr)) {
 					w.setRight(w.getRight().getRight());
 					w.addChildLeft(wr);
-					//w.getRight().setRight(null);
+					// w.getRight().setRight(null);
 					w = w.getRight();
 				} else {
 					wr.addChildLeft(w);
 					w = wr.getRight();
 				}
-				if (w != null){
+				if (w != null) {
 					wr = w.getRight();
 				}
 			}
-			
+
 			H.reposition();
-			addStep("pairlrrl2"); // a teraz sa vyberie jeden vrchol a polinkuju sa sprava dolava
+			addStep("pairlrrl2"); // a teraz sa vyberie jeden vrchol a polinkuju
+									// sa sprava dolava
 			mysuspend();
-			
+
 			j = H.root[i].numChildren();
-			if (j > 0){
-				if (j == 1){
+			if (j > 0) {
+				if (j == 1) {
 					H.root[i] = H.root[i].getChild();
 					H.root[i].setState(0);
 					return;
 				}
-				
+
 				H.root[0] = H.root[i];
 				H.root[i] = (PairHeapNode) H.root[i].rightmostChild();
 				H.root[i].setParent(null);
 				H.root[i].setState(0);
-				H.root[0].deleteChild(H.root[0].rightmostChild());//getChild().setParent(null);
+				H.root[0].deleteChild(H.root[0].rightmostChild());// getChild().setParent(null);
 
 				H.reposition();
-				//addStep(); //pri naive sa vyberie hocktory a prilinkuju sa k nemu ostatne
+				// addStep(); //pri naive sa vyberie hocktory a prilinkuju sa k
+				// nemu ostatne
 				mysuspend();
-				for (int k = 1; k < j; k++){
-					linkchrl(i,0);	
+				for (int k = 1; k < j; k++) {
+					linkchrl(i, 0);
 					mysuspend();
 				}
 			} else {
