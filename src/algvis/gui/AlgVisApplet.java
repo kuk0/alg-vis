@@ -79,8 +79,8 @@ public class AlgVisApplet extends JApplet {
 			Settings S = new Settings(L);
 			VisPanel P = DataStructures.createPanel(ds, S);
 			P.setSize(WIDTH, HEIGHT); // same size as defined in the HTML APPLET
-			if (P != null)
-				add(P);
+			add(P);
+			P.setOnAir(true);
 		}
 	}
 }

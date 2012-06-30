@@ -33,6 +33,8 @@ public class PairHeapPanel extends VisPanel{
 	public void initDS() {
 		D = new PairingHeap(this);
 		B = new PairHeapButtons(this);
+		((PairHeapButtons)B).pairVariant.setSelectedIndex(1);
+		D.random(15);
 	}
 
 }
