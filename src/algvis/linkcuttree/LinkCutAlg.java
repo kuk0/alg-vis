@@ -1,10 +1,12 @@
 package algvis.linkcuttree;
 
 import algvis.core.Algorithm;
+import algvis.core.NodeColor;
 import algvis.core.NodePair;
 
 public class LinkCutAlg extends Algorithm {
 	LinkCutDS D;
+	LinkCutDSNode s;
 	
 	public LinkCutAlg(LinkCutDS D) {
 		super(D);
@@ -27,6 +29,7 @@ public class LinkCutAlg extends Algorithm {
 			v.preffered = null;			
 		}
 		D.reposition();
+		addStep("lct-split", v.getKey());
 		mysuspend();
 		return p;
 	}
@@ -34,14 +37,14 @@ public class LinkCutAlg extends Algorithm {
 	public void splice(LinkCutDSNode p) {	//p je vrch path(p)
 		LinkCutDSNode v = p.getParent();
 		if (v == null) {return;}
-		if (v.preffered == p) {return;}
+		if (v.preffered == p) {addStep("lct-splice",p.getKey()); return;}
+		addStep("lct-splice", p.getKey());
 		NodePair<LinkCutDSNode> np = split(v);
 		if (np.left != null) {
 			np.left.preffered = p;
 		}
 		v.preffered = p;
 		D.reposition();
-		mysuspend();
 	}
 	
 	public void expose(LinkCutDSNode v) {
@@ -50,18 +53,23 @@ public class LinkCutAlg extends Algorithm {
 			np.left.preffered = v;
 		}
 		while (v != null) {
+			v.setColor(NodeColor.CACHED);
 			splice(v);
+			mysuspend();
+			v.setColor(NodeColor.NORMAL);
 			v = v.getParent();
 		}
+		addStep("lct-root");
+		mysuspend();
 	}
 	
 	public void link(LinkCutDSNode v, LinkCutDSNode w) {
 		expose(w);
-		mysuspend();
 		w.addChild(v);
 		w.preffered = v;
 		v.setParent(w);
 		D.reposition();
+		addStep("lct-link", v.getKey(), w.getKey());
 	}
 
 	public void cut(LinkCutDSNode v) {
@@ -78,5 +86,6 @@ public class LinkCutAlg extends Algorithm {
 			w.setRight(v.getRight());
 		}
 		v.setParent(null);
+		addStep("lct-cut", v.getKey());
 	}
 }
