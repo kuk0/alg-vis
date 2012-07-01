@@ -17,6 +17,7 @@
 package algvis.core;
 
 import algvis.intervaltree.IntervalTrees;
+import algvis.linkcuttree.LinkCutDS;
 import algvis.trie.Trie;
 import algvis.unionfind.UnionFind;
 
@@ -35,7 +36,8 @@ public class ADTs {
 			MeldablePQ.class, // insert, decrease-key, delete-min, meld
 			UnionFind.class, // make-set, union, find
 			Trie.class, // insert, find, delete
-			IntervalTrees.class //insert, find sum/min/max of interval, decrease-key
+			IntervalTrees.class, //insert, find sum/min/max of interval, decrease-key
+			LinkCutDS.class
 	};
 	public static final int N = ADT.length;
 

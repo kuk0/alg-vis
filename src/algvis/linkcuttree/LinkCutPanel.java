@@ -6,7 +6,7 @@ import algvis.gui.VisPanel;
 
 public class LinkCutPanel extends VisPanel {
 	private static final long serialVersionUID = 4784662431815459414L;
-	public static Class<? extends DataStructure> DS = ETtree.class;
+	public static Class<? extends DataStructure> DS = LinkCutDS.class;
 
 	public LinkCutPanel(Settings S) {
 		super(S);
@@ -16,6 +16,6 @@ public class LinkCutPanel extends VisPanel {
 	public void initDS() {
 		D = new LinkCutDS(this);
 		B = new LinkCutButtons(this);
-		D.random(20);
+		// D.random(20);
 	}
 }
