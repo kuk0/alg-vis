@@ -47,7 +47,7 @@ public class LinkCutDSNode extends TreeNode {
 					v.setColor(Color.black); // TODO maybe these lines would
 												// make problems
 					if (w == preffered) {
-						v.drawLine(x, y, w.x, w.y);
+						v.drawWideLine(x, y, w.x, w.y, 5.0f, Color.RED);
 					} else {
 						v.drawDashedLine(x, y, w.x, w.y);
 					}

@@ -21,8 +21,6 @@ import algvis.gui.view.Layout;
 
 abstract public class Dictionary extends DataStructure {
 	public static String adtName = "dictionary";
-	private Node root = null;
-	private Node v = null;
 
 	public Dictionary(VisPanel M) {
 		super(M);

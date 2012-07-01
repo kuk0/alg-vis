@@ -127,14 +127,12 @@ public class DataStructures {
 					break;
 				} catch (NoSuchFieldException e) {
 					c = (Class<? extends DataStructure>) c.getSuperclass();
-					System.out.println("bu" + i);
 				}
 			}
 			return (String) (c.getDeclaredField("adtName").get(null));
 		} catch (Exception e) {
-			System.out
-					.println("DataStructures is unable to get field adtName - abstract data type of data structure: "
-							+ i);
+			System.out.println("DataStructures is unable to get field adtName"
+					+ " - abstract data type of data structure: " + i);
 			return "";
 		}
 	}
