@@ -305,6 +305,9 @@ public class View implements MouseListener, MouseMotionListener,
 		return f.fm.stringWidth(str);
 	}
 
+	/**
+	 * draw string horizontally; middle character is at (x, y)
+	 */
 	public void drawString(String str, double x, double y, Fonts f) {
 		x -= f.fm.stringWidth(str) / 2;
 		y -= f.fm.getHeight() / 2 - f.fm.getAscent();
@@ -312,8 +315,20 @@ public class View implements MouseListener, MouseMotionListener,
 		g.drawString(str, (int) x, (int) y);
 	}
 
+	/**
+	 * draw string horizontally; last character is at (x, y)
+	 */
 	public void drawStringLeft(String str, double x, double y, Fonts f) {
 		x -= f.fm.stringWidth(str);
+		y -= f.fm.getHeight() / 2 - f.fm.getAscent();
+		g.setFont(f.font);
+		g.drawString(str, (int) x, (int) y);
+	}
+	
+	/**
+	 * draw string horizontally; first character is at (x, y)
+	 */
+	public void drawStringRight(String str, double x, double y, Fonts f) {
 		y -= f.fm.getHeight() / 2 - f.fm.getAscent();
 		g.setFont(f.font);
 		g.drawString(str, (int) x, (int) y);
