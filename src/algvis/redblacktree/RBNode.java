@@ -42,8 +42,8 @@ public class RBNode extends BSTNode {
 
 	public void setRed(boolean red) {
 		if (this.red != red) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetRedCommand(red));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetRedCommand(red));
 			}
 			this.red = red;
 		}
@@ -93,10 +93,11 @@ public class RBNode extends BSTNode {
 		if (state == Node.INVISIBLE || getKey() == NULL) {
 			return;
 		}
-		boolean a = D.scenario.isAddingEnabled();
-		D.scenario.enableAdding(false);
+		// TODO
+		boolean a = D.M.scenario.isAddingEnabled();
+		D.M.scenario.enableAdding(false);
 		setColor(isRed() ? NodeColor.RED : NodeColor.BLACK);
-		D.scenario.enableAdding(a);
+		D.M.scenario.enableAdding(a);
 		super.draw(v);
 	}
 

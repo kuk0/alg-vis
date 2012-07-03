@@ -62,13 +62,13 @@ public class DictButtons extends Buttons {
 		super.actionPerformed(evt);
 		if (evt.getSource() == insertB) {
 			final Vector<Integer> args = I.getNonEmptyVI();
-			D.scenario.traverser.startNew(new Runnable() {
+			D.M.scenario.traverser.startNew(new Runnable() {
 				@Override
 				public void run() {
 					boolean p = M.pause;
 					int n = args.size();
 					int i = 0;
-					D.scenario.enableAdding(false);
+					D.M.scenario.enableAdding(false);
 					M.C.enableUpdating(p);
 					for (; i < n - Scenario.maxAlgorithms; ++i) {
 						if (M.pause != p) {
@@ -76,7 +76,7 @@ public class DictButtons extends Buttons {
 						}
 						((Dictionary) D).insert(args.elementAt(i));
 					}
-					D.scenario.enableAdding(true);
+					D.M.scenario.enableAdding(true);
 					for (; i < n; ++i) {
 						if (M.pause != p) {
 							M.C.enableUpdating(p = M.pause);
@@ -87,20 +87,20 @@ public class DictButtons extends Buttons {
 					M.C.update();
 				}
 			}, true);
-			if (D.scenario.isEnabled() && args.size() == 1) {
+			if (D.M.scenario.isEnabled() && args.size() == 1) {
 				startLastAlg();
 			}
 		} else if (evt.getSource() == findB) {
 			final Vector<Integer> args = I.getVI();
 			if (args.size() > 0) {
 				for (final int x : args) {
-					D.scenario.traverser.startNew(new Runnable() {
+					D.M.scenario.traverser.startNew(new Runnable() {
 						@Override
 						public void run() {
 							((Dictionary) D).find(x);
 						}
 					}, true);
-					if (D.scenario.isEnabled()) {
+					if (D.M.scenario.isEnabled()) {
 						startLastAlg();
 					}
 				}
@@ -109,13 +109,13 @@ public class DictButtons extends Buttons {
 			final Vector<Integer> args = I.getVI();
 			if (args.size() > 0) {
 				for (final int x : args) {
-					D.scenario.traverser.startNew(new Runnable() {
+					D.M.scenario.traverser.startNew(new Runnable() {
 						@Override
 						public void run() {
 							((Dictionary) D).delete(x);
 						}
 					}, true);
-					if (D.scenario.isEnabled()) {
+					if (D.M.scenario.isEnabled()) {
 						startLastAlg();
 					}
 				}

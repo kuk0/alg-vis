@@ -140,53 +140,53 @@ public class DataStructures {
 	public static VisPanel createPanel(int i, Settings S) {
 		switch (i) {
 		case 0:
-			return new BSTPanel(S);
+			return new BSTPanel(S, true);
 		case 1:
-			return new RotPanel(S);
+			return new RotPanel(S, false);
 		case 2:
-			return new AVLPanel(S);
+			return new AVLPanel(S, true);
 		case 3:
-			return new a23Panel(S);
+			return new a23Panel(S, false);
 		case 4:
-			return new a234Panel(S);
+			return new a234Panel(S, false);
 		case 5:
-			return new BPanel(S);
+			return new BPanel(S, false);
 		case 6:
-			return new RBPanel(S);
+			return new RBPanel(S, true);
 		case 7:
-			return new AAPanel(S);
+			return new AAPanel(S, true);
 		case 8:
-			return new TreapPanel(S);
+			return new TreapPanel(S, true);
 		case 9:
-			return new SkipListPanel(S);
+			return new SkipListPanel(S, true);
 		case 10:
-			return new GBPanel(S);
+			return new GBPanel(S, true);
 		case 11:
-			return new SplayPanel(S);
+			return new SplayPanel(S, true);
 		case 12:
-			return new HeapPanel(S);
+			return new HeapPanel(S, true);
 		case 13:
-			return new DaryHeapPanel(S);
+			return new DaryHeapPanel(S, false);
 		case 14:
-			return new LeftHeapPanel(S);
+			return new LeftHeapPanel(S, false);
 		case 15:
-			return new SkewHeapPanel(S);
+			return new SkewHeapPanel(S, false);
 		case 16:
-			return new PairHeapPanel(S);
+			return new PairHeapPanel(S, false);
 		case 17:
-			return new BinHeapPanel(S);
+			return new BinHeapPanel(S, false);
 		case 18:
-			return new LazyBinHeapPanel(S);
+			return new LazyBinHeapPanel(S, false);
 		case 19:
-			return new FibHeapPanel(S);
+			return new FibHeapPanel(S, false);
 		case 20:
-			return new UnionFindPanel(S);
+			return new UnionFindPanel(S, true);
 		case 21:
-			return new IntervalPanel(S);
+			return new IntervalPanel(S, false);
 		case 22:
-			return new TriePanel(S);
+			return new TriePanel(S, false);
 		case 23:
-			return new SuffixTreePanel(S);
+			return new SuffixTreePanel(S, false);
 		}
 		if (!check_range(i))
 			return null;

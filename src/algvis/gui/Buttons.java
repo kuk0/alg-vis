@@ -134,7 +134,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		previous.setMnemonic(KeyEvent.VK_O);
 		previous.setEnabled(false);
 		previous.addActionListener(this);
-		previous.setVisible(D.scenario.isEnabled());
+		previous.setVisible(D.M.scenario.isEnabled());
 	}
 
 	public void initNext() {
@@ -165,7 +165,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	public void initSave() {
 		save = new IButton(M.S.L, "button-save");
 		save.setMnemonic(KeyEvent.VK_S);
-		save.setEnabled(D.scenario.isEnabled());
+		save.setEnabled(D.M.scenario.isEnabled());
 		save.addActionListener(this);
 	}
 
@@ -195,17 +195,17 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		I.sb.setText(" ");
 		if (evt.getSource() == previous) {
 			disablePrevious();
-			D.scenario.previous(M.pause, true);
+			D.M.scenario.previous(M.pause, true);
 		} else if (evt.getSource() == next) {
-			if (!D.scenario.isEnabled() || !D.scenario.hasNext()) {
+			if (!D.M.scenario.isEnabled() || !D.M.scenario.hasNext()) {
 				D.next();
 			} else {
 				disableNext();
-				D.scenario.next(M.pause, true);
+				D.M.scenario.next(M.pause, true);
 			}
 			// repaint();
 		} else if (evt.getSource() == clear) {
-			D.scenario.traverser.startNew(new Runnable() {
+			D.M.scenario.traverser.startNew(new Runnable() {
 				@Override
 				public void run() {
 					D.clear();
@@ -222,25 +222,25 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		} else if (evt.getSource() == zoomOut) {
 			M.screen.V.zoomOut();
 		} else if (evt.getSource() == save) {
-			D.scenario.saveXML("test.xml");
+			D.M.scenario.saveXML("test.xml");
 		} else if (evt.getSource() == resetView) {
 			M.screen.V.resetView();
 		}
 	}
 
 	public void update() {
-		if (D.scenario.isAlgorithmRunning()
+		if (D.M.scenario.isAlgorithmRunning()
 				|| (D.getA() != null && D.getA().isSuspended())) {
 			disableAll();
 		} else {
 			enableAll();
 		}
-		if (D.scenario.hasNext() || (D.getA() != null && D.getA().isSuspended())) {
+		if (D.M.scenario.hasNext() || (D.getA() != null && D.getA().isSuspended())) {
 			enableNext();
 		} else {
 			disableNext();
 		}
-		if (D.scenario.hasPrevious()) {
+		if (D.M.scenario.hasPrevious()) {
 			enablePrevious();
 		} else {
 			disablePrevious();
@@ -257,7 +257,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	public void enablePrevious() {
-		if (D.scenario.isEnabled()) {
+		if (D.M.scenario.isEnabled()) {
 			previous.setEnabled(true);
 		}
 	}
@@ -287,8 +287,8 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	public void setStats(String s) {
 		String oldText = stats.getText();
 		if (!oldText.equals(s)) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetStatsCommand(oldText, s));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetStatsCommand(oldText, s));
 			}
 			stats.setText(s);
 			stats.refresh();
@@ -314,13 +314,13 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 	
 	/**
-	 * if D.scenario is enabled, all algorithm is done, so we must go at start
-	 * (in scenario) of algorithm to watch it
+	 * if D.M.scenario is enabled, all algorithm is done, so we must go at start
+	 * (in M.scenario) of algorithm to watch it
 	 */
 	protected void startLastAlg() {
-		D.scenario.previous(false, false);
-		D.scenario.next(M.pause, true);
-		D.scenario.traverser.join();
+		D.M.scenario.previous(false, false);
+		D.M.scenario.next(M.pause, true);
+		D.M.scenario.traverser.join();
 		D.setStats();
 		M.C.update();
 		update();

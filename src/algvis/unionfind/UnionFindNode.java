@@ -41,8 +41,8 @@ public class UnionFindNode extends TreeNode {
 
 	public void setRank(int rank) {
 		if (this.rank != rank) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetRankCommand(rank));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetRankCommand(rank));
 			}
 			this.rank = rank;
 		}
@@ -76,8 +76,8 @@ public class UnionFindNode extends TreeNode {
 			}
 		}
 		if (this.grey != grey) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetGreyCommand(grey));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetGreyCommand(grey));
 			}
 			this.grey = grey;
 		}

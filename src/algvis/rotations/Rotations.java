@@ -43,17 +43,10 @@ public class Rotations extends DataStructure implements ClickListener {
 	/*
 	 * TODO
 	 * Algorithm.D != Buttons.D (T != this)
-	 * 
-	 * => treba mat this.scenario.isEnabled()==T.scenario.isEnabled(),
-	 * lebo funkcie v Buttons aj v Algorithm volaju scenario.isEnabled(),
-	 * ale tie scenario triedy su ine objekty
-	 * 
-	 * => blbost je mat scenario pre kazdu DS; scenario presunut do VisPanelu?
 	 */
 	public Rotations(VisPanel M) {
 		super(M);
 		T = new BST(M);
-		T.scenario.enable(false);
 		M.screen.V.setDS(this);
 		M.screen.V.align = Alignment.LEFT;
 	}

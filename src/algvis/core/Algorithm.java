@@ -31,8 +31,8 @@ abstract public class Algorithm extends Thread {
 
 	public Algorithm(DataStructure D) {
 		this.D = D;
-		D.scenario.newAlgorithm();
-		D.scenario.newStep();
+		D.M.scenario.newAlgorithm();
+		D.M.scenario.newStep();
 	}
 
 	public boolean isSuspended() {
@@ -43,7 +43,7 @@ abstract public class Algorithm extends Thread {
 	 * Mysuspend.
 	 */
 	public void mysuspend() {
-		if (D.M.pause && !D.scenario.isEnabled()) {
+		if (D.M.pause && !D.M.scenario.isEnabled()) {
 			D.M.C.update();
 			suspended = true;
 			synchronized (this) {
@@ -55,7 +55,7 @@ abstract public class Algorithm extends Thread {
 				}
 			}
 		}
-		D.scenario.newStep();
+		D.M.scenario.newStep();
 	}
 
 	/**

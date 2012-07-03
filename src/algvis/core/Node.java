@@ -108,12 +108,12 @@ public class Node {
 	}
 
 	public void setState(int s) {
-		if (state != s && D.scenario.isAddingEnabled()) {
-			D.scenario.add(new SetStateCommand(s));
+		if (state != s && D.M.scenario.isAddingEnabled()) {
+			D.M.scenario.add(new SetStateCommand(s));
 		}
 		state = s;
 		if ((s == Node.LEFT || s == Node.RIGHT || s == Node.DOWN)
-				&& D.scenario.traverser.isInterrupted()) {
+				&& D.M.scenario.traverser.isInterrupted()) {
 			int k = 0;
 			if (s == Node.LEFT) {
 				k = -1;
@@ -140,8 +140,8 @@ public class Node {
 
 	public void fgColor(Color fg) {
 		if (fg != color.fgColor) {
-			if (D != null && D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetFgColorCommand(fg));
+			if (D != null && D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetFgColorCommand(fg));
 			}
 			color = new NodeColor(fg, color.bgColor);
 		}
@@ -149,8 +149,8 @@ public class Node {
 
 	public void bgColor(Color bg) {
 		if (bg != color.bgColor) {
-			if (D != null && D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetBgColorCommand(bg));
+			if (D != null && D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetBgColorCommand(bg));
 			}
 			color = new NodeColor(color.fgColor, bg);
 		}
@@ -174,8 +174,8 @@ public class Node {
 
 	public void mark() {
 		if (!marked) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new MarkCommand(true));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new MarkCommand(true));
 			}
 			marked = true;
 		}
@@ -183,8 +183,8 @@ public class Node {
 
 	public void unmark() {
 		if (marked) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new MarkCommand(false));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new MarkCommand(false));
 			}
 			marked = false;
 		}
@@ -199,8 +199,8 @@ public class Node {
 		if (dir != w || arrow != Node.DIRARROW) {
 			dir = w;
 			arrow = Node.DIRARROW;
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new ArrowCommand(true));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new ArrowCommand(true));
 			}
 		}
 	}
@@ -214,8 +214,8 @@ public class Node {
 		if (dir != w || arrow != Node.TOARROW) {
 			dir = w;
 			arrow = Node.TOARROW;
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new ArrowCommand(true));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new ArrowCommand(true));
 			}
 		}
 	}
@@ -230,8 +230,8 @@ public class Node {
 		if (dir != null || arrow != angle) {
 			dir = null;
 			arrow = angle;
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new ArrowCommand(true));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new ArrowCommand(true));
 			}
 		}
 	}
@@ -241,8 +241,8 @@ public class Node {
 	 */
 	public void noArrow() {
 		if (dir != null || arrow != Node.NOARROW) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new ArrowCommand(false));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new ArrowCommand(false));
 			}
 			dir = null;
 			arrow = Node.NOARROW;
@@ -258,8 +258,8 @@ public class Node {
 		if (dir != w || arc == false) {
 			dir = w;
 			arc = true;
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new ArcCommand(dir, true));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new ArcCommand(dir, true));
 			}
 		}
 	}
@@ -270,8 +270,8 @@ public class Node {
 	public void noArc() {
 		if (arc == true) {
 			arc = false;
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new ArcCommand(dir, false));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new ArcCommand(dir, false));
 			}
 		}
 	}
@@ -390,10 +390,10 @@ public class Node {
 	 */
 	public void goTo(int tox, int toy) {
 		if (this.tox != tox || this.toy != toy) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new MoveCommand(tox, toy));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new MoveCommand(tox, toy));
 			}
-			if (D.scenario.traverser.isInterrupted()) {
+			if (D.M.scenario.traverser.isInterrupted()) {
 				steps = 0;
 				x = this.tox = tox;
 				y = this.toy = toy;
@@ -502,8 +502,8 @@ public class Node {
 
 	public void setKey(int key) {
 		if (this.key != key) {
-			if (D != null && D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetKeyCommand(key));
+			if (D != null && D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetKeyCommand(key));
 			}
 			this.key = key;
 		}

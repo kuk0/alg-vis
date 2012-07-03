@@ -88,8 +88,8 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		pre = new ArrayList<String>();
 		post = new ArrayList<String>();
 		param = new ArrayList<String[]>();
-		if (V.D.scenario.isAddingEnabled()) {
-			V.D.scenario.add(new SetCommentaryStateCommand(state));
+		if (V.D.M.scenario.isAddingEnabled()) {
+			V.D.M.scenario.add(new SetCommentaryStateCommand(state));
 		}
 		if (updatingEnabled) {
 			setText("<html><body></body></html>");
@@ -166,8 +166,8 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		s.add(v);
 		post.add(w);
 		param.add(par);
-		if (V.D.scenario.isAddingEnabled()) {
-			V.D.scenario.add(new SetCommentaryStateCommand(state));
+		if (V.D.M.scenario.isAddingEnabled()) {
+			V.D.M.scenario.add(new SetCommentaryStateCommand(state));
 		}
 		if (updatingEnabled) {
 			update();
@@ -210,7 +210,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 
 	public void addStep(String s, String... par) {
 		++k;
-		int scenPos = V.D.scenario.getAlgPos();
+		int scenPos = V.D.M.scenario.getAlgPos();
 		add("<ol start=\"" + k + "\"><li class=\"step\"><p><a href=\""
 				+ scenPos + "\"> ", s, "</a></p></li></ol>", par);
 	}
@@ -226,10 +226,10 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	@Override
 	public void hyperlinkUpdate(HyperlinkEvent e) {
 		if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-			if (V.D.scenario.isEnabled()) {
-				V.D.scenario.goBeforeStep(Integer.parseInt(e.getDescription()),
+			if (V.D.M.scenario.isEnabled()) {
+				V.D.M.scenario.goBeforeStep(Integer.parseInt(e.getDescription()),
 						false);
-				V.D.scenario.next(true, true);
+				V.D.M.scenario.next(true, true);
 			}
 		} else {
 			Element element = e.getSourceElement();

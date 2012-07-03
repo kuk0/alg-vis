@@ -71,7 +71,7 @@ public class AVLNode extends BSTNode {
 
 	public void setBalance(int bal) {
 		if (this.bal != bal) {
-			D.scenario.add(new SetBalanceCommand(bal));
+			D.M.scenario.add(new SetBalanceCommand(bal));
 			this.bal = bal;
 		}
 	}

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kováè, Katarína Kotrlová, Pavol Lukèa, Viktor Tomkoviè, Tatiana Tóthová
+ * Copyright (c) 2012 Jakub Kovï¿½ï¿½, Katarï¿½na Kotrlovï¿½, Pavol Lukï¿½a, Viktor Tomkoviï¿½, Tatiana Tï¿½thovï¿½
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -114,10 +114,15 @@ public class DaryHeapNode extends HeapNode{
 			return;
 		}
 		
-		boolean a = D.scenario.isAddingEnabled();
-		D.scenario.enableAdding(false);
+		/*
+		 * TODO
+		 * to co je?
+		 * ak netreaba riadok setColor, tak netreba ani tie ostatne 3
+		 */
+		boolean a = D.M.scenario.isAddingEnabled();
+		D.M.scenario.enableAdding(false);
 		//setColor(isRed() ? NodeColor.RED : NodeColor.BLACK);
-		D.scenario.enableAdding(a);
+		D.M.scenario.enableAdding(a);
 		
 
 		super.draw(v);

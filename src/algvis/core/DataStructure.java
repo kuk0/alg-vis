@@ -32,7 +32,6 @@ abstract public class DataStructure {
 	// kolko ma vstupov, ake to su a co treba robit
 	private Algorithm A;
 	public VisPanel M;
-	public Scenario scenario;
 	public static final int rootx = 0, rooty = 0, sheight = 600, swidth = 400,
 			minsepx = 38, minsepy = 30;
 	public int x1, x2, y1 = -50, y2;
@@ -43,7 +42,6 @@ abstract public class DataStructure {
 
 	public DataStructure(VisPanel M) {
 		this.M = M;
-		scenario = new Scenario(M, getName());
 		nodes = new ArrayList<Node>();
 	}
 
@@ -64,7 +62,7 @@ abstract public class DataStructure {
 	protected void start(Algorithm a) {
 		unmark();
 		A = a;
-		if (scenario.isEnabled()) {
+		if (M.scenario.isEnabled()) {
 			// ak je povoleny scenario, tak sa vykona cely algoritmus, nevytvara
 			// (=nespusta) sa nove vlakno na krokovanie
 			// TODO skarede riesenie, spravit lepsie
@@ -115,7 +113,7 @@ abstract public class DataStructure {
 	}
 
 	public void random(final int n) {
-		scenario.traverser.startNew(new Runnable() {
+		M.scenario.traverser.startNew(new Runnable() {
 			@Override
 			public void run() {
 				Random g = new Random(System.currentTimeMillis());
@@ -123,12 +121,12 @@ abstract public class DataStructure {
 				M.pause = false;
 				{
 					int i = 0;
-					scenario.enableAdding(false);
+					M.scenario.enableAdding(false);
 					M.C.enableUpdating(false);
 					for (; i < n - Scenario.maxAlgorithms; ++i) {
 						insert(g.nextInt(InputField.MAX + 1));
 					}
-					scenario.enableAdding(true);
+					M.scenario.enableAdding(true);
 					for (; i < n; ++i) {
 						insert(g.nextInt(InputField.MAX + 1));
 					}
@@ -154,14 +152,14 @@ abstract public class DataStructure {
 
 	public void setNode(int i, Node v, boolean waitBack) {
 		if (nodes.get(i) != v) {
-			if (scenario.isAddingEnabled()) {
-				scenario.add(new Command.SetNodeCommand(this, i, nodes.get(i),
+			if (M.scenario.isAddingEnabled()) {
+				M.scenario.add(new Command.SetNodeCommand(this, i, nodes.get(i),
 						v));
 			}
 			nodes.set(i, v);
 		}
-		if (waitBack && v != null && scenario.isAddingEnabled()) {
-			scenario.add(v.new WaitBackwardsCommand());
+		if (waitBack && v != null && M.scenario.isAddingEnabled()) {
+			M.scenario.add(v.new WaitBackwardsCommand());
 		}
 	}
 

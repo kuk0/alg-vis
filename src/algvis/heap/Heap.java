@@ -39,7 +39,6 @@ public class Heap extends PriorityQueue implements ClickListener {
 		super(M, dsName);
 		addNodes(3); // root (0), v (1), v2 (2)
 		M.screen.V.setDS(this);
-		scenario.enable(true);
 	}
 
 	@Override
@@ -65,7 +64,8 @@ public class Heap extends PriorityQueue implements ClickListener {
 		setRoot(setV(setV2(null)));
 		setN(0);
 		setStats();
-		scenario.clear();
+		// TODO asi nie
+		M.scenario.clear();
 	}
 
 	@Override
@@ -154,8 +154,8 @@ public class Heap extends PriorityQueue implements ClickListener {
 
 	public void setN(int n) {
 		if (this.n != n) {
-			if (scenario.isAddingEnabled()) {
-				scenario.add(new SetNCommand(n));
+			if (M.scenario.isAddingEnabled()) {
+				M.scenario.add(new SetNCommand(n));
 			}
 			this.n = n;
 		}

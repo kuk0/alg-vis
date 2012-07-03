@@ -65,8 +65,8 @@ public class BSTNode extends Node {
 			right = null;
 		}
 		if (this.left != left) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetLeftCommand(left));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetLeftCommand(left));
 			}
 			this.left = left;
 		}
@@ -86,8 +86,8 @@ public class BSTNode extends Node {
 			left = null;
 		}
 		if (this.right != right) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetRightCommand(right));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetRightCommand(right));
 			}
 			this.right = right;
 		}
@@ -100,8 +100,8 @@ public class BSTNode extends Node {
 
 	public BSTNode setParent(BSTNode parent) {
 		if (this.parent != parent) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetParentCommand(parent));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetParentCommand(parent));
 			}
 			this.parent = parent;
 		}
@@ -110,8 +110,8 @@ public class BSTNode extends Node {
 
 	public void setLevel(int level) {
 		if (this.level != level) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetLevelCommand(level));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetLevelCommand(level));
 			}
 			this.level = level;
 		}

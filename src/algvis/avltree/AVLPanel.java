@@ -25,8 +25,8 @@ public class AVLPanel extends VisPanel {
 	private static final long serialVersionUID = 9157486805598407776L;
 	public static Class<? extends DataStructure> DS = AVL.class;
 
-	public AVLPanel(Settings S) {
-		super(S);
+	public AVLPanel(Settings S, boolean isScenarioEnabled) {
+		super(S, isScenarioEnabled);
 	}
 
 	@Override

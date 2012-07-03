@@ -31,6 +31,7 @@ import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.internationalization.ILabel;
 import algvis.internationalization.LanguageListener;
+import algvis.scenario.Scenario;
 
 public abstract class VisPanel extends JPanel implements LanguageListener {
 	private static final long serialVersionUID = 5104769085118210624L;
@@ -46,9 +47,11 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 	public TitledBorder border;
 
 	public boolean pause = true, small = false;
+	public final Scenario scenario = new Scenario(this, getName());
 
-	public VisPanel(Settings S) {
+	public VisPanel(Settings S, boolean isScenarioEnabled) {
 		this.S = S;
+		scenario.enable(isScenarioEnabled);
 		init();
 	}
 

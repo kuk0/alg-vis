@@ -95,8 +95,8 @@ public class UnionFindButtons extends Buttons {
 			Thread t = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					D.scenario.newAlgorithm();
-					D.scenario.newStep();
+					D.M.scenario.newAlgorithm();
+					D.M.scenario.newStep();
 					D.makeSet(N);
 					M.B.update();
 				}
@@ -114,9 +114,9 @@ public class UnionFindButtons extends Buttons {
 					}
 					if (D.secondSelected != null) {
 						args.insertElementAt(D.secondSelected.getKey(), 1);
-						D.scenario.enableAdding(false);
+						D.M.scenario.enableAdding(false);
 						D.secondSelected.unmark();
-						D.scenario.enableAdding(true);
+						D.M.scenario.enableAdding(true);
 						D.secondSelected = null;
 					}
 					if (args.size() == 0) {
@@ -133,7 +133,7 @@ public class UnionFindButtons extends Buttons {
 				public void run() {
 					int count = D.count;
 					final Vector<Integer> args = I.getVI(1, count);
-					D.scenario.enableAdding(false);
+					D.M.scenario.enableAdding(false);
 					if (D.firstSelected != null) {
 						args.insertElementAt(D.firstSelected.getKey(), 0);
 						D.firstSelected.unmark();
@@ -144,7 +144,7 @@ public class UnionFindButtons extends Buttons {
 						D.secondSelected.unmark();
 						D.secondSelected = null;
 					}
-					D.scenario.enableAdding(true);
+					D.M.scenario.enableAdding(true);
 					Random G = new Random(System.currentTimeMillis());
 					switch (args.size()) {
 					case 0:

@@ -45,8 +45,8 @@ public class GBTree extends BST {
 
 	public void setDel(int del) {
 		if (this.del != del) {
-			if (scenario.isAddingEnabled()) {
-				scenario.add(new SetDelCommand(del));
+			if (M.scenario.isAddingEnabled()) {
+				M.scenario.add(new SetDelCommand(del));
 			}
 			this.del = del;
 		}

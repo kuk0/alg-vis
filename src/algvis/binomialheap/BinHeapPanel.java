@@ -25,8 +25,8 @@ public class BinHeapPanel extends VisPanel {
 	private static final long serialVersionUID = 2070258718656241421L;
 	public static Class<? extends DataStructure> DS = BinomialHeap.class;
 
-	public BinHeapPanel(Settings S) {
-		super(S);
+	public BinHeapPanel(Settings S, boolean isScenarioEnabled) {
+		super(S, isScenarioEnabled);
 	}
 
 	@Override

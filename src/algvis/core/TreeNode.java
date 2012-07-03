@@ -536,8 +536,8 @@ public class TreeNode extends Node {
 
 	public void setChild(TreeNode child) {
 		if (this.child != child) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetChildCommand(child));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetChildCommand(child));
 			}
 			this.child = child;
 		}
@@ -549,8 +549,8 @@ public class TreeNode extends Node {
 
 	public void setRight(TreeNode right) {
 		if (this.right != right) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetRightCommand(right));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetRightCommand(right));
 			}
 			this.right = right;
 		}
@@ -562,8 +562,8 @@ public class TreeNode extends Node {
 
 	public void setParent(TreeNode parent) {
 		if (this.parent != parent) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetParentCommand(parent));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetParentCommand(parent));
 			}
 			this.parent = parent;
 		}
