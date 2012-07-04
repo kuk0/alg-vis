@@ -20,7 +20,7 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class TrieInsert extends Algorithm {
-	private Trie T;
+	private final Trie T;
 	private String s;
 
 	public TrieInsert(Trie T, String s) {

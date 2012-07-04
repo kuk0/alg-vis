@@ -73,7 +73,7 @@ public class AlgVis extends JPanel implements ActionListener {
 	private final Languages L;
 	private final Settings S;
 
-	private Map<String, IMenu> adtItems = new HashMap<String, IMenu>();
+	private final Map<String, IMenu> adtItems = new HashMap<String, IMenu>();
 	private IMenuItem[] dsItems;
 
 	public AlgVis(JRootPane P) {

@@ -31,14 +31,14 @@ abstract public class DataStructure {
 	// datova struktura musi vediet gombikom povedat, kolko ich potrebuje,
 	// kolko ma vstupov, ake to su a co treba robit
 	private Algorithm A;
-	public VisPanel M;
+	public final VisPanel M;
 	public static final int rootx = 0, rooty = 0, sheight = 600, swidth = 400,
 			minsepx = 38, minsepy = 30;
 	public int x1, x2, y1 = -50, y2;
 	public Node chosen = null;
 	public static String adtName = "";
 	public static String dsName = "";
-	private List<Node> nodes; // root, v, v2, vv,...
+	private final List<Node> nodes; // root, v, v2, vv,...
 
 	protected DataStructure(VisPanel M) {
 		this.M = M;

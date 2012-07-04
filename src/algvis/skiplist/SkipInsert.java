@@ -22,7 +22,7 @@ import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class SkipInsert extends SkipAlg {
-	private Random R;
+	private final Random R;
 
 	public SkipInsert(SkipList L, int x) { // Buttons B,
 		super(L, x);

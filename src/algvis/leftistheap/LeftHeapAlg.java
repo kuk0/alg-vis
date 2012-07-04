@@ -20,7 +20,7 @@ import algvis.core.Algorithm;
 import algvis.core.Node;
 
 class LeftHeapAlg extends Algorithm {
-	LeftHeap H;
+	final LeftHeap H;
 	LeftHeapNode v;
 
 	LeftHeapAlg(LeftHeap H) {

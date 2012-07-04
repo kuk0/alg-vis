@@ -20,7 +20,7 @@ import algvis.core.Algorithm;
 import algvis.core.Node;
 
 class SkewHeapAlg extends Algorithm {
-	SkewHeap H;
+	final SkewHeap H;
 	SkewHeapNode v;
 
 	SkewHeapAlg(SkewHeap H) {

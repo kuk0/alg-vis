@@ -45,8 +45,8 @@ import algvis.scenario.Command;
  */
 abstract public class Buttons extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1417759004124906334L;
-	protected VisPanel M;
-	protected DataStructure D;
+	protected final VisPanel M;
+	protected final DataStructure D;
 	public InputField I;
 	private IButton previous;
     protected IButton next;

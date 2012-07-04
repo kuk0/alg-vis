@@ -17,8 +17,8 @@
 package algvis.skewheap;
 
 public class SkewHeapInsert extends SkewHeapAlg {
-	private int K;
-	private int i;
+	private final int K;
+	private final int i;
 
 	public SkewHeapInsert(SkewHeap H, int i, int x) {
 		super(H);

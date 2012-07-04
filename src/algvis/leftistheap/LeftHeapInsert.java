@@ -17,8 +17,8 @@
 package algvis.leftistheap;
 
 public class LeftHeapInsert extends LeftHeapAlg {
-	private int K;
-	private int i;
+	private final int K;
+	private final int i;
 
 	public LeftHeapInsert(LeftHeap H, int i, int x) {
 		super(H);

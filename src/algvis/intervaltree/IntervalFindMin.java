@@ -5,8 +5,8 @@ import algvis.intervaltree.IntervalNode.focusType;
 import algvis.intervaltree.IntervalTrees.mimasuType;
 
 public class IntervalFindMin extends IntervalAlg {
-	private int i;
-    private int j;
+	private final int i;
+    private final int j;
 	private IntervalNode maxi;
 	private static final int ninf = -2147483648;
 	private static final int pinf = 2147483647;

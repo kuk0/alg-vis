@@ -33,7 +33,7 @@ public class SuffixTree extends DataStructure {
 	private SuffixTreeNode v = null;
 
 	public TrieWordNode hw = null;
-	private TrieWordNode cs = null;
+	private final TrieWordNode cs = null;
 
 	public String text;
 	StringElem str;

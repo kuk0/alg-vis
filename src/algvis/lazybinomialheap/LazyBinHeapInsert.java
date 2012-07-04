@@ -20,9 +20,9 @@ import algvis.binomialheap.BinHeapNode;
 import algvis.core.Algorithm;
 
 public class LazyBinHeapInsert extends Algorithm {
-	private LazyBinomialHeap H;
-	private BinHeapNode v;
-	private int i;
+	private final LazyBinomialHeap H;
+	private final BinHeapNode v;
+	private final int i;
 
 	public LazyBinHeapInsert(LazyBinomialHeap H, int i, int x) {
 		super(H);

@@ -28,7 +28,7 @@ public class LeftHeapNode extends BSTNode {
 	int rank = 1;
 	private boolean doubleArrow = false;
 	boolean dashedrightl = false; // if true the line leading to the right son is dashed
-	private boolean dashedleftl = false; // if true the line leading to the left son is dashed
+	private final boolean dashedleftl = false; // if true the line leading to the left son is dashed
 
 	private LeftHeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);

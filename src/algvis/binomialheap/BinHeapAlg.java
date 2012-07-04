@@ -19,7 +19,7 @@ package algvis.binomialheap;
 import algvis.core.Algorithm;
 
 class BinHeapAlg extends Algorithm {
-	BinomialHeap H;
+	final BinomialHeap H;
 
 	BinHeapAlg(BinomialHeap H) {
 		super(H);

@@ -21,9 +21,9 @@ import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class BDelete extends Algorithm {
-	private BTree T;
+	private final BTree T;
 	private BNode v;
-	private int K;
+	private final int K;
 
 	public BDelete(BTree T, int x) {
 		super(T);

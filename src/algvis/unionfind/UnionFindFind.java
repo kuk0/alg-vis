@@ -29,7 +29,7 @@ public class UnionFindFind extends Algorithm {
     private UnionFindNode u = null;
 
 	private FindHeuristic findState;
-	private UnionFind UF;
+	private final UnionFind UF;
 
 	UnionFindFind(UnionFind UF) {
 		super(UF);

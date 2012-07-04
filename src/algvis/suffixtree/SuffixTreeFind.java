@@ -19,8 +19,8 @@ package algvis.suffixtree;
 import algvis.core.Algorithm;
 
 public class SuffixTreeFind extends Algorithm {
-	private SuffixTree T;
-	private String s;
+	private final SuffixTree T;
+	private final String s;
 
 	public SuffixTreeFind(SuffixTree T, String s) {
 		super(T);

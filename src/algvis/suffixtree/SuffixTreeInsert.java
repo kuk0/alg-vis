@@ -23,8 +23,8 @@ import algvis.core.NodeColor;
 import algvis.trie.TrieWordNode;
 
 public class SuffixTreeInsert extends Algorithm {
-	private SuffixTree T;
-	private String s;
+	private final SuffixTree T;
+	private final String s;
 
 	public SuffixTreeInsert(SuffixTree T, String s) {
 		super(T);

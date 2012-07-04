@@ -26,7 +26,7 @@ package algvis.core;
  * resumed (method myresume) after pressing the "Next" button.
  */
 abstract public class Algorithm extends Thread {
-	private DataStructure D;
+	private final DataStructure D;
 	private boolean suspended = false;
 
 	protected Algorithm(DataStructure D) {

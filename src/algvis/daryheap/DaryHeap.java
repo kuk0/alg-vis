@@ -23,7 +23,7 @@ import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
 
 public class DaryHeap extends PriorityQueue implements ClickListener{
-	private static String dsName = "daryheap";
+	private static final String dsName = "daryheap";
 	DaryHeapNode root = null, v = null, v2 = null;
 	DaryHeapNode last = null;
 	int order = 5;

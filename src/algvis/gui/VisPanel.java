@@ -43,7 +43,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 	public DataStructure D; // datovej struktury
 	public Screen screen; // obrazovky v strede
 	public ILabel statusBar; // a status baru
-	public Settings S;
+	public final Settings S;
 	private TitledBorder border;
 
 	public boolean pause = true, small = false;

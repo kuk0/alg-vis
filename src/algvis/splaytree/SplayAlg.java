@@ -20,7 +20,7 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 class SplayAlg extends Algorithm {
-	SplayTree T;
+	final SplayTree T;
 	SplayNode s, v;
 	int K;
 

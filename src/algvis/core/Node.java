@@ -52,8 +52,8 @@ public class Node {
 										// 135=SW, 180=W)
                                         private boolean arc = false;
 
-	private static int STEPS = 10;
-	public static int radius = 10;
+	private static final int STEPS = 10;
+	public static final int radius = 10;
 
 	/**
 	 * the key values are generally integers from 1 to 999 (inclusive) special

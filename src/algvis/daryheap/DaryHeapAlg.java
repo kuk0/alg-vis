@@ -20,7 +20,7 @@ import algvis.core.Algorithm;
 import algvis.core.Node;
 
 class DaryHeapAlg extends Algorithm {
-	DaryHeap H;
+	final DaryHeap H;
 	DaryHeapNode v;
 
 	DaryHeapAlg(DaryHeap H) {

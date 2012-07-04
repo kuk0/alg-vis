@@ -28,7 +28,7 @@ public class DaryHeapNode extends HeapNode{
 	private DaryHeapNode parent = null;
 	int numChildren = 0;
 	int nson = -1 ; //kolky je to syn svojho otca
-	DaryHeapNode[] c;
+	final DaryHeapNode[] c;
 	
 	int nnodes = 1;
     private int height = 1; // pre setStats

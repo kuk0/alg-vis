@@ -21,9 +21,9 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class RBFind extends Algorithm {
-	private RB T;
-	private BSTNode v;
-	private int K;
+	private final RB T;
+	private final BSTNode v;
+	private final int K;
 
 	public RBFind(RB T, int x) {
 		super(T);

@@ -25,7 +25,7 @@ public enum Fonts {
 			Font.SANS_SERIF, Font.PLAIN, 7)), TYPEWRITER(initTT());
 	//new Font("FreeMono", Font.BOLD, 10));
 
-	public Font font;
+	public final Font font;
 	public FontMetrics fm;
 
 	private Fonts(Font f) {

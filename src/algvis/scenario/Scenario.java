@@ -34,7 +34,7 @@ import algvis.gui.VisPanel;
 public class Scenario implements XMLable {
 	private final ScenarioCommand scenario;
 	public final Traverser traverser;
-	private VisPanel V;
+	private final VisPanel V;
 	private boolean addingEnabled = true;
 	private boolean enabled;
 

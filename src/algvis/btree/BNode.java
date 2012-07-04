@@ -30,8 +30,8 @@ public class BNode extends Node {
     private int rightw;
 	BNode parent = null;
 	int numKeys = 1, numChildren = 0;
-	int[] key;
-	BNode[] c;
+	final int[] key;
+	final BNode[] c;
 	// View V;
 
 	// statistics

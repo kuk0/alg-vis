@@ -17,8 +17,8 @@
 package algvis.pairingheap;
 
 public class PairHeapInsert extends PairHeapAlg{
-	private int K;
-	private int i;
+	private final int K;
+	private final int i;
 	PairHeapNode w;
 	
 	public PairHeapInsert(PairingHeap H, int i, int x) {

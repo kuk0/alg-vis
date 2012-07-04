@@ -24,7 +24,7 @@ import java.util.Vector;
 import java.util.regex.Pattern;
 
 public class WordGenerator {
-	private volatile static WordGenerator INSTANCE = new WordGenerator();
+	private final volatile static WordGenerator INSTANCE = new WordGenerator();
 	private Vector<String> enWords;
 	private Vector<String> skWords;
 	private Random generator;

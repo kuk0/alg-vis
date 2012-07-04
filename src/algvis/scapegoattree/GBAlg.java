@@ -19,9 +19,9 @@ package algvis.scapegoattree;
 import algvis.core.Algorithm;
 
 class GBAlg extends Algorithm {
-	GBTree T;
-	GBNode v;
-	int K;
+	final GBTree T;
+	final GBNode v;
+	final int K;
 
 	GBAlg(GBTree T, int x) {
 		super(T);

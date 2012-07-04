@@ -45,17 +45,17 @@ import algvis.scenario.Command;
 public class Commentary extends JEditorPane implements LanguageListener,
 		HyperlinkListener {
 	private static final long serialVersionUID = 9023200331860482960L;
-	private VisPanel V;
-	private Languages L;
-	private JScrollPane sp;
+	private final VisPanel V;
+	private final Languages L;
+	private final JScrollPane sp;
 	private int k = 0, position = 0;
 	private List<String> s = new ArrayList<String>(),
 			pre = new ArrayList<String>(), post = new ArrayList<String>();
 	private List<String[]> param = new ArrayList<String[]>();
 	private boolean updatingEnabled = true;
 
-	private static SimpleAttributeSet normalAttr = new SimpleAttributeSet();
-	private static SimpleAttributeSet hoverAttr = new SimpleAttributeSet();
+	private static final SimpleAttributeSet normalAttr = new SimpleAttributeSet();
+	private static final SimpleAttributeSet hoverAttr = new SimpleAttributeSet();
 	static {
 		StyleConstants.setBackground(normalAttr, Color.WHITE);
 		StyleConstants.setBackground(hoverAttr, new Color(0xDB, 0xF1, 0xF9)); // #DBF1F9

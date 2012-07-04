@@ -24,7 +24,7 @@ public class PairHeapAlg extends Algorithm {
 		NAIVE, LRRL // , FB, BF, MULTI, LAZYM
 	}
 
-	PairingHeap H;
+	final PairingHeap H;
 	PairHeapNode v;
 
 	PairHeapAlg(DataStructure D) {

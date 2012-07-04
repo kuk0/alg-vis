@@ -25,11 +25,11 @@ import java.util.ResourceBundle;
 public class Languages {
 	private final static int N = 2;
 	private int current_lang;
-	private Locale[] all_locales = new Locale[N];
-	private ResourceBundle[] all_msgs = new ResourceBundle[N];
+	private final Locale[] all_locales = new Locale[N];
+	private final ResourceBundle[] all_msgs = new ResourceBundle[N];
 	private Locale locale;
 	private ResourceBundle msg;
-	private List<LanguageListener> listeners = new LinkedList<LanguageListener>();
+	private final List<LanguageListener> listeners = new LinkedList<LanguageListener>();
 
 	private Languages() {
 		all_locales[0] = new Locale("en");

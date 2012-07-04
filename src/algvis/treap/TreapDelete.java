@@ -20,9 +20,9 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class TreapDelete extends Algorithm {
-	private Treap T;
-	private TreapNode v;
-	private int K;
+	private final Treap T;
+	private final TreapNode v;
+	private final int K;
 
 	public TreapDelete(Treap T, int x) {
 		super(T);

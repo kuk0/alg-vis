@@ -3,7 +3,7 @@ package algvis.intervaltree;
 import algvis.gui.InputField;
 
 public class IntervalChangeKey extends IntervalAlg{
-	private int value;
+	private final int value;
 
 	public IntervalChangeKey(IntervalTree T, IntervalNode v, int value) {
 		super(T);

@@ -34,9 +34,9 @@ import algvis.internationalization.ILabel;
 public class InputField extends JTextField {
 	private static final long serialVersionUID = -1263697952255226926L;
 	public final static int MAX = 999;
-	private Random G;
+	private final Random G;
 	final ILabel sb; // status bar
-	private Settings s;
+	private final Settings s;
 
 	public InputField(int cols, ILabel sb, Settings s) {
 		super(cols);

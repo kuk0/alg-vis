@@ -22,9 +22,9 @@ import algvis.core.Algorithm;
 import algvis.gui.InputField;
 
 public class FibHeapDecrKey extends Algorithm {
-	private int delta;
-    private int i;
-	private BinomialHeap H;
+	private final int delta;
+    private final int i;
+	private final BinomialHeap H;
 	private BinHeapNode v;
 
 	public FibHeapDecrKey(BinomialHeap H, BinHeapNode v, int delta, int i) {

@@ -22,9 +22,9 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class Rotate extends Algorithm {
-	private Rotations R;
-	private BST T;
-	private BSTNode v;
+	private final Rotations R;
+	private final BST T;
+	private final BSTNode v;
 
 	public Rotate(Rotations R, BSTNode v) {
 		super(R.T);

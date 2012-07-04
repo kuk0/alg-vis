@@ -20,7 +20,7 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class TrieDelete extends Algorithm {
-	private Trie T;
+	private final Trie T;
 	private String s;
 
 	public TrieDelete(Trie T, String s) {

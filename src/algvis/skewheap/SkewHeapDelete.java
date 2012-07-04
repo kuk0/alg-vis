@@ -17,7 +17,7 @@
 package algvis.skewheap;
 
 public class SkewHeapDelete extends SkewHeapAlg {
-	private int i;
+	private final int i;
 
 	public SkewHeapDelete(SkewHeap H, int i) {
 		super(H);

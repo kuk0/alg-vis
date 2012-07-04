@@ -19,10 +19,10 @@ package algvis.skiplist;
 import algvis.core.Algorithm;
 
 class SkipAlg extends Algorithm {
-	SkipList L;
+	final SkipList L;
 	SkipNode v;
 	SkipNode p[];
-	int K;
+	final int K;
 
 	SkipAlg(SkipList L, int x) {
 		super(L);

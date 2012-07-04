@@ -19,9 +19,9 @@ package algvis.lazybinomialheap;
 import algvis.core.Algorithm;
 
 public class LazyBinHeapMeld extends Algorithm {
-	private LazyBinomialHeap H;
-	private int i;
-    private int j;
+	private final LazyBinomialHeap H;
+	private final int i;
+    private final int j;
 
 	public LazyBinHeapMeld(LazyBinomialHeap H, int i, int j) {
 		super(H);

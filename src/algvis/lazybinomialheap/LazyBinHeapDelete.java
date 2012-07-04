@@ -20,8 +20,8 @@ import algvis.binomialheap.BinHeapNode;
 import algvis.core.Algorithm;
 
 public class LazyBinHeapDelete extends Algorithm {
-	private LazyBinomialHeap H;
-	private int i;
+	private final LazyBinomialHeap H;
+	private final int i;
 
 	int lg(int n) {
 		return (int) Math.ceil(Math.log(n) / Math.log(2));

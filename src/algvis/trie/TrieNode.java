@@ -27,7 +27,7 @@ import algvis.gui.view.View;
 
 public class TrieNode extends TreeNode {
 	public char ch;
-	protected int radius = 2;
+	protected final int radius = 2;
 	private static final int ordinaryNode = -7;
 
 	private boolean greyPair = false;

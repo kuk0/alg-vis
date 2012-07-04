@@ -20,7 +20,7 @@ import javax.swing.JMenuItem;
 
 public class IMenuItem extends JMenuItem implements LanguageListener {
 	private static final long serialVersionUID = -6522159616479156702L;
-	private Languages L;
+	private final Languages L;
 	private String t;
 
 	public IMenuItem(Languages L, String text) {

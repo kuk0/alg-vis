@@ -28,7 +28,7 @@ public class SkewHeapNode extends BSTNode {
 	Color color = Color.yellow;
 	private boolean doubleArrow = false;
 	boolean dashedrightl = false; // if true the line leading to the right son is dashed
-	private boolean dashedleftl = false;  // if true the line leading to the left son is dashed
+	private final boolean dashedleftl = false;  // if true the line leading to the left son is dashed
 
 	private SkewHeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);

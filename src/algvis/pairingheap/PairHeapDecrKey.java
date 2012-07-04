@@ -19,7 +19,7 @@ package algvis.pairingheap;
 import algvis.gui.InputField;
 
 public class PairHeapDecrKey extends PairHeapAlg {
-	private int delta;
+	private final int delta;
 
 	public PairHeapDecrKey(PairingHeap D, PairHeapNode v, int delta) {
 		super(D);

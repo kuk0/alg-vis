@@ -20,9 +20,9 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class BInsert extends Algorithm {
-	private BTree T;
-	private BNode v;
-	private int K;
+	private final BTree T;
+	private final BNode v;
+	private final int K;
 
 	public BInsert(BTree T, int x) {
 		super(T);

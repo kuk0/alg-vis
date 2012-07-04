@@ -8,12 +8,12 @@ import algvis.gui.view.View;
 
 public class StringElem {
 	private static final int span = 12;
-	private DataStructure D;
-	private int x;
-    private int y;
+	private final DataStructure D;
+	private final int x;
+    private final int y;
     private int len;
-	private String s;
-	private ArrayList<Color> col;
+	private final String s;
+	private final ArrayList<Color> col;
 
 	public StringElem(DataStructure D, String s, int x, int y) {
 		this.D = D;

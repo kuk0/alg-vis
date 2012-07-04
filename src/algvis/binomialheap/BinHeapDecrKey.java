@@ -21,8 +21,8 @@ import algvis.core.Node;
 import algvis.gui.InputField;
 
 public class BinHeapDecrKey extends Algorithm {
-	private int delta;
-	private BinomialHeap H;
+	private final int delta;
+	private final BinomialHeap H;
 	private BinHeapNode v;
 
 	public BinHeapDecrKey(BinomialHeap H, BinHeapNode v, int delta) {
