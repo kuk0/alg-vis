@@ -32,7 +32,9 @@ import algvis.scenario.Scenario;
  */
 public class DictButtons extends Buttons {
 	private static final long serialVersionUID = 8331529914377645715L;
-	IButton insertB, findB, deleteB;
+	private IButton insertB;
+    private IButton findB;
+    private IButton deleteB;
 
 	public DictButtons(VisPanel M) {
 		super(M);

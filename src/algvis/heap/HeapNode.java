@@ -27,7 +27,7 @@ public class HeapNode extends BSTNode {
 	// Color color = Color.yellow;
 	// int height = 1;
 
-	public HeapNode(DataStructure D, int key, int x, int y) {
+	protected HeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 		bgKeyColor();
 	}

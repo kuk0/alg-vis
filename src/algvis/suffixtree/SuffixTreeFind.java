@@ -19,8 +19,8 @@ package algvis.suffixtree;
 import algvis.core.Algorithm;
 
 public class SuffixTreeFind extends Algorithm {
-	SuffixTree T;
-	String s;
+	private SuffixTree T;
+	private String s;
 
 	public SuffixTreeFind(SuffixTree T, String s) {
 		super(T);
@@ -29,7 +29,7 @@ public class SuffixTreeFind extends Algorithm {
 		setHeader("triefind", s.substring(0, s.length() - 1));
 	}
 
-	public void beforeReturn() {
+	void beforeReturn() {
 		T.clearExtraColor();
 		addStep("done");
 	}

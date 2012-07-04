@@ -25,7 +25,9 @@ import algvis.gui.Fonts;
 import algvis.gui.view.View;
 
 public class BNode extends Node {
-	int width, leftw, rightw;
+	private int width;
+    private int leftw;
+    private int rightw;
 	BNode parent = null;
 	int numKeys = 1, numChildren = 0;
 	int[] key;
@@ -279,7 +281,7 @@ public class BNode extends Node {
 		width = _width();
 	}
 
-	public String toString(int max) {
+	String toString(int max) {
 		if (numKeys == 0 || max == 0) {
 			return "";
 		}
@@ -311,7 +313,7 @@ public class BNode extends Node {
 		}
 	}
 
-	public int pos(int i) {
+	int pos(int i) {
 		if (i < 0) {
 			return tox - D.M.screen.V.stringWidth(toString(), Fonts.NORMAL) / 2 - Node.radius;
 		}
@@ -370,7 +372,7 @@ public class BNode extends Node {
 		move();
 	}
 
-	public void rebox() {
+	void rebox() {
 		if (numChildren == 0) {
 			leftw = rightw = width / 2 + ((BTree) D).xspan; // numKeys *
 			// D.radius +
@@ -391,7 +393,7 @@ public class BNode extends Node {
 		}
 	}
 
-	public void reboxTree() {
+	void reboxTree() {
 		for (int i = 0; i < numChildren; ++i) {
 			c[i].reboxTree();
 		}
@@ -445,7 +447,7 @@ public class BNode extends Node {
 		repos();
 	}
 
-	public int _goToX(BNode v) {
+	int _goToX(BNode v) {
 		int x = key[0], p = v.numKeys;
 		for (int i = 0; i < p; ++i) {
 			if (x <= v.key[i]) {

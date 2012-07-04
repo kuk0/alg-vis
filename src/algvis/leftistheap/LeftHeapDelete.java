@@ -17,7 +17,7 @@
 package algvis.leftistheap;
 
 public class LeftHeapDelete extends LeftHeapAlg {
-	int i;
+	private int i;
 
 	public LeftHeapDelete(LeftHeap H, int i) {
 		super(H);

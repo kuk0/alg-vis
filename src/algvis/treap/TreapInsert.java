@@ -19,9 +19,9 @@ package algvis.treap;
 import algvis.core.Algorithm;
 
 public class TreapInsert extends Algorithm {
-	Treap T;
-	TreapNode v;
-	int K;
+	private Treap T;
+	private TreapNode v;
+	private int K;
 
 	public TreapInsert(Treap T, int x) {
 		super(T);

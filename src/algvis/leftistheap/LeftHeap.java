@@ -26,7 +26,7 @@ import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
 
 public class LeftHeap extends MeldablePQ implements ClickListener{
-	public static String dsName = "leftheap";
+	private static String dsName = "leftheap";
 	LeftHeapNode root[] = null, v = null, v2 = null;
 
 	public LeftHeap(VisPanel M) {
@@ -46,7 +46,7 @@ public class LeftHeap extends MeldablePQ implements ClickListener{
 
 	}
 
-	protected Pair chooseHeaps(int i, int j) {
+	Pair chooseHeaps(int i, int j) {
 		if (i < 1 || i > numHeaps) {
 			i = -1;
 		}

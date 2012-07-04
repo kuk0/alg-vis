@@ -44,12 +44,12 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 	public Screen screen; // obrazovky v strede
 	public ILabel statusBar; // a status baru
 	public Settings S;
-	public TitledBorder border;
+	private TitledBorder border;
 
 	public boolean pause = true, small = false;
 	public final Scenario scenario = new Scenario(this, getName());
 
-	public VisPanel(Settings S, boolean isScenarioEnabled) {
+	protected VisPanel(Settings S, boolean isScenarioEnabled) {
 		this.S = S;
 		scenario.enable(isScenarioEnabled);
 		init();
@@ -155,7 +155,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 		return SP;
 	}
 
-	abstract public void initDS();
+	protected abstract void initDS();
 
 	/*
 	 * public void showStatus (String t) { statusBar.setT(t); }

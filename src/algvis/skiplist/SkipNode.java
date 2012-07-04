@@ -140,11 +140,11 @@ public class SkipNode extends Node {
 		return null;
 	}
 
-	public SkipNode getLeft() {
+	SkipNode getLeft() {
 		return left;
 	}
 
-	public void setLeft(SkipNode left) {
+	void setLeft(SkipNode left) {
 		if (this.left != left) {
 			if (D.M.scenario.isAddingEnabled()) {
 				D.M.scenario.add(new SetLeftCommand(left));
@@ -157,7 +157,7 @@ public class SkipNode extends Node {
 		return right;
 	}
 
-	public SkipNode setRight(SkipNode right) {
+	SkipNode setRight(SkipNode right) {
 		if (this.right != right) {
 			if (D.M.scenario.isAddingEnabled()) {
 				D.M.scenario.add(new SetRightCommand(right));

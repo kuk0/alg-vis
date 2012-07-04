@@ -18,15 +18,15 @@ package algvis.binomialheap;
 
 import algvis.core.Algorithm;
 
-public class BinHeapAlg extends Algorithm {
+class BinHeapAlg extends Algorithm {
 	BinomialHeap H;
 
-	public BinHeapAlg(BinomialHeap H) {
+	BinHeapAlg(BinomialHeap H) {
 		super(H);
 		this.H = H;
 	}
 
-	public void meld(int i) {
+	void meld(int i) {
 		BinHeapNode v = H.root[i];
 		v.mark();
 		if ((H.min[0]).prec(H.min[i])) {

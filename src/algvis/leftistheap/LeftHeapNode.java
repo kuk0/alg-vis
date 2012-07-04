@@ -26,11 +26,11 @@ import algvis.gui.view.View;
 
 public class LeftHeapNode extends BSTNode {
 	int rank = 1;
-	boolean doubleArrow = false;
+	private boolean doubleArrow = false;
 	boolean dashedrightl = false; // if true the line leading to the right son is dashed
-	boolean dashedleftl = false; // if true the line leading to the left son is dashed
+	private boolean dashedleftl = false; // if true the line leading to the left son is dashed
 
-	public LeftHeapNode(DataStructure D, int key, int x, int y) {
+	private LeftHeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 		bgKeyColor();
 	}
@@ -220,7 +220,7 @@ public class LeftHeapNode extends BSTNode {
 		return (LeftHeapNode) super.getLeft();
 	}
 
-	public void setLeft(LeftHeapNode v) {
+	void setLeft(LeftHeapNode v) {
 		super.setLeft(v);
 	}
 

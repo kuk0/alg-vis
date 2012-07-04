@@ -28,32 +28,35 @@ public class TreeNode extends Node {
 	private TreeNode child = null, right = null, parent = null;
 
 	// variables for the Reingold-Tilford-Walker layout
-	int offset = 0; // offset from base line, base line has x-coord
+    private int offset = 0; // offset from base line, base line has x-coord
 					// equaled to x-coord of leftmost child
-	int level; // distance from the root
+                    private int level; // distance from the root
 	protected boolean thread = false; // is this node threaded?
 
-	int toExtremeSon = 0; // offset from the leftmost son
-	int toBaseline = 0; // distance to child's baseline
-	int modifier = 0;
-	int tmpx = 0, tmpy = 0; // temporary coordinates of the node
-	int number = 1;
+	private int toExtremeSon = 0; // offset from the leftmost son
+	private int toBaseline = 0; // distance to child's baseline
+	private int modifier = 0;
+	private int tmpx = 0;
+    private int tmpy = 0; // temporary coordinates of the node
+	private int number = 1;
 
-	int change = 0, shift = 0; // for evenly spaced smaller subtrees
+	private int change = 0;
+    private int shift = 0; // for evenly spaced smaller subtrees
 	// TreeNode ancestor = this; // unused variable for now
 
 	// statistics
-	public int size = 1, height = 1;
+    private int size = 1;
+    private int height = 1;
 	public int nos = 0; // number of sons, probably useless
 
 	// from binary node
 	public int leftw, rightw;
 
-	public TreeNode(DataStructure D, int key, int x, int y) {
+	protected TreeNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 	}
 
-	public TreeNode(DataStructure D, int key) {
+	protected TreeNode(DataStructure D, int key) {
 		super(D, key);
 	}
 
@@ -61,7 +64,7 @@ public class TreeNode extends Node {
 		return getParent() == null;
 	}
 
-	public boolean isLeaf() {
+	protected boolean isLeaf() {
 		return getChild() == null;
 	}
 
@@ -70,7 +73,7 @@ public class TreeNode extends Node {
 	 * Calculate height and size of "this" node assuming these were calculated
 	 * (properly) in its children.
 	 */
-	public void calc() {
+    void calc() {
 		size = 1;
 		height = 1;
 		if (!isLeaf()) {
@@ -88,7 +91,7 @@ public class TreeNode extends Node {
 	/**
 	 * Calculate height and size of subtree rooted by "this" node bottom-up
 	 */
-	public void calcTree() {
+    void calcTree() {
 		if (!isLeaf()) {
 			TreeNode w = getChild();
 			while (w != null) {
@@ -103,7 +106,7 @@ public class TreeNode extends Node {
 		setArc(getParent());
 	}
 
-	public void drawEdges(View v) {
+	protected void drawEdges(View v) {
 		if (state != INVISIBLE) {
 			if (thread) {
 				v.setColor(Color.red); // TODO
@@ -124,7 +127,7 @@ public class TreeNode extends Node {
 		}
 	}
 
-	public void drawVertices(View v) {
+	protected void drawVertices(View v) {
 		TreeNode w = getChild();
 		while (w != null) {
 			w.drawVertices(v);
@@ -137,7 +140,7 @@ public class TreeNode extends Node {
 	 * Draw edges, then the node itself. Don't draw invisible nodes and edges
 	 * from and to them
 	 */
-	public void drawTree(View v) {
+    protected void drawTree(View v) {
 		drawEdges(v);
 		drawVertices(v);
 	}
@@ -201,7 +204,7 @@ public class TreeNode extends Node {
 		rightw = re;
 	}
 
-	public void addRight(TreeNode w) {
+	void addRight(TreeNode w) {
 		if (getRight() == null) {
 			setRight(w);
 			w.setParent(parent);
@@ -250,7 +253,7 @@ public class TreeNode extends Node {
 		return w;
 	}
 
-	public void append(int x, int j) {
+	void append(int x, int j) {
 		if (getKey() == x) {
 			addChild(new TreeNode(D, j));
 		} else {
@@ -451,7 +454,7 @@ public class TreeNode extends Node {
 	/**
 	 * Disposes threads. Useful as stand-alone only for testing.
 	 */
-	public void fTRDisposeThreads() {
+    void fTRDisposeThreads() {
 		if (thread) {
 			thread = false;
 			setChild(null);
@@ -534,7 +537,7 @@ public class TreeNode extends Node {
 		return child;
 	}
 
-	public void setChild(TreeNode child) {
+	protected void setChild(TreeNode child) {
 		if (this.child != child) {
 			if (D.M.scenario.isAddingEnabled()) {
 				D.M.scenario.add(new SetChildCommand(child));
@@ -556,7 +559,7 @@ public class TreeNode extends Node {
 		}
 	}
 
-	public TreeNode getParent() {
+	protected TreeNode getParent() {
 		return parent;
 	}
 

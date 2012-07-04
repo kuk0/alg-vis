@@ -23,14 +23,14 @@ public class IntervalNode extends BSTNode {
 	}
 
 	focusType focused;
-	boolean markedColor = false;
+	private boolean markedColor = false;
 
 	public IntervalNode(DataStructure D, int key) {
 		super(D, key);
 		focused = focusType.FALSE;
 	}
 
-	public IntervalNode(DataStructure D, int key, int x, int y) {
+	private IntervalNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 		bgKeyColor();
 	}
@@ -57,9 +57,9 @@ public class IntervalNode extends BSTNode {
 		}
 	}
 
-	public static final NodeColor TREE = new NodeColor(Color.BLACK, new Color(
+	private static final NodeColor TREE = new NodeColor(Color.BLACK, new Color(
 			0xFDFF9A));// 0xFEFFC3));
-	public static final NodeColor EMPTY = new NodeColor(Color.BLACK, new Color(
+	private static final NodeColor EMPTY = new NodeColor(Color.BLACK, new Color(
 			0xF0F0F0));
 
 	@Override
@@ -101,7 +101,7 @@ public class IntervalNode extends BSTNode {
 		}
 	}
 
-	int i;
+	private int i;
 
 	@Override
 	public void drawTree(View v) {
@@ -109,11 +109,11 @@ public class IntervalNode extends BSTNode {
 		drawTree2(v);
 	}
 
-	public static final NodeColor IN = new NodeColor(Color.BLACK, new Color(
+	private static final NodeColor IN = new NodeColor(Color.BLACK, new Color(
 			0xAAFF95));
-	public static final NodeColor OUT = new NodeColor(Color.BLACK, new Color(
+	private static final NodeColor OUT = new NodeColor(Color.BLACK, new Color(
 			0xFC9A79));
-	public static final NodeColor WAIT = new NodeColor(Color.BLACK, new Color(
+	private static final NodeColor WAIT = new NodeColor(Color.BLACK, new Color(
 			0xFFFFFF));
 
 	private void drawTree2(View v) {

@@ -19,7 +19,7 @@ package algvis.heap;
 import algvis.gui.InputField;
 
 public class HeapDecrKey extends HeapAlg {
-	int delta;
+	private int delta;
 
 	public HeapDecrKey(Heap H, HeapNode v, int delta) {
 		super(H);

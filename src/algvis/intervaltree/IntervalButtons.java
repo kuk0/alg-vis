@@ -17,9 +17,13 @@ import algvis.intervaltree.IntervalTrees.mimasuType;
 public class IntervalButtons extends Buttons{
 
 	private static final long serialVersionUID = 6383200811481633404L;
-	IButton insertB, findsumB, changeKeyB;
-	IRadioButton minB, maxB, sumB;
-	ButtonGroup minMaxSumGroup;
+	private IButton insertB;
+    private IButton findsumB;
+    private IButton changeKeyB;
+	private IRadioButton minB;
+    private IRadioButton maxB;
+    private IRadioButton sumB;
+	private ButtonGroup minMaxSumGroup;
 
 	public IntervalButtons(VisPanel M) {
 		super(M);

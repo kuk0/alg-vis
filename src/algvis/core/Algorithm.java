@@ -29,7 +29,7 @@ abstract public class Algorithm extends Thread {
 	private DataStructure D;
 	private boolean suspended = false;
 
-	public Algorithm(DataStructure D) {
+	protected Algorithm(DataStructure D) {
 		this.D = D;
 		D.M.scenario.newAlgorithm();
 		D.M.scenario.newStep();
@@ -42,7 +42,7 @@ abstract public class Algorithm extends Thread {
 	/**
 	 * Mysuspend.
 	 */
-	public void mysuspend() {
+    protected void mysuspend() {
 		if (D.M.pause && !D.M.scenario.isEnabled()) {
 			D.M.C.update();
 			suspended = true;
@@ -69,19 +69,19 @@ abstract public class Algorithm extends Thread {
 		}
 	}
 
-	public void setHeader(String s) {
+	protected void setHeader(String s) {
 		D.M.C.setHeader(s);
 	}
 
-	public void setHeader(String s, String... par) {
+	protected void setHeader(String s, String... par) {
 		D.M.C.setHeader(s, par);
 	}
 
-	public void setHeader(String s, int... par) {
+	protected void setHeader(String s, int... par) {
 		D.M.C.setHeader(s, par);
 	}
 
-	public void addNote(String s) {
+	protected void addNote(String s) {
 		D.M.C.addNote(s);
 	}
 
@@ -89,19 +89,19 @@ abstract public class Algorithm extends Thread {
 		D.M.C.addNote(s, par);
 	}
 
-	public void addNote(String s, int... par) {
+	protected void addNote(String s, int... par) {
 		D.M.C.addNote(s, par);
 	}
 
-	public void addStep(String s) {
+	protected void addStep(String s) {
 		D.M.C.addStep(s);
 	}
 
-	public void addStep(String s, String... par) {
+	protected void addStep(String s, String... par) {
 		D.M.C.addStep(s, par);
 	}
 
-	public void addStep(String s, int... par) {
+	protected void addStep(String s, int... par) {
 		D.M.C.addStep(s, par);
 	}
 

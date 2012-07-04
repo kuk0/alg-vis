@@ -54,7 +54,7 @@ import algvis.unionfind.UnionFindPanel;
  */
 public class DataStructures {
 	@SuppressWarnings("rawtypes")
-	static final Class[] PANEL = { BSTPanel.class, RotPanel.class,
+    private static final Class[] PANEL = { BSTPanel.class, RotPanel.class,
 			AVLPanel.class, a23Panel.class, a234Panel.class, BPanel.class,
 			RBPanel.class, AAPanel.class, TreapPanel.class,
 			SkipListPanel.class, GBPanel.class, SplayPanel.class,
@@ -74,7 +74,7 @@ public class DataStructures {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static Class<? extends DataStructure> DS(int i) {
+    private static Class<? extends DataStructure> DS(int i) {
 		if (!check_range(i))
 			return null;
 		try {

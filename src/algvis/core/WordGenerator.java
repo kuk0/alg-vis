@@ -56,7 +56,7 @@ public class WordGenerator {
 		return generator;
 	}
 
-	public static String getEnWord() {
+	private static String getEnWord() {
 		WordGenerator wg = WordGenerator.getInstance();
 		return wg.getEnWords().get(
 				wg.getGenerator().nextInt(wg.getEnWords().size()));

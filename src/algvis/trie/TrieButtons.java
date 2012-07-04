@@ -28,7 +28,9 @@ import algvis.internationalization.IButton;
 
 public class TrieButtons extends Buttons {
 	private static final long serialVersionUID = -368670840648549217L;
-	IButton insertB, findB, deleteB;
+	private IButton insertB;
+    private IButton findB;
+    private IButton deleteB;
 
 	public TrieButtons(VisPanel M) {
 		super(M);

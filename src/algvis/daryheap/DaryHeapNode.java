@@ -24,15 +24,16 @@ import algvis.gui.view.View;
 import algvis.heap.HeapNode;
 
 public class DaryHeapNode extends HeapNode{
-	int width;//, leftw, rightw;
-	DaryHeapNode parent = null;
+	private int width;//, leftw, rightw;
+	private DaryHeapNode parent = null;
 	int numChildren = 0;
 	int nson = -1 ; //kolky je to syn svojho otca
 	DaryHeapNode[] c;
 	
-	int nnodes = 1, height = 1; // pre setStats
+	int nnodes = 1;
+    private int height = 1; // pre setStats
 	
-	public DaryHeapNode(DataStructure D, int key, int x, int y) {
+	private DaryHeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 		bgKeyColor();
 		c = new DaryHeapNode[((DaryHeap) D).getOrder()];
@@ -128,7 +129,7 @@ public class DaryHeapNode extends HeapNode{
 		super.draw(v);
 	}
 	
-	static int i;
+	private static int i;
 	public void drawTree(View v) {
 		i = 0;
 		drawTree2(v);
@@ -271,7 +272,7 @@ public class DaryHeapNode extends HeapNode{
 		return parent;
 	}
 	
-	public void setParent(DaryHeapNode v) {
+	void setParent(DaryHeapNode v) {
 		this.parent = v;
 	}
 	

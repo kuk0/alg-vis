@@ -27,32 +27,32 @@ import algvis.gui.view.View;
 
 public class TrieNode extends TreeNode {
 	public char ch;
-	public int radius = 2;
-	public static final int ordinaryNode = -7;
+	protected int radius = 2;
+	private static final int ordinaryNode = -7;
 
-	public boolean greyPair = false;
+	private boolean greyPair = false;
 
-	public TrieNode(DataStructure D, int key, int x, int y) {
+	protected TrieNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 		ch = '?';
 	}
 
-	public TrieNode(DataStructure D, int key, char ch) {
+	protected TrieNode(DataStructure D, int key, char ch) {
 		super(D, key);
 		this.ch = ch;
 	}
 
-	public TrieNode(DataStructure D, int key) {
+	protected TrieNode(DataStructure D, int key) {
 		super(D, key);
 		ch = '?';
 	}
 
-	public TrieNode(DataStructure D, char ch, int x, int y) {
+	protected TrieNode(DataStructure D, char ch, int x, int y) {
 		super(D, ordinaryNode, x, y);
 		this.ch = ch;
 	}
 
-	public TrieNode(DataStructure D, char ch) {
+	protected TrieNode(DataStructure D, char ch) {
 		super(D, ordinaryNode);
 		this.ch = ch;
 	}
@@ -66,7 +66,7 @@ public class TrieNode extends TreeNode {
 		return (TrieNode)super.getParent();
 	}
 	
-	public void unsetGrey() {
+	void unsetGrey() {
 		TrieNode w = (TrieNode) getChild();
 		while (w != null) {
 			w.unsetGrey();
@@ -75,7 +75,7 @@ public class TrieNode extends TreeNode {
 		greyPair = false;
 	}
 
-	public void drawGrey(View v) {
+	void drawGrey(View v) {
 		TrieNode w = (TrieNode) getChild();
 		while (w != null) {
 			w.drawGrey(v);
@@ -187,7 +187,7 @@ public class TrieNode extends TreeNode {
 		setColor(NodeColor.NORMAL);
 	}
 
-	public char getLabel() {
+	protected char getLabel() {
 		return ch;
 	}
 
@@ -216,7 +216,7 @@ public class TrieNode extends TreeNode {
 	 *            A character which will be inserted in lexicographical order
 	 * @return A node with proper label
 	 */
-	public TrieNode addRight(char ch, int x, int y) {
+    TrieNode addRight(char ch, int x, int y) {
 		if (getLabel() > ch) {
 			TrieNode u = new TrieNode(D, ch);
 			u.setParent(getParent());

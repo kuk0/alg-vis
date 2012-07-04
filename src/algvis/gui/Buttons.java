@@ -45,20 +45,26 @@ import algvis.scenario.Command;
  */
 abstract public class Buttons extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1417759004124906334L;
-	public VisPanel M;
-	public DataStructure D;
+	protected VisPanel M;
+	protected DataStructure D;
 	public InputField I;
-	public IButton previous, next, clear, random, save;
-	ICheckBox pause;
-	ChLabel stats;
-	JButton zoomIn, zoomOut, resetView;
+	private IButton previous;
+    protected IButton next;
+    private IButton clear;
+    protected IButton random;
+    private IButton save;
+	private ICheckBox pause;
+	private ChLabel stats;
+	private JButton zoomIn;
+    private JButton zoomOut;
+    private JButton resetView;
 
-	abstract public void actionButtons(JPanel P);
+	protected abstract void actionButtons(JPanel P);
 
-	public void actionButtons2(JPanel P) {
+	protected void actionButtons2(JPanel P) {
 	}
 
-	public Buttons(VisPanel M) {
+	protected Buttons(VisPanel M) {
 		this.M = M;
 		D = M.D;
 		assert D != null : "data structure not initialized yet";
@@ -79,7 +85,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	// input field, actions (insert, find, delete,...), previous, next
-	public JPanel initFirstRow() {
+    JPanel initFirstRow() {
 		JPanel first = new JPanel();
 		first.setLayout(new FlowLayout());
 
@@ -95,7 +101,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	// [x] pause, clear, random, zoom in/out
-	public JPanel initSecondRow() {
+    JPanel initSecondRow() {
 		JPanel second = new JPanel();
 		initPause();
 		initClear();
@@ -116,12 +122,12 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		return second;
 	}
 
-	public JPanel initThirdRow() {
+	protected JPanel initThirdRow() {
 		return null;
 	}
 
 	// statistics
-	public JPanel initStats() {
+    JPanel initStats() {
 		JPanel statsPanel = new JPanel();
 		statsPanel.setLayout(new FlowLayout());
 		stats = new ChLabel(D.stats());
@@ -129,7 +135,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		return statsPanel;
 	}
 
-	public void initPrevious() {
+	void initPrevious() {
 		previous = new IButton(M.S.L, "previous");
 		previous.setMnemonic(KeyEvent.VK_O);
 		previous.setEnabled(false);
@@ -137,26 +143,26 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		previous.setVisible(D.M.scenario.isEnabled());
 	}
 
-	public void initNext() {
+	void initNext() {
 		next = new IButton(M.S.L, "next");
 		next.setMnemonic(KeyEvent.VK_N);
 		next.setEnabled(false);
 		next.addActionListener(this);
 	}
 
-	public void initPause() {
+	void initPause() {
 		pause = new ICheckBox(M.S.L, "button-pause", true);
 		pause.setMnemonic(KeyEvent.VK_P);
 		pause.addActionListener(this);
 	}
 
-	public void initClear() {
+	void initClear() {
 		clear = new IButton(M.S.L, "button-clear");
 		clear.setMnemonic(KeyEvent.VK_C);
 		clear.addActionListener(this);
 	}
 
-	public void initRandom() {
+	protected void initRandom() {
 		random = new IButton(M.S.L, "button-random");
 		random.setMnemonic(KeyEvent.VK_R);
 		random.addActionListener(this);
@@ -179,7 +185,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		}
 	}
 
-	public void initZoom() {
+	void initZoom() {
 		// zoomLabel = new ILabel(M.S.L, "zoomio");
 		// zoomIn = createButton("+", "../images/zoom_in.gif");
 		zoomIn = createButton("+", "/algvis/images/zoom_in.gif");
@@ -262,7 +268,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		}
 	}
 
-	public void disablePrevious() {
+	void disablePrevious() {
 		previous.setEnabled(false);
 	}
 
@@ -295,7 +301,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		}
 	}
 
-	public void otherButtons(JPanel P) {
+	protected void otherButtons(JPanel P) {
 	}
 
 	@Override
@@ -317,7 +323,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	 * if D.M.scenario is enabled, all algorithm is done, so we must go at start
 	 * (in M.scenario) of algorithm to watch it
 	 */
-	protected void startLastAlg() {
+    void startLastAlg() {
 		D.M.scenario.previous(false, false);
 		D.M.scenario.next(M.pause, true);
 		D.M.scenario.traverser.join();

@@ -32,7 +32,7 @@ public enum Fonts {
 		font = f;
 	}
 
-	public static Font initTT() {
+	private static Font initTT() {
 		Font f = null;
 		try {
 			f = Font.createFont(Font.TRUETYPE_FONT,

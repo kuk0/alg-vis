@@ -5,10 +5,11 @@ import algvis.intervaltree.IntervalNode.focusType;
 import algvis.intervaltree.IntervalTrees.mimasuType;
 
 public class IntervalFindMin extends IntervalAlg {
-	int i, j;
-	IntervalNode maxi;
-	static final int ninf = -2147483648;
-	static final int pinf = 2147483647;
+	private int i;
+    private int j;
+	private IntervalNode maxi;
+	private static final int ninf = -2147483648;
+	private static final int pinf = 2147483647;
 
 	public IntervalFindMin(IntervalTree T, int i, int j) {
 		super(T);
@@ -75,7 +76,7 @@ public class IntervalFindMin extends IntervalAlg {
 		}
 	}
 
-	public void find(IntervalNode w, int b, int e) {
+	void find(IntervalNode w, int b, int e) {
 
 		w.mark();
 		// w.markSubtree = true;

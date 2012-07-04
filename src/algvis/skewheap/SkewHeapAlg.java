@@ -19,16 +19,16 @@ package algvis.skewheap;
 import algvis.core.Algorithm;
 import algvis.core.Node;
 
-public class SkewHeapAlg extends Algorithm {
+class SkewHeapAlg extends Algorithm {
 	SkewHeap H;
 	SkewHeapNode v;
 
-	public SkewHeapAlg(SkewHeap H) {
+	SkewHeapAlg(SkewHeap H) {
 		super(H);
 		this.H = H;
 	}
 	
-	public void meld(int i) {
+	void meld(int i) {
 		SkewHeapNode w = H.root[i];
 		H.root[0].mark();
 		w.mark();
@@ -127,7 +127,7 @@ public class SkewHeapAlg extends Algorithm {
 		addNote("done");
 	}
 	
-	public void bubbleup(SkewHeapNode v) {
+	void bubbleup(SkewHeapNode v) {
 		if (H.minHeap) {
 			addStep("minheapbubbleup");
 		} else {

@@ -40,7 +40,7 @@ abstract public class DataStructure {
 	public static String dsName = "";
 	private List<Node> nodes; // root, v, v2, vv,...
 
-	public DataStructure(VisPanel M) {
+	protected DataStructure(VisPanel M) {
 		this.M = M;
 		nodes = new ArrayList<Node>();
 	}
@@ -139,7 +139,7 @@ abstract public class DataStructure {
 		}, true);
 	}
 
-	public void unmark() {
+	void unmark() {
 		if (chosen != null) {
 			chosen.unmark();
 			chosen = null;
@@ -163,7 +163,7 @@ abstract public class DataStructure {
 		}
 	}
 
-	public Node getNode(int i) {
+	protected Node getNode(int i) {
 		return nodes.get(i);
 	}
 

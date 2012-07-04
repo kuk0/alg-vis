@@ -17,7 +17,8 @@
 package algvis.leftistheap;
 
 public class LeftHeapMeld extends LeftHeapAlg {
-	int i, j;
+	private int i;
+    private int j;
 
 	public LeftHeapMeld(LeftHeap H, int i, int j) {
 		super(H);

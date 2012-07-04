@@ -20,9 +20,9 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class BSTInsert extends Algorithm {
-	BST T;
-	BSTNode v;
-	int K;
+	private BST T;
+	private BSTNode v;
+	private int K;
 
 	public BSTInsert(BST T, int x) {
 		super(T);

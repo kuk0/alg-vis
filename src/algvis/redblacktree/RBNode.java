@@ -101,7 +101,7 @@ public class RBNode extends BSTNode {
 		super.draw(v);
 	}
 
-	public void drawBigNodes(View v) {
+	void drawBigNodes(View v) {
 		if (getKey() == NULL) {
 			return;
 		}

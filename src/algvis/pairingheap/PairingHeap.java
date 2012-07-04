@@ -27,8 +27,10 @@ import algvis.gui.view.View;
 import algvis.pairingheap.PairHeapAlg.Pairing;
 
 public class PairingHeap extends MeldablePQ implements ClickListener{
-	public static String dsName = "pairingheap";
-	PairHeapNode root[] = null, v = null, v2 = null;
+	private static String dsName = "pairingheap";
+	PairHeapNode root[] = null;
+    PairHeapNode v = null;
+    private PairHeapNode v2 = null;
 	public Pairing pairState = Pairing.NAIVE;
 	//public PairHeapNode children[] = null;
 	
@@ -157,7 +159,7 @@ public class PairingHeap extends MeldablePQ implements ClickListener{
 		}
 	}
 	
-	protected Pair chooseHeaps(int i, int j) {
+	Pair chooseHeaps(int i, int j) {
 		if (i < 1 || i > numHeaps) {
 			i = -1;
 		}

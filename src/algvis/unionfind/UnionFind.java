@@ -60,7 +60,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 		makeSet(15);
 	}
 
-	public void setV(UnionFindNode v) {
+	void setV(UnionFindNode v) {
 		if (this.v != v) {
 			if (M.scenario.isAddingEnabled()) {
 				M.scenario.add(new SetVCommand(v));
@@ -73,7 +73,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 	}
 
 	/** adds to sets and vertices */
-	public void add(UnionFindNode n) {
+    void add(UnionFindNode n) {
 		if (M.scenario.isAddingEnabled()) {
 			M.scenario.add(new AddCommand(n));
 		}
@@ -206,7 +206,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 		return vertices.get(elementAt);
 	}
 
-	public boolean isSelected(UnionFindNode u) {
+	boolean isSelected(UnionFindNode u) {
         return (u == firstSelected) || (u == secondSelected);
 	}
 

@@ -19,12 +19,12 @@ package algvis.splaytree;
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
-public class SplayAlg extends Algorithm {
+class SplayAlg extends Algorithm {
 	SplayTree T;
 	SplayNode s, v;
 	int K;
 
-	public SplayAlg(SplayTree T, int x) {
+	SplayAlg(SplayTree T, int x) {
 		super(T);
 		this.T = T;
 		if (T.getRoot() != null) {
@@ -33,7 +33,7 @@ public class SplayAlg extends Algorithm {
 		}
 	}
 
-	public SplayNode find(int K) {
+	SplayNode find(int K) {
 		SplayNode w = (SplayNode) T.getRoot();
 		s.goTo(w);
 		addNote("splay-start", K);
@@ -66,7 +66,7 @@ public class SplayAlg extends Algorithm {
 		return w;
 	}
 
-	public void splay(SplayNode w) {
+	void splay(SplayNode w) {
 		while (!w.isRoot()) {
 			T.setW1(w);
 			T.setW2(w.getParent());

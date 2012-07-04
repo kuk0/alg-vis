@@ -17,7 +17,7 @@
 package algvis.binomialheap;
 
 public class BinHeapDelete extends BinHeapAlg {
-	int i;
+	private int i;
 
 	public BinHeapDelete(BinomialHeap H, int i) {
 		super(H);

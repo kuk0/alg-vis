@@ -28,7 +28,7 @@ import algvis.internationalization.ICheckBox;
 
 public class AAButtons extends DictButtons implements ActionListener {
 	private static final long serialVersionUID = 5326663225787843118L;
-	ICheckBox B23;
+	private ICheckBox B23;
 
 	public AAButtons(VisPanel M) {
 		super(M);

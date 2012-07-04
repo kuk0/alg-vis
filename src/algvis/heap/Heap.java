@@ -27,7 +27,7 @@ import algvis.gui.view.View;
 import algvis.scenario.Command;
 
 public class Heap extends PriorityQueue implements ClickListener {
-	public static String dsName = "heap";
+	private static String dsName = "heap";
 	private int n = 0;
 
 	@Override

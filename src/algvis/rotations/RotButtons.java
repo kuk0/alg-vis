@@ -29,8 +29,9 @@ import algvis.internationalization.ICheckBox;
 
 public class RotButtons extends Buttons {
 	private static final long serialVersionUID = 3851020370059429766L;
-	IButton rotB;
-	ICheckBox order, subtrees;
+	private IButton rotB;
+	private ICheckBox order;
+    private ICheckBox subtrees;
 
 	public RotButtons(VisPanel M) {
 		super(M);

@@ -19,16 +19,16 @@ package algvis.leftistheap;
 import algvis.core.Algorithm;
 import algvis.core.Node;
 
-public class LeftHeapAlg extends Algorithm {
+class LeftHeapAlg extends Algorithm {
 	LeftHeap H;
 	LeftHeapNode v;
 
-	public LeftHeapAlg(LeftHeap H) {
+	LeftHeapAlg(LeftHeap H) {
 		super(H);
 		this.H = H;
 	}
 
-	public void meld(int i) {
+	void meld(int i) {
 		LeftHeapNode w = H.root[i];
 		H.root[0].mark();
 		w.mark();
@@ -143,7 +143,7 @@ public class LeftHeapAlg extends Algorithm {
 	}
 	
 	
-	public void bubbleup(LeftHeapNode v) {
+	void bubbleup(LeftHeapNode v) {
 		if (H.minHeap) {
 			addStep("minheapbubbleup");
 		} else {

@@ -19,16 +19,16 @@ package algvis.daryheap;
 import algvis.core.Algorithm;
 import algvis.core.Node;
 
-public class DaryHeapAlg extends Algorithm {
+class DaryHeapAlg extends Algorithm {
 	DaryHeap H;
 	DaryHeapNode v;
 
-	public DaryHeapAlg(DaryHeap H) {
+	DaryHeapAlg(DaryHeap H) {
 		super(H);
 		this.H = H;
 	}
 
-	public void bubbleup(DaryHeapNode v) {
+	void bubbleup(DaryHeapNode v) {
 
 		DaryHeapNode w = v.getParent();
 		while (w != null && v.prec(w)) {
@@ -54,7 +54,7 @@ public class DaryHeapAlg extends Algorithm {
 		addNote("done");
 	}
 
-	public void bubbledown(DaryHeapNode v) {
+	void bubbledown(DaryHeapNode v) {
 		DaryHeapNode w;
 
 		while (true) {

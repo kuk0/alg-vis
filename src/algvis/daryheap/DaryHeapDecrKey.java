@@ -19,7 +19,7 @@ package algvis.daryheap;
 import algvis.gui.InputField;
 
 public class DaryHeapDecrKey extends DaryHeapAlg{
-	int delta;
+	private int delta;
 
 	public DaryHeapDecrKey(DaryHeap H, DaryHeapNode v, int delta) {
 		super(H);

@@ -28,8 +28,8 @@ import algvis.internationalization.ILabel;
 
 public class DaryHeapButtons extends PQButtons implements ChangeListener {
 	private static final long serialVersionUID = -2783154701649865993L;
-	JSpinner OS;
-	ILabel orderLabel;
+	private JSpinner OS;
+	private ILabel orderLabel;
 
 	
 

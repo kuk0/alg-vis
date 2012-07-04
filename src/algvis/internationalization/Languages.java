@@ -23,15 +23,15 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class Languages {
-	final static int N = 2;
-	int current_lang;
-	Locale[] all_locales = new Locale[N];
-	ResourceBundle[] all_msgs = new ResourceBundle[N];
-	Locale locale;
-	ResourceBundle msg;
-	List<LanguageListener> listeners = new LinkedList<LanguageListener>();
+	private final static int N = 2;
+	private int current_lang;
+	private Locale[] all_locales = new Locale[N];
+	private ResourceBundle[] all_msgs = new ResourceBundle[N];
+	private Locale locale;
+	private ResourceBundle msg;
+	private List<LanguageListener> listeners = new LinkedList<LanguageListener>();
 
-	public Languages() {
+	private Languages() {
 		all_locales[0] = new Locale("en");
 		all_msgs[0] = ResourceBundle.getBundle("Messages", all_locales[0]);
 		all_locales[1] = new Locale("sk");
@@ -52,7 +52,7 @@ public class Languages {
 		listeners.add(l);
 	}
 
-	public void selectLanguage(int i) {
+	void selectLanguage(int i) {
 		if (i < 0 || i >= N) {
 			i = 0;
 		}

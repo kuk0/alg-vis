@@ -26,7 +26,7 @@ import algvis.internationalization.Languages;
 public class Settings {
 	public Layout layout;
 	public Languages L;
-	List<LayoutListener> listeners = new LinkedList<LayoutListener>();
+	private List<LayoutListener> listeners = new LinkedList<LayoutListener>();
 
 	public Settings(Languages L) {
 		this.L = L;

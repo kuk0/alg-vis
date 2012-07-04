@@ -26,11 +26,11 @@ import algvis.gui.view.View;
 
 public class SkewHeapNode extends BSTNode {
 	Color color = Color.yellow;
-	boolean doubleArrow = false;
+	private boolean doubleArrow = false;
 	boolean dashedrightl = false; // if true the line leading to the right son is dashed
-	boolean dashedleftl = false;  // if true the line leading to the left son is dashed
+	private boolean dashedleftl = false;  // if true the line leading to the left son is dashed
 
-	public SkewHeapNode(DataStructure D, int key, int x, int y) {
+	private SkewHeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 		bgKeyColor();
 	}
@@ -199,7 +199,7 @@ public class SkewHeapNode extends BSTNode {
 		return (SkewHeapNode) super.getLeft();
 	}
 
-	public void setLeft(SkewHeapNode v) {
+	void setLeft(SkewHeapNode v) {
 		super.setLeft(v);
 	}
 

@@ -22,9 +22,9 @@ import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class AADelete extends Algorithm {
-	AA T;
-	BSTNode v;
-	int K;
+	private AA T;
+	private BSTNode v;
+	private int K;
 
 	public AADelete(AA T, int x) {
 		super(T);

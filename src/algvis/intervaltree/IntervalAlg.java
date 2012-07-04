@@ -4,16 +4,16 @@ import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.intervaltree.IntervalTrees.mimasuType;
 
-public class IntervalAlg extends Algorithm{
+class IntervalAlg extends Algorithm{
 	IntervalTree T;
 	IntervalNode v;
 	
-	public IntervalAlg(IntervalTree T) {
+	IntervalAlg(IntervalTree T) {
 		super(T);
 		this.T = T;
 	}
 	
-	public void adjustValues(IntervalNode w){
+	void adjustValues(IntervalNode w){
 		while (w != null){
 			w.mark();
 			if ((w.getRight() != null) && (w.getLeft() != null)){

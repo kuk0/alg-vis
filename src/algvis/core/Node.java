@@ -32,23 +32,27 @@ import algvis.scenario.Command;
  * middle.
  */
 public class Node {
-	public DataStructure D;
+	protected DataStructure D;
 	private int key;
 	/**
 	 * x, y - node position tox, toy - the position, where the node is heading
 	 * steps - the number of steps to reach the destination
 	 */
-	public int x, y, tox, toy, steps;
+	public int x;
+    public int y;
+    public int tox;
+    public int toy;
+    protected int steps;
 	/** the state of a node - either ALIVE, DOWN, LEFT, or RIGHT. */
 	public int state = ALIVE;
 	private NodeColor color = NodeColor.NORMAL;
 	public boolean marked = false;
-	public Node dir = null;
-	public int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S,
+	protected Node dir = null;
+	private int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S,
 										// 135=SW, 180=W)
-	boolean arc = false;
+                                        private boolean arc = false;
 
-	public static int STEPS = 10;
+	private static int STEPS = 10;
 	public static int radius = 10;
 
 	/**
@@ -64,15 +68,19 @@ public class Node {
 	 * down, or diagonally left or right until it gets out of the screen, and
 	 * then turns INVISIBLE)
 	 */
-	public static final int INVISIBLE = -1, ALIVE = 0, DOWN = 2, LEFT = 3,
-			RIGHT = 4;
-	public static final int NOARROW = -10000, DIRARROW = -10001,
-			TOARROW = -10002;
+	public static final int INVISIBLE = -1;
+    private static final int ALIVE = 0;
+    private static final int DOWN = 2;
+    private static final int LEFT = 3;
+    private static final int RIGHT = 4;
+	private static final int NOARROW = -10000;
+    private static final int DIRARROW = -10001;
+    private static final int TOARROW = -10002;
 
-	public Node() {
+	protected Node() {
 	}
 
-	public Node(DataStructure D, int key, int x, int y) {
+	protected Node(DataStructure D, int key, int x, int y) {
 		this.D = D;
 		this.setKey(key);
 		this.x = tox = x;
@@ -80,7 +88,7 @@ public class Node {
 		steps = 0;
 	}
 
-	public Node(DataStructure D, int key) {
+	protected Node(DataStructure D, int key) {
 		this(D, key, 0, 0);
 		getReady();
 	}
@@ -138,7 +146,7 @@ public class Node {
 		this.color = color;
 	}
 
-	public void fgColor(Color fg) {
+	protected void fgColor(Color fg) {
 		if (fg != color.fgColor) {
 			if (D != null && D.M.scenario.isAddingEnabled()) {
 				D.M.scenario.add(new SetFgColorCommand(fg));
@@ -147,7 +155,7 @@ public class Node {
 		}
 	}
 
-	public void bgColor(Color bg) {
+	protected void bgColor(Color bg) {
 		if (bg != color.bgColor) {
 			if (D != null && D.M.scenario.isAddingEnabled()) {
 				D.M.scenario.add(new SetBgColorCommand(bg));
@@ -156,11 +164,11 @@ public class Node {
 		}
 	}
 
-	public Color getFgColor() {
+	protected Color getFgColor() {
 		return color.fgColor;
 	}
 
-	public Color getBgColor() {
+	protected Color getBgColor() {
 		return color.bgColor;
 	}
 
@@ -168,7 +176,7 @@ public class Node {
 	 * Set background color depending on the key (the higher the key, the darker
 	 * the color).
 	 */
-	public void bgKeyColor() {
+    protected void bgKeyColor() {
 		bgColor(new Color(255, 255 - getKey() / 20, 0));
 	}
 
@@ -308,14 +316,14 @@ public class Node {
 		}
 	}
 
-	public void drawKey(View v) {
+	protected void drawKey(View v) {
 		v.setColor(getFgColor());
 		if (getKey() != NOKEY) {
 			v.drawString(toString(), x, y, Fonts.NORMAL);
 		}
 	}
 
-	public void drawArrow(View v) {
+	protected void drawArrow(View v) {
 		if (arrow == Node.NOARROW || (arrow < 0 && dir == null)) {
 			return;
 		}
@@ -352,7 +360,7 @@ public class Node {
 	}
 
 	// Assumption: dir (the node we are pointing to) is above this node
-	public void drawArc(View v) {
+    protected void drawArc(View v) {
 		if (!arc || dir == null) {
 			return;
 		}
@@ -380,7 +388,7 @@ public class Node {
 	 * Is the given point inside the node? (Used mainly to decide whether a user
 	 * clicked at the node.)
 	 */
-	public boolean inside(int x, int y) {
+    protected boolean inside(int x, int y) {
 		return (this.x - x) * (this.x - x) + (this.y - y) * (this.y - y) <= Node.radius
 				* Node.radius;
 	}

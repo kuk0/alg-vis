@@ -20,9 +20,9 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class AVLInsert extends Algorithm {
-	AVL T;
-	AVLNode v;
-	int K;
+	private AVL T;
+	private AVLNode v;
+	private int K;
 
 	public AVLInsert(AVL T, int x) {
 		super(T);

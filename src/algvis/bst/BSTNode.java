@@ -37,14 +37,14 @@ public class BSTNode extends Node {
 	public boolean markSubtree = false;
 
 	// variables for the Reingold-Tilford layout
-	int offset = 0; // offset from parent node
+    private int offset = 0; // offset from parent node
 	private int level; // distance to root
-	boolean thread = false; // is this node threaded?
+	private boolean thread = false; // is this node threaded?
 
 	// statistics
 	public int size = 1, height = 1, sumh = 1;
 
-	public BSTNode(DataStructure D, int key, int x, int y) {
+	protected BSTNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 	}
 
@@ -244,7 +244,7 @@ public class BSTNode extends Node {
 		setArc(getParent());
 	}
 
-	static int i;
+	private static int i;
 
 	public void drawTree(View v) {
 		i = 0;
@@ -335,7 +335,7 @@ public class BSTNode extends Node {
 	 * from the node to the right side (rightw). Assumption: this box has
 	 * already been created for both children.
 	 */
-	public void rebox() {
+    protected void rebox() {
 		/*
 		 * if there is a left child, leftw = width of the box enclosing the
 		 * whole left subtree, i.e., leftw+rightw; otherwise the width is the

@@ -34,7 +34,7 @@ import algvis.scenario.Command;
 public class AVLNode extends BSTNode {
 	private int bal = 0;
 
-	public AVLNode(DataStructure D, int key, int x, int y) {
+	private AVLNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 	}
 
@@ -69,14 +69,14 @@ public class AVLNode extends BSTNode {
 		return bal;
 	}
 
-	public void setBalance(int bal) {
+	void setBalance(int bal) {
 		if (this.bal != bal) {
 			D.M.scenario.add(new SetBalanceCommand(bal));
 			this.bal = bal;
 		}
 	}
 
-	public int getBalance() {
+	int getBalance() {
 		return bal;
 	}
 

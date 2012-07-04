@@ -19,7 +19,7 @@ package algvis.leftistheap;
 import algvis.gui.InputField;
 
 public class LeftHeapDecrKey extends LeftHeapAlg{
-	int delta;
+	private int delta;
 	
 	public LeftHeapDecrKey(LeftHeap H, LeftHeapNode v, int delta) {
 		super(H);

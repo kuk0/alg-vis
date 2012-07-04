@@ -23,9 +23,10 @@ public class UnionFindUnion extends UnionFindFind {
 		NONE, BYRANK
 	}
 
-	public UnionHeuristic unionState;
-	UnionFind UF;
-	UnionFindNode u, v;
+	private UnionHeuristic unionState;
+	private UnionFind UF;
+	private UnionFindNode u;
+    private UnionFindNode v;
 
 	public UnionFindUnion(UnionFind UF, UnionFindNode u, UnionFindNode v) {
 		super(UF);

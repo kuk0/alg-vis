@@ -20,9 +20,9 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class BSTFind extends Algorithm {
-	BST T;
-	BSTNode v;
-	int K;
+	private BST T;
+	private BSTNode v;
+	private int K;
 
 	public BSTFind(BST T, int x) {
 		super(T);

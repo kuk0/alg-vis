@@ -17,7 +17,7 @@
 package algvis.binomialheap;
 
 public class BinHeapInsert extends BinHeapAlg {
-	int i;
+	private int i;
 
 	public BinHeapInsert(BinomialHeap H, int i, int x) {
 		super(H);

@@ -25,7 +25,7 @@ import algvis.core.NodeColor;
 public class TreapNode extends BSTNode {
 	final double p;
 
-	public TreapNode(DataStructure D, int key, int x, int y) {
+	private TreapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 		p = Math.random();
 		bgPColor();
@@ -51,7 +51,7 @@ public class TreapNode extends BSTNode {
 		return (TreapNode) super.getParent();
 	}
 
-	public void bgPColor() {
+	void bgPColor() {
 		bgColor(new Color(255, 255 - (int) Math.round(100 * p), 0));
 	}
 

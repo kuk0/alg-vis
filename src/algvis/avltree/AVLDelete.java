@@ -21,9 +21,9 @@ import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class AVLDelete extends Algorithm {
-	AVL T;
-	AVLNode v;
-	int K;
+	private AVL T;
+	private AVLNode v;
+	private int K;
 
 	public AVLDelete(AVL T, int x) {
 		super(T);

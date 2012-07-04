@@ -29,7 +29,7 @@ import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
 
 public class BinomialHeap extends MeldablePQ implements ClickListener {
-	public static String dsName = "binheap";
+	private static String dsName = "binheap";
 	public BinHeapNode[] root; // root[0] je pomocny, prave meldujuci
 	public BinHeapNode[] min;
 	public BinHeapNode d, v, v2;

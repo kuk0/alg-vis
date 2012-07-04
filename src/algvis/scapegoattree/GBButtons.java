@@ -28,8 +28,8 @@ import algvis.gui.VisPanel;
 
 public class GBButtons extends DictButtons implements ChangeListener {
 	private static final long serialVersionUID = -4200856610929537432L;
-	JSpinner AS;
-	JLabel alpha;
+	private JSpinner AS;
+	private JLabel alpha;
 
 	public GBButtons(VisPanel M) {
 		super(M);

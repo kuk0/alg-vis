@@ -63,7 +63,7 @@ public class UnionFindNode extends TreeNode {
 		return (UnionFindNode) super.getParent();
 	}
 
-	public boolean isGrey() {
+	boolean isGrey() {
 		return grey;
 	}
 
@@ -83,7 +83,7 @@ public class UnionFindNode extends TreeNode {
 		}
 	}
 
-	public void drawGrey(View v) {
+	void drawGrey(View v) {
 		TreeNode w = getChild();
 		while (w != null) {
 			((UnionFindNode) w).drawGrey(v);

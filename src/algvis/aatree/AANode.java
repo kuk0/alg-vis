@@ -23,7 +23,7 @@ import algvis.gui.Fonts;
 import algvis.gui.view.View;
 
 public class AANode extends BSTNode {
-	public AANode(DataStructure D, int key, int x, int y) {
+	private AANode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 		setLevel(1);
 	}
@@ -65,7 +65,7 @@ public class AANode extends BSTNode {
 		v.drawString(str, x + Node.radius, y - Node.radius, Fonts.SMALL);
 	}
 
-	public void drawBigNodes(View v) {
+	void drawBigNodes(View v) {
 		if (getLeft() != null) {
 			getLeft().drawBigNodes(v);
 		}

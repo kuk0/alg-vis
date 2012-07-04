@@ -46,16 +46,16 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		HyperlinkListener {
 	private static final long serialVersionUID = 9023200331860482960L;
 	private VisPanel V;
-	Languages L;
-	JScrollPane sp;
+	private Languages L;
+	private JScrollPane sp;
 	private int k = 0, position = 0;
 	private List<String> s = new ArrayList<String>(),
 			pre = new ArrayList<String>(), post = new ArrayList<String>();
 	private List<String[]> param = new ArrayList<String[]>();
 	private boolean updatingEnabled = true;
 
-	static SimpleAttributeSet normalAttr = new SimpleAttributeSet();
-	static SimpleAttributeSet hoverAttr = new SimpleAttributeSet();
+	private static SimpleAttributeSet normalAttr = new SimpleAttributeSet();
+	private static SimpleAttributeSet hoverAttr = new SimpleAttributeSet();
 	static {
 		StyleConstants.setBackground(normalAttr, Color.WHITE);
 		StyleConstants.setBackground(hoverAttr, new Color(0xDB, 0xF1, 0xF9)); // #DBF1F9
@@ -159,7 +159,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 
 	}
 
-	public void add(String u, String v, String w, String... par) {
+	void add(String u, String v, String w, String... par) {
 		State state = new State(position, s, pre, post, param);
 		++position;
 		pre.add(u);
@@ -246,7 +246,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		}
 	}
 
-	public void restoreState(State state) {
+	void restoreState(State state) {
 		position = state.position;
 		s = state.s;
 		pre = state.pre;
@@ -257,7 +257,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		}
 	}
 
-	public State getState() {
+	State getState() {
 		return new State(position, s, pre, post, param);
 	}
 

@@ -22,8 +22,8 @@ import javax.swing.JComboBox;
 
 public class IComboBox extends JComboBox implements LanguageListener {
 	private static final long serialVersionUID = 8795452558528688577L;
-	Languages L;
-	String[] choices;
+	private Languages L;
+	private String[] choices;
 
 	public IComboBox(Languages L, String[] choices) {
 		super(choices);

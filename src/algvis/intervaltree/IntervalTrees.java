@@ -11,7 +11,7 @@ public abstract class IntervalTrees extends DataStructure{
 	}
 	public mimasuType minTree = mimasuType.MAX;
 	
-	public IntervalTrees(VisPanel M) {
+	IntervalTrees(VisPanel M) {
 		super(M);
 	}
 

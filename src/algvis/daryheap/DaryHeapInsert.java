@@ -18,9 +18,9 @@ package algvis.daryheap;
 
 
 public class DaryHeapInsert extends DaryHeapAlg{
-	DaryHeap T; //prepisat na H
-	DaryHeapNode v;
-	int K;
+	private DaryHeap T; //prepisat na H
+	private DaryHeapNode v;
+	private int K;
 
 	public DaryHeapInsert(DaryHeap T, int x) {
 		super(T);

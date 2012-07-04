@@ -21,9 +21,9 @@ import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class BSTDelete extends Algorithm {
-	BST T;
-	BSTNode v;
-	int K;
+	private BST T;
+	private BSTNode v;
+	private int K;
 
 	public BSTDelete(BST T, int x) { // Buttons B,
 		super(T);

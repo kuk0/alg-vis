@@ -34,11 +34,14 @@ import algvis.internationalization.IRadioButton;
 
 public class MeldablePQButtonsNoDecr extends Buttons implements ChangeListener {
 	private static final long serialVersionUID = 1242711038059609653L;
-	IButton insertB, deleteB, meldB;
+	private IButton insertB;
+    private IButton deleteB;
+    private IButton meldB;
 	public JSpinner activeHeap;
-	ILabel activeLabel;
-	IRadioButton minB, maxB;
-	ButtonGroup minMaxGroup;
+	private ILabel activeLabel;
+	private IRadioButton minB;
+    private IRadioButton maxB;
+	private ButtonGroup minMaxGroup;
 
 	public MeldablePQButtonsNoDecr(VisPanel M) {
 		super(M);

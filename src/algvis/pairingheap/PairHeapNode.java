@@ -25,7 +25,7 @@ import algvis.gui.view.View;
 
 public class PairHeapNode extends TreeNode{
 
-	public PairHeapNode(DataStructure D, int key, int x, int y) {
+	private PairHeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 	}
 	

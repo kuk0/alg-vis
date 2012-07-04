@@ -20,8 +20,8 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class TrieInsert extends Algorithm {
-	Trie T;
-	String s;
+	private Trie T;
+	private String s;
 
 	public TrieInsert(Trie T, String s) {
 		super(T);
@@ -30,7 +30,7 @@ public class TrieInsert extends Algorithm {
 		setHeader("trieinsert", s.substring(0, s.length() - 1));
 	}
 
-	public void beforeReturn() {
+	void beforeReturn() {
 		T.hw = null;
 		T.clearExtraColor();
 		addStep("done");

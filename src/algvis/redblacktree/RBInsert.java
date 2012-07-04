@@ -19,9 +19,9 @@ package algvis.redblacktree;
 import algvis.core.Algorithm;
 
 public class RBInsert extends Algorithm {
-	RB T;
-	RBNode v;
-	int K;
+	private RB T;
+	private RBNode v;
+	private int K;
 
 	public RBInsert(RB T, int x) {
 		super(T);

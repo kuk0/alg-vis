@@ -19,7 +19,7 @@ package algvis.skewheap;
 import algvis.gui.InputField;
 
 public class SkewHeapDecrKey extends SkewHeapAlg{
-int delta;
+private int delta;
 	
 	public SkewHeapDecrKey(SkewHeap H, SkewHeapNode v, int delta) {
 		super(H);

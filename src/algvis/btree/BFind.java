@@ -20,8 +20,8 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class BFind extends Algorithm {
-	BTree T;
-	BNode v;
+	private BTree T;
+	private BNode v;
 
 	public BFind(BTree T, int x) {
 		super(T);

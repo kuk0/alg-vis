@@ -1,7 +1,7 @@
 package algvis.intervaltree;
 
 public class IntervalInsert extends IntervalAlg{
-	int K;
+	private int K;
 
 	public IntervalInsert(IntervalTree T, int x) {
 		super(T);

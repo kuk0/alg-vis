@@ -31,8 +31,11 @@ import algvis.internationalization.ILabel;
 
 public class UnionFindButtons extends Buttons {
 	private static final long serialVersionUID = 2683381160819263717L;
-	IButton makesetB, findB, unionB;
-	IComboBox unionHeuristicCB, findHeuristicCB;
+	private IButton makesetB;
+    private IButton findB;
+    private IButton unionB;
+	private IComboBox unionHeuristicCB;
+    private IComboBox findHeuristicCB;
 
 	public UnionFindButtons(VisPanel M) {
 		super(M);
