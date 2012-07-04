@@ -70,7 +70,7 @@ public class WordGenerator {
 	
 	public static String getABWord(int n) {
 		Random r = WordGenerator.getInstance().getGenerator();
-		StringBuffer s = new StringBuffer("");
+		StringBuilder s = new StringBuilder("");
 		for (int i=0; i<n; ++i) {
 			if (r.nextBoolean()) s.append("A");
 			else s.append("B");

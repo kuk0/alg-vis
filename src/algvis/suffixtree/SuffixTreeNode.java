@@ -190,7 +190,7 @@ public class SuffixTreeNode extends TrieNode {
 			if (getParent() == null)
 				return;
 			TrieNode u = this;
-			StringBuffer s = new StringBuffer("");
+			StringBuilder s = new StringBuilder("");
 			if (getChild() == null || getChild().getRight() != null) {
 				while (u != null && u.getParent() != null
 						&& u.getParent().getChild() == u

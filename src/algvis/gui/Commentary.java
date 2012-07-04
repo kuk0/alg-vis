@@ -110,7 +110,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	}
 
 	public synchronized void update() {
-		StringBuffer text = new StringBuffer("");
+		StringBuilder text = new StringBuilder("");
 		for (int i = 0; i < s.size(); ++i) {
 			if (i == position - 1) {
 				text.append("<B>").append(str(i)).append("</B>");
