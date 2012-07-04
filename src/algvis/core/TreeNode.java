@@ -106,7 +106,7 @@ public class TreeNode extends Node {
 		setArc(getParent());
 	}
 
-	protected void drawEdges(View v) {
+	public void drawEdges(View v) {
 		if (state != INVISIBLE) {
 			if (thread) {
 				v.setColor(Color.red); // TODO
@@ -127,7 +127,7 @@ public class TreeNode extends Node {
 		}
 	}
 
-	protected void drawVertices(View v) {
+	public void drawVertices(View v) {
 		TreeNode w = getChild();
 		while (w != null) {
 			w.drawVertices(v);
@@ -536,7 +536,7 @@ public class TreeNode extends Node {
 		return child;
 	}
 
-	protected void setChild(TreeNode child) {
+	public void setChild(TreeNode child) {
 		if (this.child != child) {
 			if (D.M.scenario.isAddingEnabled()) {
 				D.M.scenario.add(new SetChildCommand(child));

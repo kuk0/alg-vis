@@ -70,7 +70,6 @@ public class BSTNode extends Node {
 			}
 			this.left = left;
 		}
-		return left;
 	}
 
 	public BSTNode getRight() {

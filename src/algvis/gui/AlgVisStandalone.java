@@ -51,7 +51,7 @@ public class AlgVisStandalone {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent e) {
 				System.exit(0);
-			};
+			}
 		});
 
 		AlgVis A = new AlgVis(f.getRootPane());

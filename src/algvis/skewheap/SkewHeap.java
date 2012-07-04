@@ -26,7 +26,7 @@ import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
 
 public class SkewHeap extends MeldablePQ implements ClickListener{
-	private static final String dsName = "skewheap";
+	public static final String dsName = "skewheap";
 	SkewHeapNode root[] = null, v = null, v2 = null;
 	
 	public SkewHeap(VisPanel M) {

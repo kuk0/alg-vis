@@ -26,7 +26,7 @@ import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
 
 public class LeftHeap extends MeldablePQ implements ClickListener{
-	private static final String dsName = "leftheap";
+	public static final String dsName = "leftheap";
 	LeftHeapNode root[] = null, v = null, v2 = null;
 
 	public LeftHeap(VisPanel M) {

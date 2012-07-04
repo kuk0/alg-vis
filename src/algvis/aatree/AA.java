@@ -67,7 +67,6 @@ public class AA extends BST {
 			rotate(w);
 			reposition();
 		}
-		return w;
 	}
 
 	public BSTNode split(BSTNode w) {

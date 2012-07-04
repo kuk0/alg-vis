@@ -8,3 +8,4 @@ bin/
 *.pyc
 *.xml
 !format.xml
+*.iml

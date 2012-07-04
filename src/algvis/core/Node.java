@@ -32,7 +32,7 @@ import algvis.scenario.Command;
  * middle.
  */
 public class Node {
-	protected DataStructure D;
+	public DataStructure D;
 	private int key;
 	/**
 	 * x, y - node position tox, toy - the position, where the node is heading
