@@ -167,7 +167,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 	}
 	
 	public void setOnAir(boolean onAir) {
-		if (onAir == false) {
+		if (!onAir) {
 			screen.suspend();
 		} else {
 			screen.resume();

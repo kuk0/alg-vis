@@ -161,10 +161,10 @@ public class UnionFind extends DataStructure implements ClickListener {
 			}
 		}
 		if (v != null) {
-			if (isSelected(v) && (v.marked == false)) {
+			if (isSelected(v) && (!v.marked)) {
 				// v.mark(); // TODO
 			}
-			if (!isSelected(v) && (v.marked != false)) {
+			if (!isSelected(v) && (!!v.marked)) {
 				// v.unmark(); // TODO are these lines needed?
 			}
 			v.move();

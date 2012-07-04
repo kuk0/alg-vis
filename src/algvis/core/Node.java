@@ -255,7 +255,7 @@ public class Node {
 	 * @param w
 	 */
 	public void setArc(Node w) {
-		if (dir != w || arc == false) {
+		if (dir != w || !arc) {
 			dir = w;
 			arc = true;
 			if (D.M.scenario.isAddingEnabled()) {
@@ -268,7 +268,7 @@ public class Node {
 	 * Stop drawing an arc.
 	 */
 	public void noArc() {
-		if (arc == true) {
+		if (arc) {
 			arc = false;
 			if (D.M.scenario.isAddingEnabled()) {
 				D.M.scenario.add(new ArcCommand(dir, false));

@@ -68,7 +68,7 @@ public class UnionFindNode extends TreeNode {
 	}
 
 	public void setGrey(boolean grey) {
-		if (grey == false) {
+		if (!grey) {
 			UnionFindNode w = getChild();
 			while (w != null) {
 				w.setGrey(false);
