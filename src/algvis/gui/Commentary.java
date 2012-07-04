@@ -113,7 +113,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		StringBuffer text = new StringBuffer("");
 		for (int i = 0; i < s.size(); ++i) {
 			if (i == position - 1) {
-				text.append("<B>" + str(i) + "</B>");
+				text.append("<B>").append(str(i)).append("</B>");
 			} else {
 				text.append(str(i));
 			}
