@@ -59,7 +59,7 @@ public class BSTNode extends Node {
 			return left;
 	}
 
-	public BSTNode setLeft(BSTNode left) {
+	public void setLeft(BSTNode left) {
 		if (thread) {
 			thread = false;
 			right = null;

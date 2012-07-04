@@ -36,7 +36,7 @@ public class Heap extends PriorityQueue implements ClickListener {
 	}
 
 	public Heap(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		addNodes(3); // root (0), v (1), v2 (2)
 		M.screen.V.setDS(this);
 	}

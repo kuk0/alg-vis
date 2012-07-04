@@ -176,7 +176,8 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 
 	}
 
-	public int getMinsepx() {
+	@SuppressWarnings("SameReturnValue")
+    public int getMinsepx() {
 		return IntervalTree.minsepx;
 	}
 

@@ -61,7 +61,7 @@ public class AA extends BST {
 		return mode23;
 	}
 
-	public BSTNode skew(BSTNode w) {
+	public void skew(BSTNode w) {
 		if (w.getLeft() != null && w.getLeft().getLevel() == w.getLevel()) {
 			w = w.getLeft();
 			rotate(w);

@@ -44,7 +44,7 @@ public class TrieWordNode extends Node {
 		return s;
 	}
 
-	String setS(String s) {
+	void setS(String s) {
 		this.s = s;
 		return s;
 	}

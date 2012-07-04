@@ -30,7 +30,7 @@ public class LeftHeap extends MeldablePQ implements ClickListener{
 	LeftHeapNode root[] = null, v = null, v2 = null;
 
 	public LeftHeap(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		root = new LeftHeapNode[numHeaps + 1];
 		M.screen.V.setDS(this);
 	}

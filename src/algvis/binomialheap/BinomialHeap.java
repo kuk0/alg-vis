@@ -40,7 +40,7 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 	}
 
 	public BinomialHeap(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		root = new BinHeapNode[numHeaps + 1];
 		min = new BinHeapNode[numHeaps + 1];
 		

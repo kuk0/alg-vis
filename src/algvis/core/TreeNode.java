@@ -170,10 +170,7 @@ public class TreeNode extends Node {
 		return res;
 	}
 
-	public void rebox() {
-	}
-
-	/**
+    /**
 	 * Rebox the whole subtree calculating the widths recursively bottom-up.
 	 */
 	public void reboxTree() {

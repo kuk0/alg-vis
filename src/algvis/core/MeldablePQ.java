@@ -26,11 +26,12 @@ abstract public class MeldablePQ extends DataStructure implements Highlighting{
 	public boolean minHeap = false;
 	public int active = 1;
 
-	protected MeldablePQ(VisPanel M, String dsName) {
+	protected MeldablePQ(VisPanel M) {
 		super(M);
 	}
 
-	public static String adtName() {
+	@SuppressWarnings("SameReturnValue")
+    public static String adtName() {
 		return "meldable-pq";
 	}
 

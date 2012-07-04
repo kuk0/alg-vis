@@ -96,7 +96,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 	private JPanel initScreen() {
 		JPanel screenP = new JPanel();
 		screenP.setLayout(new BorderLayout());
-		screen = new Screen(this) {
+		screen = new Screen() {
 			private static final long serialVersionUID = 2196788670749006364L;
 
 			@Override

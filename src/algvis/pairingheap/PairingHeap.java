@@ -35,7 +35,7 @@ public class PairingHeap extends MeldablePQ implements ClickListener{
 	//public PairHeapNode children[] = null;
 	
 	public PairingHeap(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		root = new PairHeapNode[numHeaps + 1];
 		M.screen.V.setDS(this); 
 	}

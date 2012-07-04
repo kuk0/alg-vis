@@ -30,7 +30,7 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 	SkewHeapNode root[] = null, v = null, v2 = null;
 	
 	public SkewHeap(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		root = new SkewHeapNode[numHeaps + 1];
 		M.screen.V.setDS(this);
 	}	

@@ -30,7 +30,7 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 	public static final int minsepx = 30;  //zmenit na mensie
 
 	public DaryHeap(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		last = new DaryHeapNode(this, 47); 
 		M.screen.V.setDS(this);
 	}
