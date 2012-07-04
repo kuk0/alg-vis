@@ -87,7 +87,7 @@ public class SuffixTreeInsert extends Algorithm {
 			T.reposition();
 			mysuspend();
 			Vector<SuffixTreeNode> upWalk = new Vector<SuffixTreeNode>();
-			String cachedUpWalk = new String();
+			String cachedUpWalk = "";
 			setUpSuffixLinkOnThis = T.getRoot();
 			SuffixTreeNode current = starting;
 			boolean pathEnded = false;

@@ -118,7 +118,7 @@ public class LeftHeapNode extends BSTNode {
 	public void draw(View v) {
 		super.draw(v);
 		drawDoubleArrow(v);
-		String str = new String("" + rank);
+		String str = "" + rank;
 		if (rank != -1) {
 			if (this.getParent() != null && this.getParent().getLeft() == this) {
 				v.drawString(str, x - LeftHeapNode.radius, y

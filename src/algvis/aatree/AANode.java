@@ -61,7 +61,7 @@ public class AANode extends BSTNode {
 		drawKey(v);
 		drawArrow(v);
 		drawArc(v);
-		String str = new String("" + getLevel());
+		String str = "" + getLevel();
 		v.drawString(str, x + Node.radius, y - Node.radius, Fonts.SMALL);
 	}
 
