@@ -191,9 +191,7 @@ public class BDelete extends Algorithm {
 						}
 						p.c[k].parent = p;
 						--p.numChildren;
-						for (int i = k + 1; i < p.numChildren; ++i) {
-							p.c[i] = p.c[i + 1];
-						}
+                        System.arraycopy(p.c, k + 1 + 1, p.c, k + 1, p.numChildren - (k + 1));
 						d = p;
 					}
 				}
