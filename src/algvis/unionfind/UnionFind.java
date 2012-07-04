@@ -207,10 +207,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 	}
 
 	public boolean isSelected(UnionFindNode u) {
-		if ((u == firstSelected) || (u == secondSelected))
-			return true;
-		else
-			return false;
+        return (u == firstSelected) || (u == secondSelected);
 	}
 
 	@Override

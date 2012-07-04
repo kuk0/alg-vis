@@ -200,11 +200,7 @@ public class Scenario implements XMLable {
 				e.printStackTrace();
 				return;
 			}
-			if (!visible) {
-				interrupted = true;
-			} else {
-				interrupted = false;
-			}
+            interrupted = !visible;
 			threadInstance.start();
 			if (!visible) {
 				threadInstance.interrupt();
