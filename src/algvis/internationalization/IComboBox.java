@@ -37,8 +37,8 @@ public class IComboBox extends JComboBox implements LanguageListener {
 	@Override
 	public void languageChanged() {
 		removeAllItems();
-		for (int i = 0; i < choices.length; ++i) {
-			this.addItem(L.getString(choices[i]));
-		}
+        for (String choice : choices) {
+            this.addItem(L.getString(choice));
+        }
 	}
 }

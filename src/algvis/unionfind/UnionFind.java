@@ -155,10 +155,10 @@ public class UnionFind extends DataStructure implements ClickListener {
 	@Override
 	public void draw(View V) {
 		if (sets != null) {
-			for (int i = 0; i < sets.size(); i++) {
-				sets.get(i).moveTree();
-				sets.get(i).drawTree(V);
-			}
+            for (UnionFindNode set : sets) {
+                set.moveTree();
+                set.drawTree(V);
+            }
 		}
 		if (v != null) {
 			if (isSelected(v) && (!v.marked)) {
@@ -176,27 +176,27 @@ public class UnionFind extends DataStructure implements ClickListener {
 		if (sets != null) {
 			int ey2 = -9999999;
 			int ey1 = 9999999;
-			for (int i = 0; i < sets.size(); i++) {
-				y1 = y2 = 0;
-				sets.get(i).reposition();
-				if (y1 < ey1) {
-					ey1 = y1;
-				}
-				if (y2 > ey2) {
-					ey2 = y2;
-				}
-			}
+            for (UnionFindNode set : sets) {
+                y1 = y2 = 0;
+                set.reposition();
+                if (y1 < ey1) {
+                    ey1 = y1;
+                }
+                if (y2 > ey2) {
+                    ey2 = y2;
+                }
+            }
 			y1 = ey1;
 			y2 = ey2;
 
 			x1 = x2 = 0;
 			int shift = -sets.get(0).leftw;
 			x1 = shift;
-			for (int i = 0; i < sets.size(); i++) {
-				shift += sets.get(i).leftw;
-				sets.get(i).shift(shift, 0);
-				shift += sets.get(i).rightw;
-			}
+            for (UnionFindNode set : sets) {
+                shift += set.leftw;
+                set.shift(shift, 0);
+                shift += set.rightw;
+            }
 			x2 = shift;
 			M.screen.V.setBounds(x1, y1, x2, y2);
 		}
