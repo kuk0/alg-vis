@@ -24,9 +24,9 @@ import algvis.core.NodeColor;
 public class UnionFindFind extends Algorithm {
 	public enum FindHeuristic {
 		NONE, COMPRESSION, HALVING, SPLITTING
-	};
+	}
 
-	UnionFindNode u = null;
+    UnionFindNode u = null;
 
 	public FindHeuristic findState;
 	UnionFind UF;
