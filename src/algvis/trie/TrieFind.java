@@ -84,7 +84,7 @@ public class TrieFind extends Algorithm {
 			s = s.substring(1);
 		}
 		T.hw.setAndGoNextTo(s, v);
-		TrieNode w = (TrieNode) v.getChildWithCH('$');
+		TrieNode w = v.getChildWithCH('$');
 		if (w == null) {
 			addStep("triefindending2");
 		} else {

@@ -52,7 +52,7 @@ public class DaryHeapButtons extends PQButtons implements ChangeListener {
 	public void stateChanged(ChangeEvent evt) {
 		if (evt.getSource() == OS) {
 			((DaryHeap) D).order = (Integer) OS.getValue();
-			((DaryHeap) D).clear();
+			D.clear();
 			((DaryHeap) D).reposition();
 		}
 	}

@@ -104,7 +104,7 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 	}
 
 	public IntervalNode getV() {
-		return (IntervalNode) v;
+		return v;
 	}
 
 	public IntervalNode setV(IntervalNode v) {

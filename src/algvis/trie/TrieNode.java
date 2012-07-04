@@ -132,7 +132,7 @@ public class TrieNode extends TreeNode {
 	}
 
 	public void drawLabel(View v) {
-		TrieNode u = (TrieNode) getParent();
+		TrieNode u = getParent();
 		if (u != null) {
 			int midx, midy, w, h;
 			if (ch == '$') {

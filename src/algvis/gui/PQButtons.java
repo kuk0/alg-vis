@@ -90,7 +90,7 @@ public class PQButtons extends Buttons {
 				@Override
 				public void run() {
 					for (int x : args) {
-						((PriorityQueue) D).insert(x);
+						D.insert(x);
 					}
 				}
 			});

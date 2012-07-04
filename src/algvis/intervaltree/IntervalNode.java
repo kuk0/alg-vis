@@ -219,7 +219,7 @@ public class IntervalNode extends BSTNode {
 	}
 
 	public void setRight(IntervalNode v) {
-		super.setRight((BSTNode) v);
+		super.setRight(v);
 	}
 
 	@Override
@@ -228,7 +228,7 @@ public class IntervalNode extends BSTNode {
 	}
 
 	public void setLeft(IntervalNode v) {
-		super.setLeft((BSTNode) v);
+		super.setLeft(v);
 	}
 
 	@Override
@@ -237,7 +237,7 @@ public class IntervalNode extends BSTNode {
 	}
 
 	public void setParent(IntervalNode v) {
-		super.setParent((BSTNode) v);
+		super.setParent(v);
 	}
 
 	public void setInterval(int i, int j) {

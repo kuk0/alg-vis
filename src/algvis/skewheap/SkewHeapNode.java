@@ -191,7 +191,7 @@ public class SkewHeapNode extends BSTNode {
 	}
 
 	public void setRight(SkewHeapNode v) {
-		super.setRight((BSTNode) v);
+		super.setRight(v);
 	}
 
 	@Override
@@ -200,7 +200,7 @@ public class SkewHeapNode extends BSTNode {
 	}
 
 	public void setLeft(SkewHeapNode v) {
-		super.setLeft((BSTNode) v);
+		super.setLeft(v);
 	}
 
 	@Override
@@ -209,7 +209,7 @@ public class SkewHeapNode extends BSTNode {
 	}
 
 	public void setParent(SkewHeapNode v) {
-		super.setParent((BSTNode) v);
+		super.setParent(v);
 	}
 
 

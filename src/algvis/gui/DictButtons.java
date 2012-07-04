@@ -74,14 +74,14 @@ public class DictButtons extends Buttons {
 						if (M.pause != p) {
 							M.C.enableUpdating(p = M.pause);
 						}
-						((Dictionary) D).insert(args.elementAt(i));
+						D.insert(args.elementAt(i));
 					}
 					D.M.scenario.enableAdding(true);
 					for (; i < n; ++i) {
 						if (M.pause != p) {
 							M.C.enableUpdating(p = M.pause);
 						}
-						((Dictionary) D).insert(args.elementAt(i));
+						D.insert(args.elementAt(i));
 					}
 					M.C.enableUpdating(true);
 					M.C.update();

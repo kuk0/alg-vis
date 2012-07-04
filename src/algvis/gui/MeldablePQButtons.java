@@ -103,7 +103,7 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 				@Override
 				public void run() {
 					for (int x : args) {
-						((MeldablePQ) D).insert(x);
+						D.insert(x);
 					}
 				}
 			});

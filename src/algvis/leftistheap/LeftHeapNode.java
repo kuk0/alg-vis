@@ -212,7 +212,7 @@ public class LeftHeapNode extends BSTNode {
 	}
 
 	public void setRight(LeftHeapNode v) {
-		super.setRight((BSTNode) v);
+		super.setRight(v);
 	}
 
 	@Override
@@ -221,7 +221,7 @@ public class LeftHeapNode extends BSTNode {
 	}
 
 	public void setLeft(LeftHeapNode v) {
-		super.setLeft((BSTNode) v);
+		super.setLeft(v);
 	}
 
 	@Override
@@ -230,7 +230,7 @@ public class LeftHeapNode extends BSTNode {
 	}
 
 	public void setParent(LeftHeapNode v) {
-		super.setParent((BSTNode) v);
+		super.setParent(v);
 	}
 
 }

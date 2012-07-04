@@ -87,7 +87,7 @@ public class TrieDelete extends Algorithm {
 			s = s.substring(1);
 		}
 		T.hw.setAndGoNextTo(s, v);
-		TrieNode w = (TrieNode) v.getChildWithCH('$');
+		TrieNode w = v.getChildWithCH('$');
 		if (w == null) {
 			addStep("triefindending2");
 			mysuspend();
@@ -115,7 +115,7 @@ public class TrieDelete extends Algorithm {
 		w = v;
 		do {
 			w.setColor(NodeColor.DELETE);
-			w = (TrieNode) w.getParent();
+			w = w.getParent();
 			countOfSons = 0;
 			TrieNode ww = (TrieNode) w.getChild();
 			while (ww != null) {
@@ -128,7 +128,7 @@ public class TrieDelete extends Algorithm {
 		do {
 			addStep("triedeletedbdb");
 			mysuspend();
-			w = (TrieNode) v.getParent();
+			w = v.getParent();
 			w.deleteChild(v);
 			T.reposition();
 			v = w;

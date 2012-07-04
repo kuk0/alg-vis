@@ -87,7 +87,7 @@ public class IntervalButtons extends Buttons{
 				@Override
 				public void run() {
 					for (int x : args) {
-						((IntervalTrees) D).insert(x);
+						D.insert(x);
 					}
 				}
 			});
