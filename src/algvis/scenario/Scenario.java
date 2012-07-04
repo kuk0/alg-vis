@@ -91,12 +91,7 @@ public class Scenario implements XMLable {
 	}
 
 	public boolean isAlgorithmRunning() {
-		if (scenario.isEmpty()) {
-			return false;
-		} else {
-			return scenario.getCurrent().hasPrevious()
-					&& scenario.getCurrent().hasNext();
-		}
+        return !scenario.isEmpty() && scenario.getCurrent().hasPrevious() && scenario.getCurrent().hasNext();
 	}
 
 	public boolean hasPrevious() {
