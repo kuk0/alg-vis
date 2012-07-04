@@ -305,7 +305,8 @@ public class TreeNode extends Node {
 	 * 
 	 * @return Leftmost and rightmost nodes on the last level of subtree
 	 */
-	private NodePair<TreeNode> fTRPrePosition() {
+	@SuppressWarnings("SillyAssignment")
+    private NodePair<TreeNode> fTRPrePosition() {
 		NodePair<TreeNode> result = new NodePair<TreeNode>();
 
 		if (isLeaf()) {
@@ -398,7 +399,8 @@ public class TreeNode extends Node {
 			 */
 			// both left subforest and right subtree have the same height
 			if ((L == null) && (R == null)) {
-				fromLeftSubtree.left = fromLeftSubtree.left;
+                //noinspection SillyAssignment
+                fromLeftSubtree.left = fromLeftSubtree.left;
 				fromLeftSubtree.right = fromRightSubtree.right;
 				// left subforest is more shallow
 			} else if ((L == null) && (R != null)) {
