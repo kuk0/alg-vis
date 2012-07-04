@@ -43,8 +43,7 @@ public class RBDelete extends Algorithm {
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
-			return;
-		} else {
+        } else {
 			RBNode d = (RBNode) T.getRoot();
 			v.goTo(d);
 			addStep("bstdeletestart");

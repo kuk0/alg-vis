@@ -42,8 +42,7 @@ public class BSTDelete extends Algorithm {
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
-			return;
-		} else {
+        } else {
 			BSTNode d = T.getRoot();
 			v.goAbove(d);
 			addNote("bstdeletestart");

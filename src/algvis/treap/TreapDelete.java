@@ -41,8 +41,7 @@ public class TreapDelete extends Algorithm {
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
-			return;
-		} else {
+        } else {
 			TreapNode d = (TreapNode)T.getRoot();
 			v.goTo(d);
 			addStep("bstdeletestart");

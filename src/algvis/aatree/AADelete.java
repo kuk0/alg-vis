@@ -43,8 +43,7 @@ public class AADelete extends Algorithm {
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
-			return;
-		} else {
+        } else {
 			AANode d = (AANode) T.getRoot();
 			v.goTo(d);
 			addStep("bstdeletestart");

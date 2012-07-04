@@ -42,8 +42,7 @@ public class AVLDelete extends Algorithm {
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
-			return;
-		} else {
+        } else {
 			AVLNode d = (AVLNode) T.getRoot();
 			v.goTo(d);
 			addStep("bstdeletestart");
