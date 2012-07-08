@@ -25,7 +25,7 @@ package algvis.core;
  * each step of the algorithm; see method mysuspend) and is automatically
  * resumed (method myresume) after pressing the "Next" button.
  */
-abstract public class Algorithm extends Thread {
+abstract public class Algorithm implements Runnable {
 	private final DataStructure D;
 	private boolean suspended = false;
 

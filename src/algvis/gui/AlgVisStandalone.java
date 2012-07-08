@@ -16,26 +16,20 @@
  ******************************************************************************/
 package algvis.gui;
 
-import java.awt.Color;
-
-import javax.swing.JFrame;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.TitledBorder;
+import java.awt.*;
 
 
 public class AlgVisStandalone {
-	private static final int WIDTH = 1080;
-    private static final int HEIGHT = 680;
-
 	public static void main(String[] args) {
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
 					UIManager.put("nimbusBase", new Color(0xBB, 0xC3, 0xFF));
 					UIManager.put("TitledBorder.position", TitledBorder.CENTER);
-					UIManager
-							.put("nimbusBlueGrey", new Color(0xD1, 0xD1, 0xD1));
+					UIManager.put("nimbusBlueGrey", new Color(0xD1, 0xD1, 0xD1));
 					UIManager.put("control", new Color(0xFA, 0xFA, 0xFA));
 					UIManager.setLookAndFeel(info.getClassName());
 					break;
@@ -44,22 +38,31 @@ public class AlgVisStandalone {
 		} catch (Exception e) {
 			// If Nimbus is not available, you can set the GUI to another look
 			// and feel.
+			e.printStackTrace();
 		}
 
-		JFrame f = new JFrame("Gnarley Trees");
-		f.addWindowListener(new java.awt.event.WindowAdapter() {
+		EventQueue.invokeLater(new Runnable() {
 			@Override
-			public void windowClosing(java.awt.event.WindowEvent e) {
-				System.exit(0);
+			public void run() {
+				JFrame f = new MainFrame();
+				f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				f.setVisible(true);
 			}
 		});
+	}
+}
 
-		AlgVis A = new AlgVis(f.getRootPane());
+class MainFrame extends JFrame {
+	private static final int WIDTH = 1080;
+	private static final int HEIGHT = 680;
+
+	public MainFrame() {
+		setTitle("Gnarley Trees");
+		AlgVis A = new AlgVis(getRootPane());
 		A.setSize(WIDTH, HEIGHT);
-		f.getContentPane().add(A);
-		f.pack();
+		add(A);
+		pack();
 		A.init();
-		f.setSize(WIDTH, HEIGHT + 20); // add 20 for the frame title
-		f.setVisible(true);
+		setSize(WIDTH, HEIGHT + 20); // add 20 for the frame title
 	}
 }

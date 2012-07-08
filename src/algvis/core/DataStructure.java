@@ -72,8 +72,9 @@ abstract public class DataStructure {
 			M.B.enablePrevious();
 			M.B.disableAll();
 
+			Thread t = new Thread(A);
 			try {
-				A.start();
+				t.start();
 			} catch (IllegalThreadStateException e) {
 				System.err.println("LOL");
 				M.B.disableNext();
@@ -81,14 +82,14 @@ abstract public class DataStructure {
 				return;
 			}
 			try {
-				A.join();
+				t.join();
 				// System.err.println("join");
 			} catch (InterruptedException e) {
 				// TODO ak sa napr. viac randomov zavola za sebou, tak sa
 				// interruptne
 				Thread.interrupted();
 				try {
-					A.join();
+					t.join();
 				} catch (InterruptedException e1) {
 					System.err.println("AJAJAJ");
 					e.printStackTrace();

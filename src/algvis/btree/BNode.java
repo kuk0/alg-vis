@@ -73,7 +73,7 @@ public class BNode extends Node {
 		n2 = w.numChildren;
 		numChildren = n1 + n2;
         System.arraycopy(u.c, 0, c, 0, n1);
-        System.arraycopy(w.c, 0, c, n1 + 0, n2);
+        System.arraycopy(w.c, 0, c, n1, n2);
 		for (int i = 0; i < numChildren; ++i) {
 			c[i].parent = this;
 		}

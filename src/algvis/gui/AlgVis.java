@@ -69,7 +69,7 @@ public class AlgVis extends JPanel implements ActionListener {
 	private final JPanel cards;
 	private final VisPanel[] panels;
 	private int activePanel = -1;
-	private final JRootPane P;
+	private final JRootPane rootPane;
 	private final Languages L;
 	private final Settings S;
 
@@ -81,7 +81,7 @@ public class AlgVis extends JPanel implements ActionListener {
 	}
 
 	public AlgVis(JRootPane P, String s) {
-		this.P = P;
+		this.rootPane = P;
 		L = new Languages(s);
 		S = new Settings(L);
 		cards = new JPanel(new CardLayout());
@@ -163,7 +163,7 @@ public class AlgVis extends JPanel implements ActionListener {
 		}
 
 		add(menuBar);
-		P.setJMenuBar(menuBar);
+		rootPane.setJMenuBar(menuBar);
 		add(cards);
 
 		showCard(DEFAULT_DS);
