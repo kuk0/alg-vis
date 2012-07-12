@@ -23,6 +23,8 @@ import java.util.Random;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
+import algvis.internationalization.Languages;
+
 public class WordGenerator {
 	private volatile static WordGenerator INSTANCE = new WordGenerator();
 	private Vector<String> enWords;
@@ -80,7 +82,7 @@ public class WordGenerator {
 	}
 	
 	public static String getWord(Settings s) {
-		int current_language = s.L.getCurrentLanguage();
+		int current_language = Languages.getCurrentLanguage();
 		switch (current_language) {
 		case 0:
 			return getEnWord();

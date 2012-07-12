@@ -93,6 +93,19 @@ public class LeftHeap extends MeldablePQ implements ClickListener{
 					+ root[active].size
 					+ ";   "
 					+ M.S.L.getString("height")
+=======
+			return Languages.getString("size") + ": 0;   "
+					+ Languages.getString("height") + ": 0 =  1.00\u00b7"
+					+ Languages.getString("opt") + ";   "
+					+ Languages.getString("avedepth") + ": 0";
+		} else {
+			root[active].calcTree();
+			return Languages.getString("size")
+					+ ": "
+					+ root[active].size
+					+ ";   "
+					+ Languages.getString("height")
+>>>>>>> vis-elem
 					+ ": "
 					+ root[active].height
 					+ " = "
@@ -101,9 +114,15 @@ public class LeftHeap extends MeldablePQ implements ClickListener{
 									/ (Math.floor(lg(root[active].size)) + 1),
 							2, 5)
 					+ "\u00b7"
+<<<<<<< HEAD
 					+ M.S.L.getString("opt")
 					+ ";   "
 					+ M.S.L.getString("avedepth")
+=======
+					+ Languages.getString("opt")
+					+ ";   "
+					+ Languages.getString("avedepth")
+>>>>>>> vis-elem
 					+ ": "
 					+ StringUtils.format(root[active].sumh
 							/ (double) root[active].size, 2, -5);

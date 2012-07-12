@@ -22,23 +22,34 @@ import javax.swing.JComboBox;
 
 public class IComboBox extends JComboBox implements LanguageListener {
 	private static final long serialVersionUID = 8795452558528688577L;
-	Languages L;
-	String[] choices;
+	Stringable[] choices;
 
-	public IComboBox(Languages L, String[] choices) {
-		super(choices);
-		this.L = L;
+	public IComboBox(Stringable[] choices) {
+		super();
+		setChoices(choices);
+	}
+
+	public IComboBox(String[] choices) {
+		super();
+		Stringable[] ch = new Stringable[choices.length];
+		for (int i=0; i < choices.length; ++i) {
+			ch[i] = new IString(choices[i]);
+		}
+		setChoices(ch);
+	}
+	
+	public void setChoices(Stringable[] choices) {
 		this.choices = choices;
 		languageChanged();
-		L.addListener(this);
-		setBackground(Color.WHITE);
+		Languages.addListener(this);
+		setBackground(Color.WHITE);		
 	}
 
 	@Override
 	public void languageChanged() {
 		removeAllItems();
 		for (int i = 0; i < choices.length; ++i) {
-			this.addItem(L.getString(choices[i]));
+			this.addItem(choices[i].getString());
 		}
 	}
 }
