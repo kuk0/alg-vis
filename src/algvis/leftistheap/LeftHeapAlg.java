@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kov·Ë, KatarÌna Kotrlov·, Pavol LukËa, Viktor TomkoviË, Tatiana TÛthov·
+ * Copyright (c) 2012 Jakub Kov√°ƒç, Katar√≠na Kotrlov√°, Pavol Lukƒça, Viktor Tomkoviƒç, Tatiana T√≥thov√°
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,16 +19,16 @@ package algvis.leftistheap;
 import algvis.core.Algorithm;
 import algvis.core.Node;
 
-public class LeftHeapAlg extends Algorithm {
-	LeftHeap H;
+class LeftHeapAlg extends Algorithm {
+	final LeftHeap H;
 	LeftHeapNode v;
 
-	public LeftHeapAlg(LeftHeap H) {
+	LeftHeapAlg(LeftHeap H) {
 		super(H);
 		this.H = H;
 	}
 
-	public void meld(int i) {
+	void meld(int i) {
 		LeftHeapNode w = H.root[i];
 		H.root[0].mark();
 		w.mark();
@@ -143,7 +143,7 @@ public class LeftHeapAlg extends Algorithm {
 	}
 	
 	
-	public void bubbleup(LeftHeapNode v) {
+	void bubbleup(LeftHeapNode v) {
 		if (H.minHeap) {
 			addStep("minheapbubbleup");
 		} else {

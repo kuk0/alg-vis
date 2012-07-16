@@ -37,8 +37,8 @@ public class StringUtils {
 		return s;
 	}
 
-	static final String ZEROES = "000000000000";
-	static final String BLANKS = "            ";
+	private static final String ZEROES = "000000000000";
+	private static final String BLANKS = "            ";
 
 	public static String format(double val, int n, int w) { // rounding
 		double incr = 0.5;

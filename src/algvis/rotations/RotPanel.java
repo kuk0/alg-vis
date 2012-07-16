@@ -24,8 +24,8 @@ public class RotPanel extends VisPanel {
 	private static final long serialVersionUID = -5154501209600594791L;
 	public static Class<? extends DataStructure> DS = Rotations.class;
 
-	public RotPanel(Settings S) {
-		super(S);
+	public RotPanel(Settings S, boolean isScenarioEnabled) {
+		super(S, isScenarioEnabled);
 	}
 
 	@Override

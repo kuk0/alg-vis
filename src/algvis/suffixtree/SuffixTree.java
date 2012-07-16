@@ -25,7 +25,7 @@ import algvis.gui.view.View;
 import algvis.trie.TrieWordNode;
 
 public class SuffixTree extends DataStructure {
-	static final int textpos = -40; 
+	private static final int textpos = -40;
 	public static String adtName = "stringology";
 	public static String dsName = "suffixtree";
 
@@ -33,7 +33,7 @@ public class SuffixTree extends DataStructure {
 	private SuffixTreeNode v = null;
 
 	public TrieWordNode hw = null;
-	public TrieWordNode cs = null;
+	private final TrieWordNode cs = null;
 
 	public String text;
 	StringElem str;
@@ -71,7 +71,7 @@ public class SuffixTree extends DataStructure {
 		str = null;
 	}
 
-	public SuffixTreeNode getV() {
+	SuffixTreeNode getV() {
 		return v;
 	}
 

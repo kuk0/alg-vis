@@ -18,7 +18,7 @@ package algvis.internationalization;
 
 public class IButton extends ChButton implements LanguageListener {
 	private static final long serialVersionUID = -6020341462591231389L;
-	Stringable t;
+	private Stringable t;
 
 	public IButton(Stringable text) {
 		super(text.getString());

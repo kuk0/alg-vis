@@ -32,6 +32,7 @@ import algvis.core.Settings;
 import algvis.internationalization.ILabel;
 import algvis.internationalization.LanguageListener;
 import algvis.internationalization.Languages;
+import algvis.scenario.Scenario;
 
 public abstract class VisPanel extends JPanel implements LanguageListener {
 	private static final long serialVersionUID = 5104769085118210624L;
@@ -43,13 +44,15 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 	public DataStructure D; // datovej struktury
 	public Screen screen; // obrazovky v strede
 	public ILabel statusBar; // a status baru
-	public Settings S;
-	public TitledBorder border;
+	public final Settings S;
+	private TitledBorder border;
 
 	public boolean pause = true, small = false;
+	public final Scenario scenario = new Scenario(this, getName());
 
-	public VisPanel(Settings S) {
+	protected VisPanel(Settings S, boolean isScenarioEnabled) {
 		this.S = S;
+		scenario.enable(isScenarioEnabled);
 		init();
 	}
 
@@ -94,7 +97,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 	private JPanel initScreen() {
 		JPanel screenP = new JPanel();
 		screenP.setLayout(new BorderLayout());
-		screen = new Screen(this) {
+		screen = new Screen() {
 			private static final long serialVersionUID = 2196788670749006364L;
 
 			@Override
@@ -153,7 +156,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 		return SP;
 	}
 
-	abstract public void initDS();
+	protected abstract void initDS();
 
 	/*
 	 * public void showStatus (String t) { statusBar.setT(t); }
@@ -165,7 +168,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 	}
 	
 	public void setOnAir(boolean onAir) {
-		if (onAir == false) {
+		if (!onAir) {
 			screen.suspend();
 		} else {
 			screen.resume();

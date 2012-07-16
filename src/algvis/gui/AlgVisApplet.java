@@ -30,7 +30,8 @@ import algvis.internationalization.Languages;
 
 public class AlgVisApplet extends JApplet {
 	private static final long serialVersionUID = -76009301274562874L;
-	static final int WIDTH = 1080, HEIGHT = 680;
+	private static final int WIDTH = 1080;
+    private static final int HEIGHT = 680;
 
 	@Override
 	public void init() {

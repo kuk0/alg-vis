@@ -23,13 +23,13 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class Languages {
-	final static int N = 2;
-	static int current_lang;
-	static Locale[] all_locales = new Locale[N];
-	static ResourceBundle[] all_msgs = new ResourceBundle[N];
-	static Locale locale;
-	static ResourceBundle msg;
-	static List<LanguageListener> listeners = new LinkedList<LanguageListener>();
+	private static final int N = 2;
+	private static int current_lang;
+	private static final Locale[] all_locales = new Locale[N];
+	private static final ResourceBundle[] all_msgs = new ResourceBundle[N];
+	//private static Locale locale;
+	//private static ResourceBundle msg;
+	private static final List<LanguageListener> listeners = new LinkedList<LanguageListener>();
 
 	static {
 		all_locales[0] = new Locale("en");
@@ -42,13 +42,13 @@ public class Languages {
 		Languages.listeners.add(l);
 	}
 
-	public static void selectLanguage(int i) {
+	static void selectLanguage(int i) {
 		if (i < 0 || i >= N) {
 			i = 0;
 		}
 		current_lang = i;
-		locale = all_locales[current_lang];
-		msg = all_msgs[current_lang];
+		//locale = all_locales[current_lang];
+		//msg = all_msgs[current_lang];
 		// notify all listeners
 		for (LanguageListener l : listeners) {
 			l.languageChanged();

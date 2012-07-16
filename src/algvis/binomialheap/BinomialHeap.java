@@ -30,9 +30,9 @@ import algvis.gui.view.View;
 import algvis.internationalization.Languages;
 
 public class BinomialHeap extends MeldablePQ implements ClickListener {
-	public static String dsName = "binheap";
-	public BinHeapNode[] root; // root[0] je pomocny, prave meldujuci
-	public BinHeapNode[] min;
+	public static final String dsName = "binheap";
+	public final BinHeapNode[] root; // root[0] je pomocny, prave meldujuci
+	public final BinHeapNode[] min;
 	public BinHeapNode d, v, v2;
 
 	@Override
@@ -41,7 +41,7 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 	}
 
 	public BinomialHeap(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		root = new BinHeapNode[numHeaps + 1];
 		min = new BinHeapNode[numHeaps + 1];
 		

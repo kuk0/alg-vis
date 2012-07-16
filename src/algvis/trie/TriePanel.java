@@ -24,8 +24,8 @@ public class TriePanel extends VisPanel {
 	private static final long serialVersionUID = -8652425842838569507L;
 	public static Class<? extends DataStructure> DS = Trie.class;
 
-	public TriePanel(Settings S) {
-		super(S);
+	public TriePanel(Settings S, boolean isScenarioEnabled) {
+		super(S, isScenarioEnabled);
 	}
 	
 	@Override

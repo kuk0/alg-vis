@@ -35,9 +35,12 @@ import algvis.internationalization.IRadioButton;
  */
 public class PQButtons extends Buttons {
 	private static final long serialVersionUID = 5632185496171660196L;
-	IButton insertB, deleteB, decrKeyB;
-	IRadioButton minB, maxB;
-	ButtonGroup minMaxGroup;
+	private IButton insertB;
+    private IButton deleteB;
+    private IButton decrKeyB;
+	private IRadioButton minB;
+    private IRadioButton maxB;
+	private ButtonGroup minMaxGroup;
 
 	public PQButtons(VisPanel M) {
 		super(M);
@@ -90,7 +93,7 @@ public class PQButtons extends Buttons {
 				@Override
 				public void run() {
 					for (int x : args) {
-						((PriorityQueue) D).insert(x);
+						D.insert(x);
 					}
 				}
 			});

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kov·Ë, KatarÌna Kotrlov·, Pavol LukËa, Viktor TomkoviË, Tatiana TÛthov·
+ * Copyright (c) 2012 Jakub Kov√°ƒç, Katar√≠na Kotrlov√°, Pavol Lukƒça, Viktor Tomkoviƒç, Tatiana T√≥thov√°
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,8 @@ import algvis.internationalization.ILabel;
 
 public class DaryHeapButtons extends PQButtons implements ChangeListener {
 	private static final long serialVersionUID = -2783154701649865993L;
-	JSpinner OS;
-	ILabel orderLabel;
+	private JSpinner OS;
+	private ILabel orderLabel;
 
 	
 
@@ -52,7 +52,7 @@ public class DaryHeapButtons extends PQButtons implements ChangeListener {
 	public void stateChanged(ChangeEvent evt) {
 		if (evt.getSource() == OS) {
 			((DaryHeap) D).order = (Integer) OS.getValue();
-			((DaryHeap) D).clear();
+			D.clear();
 			((DaryHeap) D).reposition();
 		}
 	}

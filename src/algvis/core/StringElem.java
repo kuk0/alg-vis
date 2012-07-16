@@ -7,14 +7,16 @@ import algvis.gui.Fonts;
 import algvis.gui.view.View;
 
 public class StringElem {
-	static final int span = 12;
-	public DataStructure D;
-	int x, y, len;
-	String s;
-	ArrayList<Color> col;
+	private static final int span = 12;
+	//private final DataStructure D;
+	private final int x;
+    private final int y;
+    private int len;
+	private final String s;
+	private final ArrayList<Color> col;
 
 	public StringElem(DataStructure D, String s, int x, int y) {
-		this.D = D;
+		//this.D = D;
 		this.s = s;
 		this.x = x;
 		this.y = y;

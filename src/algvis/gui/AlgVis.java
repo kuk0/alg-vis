@@ -61,7 +61,7 @@ public class AlgVis extends JPanel implements ActionListener {
      * 21 - Interval tree ("intervaltree")
      * 22 - Trie ("trie") 
      * 23 - Suffix Tree ("suffixtree") */
-	final static int DEFAULT_DS = 0;
+	private final static int DEFAULT_DS = 0;
 	
 	private static final long serialVersionUID = -5202486006824196688L;
 
@@ -72,8 +72,8 @@ public class AlgVis extends JPanel implements ActionListener {
 	private final JRootPane P;
 	private final Settings S;
 
-	Map<String, IMenu> adtItems = new HashMap<String, IMenu>();
-	IMenuItem[] dsItems;
+	private final Map<String, IMenu> adtItems = new HashMap<String, IMenu>();
+	private IMenuItem[] dsItems;
 
 	public AlgVis(JRootPane P) {
 		this(P, "en");

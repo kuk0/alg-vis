@@ -22,7 +22,7 @@ import javax.swing.JComboBox;
 
 public class IComboBox extends JComboBox implements LanguageListener {
 	private static final long serialVersionUID = 8795452558528688577L;
-	Stringable[] choices;
+	private Stringable[] choices;
 
 	public IComboBox(Stringable[] choices) {
 		super();
@@ -48,8 +48,8 @@ public class IComboBox extends JComboBox implements LanguageListener {
 	@Override
 	public void languageChanged() {
 		removeAllItems();
-		for (int i = 0; i < choices.length; ++i) {
-			this.addItem(choices[i].getString());
+		for (Stringable choice : choices) {
+			this.addItem(choice.getString());
 		}
 	}
 }

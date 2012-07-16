@@ -24,13 +24,14 @@ import algvis.gui.MeldablePQButtonsNoDecr;
 import algvis.gui.VisPanel;
 import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
+import algvis.internationalization.Languages;
 
 public class LeftHeap extends MeldablePQ implements ClickListener{
 	public static String dsName = "leftheap";
 	LeftHeapNode root[] = null, v = null, v2 = null;
 
 	public LeftHeap(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		root = new LeftHeapNode[numHeaps + 1];
 		M.screen.V.setDS(this);
 	}
@@ -82,18 +83,6 @@ public class LeftHeap extends MeldablePQ implements ClickListener{
 	public String stats() {
 
 		if (root[active] == null) {
-			return M.S.L.getString("size") + ": 0;   "
-					+ M.S.L.getString("height") + ": 0 =  1.00\u00b7"
-					+ M.S.L.getString("opt") + ";   "
-					+ M.S.L.getString("avedepth") + ": 0";
-		} else {
-			root[active].calcTree();
-			return M.S.L.getString("size")
-					+ ": "
-					+ root[active].size
-					+ ";   "
-					+ M.S.L.getString("height")
-=======
 			return Languages.getString("size") + ": 0;   "
 					+ Languages.getString("height") + ": 0 =  1.00\u00b7"
 					+ Languages.getString("opt") + ";   "
@@ -105,7 +94,6 @@ public class LeftHeap extends MeldablePQ implements ClickListener{
 					+ root[active].size
 					+ ";   "
 					+ Languages.getString("height")
->>>>>>> vis-elem
 					+ ": "
 					+ root[active].height
 					+ " = "
@@ -114,15 +102,9 @@ public class LeftHeap extends MeldablePQ implements ClickListener{
 									/ (Math.floor(lg(root[active].size)) + 1),
 							2, 5)
 					+ "\u00b7"
-<<<<<<< HEAD
-					+ M.S.L.getString("opt")
-					+ ";   "
-					+ M.S.L.getString("avedepth")
-=======
 					+ Languages.getString("opt")
 					+ ";   "
 					+ Languages.getString("avedepth")
->>>>>>> vis-elem
 					+ ": "
 					+ StringUtils.format(root[active].sumh
 							/ (double) root[active].size, 2, -5);

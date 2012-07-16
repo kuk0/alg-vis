@@ -24,10 +24,10 @@ import org.jdom.Element;
 
 public class MacroCommand<T extends Command> implements Command {
 	private final String name;
-	protected final List<T> commands;
-	protected ListIterator<T> iterator;
-	protected T current = null;
-	protected int position = -1;
+	final List<T> commands;
+	ListIterator<T> iterator;
+	T current = null;
+	int position = -1;
 
 	public MacroCommand(String name) {
 		commands = new ArrayList<T>();

@@ -28,8 +28,8 @@ import algvis.internationalization.ILabel;
 
 public class BTreeButtons extends DictButtons implements ChangeListener {
 	private static final long serialVersionUID = -4573594717377516312L;
-	JSpinner OS;
-	ILabel orderLabel;
+	private JSpinner OS;
+	private ILabel orderLabel;
 
 	public BTreeButtons(VisPanel M) {
 		super(M);
@@ -48,7 +48,7 @@ public class BTreeButtons extends DictButtons implements ChangeListener {
 	public void stateChanged(ChangeEvent evt) {
 		if (evt.getSource() == OS) {
 			((BTree) D).order = (Integer) OS.getValue();
-			((BTree) D).clear();
+			D.clear();
 			((BTree) D).reposition();
 		}
 	}

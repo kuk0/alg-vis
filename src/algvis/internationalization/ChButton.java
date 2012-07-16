@@ -25,15 +25,11 @@ import javax.swing.JButton;
 public class ChButton extends JButton {
 	private static final long serialVersionUID = 6239957285446549335L;
 
-	public ChButton() {
-		super();
-	}
-	
-	public ChButton(String text) {
+	ChButton(String text) {
 		super(text);
 	}
 
-	public void refresh() {
+	void refresh() {
 		FontMetrics metrics = getFontMetrics(getFont());
 		int width = metrics.stringWidth(getText());
 		int height = metrics.getHeight();

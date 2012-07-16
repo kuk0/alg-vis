@@ -20,7 +20,7 @@ import javax.swing.JCheckBox;
 
 public class ICheckBox extends JCheckBox implements LanguageListener {
 	private static final long serialVersionUID = -8231264680063436446L;
-	Stringable t;
+	private Stringable t;
 
 	public ICheckBox(Stringable title, boolean on) {
 		super(title.getString(), on);

@@ -42,9 +42,15 @@ import algvis.gui.Fonts;
 public class View implements MouseListener, MouseMotionListener,
 		MouseWheelListener {
 	private Graphics2D g;
-	final static double SCALE_FACTOR = 1.1, MIN_ZOOM = 0.16, MAX_ZOOM = 5.5;
-	public int W, H; // display width&height
-	public int minx, miny, maxx, maxy;
+	private final static double SCALE_FACTOR = 1.1;
+    private final static double MIN_ZOOM = 0.16;
+    private final static double MAX_ZOOM = 5.5;
+	private int W;
+    private int H; // display width&height
+	private int minx;
+    public int miny;
+    private int maxx;
+    private int maxy;
 	private int mouseX, mouseY; // mouse position
 	public Alignment align = Alignment.CENTER;
 
@@ -114,7 +120,7 @@ public class View implements MouseListener, MouseMotionListener,
 		this.maxy = maxy + 50;
 	}
 
-	public void zoom(int x, int y, double f) {
+	void zoom(int x, int y, double f) {
 		if (at.getScaleX() * f <= MAX_ZOOM) {
 			AffineTransform t = new AffineTransform();
 			t.translate(x, y);
@@ -128,11 +134,11 @@ public class View implements MouseListener, MouseMotionListener,
 		zoom(W / 2, H / 2, SCALE_FACTOR);
 	}
 
-	public void zoomIn(int x, int y) {
+	void zoomIn(int x, int y) {
 		zoom(x, y, SCALE_FACTOR);
 	}
 
-	public void zoomOut(int x, int y) {
+	void zoomOut(int x, int y) {
 		zoom(x, y, 1 / SCALE_FACTOR);
 	}
 
@@ -140,7 +146,7 @@ public class View implements MouseListener, MouseMotionListener,
 		zoom(W / 2, H / 2, 1 / SCALE_FACTOR);
 	}
 
-	public Point2D v2r(double x, double y) {
+	Point2D v2r(double x, double y) {
 		Point2D p = new Point2D.Double(x, y);
 		at.transform(p, p);
 		return p;
@@ -233,7 +239,7 @@ public class View implements MouseListener, MouseMotionListener,
 		g.fillRect((int) (x - a), (int) (y - b), 2 * (int) a, 2 * (int) b);
 	}
 
-	public void drawRect(double x, double y, double a, double b) {
+	void drawRect(double x, double y, double a, double b) {
 		g.drawRect((int) (x - a), (int) (y - b), 2 * (int) a, 2 * (int) b);
 	}
 
@@ -265,8 +271,8 @@ public class View implements MouseListener, MouseMotionListener,
 		g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
 	}
 
-	public void drawWideLine(double x1, double y1, double x2, double y2,
-			float width, Color col) {
+	void drawWideLine(double x1, double y1, double x2, double y2,
+                      float width, Color col) {
 		final Stroke old = g.getStroke(), wide = new BasicStroke(width,
 				BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 		final Color c = g.getColor();
@@ -305,6 +311,9 @@ public class View implements MouseListener, MouseMotionListener,
 		return f.fm.stringWidth(str);
 	}
 
+	/**
+	 * draw string horizontally; middle character is at (x, y)
+	 */
 	public void drawString(String str, double x, double y, Fonts f) {
 		x -= f.fm.stringWidth(str) / 2;
 		y -= f.fm.getHeight() / 2 - f.fm.getAscent();
@@ -312,8 +321,20 @@ public class View implements MouseListener, MouseMotionListener,
 		g.drawString(str, (int) x, (int) y);
 	}
 
+	/**
+	 * draw string horizontally; last character is at (x, y)
+	 */
 	public void drawStringLeft(String str, double x, double y, Fonts f) {
 		x -= f.fm.stringWidth(str);
+		y -= f.fm.getHeight() / 2 - f.fm.getAscent();
+		g.setFont(f.font);
+		g.drawString(str, (int) x, (int) y);
+	}
+	
+	/**
+	 * draw string horizontally; first character is at (x, y)
+	 */
+	public void drawStringRight(String str, double x, double y, Fonts f) {
 		y -= f.fm.getHeight() / 2 - f.fm.getAscent();
 		g.setFont(f.font);
 		g.drawString(str, (int) x, (int) y);
@@ -397,8 +418,8 @@ public class View implements MouseListener, MouseMotionListener,
 	// elliptical arc
 	// x,y,w,h is the bounding rectangle
 	// a1,a2 is the starting and ending angle in degrees
-	public void drawArc(double x, double y, double w, double h, double a1,
-			double a2) {
+    void drawArc(double x, double y, double w, double h, double a1,
+                 double a2) {
 		g.drawArc((int) x, (int) y, (int) w, (int) h, (int) a1, (int) (a2 - a1));
 	}
 

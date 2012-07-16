@@ -25,8 +25,8 @@ public class LazyBinHeapPanel extends VisPanel {
 	private static final long serialVersionUID = 1997265264400223983L;
 	public static Class<? extends DataStructure> DS = LazyBinomialHeap.class;
 
-	public LazyBinHeapPanel(Settings S) {
-		super(S);
+	public LazyBinHeapPanel(Settings S, boolean isScenarioEnabled) {
+		super(S, isScenarioEnabled);
 	}
 
 	@Override

@@ -22,7 +22,7 @@ import algvis.gui.view.Layout;
 abstract public class Dictionary extends DataStructure {
 	public static String adtName = "dictionary";
 
-	public Dictionary(VisPanel M) {
+	protected Dictionary(VisPanel M) {
 		super(M);
 		addNodes(2); // root (0), v (1)
 	}
@@ -34,19 +34,19 @@ abstract public class Dictionary extends DataStructure {
 
 	abstract public void delete(int x);
 
-	public Node getRoot() {
+	protected Node getRoot() {
 		return getNode(0);
 	}
 
-	public void setRoot(Node root) {
+	protected void setRoot(Node root) {
 		setNode(0, root, false);
 	}
 
-	public Node getV() {
+	protected Node getV() {
 		return getNode(1);
 	}
 
-	public void setV(Node v) {
+	protected void setV(Node v) {
 		setNode(1, v, true);
 	}
 

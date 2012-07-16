@@ -25,7 +25,8 @@ public class BTree extends Dictionary {
 	public static String dsName = "btree";
 	int order = 5;
 	BNode root = null, v = null;
-	int xspan = 5, yspan = 15;
+	final int xspan = 5;
+    final int yspan = 15;
 
 	@Override
 	public String getName() {

@@ -37,14 +37,14 @@ public class BSTNode extends Node {
 	public boolean markSubtree = false;
 
 	// variables for the Reingold-Tilford layout
-	int offset = 0; // offset from parent node
+    private int offset = 0; // offset from parent node
 	private int level; // distance to root
-	boolean thread = false; // is this node threaded?
+	private boolean thread = false; // is this node threaded?
 
 	// statistics
 	public int size = 1, height = 1, sumh = 1;
 
-	public BSTNode(DataStructure D, int key, int x, int y) {
+	protected BSTNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 	}
 
@@ -59,18 +59,17 @@ public class BSTNode extends Node {
 			return left;
 	}
 
-	public BSTNode setLeft(BSTNode left) {
+	public void setLeft(BSTNode left) {
 		if (thread) {
 			thread = false;
 			right = null;
 		}
 		if (this.left != left) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetLeftCommand(left));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetLeftCommand(left));
 			}
 			this.left = left;
 		}
-		return left;
 	}
 
 	public BSTNode getRight() {
@@ -86,8 +85,8 @@ public class BSTNode extends Node {
 			left = null;
 		}
 		if (this.right != right) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetRightCommand(right));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetRightCommand(right));
 			}
 			this.right = right;
 		}
@@ -100,8 +99,8 @@ public class BSTNode extends Node {
 
 	public BSTNode setParent(BSTNode parent) {
 		if (this.parent != parent) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetParentCommand(parent));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetParentCommand(parent));
 			}
 			this.parent = parent;
 		}
@@ -110,8 +109,8 @@ public class BSTNode extends Node {
 
 	public void setLevel(int level) {
 		if (this.level != level) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetLevelCommand(level));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetLevelCommand(level));
 			}
 			this.level = level;
 		}
@@ -244,7 +243,7 @@ public class BSTNode extends Node {
 		setArc(getParent());
 	}
 
-	static int i;
+	private static int i;
 
 	public void drawTree(View v) {
 		i = 0;
@@ -335,7 +334,7 @@ public class BSTNode extends Node {
 	 * from the node to the right side (rightw). Assumption: this box has
 	 * already been created for both children.
 	 */
-	public void rebox() {
+    protected void rebox() {
 		/*
 		 * if there is a left child, leftw = width of the box enclosing the
 		 * whole left subtree, i.e., leftw+rightw; otherwise the width is the

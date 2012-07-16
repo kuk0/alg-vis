@@ -8,8 +8,8 @@ public class IntervalPanel extends VisPanel{
 	private static final long serialVersionUID = -5655533916806349111L;
 	public static Class<? extends DataStructure> DS = IntervalTree.class;
 	
-	public IntervalPanel(Settings S) {
-		super(S);
+	public IntervalPanel(Settings S, boolean isScenarioEnabled) {
+		super(S, isScenarioEnabled);
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kov·Ë, KatarÌna Kotrlov·, Pavol LukËa, Viktor TomkoviË, Tatiana TÛthov·
+ * Copyright (c) 2012 Jakub Kov√°ƒç, Katar√≠na Kotrlov√°, Pavol Lukƒça, Viktor Tomkoviƒç, Tatiana T√≥thov√°
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,11 +27,11 @@ import algvis.gui.view.View;
 import algvis.internationalization.Languages;
 
 public class SkewHeap extends MeldablePQ implements ClickListener{
-	public static String dsName = "skewheap";
+	public static final String dsName = "skewheap";
 	SkewHeapNode root[] = null, v = null, v2 = null;
 	
 	public SkewHeap(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		root = new SkewHeapNode[numHeaps + 1];
 		M.screen.V.setDS(this);
 	}	
@@ -95,7 +95,7 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 		start(new SkewHeapDelete(this, active));
 		
 	}
-	protected Pair chooseHeaps(int i, int j) {
+	Pair chooseHeaps(int i, int j) {
 		if (i < 1 || i > numHeaps) {
 			i = -1;
 		}

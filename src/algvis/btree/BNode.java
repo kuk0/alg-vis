@@ -25,11 +25,13 @@ import algvis.gui.Fonts;
 import algvis.gui.view.View;
 
 public class BNode extends Node {
-	int width, leftw, rightw;
+	private int width;
+    private int leftw;
+    private int rightw;
 	BNode parent = null;
 	int numKeys = 1, numChildren = 0;
-	int[] key;
-	BNode[] c;
+	final int[] key;
+	final BNode[] c;
 	// View V;
 
 	// statistics
@@ -62,9 +64,7 @@ public class BNode extends Node {
 		this(u.D, Node.NOKEY, v.x, v.y);
 		int n1 = u.numKeys, n2 = w.numKeys;
 		numKeys = n1 + 1 + n2;
-		for (int i = 0; i < n1; ++i) {
-			key[i] = u.key[i];
-		}
+        System.arraycopy(u.key, 0, key, 0, n1);
 		key[n1] = v.key[0];
 		for (int i = 0; i < n2; ++i) {
 			key[n1 + 1 + i] = w.key[i];
@@ -72,12 +72,8 @@ public class BNode extends Node {
 		n1 = u.numChildren;
 		n2 = w.numChildren;
 		numChildren = n1 + n2;
-		for (int i = 0; i < n1; ++i) {
-			c[i] = u.c[i];
-		}
-		for (int i = 0; i < n2; ++i) {
-			c[n1 + i] = w.c[i];
-		}
+        System.arraycopy(u.c, 0, c, 0, n1);
+        System.arraycopy(w.c, 0, c, n1 + 0, n2);
 		for (int i = 0; i < numChildren; ++i) {
 			c[i].parent = this;
 		}
@@ -230,9 +226,7 @@ public class BNode extends Node {
 	public BNode delMin() {
 		int r = key[0];
 		--numKeys;
-		for (int i = 0; i < numKeys; ++i) {
-			key[i] = key[i + 1];
-		}
+        System.arraycopy(key, 1, key, 0, numKeys);
 		width = _width();
 		return new BNode(D, r, x - (numKeys - 1) * Node.radius, y);
 	}
@@ -240,9 +234,7 @@ public class BNode extends Node {
 	public BNode delMinCh() {
 		BNode r = c[0];
 		--numChildren;
-		for (int i = 0; i < numChildren; ++i) {
-			c[i] = c[i + 1];
-		}
+        System.arraycopy(c, 1, c, 0, numChildren);
 		width = _width();
 		return r;
 	}
@@ -260,17 +252,13 @@ public class BNode extends Node {
 	}
 
 	public void insMin(int k) {
-		for (int i = numKeys++; i > 0; --i) {
-			key[i] = key[i - 1];
-		}
+        System.arraycopy(key, 0, key, 1, numKeys++);
 		key[0] = k;
 		width = _width();
 	}
 
 	public void insMinCh(BNode v) {
-		for (int i = numChildren++; i > 0; --i) {
-			c[i] = c[i - 1];
-		}
+        System.arraycopy(c, 0, c, 1, numChildren++);
 		c[0] = v;
 		width = _width();
 	}
@@ -293,7 +281,7 @@ public class BNode extends Node {
 		width = _width();
 	}
 
-	public String toString(int max) {
+	String toString(int max) {
 		if (numKeys == 0 || max == 0) {
 			return "";
 		}
@@ -325,7 +313,7 @@ public class BNode extends Node {
 		}
 	}
 
-	public int pos(int i) {
+	int pos(int i) {
 		if (i < 0) {
 			return tox - D.M.screen.V.stringWidth(toString(), Fonts.NORMAL) / 2 - Node.radius;
 		}
@@ -384,7 +372,7 @@ public class BNode extends Node {
 		move();
 	}
 
-	public void rebox() {
+	void rebox() {
 		if (numChildren == 0) {
 			leftw = rightw = width / 2 + ((BTree) D).xspan; // numKeys *
 			// D.radius +
@@ -405,7 +393,7 @@ public class BNode extends Node {
 		}
 	}
 
-	public void reboxTree() {
+	void reboxTree() {
 		for (int i = 0; i < numChildren; ++i) {
 			c[i].reboxTree();
 		}
@@ -459,7 +447,7 @@ public class BNode extends Node {
 		repos();
 	}
 
-	public int _goToX(BNode v) {
+	int _goToX(BNode v) {
 		int x = key[0], p = v.numKeys;
 		for (int i = 0; i < p; ++i) {
 			if (x <= v.key[i]) {

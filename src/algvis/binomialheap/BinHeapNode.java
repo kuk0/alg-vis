@@ -26,13 +26,15 @@ import algvis.gui.Fonts;
 import algvis.gui.view.View;
 
 public class BinHeapNode extends Node {
-	public int leftw, height, rank; // TODO: size -> rank (treba ale
+	private int leftw;
+    public int height;
+    public int rank; // TODO: size -> rank (treba ale
 											// zmenit aj pomocne upratovacie
 											// pole....)
 	public BinHeapNode parent, left, right, child;
 	public boolean cut;
 
-	public BinHeapNode(DataStructure D, int key, int x, int y) {
+	private BinHeapNode(DataStructure D, int key, int x, int y) {
 		this.setKey(key);
 		this.D = D;
 		this.x = tox = x;
@@ -57,7 +59,7 @@ public class BinHeapNode extends Node {
 		return parent == null;
 	}
 
-	public boolean isLeaf() {
+	boolean isLeaf() {
 		return child == null;
 	}
 
@@ -120,7 +122,7 @@ public class BinHeapNode extends Node {
 		w.right = this;
 	}
 
-	public void rebox() {
+	void rebox() {
 		if (isLeaf()) {
 			leftw = DataStructure.minsepx / 2;
 			height = 1;
@@ -135,7 +137,7 @@ public class BinHeapNode extends Node {
 		}
 	}
 
-	public void reboxTree(BinHeapNode first) {
+	void reboxTree(BinHeapNode first) {
 		if (!isLeaf()) {
 			child.reboxTree(child);
 		}
@@ -181,7 +183,7 @@ public class BinHeapNode extends Node {
 		moveTree(this);
 	}
 
-	public void moveTree(BinHeapNode first) {
+	void moveTree(BinHeapNode first) {
 		move();
 		if (!isLeaf()) {
 			child.moveTree(child);
@@ -191,11 +193,11 @@ public class BinHeapNode extends Node {
 		}
 	}
 
-	public void lowlight() {
+	void lowlight() {
 		bgColor(new Color(200, 200 - getKey() / 10, 0));
 	}
 
-	public void highlight() {
+	void highlight() {
 		bgKeyColor();
 	}
 
@@ -203,7 +205,7 @@ public class BinHeapNode extends Node {
 		lowlightTree(this);
 	}
 
-	public void lowlightTree(BinHeapNode first) {
+	void lowlightTree(BinHeapNode first) {
 		lowlight();
 		if (!isLeaf()) {
 			child.lowlightTree(child);

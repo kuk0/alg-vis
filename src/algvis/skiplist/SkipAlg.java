@@ -18,13 +18,13 @@ package algvis.skiplist;
 
 import algvis.core.Algorithm;
 
-public class SkipAlg extends Algorithm {
-	SkipList L;
+class SkipAlg extends Algorithm {
+	final SkipList L;
 	SkipNode v;
 	SkipNode p[];
-	int K;
+	final int K;
 
-	public SkipAlg(SkipList L, int x) {
+	SkipAlg(SkipList L, int x) {
 		super(L);
 		this.L = L;
 		L.setV(v = new SkipNode(L, x));
@@ -32,7 +32,7 @@ public class SkipAlg extends Algorithm {
 		p = new SkipNode[L.height];
 	}
 
-	public SkipNode find() {
+	SkipNode find() {
 		SkipNode w = L.getRoot();
 		v.goToRoot();
 		mysuspend();

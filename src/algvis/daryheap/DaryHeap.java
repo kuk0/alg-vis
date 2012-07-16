@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kov·Ë, KatarÌna Kotrlov·, Pavol LukËa, Viktor TomkoviË, Tatiana TÛthov·
+ * Copyright (c) 2012 Jakub Kov√°ƒç, Katar√≠na Kotrlov√°, Pavol Lukƒça, Viktor Tomkoviƒç, Tatiana T√≥thov√°
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  ******************************************************************************/
 package algvis.daryheap;
 
-import java.awt.geom.Rectangle2D;
-
 import algvis.core.Node;
 import algvis.core.PriorityQueue;
 import algvis.gui.VisPanel;
@@ -26,14 +24,14 @@ import algvis.gui.view.View;
 import algvis.internationalization.Languages;
 
 public class DaryHeap extends PriorityQueue implements ClickListener{
-	public static String dsName = "daryheap";
+	public static final String dsName = "daryheap";
 	DaryHeapNode root = null, v = null, v2 = null;
 	DaryHeapNode last = null;
 	int order = 5;
 	public static final int minsepx = 30;  //zmenit na mensie
 
 	public DaryHeap(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		last = new DaryHeapNode(this, 47); 
 		M.screen.V.setDS(this);
 	}

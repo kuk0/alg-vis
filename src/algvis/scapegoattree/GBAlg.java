@@ -18,18 +18,18 @@ package algvis.scapegoattree;
 
 import algvis.core.Algorithm;
 
-public class GBAlg extends Algorithm {
-	GBTree T;
-	GBNode v;
-	int K;
+class GBAlg extends Algorithm {
+	final GBTree T;
+	final GBNode v;
+	final int K;
 
-	public GBAlg(GBTree T, int x) {
+	GBAlg(GBTree T, int x) {
 		super(T);
 		this.T = T;
 		v = (GBNode) T.setV(new GBNode(T, K = x));
 	}
 
-	public GBNode compr(GBNode r, int c) {
+	GBNode compr(GBNode r, int c) {
 		GBNode w = r, x = (c > 0) ? r.getRight() : r;
 		w.mark();
 		mysuspend();

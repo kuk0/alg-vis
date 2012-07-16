@@ -39,8 +39,8 @@ public class GBNode extends BSTNode {
 
 	public void setDeleted(boolean deleted) {
 		if (this.deleted != deleted) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetDeletedCommand(deleted));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetDeletedCommand(deleted));
 			}
 			this.deleted = deleted;
 		}

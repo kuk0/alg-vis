@@ -8,7 +8,9 @@ import algvis.intervaltree.IntervalNode.focusType;
 
 public class IntervalTree extends IntervalTrees implements ClickListener {
 	public static String dsName = "intervaltree";
-	IntervalNode root = null, v = null, v2 = null;
+	IntervalNode root = null;
+    private IntervalNode v = null;
+    private IntervalNode v2 = null;
 	int numLeafs = 0; // pocet obsadenych listov
 	public static final int minsepx = 22;
 
@@ -94,7 +96,7 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 		// start(new IntervalInsert(this, b));
 	}
 
-	public IntervalNode getRoot() {
+	IntervalNode getRoot() {
 		return root;
 	}
 
@@ -104,7 +106,7 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 	}
 
 	public IntervalNode getV() {
-		return (IntervalNode) v;
+		return v;
 	}
 
 	public IntervalNode setV(IntervalNode v) {
@@ -120,7 +122,7 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 		M.screen.V.setBounds(x1, y1, x2, y2);
 	}
 
-	public int getHeight() {
+	int getHeight() {
 		int tmp = numLeafs;
 		int res = 1;
 		while (tmp > 1) {
@@ -134,9 +136,9 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 		}
 	}
 
-	int numL;
+	private int numL;
 
-	public IntervalNode generateEmpty(int h) {
+	IntervalNode generateEmpty(int h) {
 		IntervalNode w = new IntervalNode(this, Node.NOKEY);
 		if (h > 0) {
 			IntervalNode tmp1 = generateEmpty(h - 1);
@@ -174,7 +176,7 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 
 	}
 
-	public int getMinsepx() {
+    public int getMinsepx() {
 		return IntervalTree.minsepx;
 	}
 

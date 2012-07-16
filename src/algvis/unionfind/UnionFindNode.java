@@ -41,8 +41,8 @@ public class UnionFindNode extends TreeNode {
 
 	public void setRank(int rank) {
 		if (this.rank != rank) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetRankCommand(rank));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetRankCommand(rank));
 			}
 			this.rank = rank;
 		}
@@ -63,12 +63,12 @@ public class UnionFindNode extends TreeNode {
 		return (UnionFindNode) super.getParent();
 	}
 
-	public boolean isGrey() {
+	boolean isGrey() {
 		return grey;
 	}
 
 	public void setGrey(boolean grey) {
-		if (grey == false) {
+		if (!grey) {
 			UnionFindNode w = getChild();
 			while (w != null) {
 				w.setGrey(false);
@@ -76,14 +76,14 @@ public class UnionFindNode extends TreeNode {
 			}
 		}
 		if (this.grey != grey) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetGreyCommand(grey));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetGreyCommand(grey));
 			}
 			this.grey = grey;
 		}
 	}
 
-	public void drawGrey(View v) {
+	void drawGrey(View v) {
 		TreeNode w = getChild();
 		while (w != null) {
 			((UnionFindNode) w).drawGrey(v);

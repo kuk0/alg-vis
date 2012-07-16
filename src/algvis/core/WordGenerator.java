@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 import algvis.internationalization.Languages;
 
 public class WordGenerator {
-	private volatile static WordGenerator INSTANCE = new WordGenerator();
+	private final static WordGenerator INSTANCE = new WordGenerator();
 	private Vector<String> enWords;
 	private Vector<String> skWords;
 	private Random generator;
@@ -58,7 +58,7 @@ public class WordGenerator {
 		return generator;
 	}
 
-	public static String getEnWord() {
+	private static String getEnWord() {
 		WordGenerator wg = WordGenerator.getInstance();
 		return wg.getEnWords().get(
 				wg.getGenerator().nextInt(wg.getEnWords().size()));
@@ -72,7 +72,7 @@ public class WordGenerator {
 	
 	public static String getABWord(int n) {
 		Random r = WordGenerator.getInstance().getGenerator();
-		StringBuffer s = new StringBuffer("");
+		StringBuilder s = new StringBuilder("");
 		for (int i=0; i<n; ++i) {
 			if (r.nextBoolean()) s.append("A");
 			else s.append("B");

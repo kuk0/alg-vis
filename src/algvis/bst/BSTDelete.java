@@ -21,9 +21,9 @@ import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class BSTDelete extends Algorithm {
-	BST T;
-	BSTNode v;
-	int K;
+	private final BST T;
+	private BSTNode v;
+	private final int K;
 
 	public BSTDelete(BST T, int x) { // Buttons B,
 		super(T);
@@ -42,8 +42,7 @@ public class BSTDelete extends Algorithm {
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
-			return;
-		} else {
+        } else {
 			BSTNode d = T.getRoot();
 			v.goAbove(d);
 			addNote("bstdeletestart");

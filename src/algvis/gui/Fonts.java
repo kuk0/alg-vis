@@ -26,14 +26,14 @@ public enum Fonts {
 	TYPEWRITER(initTT());
 	//new Font("FreeMono", Font.BOLD, 10));
 
-	public Font font;
+	public final Font font;
 	public FontMetrics fm;
 
 	private Fonts(Font f) {
 		font = f;
 	}
 
-	public static Font initTT() {
+	private static Font initTT() {
 		Font f = null;
 		try {
 			f = Font.createFont(Font.TRUETYPE_FONT,

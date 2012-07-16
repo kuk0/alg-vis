@@ -42,7 +42,7 @@ public class SplayTree extends BST {
 		setNode(2, root2, false);
 	}
 
-	public SplayNode getVV() {
+	SplayNode getVV() {
 		return (SplayNode) getNode(3);
 	}
 
@@ -50,7 +50,7 @@ public class SplayTree extends BST {
 		setNode(3, vv, true);
 	}
 
-	public SplayNode getW1() {
+	SplayNode getW1() {
 		return (SplayNode) getNode(4);
 	}
 
@@ -58,7 +58,7 @@ public class SplayTree extends BST {
 		setNode(4, w1, true);
 	}
 
-	public SplayNode getW2() {
+	SplayNode getW2() {
 		return (SplayNode) getNode(5);
 	}
 

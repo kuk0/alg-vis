@@ -21,9 +21,9 @@ import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class AVLDelete extends Algorithm {
-	AVL T;
-	AVLNode v;
-	int K;
+	private final AVL T;
+	private AVLNode v;
+	private final int K;
 
 	public AVLDelete(AVL T, int x) {
 		super(T);
@@ -42,8 +42,7 @@ public class AVLDelete extends Algorithm {
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
-			return;
-		} else {
+        } else {
 			AVLNode d = (AVLNode) T.getRoot();
 			v.goTo(d);
 			addStep("bstdeletestart");

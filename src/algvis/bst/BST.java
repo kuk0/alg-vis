@@ -36,7 +36,6 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 
 	public BST(VisPanel M) {
 		super(M);
-		scenario.enable(true);
 		M.screen.V.setDS(this);
 	}
 
@@ -75,9 +74,9 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 
 	@Override
 	public void clear() {
-		if (getRoot() != null || getV() != null || scenario.hasNext()) {
-			scenario.newAlgorithm();
-			scenario.newStep();
+		if (getRoot() != null || getV() != null || M.scenario.hasNext()) {
+			M.scenario.newAlgorithm();
+			M.scenario.newStep();
 			setRoot(null);
 			setV(null);
 			M.C.clear();

@@ -17,14 +17,13 @@
 package algvis.pairingheap;
 
 public class PairHeapInsert extends PairHeapAlg{
-	int K;
-	int i;
+	private final int i;
 	PairHeapNode w;
 	
 	public PairHeapInsert(PairingHeap H, int i, int x) {
 		super(H);
 		this.i = i;
-		H.root[0] = new PairHeapNode(H, K = x);
+		H.root[0] = new PairHeapNode(H, x);
 		setHeader("insertion");
 	}
 	

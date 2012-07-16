@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kov·Ë, KatarÌna Kotrlov·, Pavol LukËa, Viktor TomkoviË, Tatiana TÛthov·
+ * Copyright (c) 2012 Jakub Kov√°ƒç, Katar√≠na Kotrlov√°, Pavol Lukƒça, Viktor Tomkoviƒç, Tatiana T√≥thov√°
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,11 +26,11 @@ import algvis.gui.view.View;
 
 public class LeftHeapNode extends BSTNode {
 	int rank = 1;
-	boolean doubleArrow = false;
+	private boolean doubleArrow = false;
 	boolean dashedrightl = false; // if true the line leading to the right son is dashed
-	boolean dashedleftl = false; // if true the line leading to the left son is dashed
+	private final boolean dashedleftl = false; // if true the line leading to the left son is dashed
 
-	public LeftHeapNode(DataStructure D, int key, int x, int y) {
+	private LeftHeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 		bgKeyColor();
 	}
@@ -118,7 +118,7 @@ public class LeftHeapNode extends BSTNode {
 	public void draw(View v) {
 		super.draw(v);
 		drawDoubleArrow(v);
-		String str = new String("" + rank);
+		String str = "" + rank;
 		if (rank != -1) {
 			if (this.getParent() != null && this.getParent().getLeft() == this) {
 				v.drawString(str, x - LeftHeapNode.radius, y
@@ -212,7 +212,7 @@ public class LeftHeapNode extends BSTNode {
 	}
 
 	public void setRight(LeftHeapNode v) {
-		super.setRight((BSTNode) v);
+		super.setRight(v);
 	}
 
 	@Override
@@ -220,8 +220,8 @@ public class LeftHeapNode extends BSTNode {
 		return (LeftHeapNode) super.getLeft();
 	}
 
-	public void setLeft(LeftHeapNode v) {
-		super.setLeft((BSTNode) v);
+	void setLeft(LeftHeapNode v) {
+		super.setLeft(v);
 	}
 
 	@Override
@@ -230,7 +230,7 @@ public class LeftHeapNode extends BSTNode {
 	}
 
 	public void setParent(LeftHeapNode v) {
-		super.setParent((BSTNode) v);
+		super.setParent(v);
 	}
 
 }

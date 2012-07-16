@@ -18,7 +18,7 @@ package algvis.internationalization;
 
 public class ILabel extends ChLabel implements LanguageListener {
 	private static final long serialVersionUID = 8993404595330090194L;
-	Stringable t;
+	private Stringable t;
 
 	public ILabel(Stringable text) {
 		super(text.getString());

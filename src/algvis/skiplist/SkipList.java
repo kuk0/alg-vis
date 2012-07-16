@@ -16,8 +16,6 @@
  ******************************************************************************/
 package algvis.skiplist;
 
-import java.awt.geom.Rectangle2D;
-
 import algvis.core.Dictionary;
 import algvis.core.Node;
 import algvis.gui.VisPanel;
@@ -38,7 +36,6 @@ public class SkipList extends Dictionary implements ClickListener {
 
 	public SkipList(VisPanel M) {
 		super(M);
-		scenario.enable(true);
 		M.screen.V.setDS(this);
 		M.screen.V.align = Alignment.LEFT;
 		setRoot(new SkipNode(this, -Node.INF));
@@ -63,9 +60,10 @@ public class SkipList extends Dictionary implements ClickListener {
 
 	@Override
 	public void clear() {
-		if (n != 0 || scenario.hasNext()) {
-			scenario.newAlgorithm();
-			scenario.newStep();
+		// TODO asi nezmazat historiu
+		if (n != 0 || M.scenario.hasNext()) {
+			M.scenario.newAlgorithm();
+			M.scenario.newStep();
 			height = 1;
 			n = e = 0;
 			setRoot(new SkipNode(this, -Node.INF));

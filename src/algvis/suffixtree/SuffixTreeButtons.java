@@ -29,8 +29,9 @@ import algvis.internationalization.ICheckBox;
 
 public class SuffixTreeButtons extends Buttons {
 	private static final long serialVersionUID = -368670840648549217L;
-	IButton insertB, findB;
-	ICheckBox implicitB;
+	private IButton insertB;
+    private IButton findB;
+	private ICheckBox implicitB;
 
 	public SuffixTreeButtons(VisPanel M) {
 		super(M);
