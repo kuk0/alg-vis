@@ -18,7 +18,7 @@ package algvis.skiplist;
 
 import java.awt.Color;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;

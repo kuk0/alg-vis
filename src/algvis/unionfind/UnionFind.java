@@ -19,7 +19,7 @@ package algvis.unionfind;
 import java.util.ArrayList;
 import java.util.Random;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 import algvis.core.DataStructure;
 import algvis.gui.VisPanel;

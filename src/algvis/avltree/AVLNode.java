@@ -18,7 +18,7 @@ package algvis.avltree;
 
 import java.awt.Color;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;

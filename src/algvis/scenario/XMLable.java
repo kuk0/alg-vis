@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.scenario;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 public interface XMLable {
 	public Element getXML();

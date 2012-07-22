@@ -285,8 +285,8 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		}
 
 		@Override
-		public org.jdom.Element getXML() {
-			org.jdom.Element e = new org.jdom.Element("saveCommentary");
+		public org.jdom2.Element getXML() {
+			org.jdom2.Element e = new org.jdom2.Element("saveCommentary");
 			return e;
 		}
 
