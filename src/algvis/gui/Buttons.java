@@ -28,7 +28,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 import algvis.core.DataStructure;
 import algvis.internationalization.ChLabel;

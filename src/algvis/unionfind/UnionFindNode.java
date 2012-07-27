@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.unionfind;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 import algvis.core.DataStructure;
 import algvis.core.TreeNode;

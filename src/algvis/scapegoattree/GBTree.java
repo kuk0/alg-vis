@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.scapegoattree;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 import algvis.bst.BST;
 import algvis.core.StringUtils;

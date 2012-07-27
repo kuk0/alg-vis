@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.redblacktree;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;

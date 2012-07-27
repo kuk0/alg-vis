@@ -19,7 +19,7 @@ package algvis.core;
 import java.awt.Color;
 import java.util.Stack;
 
-import org.jdom.Element;
+import org.jdom2.Element;
 
 import algvis.gui.view.View;
 import algvis.scenario.Command;
