@@ -31,27 +31,27 @@ public class IntervalButtons extends Buttons{
 	
 	@Override
 	public void actionButtons(JPanel P) {
-		insertB = new IButton(M.S.L, "button-insert");
+		insertB = new IButton(panel.S.L, "button-insert");
 		insertB.setMnemonic(KeyEvent.VK_I);
 		insertB.addActionListener(this);
 
 		/*
-		deleteB = new IButton(M.S.L, "button-deletemax");
+		deleteB = new IButton(panel.S.L, "button-deletemax");
 		deleteB.setMnemonic(KeyEvent.VK_D);
 		deleteB.addActionListener(this);
 		*/
 		
 		if (((IntervalTrees) D).minTree == mimasuType.MIN) {
-			findsumB = new IButton(M.S.L, "button-findmin");
+			findsumB = new IButton(panel.S.L, "button-findmin");
 		} else if (((IntervalTrees) D).minTree == mimasuType.MAX){
-			findsumB = new IButton(M.S.L, "button-findmax");
+			findsumB = new IButton(panel.S.L, "button-findmax");
 		} else {
-			findsumB = new IButton(M.S.L, "button-findsum");
+			findsumB = new IButton(panel.S.L, "button-findsum");
 		}
 		findsumB.setMnemonic(KeyEvent.VK_I);
 		findsumB.addActionListener(this);
 		
-		changeKeyB = new IButton(M.S.L, "button-changekey");
+		changeKeyB = new IButton(panel.S.L, "button-changekey");
 		changeKeyB.setMnemonic(KeyEvent.VK_K);
 		changeKeyB.addActionListener(this);
 
@@ -64,13 +64,13 @@ public class IntervalButtons extends Buttons{
 	
 	@Override
 	public void otherButtons(JPanel P) {
-		minB = new IRadioButton(M.S.L, "min");
+		minB = new IRadioButton(panel.S.L, "min");
 		minB.setSelected(false);
 		minB.addActionListener(this);
-		maxB = new IRadioButton(M.S.L, "max");
+		maxB = new IRadioButton(panel.S.L, "max");
 		maxB.setSelected(true);
 		maxB.addActionListener(this);
-		sumB = new IRadioButton(M.S.L, "sum");
+		sumB = new IRadioButton(panel.S.L, "sum");
 		sumB.setSelected(false);
 		sumB.addActionListener(this);
 		minMaxSumGroup = new ButtonGroup();

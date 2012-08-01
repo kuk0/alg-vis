@@ -56,7 +56,7 @@ public class SkewHeapMeld extends SkewHeapAlg{
 		H.root[0].highlightTree();
 		H.reposition();
 
-		mysuspend();
+		pause();
 		meld(i);
 	}
 

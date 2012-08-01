@@ -83,13 +83,13 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 	public String stats() {
 
 		if (root == null) {
-			return M.S.L.getString("size") + ": 0 ("
-					+ M.S.L.getString("emptyheap") + ")";
+			return panel.S.L.getString("size") + ": 0 ("
+					+ panel.S.L.getString("emptyheap") + ")";
 		} else if (root.nnodes == 1000) {
-			return M.S.L.getString("size") + ": 1000 ("
-					+ M.S.L.getString("fullheap") + ")";
+			return panel.S.L.getString("size") + ": 1000 ("
+					+ panel.S.L.getString("fullheap") + ")";
 		} else {
-			return M.S.L.getString("size") + ": " + root.nnodes;
+			return panel.S.L.getString("size") + ": " + root.nnodes;
 		}
 	}
 
@@ -120,7 +120,7 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 	public void reposition() {
 		if (root != null) {
 			root._reposition();
-			M.screen.V.setBounds(x1, y1, x2, y2);
+			panel.screen.V.setBounds(x1, y1, x2, y2);
 		}
 	}
 

@@ -16,20 +16,18 @@
  ******************************************************************************/
 package algvis.bst;
 
-import java.awt.Color;
-import java.awt.Polygon;
-import java.util.Stack;
-
-import org.jdom2.Element;
-
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.NodePair;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.gui.Fonts;
 import algvis.gui.view.Layout;
 import algvis.gui.view.View;
-import algvis.scenario.Command;
+
+import java.awt.*;
+import java.util.Hashtable;
+import java.util.Stack;
 
 public class BSTNode extends Node {
 	private BSTNode left = null, right = null, parent = null;
@@ -48,8 +46,8 @@ public class BSTNode extends Node {
 		super(D, key, x, y);
 	}
 
-	public BSTNode(DataStructure D, int key) {
-		super(D, key);
+	public BSTNode(DataStructure D, int key, int zDepth) {
+		super(D, key, zDepth);
 	}
 
 	public BSTNode getLeft() {
@@ -64,12 +62,7 @@ public class BSTNode extends Node {
 			thread = false;
 			right = null;
 		}
-		if (this.left != left) {
-			if (D.M.scenario.isAddingEnabled()) {
-				D.M.scenario.add(new SetLeftCommand(left));
-			}
-			this.left = left;
-		}
+		this.left = left;
 	}
 
 	public BSTNode getRight() {
@@ -84,12 +77,7 @@ public class BSTNode extends Node {
 			thread = false;
 			left = null;
 		}
-		if (this.right != right) {
-			if (D.M.scenario.isAddingEnabled()) {
-				D.M.scenario.add(new SetRightCommand(right));
-			}
-			this.right = right;
-		}
+		this.right = right;
 		return right;
 	}
 
@@ -98,22 +86,11 @@ public class BSTNode extends Node {
 	}
 
 	public BSTNode setParent(BSTNode parent) {
-		if (this.parent != parent) {
-			if (D.M.scenario.isAddingEnabled()) {
-				D.M.scenario.add(new SetParentCommand(parent));
-			}
-			this.parent = parent;
-		}
-		return parent;
+		return this.parent = parent;
 	}
 
 	public void setLevel(int level) {
-		if (this.level != level) {
-			if (D.M.scenario.isAddingEnabled()) {
-				D.M.scenario.add(new SetLevelCommand(level));
-			}
-			this.level = level;
-		}
+		this.level = level;
 	}
 
 	public int getLevel() {
@@ -287,7 +264,7 @@ public class BSTNode extends Node {
 			p.addPoint(x + 1, y - 1);
 			v.fillPolygon(p);
 		}
-		if (state != INVISIBLE && parent != null) {
+		if ((state != INVISIBLE || !isAnimationDone()) && parent != null) {
 			v.setColor(Color.black);
 			v.drawLine(x, y, parent.x, parent.y);
 		}
@@ -295,7 +272,7 @@ public class BSTNode extends Node {
 			//System.out.println("kreslim lavy " + getLeft().key + " " + this.key);
 			getLeft().drawTree2(v);
 		}
-		if (D instanceof BST && ((BST) D).order) { // && D.M.S.layout ==
+		if (D instanceof BST && ((BST) D).order) { // && D.panel.S.layout ==
 													// Layout.SIMPLE
 			v.setColor(Color.LIGHT_GRAY);
 			++i;
@@ -338,7 +315,7 @@ public class BSTNode extends Node {
 		/*
 		 * if there is a left child, leftw = width of the box enclosing the
 		 * whole left subtree, i.e., leftw+rightw; otherwise the width is the
-		 * node radius plus some additional space called xspan
+		 * node RADIUS plus some additional space called xspan
 		 */
 		leftw = (getLeft() == null) ? DataStructure.minsepx / 2
 				: getLeft().leftw + getLeft().rightw;
@@ -640,140 +617,30 @@ public class BSTNode extends Node {
 			getRight().subtreeColor(color);
 	}
 
-	private class SetLeftCommand implements Command {
-		private final BSTNode oldLeft, newLeft;
-
-		public SetLeftCommand(BSTNode newLeft) {
-			oldLeft = getLeft();
-			this.newLeft = newLeft;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setLeft");
-			e.setAttribute("key", Integer.toString(getKey()));
-			if (newLeft != null) {
-				e.setAttribute("newLeft", Integer.toString(newLeft.getKey()));
-			} else {
-				e.setAttribute("newLeft", "null");
-			}
-			if (oldLeft != null) {
-				e.setAttribute("oldLeft", Integer.toString(oldLeft.getKey()));
-			} else {
-				e.setAttribute("oldLeft", "null");
-			}
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setLeft(newLeft);
-		}
-
-		@Override
-		public void unexecute() {
-			setLeft(oldLeft);
-		}
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "left", left);
+		HashtableStoreSupport.store(state, hash + "right", right);
+		HashtableStoreSupport.store(state, hash + "parent", parent);
+		HashtableStoreSupport.store(state, hash + "level", level);
+		if (left != null) left.storeState(state);
+		if (right != null) right.storeState(state);
 	}
 
-	private class SetRightCommand implements Command {
-		private final BSTNode oldRight, newRight;
-
-		public SetRightCommand(BSTNode newRight) {
-			oldRight = getRight();
-			this.newRight = newRight;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setRight");
-			e.setAttribute("key", Integer.toString(getKey()));
-			if (newRight != null) {
-				e.setAttribute("newRight", Integer.toString(newRight.getKey()));
-			} else {
-				e.setAttribute("newRight", "null");
-			}
-			if (oldRight != null) {
-				e.setAttribute("oldRight", Integer.toString(oldRight.getKey()));
-			} else {
-				e.setAttribute("oldRight", "null");
-			}
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setRight(newRight);
-		}
-
-		@Override
-		public void unexecute() {
-			setRight(oldRight);
-		}
-
-	}
-
-	private class SetParentCommand implements Command {
-		private final BSTNode oldParent, newParent;
-
-		public SetParentCommand(BSTNode newParent) {
-			oldParent = getParent();
-			this.newParent = newParent;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setParent");
-			e.setAttribute("key", Integer.toString(getKey()));
-			if (newParent != null) {
-				e.setAttribute("newParent", Integer.toString(newParent.getKey()));
-			} else {
-				e.setAttribute("newParent", "null");
-			}
-			if (oldParent != null) {
-				e.setAttribute("oldParent", Integer.toString(oldParent.getKey()));
-			} else {
-				e.setAttribute("oldParent", "null");
-			}
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setParent(newParent);
-		}
-
-		@Override
-		public void unexecute() {
-			setParent(oldParent);
-		}
-	}
-
-	private class SetLevelCommand implements Command {
-		private final int fromLevel, toLevel;
-
-		public SetLevelCommand(int toLevel) {
-			this.fromLevel = getLevel();
-			this.toLevel = toLevel;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setLevel");
-			e.setAttribute("key", Integer.toString(getKey()));
-			e.setAttribute("fromLevel", Integer.toString(fromLevel));
-			e.setAttribute("toLevel", Integer.toString(toLevel));
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setLevel(toLevel);
-		}
-
-		@Override
-		public void unexecute() {
-			setLevel(fromLevel);
-		}
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object left = state.get(hash + "left");
+		if (left != null) this.left = (BSTNode) HashtableStoreSupport.restore(left);
+		Object right = state.get(hash + "right");
+		if (right != null) this.right = (BSTNode) HashtableStoreSupport.restore(right);
+		Object parent = state.get(hash + "parent");
+		if (parent != null) this.parent = (BSTNode) HashtableStoreSupport.restore(parent);
+		Object level = state.get(hash + "level");
+		if (level != null) this.level = (Integer) HashtableStoreSupport.restore(level);
+		
+		if (this.left != null) this.left.restoreState(state);
+		if (this.right != null) this.right.restoreState(state);
 	}
 }

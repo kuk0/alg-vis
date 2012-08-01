@@ -26,13 +26,13 @@ public class SplayPanel extends VisPanel {
 	public static Class<? extends DataStructure> DS = SplayTree.class;
 
 	public SplayPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		D = new SplayTree(this);
-		B = new DictButtons(this);
+		buttons = new DictButtons(this);
 		D.random(20);
 	}
 }

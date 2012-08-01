@@ -64,7 +64,7 @@ public class PairingHeap extends MeldablePQ implements ClickListener{
 					v.mark();
 					chosen = v;
 				} else {
-					((MeldablePQButtons) M.B).activeHeap.setValue(h);
+					((MeldablePQButtons) panel.buttons).activeHeap.setValue(h);
 					// lowlight();
 					// highlight(h);
 				}
@@ -90,7 +90,7 @@ public class PairingHeap extends MeldablePQ implements ClickListener{
 		Pair p = chooseHeaps(i, j);
 		i = p.first;
 		j = p.second;
-		((MeldablePQButtons) M.B).activeHeap.setValue(i);
+		((MeldablePQButtons) panel.buttons).activeHeap.setValue(i);
 		start(new PairHeapMeld(this, i, j));
 	}
 
@@ -227,6 +227,6 @@ public class PairingHeap extends MeldablePQ implements ClickListener{
 			}
 			
 		}
-		M.screen.V.setBounds(0, 0, sumx, y2);
+		panel.screen.V.setBounds(0, 0, sumx, y2);
 	}
 }

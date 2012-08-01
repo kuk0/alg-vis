@@ -26,14 +26,14 @@ public class LazyBinHeapPanel extends VisPanel {
 	public static Class<? extends DataStructure> DS = LazyBinomialHeap.class;
 
 	public LazyBinHeapPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		LazyBinomialHeap H = new LazyBinomialHeap(this);
 		D = H;
-		B = new MeldablePQButtons(this);
+		buttons = new MeldablePQButtons(this);
 		H.active = 1;
 		D.random(7);
 		H.active = 2;
@@ -43,6 +43,6 @@ public class LazyBinHeapPanel extends VisPanel {
 		D.random(5);
 		H.lowlight();
 		H.active = 1;
-		D.M.screen.V.resetView();
+		D.panel.screen.V.resetView();
 	}
 }

@@ -23,7 +23,6 @@ import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.gui.view.View;
-import algvis.scenario.Command;
 
 public class RBNode extends BSTNode {
 	private boolean red = true;
@@ -42,8 +41,8 @@ public class RBNode extends BSTNode {
 
 	public void setRed(boolean red) {
 		if (this.red != red) {
-			if (D.M.scenario.isAddingEnabled()) {
-				D.M.scenario.add(new SetRedCommand(red));
+			if (D.panel.scenario.isAddingEnabled()) {
+				D.panel.scenario.add(new SetRedCommand(red));
 			}
 			this.red = red;
 		}
@@ -94,10 +93,10 @@ public class RBNode extends BSTNode {
 			return;
 		}
 		// TODO
-		boolean a = D.M.scenario.isAddingEnabled();
-		D.M.scenario.enableAdding(false);
+		boolean a = D.panel.scenario.isAddingEnabled();
+		D.panel.scenario.enableAdding(false);
 		setColor(isRed() ? NodeColor.RED : NodeColor.BLACK);
-		D.M.scenario.enableAdding(a);
+		D.panel.scenario.enableAdding(a);
 		super.draw(v);
 	}
 

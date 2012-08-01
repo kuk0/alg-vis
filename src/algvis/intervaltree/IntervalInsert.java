@@ -40,10 +40,10 @@ public class IntervalInsert extends IntervalAlg{
 		if (tmp == 1){
 			T.extend();
 			addStep("intervalextend");
-			mysuspend();
+			pause();
 		}
 		T.reposition();
-		//mysuspend();
+		//pause();
 		
 		/*
 		T.root.linkRight(v);
@@ -59,7 +59,7 @@ public class IntervalInsert extends IntervalAlg{
 		if (n == 0) {
 			T.root = w = v;
 			v.goToRoot();
-			mysuspend();
+			pause();
 		} else {
 			while ((k & n) == 0) {
 				k >>= 1;
@@ -81,7 +81,7 @@ public class IntervalInsert extends IntervalAlg{
 		T.numLeafs++;
 		addNote("intervalinsert");
 		v.mark();
-		mysuspend();
+		pause();
 		v.unmark();
 		/*
 		uprav strom na min/max z intervalu;

@@ -24,7 +24,7 @@ public class RBInsert extends Algorithm {
 	private final int K;
 
 	public RBInsert(RB T, int x) {
-		super(T);
+		super(panel, d);
 		this.T = T;
 		v = (RBNode) T.setV(new RBNode(T, K = x));
 		setHeader("insert", K);
@@ -38,11 +38,11 @@ public class RBInsert extends Algorithm {
 			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
-			mysuspend();
+			pause();
 		} else {
 			v.goAboveRoot();
 			addStep("bst-insert-start");
-			mysuspend();
+			pause();
 
 			while (true) {
 				if (w.getKey() == K) {
@@ -67,12 +67,12 @@ public class RBInsert extends Algorithm {
 					}
 				}
 				v.goAbove(w);
-				mysuspend();
+				pause();
 			}
 			// v.setLeft(v.setRight(T.NULL));
 
 			T.reposition();
-			mysuspend();
+			pause();
 
 			// bubleme nahor
 			w = v;
@@ -87,7 +87,7 @@ public class RBInsert extends Algorithm {
 				if (y.isRed()) {
 					// case 1
 					addStep("rbinsertcase1");
-					mysuspend();
+					pause();
 					pw.setRed(false);
 					y.setRed(false);
 					ppw.setRed(true);
@@ -95,14 +95,14 @@ public class RBInsert extends Algorithm {
 					w = ppw;
 					w.mark();
 					pw = w.getParent2();
-					mysuspend();
+					pause();
 				} else {
 					// case 2
 					if (isleft != w.isLeft()) {
 						addStep("rbinsertcase2");
-						mysuspend();
+						pause();
 						T.rotate(w);
-						mysuspend();
+						pause();
 					} else {
 						w.unmark();
 						w = w.getParent2();
@@ -111,11 +111,11 @@ public class RBInsert extends Algorithm {
 					pw = w.getParent2();
 					// case 3
 					addStep("rbinsertcase3");
-					mysuspend();
+					pause();
 					w.setRed(false);
 					pw.setRed(true);
 					T.rotate(w);
-					mysuspend();
+					pause();
 					w.unmark();
 					break;
 				}

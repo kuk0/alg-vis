@@ -16,17 +16,12 @@
  ******************************************************************************/
 package algvis.gui;
 
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import algvis.core.StringUtils;
+import algvis.core.history.HashtableStoreSupport;
+import algvis.internationalization.LanguageListener;
+import algvis.internationalization.Languages;
 
-import javax.swing.JEditorPane;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.text.BadLocationException;
@@ -36,23 +31,23 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.StyleSheet;
-
-import algvis.core.StringUtils;
-import algvis.internationalization.LanguageListener;
-import algvis.internationalization.Languages;
-import algvis.scenario.Command;
+import javax.swing.undo.StateEditable;
+import java.awt.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
 
 public class Commentary extends JEditorPane implements LanguageListener,
-		HyperlinkListener {
+		HyperlinkListener, StateEditable {
 	private static final long serialVersionUID = 9023200331860482960L;
-	private final VisPanel V;
+	private final VisPanel panel;
 	private final Languages L;
 	private final JScrollPane sp;
-	private int k = 0, position = 0;
+	private int indexOfNextStep = 0, currentPosition = -1;
 	private List<String> s = new ArrayList<String>(),
 			pre = new ArrayList<String>(), post = new ArrayList<String>();
 	private List<String[]> param = new ArrayList<String[]>();
-	private boolean updatingEnabled = true;
 
 	private static final SimpleAttributeSet normalAttr = new SimpleAttributeSet();
 	private static final SimpleAttributeSet hoverAttr = new SimpleAttributeSet();
@@ -60,10 +55,11 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		StyleConstants.setBackground(normalAttr, Color.WHITE);
 		StyleConstants.setBackground(hoverAttr, new Color(0xDB, 0xF1, 0xF9)); // #DBF1F9
 	}
+	private final String hash = Integer.toString(hashCode());
 
-	public Commentary(VisPanel V, Languages L, JScrollPane sp) {
+	public Commentary(VisPanel panel, Languages L, JScrollPane sp) {
 		super();
-		this.V = V;
+		this.panel = panel;
 		setContentType("text/html; charset=iso-8859-2");
 		setEditable(false);
 		Font font = UIManager.getFont("Label.font");
@@ -81,19 +77,14 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		setText("<html><body></body></html>");
 	}
 
-	public void clear() {
-		State state = new State(position, s, pre, post, param);
-		position = k = 0;
+	public synchronized void clear() {
+		currentPosition = -1; 
+		indexOfNextStep = 0;
 		s = new ArrayList<String>();
 		pre = new ArrayList<String>();
 		post = new ArrayList<String>();
 		param = new ArrayList<String[]>();
-		if (V.D.M.scenario.isAddingEnabled()) {
-			V.D.M.scenario.add(new SetCommentaryStateCommand(state));
-		}
-		if (updatingEnabled) {
-			setText("<html><body></body></html>");
-		}
+		setText("<html><body></body></html>");
 	}
 
 	private String str(int i) {
@@ -106,19 +97,20 @@ public class Commentary extends JEditorPane implements LanguageListener,
 
 	@Override
 	public void languageChanged() {
-		update();
+		refresh();
 	}
 
-	public synchronized void update() {
+	public void refresh() {
 		StringBuilder text = new StringBuilder("");
-		for (int i = 0; i < s.size(); ++i) {
-			if (i == position - 1) {
-				text.append("<B>").append(str(i)).append("</B>");
-			} else {
-				text.append(str(i));
+		synchronized (this) {
+			for (int i = 0; i < s.size(); ++i) {
+				if (i == currentPosition) {
+					text.append("<B>").append(str(i)).append("</B>");
+				} else {
+					text.append(str(i));
+				}
 			}
 		}
-
 		HTMLDocument html = (HTMLDocument) getDocument();
 		Element body = null;
 		Element[] roots = html.getRootElements();
@@ -131,10 +123,12 @@ public class Commentary extends JEditorPane implements LanguageListener,
 			}
 		}
 		try {
-			if (text.toString().equals("")) {
-				html.setInnerHTML(body, "&nbsp;");
-			} else {
-				html.setInnerHTML(body, text.toString());
+			synchronized (this) {
+				if (text.toString().equals("")) {
+					html.setInnerHTML(body, "&nbsp;");
+				} else {
+					html.setInnerHTML(body, text.toString());
+				}
 			}
 		} catch (BadLocationException e) {
 			e.printStackTrace();
@@ -144,34 +138,17 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		scrollDown();
 	}
 
-	public void enableUpdating(boolean updatingEnabled) {
-		this.updatingEnabled = updatingEnabled;
-	}
-
 	private void scrollDown() {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				final JScrollBar v = sp.getVerticalScrollBar();
-				v.setValue(v.getMaximum() - v.getVisibleAmount());
-			}
-		});
-
+		final JScrollBar v = sp.getVerticalScrollBar();
+		v.setValue(v.getMaximum() - v.getVisibleAmount());
 	}
 
-	void add(String u, String v, String w, String... par) {
-		State state = new State(position, s, pre, post, param);
-		++position;
+	private synchronized void add(String u, String v, String w, String... par) {
+		++currentPosition;
 		pre.add(u);
 		s.add(v);
 		post.add(w);
 		param.add(par);
-		if (V.D.M.scenario.isAddingEnabled()) {
-			V.D.M.scenario.add(new SetCommentaryStateCommand(state));
-		}
-		if (updatingEnabled) {
-			update();
-		}
 	}
 
 	private String[] int2strArray(int[] a) {
@@ -182,17 +159,16 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	}
 
 	public void setHeader(String h) {
-		clear();
+//		clear();
 		add("<h2>", h, "</h2>");
 	}
 
 	public void setHeader(String h, String... par) {
-		clear();
+//		clear();
 		add("<h2>", h, "</h2>", par);
 	}
 
 	public void setHeader(String h, int... par) {
-		clear();
 		setHeader(h, int2strArray(par));
 	}
 
@@ -209,10 +185,9 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	}
 
 	public void addStep(String s, String... par) {
-		++k;
-		int scenPos = V.D.M.scenario.getAlgPos();
-		add("<ol start=\"" + k + "\"><li class=\"step\"><p><a href=\""
-				+ scenPos + "\"> ", s, "</a></p></li></ol>", par);
+		add("<ol start=\"" + (indexOfNextStep + 1) + "\"><li class=\"step\"><p><a href=\"" +
+				panel.history.getLastEditId() + "\"> ", s, "</a></p></li></ol>", par);
+		++indexOfNextStep;
 	}
 
 	public void addStep(String s) {
@@ -226,11 +201,8 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	@Override
 	public void hyperlinkUpdate(HyperlinkEvent e) {
 		if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-			if (V.D.M.scenario.isEnabled()) {
-				V.D.M.scenario.goBeforeStep(Integer.parseInt(e.getDescription()),
-						false);
-				V.D.M.scenario.next(true, true);
-			}
+			panel.history.goTo(Integer.parseInt(e.getDescription()));
+			panel.refresh();
 		} else {
 			Element element = e.getSourceElement();
 			int start = element.getStartOffset();
@@ -246,58 +218,26 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		}
 	}
 
-	void restoreState(State state) {
-		position = state.position;
-		s = state.s;
-		pre = state.pre;
-		post = state.post;
-		param = state.param;
-		if (updatingEnabled) {
-			update();
-		}
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		HashtableStoreSupport.store(state, hash + "currentPosition", currentPosition);
+		HashtableStoreSupport.store(state, hash + "s", s);
+		HashtableStoreSupport.store(state, hash + "pre", pre);
+		HashtableStoreSupport.store(state, hash + "post", post);
+		HashtableStoreSupport.store(state, hash + "param", param);
 	}
 
-	State getState() {
-		return new State(position, s, pre, post, param);
-	}
-
-	private class State {
-		private final int position;
-		private final List<String> s, pre, post;
-		private final List<String[]> param;
-
-		public State(int position, List<String> s, List<String> pre,
-				List<String> post, List<String[]> param) {
-			this.position = position;
-			this.s = s;
-			this.pre = pre;
-			this.post = post;
-			this.param = param;
-		}
-	}
-
-	private class SetCommentaryStateCommand implements Command {
-		private final State fromState, toState;
-
-		public SetCommentaryStateCommand(State fromState) {
-			this.fromState = fromState;
-			this.toState = getState();
-		}
-
-		@Override
-		public org.jdom2.Element getXML() {
-			org.jdom2.Element e = new org.jdom2.Element("saveCommentary");
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			restoreState(toState);
-		}
-
-		@Override
-		public void unexecute() {
-			restoreState(fromState);
-		}
+	@Override
+	public synchronized void restoreState(Hashtable<?, ?> state) {
+		Object position = state.get(hash + "currentPosition");
+		if (position != null) this.currentPosition = (Integer) HashtableStoreSupport.restore(position);
+		Object s = state.get(hash + "s");
+		if (s != null) this.s = (List<String>) HashtableStoreSupport.restore(s);
+		Object pre = state.get(hash + "pre");
+		if (pre != null) this.pre = (List<String>) HashtableStoreSupport.restore(pre);
+		Object post = state.get(hash + "post");
+		if (post != null) this.post = (List<String>) HashtableStoreSupport.restore(post);
+		Object param = state.get(hash + "param");
+		if (param != null) this.param = (List<String[]>) HashtableStoreSupport.restore(param);
 	}
 }

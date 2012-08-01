@@ -49,7 +49,7 @@ public class PairHeapDelete extends PairHeapAlg{
 		H.v = new PairHeapNode(H.root[i]);
 		H.v.mark();
 		
-		mysuspend();
+		pause();
 		
 		//spravime neviditelneho roota (vymazane minimum) a posunieme to o minsepy hore.
 		

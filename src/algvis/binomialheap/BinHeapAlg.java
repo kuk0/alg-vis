@@ -22,7 +22,7 @@ class BinHeapAlg extends Algorithm {
 	final BinomialHeap H;
 
 	BinHeapAlg(BinomialHeap H) {
-		super(H);
+		super(panel, d);
 		this.H = H;
 	}
 
@@ -36,7 +36,7 @@ class BinHeapAlg extends Algorithm {
 			// stare min.
 		}
 		H.min[0] = null;
-		mysuspend();
+		pause();
 		while (true) {
 			if (H.root[0] != null && v.rank > H.root[0].rank) {
 				// pripojime vlavo
@@ -92,7 +92,7 @@ class BinHeapAlg extends Algorithm {
 				break;
 			}
 			H.reposition();
-			mysuspend();
+			pause();
 		}
 	}
 }

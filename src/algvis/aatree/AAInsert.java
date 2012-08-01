@@ -25,7 +25,7 @@ public class AAInsert extends Algorithm {
 	private final int K;
 
 	public AAInsert(AA T, int x) {
-		super(T);
+		super(panel, d);
 		this.T = T;
 		T.setV(v = (AANode) T.setV(new AANode(T, K = x)));
 		v.setColor(NodeColor.INSERT);
@@ -39,13 +39,13 @@ public class AAInsert extends Algorithm {
 			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
-			mysuspend();
+			pause();
 			v.setColor(NodeColor.NORMAL);
 			T.setV(null);
 		} else {
 			v.goAboveRoot();
 			addStep("bst-insert-start");
-			mysuspend();
+			pause();
 
 			while (true) {
 				if (w.getKey() == K) {
@@ -71,11 +71,11 @@ public class AAInsert extends Algorithm {
 					}
 				}
 				v.goAbove(w);
-				mysuspend();
+				pause();
 			}
 
 			T.reposition();
-			mysuspend();
+			pause();
 
 			v.setColor(NodeColor.NORMAL);
 			T.setV(null);
@@ -87,12 +87,12 @@ public class AAInsert extends Algorithm {
 				if (w.getLeft() != null
 						&& w.getLeft().getLevel() == w.getLevel()) {
 					addStep("aaskew");
-					mysuspend();
+					pause();
 					w.unmark();
 					w = w.getLeft();
 					w.mark();
 					w.setArc();
-					mysuspend();
+					pause();
 					w.noArc();
 					T.rotate(w);
 					T.reposition();
@@ -106,13 +106,13 @@ public class AAInsert extends Algorithm {
 					w = r;
 					w.mark();
 					w.setArc();
-					mysuspend();
+					pause();
 					w.noArc();
 					T.rotate(w);
 					w.setLevel(w.getLevel() + 1);
 					T.reposition();
 				}
-				mysuspend();
+				pause();
 				w.unmark();
 				w = w.getParent();
 			}

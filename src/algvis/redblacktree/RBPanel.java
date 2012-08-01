@@ -25,13 +25,13 @@ public class RBPanel extends VisPanel {
 	public static Class<? extends DataStructure> DS = RB.class;
 
 	public RBPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		D = new RB(this);
-		B = new RBButtons(this);
+		buttons = new RBButtons(this);
 		D.random(30);
 	}
 }

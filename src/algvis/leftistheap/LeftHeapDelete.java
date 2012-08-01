@@ -37,7 +37,7 @@ public class LeftHeapDelete extends LeftHeapAlg {
 			addStep("minimum", H.root[i].getKey());
 		}
 
-		mysuspend();
+		pause();
 
 		LeftHeapNode tmp = H.root[i];
 		H.root[i] = tmp.getLeft();
@@ -50,7 +50,7 @@ public class LeftHeapDelete extends LeftHeapAlg {
 			if (H.root[i] != null) {
 				H.root[i].highlightTree();
 				H.root[i].repos(H.root[i].x, H.root[i].y
-						- (LeftHeap.minsepy));// + 2 * LeftHeapNode.radius));
+						- (LeftHeap.minsepy));// + 2 * LeftHeapNode.RADIUS));
 			}
 			// heap #1 is empty; done;
 			return;
@@ -58,16 +58,16 @@ public class LeftHeapDelete extends LeftHeapAlg {
 		H.root[i].setParent(null);
 
 		if (H.root[0] == null) {
-			H.root[i].repos(H.root[i].x, H.root[i].y - (LeftHeap.minsepy));// + 2 * LeftHeapNode.radius));
+			H.root[i].repos(H.root[i].x, H.root[i].y - (LeftHeap.minsepy));// + 2 * LeftHeapNode.RADIUS));
 			// heap #2 is empty; done;
 			return;
 		}
 		H.root[0].setParent(null);
 
-		H.root[i].repos(H.root[i].x, H.root[i].y - (LeftHeap.minsepy));// + 2 * LeftHeapNode.radius));
-		H.root[0].repos(H.root[0].x, H.root[0].y - (LeftHeap.minsepy));// + 2 * H.radius));
+		H.root[i].repos(H.root[i].x, H.root[i].y - (LeftHeap.minsepy));// + 2 * LeftHeapNode.RADIUS));
+		H.root[0].repos(H.root[0].x, H.root[0].y - (LeftHeap.minsepy));// + 2 * H.RADIUS));
 
-		mysuspend();
+		pause();
 		meld(i);
 
 	}

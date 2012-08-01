@@ -27,7 +27,7 @@ public class RBDelete extends Algorithm {
 	private final int K;
 
 	public RBDelete(RB T, int x) {
-		super(T);
+		super(panel, d);
 		this.T = T;
 		v = T.setV(new BSTNode(T, K = x));
 		v.setColor(NodeColor.DELETE);
@@ -39,7 +39,7 @@ public class RBDelete extends Algorithm {
 		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
-			mysuspend();
+			pause();
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
@@ -47,7 +47,7 @@ public class RBDelete extends Algorithm {
 			RBNode d = (RBNode) T.getRoot();
 			v.goTo(d);
 			addStep("bstdeletestart");
-			mysuspend();
+			pause();
 
 			while (true) {
 				if (d.getKey() == K) { // found
@@ -72,7 +72,7 @@ public class RBDelete extends Algorithm {
 						break;
 					}
 				}
-				mysuspend();
+				pause();
 			}
 
 			if (d == null) { // notfound
@@ -86,7 +86,7 @@ public class RBDelete extends Algorithm {
 			d.setColor(NodeColor.FOUND);
 			if (d.isLeaf()) { // case I - list
 				addStep("bst-delete-case1");
-				mysuspend();
+				pause();
 				if (d.isRoot()) {
 					T.setRoot(null);
 				} else if (d.isLeft()) {
@@ -99,7 +99,7 @@ public class RBDelete extends Algorithm {
 			} else if (d.getLeft() == null || d.getRight() == null) {
 				// case IIa - 1 syn
 				addStep("bst-delete-case2");
-				mysuspend();
+				pause();
 				BSTNode s = (d.getLeft() == null) ? d.getRight() : d.getLeft();
 				if (d.isRoot()) {
 					T.setRoot(s);
@@ -120,11 +120,11 @@ public class RBDelete extends Algorithm {
 				v = T.setV(new BSTNode(T, -Node.INF));
 				v.setColor(NodeColor.FIND);
 				v.goTo(s);
-				mysuspend();
+				pause();
 				while (s.getLeft() != null) {
 					s = s.getLeft();
 					v.goTo(s);
-					mysuspend();
+					pause();
 				}
 				u = s;
 				w = u.getRight2();
@@ -137,7 +137,7 @@ public class RBDelete extends Algorithm {
 					s.getParent().linkRight(u.getRight());
 				}
 				v.goNextTo(d);
-				mysuspend();
+				pause();
 				if (d.getParent() == null) {
 					v.setParent(null);
 					T.setRoot(v);
@@ -164,24 +164,24 @@ public class RBDelete extends Algorithm {
 						RBNode s = w.getParent2().getRight2();
 						if (s.isRed()) {
 							addStep("rbdelete1");
-							mysuspend();
+							pause();
 							s.setRed(false);
 							w.getParent2().setRed(true);
 							T.rotate(s);
 						} else if (!s.getLeft2().isRed() && !s.getRight2().isRed()) {
 							addStep("rbdelete2");
-							mysuspend();
+							pause();
 							s.setRed(true);
 							w = w.getParent2();
 						} else if (!s.getRight2().isRed()) {
 							addStep("rbdelete3");
-							mysuspend();
+							pause();
 							s.getLeft2().setRed(false);
 							s.setRed(true);
 							T.rotate(s.getLeft());
 						} else {
 							addStep("rbdelete4");
-							mysuspend();
+							pause();
 							s.setRed(s.getParent2().isRed());
 							w.getParent2().setRed(false);
 							s.getRight2().setRed(false);
@@ -192,24 +192,24 @@ public class RBDelete extends Algorithm {
 						RBNode s = w.getParent2().getLeft2();
 						if (s.isRed()) {
 							addStep("rbdelete1");
-							mysuspend();
+							pause();
 							s.setRed(false);
 							w.getParent2().setRed(true);
 							T.rotate(s);
 						} else if (!s.getRight2().isRed() && !s.getLeft2().isRed()) {
 							addStep("rbdelete2");
-							mysuspend();
+							pause();
 							s.setRed(true);
 							w = w.getParent2();
 						} else if (!s.getLeft2().isRed()) {
 							s.getRight2().setRed(false);
 							addStep("rbdelete3");
-							mysuspend();
+							pause();
 							s.setRed(true);
 							T.rotate(s.getRight2());
 						} else {
 							addStep("rbdelete4");
-							mysuspend();
+							pause();
 							s.setRed(s.getParent2().isRed());
 							w.getParent2().setRed(false);
 							s.getLeft2().setRed(false);
@@ -217,7 +217,7 @@ public class RBDelete extends Algorithm {
 							w = (RBNode) T.getRoot();
 						}
 					}
-					mysuspend();
+					pause();
 				}
 				w.setRed(false);
 			}

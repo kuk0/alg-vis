@@ -60,31 +60,31 @@ public class SkipList extends Dictionary implements ClickListener {
 	@Override
 	public void clear() {
 		// TODO asi nezmazat historiu
-		if (n != 0 || M.scenario.hasNext()) {
-			M.scenario.newAlgorithm();
-			M.scenario.newStep();
+		if (n != 0 || panel.scenario.hasNext()) {
+			panel.scenario.newAlgorithm();
+			panel.scenario.newStep();
 			height = 1;
 			n = e = 0;
 			setRoot(new SkipNode(this, -Node.INF));
 			getRoot().linkright(sent = new SkipNode(this, Node.INF));
 			setV(null);
-			M.C.clear();
+			panel.commentary.clear();
 			setStats();
 			reposition();
-			// M.screen.V.resetView(); TODO toto bolo v BST.clear()
+			// panel.screen.V.resetView(); TODO toto bolo v BST.clear()
 		}
 	}
 
 	@Override
 	public String stats() {
 		if (getRoot() == null) {
-			return M.S.L.getString("size") + ": 0;   "
-					+ M.S.L.getString("height") + ": 0;   #"
-					+ M.S.L.getString("excess") + ": 0";
+			return panel.S.L.getString("size") + ": 0;   "
+					+ panel.S.L.getString("height") + ": 0;   #"
+					+ panel.S.L.getString("excess") + ": 0";
 		} else {
-			return M.S.L.getString("size") + ": " + n + ";   "
-					+ M.S.L.getString("height") + ": " + height + ";   #"
-					+ M.S.L.getString("excess") + ": " + e;
+			return panel.S.L.getString("size") + ": " + n + ";   "
+					+ panel.S.L.getString("height") + ": " + height + ";   #"
+					+ panel.S.L.getString("excess") + ": " + e;
 		}
 	}
 
@@ -104,14 +104,14 @@ public class SkipList extends Dictionary implements ClickListener {
 		x1 = 0;
 		y1 = 0;
 		getRoot()._reposition();
-		M.screen.V.setBounds(x1, y1, x2, y2);
+		panel.screen.V.setBounds(x1, y1, x2, y2);
 	}
 
 	public void mouseClicked(int x, int y) {
 		if (getRoot() != null) {
 			Node w = getRoot().find(x, y);
 			if (w != null) {
-				M.B.I.setText("" + w.getKey());
+				panel.buttons.I.setText("" + w.getKey());
 			}
 		}
 	}

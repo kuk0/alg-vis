@@ -35,7 +35,7 @@ public class HeapDelete extends HeapAlg {
 			H.setRoot(null);
 			H.setN(H.getN() - 1);
 			H.getV().goDown();
-			mysuspend();
+			pause();
 			return;
 		}
 		HeapNode v, w;
@@ -59,7 +59,7 @@ public class HeapDelete extends HeapAlg {
 		}
 		H.getV().goToRoot();
 		H.reposition();
-		mysuspend();
+		pause();
 
 		H.getRoot().setKey(H.getV().getKey());
 		H.setV(null);
@@ -68,7 +68,7 @@ public class HeapDelete extends HeapAlg {
 		} else {
 			addStep("maxheapbubbledown");
 		}
-		// mysuspend();
+		// pause();
 
 		v = H.getRoot();
 		while (true) {
@@ -88,7 +88,7 @@ public class HeapDelete extends HeapAlg {
 			w.setKey(Node.NOKEY);
 			H.getV().goTo(w);
 			H.getV2().goTo(v);
-			mysuspend();
+			pause();
 			v.setKey(H.getV2().getKey());
 			w.setKey(H.getV().getKey());
 			v.setColor(H.getV2().getColor());

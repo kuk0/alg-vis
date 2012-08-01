@@ -18,26 +18,35 @@ package algvis.bst;
 
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
+import algvis.core.visual.ZDepth;
 
 public class BSTFind extends Algorithm {
 	private final BST T;
-	private final BSTNode v;
 	private final int K;
+	private BSTNode result = null;
 
 	public BSTFind(BST T, int x) {
-		super(T);
+		super(T.panel);
 		this.T = T;
-		v = T.setV(new BSTNode(T, K = x));
-		v.setColor(NodeColor.FIND);
-		setHeader("find", K);
+		K = x;
+	}
+
+	public BSTFind(BST T, int x, Algorithm a) {
+		super(T.panel, a);
+		this.T = T;
+		K = x;
 	}
 
 	@Override
-	public void run() {
+	public void runAlgorithm() throws InterruptedException {
+		BSTNode v = new BSTNode(T, K, ZDepth.ACTIONNODE);
+		addToScene(v);
+		v.setColor(NodeColor.FIND);
+		setHeader("find", K);
 		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
-			mysuspend();
+			pause();
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
@@ -45,12 +54,13 @@ public class BSTFind extends Algorithm {
 			BSTNode w = T.getRoot();
 			v.goAbove(w);
 			addStep("bstfindstart");
-			mysuspend();
+			pause();
 			while (true) {
 				if (w.getKey() == K) {
 					v.goTo(w);
-					addNote("found");
+					addStep("found");
 					v.setColor(NodeColor.FOUND);
+					result = w;
 					break;
 				} else if (w.getKey() < K) {
 					if (w.getRight() == null) {
@@ -59,7 +69,7 @@ public class BSTFind extends Algorithm {
 						v.pointAbove(w.getRight());
 					}
 					addStep("bstfindright", K, w.getKey());
-					mysuspend();
+					pause();
 					v.noArrow();
 					w.setColor(NodeColor.DARKER);
 					if (w.getLeft() != null) w.getLeft().subtreeColor(NodeColor.DARKER);
@@ -67,7 +77,7 @@ public class BSTFind extends Algorithm {
 					if (w != null) {
 						v.goAbove(w);
 					} else { // not found
-						addNote("notfound");
+						addStep("notfound");
 						v.setColor(NodeColor.NOTFOUND);
 						v.goRight();
 						break;
@@ -79,7 +89,7 @@ public class BSTFind extends Algorithm {
 						v.pointAbove(w.getLeft());
 					}
 					addStep("bstfindleft", K, w.getKey());
-					mysuspend();
+					pause();
 					v.noArrow();
 					w.setColor(NodeColor.DARKER);
 					if (w.getRight() != null) w.getRight().subtreeColor(NodeColor.DARKER);
@@ -87,19 +97,23 @@ public class BSTFind extends Algorithm {
 					if (w != null) {
 						v.goAbove(w);
 					} else { // notfound
-						addNote("notfound");
+						addStep("notfound");
 						v.setColor(NodeColor.NOTFOUND);
 						v.goLeft();
 						break;
 					}
 				}
-				mysuspend();
+				pause();
 			}
 		}
-		mysuspend();
+		pause();
 		if (T.getRoot() != null) {
 			T.getRoot().subtreeColor(NodeColor.NORMAL);
 		}
-		T.setV(null);
+		removeFromScene(v);
+	}
+
+	public BSTNode getResult() {
+		return result;
 	}
 }

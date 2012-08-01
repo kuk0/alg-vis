@@ -25,13 +25,13 @@ public class BPanel extends VisPanel {
 	public static Class<? extends DataStructure> DS = BTree.class;
 
 	public BPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		D = new BTree(this);
-		B = new BTreeButtons(this);
+		buttons = new BTreeButtons(this);
 		D.random(25);
 	}
 }

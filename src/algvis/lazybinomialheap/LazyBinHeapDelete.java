@@ -28,7 +28,7 @@ public class LazyBinHeapDelete extends Algorithm {
 	}
 
 	public LazyBinHeapDelete(LazyBinomialHeap H, int i) {
-		super(H);
+		super(panel, d);
 		this.H = H;
 		this.i = i;
 		H.cleanup = new BinHeapNode[lg(H.size(i) + 1) + 1]; // TODO: change to rank
@@ -41,7 +41,7 @@ public class LazyBinHeapDelete extends Algorithm {
 			H.cleanup = null;
 			return;
 		}
-		mysuspend();
+		pause();
 		// delete min
 		BinHeapNode v, w, next;
 		H.d = H.min[i];
@@ -76,7 +76,7 @@ public class LazyBinHeapDelete extends Algorithm {
 			}
 		}
 		H.reposition();
-		mysuspend();
+		pause();
 
 		// cleanup
 		if (H.root[i] != null) {
@@ -84,7 +84,7 @@ public class LazyBinHeapDelete extends Algorithm {
 			w = H.root[i];
 			do {
 				w.mark();
-				mysuspend();
+				pause();
 				h = w.rank;
 				v = H.cleanup[h];
 				next = w.right;
@@ -105,17 +105,17 @@ public class LazyBinHeapDelete extends Algorithm {
 						if (H.root[i] == v) {
 							H.root[i] = w;
 						}
-						// mysuspend();
+						// pause();
 						v.unlink();
 						w.linkChild(v);
 						v = w;
 					}
-					// mysuspend();
+					// pause();
 					H.cleanup[h] = null;
 					++h;
 					v = H.cleanup[h];
 					H.reposition();
-					mysuspend();
+					pause();
 				}
 				H.cleanup[h] = w;
 				w = next;

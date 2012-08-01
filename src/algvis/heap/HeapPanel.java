@@ -26,13 +26,13 @@ public class HeapPanel extends VisPanel {
 	public static Class<? extends DataStructure> DS = Heap.class;
 
 	public HeapPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		D = new Heap(this);
-		B = new PQButtons(this);
+		buttons = new PQButtons(this);
 		D.random(20);
 	}
 }

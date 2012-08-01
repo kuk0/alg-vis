@@ -57,7 +57,7 @@ public class BinHeapDelete extends BinHeapAlg {
 		H.d.child = null;
 		H.reposition();
 		if (w == null) {
-			mysuspend();
+			pause();
 			// no children - done;
 			return;
 		}
@@ -75,7 +75,7 @@ public class BinHeapDelete extends BinHeapAlg {
 		} while (w != v);
 		H.root[0] = w = v = w.right;
 		H.reposition();
-		mysuspend();
+		pause();
 
 		if (H.root[i] == null) {
 			H.root[i] = H.root[0];

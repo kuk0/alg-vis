@@ -98,16 +98,16 @@ public class Trie extends DataStructure {
 
 	@Override
 	public void random(int n) {
-		boolean p = M.pause;
-		M.pause = false;
+		boolean p = panel.pauses;
+		panel.pauses = false;
 		for (int i = 0; i < n; i++) {
-			if (M.S == null) {
+			if (panel.S == null) {
 				insert(WordGenerator.getSkWord());
 			} else {
-				insert(WordGenerator.getWord(M.S));
+				insert(WordGenerator.getWord(panel.S));
 			}
 		}
-		M.pause = p;
+		panel.pauses = p;
 	}
 
 	public void insert(String s) {

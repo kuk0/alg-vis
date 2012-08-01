@@ -102,9 +102,9 @@ public class DaryHeapNode extends HeapNode{
 	int _width() {
 		
 		if (key != Node.NOKEY && numChildren > 0) {
-			return (2 * Node.radius + DaryHeap.minsepx)*numChildren - DaryHeap.minsepx;		
+			return (2 * Node.RADIUS + DaryHeap.minsepx)*numChildren - DaryHeap.minsepx;		
 		} else {
-			return 2*Node.radius;
+			return 2*Node.RADIUS;
 		}
 	}
 	*/	
@@ -120,10 +120,10 @@ public class DaryHeapNode extends HeapNode{
 		 * to co je?
 		 * ak netreaba riadok setColor, tak netreba ani tie ostatne 3
 		 */
-		boolean a = D.M.scenario.isAddingEnabled();
-		D.M.scenario.enableAdding(false);
+		boolean a = D.panel.scenario.isAddingEnabled();
+		D.panel.scenario.enableAdding(false);
 		//setColor(isRed() ? NodeColor.RED : NodeColor.BLACK);
-		D.M.scenario.enableAdding(a);
+		D.panel.scenario.enableAdding(a);
 		
 
 		super.draw(v);
@@ -166,9 +166,9 @@ public class DaryHeapNode extends HeapNode{
 			v.setColor(Color.black);
 			/*
 			 * int xx, yy; if (i==0 || i==numChildren-1) { xx = x; yy = y; }
-			 * else { xx = (pos(i-1)+pos(i))/2; yy = y+D.radius; }
+			 * else { xx = (pos(i-1)+pos(i))/2; yy = y+D.RADIUS; }
 			 *//*
-			v.drawLine(x, y, c[i].x, c[i].y - Node.radius);
+			v.drawLine(x, y, c[i].x, c[i].y - Node.RADIUS);
 			c[i].drawTree(v);
 		}
 		draw(v);

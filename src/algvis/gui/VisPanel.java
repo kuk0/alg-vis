@@ -16,42 +16,42 @@
  ******************************************************************************/
 package algvis.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.border.TitledBorder;
-
 import algvis.core.DataStructure;
 import algvis.core.Settings;
+import algvis.core.history.HistoryManager;
+import algvis.core.visual.Scene;
 import algvis.internationalization.ILabel;
 import algvis.internationalization.LanguageListener;
-import algvis.scenario.Scenario;
 
-public abstract class VisPanel extends JPanel implements LanguageListener {
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.undo.StateEditable;
+import java.awt.*;
+import java.util.Hashtable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public abstract class VisPanel extends JPanel implements LanguageListener, StateEditable {
 	private static final long serialVersionUID = 5104769085118210624L;
 	public static Class<? extends DataStructure> DS;
 
 	// aplet pozostava z piatich zakladnych veci:
-	public Buttons B; // gombikov (dolu)
-	public Commentary C; // komentara (vpravo)
+	public Buttons buttons; // gombikov (dolu)
+	public Commentary commentary; // komentara (vpravo)
 	public DataStructure D; // datovej struktury
 	public Screen screen; // obrazovky v strede
+	public final Scene scene = new Scene();
 	public ILabel statusBar; // a status baru
 	public final Settings S;
 	private TitledBorder border;
 
-	public boolean pause = true, small = false;
-	public final Scenario scenario = new Scenario(this, getName());
+	public volatile boolean pauses = true;
+	public boolean small = false;
+	public ExecutorService algorithmPool = Executors.newSingleThreadExecutor();
+	public final HistoryManager history = new HistoryManager(this);
 
-	protected VisPanel(Settings S, boolean isScenarioEnabled) {
+	protected VisPanel(Settings S) {
 		this.S = S;
-		scenario.enable(isScenarioEnabled);
 		init();
 	}
 
@@ -79,7 +79,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 		cb.gridx = 0;
 		cb.gridy = 1;
 		cb.fill = GridBagConstraints.HORIZONTAL;
-		add(B, cb);
+		add(buttons, cb);
 
 		GridBagConstraints csb = new GridBagConstraints();
 		csb.gridx = 0;
@@ -90,13 +90,13 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 		screen.setDS(D);
 		screen.start();
 		languageChanged();
-		B.I.requestFocusInWindow();
+		buttons.I.requestFocusInWindow();
 	}
 
 	private JPanel initScreen() {
 		JPanel screenP = new JPanel();
 		screenP.setLayout(new BorderLayout());
-		screen = new Screen() {
+		screen = new Screen(this) {
 			private static final long serialVersionUID = 2196788670749006364L;
 
 			@Override
@@ -147,8 +147,8 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 				// return new Dimension(200, 530);
 			}
 		};
-		C = new Commentary(this, S.L, SP);
-		SP.setViewportView(C);
+		commentary = new Commentary(this, S.L, SP);
+		SP.setViewportView(commentary);
 		// JPanel CP = new JPanel();
 		// CP.add(SP);
 		SP.setBorder(BorderFactory.createTitledBorder(""));
@@ -172,5 +172,31 @@ public abstract class VisPanel extends JPanel implements LanguageListener {
 		} else {
 			screen.resume();
 		}
+	}
+	
+	public void refresh() {
+		buttons.refresh();
+		commentary.refresh();
+	}
+
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		buttons.storeState(state);
+		commentary.storeState(state);
+		D.storeState(state);
+		scene.storeState(state);
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		buttons.restoreState(state);
+		commentary.restoreState(state);
+		D.restoreState(state);
+		scene.restoreState(state);
+	}
+
+	public void newAlgorithmPool() {
+		algorithmPool.shutdownNow();
+		algorithmPool = Executors.newSingleThreadExecutor();
 	}
 }

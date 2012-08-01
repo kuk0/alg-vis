@@ -43,7 +43,7 @@ public class DaryHeapDelete extends DaryHeapAlg {
 			H.root = null;
 			H.v.mark();
 			//--H.n;
-			mysuspend();
+			pause();
 			H.v.unmark();
 			H.v.goDown();
 			return;
@@ -54,10 +54,10 @@ public class DaryHeapDelete extends DaryHeapAlg {
 			addStep("maximum", H.root.getKey());
 		}
 		H.root.mark();
-		mysuspend();
+		pause();
 		//H.root.unmark();
 		addStep("heapchange");
-		mysuspend();
+		pause();
 		H.root.unmark();
 		
 		H.v = new DaryHeapNode(H.last);
@@ -67,7 +67,7 @@ public class DaryHeapDelete extends DaryHeapAlg {
 		H.v.goToRoot();
 		H.v2.goTo(H.last);
 		H.v2.mark();
-		mysuspend();
+		pause();
 		H.last.setKey(H.v2.getKey());
 		H.root.setKey(H.v.getKey());
 		H.last.setColor(H.v2.getColor());
@@ -88,7 +88,7 @@ public class DaryHeapDelete extends DaryHeapAlg {
 		} else {
 			addStep("maxdheapbubbledown");
 		}
-		mysuspend();
+		pause();
 		H.v = null;
 		
 		v = H.root;

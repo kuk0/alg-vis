@@ -24,7 +24,6 @@ import algvis.core.PriorityQueue;
 import algvis.gui.VisPanel;
 import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
-import algvis.scenario.Command;
 
 public class Heap extends PriorityQueue implements ClickListener {
 	public static final String dsName = "heap";
@@ -65,19 +64,19 @@ public class Heap extends PriorityQueue implements ClickListener {
 		setN(0);
 		setStats();
 		// TODO asi nie
-		M.scenario.clear();
+		panel.scenario.clear();
 	}
 
 	@Override
 	public String stats() {
 		if (getN() == 0) {
-			return M.S.L.getString("size") + ": 0 ("
-					+ M.S.L.getString("emptyheap") + ")";
+			return panel.S.L.getString("size") + ": 0 ("
+					+ panel.S.L.getString("emptyheap") + ")";
 		} else if (getN() == 1000) {
-			return M.S.L.getString("size") + ": 1000 ("
-					+ M.S.L.getString("fullheap") + ")";
+			return panel.S.L.getString("size") + ": 1000 ("
+					+ panel.S.L.getString("fullheap") + ")";
 		} else {
-			return M.S.L.getString("size") + ": " + getN();
+			return panel.S.L.getString("size") + ": " + getN();
 		}
 	}
 
@@ -100,7 +99,7 @@ public class Heap extends PriorityQueue implements ClickListener {
 	public void reposition() {
 		if (getRoot() != null) {
 			getRoot().reposition();
-			M.screen.V.setBounds(x1, y1, x2, y2);
+			panel.screen.V.setBounds(x1, y1, x2, y2);
 		}
 	}
 
@@ -154,8 +153,8 @@ public class Heap extends PriorityQueue implements ClickListener {
 
 	public void setN(int n) {
 		if (this.n != n) {
-			if (M.scenario.isAddingEnabled()) {
-				M.scenario.add(new SetNCommand(n));
+			if (panel.scenario.isAddingEnabled()) {
+				panel.scenario.add(new SetNCommand(n));
 			}
 			this.n = n;
 		}

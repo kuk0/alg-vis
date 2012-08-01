@@ -52,17 +52,17 @@ public class DaryHeapInsert extends DaryHeapAlg{
 			H.root = w = v;
 			v.goToRoot();
 			H.last = H.root;
-			mysuspend();
+			pause();
 		} else { //najdeme miesto pre v
 			w = H.last.nextneighbour();
 			w.linknewson(v);
 			H.reposition();			
-			mysuspend();
+			pause();
 		}
 		H.v = null;
 		
 		++H.root.nnodes;
-		// mysuspend();
+		// pause();
 		v.unmark();
 		bubbleup(v);
 	}

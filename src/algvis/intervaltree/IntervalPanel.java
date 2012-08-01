@@ -9,14 +9,14 @@ public class IntervalPanel extends VisPanel{
 	public static Class<? extends DataStructure> DS = IntervalTree.class;
 	
 	public IntervalPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		IntervalTree L = new IntervalTree(this);
 		D = L;
-		B = new IntervalButtons(this);
+		buttons = new IntervalButtons(this);
 		L.random(14);
 	}
 

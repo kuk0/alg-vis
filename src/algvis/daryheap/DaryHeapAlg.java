@@ -24,7 +24,7 @@ class DaryHeapAlg extends Algorithm {
 	DaryHeapNode v;
 
 	DaryHeapAlg(DaryHeap H) {
-		super(H);
+		super(panel, d);
 		this.H = H;
 	}
 
@@ -39,7 +39,7 @@ class DaryHeapAlg extends Algorithm {
 			w.setKey(Node.NOKEY);
 			H.v.goTo(w);
 			H.v2.goTo(v);
-			mysuspend();
+			pause();
 			v.setKey(H.v2.getKey());
 			w.setKey(H.v.getKey());
 			v.setColor(H.v2.getColor());
@@ -74,7 +74,7 @@ class DaryHeapAlg extends Algorithm {
 			w.setKey(Node.NOKEY);
 			H.v.goTo(w);
 			H.v2.goTo(v);
-			mysuspend();
+			pause();
 			v.setKey(H.v2.getKey());
 			w.setKey(H.v.getKey());
 			v.setColor(H.v2.getColor());

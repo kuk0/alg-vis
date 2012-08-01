@@ -25,13 +25,13 @@ public class SuffixTreePanel extends VisPanel {
 	public static Class<? extends DataStructure> DS = SuffixTree.class;
 
 	public SuffixTreePanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 	
 	@Override
 	public void initDS() {
 		D = new SuffixTree(this);
-		B = new SuffixTreeButtons(this);
+		buttons = new SuffixTreeButtons(this);
 		//D.random(10);
 	}
 

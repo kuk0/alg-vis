@@ -16,7 +16,9 @@
  ******************************************************************************/
 package algvis.unionfind;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Random;
 
 import org.jdom2.Element;
@@ -26,8 +28,6 @@ import algvis.gui.VisPanel;
 import algvis.gui.view.Alignment;
 import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
-import algvis.scenario.Command;
-import algvis.scenario.Scenario;
 import algvis.unionfind.UnionFindFind.FindHeuristic;
 import algvis.unionfind.UnionFindUnion.UnionHeuristic;
 
@@ -56,26 +56,17 @@ public class UnionFind extends DataStructure implements ClickListener {
 		M.screen.V.align = Alignment.LEFT;
 		M.screen.V.setDS(this);
 		count = 0;
-		sets = new ArrayList<UnionFindNode>();
 		makeSet(15);
 	}
 
 	void setV(UnionFindNode v) {
-		if (this.v != v) {
-			if (M.scenario.isAddingEnabled()) {
-				M.scenario.add(new SetVCommand(v));
-			}
-			this.v = v;
-		}
-		if (v != null && M.scenario.isAddingEnabled()) {
-			M.scenario.add(v.new WaitBackwardsCommand());
-		}
+		this.v = v;
 	}
 
 	/** adds to sets and vertices */
     void add(UnionFindNode n) {
-		if (M.scenario.isAddingEnabled()) {
-			M.scenario.add(new AddCommand(n));
+		if (panel.scenario.isAddingEnabled()) {
+			panel.scenario.add(new AddCommand(n));
 		}
 		count++;
 		sets.add(n);
@@ -83,8 +74,8 @@ public class UnionFind extends DataStructure implements ClickListener {
 	}
 
 	public void removeFromSets(UnionFindNode n) {
-		if (M.scenario.isAddingEnabled()) {
-			M.scenario.add(new RemoveFromSetsCommand(n));
+		if (panel.scenario.isAddingEnabled()) {
+			panel.scenario.add(new RemoveFromSetsCommand(n));
 		}
 		sets.remove(n);
 	}
@@ -114,31 +105,14 @@ public class UnionFind extends DataStructure implements ClickListener {
 	}
 
 	@Override
-	public void random(final int n) {
-		M.scenario.traverser.startNew(new Runnable() {
-			@Override
-			public void run() {
-				Random g = new Random(System.currentTimeMillis());
-				boolean p = M.pause;
-				M.pause = false;
-				{
-					int i = 0;
-					M.scenario.enableAdding(false);
-					M.C.enableUpdating(false);
-					for (; i < n - Scenario.maxAlgorithms; ++i) {
-						union(at(g.nextInt(count)), at(g.nextInt(count)));
-					}
-					M.scenario.enableAdding(true);
-					for (; i < n; ++i) {
-						union(at(g.nextInt(count)), at(g.nextInt(count)));
-					}
-					M.C.enableUpdating(true);
-					M.C.update();
-					M.B.update();
-				}
-				M.pause = p;				
+	public void random(int n) {
+		Random g = new Random(System.currentTimeMillis());
+		boolean p = panel.pauses;
+		panel.pauses = false;
+			for (int i = 0; i < n; ++i) {
+				union(at(g.nextInt(count)), at(g.nextInt(count)));
 			}
-		}, true);
+		panel.pauses = p;
 	}
 
 	@Override
@@ -148,8 +122,6 @@ public class UnionFind extends DataStructure implements ClickListener {
 		vertices = new ArrayList<UnionFindNode>();
 		makeSet(10);
 		setStats();
-		// TODO asi nie
-		M.scenario.clear();
 	}
 
 	@Override
@@ -170,6 +142,15 @@ public class UnionFind extends DataStructure implements ClickListener {
 			v.move();
 			v.draw(V);
 		}
+	}
+
+	@Override
+	public void move() {
+	}
+
+	@Override
+	public Rectangle2D getBoundingBox() {
+		return null;
 	}
 
 	public void reposition() {
@@ -198,7 +179,7 @@ public class UnionFind extends DataStructure implements ClickListener {
                 shift += set.rightw;
             }
 			x2 = shift;
-			M.screen.V.setBounds(x1, y1, x2, y2);
+			panel.screen.V.setBounds(x1, y1, x2, y2);
 		}
 	}
 
@@ -221,9 +202,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 		} while ((u == null) && (i < j));
 		if (u != null) {
 			if (isSelected(u)) {
-				M.scenario.enableAdding(false);
 				u.unmark();
-				M.scenario.enableAdding(true);
 				if (u == secondSelected) {
 					secondSelected = null;
 				} else if (u == firstSelected) {
@@ -231,56 +210,17 @@ public class UnionFind extends DataStructure implements ClickListener {
 					secondSelected = null;
 				}
 			} else {
-				M.scenario.enableAdding(false);
 				u.mark();
-				M.scenario.enableAdding(true);
 				if (firstSelected == null) {
 					firstSelected = u;
 				} else if (secondSelected == null) {
 					secondSelected = u;
 				} else {
-					M.scenario.enableAdding(false);
 					firstSelected.unmark();
-					M.scenario.enableAdding(true);
 					firstSelected = secondSelected;
 					secondSelected = u;
 				}
 			}
-		}
-	}
-
-	private class SetVCommand implements Command {
-		private final UnionFindNode newV, oldV;
-
-		public SetVCommand(UnionFindNode newV) {
-			oldV = v;
-			this.newV = newV;
-		}
-
-		@Override
-		public void execute() {
-			setV(newV);
-		}
-
-		@Override
-		public void unexecute() {
-			setV(oldV);
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setV");
-			if (newV != null) {
-				e.setAttribute("newVKey", Integer.toString(newV.getKey()));
-			} else {
-				e.setAttribute("newV", "null");
-			}
-			if (oldV != null) {
-				e.setAttribute("oldVKey", Integer.toString(oldV.getKey()));
-			} else {
-				e.setAttribute("oldV", "null");
-			}
-			return e;
 		}
 	}
 
@@ -334,5 +274,19 @@ public class UnionFind extends DataStructure implements ClickListener {
 		public void unexecute() {
 			sets.add(n);
 		}
+	}
+
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		state.put(hash + "v", v);
+		state.put(hash + "count", count);
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		UnionFindNode v = (UnionFindNode) state.get(hash + "v");
+		if (v != null) this.v = v;
+		Integer count = (Integer) state.get(hash + "count");
+		if (count != null) this.count = count;
 	}
 }

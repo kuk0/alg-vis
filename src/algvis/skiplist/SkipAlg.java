@@ -25,7 +25,7 @@ class SkipAlg extends Algorithm {
 	final int K;
 
 	SkipAlg(SkipList L, int x) {
-		super(L);
+		super(panel, d);
 		this.L = L;
 		L.setV(v = new SkipNode(L, x));
 		K = x;
@@ -35,14 +35,14 @@ class SkipAlg extends Algorithm {
 	SkipNode find() {
 		SkipNode w = L.getRoot();
 		v.goToRoot();
-		mysuspend();
+		pause();
 
 		for (int i = L.height - 1;; --i) {
 			while (w.getRight().getKey() < K) {
 				addStep("skipnext");
 				w = w.getRight();
 				v.goTo(w);
-				mysuspend();
+				pause();
 			}
 			addStep("skipdown");
 			p[i] = w;
@@ -51,9 +51,9 @@ class SkipAlg extends Algorithm {
 			}
 			w = w.getDown();
 			v.goTo(w);
-			mysuspend();
+			pause();
 		}
-		mysuspend();
+		pause();
 		return w;
 	}
 }

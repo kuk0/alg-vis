@@ -16,33 +16,34 @@
  ******************************************************************************/
 package algvis.core;
 
+import algvis.bst.BSTPanel;
+import algvis.gui.VisPanel;
+
 import java.lang.reflect.Constructor;
 
-import algvis.aatree.AAPanel;
-import algvis.avltree.AVLPanel;
-import algvis.binomialheap.BinHeapPanel;
-import algvis.bst.BSTPanel;
-import algvis.btree.BPanel;
-import algvis.btree.a234Panel;
-import algvis.btree.a23Panel;
-import algvis.daryheap.DaryHeapPanel;
-import algvis.fibonacciheap.FibHeapPanel;
-import algvis.gui.VisPanel;
-import algvis.heap.HeapPanel;
-import algvis.intervaltree.IntervalPanel;
-import algvis.lazybinomialheap.LazyBinHeapPanel;
-import algvis.leftistheap.LeftHeapPanel;
-import algvis.pairingheap.PairHeapPanel;
-import algvis.redblacktree.RBPanel;
-import algvis.rotations.RotPanel;
-import algvis.scapegoattree.GBPanel;
-import algvis.skewheap.SkewHeapPanel;
-import algvis.skiplist.SkipListPanel;
-import algvis.splaytree.SplayPanel;
-import algvis.suffixtree.SuffixTreePanel;
-import algvis.treap.TreapPanel;
-import algvis.trie.TriePanel;
-import algvis.unionfind.UnionFindPanel;
+//import algvis.aatree.AAPanel;
+//import algvis.avltree.AVLPanel;
+//import algvis.binomialheap.BinHeapPanel;
+//import algvis.btree.BPanel;
+//import algvis.btree.a234Panel;
+//import algvis.btree.a23Panel;
+//import algvis.daryheap.DaryHeapPanel;
+//import algvis.fibonacciheap.FibHeapPanel;
+//import algvis.heap.HeapPanel;
+//import algvis.intervaltree.IntervalPanel;
+//import algvis.lazybinomialheap.LazyBinHeapPanel;
+//import algvis.leftistheap.LeftHeapPanel;
+//import algvis.pairingheap.PairHeapPanel;
+//import algvis.redblacktree.RBPanel;
+//import algvis.rotations.RotPanel;
+//import algvis.scapegoattree.GBPanel;
+//import algvis.skewheap.SkewHeapPanel;
+//import algvis.skiplist.SkipListPanel;
+//import algvis.splaytree.SplayPanel;
+//import algvis.suffixtree.SuffixTreePanel;
+//import algvis.treap.TreapPanel;
+//import algvis.trie.TriePanel;
+//import algvis.unionfind.UnionFindPanel;
 
 /**
  * The Class DataStructures. This class contains the list of all visualized data
@@ -54,14 +55,14 @@ import algvis.unionfind.UnionFindPanel;
  */
 public class DataStructures {
 	@SuppressWarnings("rawtypes")
-    private static final Class[] PANEL = { BSTPanel.class, RotPanel.class,
+    private static final Class[] PANEL = { BSTPanel.class/*, RotPanel.class,
 			AVLPanel.class, a23Panel.class, a234Panel.class, BPanel.class,
 			RBPanel.class, AAPanel.class, TreapPanel.class,
 			SkipListPanel.class, GBPanel.class, SplayPanel.class,
 			HeapPanel.class, DaryHeapPanel.class, LeftHeapPanel.class,
 			SkewHeapPanel.class, PairHeapPanel.class, BinHeapPanel.class,
 			LazyBinHeapPanel.class, FibHeapPanel.class, UnionFindPanel.class,
-			IntervalPanel.class, TriePanel.class, SuffixTreePanel.class };
+			IntervalPanel.class, TriePanel.class, SuffixTreePanel.class */};
 
 	public static final int N = PANEL.length;
 
@@ -140,53 +141,53 @@ public class DataStructures {
 	public static VisPanel createPanel(int i, Settings S) {
 		switch (i) {
 		case 0:
-			return new BSTPanel(S, true);
-		case 1:
-			return new RotPanel(S, false);
-		case 2:
-			return new AVLPanel(S, true);
-		case 3:
-			return new a23Panel(S, false);
-		case 4:
-			return new a234Panel(S, false);
-		case 5:
-			return new BPanel(S, false);
-		case 6:
-			return new RBPanel(S, true);
-		case 7:
-			return new AAPanel(S, true);
-		case 8:
-			return new TreapPanel(S, true);
-		case 9:
-			return new SkipListPanel(S, true);
-		case 10:
-			return new GBPanel(S, true);
-		case 11:
-			return new SplayPanel(S, true);
-		case 12:
-			return new HeapPanel(S, true);
-		case 13:
-			return new DaryHeapPanel(S, false);
-		case 14:
-			return new LeftHeapPanel(S, false);
-		case 15:
-			return new SkewHeapPanel(S, false);
-		case 16:
-			return new PairHeapPanel(S, false);
-		case 17:
-			return new BinHeapPanel(S, false);
-		case 18:
-			return new LazyBinHeapPanel(S, false);
-		case 19:
-			return new FibHeapPanel(S, false);
-		case 20:
-			return new UnionFindPanel(S, true);
-		case 21:
-			return new IntervalPanel(S, false);
-		case 22:
-			return new TriePanel(S, false);
-		case 23:
-			return new SuffixTreePanel(S, false);
+			return new BSTPanel(S);
+//		case 1:
+//			return new RotPanel(S, false);
+//		case 2:
+//			return new AVLPanel(S, true);
+//		case 3:
+//			return new a23Panel(S, false);
+//		case 4:
+//			return new a234Panel(S, false);
+//		case 5:
+//			return new BPanel(S, false);
+//		case 6:
+//			return new RBPanel(S, true);
+//		case 7:
+//			return new AAPanel(S, true);
+//		case 8:
+//			return new TreapPanel(S, true);
+//		case 9:
+//			return new SkipListPanel(S, true);
+//		case 10:
+//			return new GBPanel(S, true);
+//		case 11:
+//			return new SplayPanel(S, true);
+//		case 12:
+//			return new HeapPanel(S, true);
+//		case 13:
+//			return new DaryHeapPanel(S, false);
+//		case 14:
+//			return new LeftHeapPanel(S, false);
+//		case 15:
+//			return new SkewHeapPanel(S, false);
+//		case 16:
+//			return new PairHeapPanel(S, false);
+//		case 17:
+//			return new BinHeapPanel(S, false);
+//		case 18:
+//			return new LazyBinHeapPanel(S, false);
+//		case 19:
+//			return new FibHeapPanel(S, false);
+//		case 20:
+//			return new UnionFindPanel(S, true);
+//		case 21:
+//			return new IntervalPanel(S, false);
+//		case 22:
+//			return new TriePanel(S, false);
+//		case 23:
+//			return new SuffixTreePanel(S, false);
 		}
 		if (!check_range(i))
 			return null;

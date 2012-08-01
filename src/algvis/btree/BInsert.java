@@ -25,7 +25,7 @@ public class BInsert extends Algorithm {
 	private final int K;
 
 	public BInsert(BTree T, int x) {
-		super(T);
+		super(panel, d);
 		this.T = T;
 		v = T.v = new BNode(T, K = x);
 		v.setColor(NodeColor.INSERT);
@@ -38,13 +38,13 @@ public class BInsert extends Algorithm {
 			T.root = v;
 			v.goAboveRoot();
 			addStep("newroot");
-			mysuspend();
+			pause();
 			v.setColor(NodeColor.NORMAL);
 		} else {
 			BNode w = T.root;
 			v.goAbove(w);
 			addStep("bst-insert-start");
-			mysuspend();
+			pause();
 
 			while (true) {
 				if (w.isIn(K)) {
@@ -65,7 +65,7 @@ public class BInsert extends Algorithm {
 				}
 				w = w.c[p];
 				v.goAbove(w);
-				mysuspend();
+				pause();
 			}
 
 			addStep("binsertleaf");
@@ -74,7 +74,7 @@ public class BInsert extends Algorithm {
 				w.setColor(NodeColor.NOTFOUND);
 			}
 			T.v = null;
-			mysuspend();
+			pause();
 
 			while (w.numKeys >= T.order) {
 				addStep("bsplit");
@@ -84,16 +84,16 @@ public class BInsert extends Algorithm {
 					break;
 				}
 				w.parent.c[o] = w;
-				mysuspend();
+				pause();
 				w.goBelow(w.parent);
-				mysuspend();
+				pause();
 				w.parent.add(o, w);
 				w = w.parent;
 				if (w.numKeys >= T.order) {
 					w.setColor(NodeColor.NOTFOUND);
 				}
 				T.reposition();
-				mysuspend();
+				pause();
 			}
 			if (w.isRoot()) {
 				T.root = w;

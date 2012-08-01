@@ -24,7 +24,7 @@ public class TreapInsert extends Algorithm {
 	private final int K;
 
 	public TreapInsert(Treap T, int x) {
-		super(T);
+		super(panel, d);
 		this.T = T;
 		T.setV(v = new TreapNode(T, K = x));
 		setHeader("insert", K);
@@ -36,12 +36,12 @@ public class TreapInsert extends Algorithm {
 			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
-			mysuspend();
+			pause();
 		} else {
 			TreapNode w = (TreapNode)T.getRoot();
 			v.goAboveRoot();
 			addStep("bst-insert-start");
-			mysuspend();
+			pause();
 
 			while (true) {
 				if (w.getKey() == K) {
@@ -66,15 +66,15 @@ public class TreapInsert extends Algorithm {
 					}
 				}
 				v.goAbove(w);
-				mysuspend();
+				pause();
 			}
 			T.reposition();
-			mysuspend();
+			pause();
 			// bubleme nahor
 			addStep("treapbubbleup");
 			while (!v.isRoot() && v.getParent().p < v.p) {
 				T.rotate(v);
-				mysuspend();
+				pause();
 			}
 		}
 		addStep("done");

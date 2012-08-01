@@ -16,12 +16,11 @@
  ******************************************************************************/
 package algvis.unionfind;
 
-import org.jdom2.Element;
-
 import algvis.core.DataStructure;
 import algvis.core.TreeNode;
 import algvis.gui.view.View;
-import algvis.scenario.Command;
+
+import java.util.Hashtable;
 
 public class UnionFindNode extends TreeNode {
 	private int rank = 0;
@@ -40,12 +39,7 @@ public class UnionFindNode extends TreeNode {
 	}
 
 	public void setRank(int rank) {
-		if (this.rank != rank) {
-			if (D.M.scenario.isAddingEnabled()) {
-				D.M.scenario.add(new SetRankCommand(rank));
-			}
-			this.rank = rank;
-		}
+		this.rank = rank;
 	}
 
 	@Override
@@ -75,12 +69,7 @@ public class UnionFindNode extends TreeNode {
 				w = w.getRight();
 			}
 		}
-		if (this.grey != grey) {
-			if (D.M.scenario.isAddingEnabled()) {
-				D.M.scenario.add(new SetGreyCommand(grey));
-			}
-			this.grey = grey;
-		}
+		this.grey = grey;
 	}
 
 	void drawGrey(View v) {
@@ -100,59 +89,19 @@ public class UnionFindNode extends TreeNode {
 		super.drawTree(v);
 	}
 
-	private class SetRankCommand implements Command {
-		private final int oldRank, newRank;
-
-		public SetRankCommand(int newRank) {
-			oldRank = getRank();
-			this.newRank = newRank;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setRank");
-			e.setAttribute("key", Integer.toString(getKey()));
-			e.setAttribute("oldRank", Integer.toString(oldRank));
-			e.setAttribute("newRank", Integer.toString(newRank));
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setRank(newRank);
-		}
-
-		@Override
-		public void unexecute() {
-			setRank(oldRank);
-		}
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		state.put(hash + "rank", rank);
+		state.put(hash + "grey", grey);
 	}
 
-	private class SetGreyCommand implements Command {
-		private final boolean oldGrey, newGrey;
-
-		public SetGreyCommand(boolean newGrey) {
-			oldGrey = isGrey();
-			this.newGrey = newGrey;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setGrey");
-			e.setAttribute("key", Integer.toString(getKey()));
-			e.setAttribute("wasGrey", Boolean.toString(oldGrey));
-			e.setAttribute("isGrey", Boolean.toString(newGrey));
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setGrey(newGrey);
-		}
-
-		@Override
-		public void unexecute() {
-			setGrey(oldGrey);
-		}
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Integer rank = (Integer) state.get(hash + "rank");
+		if (rank != null) this.rank = rank;
+		Boolean grey = (Boolean) state.get(hash + "grey");
+		if (grey != null) this.grey = grey;
 	}
 }

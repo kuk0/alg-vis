@@ -30,7 +30,7 @@ public class SplayDelete extends SplayAlg {
 		if (T.getRoot() == null) {
 			s.goToRoot();
 			addStep("empty");
-			mysuspend();
+			pause();
 			s.goDown();
 			s.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
@@ -57,13 +57,13 @@ public class SplayDelete extends SplayAlg {
 			T.setRoot(w.getRight());
 			T.getRoot().setParent(null);
 			T.reposition();
-			mysuspend();
+			pause();
 		} else if (w.getRight() == null) {
 			addStep("splaydeleteleft");
 			T.setRoot(w.getLeft());
 			T.getRoot().setParent(null);
 			T.reposition();
-			mysuspend();
+			pause();
 		} else {
 			addStep("splaydelete");
 			T.setRoot2(w.getLeft());
@@ -74,11 +74,11 @@ public class SplayDelete extends SplayAlg {
 			s.setColor(NodeColor.FIND);
 			w = w.getRight();
 			s.goTo(w);
-			mysuspend();
+			pause();
 			while (w.getLeft() != null) {
 				w = w.getLeft();
 				s.goTo(w);
-				mysuspend();
+				pause();
 			}
 			w.setColor(NodeColor.FIND);
 			T.setVV(null);
@@ -94,7 +94,7 @@ public class SplayDelete extends SplayAlg {
 						 * setText ("splayzigzigright");
 						 */
 						T.rotate2(w.getParent());
-						mysuspend();
+						pause();
 						T.rotate2(w);
 					} else {
 						/*
@@ -102,11 +102,11 @@ public class SplayDelete extends SplayAlg {
 						 * setText ("splayzigzagright");
 						 */
 						T.rotate2(w);
-						mysuspend();
+						pause();
 						T.rotate2(w);
 					}
 				}
-				mysuspend();
+				pause();
 			}
 			addStep("splaydeletelink");
 			T.setRoot(w);
@@ -114,7 +114,7 @@ public class SplayDelete extends SplayAlg {
 			w.linkLeft(T.getRoot2());
 			T.setRoot2(null);
 			T.reposition();
-			mysuspend();
+			pause();
 		}
 
 		addStep("done");

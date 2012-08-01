@@ -26,14 +26,14 @@ public class BinHeapPanel extends VisPanel {
 	public static Class<? extends DataStructure> DS = BinomialHeap.class;
 
 	public BinHeapPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		BinomialHeap H = new BinomialHeap(this);
 		D = H;
-		B = new MeldablePQButtons(this);
+		buttons = new MeldablePQButtons(this);
 		H.active = 1;
 		D.random(13);
 		H.active = 2;
@@ -43,6 +43,6 @@ public class BinHeapPanel extends VisPanel {
 		D.random(7);
 		H.lowlight();
 		H.active = 1;
-		D.M.screen.V.resetView();		
+		D.panel.screen.V.resetView();		
 	}
 }

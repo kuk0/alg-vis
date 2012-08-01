@@ -62,10 +62,10 @@ public class UnionFindUnion extends UnionFindFind {
 		UnionFindNode r2 = find(W);
 		if (r1 == r2) {
 			addStep("ufsameset");
-			mysuspend();
+			pause();
 		} else {
 			addStep("ufunionsimple");
-			mysuspend();
+			pause();
 			UF.removeFromSets(r2);
 			r1.addChild(r2);
 		}
@@ -77,7 +77,7 @@ public class UnionFindUnion extends UnionFindFind {
 
 		UF.reposition();
 		addNote("done");
-		// UF.M.screen.V.resetView(); // only for testing, but still there
+		// UF.panel.screen.V.resetView(); // only for testing, but still there
 		// should
 		// be some correction.
 	}
@@ -87,22 +87,22 @@ public class UnionFindUnion extends UnionFindFind {
 		UnionFindNode r2 = find(W);
 		if (r1 == r2) {
 			addStep("ufsameset");
-			mysuspend();
+			pause();
 		} else {
 			addStep("ufunionbyrank", r1.getRank(), r2.getRank());
 			if (r1.getRank() > r2.getRank()) {
 				addStep("ufunionfirstsecond");
-				mysuspend();
+				pause();
 				UF.removeFromSets(r2);
 				r1.addChild(r2);
 			} else if (r1.getRank() < r2.getRank()) {
 				addStep("ufunionsecondfirst");
-				mysuspend();
+				pause();
 				UF.removeFromSets(r1);
 				r2.addChild(r1);
 			} else {
 				addStep("ufunionsamerank");
-				mysuspend();
+				pause();
 				UF.removeFromSets(r2);
 				r1.addChild(r2);
 				r1.setRank(r1.getRank() + 1);
@@ -116,7 +116,7 @@ public class UnionFindUnion extends UnionFindFind {
 
 		UF.reposition();
 		addNote("done");
-		// UF.M.screen.V.resetView(); // only for testing, but still there
+		// UF.panel.screen.V.resetView(); // only for testing, but still there
 		// should
 		// be some correction.
 	}

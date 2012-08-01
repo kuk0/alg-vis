@@ -16,33 +16,33 @@
  ******************************************************************************/
 package algvis.core;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import algvis.gui.InputField;
 import algvis.gui.VisPanel;
 import algvis.gui.view.Layout;
 import algvis.gui.view.View;
-import algvis.scenario.Command;
-import algvis.scenario.Scenario;
+import algvis.core.visual.VisualElement;
+import algvis.core.visual.ZDepth;
 
-abstract public class DataStructure {
+import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
+abstract public class DataStructure extends VisualElement {
 	// datova struktura musi vediet gombikom povedat, kolko ich potrebuje,
 	// kolko ma vstupov, ake to su a co treba robit
-	private Algorithm A;
-	public final VisPanel M;
+	public Algorithm A = null;
+	public final VisPanel panel;
 	public static final int rootx = 0, rooty = 0, sheight = 600, swidth = 400,
 			minsepx = 38, minsepy = 30;
 	public int x1, x2, y1 = -50, y2;
 	public Node chosen = null;
 	public static String adtName = "";
 	public static String dsName = "";
-	private final List<Node> nodes; // root, v, v2, vv,...
 
-	protected DataStructure(VisPanel M) {
-		this.M = M;
-		nodes = new ArrayList<Node>();
+	protected DataStructure(VisPanel panel) {
+		super(panel.scene, ZDepth.DS);
+		this.panel = panel;
+		addToScene();
 	}
 
 	abstract public String getName();
@@ -55,58 +55,31 @@ abstract public class DataStructure {
 
 	abstract public void draw(View v);
 
-	public void next() {
-		A.myresume();
-	}
-
-	protected void start(Algorithm a) {
+	protected void start(Algorithm algorithm) {
 		unmark();
-		A = a;
-		if (M.scenario.isEnabled()) {
-			// ak je povoleny scenario, tak sa vykona cely algoritmus, nevytvara
-			// (=nespusta) sa nove vlakno na krokovanie
-			// TODO skarede riesenie, spravit lepsie
-			a.run();
-		} else {
-			M.B.enableNext();
-			M.B.enablePrevious();
-			M.B.disableAll();
-
-			Thread t = new Thread(A);
-			try {
-				t.start();
-			} catch (IllegalThreadStateException e) {
-				System.err.println("LOL");
-				M.B.disableNext();
-				M.B.enableAll();
-				return;
-			}
-			try {
-				t.join();
-				// System.err.println("join");
-			} catch (InterruptedException e) {
-				// TODO ak sa napr. viac randomov zavola za sebou, tak sa
-				// interruptne
-				Thread.interrupted();
+		final Future result = panel.algorithmPool.submit(algorithm);
+		// TODO only for debugging purposes:
+		Thread t = new Thread(new Runnable() {
+			@Override
+			public void run() {
 				try {
-					t.join();
-				} catch (InterruptedException e1) {
-					System.err.println("AJAJAJ");
+					result.get();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
 					e.printStackTrace();
 				}
 			}
-			M.B.disableNext();
-			M.B.enableAll();
-		}
-		setStats();
+		});
+		t.start();
 	}
 
 	public void setStats() {
-		M.B.setStats(stats());
+		panel.buttons.setStats(stats());
 	}
 
 	/*
-	 * protected void showStatus(String t) { M.showStatus(t); }
+	 * protected void showStatus(String t) { panel.showStatus(t); }
 	 */
 
 	public double lg(int x) { // log_2
@@ -114,30 +87,13 @@ abstract public class DataStructure {
 	}
 
 	public void random(final int n) {
-		M.scenario.traverser.startNew(new Runnable() {
-			@Override
-			public void run() {
-				Random g = new Random(System.currentTimeMillis());
-				boolean p = M.pause;
-				M.pause = false;
-				{
-					int i = 0;
-					M.scenario.enableAdding(false);
-					M.C.enableUpdating(false);
-					for (; i < n - Scenario.maxAlgorithms; ++i) {
-						insert(g.nextInt(InputField.MAX + 1));
-					}
-					M.scenario.enableAdding(true);
-					for (; i < n; ++i) {
-						insert(g.nextInt(InputField.MAX + 1));
-					}
-					M.C.enableUpdating(true);
-					M.C.update();
-					M.B.update();
-				}
-				M.pause = p;
-			}
-		}, true);
+		Random g = new Random(System.currentTimeMillis());
+		boolean p = panel.pauses;
+		panel.pauses = false;
+		for (int i = 0; i < n; ++i) {
+			insert(g.nextInt(InputField.MAX + 1));
+		}
+		panel.algorithmPool.submit(new RestorePauses(p));
 	}
 
 	void unmark() {
@@ -148,33 +104,34 @@ abstract public class DataStructure {
 	}
 
 	public Layout getLayout() {
-		return M.S.layout;
-	}
-
-	public void setNode(int i, Node v, boolean waitBack) {
-		if (nodes.get(i) != v) {
-			if (M.scenario.isAddingEnabled()) {
-				M.scenario.add(new Command.SetNodeCommand(this, i, nodes.get(i),
-						v));
-			}
-			nodes.set(i, v);
-		}
-		if (waitBack && v != null && M.scenario.isAddingEnabled()) {
-			M.scenario.add(v.new WaitBackwardsCommand());
-		}
-	}
-
-	protected Node getNode(int i) {
-		return nodes.get(i);
-	}
-
-	protected void addNodes(int count) {
-		for (int i = 0; i < count; ++i) {
-			nodes.add(null);
-		}
+		return panel.S.layout;
 	}
 
 	public Algorithm getA() {
 		return A;
+	}
+	
+	private class RestorePauses extends Algorithm {
+		private final boolean pauses;
+
+		private RestorePauses(boolean pauses) {
+			super(panel);
+			this.pauses = pauses;
+		}
+
+		@Override
+		public void run() {
+			runAlgorithm();
+		}
+
+		@Override
+		public void runAlgorithm() {
+			panel.pauses = pauses;
+		}
+
+		@Override
+		public Object getResult() {
+			return null;
+		}
 	}
 }

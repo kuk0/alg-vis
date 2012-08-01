@@ -91,7 +91,7 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 		Pair p = chooseHeaps(i, j);
 		i = p.first;
 		j = p.second;
-		((MeldablePQButtons) M.B).activeHeap.setValue(i);
+		((MeldablePQButtons) panel.buttons).activeHeap.setValue(i);
 		start(new BinHeapMeld(this, i, j));
 	}
 
@@ -103,7 +103,7 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 		v = v2 = null;
 		setStats();
 		reposition();
-		M.screen.V.resetView();
+		panel.screen.V.resetView();
 	}
 
 	// number of nodes in the i-th heap
@@ -137,16 +137,16 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 				root[i].drawTree(V, root[i], null);
 				if (i > 0) {
 					V.setColor(Color.black);
-					V.drawStringLeft(M.S.L.getString("heap") + " #" + i + ":",
-							root[i].x - Node.radius - 5, root[i].y, Fonts.NORMAL);
+					V.drawStringLeft(panel.S.L.getString("heap") + " #" + i + ":",
+							root[i].x - Node.RADIUS - 5, root[i].y, Fonts.NORMAL);
 				}
 				if (min[i] != null) {
 					if (minHeap) {
-						V.drawStringTop(M.S.L.getString("min"), min[i].x,
-								min[i].y - Node.radius - 2, Fonts.NORMAL);
+						V.drawStringTop(panel.S.L.getString("min"), min[i].x,
+								min[i].y - Node.RADIUS - 2, Fonts.NORMAL);
 					} else {
-						V.drawStringTop(M.S.L.getString("max"), min[i].x,
-								min[i].y - Node.radius - 2, Fonts.NORMAL);
+						V.drawStringTop(panel.S.L.getString("max"), min[i].x,
+								min[i].y - Node.RADIUS - 2, Fonts.NORMAL);
 					}
 				}
 			}
@@ -169,22 +169,22 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 				if (active == i && root[0] != null) {
 					x0 = x;
 				}
-				maxx = root[i].left.tox + Node.radius;
+				maxx = root[i].left.tox + Node.RADIUS;
 				x = maxx + 3 * minsepx;
 				if (maxheight < root[i].left.height) {
 					maxheight = root[i].left.height;
 				}
 			}
 		}
-		//  maxy = maxheight * (2 * radius + yspan) - yspan;
-		//  // height*(2*radius+yspan)-radius-yspan je sur. najnizsieho
-		// maxy += 4 * (radius + yspan);
+		//  maxy = maxheight * (2 * RADIUS + yspan) - yspan;
+		//  // height*(2*RADIUS+yspan)-RADIUS-yspan je sur. najnizsieho
+		// maxy += 4 * (RADIUS + yspan);
 		maxy = (maxheight + 2) * minsepy;
 		if (root[0] != null) {
 			root[0]._reposition(x0, maxy);
 			maxy += root[0].left.height * minsepy;
 		}
-		M.screen.V.setBounds(0, 0, maxx, maxy);
+		panel.screen.V.setBounds(0, 0, maxx, maxy);
 	}
 
 	public void lowlight() {
@@ -224,7 +224,7 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 					v.mark();
 					chosen = v;
 				} else {
-					((MeldablePQButtons) M.B).activeHeap.setValue(h);
+					((MeldablePQButtons) panel.buttons).activeHeap.setValue(h);
 					// lowlight();
 					// highlight(h);
 				}

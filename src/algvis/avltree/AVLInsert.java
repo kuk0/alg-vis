@@ -25,7 +25,7 @@ public class AVLInsert extends Algorithm {
 	private final int K;
 
 	public AVLInsert(AVL T, int x) {
-		super(T);
+		super(panel, d);
 		this.T = T;
 		v = (AVLNode) T.setV(new AVLNode(T, K = x));
 		v.setColor(NodeColor.INSERT);
@@ -39,13 +39,13 @@ public class AVLInsert extends Algorithm {
 			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
-			mysuspend();
+			pause();
 			v.setColor(NodeColor.NORMAL);
 			T.setV(null);
 		} else {
 			v.goAboveRoot();
 			addStep("bst-insert-start");
-			mysuspend();
+			pause();
 
 			while (true) {
 				if (w.getKey() == K) {
@@ -71,13 +71,13 @@ public class AVLInsert extends Algorithm {
 					}
 				}
 				v.goAbove(w);
-				mysuspend();
+				pause();
 			}
 
 			v.setColor(NodeColor.NORMAL);
 			T.reposition();
 			addNote("avlinsertbal");
-			mysuspend();
+			pause();
 
 			v.setColor(NodeColor.NORMAL);
 			T.setV(null);
@@ -86,7 +86,7 @@ public class AVLInsert extends Algorithm {
 				w.mark();
 				w.calc();
 				addStep("avlupdatebal");
-				mysuspend();
+				pause();
 				if (w.balance() == -2) {
 					if (w.getLeft().balance() != +1) { // R-rot
 						addStep("avlr");
@@ -94,7 +94,7 @@ public class AVLInsert extends Algorithm {
 						w = w.getLeft();
 						w.mark();
 						w.setArc(w.getParent());
-						mysuspend();
+						pause();
 						w.noArc();
 						T.rotate(w);
 					} else { // LR-rot
@@ -104,14 +104,14 @@ public class AVLInsert extends Algorithm {
 						w.mark();
 						w.setArc(w.getParent());
 						w.getParent().setArc(w.getParent().getParent());
-						mysuspend();
+						pause();
 						w.noArc();
 						w.getParent().noArc();
 						T.rotate(w);
-						mysuspend();
+						pause();
 						T.rotate(w);
 					}
-					mysuspend();
+					pause();
 				} else if (w.balance() == +2) {
 					if (w.getRight().balance() != -1) { // L-rot
 						addStep("avll");
@@ -119,7 +119,7 @@ public class AVLInsert extends Algorithm {
 						w = w.getRight();
 						w.mark();
 						w.setArc(w.getParent());
-						mysuspend();
+						pause();
 						w.noArc();
 						T.rotate(w);
 					} else { // RL-rot
@@ -129,14 +129,14 @@ public class AVLInsert extends Algorithm {
 						w.mark();
 						w.setArc(w.getParent());
 						w.getParent().setArc(w.getParent().getParent());
-						mysuspend();
+						pause();
 						w.noArc();
 						w.getParent().noArc();
 						T.rotate(w);
-						mysuspend();
+						pause();
 						T.rotate(w);
 					}
-					mysuspend();
+					pause();
 				}
 				w.unmark();
 				w = w.getParent();

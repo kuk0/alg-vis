@@ -110,8 +110,8 @@ public class LeftHeapNode extends BSTNode {
 			x1 = dir.x;
 			y1 = dir.y;
 		}
-		v.drawDoubleArrow(x1 + 2 * LeftHeapNode.radius, y1, x2 - 2
-				* LeftHeapNode.radius, y2);
+		v.drawDoubleArrow(x1 + 2 * LeftHeapNode.RADIUS, y1, x2 - 2
+				* LeftHeapNode.RADIUS, y2);
 	}
 
 	@Override
@@ -121,11 +121,11 @@ public class LeftHeapNode extends BSTNode {
 		String str = "" + rank;
 		if (rank != -1) {
 			if (this.getParent() != null && this.getParent().getLeft() == this) {
-				v.drawString(str, x - LeftHeapNode.radius, y
-						- LeftHeapNode.radius, Fonts.SMALL);
+				v.drawString(str, x - LeftHeapNode.RADIUS, y
+						- LeftHeapNode.RADIUS, Fonts.SMALL);
 			} else {
-				v.drawString(str, x + LeftHeapNode.radius, y
-						- LeftHeapNode.radius, Fonts.SMALL);
+				v.drawString(str, x + LeftHeapNode.RADIUS, y
+						- LeftHeapNode.RADIUS, Fonts.SMALL);
 			}
 		}
 	}
@@ -135,11 +135,11 @@ public class LeftHeapNode extends BSTNode {
 
 		if (this.getRight() != null) {
 			this.getRight().repos(px + getRight().leftw,
-					py + (LeftHeap.minsepy));// + 2 * LeftHeapNode.radius));
+					py + (LeftHeap.minsepy));// + 2 * LeftHeapNode.RADIUS));
 		}
 		if (this.getLeft() != null) {
 			this.getLeft()
-					.repos(px - getLeft().rightw, py + (LeftHeap.minsepy));// + 2 * LeftHeapNode.radius));
+					.repos(px - getLeft().rightw, py + (LeftHeap.minsepy));// + 2 * LeftHeapNode.RADIUS));
 		}
 	}
 

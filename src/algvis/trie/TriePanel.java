@@ -25,13 +25,13 @@ public class TriePanel extends VisPanel {
 	public static Class<? extends DataStructure> DS = Trie.class;
 
 	public TriePanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 	
 	@Override
 	public void initDS() {
 		D = new Trie(this);
-		B = new TrieButtons(this);
+		buttons = new TrieButtons(this);
 		D.random(10);
 	}
 

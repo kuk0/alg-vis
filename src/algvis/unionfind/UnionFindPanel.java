@@ -25,12 +25,12 @@ public class UnionFindPanel extends VisPanel {
 	public static Class<? extends DataStructure> DS = UnionFind.class;
 
 	public UnionFindPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		D = new UnionFind(this);
-		B = new UnionFindButtons(this);
+		buttons = new UnionFindButtons(this);
 	}
 }

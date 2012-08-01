@@ -53,7 +53,7 @@ public class LeftHeapInsert extends LeftHeapAlg {
 		H.root[0].highlightTree();
 		H.reposition();
 
-		mysuspend();
+		pause();
 		meld(i);
 	}
 

@@ -24,7 +24,7 @@ class GBAlg extends Algorithm {
 	final int K;
 
 	GBAlg(GBTree T, int x) {
-		super(T);
+		super(panel, d);
 		this.T = T;
 		v = (GBNode) T.setV(new GBNode(T, K = x));
 	}
@@ -32,7 +32,7 @@ class GBAlg extends Algorithm {
 	GBNode compr(GBNode r, int c) {
 		GBNode w = r, x = (c > 0) ? r.getRight() : r;
 		w.mark();
-		mysuspend();
+		pause();
 		for (int i = 0; i < c; ++i) {
 			w.unmark();
 			w = w.getRight();
@@ -41,7 +41,7 @@ class GBAlg extends Algorithm {
 			if (w != null) {
 				w.mark();
 			}
-			mysuspend();
+			pause();
 		}
 		if (w != null) {
 			w.unmark();

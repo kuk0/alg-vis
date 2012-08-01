@@ -35,7 +35,7 @@ public class SkipDelete extends SkipAlg {
 		if (w.getRight().getKey() != K) {
 			addStep("notfound");
 			v.goDown();
-			mysuspend();
+			pause();
 			return;
 		}
 
@@ -54,7 +54,7 @@ public class SkipDelete extends SkipAlg {
 			}
 			L.getV().isolate();
 			L.getV().goDown();
-			mysuspend();
+			pause();
 			if (i > 0 && p[i].getKey() == -Node.INF
 					&& p[i].getRight().getKey() == Node.INF) {
 				L.setRoot(p[i].getDown());
@@ -68,7 +68,7 @@ public class SkipDelete extends SkipAlg {
 
 		addStep("done");
 		L.reposition();
-		mysuspend();
+		pause();
 		L.setV(null);
 	}
 }

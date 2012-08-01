@@ -74,7 +74,7 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 					v.mark();
 					chosen = v;
 				} else {
-					((MeldablePQButtonsNoDecr) M.B).activeHeap.setValue(h);
+					((MeldablePQButtonsNoDecr) panel.buttons).activeHeap.setValue(h);
 					// lowlight();
 					// highlight(h);
 				}
@@ -122,7 +122,7 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 		Pair p = chooseHeaps(i, j);
 		i = p.first;
 		j = p.second;
-		((MeldablePQButtonsNoDecr) M.B).activeHeap.setValue(i);
+		((MeldablePQButtonsNoDecr) panel.buttons).activeHeap.setValue(i);
 		start(new SkewHeapMeld(this, i, j));
 		
 	}
@@ -145,17 +145,17 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 	public String stats() {
 
 		if (root[active] == null) {
-			return M.S.L.getString("size") + ": 0;   "
-					+ M.S.L.getString("height") + ": 0 =  1.00\u00b7"
-					+ M.S.L.getString("opt") + ";   "
-					+ M.S.L.getString("avedepth") + ": 0";
+			return panel.S.L.getString("size") + ": 0;   "
+					+ panel.S.L.getString("height") + ": 0 =  1.00\u00b7"
+					+ panel.S.L.getString("opt") + ";   "
+					+ panel.S.L.getString("avedepth") + ": 0";
 		} else {
 			root[active].calcTree();
-			return M.S.L.getString("size")
+			return panel.S.L.getString("size")
 					+ ": "
 					+ root[active].size
 					+ ";   "
-					+ M.S.L.getString("height")
+					+ panel.S.L.getString("height")
 					+ ": "
 					+ root[active].height
 					+ " = "
@@ -164,9 +164,9 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 									/ (Math.floor(lg(root[active].size)) + 1),
 							2, 5)
 					+ "\u00b7"
-					+ M.S.L.getString("opt")
+					+ panel.S.L.getString("opt")
 					+ ";   "
-					+ M.S.L.getString("avedepth")
+					+ panel.S.L.getString("avedepth")
 					+ ": "
 					+ StringUtils.format(root[active].sumh
 							/ (double) root[active].size, 2, -5);
@@ -237,6 +237,6 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 				}
 			}
 		}
-		M.screen.V.setBounds(0, 0, sumx, y2);
+		panel.screen.V.setBounds(0, 0, sumx, y2);
 	}
 }

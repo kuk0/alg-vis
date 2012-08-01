@@ -40,7 +40,7 @@ public class SkipFind extends SkipAlg {
 			v.setColor(NodeColor.NOTFOUND);
 			v.goDown();
 		}
-		mysuspend();
+		pause();
 
 		L.setV(null);
 	}

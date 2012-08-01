@@ -43,11 +43,11 @@ public class UnionFindButtons extends Buttons {
 
 	@Override
 	public void actionButtons(JPanel P) {
-		findB = new IButton(M.S.L, "button-uffind");
+		findB = new IButton(panel.S.L, "button-uffind");
 		findB.setMnemonic(KeyEvent.VK_F);
 		findB.addActionListener(this);
 
-		unionB = new IButton(M.S.L, "button-union");
+		unionB = new IButton(panel.S.L, "button-union");
 		unionB.setMnemonic(KeyEvent.VK_U);
 		unionB.addActionListener(this);
 
@@ -57,7 +57,7 @@ public class UnionFindButtons extends Buttons {
 
 	@Override
 	public void actionButtons2(JPanel P) {
-		makesetB = new IButton(M.S.L, "button-makeset");
+		makesetB = new IButton(panel.S.L, "button-makeset");
 		makesetB.setMnemonic(KeyEvent.VK_A);
 		makesetB.addActionListener(this);
 
@@ -66,7 +66,7 @@ public class UnionFindButtons extends Buttons {
 
 	@Override
 	public void initRandom() {
-		random = new IButton(M.S.L, "button-random-unions");
+		random = new IButton(panel.S.L, "button-random-unions");
 		random.setMnemonic(KeyEvent.VK_R);
 		random.addActionListener(this);
 	}
@@ -74,12 +74,12 @@ public class UnionFindButtons extends Buttons {
 	@Override
 	public JPanel initThirdRow() {
 		JPanel P = new JPanel();
-		ILabel uhLabel = new ILabel(M.S.L, "uf-union-heuristic"), fhLabel = new ILabel(
-				M.S.L, "uf-find-heuristic");
+		ILabel uhLabel = new ILabel(panel.S.L, "uf-union-heuristic"), fhLabel = new ILabel(
+				panel.S.L, "uf-find-heuristic");
 		String[] uh = { "uf-none", "uf-byrank" }, fh = { "uf-none",
 				"uf-compresion", "uf-halving", "uf-splitting" };
-		unionHeuristicCB = new IComboBox(M.S.L, uh);
-		findHeuristicCB = new IComboBox(M.S.L, fh);
+		unionHeuristicCB = new IComboBox(panel.S.L, uh);
+		findHeuristicCB = new IComboBox(panel.S.L, fh);
 		unionHeuristicCB.addActionListener(this);
 		findHeuristicCB.addActionListener(this);
 		P.add(uhLabel);
@@ -98,10 +98,10 @@ public class UnionFindButtons extends Buttons {
 			Thread t = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					D.M.scenario.newAlgorithm();
-					D.M.scenario.newStep();
+					D.panel.scenario.newAlgorithm();
+					D.panel.scenario.newStep();
 					D.makeSet(N);
-					M.B.update();
+					panel.buttons.refresh();
 				}
 			});
 			t.start();
@@ -117,9 +117,9 @@ public class UnionFindButtons extends Buttons {
 					}
 					if (D.secondSelected != null) {
 						args.insertElementAt(D.secondSelected.getKey(), 1);
-						D.M.scenario.enableAdding(false);
+						D.panel.scenario.enableAdding(false);
 						D.secondSelected.unmark();
-						D.M.scenario.enableAdding(true);
+						D.panel.scenario.enableAdding(true);
 						D.secondSelected = null;
 					}
 					if (args.size() == 0) {
@@ -136,7 +136,7 @@ public class UnionFindButtons extends Buttons {
 				public void run() {
 					int count = D.count;
 					final Vector<Integer> args = I.getVI(1, count);
-					D.M.scenario.enableAdding(false);
+					D.panel.scenario.enableAdding(false);
 					if (D.firstSelected != null) {
 						args.insertElementAt(D.firstSelected.getKey(), 0);
 						D.firstSelected.unmark();
@@ -147,7 +147,7 @@ public class UnionFindButtons extends Buttons {
 						D.secondSelected.unmark();
 						D.secondSelected = null;
 					}
-					D.M.scenario.enableAdding(true);
+					D.panel.scenario.enableAdding(true);
 					Random G = new Random(System.currentTimeMillis());
 					switch (args.size()) {
 					case 0:

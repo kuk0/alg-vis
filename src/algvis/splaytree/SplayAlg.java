@@ -25,7 +25,7 @@ class SplayAlg extends Algorithm {
 	int K;
 
 	SplayAlg(SplayTree T, int x) {
-		super(T);
+		super(panel, d);
 		this.T = T;
 		if (T.getRoot() != null) {
 			T.setV(s = new SplayNode(T, K = x));
@@ -37,7 +37,7 @@ class SplayAlg extends Algorithm {
 		SplayNode w = (SplayNode) T.getRoot();
 		s.goTo(w);
 		addNote("splay-start", K);
-		mysuspend();
+		pause();
 		while (true) {
 			if (w.getKey() == K) {
 				addNote("splay-found");
@@ -58,11 +58,11 @@ class SplayAlg extends Algorithm {
 				addStep("bstfindleft", K, w.getKey());
 			}
 			s.goTo(w);
-			mysuspend();
+			pause();
 		}
 		w.setColor(NodeColor.FIND);
 		T.setV(null);
-		mysuspend();
+		pause();
 		return w;
 	}
 
@@ -73,7 +73,7 @@ class SplayAlg extends Algorithm {
 			if (w.getParent().isRoot()) {
 				addNote("splay-root");
 				w.setArc(w.getParent());
-				mysuspend();
+				pause();
 				w.noArc();
 				T.rotate(w);
 			} else {
@@ -85,17 +85,17 @@ class SplayAlg extends Algorithm {
 					}
 					addStep("rotate", w.getParent().getKey());
 					w.getParent().setArc(w.getParent().getParent());
-					mysuspend();
+					pause();
 					w.getParent().noArc();
 					T.setW2(w.getParent().getParent());
 					T.rotate(w.getParent());
 					w.setArc(w.getParent());
 					addStep("rotate", w.getKey());
-					mysuspend();
+					pause();
 					w.noArc();
 					T.setW1(w.getParent());
 					T.rotate(w);
-					mysuspend();
+					pause();
 				} else {
 					if (!w.isLeft()) {
 						addNote("splay-zig-zag-left", w.getKey(), w.getParent().getKey());
@@ -104,16 +104,16 @@ class SplayAlg extends Algorithm {
 					}
 					w.setArc(w.getParent());
 					addStep("rotate", w.getKey());
-					mysuspend();
+					pause();
 					w.noArc();
 					T.rotate(w);
 					w.setArc(w.getParent());
 					addStep("rotate", w.getKey());
-					mysuspend();
+					pause();
 					w.noArc();
 					T.setW1(w.getParent());
 					T.rotate(w);
-					mysuspend();
+					pause();
 				}
 			}
 		}

@@ -32,7 +32,7 @@ public class SplayInsert extends SplayAlg {
 			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
-			mysuspend();
+			pause();
 		} else {
 			v.goAboveRoot();
 			SplayNode w = find(K);
@@ -47,21 +47,21 @@ public class SplayInsert extends SplayAlg {
 			} else if (w.getKey() < K) {
 				addNote("splay-insert-left", K);
 				addStep("splay-insert-left2", K);
-				mysuspend();
+				pause();
 				v.linkLeft(w);
 				v.linkRight(w.getRight());
 				w.setRight(null);
 			} else {
 				addNote("splay-insert-right", K);
 				addStep("splay-insert-right2", K);
-				mysuspend();
+				pause();
 				v.linkRight(w);
 				v.linkLeft(w.getLeft());
 				w.setLeft(null);
 			}
 			T.setRoot(v);
 			T.reposition();
-			mysuspend();
+			pause();
 		}
 		addNote("done");
 		v.setColor(NodeColor.NORMAL);

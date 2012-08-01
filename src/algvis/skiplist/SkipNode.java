@@ -16,14 +16,12 @@
  ******************************************************************************/
 package algvis.skiplist;
 
-import java.awt.Color;
-
-import org.jdom2.Element;
-
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.gui.view.View;
-import algvis.scenario.Command;
+
+import java.awt.*;
+import java.util.Hashtable;
 
 public class SkipNode extends Node {
 	private SkipNode left = null;
@@ -66,11 +64,11 @@ public class SkipNode extends Node {
 	@Override
 	public void drawBg(View v) {
 		v.setColor(getBgColor());
-		v.fillSqr(x, y, Node.radius);
+		v.fillSqr(x, y, Node.RADIUS);
 		v.setColor(Color.BLACK); // fgcolor);
-		v.drawSqr(x, y, Node.radius);
+		v.drawSqr(x, y, Node.RADIUS);
 		if (marked) {
-			v.drawSqr(x, y, Node.radius + 2);
+			v.drawSqr(x, y, Node.RADIUS + 2);
 		}
 	}
 
@@ -82,7 +80,7 @@ public class SkipNode extends Node {
 		}
 		if (getRight() != null) {
 			V.setColor(Color.black);
-			V.drawArrow(x, y, getRight().x - Node.radius, getRight().y);
+			V.drawArrow(x, y, getRight().x - Node.RADIUS, getRight().y);
 			getRight().drawSkipList(V);
 		}
 		draw(V);
@@ -145,12 +143,7 @@ public class SkipNode extends Node {
 	}
 
 	void setLeft(SkipNode left) {
-		if (this.left != left) {
-			if (D.M.scenario.isAddingEnabled()) {
-				D.M.scenario.add(new SetLeftCommand(left));
-			}
-			this.left = left;
-		}
+		this.left = left;
 	}
 
 	public SkipNode getRight() {
@@ -158,13 +151,7 @@ public class SkipNode extends Node {
 	}
 
 	SkipNode setRight(SkipNode right) {
-		if (this.right != right) {
-			if (D.M.scenario.isAddingEnabled()) {
-				D.M.scenario.add(new SetRightCommand(right));
-			}
-			this.right = right;
-		}
-		return right;
+		return this.right = right;
 	}
 
 	public SkipNode getUp() {
@@ -172,13 +159,7 @@ public class SkipNode extends Node {
 	}
 
 	public SkipNode setUp(SkipNode up) {
-		if (this.up != up) {
-			if (D.M.scenario.isAddingEnabled()) {
-				D.M.scenario.add(new SetUpCommand(up));
-			}
-			this.up = up;
-		}
-		return up;
+		return this.up = up;
 	}
 
 	public SkipNode getDown() {
@@ -186,156 +167,28 @@ public class SkipNode extends Node {
 	}
 
 	public SkipNode setDown(SkipNode down) {
-		if (this.down != down) {
-			if (D.M.scenario.isAddingEnabled()) {
-				D.M.scenario.add(new SetDownCommand(down));
-			}
-			this.down = down;
-		}
-		return down;
-	}
-	
-	private class SetDownCommand implements Command {
-		private final SkipNode oldDown, newDown;
-
-		public SetDownCommand(SkipNode newDown) {
-			oldDown = getDown();
-			this.newDown = newDown;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setDown");
-			e.setAttribute("key", Integer.toString(getKey()));
-			if (newDown != null) {
-				e.setAttribute("newDown", Integer.toString(newDown.getKey()));
-			} else {
-				e.setAttribute("newDown", "null");
-			}
-			if (oldDown != null) {
-				e.setAttribute("oldDown", Integer.toString(oldDown.getKey()));
-			} else {
-				e.setAttribute("oldDown", "null");
-			}
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setDown(newDown);
-		}
-
-		@Override
-		public void unexecute() {
-			setDown(oldDown);
-		}
-	}
-	
-	private class SetLeftCommand implements Command {
-		private final SkipNode oldLeft, newLeft;
-
-		public SetLeftCommand(SkipNode newLeft) {
-			oldLeft = getLeft();
-			this.newLeft = newLeft;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setLeft");
-			e.setAttribute("key", Integer.toString(getKey()));
-			if (newLeft != null) {
-				e.setAttribute("newLeft", Integer.toString(newLeft.getKey()));
-			} else {
-				e.setAttribute("newLeft", "null");
-			}
-			if (oldLeft != null) {
-				e.setAttribute("oldLeft", Integer.toString(oldLeft.getKey()));
-			} else {
-				e.setAttribute("oldLeft", "null");
-			}
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setLeft(newLeft);
-		}
-
-		@Override
-		public void unexecute() {
-			setLeft(oldLeft);
-		}
+		return this.down = down;
 	}
 
-	private class SetRightCommand implements Command {
-		private final SkipNode oldRight, newRight;
-
-		public SetRightCommand(SkipNode newRight) {
-			oldRight = getRight();
-			this.newRight = newRight;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setRight");
-			e.setAttribute("key", Integer.toString(getKey()));
-			if (newRight != null) {
-				e.setAttribute("newRight", Integer.toString(newRight.getKey()));
-			} else {
-				e.setAttribute("newRight", "null");
-			}
-			if (oldRight != null) {
-				e.setAttribute("oldRight", Integer.toString(oldRight.getKey()));
-			} else {
-				e.setAttribute("oldRight", "null");
-			}
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setRight(newRight);
-		}
-
-		@Override
-		public void unexecute() {
-			setRight(oldRight);
-		}
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		state.put(hash + "down", down);
+		state.put(hash + "left", left);
+		state.put(hash + "right", right);
+		state.put(hash + "up", up);
 	}
 
-	private class SetUpCommand implements Command {
-		private final SkipNode oldUp, newUp;
-
-		public SetUpCommand(SkipNode newUp) {
-			oldUp = getUp();
-			this.newUp = newUp;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setUp");
-			e.setAttribute("key", Integer.toString(getKey()));
-			if (newUp != null) {
-				e.setAttribute("newUp", Integer.toString(newUp.getKey()));
-			} else {
-				e.setAttribute("newUp", "null");
-			}
-			if (oldUp != null) {
-				e.setAttribute("oldUp", Integer.toString(oldUp.getKey()));
-			} else {
-				e.setAttribute("oldUp", "null");
-			}
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setUp(newUp);
-		}
-
-		@Override
-		public void unexecute() {
-			setUp(oldUp);
-		}
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		SkipNode down = (SkipNode) state.get(hash + "down");
+		if (down != null) this.down = down;
+		SkipNode left = (SkipNode) state.get(hash + "left");
+		if (left != null) this.left = left;
+		SkipNode right = (SkipNode) state.get(hash + "right");
+		if (right != null) this.right = right;
+		SkipNode up = (SkipNode) state.get(hash + "up");
+		if (up != null) this.up = up;
 	}
 }

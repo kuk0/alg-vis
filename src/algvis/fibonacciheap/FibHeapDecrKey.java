@@ -28,7 +28,7 @@ public class FibHeapDecrKey extends Algorithm {
 	private BinHeapNode v;
 
 	public FibHeapDecrKey(BinomialHeap H, BinHeapNode v, int delta, int i) {
-		super(H);
+		super(panel, d);
 		this.H = H;
 		this.v = v;
 		this.delta = delta;
@@ -57,7 +57,7 @@ public class FibHeapDecrKey extends Algorithm {
 				H.min[i] = v;
 			}
 			H.reposition();
-			mysuspend();
+			pause();
 			if (w.cut) {
 				v = w;
 				w = v.parent;

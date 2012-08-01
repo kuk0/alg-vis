@@ -32,13 +32,13 @@ public class UnionFindFind extends Algorithm {
 	private final UnionFind UF;
 
 	UnionFindFind(UnionFind UF) {
-		super(UF);
+		super(panel, d);
 		this.UF = UF;
 		setState(UF.pathCompression);
 	}
 
 	public UnionFindFind(UnionFind UF, UnionFindNode u) {
-		super(UF);
+		super(panel, d);
 		this.UF = UF;
 		setState(UF.pathCompression);
 		this.u = u;
@@ -79,13 +79,13 @@ public class UnionFindFind extends Algorithm {
 		u.setColor(NodeColor.FIND);
 		u.mark();
 		addStep("uffindstart", u.getKey());
-		mysuspend();
+		pause();
 
 		// u is a representative
 		if (u.getParent() == null) {
 			u.setColor(NodeColor.FOUND);
 			addStep("ufalreadyroot");
-			mysuspend();
+			pause();
 			u.unmark();
 			return u;
 		}
@@ -97,7 +97,7 @@ public class UnionFindFind extends Algorithm {
 			S.add(v);
 			v.setColor(NodeColor.FIND);
 			addStep("ufup");
-			mysuspend();
+			pause();
 			v = v.getParent();
 		}
 
@@ -105,7 +105,7 @@ public class UnionFindFind extends Algorithm {
 		result = v;
 		v.setColor(NodeColor.FOUND);
 		addStep("ufrootfound", result.getKey());
-		mysuspend();
+		pause();
 
 		// traveling back
 		while (!S.empty()) {
@@ -127,13 +127,13 @@ public class UnionFindFind extends Algorithm {
 		u.setColor(NodeColor.FIND);
 		u.mark();
 		addStep("uffindstart", u.getKey());
-		mysuspend();
+		pause();
 
 		// u is a representative
 		if (u.getParent() == null) {
 			u.setColor(NodeColor.FOUND);
 			addStep("ufalreadyroot");
-			mysuspend();
+			pause();
 			u.unmark();
 			return u;
 		}
@@ -146,7 +146,7 @@ public class UnionFindFind extends Algorithm {
 			//v.setColor(NodeColor.FIND);
 			v.setGrey(true);
 			addStep("ufup");
-			mysuspend();
+			pause();
 			v = v.getParent();
 		}
 
@@ -155,12 +155,12 @@ public class UnionFindFind extends Algorithm {
 		v.setColor(NodeColor.FOUND);
 		addStep("ufrootfound", result.getKey());
 		addStep("ufdownstart");
-		mysuspend();
+		pause();
 
 		// don't compress a path of a son of a root
 		if (!S.empty()) {
 			addStep("ufdownson");
-			mysuspend();
+			pause();
 			v = S.pop();
 			v.setColor(NodeColor.NORMAL);
 		}
@@ -169,19 +169,19 @@ public class UnionFindFind extends Algorithm {
 			addStep("ufdown");
 			v = S.pop();
 			//v.pointTo(result);
-			mysuspend();
+			pause();
 			//v.noArrow();
 			v.setColor(NodeColor.NORMAL);
 			v.getParent().deleteChild(v);
 			UF.reposition();
-			// mysuspend();
+			// pause();
 			result.addChild(v);
 			UF.reposition();
-			// mysuspend();
+			// pause();
 		}
 
 		// u.bgcolor = Colors.NORMAL;
-		mysuspend();
+		pause();
 		u.unmark();
 		result.setGrey(false);
 		return result;
@@ -202,13 +202,13 @@ public class UnionFindFind extends Algorithm {
 		
 		u.mark();
 		addStep("uffindstart", u.getKey());
-		mysuspend();
+		pause();
 
 		// u is a representative
 		if (u.getParent() == null) {
 			u.setColor(NodeColor.FOUND);
 			addStep("ufalreadyroot");
-			mysuspend();
+			pause();
 			u.unmark();
 			return u;
 		}
@@ -225,7 +225,7 @@ public class UnionFindFind extends Algorithm {
 
 		if (v.getParent() != null) {
 			addStep("ufup");
-			mysuspend();
+			pause();
 			v.setColor(NodeColor.FIND);
 			v = v.getParent();
 			child = v;
@@ -236,7 +236,7 @@ public class UnionFindFind extends Algorithm {
 		if (v.getParent() != null)
 			do {
 				addStep("ufup");
-				mysuspend();
+				pause();
 				v.setColor(NodeColor.FIND);
 				v.setGrey(true);
 				v = v.getParent();
@@ -245,7 +245,7 @@ public class UnionFindFind extends Algorithm {
 					odd = false;
 					grandchild.setColor(NodeColor.CACHED);
 					addStep("ufupspecial");
-					mysuspend();
+					pause();
 					grandchild.setColor(NodeColor.NORMAL);
 					grandchild.getParent().deleteChild(grandchild);
 					v.addChild(grandchild);
@@ -266,7 +266,7 @@ public class UnionFindFind extends Algorithm {
 		v.setColor(NodeColor.FOUND);
 		result = v;
 		addStep("ufrootfound", result.getKey());
-		mysuspend();
+		pause();
 
 		u.unmark();
 		result.setGrey(false);
@@ -288,13 +288,13 @@ public class UnionFindFind extends Algorithm {
 			t = t.getParent();
 		}
 		
-		mysuspend();
+		pause();
 
 		// u is a representative
 		if (u.getParent() == null) {
 			u.setColor(NodeColor.FOUND);
 			addStep("ufalreadyroot");
-			mysuspend();
+			pause();
 			u.unmark();
 			return u;
 		}
@@ -311,7 +311,7 @@ public class UnionFindFind extends Algorithm {
 
 		if (v.getParent() != null) {
 			addStep("ufup");
-			mysuspend();
+			pause();
 			v.setColor(NodeColor.FIND);
 			v = v.getParent();
 			child = v;
@@ -321,13 +321,13 @@ public class UnionFindFind extends Algorithm {
 		if (v.getParent() != null)
 			do {
 				addStep("ufup");
-				mysuspend();
+				pause();
 				v.setColor(NodeColor.FIND);
 				v = v.getParent();
 				v.setColor(NodeColor.INSERT);
 				grandchild.setColor(NodeColor.CACHED);
 				addStep("ufupspecial");
-				mysuspend();
+				pause();
 				grandchild.setColor(NodeColor.NORMAL);
 				grandchild.getParent().deleteChild(grandchild);
 				v.addChild(grandchild);
@@ -345,7 +345,7 @@ public class UnionFindFind extends Algorithm {
 		v.setColor(NodeColor.FOUND);
 		result = v;
 		addStep("ufrootfound", result.getKey());
-		mysuspend();
+		pause();
 
 		u.unmark();
 		result.setGrey(false);

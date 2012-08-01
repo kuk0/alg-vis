@@ -39,11 +39,11 @@ public class SuffixTreeButtons extends Buttons {
 
 	@Override
 	public void actionButtons(JPanel P) {
-		insertB = new IButton(M.S.L, "button-create-st");
+		insertB = new IButton(panel.S.L, "button-create-st");
 		insertB.setMnemonic(KeyEvent.VK_I);
 		insertB.addActionListener(this);
 
-		findB = new IButton(M.S.L, "button-find");
+		findB = new IButton(panel.S.L, "button-find");
 		findB.setMnemonic(KeyEvent.VK_F);
 		findB.addActionListener(this);
 
@@ -53,7 +53,7 @@ public class SuffixTreeButtons extends Buttons {
 
 	@Override
 	public void otherButtons(JPanel P) {
-		implicitB = new ICheckBox(M.S.L, "implicit", false);
+		implicitB = new ICheckBox(panel.S.L, "implicit", false);
 		implicitB.setMnemonic(KeyEvent.VK_I);
 		implicitB.addActionListener(this);
 		P.add(implicitB);
@@ -61,7 +61,7 @@ public class SuffixTreeButtons extends Buttons {
 
 	@Override
 	public void initRandom() {
-		/*random = new IButton(M.S.L, "button-random");
+		/*random = new IButton(panel.S.L, "button-random");
 		random.setMnemonic(KeyEvent.VK_R);
 		random.addActionListener(this);*/
 	}

@@ -9,7 +9,7 @@ class IntervalAlg extends Algorithm{
 	IntervalNode v;
 	
 	IntervalAlg(IntervalTree T) {
-		super(T);
+		super(panel, d);
 		this.T = T;
 	}
 	
@@ -43,7 +43,7 @@ class IntervalAlg extends Algorithm{
 				}
 				w.setInterval(w.getLeft().b, w.getRight().e);
 				//System.out.println(w.getKey() + " " + w.b + " " + w.e);
-				mysuspend();
+				pause();
 				//System.out.println(w.b + " " + w.e);
 			}
 			w.unmark();

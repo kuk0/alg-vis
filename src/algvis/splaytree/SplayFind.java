@@ -31,7 +31,7 @@ public class SplayFind extends SplayAlg {
 		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("bstfindempty");
-			mysuspend();
+			pause();
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("bstfindnotfound");
@@ -41,7 +41,7 @@ public class SplayFind extends SplayAlg {
 			splay(w);
 
 			addStep("splayinroot");
-			mysuspend();
+			pause();
 
 			w.setColor(NodeColor.NORMAL);
 			v.goToRoot();
@@ -53,7 +53,7 @@ public class SplayFind extends SplayAlg {
 				v.setColor(NodeColor.NOTFOUND);
 				v.goDown();
 			}
-			mysuspend();
+			pause();
 		}
 	}
 }

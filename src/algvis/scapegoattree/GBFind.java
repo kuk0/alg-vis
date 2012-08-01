@@ -31,7 +31,7 @@ public class GBFind extends GBAlg {
 		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
-			mysuspend();
+			pause();
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
@@ -39,7 +39,7 @@ public class GBFind extends GBAlg {
 			BSTNode w = T.getRoot();
 			v.goTo(w);
 			addStep("bstfindstart");
-			mysuspend();
+			pause();
 			while (true) {
 				if (w.getKey() == K) {
 					if (((GBNode) w).isDeleted()) {
@@ -74,7 +74,7 @@ public class GBFind extends GBAlg {
 						break;
 					}
 				}
-				mysuspend();
+				pause();
 			}
 		}
 	}

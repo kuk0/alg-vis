@@ -55,7 +55,7 @@ public class LazyBinomialHeap extends BinomialHeap {
 		Pair p = chooseHeaps(i, j);
 		i = p.first;
 		j = p.second;
-		((MeldablePQButtons) M.B).activeHeap.setValue(i);
+		((MeldablePQButtons) panel.buttons).activeHeap.setValue(i);
 		start(new LazyBinHeapMeld(this, i, j));
 	}
 
@@ -65,14 +65,14 @@ public class LazyBinomialHeap extends BinomialHeap {
 		if (cleanup != null && root[active] != null) {
 			int x = root[active].x, y = -arrayheight;
 			for (int i = 0; i < cleanup.length; ++i) {
-				V.drawSquare(x, y, Node.radius);
-				V.drawStringTop("" + i, x, y - Node.radius + 1, Fonts.NORMAL);
+				V.drawSquare(x, y, Node.RADIUS);
+				V.drawStringTop("" + i, x, y - Node.RADIUS + 1, Fonts.NORMAL);
 				if (cleanup[i] == null) {
-					V.drawLine(x-Node.radius, y+Node.radius, x+Node.radius, y-Node.radius);
+					V.drawLine(x-Node.RADIUS, y+Node.RADIUS, x+Node.RADIUS, y-Node.RADIUS);
 				} else {
-					V.drawArrow(x, y, cleanup[i].x, cleanup[i].y - minsepy + Node.radius);
+					V.drawArrow(x, y, cleanup[i].x, cleanup[i].y - minsepy + Node.RADIUS);
 				}
-				x += 2 * Node.radius;
+				x += 2 * Node.RADIUS;
 			}
 		}
 	}
@@ -80,6 +80,6 @@ public class LazyBinomialHeap extends BinomialHeap {
 	@Override
 	public void reposition() {
 		super.reposition();
-		M.screen.V.miny = -arrayheight - 50;
+		panel.screen.V.miny = -arrayheight - 50;
 	}
 }

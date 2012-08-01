@@ -36,7 +36,7 @@ public class RBButtons extends DictButtons implements ActionListener {
 
 	@Override
 	public void otherButtons(JPanel P) {
-		B24 = new ICheckBox(M.S.L, "mode234", false);
+		B24 = new ICheckBox(panel.S.L, "mode234", false);
 		B24.setMnemonic(KeyEvent.VK_2);
 		B24.addActionListener(this);
 		P.add(B24);
@@ -46,8 +46,8 @@ public class RBButtons extends DictButtons implements ActionListener {
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
 		if (evt.getSource() == B24) {
-			((RB) M.D).mode24 = B24.isSelected();
-			((RB) M.D).reposition();
+			((RB) panel.D).mode24 = B24.isSelected();
+			((RB) panel.D).reposition();
 		}
 	}
 }

@@ -52,12 +52,12 @@ public class PairHeapDecrKey extends PairHeapAlg {
 			}
 			H.root[0] = v;
 			H.root[0].mark();
-			mysuspend();
+			pause();
 			v.getParent().deleteChild(v);
 
 			H.root[H.active].mark();
 			H.reposition();
-			mysuspend();
+			pause();
 			H.root[0].unmark();
 			H.root[H.active].unmark();
 			link(H.active, 0);

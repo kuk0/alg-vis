@@ -25,14 +25,14 @@ public class BSTPanel extends VisPanel {
 	private static final long serialVersionUID = 2619694930536571557L;
 	public static Class<? extends DataStructure> DS = BST.class;
 
-	public BSTPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+	public BSTPanel(Settings S) {
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		D = new BST(this);
-		B = new BSTButtons(this);
+		buttons = new BSTButtons(this);
 		S.addLayoutListener((LayoutListener) D);
 		D.random(20);
 	}

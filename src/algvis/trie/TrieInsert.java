@@ -24,7 +24,7 @@ public class TrieInsert extends Algorithm {
 	private String s;
 
 	public TrieInsert(Trie T, String s) {
-		super(T);
+		super(panel, d);
 		this.T = T;
 		this.s = s;
 		setHeader("trieinsert", s.substring(0, s.length() - 1));
@@ -46,7 +46,7 @@ public class TrieInsert extends Algorithm {
 		v.mark();
 		addNote("trieinsertnote");
 		addStep("trierootstart");
-		mysuspend();
+		pause();
 		v.unmark();
 		T.hw = new TrieWordNode(T, s);
 		T.hw.setColor(NodeColor.INSERT);
@@ -64,7 +64,7 @@ public class TrieInsert extends Algorithm {
 			}
 			w.setColor(NodeColor.CACHED);
 			T.reposition();
-			mysuspend();
+			pause();
 			v = w;
 			v.setColor(NodeColor.INSERT);
 			T.reposition();
@@ -77,7 +77,7 @@ public class TrieInsert extends Algorithm {
 		} else {
 			addStep("trieinsertneow");
 		}
-		mysuspend();
+		pause();
 		v.setColor(NodeColor.NORMAL);
 		v = v.addChild('$', T.hw.x, T.hw.y);
 		T.reposition();

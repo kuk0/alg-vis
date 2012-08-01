@@ -27,7 +27,7 @@ public class AADelete extends Algorithm {
 	private final int K;
 
 	public AADelete(AA T, int x) {
-		super(T);
+		super(panel, d);
 		this.T = T;
 		v = T.setV(new BSTNode(T, K = x));
 		v.setColor(NodeColor.DELETE);
@@ -39,7 +39,7 @@ public class AADelete extends Algorithm {
 		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
-			mysuspend();
+			pause();
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
@@ -47,7 +47,7 @@ public class AADelete extends Algorithm {
 			AANode d = (AANode) T.getRoot();
 			v.goTo(d);
 			addStep("bstdeletestart");
-			mysuspend();
+			pause();
 
 			while (true) {
 				if (d.getKey() == K) { // found
@@ -72,7 +72,7 @@ public class AADelete extends Algorithm {
 						break;
 					}
 				}
-				mysuspend();
+				pause();
 			}
 
 			if (d == null) { // notfound
@@ -84,7 +84,7 @@ public class AADelete extends Algorithm {
 			d.setColor(NodeColor.FOUND);
 			if (d.isLeaf()) { // case I - list
 				addStep("bst-delete-case1");
-				mysuspend();
+				pause();
 				if (d.isRoot()) {
 					T.setRoot(null);
 				} else if (d.isLeft()) {
@@ -98,7 +98,7 @@ public class AADelete extends Algorithm {
 																		// IIa -
 																		// 1 syn
 				addStep("bst-delete-case2");
-				mysuspend();
+				pause();
 				AANode s = (d.getLeft() == null) ? d.getRight() : d.getLeft();
 				if (d.isRoot()) {
 					T.setRoot(s);
@@ -118,11 +118,11 @@ public class AADelete extends Algorithm {
 				v = T.setV(new AANode(T, -Node.INF));
 				v.setColor(NodeColor.FIND);
 				v.goTo(s);
-				mysuspend();
+				pause();
 				while (s.getLeft() != null) {
 					s = s.getLeft();
 					v.goTo(s);
-					mysuspend();
+					pause();
 				}
 				w = s.getParent();
 				if (w == d) {
@@ -136,7 +136,7 @@ public class AADelete extends Algorithm {
 				}
 				v.goNextTo(d);
 				v.setLevel(lev);
-				mysuspend();
+				pause();
 				if (d.getParent() == null) {
 					T.setRoot(v);
 				} else {
@@ -156,7 +156,7 @@ public class AADelete extends Algorithm {
 
 			// bubleme nahor
 			T.reposition();
-			mysuspend();
+			pause();
 			while (w != null) {
 				int ll = (w.getLeft() == null) ? 0 : w.getLeft().getLevel(), rl = (w
 						.getRight() == null) ? 0 : w.getRight().getLevel(), wl = w
@@ -173,12 +173,12 @@ public class AADelete extends Algorithm {
 					if (w.getLeft() != null
 							&& w.getLeft().getLevel() == w.getLevel()) {
 						addStep("aaskew");
-						mysuspend();
+						pause();
 						w.unmark();
 						w = w.getLeft();
 						w.mark();
 						w.setArc();
-						mysuspend();
+						pause();
 						w.noArc();
 						T.rotate(w);
 						T.reposition();
@@ -191,9 +191,9 @@ public class AADelete extends Algorithm {
 								&& r.getLeft().getLevel() == r.getLevel()) {
 							addStep("aaskew2");
 							r.getLeft().setArc(r);
-							mysuspend();
+							pause();
 							r.getLeft().noArc();
-							mysuspend();
+							pause();
 							T.rotate(r.getLeft());
 							T.reposition();
 						}
@@ -203,7 +203,7 @@ public class AADelete extends Algorithm {
 									&& r.getLeft().getLevel() == r.getLevel()) {
 								addStep("aaskew3");
 								r.getLeft().setArc(r);
-								mysuspend();
+								pause();
 								r.getLeft().noArc();
 								T.rotate(r.getLeft());
 								T.reposition();
@@ -216,7 +216,7 @@ public class AADelete extends Algorithm {
 							&& r.getRight().getLevel() == w.getLevel()) {
 						addStep("aasplit");
 						r.setArc();
-						mysuspend();
+						pause();
 						r.noArc();
 						w.unmark();
 						w = r;
@@ -226,7 +226,7 @@ public class AADelete extends Algorithm {
 						T.reposition();
 					}
 
-					// mysuspend();
+					// pause();
 					if (w != null && w.getRight() != null) {
 						r = w.getRight().getRight();
 						if (r != null
@@ -235,14 +235,14 @@ public class AADelete extends Algorithm {
 										.getLevel()) {
 							addStep("aasplit2");
 							r.setArc();
-							mysuspend();
+							pause();
 							r.noArc();
 							T.rotate(r);
 							r.setLevel(r.getLevel() + 1);
 							T.reposition();
 						}
 					}
-					mysuspend();
+					pause();
 				}
 				w.unmark();
 				w = w.getParent();

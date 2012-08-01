@@ -28,7 +28,7 @@ public class PairHeapAlg extends Algorithm {
 	PairHeapNode v;
 
 	PairHeapAlg(DataStructure D) {
-		super(D);
+		super(panel, d);
 		this.H = (PairingHeap) D;
 	}
 
@@ -70,7 +70,7 @@ public class PairHeapAlg extends Algorithm {
 			}
 			addStep("pairnaive"); // pri naive sa vyberie hocktory a prilinkuju
 									// sa k nemu ostatne
-			mysuspend();
+			pause();
 
 			H.root[0] = H.root[i];
 			H.root[i] = H.root[i].getChild();
@@ -79,10 +79,10 @@ public class PairHeapAlg extends Algorithm {
 			H.root[0].deleteChild(H.root[0].leftmostChild());// getChild().setParent(null);
 
 			H.reposition();
-			mysuspend();
+			pause();
 			for (int k = 1; k < j; k++) {
 				linkchlr(i, 0);
-				mysuspend();
+				pause();
 			}
 		} else {
 			// vymazat neviditelneho roota
@@ -124,7 +124,7 @@ public class PairHeapAlg extends Algorithm {
 
 			H.reposition();
 			addStep("pairlrrl1");
-			mysuspend();
+			pause();
 			PairHeapNode w = H.root[i].getChild();
 			PairHeapNode wr = H.root[i].getChild().getRight();
 
@@ -146,7 +146,7 @@ public class PairHeapAlg extends Algorithm {
 			H.reposition();
 			addStep("pairlrrl2"); // a teraz sa vyberie jeden vrchol a polinkuju
 									// sa sprava dolava
-			mysuspend();
+			pause();
 
 			j = H.root[i].numChildren();
 			if (j > 0) {
@@ -165,10 +165,10 @@ public class PairHeapAlg extends Algorithm {
 				H.reposition();
 				// addStep(); //pri naive sa vyberie hocktory a prilinkuju sa k
 				// nemu ostatne
-				mysuspend();
+				pause();
 				for (int k = 1; k < j; k++) {
 					linkchrl(i, 0);
-					mysuspend();
+					pause();
 				}
 			} else {
 				// vymazat neviditelneho roota

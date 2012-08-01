@@ -25,13 +25,13 @@ public class DaryHeapPanel extends VisPanel{
 	public static Class<? extends DataStructure> DS = DaryHeap.class;
 
 	public DaryHeapPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		D = new DaryHeap(this);
-		B = new DaryHeapButtons(this);
+		buttons = new DaryHeapButtons(this);
 		D.random(14);
 	}
 }

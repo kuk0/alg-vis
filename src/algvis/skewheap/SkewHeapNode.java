@@ -101,7 +101,7 @@ public class SkewHeapNode extends BSTNode {
 			x1 = dir.x;
 			y1 = dir.y;
 		}
-		v.drawDoubleArrow(x1 + 2 * SkewHeapNode.radius, y1, x2 - 2 * SkewHeapNode.radius, y2);
+		v.drawDoubleArrow(x1 + 2 * SkewHeapNode.RADIUS, y1, x2 - 2 * SkewHeapNode.RADIUS, y2);
 	}
 
 	@Override
@@ -115,11 +115,11 @@ public class SkewHeapNode extends BSTNode {
 
 		if (this.getRight() != null) {
 			this.getRight().repos(px + getRight().leftw,
-					py + (SkewHeap.minsepy));// + 2 * SkewHeapNode.radius));
+					py + (SkewHeap.minsepy));// + 2 * SkewHeapNode.RADIUS));
 		}
 		if (this.getLeft() != null) {
 			this.getLeft().repos(px - getLeft().rightw,
-					py + (SkewHeap.minsepy));// + 2 * SkewHeapNode.radius));
+					py + (SkewHeap.minsepy));// + 2 * SkewHeapNode.RADIUS));
 		}
 	}
 

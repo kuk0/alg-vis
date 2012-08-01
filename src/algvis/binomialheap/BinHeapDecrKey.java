@@ -26,7 +26,7 @@ public class BinHeapDecrKey extends Algorithm {
 	private BinHeapNode v;
 
 	public BinHeapDecrKey(BinomialHeap H, BinHeapNode v, int delta) {
-		super(H);
+		super(panel, d);
 		this.H = H;
 		this.v = v;
 		this.delta = delta;
@@ -52,7 +52,7 @@ public class BinHeapDecrKey extends Algorithm {
 			w.setKey(Node.NOKEY);
 			H.v.goTo(w);
 			H.v2.goTo(v);
-			mysuspend();
+			pause();
 			v.setKey(H.v2.getKey());
 			w.setKey(H.v.getKey());
 			v.setColor(H.v2.getColor());

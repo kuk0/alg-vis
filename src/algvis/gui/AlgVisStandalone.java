@@ -45,7 +45,7 @@ public class AlgVisStandalone {
 			@Override
 			public void run() {
 				JFrame f = new MainFrame();
-				f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 				f.setVisible(true);
 			}
 		});

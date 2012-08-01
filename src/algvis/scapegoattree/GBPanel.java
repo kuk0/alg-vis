@@ -25,13 +25,13 @@ public class GBPanel extends VisPanel {
 	public static Class<? extends DataStructure> DS = GBTree.class;
 
 	public GBPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		D = new GBTree(this);
-		B = new GBButtons(this);
+		buttons = new GBButtons(this);
 		D.random(25);
 	}
 }

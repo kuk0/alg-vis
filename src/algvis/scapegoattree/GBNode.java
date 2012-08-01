@@ -16,11 +16,10 @@
  ******************************************************************************/
 package algvis.scapegoattree;
 
-import org.jdom2.Element;
-
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
-import algvis.scenario.Command;
+
+import java.util.Hashtable;
 
 public class GBNode extends BSTNode {
 	private boolean deleted = false;
@@ -38,12 +37,7 @@ public class GBNode extends BSTNode {
 	}
 
 	public void setDeleted(boolean deleted) {
-		if (this.deleted != deleted) {
-			if (D.M.scenario.isAddingEnabled()) {
-				D.M.scenario.add(new SetDeletedCommand(deleted));
-			}
-			this.deleted = deleted;
-		}
+		this.deleted = deleted;
 	}
 
 	@Override
@@ -61,31 +55,16 @@ public class GBNode extends BSTNode {
 		return (GBNode) super.getParent();
 	}
 
-	private class SetDeletedCommand implements Command {
-		private final boolean oldDeleted, newDeleted;
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		state.put(hash + "deleted", deleted);
+	}
 
-		public SetDeletedCommand(boolean newDeleted) {
-			oldDeleted = isDeleted();
-			this.newDeleted = newDeleted;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setDeleted");
-			e.setAttribute("key", Integer.toString(getKey()));
-			e.setAttribute("wasDeleted", Boolean.toString(oldDeleted));
-			e.setAttribute("isDeleted", Boolean.toString(newDeleted));
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setDeleted(newDeleted);
-		}
-
-		@Override
-		public void unexecute() {
-			setDeleted(oldDeleted);
-		}
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Boolean deleted = (Boolean) state.get(hash + "deleted");
+		if (deleted != null) this.deleted = deleted;
 	}
 }

@@ -16,17 +16,15 @@
  ******************************************************************************/
 package algvis.gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.util.Vector;
-
-import javax.swing.ButtonGroup;
-import javax.swing.JPanel;
-
 import algvis.bst.BSTNode;
 import algvis.core.PriorityQueue;
 import algvis.internationalization.IButton;
 import algvis.internationalization.IRadioButton;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.util.Vector;
 
 /**
  * The Class PQButtons. All priority queues need buttons "Insert",
@@ -48,18 +46,18 @@ public class PQButtons extends Buttons {
 
 	@Override
 	public void actionButtons(JPanel P) {
-		insertB = new IButton(M.S.L, "button-insert");
+		insertB = new IButton(panel.S.L, "button-insert");
 		insertB.setMnemonic(KeyEvent.VK_I);
 		insertB.addActionListener(this);
 
-		deleteB = new IButton(M.S.L, "button-deletemax");
+		deleteB = new IButton(panel.S.L, "button-deletemax");
 		deleteB.setMnemonic(KeyEvent.VK_D);
 		deleteB.addActionListener(this);
 
 		if (((PriorityQueue) D).minHeap) {
-			decrKeyB = new IButton(M.S.L, "button-decreasekey");
+			decrKeyB = new IButton(panel.S.L, "button-decreasekey");
 		} else {
-			decrKeyB = new IButton(M.S.L, "button-increasekey");
+			decrKeyB = new IButton(panel.S.L, "button-increasekey");
 		}
 		decrKeyB.setMnemonic(KeyEvent.VK_K);
 		decrKeyB.addActionListener(this);
@@ -71,10 +69,10 @@ public class PQButtons extends Buttons {
 
 	@Override
 	public void otherButtons(JPanel P) {
-		minB = new IRadioButton(M.S.L, "min");
+		minB = new IRadioButton(panel.S.L, "min");
 		minB.setSelected(false);
 		minB.addActionListener(this);
-		maxB = new IRadioButton(M.S.L, "max");
+		maxB = new IRadioButton(panel.S.L, "max");
 		maxB.setSelected(true);
 		maxB.addActionListener(this);
 		minMaxGroup = new ButtonGroup();

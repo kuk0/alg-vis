@@ -27,7 +27,7 @@ public class Rotate extends Algorithm {
 	private final BSTNode v;
 
 	public Rotate(Rotations R, BSTNode v) {
-		super(R.T);
+		super(panel, d);
 		this.R = R;
 		this.T = R.T;
 		this.v = v;
@@ -71,12 +71,12 @@ public class Rotate extends Algorithm {
 		} else {
 			addNote("rotate-changes", v.getKey(), b.getKey(), u.getKey(), u.getParent().getKey());
 		}
-		mysuspend();
+		pause();
 		
 		T.rotate(v);
 		R.v = u;
 		R.reposition();
-		mysuspend();
+		pause();
 
 		R.v = null;
 		if (v.getLeft() != null) {

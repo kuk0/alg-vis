@@ -25,13 +25,13 @@ public class AAPanel extends VisPanel {
 	public static Class<? extends DataStructure> DS = AA.class;
 
 	public AAPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		D = new AA(this);
-		B = new AAButtons(this);
+		buttons = new AAButtons(this);
 		D.random(30);
 	}
 }

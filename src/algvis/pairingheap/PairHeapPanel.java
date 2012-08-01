@@ -26,14 +26,14 @@ public class PairHeapPanel extends VisPanel{
 	public static Class<? extends DataStructure> DS = PairingHeap.class;
 
 	public PairHeapPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		D = new PairingHeap(this);
-		B = new PairHeapButtons(this);
-		((PairHeapButtons)B).pairVariant.setSelectedIndex(1);
+		buttons = new PairHeapButtons(this);
+		((PairHeapButtons) buttons).pairVariant.setSelectedIndex(1);
 		D.random(15);
 	}
 

@@ -24,7 +24,7 @@ class SkewHeapAlg extends Algorithm {
 	SkewHeapNode v;
 
 	SkewHeapAlg(SkewHeap H) {
-		super(H);
+		super(panel, d);
 		this.H = H;
 	}
 	
@@ -33,7 +33,7 @@ class SkewHeapAlg extends Algorithm {
 		H.root[0].mark();
 		w.mark();
 		addStep("leftmeldstart");
-		mysuspend();
+		pause();
 		while (true) {
 			H.root[0].mark();
 			w.mark();
@@ -43,7 +43,7 @@ class SkewHeapAlg extends Algorithm {
 				} else {
 					addStep("leftmeldrightl", w.getKey(), H.root[0].getKey());
 				}
-				mysuspend();
+				pause();
 			} else {
 				if (!H.minHeap) {
 					addStep("leftmeldswapl", w.getKey(), H.root[0].getKey());
@@ -51,7 +51,7 @@ class SkewHeapAlg extends Algorithm {
 					addStep("leftmeldswapg", w.getKey(), H.root[0].getKey());
 				}
 				w.setDoubleArrow(H.root[0]);
-				mysuspend();
+				pause();
 				w.noDoubleArrow();
 				SkewHeapNode tmp1 = w.getParent();
 				SkewHeapNode tmp2 = H.root[0];
@@ -73,13 +73,13 @@ class SkewHeapAlg extends Algorithm {
 				w.getParent().dashedrightl = false;
 			}
 
-			H.root[0].repos(H.root[0].tox, H.root[0].toy + SkewHeap.minsepy);// + 2* SkewHeapNode.radius);
+			H.root[0].repos(H.root[0].tox, H.root[0].toy + SkewHeap.minsepy);// + 2* SkewHeapNode.RADIUS);
 			H.root[0].unmark();
 			w.unmark();
 
 			if (w.getRight() == null) {
 				addStep("leftmeldnoson", H.root[0].getKey(), w.getKey());
-				mysuspend();
+				pause();
 				w.linkRight(H.root[0]);
 				H.root[0] = null;
 				H.reposition();
@@ -88,12 +88,12 @@ class SkewHeapAlg extends Algorithm {
 
 			w.dashedrightl = true;
 			w = w.getRight();
-			mysuspend();
+			pause();
 		}
 
 		//povymiename synov, ale nie na zaklade ranku, ale vsetkych okrem synov posledneho vrcholu z pravej cesty 
 		addNote("skewheapswap");
-		mysuspend();
+		pause();
 
 		SkewHeapNode tmp = w;
 		//najdeme predposledny vrchol v pravej ceste 
@@ -111,7 +111,7 @@ class SkewHeapAlg extends Algorithm {
 			}
 			
 			tmp.swapChildren();
-			mysuspend();
+			pause();
 			H.reposition();
 
 			if (tmp.getLeft() != null) {
@@ -134,7 +134,7 @@ class SkewHeapAlg extends Algorithm {
 			addStep("maxheapbubbleup");
 		}
 		v.mark();
-		mysuspend();
+		pause();
 		v.unmark();		
 		SkewHeapNode w = v.getParent();
 		while (w != null && v.prec(w)) {
@@ -145,7 +145,7 @@ class SkewHeapAlg extends Algorithm {
 			w.setKey(Node.NOKEY);
 			H.v.goTo(w);
 			H.v2.goTo(v);
-			mysuspend();
+			pause();
 			v.setKey(H.v2.getKey());
 			w.setKey(H.v.getKey());
 			v.setColor(H.v2.getColor());

@@ -26,13 +26,13 @@ public class SkipListPanel extends VisPanel {
 	public static Class<? extends DataStructure> DS = SkipList.class;
 
 	public SkipListPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		D = new SkipList(this);
-		B = new DictButtons(this);
+		buttons = new DictButtons(this);
 		D.random(10);
 	}
 }

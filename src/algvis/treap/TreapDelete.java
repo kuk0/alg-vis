@@ -25,7 +25,7 @@ public class TreapDelete extends Algorithm {
 	private final int K;
 
 	public TreapDelete(Treap T, int x) {
-		super(T);
+		super(panel, d);
 		this.T = T;
 		T.setV(v = new TreapNode(T, K = x));
 		v.setColor(NodeColor.DELETE);
@@ -37,7 +37,7 @@ public class TreapDelete extends Algorithm {
 		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
-			mysuspend();
+			pause();
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
@@ -45,7 +45,7 @@ public class TreapDelete extends Algorithm {
 			TreapNode d = (TreapNode)T.getRoot();
 			v.goTo(d);
 			addStep("bstdeletestart");
-			mysuspend();
+			pause();
 
 			while (true) {
 				if (d.getKey() == K) { // found
@@ -70,7 +70,7 @@ public class TreapDelete extends Algorithm {
 						break;
 					}
 				}
-				mysuspend();
+				pause();
 			}
 
 			if (d == null) { // notfound
@@ -92,11 +92,11 @@ public class TreapDelete extends Algorithm {
 				} else {
 					T.rotate(d.getLeft());
 				}
-				mysuspend();
+				pause();
 			}
 			T.setV(d);
 			addStep("treapdeletecase1");
-			mysuspend();
+			pause();
 			if (d.isRoot()) {
 				T.setRoot(null);
 			} else if (d.isLeft()) {

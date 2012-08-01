@@ -53,7 +53,7 @@ public class SkewHeapInsert extends SkewHeapAlg {
 		H.root[0].highlightTree();
 		H.reposition();
 
-		mysuspend();
+		pause();
 		meld(i);
 	}
 }

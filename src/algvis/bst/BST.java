@@ -18,11 +18,14 @@ package algvis.bst;
 
 import algvis.core.Dictionary;
 import algvis.core.StringUtils;
+import algvis.core.history.UpdatableStateEdit;
 import algvis.gui.VisPanel;
 import algvis.gui.view.ClickListener;
 import algvis.gui.view.Layout;
 import algvis.gui.view.LayoutListener;
 import algvis.gui.view.View;
+
+import java.awt.geom.Rectangle2D;
 
 public class BST extends Dictionary implements LayoutListener, ClickListener {
 	public static String dsName = "bst";
@@ -37,16 +40,7 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 		super(M);
 		M.screen.V.setDS(this);
 	}
-
-	public BSTNode getV() {
-		return (BSTNode) super.getV();
-	}
-
-	public BSTNode setV(BSTNode v) {
-		super.setV(v);
-		return v;
-	}
-
+	
 	public BSTNode getRoot() {
 		return (BSTNode) super.getRoot();
 	}
@@ -73,32 +67,35 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 
 	@Override
 	public void clear() {
-		if (getRoot() != null || getV() != null || M.scenario.hasNext()) {
-			M.scenario.newAlgorithm();
-			M.scenario.newStep();
+		if (getRoot() != null) {
+			UpdatableStateEdit e = new UpdatableStateEdit(panel, panel.history.getNextId());
 			setRoot(null);
-			setV(null);
-			M.C.clear();
+			panel.commentary.clear();
+			panel.scene.clear();
+			addToScene();
 			setStats();
 			reposition();
-			M.screen.V.resetView();
+			panel.screen.V.resetView();
+			e.end();
+			panel.history.addEdit(e);
+			panel.history.putAlgorithmEnd();
 		}
 	}
 
 	@Override
 	public String stats() {
 		if (getRoot() == null) {
-			return M.S.L.getString("size") + ": 0;   "
-					+ M.S.L.getString("height") + ": 0 =  1.00\u00b7"
-					+ M.S.L.getString("opt") + ";   "
-					+ M.S.L.getString("avedepth") + ": 0";
+			return panel.S.L.getString("size") + ": 0;   "
+					+ panel.S.L.getString("height") + ": 0 =  1.00\u00b7"
+					+ panel.S.L.getString("opt") + ";   "
+					+ panel.S.L.getString("avedepth") + ": 0";
 		} else {
 			getRoot().calcTree();
-			return M.S.L.getString("size")
+			return panel.S.L.getString("size")
 					+ ": "
 					+ getRoot().size
 					+ ";   "
-					+ M.S.L.getString("height")
+					+ panel.S.L.getString("height")
 					+ ": "
 					+ getRoot().height
 					+ " = "
@@ -107,9 +104,9 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 									/ (Math.floor(lg(getRoot().size)) + 1), 2,
 							5)
 					+ "\u00b7"
-					+ M.S.L.getString("opt")
+					+ panel.S.L.getString("opt")
 					+ ";   "
-					+ M.S.L.getString("avedepth")
+					+ panel.S.L.getString("avedepth")
 					+ ": "
 					+ StringUtils.format(getRoot().sumh
 							/ (double) getRoot().size, 2, -5);
@@ -123,14 +120,18 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 	@Override
 	public void draw(View V) {
 		if (getRoot() != null) {
-			getRoot().moveTree();
 			getRoot().drawTree(V);
 		}
-		if (getV() != null) {
-			getV().move();
-			// TODO toto hodilo nullPointerException pri vlozeni 1000 prvkov
-			getV().draw(V);
-		}
+	}
+
+	@Override
+	public void move() {
+		if (getRoot() != null) getRoot().moveTree();
+	}
+
+	@Override
+	public Rectangle2D getBoundingBox() {
+		return new Rectangle2D.Float(x1, y1, x2-x1, y2-y1);
 	}
 
 	protected void leftrot(BSTNode v) {
@@ -200,7 +201,7 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 		if (getRoot() != null) {
 			getRoot().reposition();
 		}
-		M.screen.V.setBounds(x1, y1, x2, y2);
+		panel.screen.V.setBounds(x1, y1, x2, y2);
 	}
 
 	@Override
@@ -213,7 +214,7 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 			BSTNode w = getRoot().find(x, y);
 			if (w != null) {
 				// w.markSubtree = true;
-				M.B.I.setText("" + w.getKey());
+				panel.buttons.I.setText("" + w.getKey());
 			}
 		}
 	}

@@ -53,7 +53,7 @@ public class IntervalFindMin extends IntervalAlg {
 			// pomocou DFS.
 			addNote("intervalfind", i, j); // vysvetlenie
 			find(T.root, i, j);
-			mysuspend();
+			pause();
 			if (T.minTree == mimasuType.MAX) {
 				addStep("maximum", maxi.getKey());
 			} else if (T.minTree == mimasuType.MIN) {
@@ -66,7 +66,7 @@ public class IntervalFindMin extends IntervalAlg {
 				maxi.mark();
 				T.markColor(T.root, i, j);
 			}
-			mysuspend();
+			pause();
 			// if (T.minTree == mimasuType.SUM){
 			// }
 			T.unfocus(T.root);
@@ -89,7 +89,7 @@ public class IntervalFindMin extends IntervalAlg {
 				addStep("intervalempty", w.b, w.e); // prazdny vrchol
 			}
 			w.focused = focusType.TOUT;
-			mysuspend();
+			pause();
 			w.unmark();
 			w.focused = focusType.FALSE;
 			return;
@@ -105,7 +105,7 @@ public class IntervalFindMin extends IntervalAlg {
 			}
 			addStep("intervalin", i, j, w.getKey(), w.b, w.e); // dnu intervalu
 			w.focused = focusType.TIN;
-			mysuspend();
+			pause();
 			// w.unmark();
 			// w.unfocus();
 			return;
@@ -114,7 +114,7 @@ public class IntervalFindMin extends IntervalAlg {
 		if ((w.b <= b) || (w.e >= e)) {
 			addStep("intervalpart", i, j, w.getKey(), w.b, w.e); // neprazdny prienik
 			w.focused = focusType.TOUT;
-			mysuspend();
+			pause();
 			w.focused = focusType.TWAIT;
 			find(w.getLeft(), b, e);
 			find(w.getRight(), b, e);

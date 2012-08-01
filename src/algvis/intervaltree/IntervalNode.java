@@ -47,12 +47,12 @@ public class IntervalNode extends BSTNode {
 		}
 
 		if (!isLeaf()) {
-			v.drawStringLeft(Integer.toString(b), x - Node.radius, y
-					- Node.radius, Fonts.SMALL);
-			v.drawStringRight(Integer.toString(e), x + Node.radius, y - Node.radius,
+			v.drawStringLeft(Integer.toString(b), x - Node.RADIUS, y
+					- Node.RADIUS, Fonts.SMALL);
+			v.drawStringRight(Integer.toString(e), x + Node.RADIUS, y - Node.RADIUS,
 					Fonts.SMALL);
 		} else {
-			v.drawString(Integer.toString(e), x, y + Node.radius + 5,
+			v.drawString(Integer.toString(e), x, y + Node.RADIUS + 5,
 					Fonts.SMALL);
 		}
 	}
@@ -74,11 +74,11 @@ public class IntervalNode extends BSTNode {
 
 		if (!isLeaf()) {
 			v.setColor(this.getBgColor());
-			v.fillCircle(x, y, Node.radius);
+			v.fillCircle(x, y, Node.RADIUS);
 			v.setColor(this.getFgColor());
-			v.drawCircle(x, y, Node.radius);
+			v.drawCircle(x, y, Node.RADIUS);
 			if (marked) {
-				v.drawCircle(x, y, Node.radius + 2);
+				v.drawCircle(x, y, Node.RADIUS + 2);
 			}
 		} else {
 			if (getKey() != NOKEY) {
@@ -91,12 +91,12 @@ public class IntervalNode extends BSTNode {
 				this.setColor(EMPTY);
 			}
 			v.setColor(getBgColor());
-			v.fillSqr(x, y, Node.radius + 1);// + IntervalTree.minsepx);
+			v.fillSqr(x, y, Node.RADIUS + 1);// + IntervalTree.minsepx);
 			v.setColor(Color.BLACK); // fgcolor);
-			v.drawSqr(x, y, Node.radius + 1);// + IntervalTree.minsepx);
+			v.drawSqr(x, y, Node.RADIUS + 1);// + IntervalTree.minsepx);
 			// DOROBIT!!!
 			if (marked) {
-				v.drawSqr(x, y, Node.radius - 1);
+				v.drawSqr(x, y, Node.RADIUS - 1);
 			}
 		}
 	}
@@ -140,11 +140,11 @@ public class IntervalNode extends BSTNode {
 			System.out.println(d + " =vyska-1, minsepy= "
 					+ IntervalTree.minsepy);
 			int width = (c) * IntervalTree.minsepx;
-			int height = (d) * IntervalTree.minsepy + 4 + 2 * Node.radius;
-			v.drawRoundRectangle(x, y + height / 2 - Node.radius - 3,
+			int height = (d) * IntervalTree.minsepy + 4 + 2 * Node.RADIUS;
+			v.drawRoundRectangle(x, y + height / 2 - Node.RADIUS - 3,
 					width / 2, height / 2, 8, 8);
 			v.setColor(this.getBgColor());
-			v.fillRoundRectangle(x, y + height / 2 - Node.radius - 3,
+			v.fillRoundRectangle(x, y + height / 2 - Node.RADIUS - 3,
 					width / 2, height / 2, 8, 8);
 		default:
 			break;
@@ -158,7 +158,7 @@ public class IntervalNode extends BSTNode {
 			// this.key);
 			getLeft().drawTree2(v);
 		}
-		if (D instanceof BST && ((BST) D).order) { // && D.M.S.layout ==
+		if (D instanceof BST && ((BST) D).order) { // && D.panel.S.layout ==
 													// Layout.SIMPLE
 			v.setColor(Color.LIGHT_GRAY);
 			++i;
@@ -185,7 +185,7 @@ public class IntervalNode extends BSTNode {
 		/*
 		 * if there is a left child, leftw = width of the box enclosing the
 		 * whole left subtree, i.e., leftw+rightw; otherwise the width is the
-		 * node radius plus some additional space called xspan
+		 * node RADIUS plus some additional space called xspan
 		 */
 		leftw = (getLeft() == null) ? ((IntervalTree) D).getMinsepx() / 2
 				: getLeft().leftw + getLeft().rightw;

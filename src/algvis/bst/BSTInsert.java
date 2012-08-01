@@ -17,23 +17,27 @@
 package algvis.bst;
 
 import algvis.core.Algorithm;
+import algvis.core.Node;
 import algvis.core.NodeColor;
+import algvis.core.visual.ZDepth;
 
 public class BSTInsert extends Algorithm {
 	private final BST T;
-	private final BSTNode v;
 	private final int K;
 
 	public BSTInsert(BST T, int x) {
-		super(T);
+		super(T.panel);
 		this.T = T;
-		v = T.setV(new BSTNode(T, K = x));
-		v.setColor(NodeColor.INSERT);
-		setHeader("insert", K);
+		K = x;
 	}
 
 	@Override
-	public void run() {
+	public void runAlgorithm() throws InterruptedException {
+		BSTNode v = new BSTNode(T, K, ZDepth.ACTIONNODE);
+		addToScene(v);
+		v.setState(Node.ALIVE);
+		v.setColor(NodeColor.INSERT);
+		setHeader("insert", K);
 		if (T.getRoot() == null) {
 			T.setRoot(v);
 			v.goToRoot();
@@ -42,13 +46,14 @@ public class BSTInsert extends Algorithm {
 			BSTNode w = T.getRoot();
 			v.goAboveRoot();
 			addStep("bst-insert-start");
-			mysuspend();
+			pause();
 
 			while (true) {
 				if (w.getKey() == K) {
 					addStep("alreadythere");
 					v.setColor(NodeColor.NOTFOUND);
 					v.goDown();
+					removeFromScene(v);
 					return;
 				} else if (w.getKey() < K) {
 					if (w.getRight() == null) {
@@ -57,7 +62,7 @@ public class BSTInsert extends Algorithm {
 						v.pointAbove(w.getRight());
 					}
 					addStep("bst-insert-right", K, w.getKey());
-					mysuspend();
+					pause();
 					v.noArrow();
 					if (w.getRight() != null) {
 						w = w.getRight();
@@ -72,7 +77,7 @@ public class BSTInsert extends Algorithm {
 						v.pointAbove(w.getLeft());
 					}
 					addStep("bst-insert-left", K, w.getKey());
-					mysuspend();
+					pause();
 					v.noArrow();
 					if (w.getLeft() != null) {
 						w = w.getLeft();
@@ -82,13 +87,19 @@ public class BSTInsert extends Algorithm {
 					}
 				}
 				v.goAbove(w);
-				mysuspend();
+				pause();
 			}
 		}
 		T.reposition();
-		mysuspend();
-		addNote("done");
-		v.setColor(NodeColor.NORMAL);		
-		T.setV(null);
+		pause();
+		addStep("done");
+		v.setColor(NodeColor.NORMAL);
+		removeFromScene(v);
+//		v.setZDepth(ZDepth.DS);
+	}
+
+	@Override
+	public Object getResult() {
+		return null;
 	}
 }

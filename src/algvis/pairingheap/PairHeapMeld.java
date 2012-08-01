@@ -72,7 +72,7 @@ public class PairHeapMeld extends PairHeapAlg{
 				addStep("pairlinkmax", H.root[0].getKey(), H.root[i].getKey());
 			}
 		}
-		mysuspend();
+		pause();
 		H.root[0].unmark();
 		H.root[i].unmark();
 		link(i,0);

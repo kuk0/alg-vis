@@ -119,7 +119,7 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 		if (getRoot() != null) {
 			getRoot().reposition();
 		}
-		M.screen.V.setBounds(x1, y1, x2, y2);
+		panel.screen.V.setBounds(x1, y1, x2, y2);
 	}
 
 	int getHeight() {

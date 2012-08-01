@@ -16,14 +16,13 @@
  ******************************************************************************/
 package algvis.scapegoattree;
 
-import org.jdom2.Element;
-
 import algvis.bst.BST;
 import algvis.core.StringUtils;
 import algvis.gui.VisPanel;
 import algvis.gui.view.Layout;
 import algvis.gui.view.View;
-import algvis.scenario.Command;
+
+import java.util.Hashtable;
 
 public class GBTree extends BST {
 	public static String dsName = "scapegoat";
@@ -44,12 +43,7 @@ public class GBTree extends BST {
 	}
 
 	public void setDel(int del) {
-		if (this.del != del) {
-			if (M.scenario.isAddingEnabled()) {
-				M.scenario.add(new SetDelCommand(del));
-			}
-			this.del = del;
-		}
+		this.del = del;
 	}
 
 	@Override
@@ -88,23 +82,23 @@ public class GBTree extends BST {
 	@Override
 	public String stats() {
 		if (getRoot() == null) {
-			return "#" + M.S.L.getString("nodes") + ": 0;   #"
-					+ M.S.L.getString("deleted") + ": 0;   "
-					+ M.S.L.getString("height") + ": 0 =  1.00\u00b7"
-					+ M.S.L.getString("opt") + ";   "
-					+ M.S.L.getString("avedepth") + ": 0";
+			return "#" + panel.S.L.getString("nodes") + ": 0;   #"
+					+ panel.S.L.getString("deleted") + ": 0;   "
+					+ panel.S.L.getString("height") + ": 0 =  1.00\u00b7"
+					+ panel.S.L.getString("opt") + ";   "
+					+ panel.S.L.getString("avedepth") + ": 0";
 		} else {
 			getRoot().calcTree();
 			return "#"
-					+ M.S.L.getString("nodes")
+					+ panel.S.L.getString("nodes")
 					+ ": "
 					+ getRoot().size
 					+ ";   #"
-					+ M.S.L.getString("deleted")
+					+ panel.S.L.getString("deleted")
 					+ ": "
 					+ getDel()
 					+ ";   "
-					+ M.S.L.getString("height")
+					+ panel.S.L.getString("height")
 					+ ": "
 					+ getRoot().height
 					+ " = "
@@ -113,9 +107,9 @@ public class GBTree extends BST {
 									/ (Math.floor(lg(getRoot().size - getDel())) + 1),
 									2, 5)
 					+ "\u00b7"
-					+ M.S.L.getString("opt")
+					+ panel.S.L.getString("opt")
 					+ ";   "
-					+ M.S.L.getString("avedepth")
+					+ panel.S.L.getString("avedepth")
 					+ ": "
 					+ StringUtils.format(getRoot().sumh
 							/ (double) getRoot().size, 2, -5);
@@ -127,31 +121,16 @@ public class GBTree extends BST {
 		return Layout.COMPACT;
 	}
 
-	private class SetDelCommand implements Command {
-		private final int oldDel, newDel;
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		state.put(hash + "del", del);
+	}
 
-		public SetDelCommand(int newDel) {
-			oldDel = getDel();
-			this.newDel = newDel;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setDel");
-			e.setAttribute("GBTree", Integer.toString(hashCode()));
-			e.setAttribute("oldDel", Integer.toString(oldDel));
-			e.setAttribute("newDel", Integer.toString(newDel));
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setDel(newDel);
-		}
-
-		@Override
-		public void unexecute() {
-			setDel(oldDel);
-		}
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Integer del = (Integer) state.get(hash + "del");
+		if (del != null) this.del = del;
 	}
 }

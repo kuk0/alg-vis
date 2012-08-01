@@ -39,7 +39,7 @@ public class SkipInsert extends SkipAlg {
 		if (w.getRight().getKey() == v.getKey()) {
 			addStep("alreadythere");
 			v.goDown();
-			mysuspend();
+			pause();
 			return;
 		}
 
@@ -76,11 +76,11 @@ public class SkipInsert extends SkipAlg {
 				++i;
 				++L.height;
 			}
-			mysuspend();
+			pause();
 		} while (R.nextInt(2) == 1);
 
 		addStep("skipend");
-		mysuspend();
+		pause();
 
 		addStep("done");
 		L.getV().setColor(NodeColor.NORMAL);

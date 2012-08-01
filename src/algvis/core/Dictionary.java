@@ -18,13 +18,16 @@ package algvis.core;
 
 import algvis.gui.VisPanel;
 import algvis.gui.view.Layout;
+import algvis.core.history.HashtableStoreSupport;
+
+import java.util.Hashtable;
 
 abstract public class Dictionary extends DataStructure {
 	public static String adtName = "dictionary";
+	private Node root;
 
 	protected Dictionary(VisPanel M) {
 		super(M);
-		addNodes(2); // root (0), v (1)
 	}
 
 	@Override
@@ -35,19 +38,11 @@ abstract public class Dictionary extends DataStructure {
 	abstract public void delete(int x);
 
 	protected Node getRoot() {
-		return getNode(0);
+		return root;
 	}
 
 	protected void setRoot(Node root) {
-		setNode(0, root, false);
-	}
-
-	protected Node getV() {
-		return getNode(1);
-	}
-
-	protected void setV(Node v) {
-		setNode(1, v, true);
+		this.root = root;
 	}
 
 	@Override
@@ -55,4 +50,31 @@ abstract public class Dictionary extends DataStructure {
 		return Layout.COMPACT;
 	}
 
+	@Override
+	public void endAnimation() {
+		if (root != null) root.endAnimation();
+	}
+
+	@Override
+	public boolean isAnimationDone() {
+		return root == null || root.isAnimationDone();
+	}
+
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "root", root);
+		if (root != null) root.storeState(state);
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		if (this.root != null) this.root.restoreState(state);
+		Object root = state.get(hash + "root");
+		if (root != null) this.root = (Node) HashtableStoreSupport.restore(root);
+		
+		if (this.root != null) this.root.restoreState(state);
+		// TODO mozno problem ak root = null -> root != null
+	}
 }

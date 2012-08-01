@@ -38,15 +38,15 @@ public class TrieButtons extends Buttons {
 
 	@Override
 	public void actionButtons(JPanel P) {
-		insertB = new IButton(M.S.L, "button-insert");
+		insertB = new IButton(panel.S.L, "button-insert");
 		insertB.setMnemonic(KeyEvent.VK_I);
 		insertB.addActionListener(this);
 
-		findB = new IButton(M.S.L, "button-find");
+		findB = new IButton(panel.S.L, "button-find");
 		findB.setMnemonic(KeyEvent.VK_F);
 		findB.addActionListener(this);
 
-		deleteB = new IButton(M.S.L, "button-delete");
+		deleteB = new IButton(panel.S.L, "button-delete");
 		deleteB.setMnemonic(KeyEvent.VK_D);
 		deleteB.addActionListener(this);
 
@@ -57,7 +57,7 @@ public class TrieButtons extends Buttons {
 
 	@Override
 	public void initRandom() {
-		random = new IButton(M.S.L, "button-random");
+		random = new IButton(panel.S.L, "button-random");
 		random.setMnemonic(KeyEvent.VK_R);
 		random.addActionListener(this);
 	}

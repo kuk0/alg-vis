@@ -24,7 +24,7 @@ class LeftHeapAlg extends Algorithm {
 	LeftHeapNode v;
 
 	LeftHeapAlg(LeftHeap H) {
-		super(H);
+		super(panel, d);
 		this.H = H;
 	}
 
@@ -33,7 +33,7 @@ class LeftHeapAlg extends Algorithm {
 		H.root[0].mark();
 		w.mark();
 		addStep("leftmeldstart");
-		mysuspend();
+		pause();
 		while (true) {
 			H.root[0].mark();
 			w.mark();
@@ -43,7 +43,7 @@ class LeftHeapAlg extends Algorithm {
 				} else {
 					addStep("leftmeldrightl", w.getKey(), H.root[0].getKey());
 				}
-				mysuspend();
+				pause();
 			} else {
 				if (!H.minHeap) {
 					addStep("leftmeldswapl", w.getKey(), H.root[0].getKey());
@@ -51,7 +51,7 @@ class LeftHeapAlg extends Algorithm {
 					addStep("leftmeldswapg", w.getKey(), H.root[0].getKey());
 				}
 				w.setDoubleArrow(H.root[0]);
-				mysuspend();
+				pause();
 				w.noDoubleArrow();
 				LeftHeapNode tmp1 = w.getParent();
 				LeftHeapNode tmp2 = H.root[0];
@@ -72,13 +72,13 @@ class LeftHeapAlg extends Algorithm {
 			if (w.getParent() != null) {
 				w.getParent().dashedrightl = false;
 			}
-			H.root[0].repos(H.root[0].tox, H.root[0].toy + LeftHeap.minsepy);// + 2* LeftHeapNode.radius);
+			H.root[0].repos(H.root[0].tox, H.root[0].toy + LeftHeap.minsepy);// + 2* LeftHeapNode.RADIUS);
 			H.root[0].unmark();
 			w.unmark();
 
 			if (w.getRight() == null) {
 				addStep("leftmeldnoson", H.root[0].getKey(), w.getKey());
-				mysuspend();
+				pause();
 				w.linkRight(H.root[0]);
 				H.root[0] = null;
 				H.reposition();
@@ -87,10 +87,10 @@ class LeftHeapAlg extends Algorithm {
 
 			w.dashedrightl = true;
 			w = w.getRight();
-			mysuspend();
+			pause();
 		}
 		addNote("leftrankupdate");
-		mysuspend();
+		pause();
 
 		LeftHeapNode tmp = w;
 
@@ -104,7 +104,7 @@ class LeftHeapAlg extends Algorithm {
 			tmp = tmp.getParent();
 		}
 		addNote("leftrankstart");
-		mysuspend();
+		pause();
 
 		tmp = w;
 		while (tmp != null) {
@@ -122,7 +122,7 @@ class LeftHeapAlg extends Algorithm {
 				tmp.getRight().mark();
 				r = tmp.getRight().rank;
 			}
-			mysuspend();
+			pause();
 			if (l < r) {
 				tmp.swapChildren();
 			}
@@ -150,7 +150,7 @@ class LeftHeapAlg extends Algorithm {
 			addStep("maxheapbubbleup");
 		}
 		v.mark();
-		mysuspend();
+		pause();
 		v.unmark();		
 		LeftHeapNode w = v.getParent();
 		while (w != null && v.prec(w)) {
@@ -163,7 +163,7 @@ class LeftHeapAlg extends Algorithm {
 			w.setKey(Node.NOKEY);
 			H.v.goTo(w);
 			H.v2.goTo(v);
-			mysuspend();
+			pause();
 			v.setKey(H.v2.getKey());
 			w.setKey(H.v.getKey());
 			v.setColor(H.v2.getColor());

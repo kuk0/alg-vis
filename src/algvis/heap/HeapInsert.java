@@ -38,7 +38,7 @@ public class HeapInsert extends HeapAlg {
 		if (n == 1) {
 			H.setRoot(w = v);
 			v.goToRoot();
-			mysuspend();
+			pause();
 		} else {
 			while ((k & n) == 0) {
 				k >>= 1;
@@ -55,11 +55,11 @@ public class HeapInsert extends HeapAlg {
 				w.linkRight(v);
 			}
 			H.reposition();
-			mysuspend();
+			pause();
 		}
 		H.setV(null);
 
-		// mysuspend();
+		// pause();
 		bubbleup(v);
 	}
 }

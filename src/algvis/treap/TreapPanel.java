@@ -26,13 +26,13 @@ public class TreapPanel extends VisPanel {
 	public static Class<? extends DataStructure> DS = Treap.class;
 
 	public TreapPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		D = new Treap(this);
-		B = new DictButtons(this);
+		buttons = new DictButtons(this);
 		D.random(20);
 	}
 }

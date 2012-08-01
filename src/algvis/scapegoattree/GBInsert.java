@@ -31,13 +31,13 @@ public class GBInsert extends GBAlg {
 			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
-			mysuspend();
+			pause();
 			v.setColor(NodeColor.NORMAL);
 		} else {
 			GBNode w = (GBNode) T.getRoot();
 			v.goAboveRoot();
 			addStep("bst-insert-start");
-			mysuspend();
+			pause();
 
 			while (true) {
 				if (w.getKey() == K) {
@@ -71,11 +71,11 @@ public class GBInsert extends GBAlg {
 					}
 				}
 				v.goAbove(w);
-				mysuspend();
+				pause();
 			}
 			v.setColor(NodeColor.NORMAL);
 			T.reposition();
-			mysuspend();
+			pause();
 
 			GBNode b = null;
 			while (w != null) {
@@ -92,7 +92,7 @@ public class GBInsert extends GBAlg {
 				int s = 0;
 				addStep("gbtoohigh");
 				r.mark();
-				mysuspend();
+				pause();
 				// to vine
 				addStep("gbrebuild1");
 				while (r != null) {
@@ -130,7 +130,7 @@ public class GBInsert extends GBAlg {
 						T.rotate(r);
 					}
 					T.reposition();
-					mysuspend();
+					pause();
 				}
 
 				// to tree

@@ -31,13 +31,13 @@ public class BinHeapInsert extends BinHeapAlg {
 	@Override
 	public void run() {
 		H.reposition();
-		mysuspend();
+		pause();
 		// meld
 		if (H.root[i] == null) {
 			H.root[i] = H.min[i] = H.root[0];
 			H.root[0] = null;
 			H.reposition();
-			mysuspend();
+			pause();
 			return;
 		}
 

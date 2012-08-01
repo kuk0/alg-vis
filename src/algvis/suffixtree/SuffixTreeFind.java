@@ -23,7 +23,7 @@ public class SuffixTreeFind extends Algorithm {
 	private final String s;
 
 	public SuffixTreeFind(SuffixTree T, String s) {
-		super(T);
+		super(panel, d);
 		this.T = T;
 		this.s = s;
 		setHeader("triefind", s.substring(0, s.length() - 1));
@@ -44,7 +44,7 @@ public class SuffixTreeFind extends Algorithm {
 		addNote("triefindnote");
 		addStep("trierootstart");
 		v.mark();
-		mysuspend();
+		pause();
 		v.unmark();
 		T.hw = new SuffixTreeWordNode(T, s);
 		T.hw.setC(NodeColor.CACHED);

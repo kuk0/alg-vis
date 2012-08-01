@@ -16,14 +16,13 @@
  ******************************************************************************/
 package algvis.bst;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-
-import javax.swing.JPanel;
-
 import algvis.gui.DictButtons;
 import algvis.gui.VisPanel;
 import algvis.internationalization.ICheckBox;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 public class BSTButtons extends DictButtons {
 	private static final long serialVersionUID = -6884955717665753504L;
@@ -35,7 +34,7 @@ public class BSTButtons extends DictButtons {
 
 	@Override
 	public void otherButtons(JPanel P) {
-		order = new ICheckBox(M.S.L, "show-order", false);
+		order = new ICheckBox(panel.S.L, "show-order", false);
 		order.setMnemonic(KeyEvent.VK_2);
 		order.addActionListener(this);
 		P.add(order);
@@ -45,7 +44,7 @@ public class BSTButtons extends DictButtons {
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
 		if (evt.getSource() == order) {
-			((BST) M.D).order = order.isSelected();
+			((BST) panel.D).order = order.isSelected();
 		}
 	}
 }

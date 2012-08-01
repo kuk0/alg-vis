@@ -37,7 +37,7 @@ public class SkewHeapDelete extends SkewHeapAlg {
 			addStep("minimum", H.root[i].getKey());
 		}
 
-		mysuspend();
+		pause();
 
 		SkewHeapNode tmp = H.root[i];
 		H.root[i] = tmp.getLeft();
@@ -50,7 +50,7 @@ public class SkewHeapDelete extends SkewHeapAlg {
 			if (H.root[i] != null) {
 				H.root[i].highlightTree();
 				H.root[i].repos(H.root[i].x, H.root[i].y
-						- (SkewHeap.minsepy));// + 2 * SkewHeapNode.radius));
+						- (SkewHeap.minsepy));// + 2 * SkewHeapNode.RADIUS));
 			}
 			// heap #1 is empty; done;
 			return;
@@ -58,16 +58,16 @@ public class SkewHeapDelete extends SkewHeapAlg {
 		H.root[i].setParent(null);
 
 		if (H.root[0] == null) {
-			H.root[i].repos(H.root[i].x, H.root[i].y - (SkewHeap.minsepy));// + 2 * SkewHeapNode.radius));
+			H.root[i].repos(H.root[i].x, H.root[i].y - (SkewHeap.minsepy));// + 2 * SkewHeapNode.RADIUS));
 			// heap #2 is empty; done;
 			return;
 		}
 		H.root[0].setParent(null);
 
-		H.root[i].repos(H.root[i].x, H.root[i].y - (SkewHeap.minsepy));// + 2 * SkewHeapNode.radius));
-		H.root[0].repos(H.root[0].x, H.root[0].y - (SkewHeap.minsepy));// + 2 * SkewHeapNode.radius));
+		H.root[i].repos(H.root[i].x, H.root[i].y - (SkewHeap.minsepy));// + 2 * SkewHeapNode.RADIUS));
+		H.root[0].repos(H.root[0].x, H.root[0].y - (SkewHeap.minsepy));// + 2 * SkewHeapNode.RADIUS));
 
-		mysuspend();
+		pause();
 		meld(i);
 
 	}

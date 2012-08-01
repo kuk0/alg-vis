@@ -27,14 +27,14 @@ public class LeftHeapPanel extends VisPanel {
 	public static Class<? extends DataStructure> DS = LeftHeap.class;
 
 	public LeftHeapPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		LeftHeap L = new LeftHeap(this);
 		D = L;
-		B = new MeldablePQButtonsNoDecr(this);
+		buttons = new MeldablePQButtonsNoDecr(this);
 		L.active = 1;
 		D.random(13);
 		L.active = 2;
@@ -44,7 +44,7 @@ public class LeftHeapPanel extends VisPanel {
 		D.random(7);
 		L.lowlight();
 		L.active = 1;
-		D.M.screen.V.resetView();
+		D.panel.screen.V.resetView();
 	}
 
 }

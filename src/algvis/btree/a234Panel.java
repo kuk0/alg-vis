@@ -26,13 +26,13 @@ public class a234Panel extends VisPanel {
 	public static Class<? extends DataStructure> DS = a234Tree.class;
 
 	public a234Panel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		D = new a234Tree(this);
-		B = new DictButtons(this);
+		buttons = new DictButtons(this);
 		D.random(30);
 	}
 }

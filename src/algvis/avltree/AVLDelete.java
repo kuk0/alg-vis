@@ -26,7 +26,7 @@ public class AVLDelete extends Algorithm {
 	private final int K;
 
 	public AVLDelete(AVL T, int x) {
-		super(T);
+		super(panel, d);
 		this.T = T;
 		v = (AVLNode) T.setV(new AVLNode(T, K = x));
 		v.setColor(NodeColor.DELETE);
@@ -38,7 +38,7 @@ public class AVLDelete extends Algorithm {
 		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
-			mysuspend();
+			pause();
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
@@ -46,7 +46,7 @@ public class AVLDelete extends Algorithm {
 			AVLNode d = (AVLNode) T.getRoot();
 			v.goTo(d);
 			addStep("bstdeletestart");
-			mysuspend();
+			pause();
 
 			while (true) {
 				if (d.getKey() == K) { // found
@@ -71,7 +71,7 @@ public class AVLDelete extends Algorithm {
 						break;
 					}
 				}
-				mysuspend();
+				pause();
 			}
 
 			if (d == null) { // notfound
@@ -83,7 +83,7 @@ public class AVLDelete extends Algorithm {
 			d.setColor(NodeColor.FOUND);
 			if (d.isLeaf()) { // case I - list
 				addStep("bst-delete-case1");
-				mysuspend();
+				pause();
 				if (d.isRoot()) {
 					T.setRoot(null);
 				} else if (d.isLeft()) {
@@ -97,7 +97,7 @@ public class AVLDelete extends Algorithm {
 																		// IIa -
 																		// 1 syn
 				addStep("bst-delete-case2");
-				mysuspend();
+				pause();
 				AVLNode s = (d.getLeft() == null) ? d.getRight() : d.getLeft();
 				if (d.isRoot()) {
 					T.setRoot(s);
@@ -116,11 +116,11 @@ public class AVLDelete extends Algorithm {
 				v = (AVLNode) T.setV(new AVLNode(T, -Node.INF));
 				v.setColor(NodeColor.FIND);
 				v.goTo(s);
-				mysuspend();
+				pause();
 				while (s.getLeft() != null) {
 					s = s.getLeft();
 					v.goTo(s);
-					mysuspend();
+					pause();
 				}
 				w = s.getParent();
 				if (w == d) {
@@ -133,7 +133,7 @@ public class AVLDelete extends Algorithm {
 					s.getParent().linkRight(s.getRight());
 				}
 				v.goNextTo(d);
-				mysuspend();
+				pause();
 				if (d.getParent() == null) {
 					T.setRoot(v);
 				} else {
@@ -152,13 +152,13 @@ public class AVLDelete extends Algorithm {
 			} // end case III
 
 			addStep("avldeletebal");
-			mysuspend();
+			pause();
 			// bubleme nahor
 			while (w != null) {
 				w.mark();
 				w.calc();
 				addStep("avlupdatebal");
-				mysuspend();
+				pause();
 				if (w.balance() == -2) {
 					if (w.getLeft().balance() != +1) { // R-rot
 						addStep("avlr");
@@ -166,7 +166,7 @@ public class AVLDelete extends Algorithm {
 						w = w.getLeft();
 						w.mark();
 						w.setArc(w.getParent());
-						mysuspend();
+						pause();
 						w.noArc();
 						T.rotate(w);
 					} else { // LR-rot
@@ -176,14 +176,14 @@ public class AVLDelete extends Algorithm {
 						w.mark();
 						w.setArc(w.getParent());
 						w.getParent().setArc(w.getParent().getParent());
-						mysuspend();
+						pause();
 						w.noArc();
 						w.getParent().noArc();
 						T.rotate(w);
-						mysuspend();
+						pause();
 						T.rotate(w);
 					}
-					mysuspend();
+					pause();
 				} else if (w.balance() == +2) {
 					if (w.getRight().balance() != -1) { // L-rot
 						addStep("avll");
@@ -191,7 +191,7 @@ public class AVLDelete extends Algorithm {
 						w = w.getRight();
 						w.mark();
 						w.setArc(w.getParent());
-						mysuspend();
+						pause();
 						w.noArc();
 						T.rotate(w);
 					} else { // RL-rot
@@ -201,14 +201,14 @@ public class AVLDelete extends Algorithm {
 						w.mark();
 						w.setArc(w.getParent());
 						w.getParent().setArc(w.getParent().getParent());
-						mysuspend();
+						pause();
 						w.noArc();
 						w.getParent().noArc();
 						T.rotate(w);
-						mysuspend();
+						pause();
 						T.rotate(w);
 					}
-					mysuspend();
+					pause();
 				}
 				w.unmark();
 				w = w.getParent();

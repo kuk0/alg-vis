@@ -24,7 +24,7 @@ public class LazyBinHeapMeld extends Algorithm {
     private final int j;
 
 	public LazyBinHeapMeld(LazyBinomialHeap H, int i, int j) {
-		super(H);
+		super(panel, d);
 		this.H = H;
 		this.i = i;
 		this.j = j;
@@ -53,6 +53,6 @@ public class LazyBinHeapMeld extends Algorithm {
 			H.root[j] = H.min[j] = null;
 		}
 		H.reposition();
-		mysuspend();
+		pause();
 	}
 }

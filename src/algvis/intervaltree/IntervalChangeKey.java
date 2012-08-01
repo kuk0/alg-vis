@@ -25,7 +25,7 @@ public class IntervalChangeKey extends IntervalAlg{
 		//if (H.minHeap) { //<<------
 		addNote("intervalchangev");
 		v.mark();
-		mysuspend();
+		pause();
 		v.unmark();
 		v = v.getParent();
 		adjustValues(v);

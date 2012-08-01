@@ -25,7 +25,7 @@ public class LazyBinHeapInsert extends Algorithm {
 	private final int i;
 
 	public LazyBinHeapInsert(LazyBinomialHeap H, int i, int x) {
-		super(H);
+		super(panel, d);
 		this.H = H;
 		this.i = i;
 		v = new BinHeapNode(H, x);
@@ -42,6 +42,6 @@ public class LazyBinHeapInsert extends Algorithm {
 			}
 		}
 		H.reposition();
-		mysuspend();
+		pause();
 	}
 }

@@ -60,17 +60,17 @@ public class BTree extends Dictionary {
 	@Override
 	public String stats() {
 		if (root == null) {
-			return "#" + M.S.L.getString("nodes") + ": 0;   #"
-					+ M.S.L.getString("keys") + ": 0 = 0% "
-					+ M.S.L.getString("full") + ";   "
-					+ M.S.L.getString("height") + ": 0";
+			return "#" + panel.S.L.getString("nodes") + ": 0;   #"
+					+ panel.S.L.getString("keys") + ": 0 = 0% "
+					+ panel.S.L.getString("full") + ";   "
+					+ panel.S.L.getString("height") + ": 0";
 		} else {
 			root.calcTree();
-			return "#" + M.S.L.getString("nodes") + ": " + root.nnodes + ";   "
-					+ "#" + M.S.L.getString("keys") + ": " + root.nkeys + " = "
+			return "#" + panel.S.L.getString("nodes") + ": " + root.nnodes + ";   "
+					+ "#" + panel.S.L.getString("keys") + ": " + root.nkeys + " = "
 					+ (100 * root.nkeys) / (root.nnodes * (order - 1)) + "% "
-					+ M.S.L.getString("full") + ";   "
-					+ M.S.L.getString("height") + ": " + root.height;
+					+ panel.S.L.getString("full") + ";   "
+					+ panel.S.L.getString("height") + ": " + root.height;
 		}
 	}
 
@@ -89,7 +89,7 @@ public class BTree extends Dictionary {
 	public void reposition() {
 		if (root != null) {
 			root._reposition();
-			M.screen.V.setBounds(x1, y1, x2, y2);
+			panel.screen.V.setBounds(x1, y1, x2, y2);
 		}
 	}
 }

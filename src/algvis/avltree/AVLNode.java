@@ -26,7 +26,6 @@ import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.gui.Fonts;
 import algvis.gui.view.View;
-import algvis.scenario.Command;
 
 //import static java.lang.Math.random;
 //import static java.lang.Math.round;
@@ -71,7 +70,7 @@ public class AVLNode extends BSTNode {
 
 	void setBalance(int bal) {
 		if (this.bal != bal) {
-			D.M.scenario.add(new SetBalanceCommand(bal));
+			D.panel.scenario.add(new SetBalanceCommand(bal));
 			this.bal = bal;
 		}
 	}
@@ -95,7 +94,7 @@ public class AVLNode extends BSTNode {
 		drawArrow(V);
 		drawArc(V);
 
-		int xx = x - Node.radius, yy = y - Node.radius, dx = 2 * Node.radius, dy = 2 * Node.radius;
+		int xx = x - Node.RADIUS, yy = y - Node.RADIUS, dx = 2 * Node.RADIUS, dy = 2 * Node.RADIUS;
 		String b = "";
 		if (getBgColor() == NodeColor.NORMAL.bgColor) {
 			V.setColor(Color.ORANGE);
@@ -122,16 +121,16 @@ public class AVLNode extends BSTNode {
 				break;
 			}
 			V.setColor(getFgColor());
-			V.drawOval(x - Node.radius, y - Node.radius, 2 * Node.radius,
-					2 * Node.radius);
+			V.drawOval(x - Node.RADIUS, y - Node.RADIUS, 2 * Node.RADIUS,
+					2 * Node.RADIUS);
 		}
 
 		drawKey(V);
 		if (getParent() != null && getParent().getLeft() == this) {
-			V.drawString(b, x - Node.radius - 1, y - Node.radius - 1,
+			V.drawString(b, x - Node.RADIUS - 1, y - Node.RADIUS - 1,
 					Fonts.NORMAL);
 		} else {
-			V.drawString(b, x + Node.radius + 1, y - Node.radius - 1,
+			V.drawString(b, x + Node.RADIUS + 1, y - Node.RADIUS - 1,
 					Fonts.NORMAL);
 		}
 	}

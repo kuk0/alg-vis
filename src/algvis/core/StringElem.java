@@ -1,10 +1,10 @@
 package algvis.core;
 
-import java.awt.Color;
-import java.util.ArrayList;
-
 import algvis.gui.Fonts;
 import algvis.gui.view.View;
+
+import java.awt.*;
+import java.util.ArrayList;
 
 public class StringElem {
 	private static final int span = 12;
@@ -40,26 +40,26 @@ public class StringElem {
 
 	public void draw(View v) {
 		v.setColor(NodeColor.NORMAL.bgColor);
-		v.fillRoundRectangle(x, y, len * span / 2 + 7, Node.radius,
-				2 * Node.radius, 2 * Node.radius);
+		v.fillRoundRectangle(x, y, len * span / 2 + 7, Node.RADIUS,
+				2 * Node.RADIUS, 2 * Node.RADIUS);
 		int x0 = x - len * span / 2 + 6;
 		v.setColor(col.get(0));
-		v.fillRoundRectangle(x0 - 6, y, 7, Node.radius, 2 * Node.radius,
-				2 * Node.radius);
+		v.fillRoundRectangle(x0 - 6, y, 7, Node.RADIUS, 2 * Node.RADIUS,
+				2 * Node.RADIUS);
 		v.setColor(col.get(len - 1));
-		v.fillRoundRectangle(x + len * span / 2, y, 7, Node.radius,
-				2 * Node.radius, 2 * Node.radius);
+		v.fillRoundRectangle(x + len * span / 2, y, 7, Node.RADIUS,
+				2 * Node.RADIUS, 2 * Node.RADIUS);
 
 		for (int i = 0; i < len; ++i) {
 			v.setColor(col.get(i));
-			v.fillRect(x0, y, 6, Node.radius);
+			v.fillRect(x0, y, 6, Node.RADIUS);
 			v.setColor(NodeColor.NORMAL.fgColor);
-			v.drawString("" + (i + 1), x0, y - Node.radius - 5, Fonts.SMALL);
+			v.drawString("" + (i + 1), x0, y - Node.RADIUS - 5, Fonts.SMALL);
 			v.drawString("" + s.charAt(i), x0, y - 1, Fonts.TYPEWRITER);
 			x0 += span;
 		}
 		v.setColor(NodeColor.NORMAL.fgColor);
-		v.drawRoundRectangle(x, y, len * span / 2 + 7, Node.radius,
-				2 * Node.radius, 2 * Node.radius);
+		v.drawRoundRectangle(x, y, len * span / 2 + 7, Node.RADIUS,
+				2 * Node.RADIUS, 2 * Node.RADIUS);
 	}
 }

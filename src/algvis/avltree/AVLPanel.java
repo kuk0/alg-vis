@@ -26,13 +26,13 @@ public class AVLPanel extends VisPanel {
 	public static Class<? extends DataStructure> DS = AVL.class;
 
 	public AVLPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		D = new AVL(this);
-		B = new DictButtons(this);
+		buttons = new DictButtons(this);
 		D.random(30);
 	}
 }

@@ -16,24 +16,20 @@
  ******************************************************************************/
 package algvis.gui;
 
-import java.awt.CardLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JRootPane;
-
 import algvis.core.ADTs;
 import algvis.core.DataStructures;
 import algvis.core.Settings;
 import algvis.internationalization.IMenu;
 import algvis.internationalization.IMenuItem;
 import algvis.internationalization.Languages;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AlgVis extends JPanel implements ActionListener {
 	/* set the default panel

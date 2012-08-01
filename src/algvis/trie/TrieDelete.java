@@ -24,7 +24,7 @@ public class TrieDelete extends Algorithm {
 	private String s;
 
 	public TrieDelete(Trie T, String s) {
-		super(T);
+		super(panel, d);
 		this.T = T;
 		this.s = s;
 		setHeader("triedelete", s.substring(0, s.length() - 1));
@@ -46,7 +46,7 @@ public class TrieDelete extends Algorithm {
 		addNote("triedeletenote1");
 		addStep("trierootstart");
 		v.mark();
-		mysuspend();
+		pause();
 		v.unmark();
 		T.hw = new TrieWordNode(T, s);
 		T.hw.setColor(NodeColor.CACHED);
@@ -69,14 +69,14 @@ public class TrieDelete extends Algorithm {
 					vd = (TrieNode) vd.getRight();
 				}
 				addStep("triefindending1", ""+ch);
-				mysuspend();
+				pause();
 				addStep("triedeletefindunsu");
-				mysuspend();
+				pause();
 				beforeReturn();
 				return;
 			}
 			addStep("triefindmovedown", ""+ch);
-			mysuspend();
+			pause();
 			while (vd != null) {
 				vd.setColor(NodeColor.NORMAL);
 				vd = (TrieNode) vd.getRight();
@@ -90,7 +90,7 @@ public class TrieDelete extends Algorithm {
 		TrieNode w = v.getChildWithCH('$');
 		if (w == null) {
 			addStep("triefindending2");
-			mysuspend();
+			pause();
 			v.setColor(NodeColor.NORMAL);
 			addStep("triedeletefindunsu");
 			beforeReturn();
@@ -98,7 +98,7 @@ public class TrieDelete extends Algorithm {
 		} else {
 			addStep("triefindsucc");
 		}
-		mysuspend();
+		pause();
 		T.hw = null;
 		T.clearExtraColor();
 		addNote("triedeletenote2");
@@ -106,7 +106,7 @@ public class TrieDelete extends Algorithm {
 		T.reposition();
 		if (v.getChild() != null) {
 			addStep("triedeletewodb");
-			mysuspend();
+			pause();
 			beforeReturn();
 			return;
 		}
@@ -123,11 +123,11 @@ public class TrieDelete extends Algorithm {
 				ww = (TrieNode) ww.getRight();
 			}
 		} while ((w.getParent() != null) && (countOfSons == 1));
-		mysuspend();
+		pause();
 		w = v;
 		do {
 			addStep("triedeletedbdb");
-			mysuspend();
+			pause();
 			w = v.getParent();
 			w.deleteChild(v);
 			T.reposition();

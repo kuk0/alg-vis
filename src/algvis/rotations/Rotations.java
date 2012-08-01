@@ -118,7 +118,7 @@ public class Rotations extends DataStructure implements ClickListener {
 	public void reposition() {
 		T.reposition();
 		T.getRoot().repos(T.getRoot().leftw, 0);
-		M.screen.V.setBounds(T.x1, T.y1, T.x2, T.y2);
+		panel.screen.V.setBounds(T.x1, T.y1, T.x2, T.y2);
 	}
 	
 	@Override
@@ -129,15 +129,15 @@ public class Rotations extends DataStructure implements ClickListener {
 	@Override
 	public void random(int n) {
 		Random g = new Random(System.currentTimeMillis());
-		boolean p = M.pause;
-		M.pause = false;
+		boolean p = panel.pauses;
+		panel.pauses = false;
 		for (int i = 0; i < n; ++i) {
 			insert(g.nextInt(InputField.MAX + 1));
 		}
 		T.getRoot().calcTree();
 		setStats();
-		//M.screen.V.resetView();
-		M.pause = p;
+		//panel.screen.V.resetView();
+		panel.pauses = p;
 	}
 
 	@Override
@@ -149,13 +149,13 @@ public class Rotations extends DataStructure implements ClickListener {
 			if (v.marked) {
 				v.unmark();
 				chosen = null;
-				M.B.I.setText("");
+				panel.buttons.I.setText("");
 			} else {
 				if (chosen != null)
 					chosen.unmark();
 				v.mark();
 				chosen = v;
-				M.B.I.setText("" + chosen.getKey());
+				panel.buttons.I.setText("" + chosen.getKey());
 			}
 		}
 	}

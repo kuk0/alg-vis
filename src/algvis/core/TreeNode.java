@@ -16,13 +16,12 @@
  ******************************************************************************/
 package algvis.core;
 
-import java.awt.Color;
-import java.util.Stack;
-
-import org.jdom2.Element;
-
 import algvis.gui.view.View;
-import algvis.scenario.Command;
+import algvis.core.visual.ZDepth;
+
+import java.awt.*;
+import java.util.Hashtable;
+import java.util.Stack;
 
 public class TreeNode extends Node {
 	private TreeNode child = null, right = null, parent = null;
@@ -56,8 +55,8 @@ public class TreeNode extends Node {
 		super(D, key, x, y);
 	}
 
-	protected TreeNode(DataStructure D, int key) {
-		super(D, key);
+	protected TreeNode(DataStructure D, int key, int zDepth) {
+		super(D, key, zDepth);
 	}
 
 	public boolean isRoot() {
@@ -252,7 +251,7 @@ public class TreeNode extends Node {
 
 	void append(int x, int j) {
 		if (getKey() == x) {
-			addChild(new TreeNode(D, j));
+			addChild(new TreeNode(D, j, ZDepth.NODE));
 		} else {
 			TreeNode w = getChild();
 			while (w != null) {
@@ -270,9 +269,9 @@ public class TreeNode extends Node {
 		fTRBounding(-tmpx);
 		reboxTree();
 		/*D.x1 -= D.minsepx;
-		D.x2 += D.xspan + D.radius;
-		D.y1 -= D.yspan + D.radius;
-		D.y2 += D.yspan + D.radius;*/
+		D.x2 += D.xspan + D.RADIUS;
+		D.y1 -= D.yspan + D.RADIUS;
+		D.y2 += D.yspan + D.RADIUS;*/
 	}
 
 	/**
@@ -537,12 +536,7 @@ public class TreeNode extends Node {
 	}
 
 	public void setChild(TreeNode child) {
-		if (this.child != child) {
-			if (D.M.scenario.isAddingEnabled()) {
-				D.M.scenario.add(new SetChildCommand(child));
-			}
-			this.child = child;
-		}
+		this.child = child;
 	}
 
 	public TreeNode getRight() {
@@ -550,12 +544,7 @@ public class TreeNode extends Node {
 	}
 
 	public void setRight(TreeNode right) {
-		if (this.right != right) {
-			if (D.M.scenario.isAddingEnabled()) {
-				D.M.scenario.add(new SetRightCommand(right));
-			}
-			this.right = right;
-		}
+		this.right = right;
 	}
 
 	protected TreeNode getParent() {
@@ -563,12 +552,7 @@ public class TreeNode extends Node {
 	}
 
 	public void setParent(TreeNode parent) {
-		if (this.parent != parent) {
-			if (D.M.scenario.isAddingEnabled()) {
-				D.M.scenario.add(new SetParentCommand(parent));
-			}
-			this.parent = parent;
-		}
+		this.parent = parent;
 	}
 
 	// private void fTRGetInfo(int phase, int variable) {
@@ -580,112 +564,22 @@ public class TreeNode extends Node {
 	// + phase + ")");
 	// }
 
-	private class SetRightCommand implements Command {
-		private final TreeNode oldRight, newRight;
-
-		public SetRightCommand(TreeNode newRight) {
-			oldRight = getRight();
-			this.newRight = newRight;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setRight");
-			e.setAttribute("key", Integer.toString(getKey()));
-			if (newRight != null) {
-				e.setAttribute("newRight", Integer.toString(newRight.getKey()));
-			} else {
-				e.setAttribute("newRight", "null");
-			}
-			if (oldRight != null) {
-				e.setAttribute("oldRight", Integer.toString(oldRight.getKey()));
-			} else {
-				e.setAttribute("oldRight", "null");
-			}
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setRight(newRight);
-		}
-
-		@Override
-		public void unexecute() {
-			setRight(oldRight);
-		}
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		state.put(hash + "child", child);
+		state.put(hash + "right", right);
+		state.put(hash + "parent", parent);
 	}
 
-	private class SetParentCommand implements Command {
-		private final TreeNode oldParent, newParent;
-
-		public SetParentCommand(TreeNode newParent) {
-			oldParent = getParent();
-			this.newParent = newParent;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setParent");
-			e.setAttribute("key", Integer.toString(getKey()));
-			if (newParent != null) {
-				e.setAttribute("newParent", Integer.toString(newParent.getKey()));
-			} else {
-				e.setAttribute("newParent", "null");
-			}
-			if (oldParent != null) {
-				e.setAttribute("oldParent", Integer.toString(oldParent.getKey()));
-			} else {
-				e.setAttribute("oldParent", "null");
-			}
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setParent(newParent);
-		}
-
-		@Override
-		public void unexecute() {
-			setParent(oldParent);
-		}
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		TreeNode child = (TreeNode) state.get(hash + "child");
+		if (child != null) this.child = child;
+		TreeNode right = (TreeNode) state.get(hash + "right");
+		if (right != null) this.right = right;
+		TreeNode parent = (TreeNode) state.get(hash + "parent");
+		if (parent != null) this.parent = parent;
 	}
-
-	private class SetChildCommand implements Command {
-		private final TreeNode oldChild, newChild;
-
-		public SetChildCommand(TreeNode newChild) {
-			oldChild = getChild();
-			this.newChild = newChild;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setChild");
-			e.setAttribute("key", Integer.toString(getKey()));
-			if (newChild != null) {
-				e.setAttribute("newChild", Integer.toString(newChild.getKey()));
-			} else {
-				e.setAttribute("newChild", "null");
-			}
-			if (oldChild != null) {
-				e.setAttribute("oldChild", Integer.toString(oldChild.getKey()));
-			} else {
-				e.setAttribute("oldChild", "null");
-			}
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setChild(newChild);
-		}
-
-		@Override
-		public void unexecute() {
-			setChild(oldChild);
-		}
-	}
-
 }

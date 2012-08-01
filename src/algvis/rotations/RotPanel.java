@@ -25,13 +25,13 @@ public class RotPanel extends VisPanel {
 	public static Class<? extends DataStructure> DS = Rotations.class;
 
 	public RotPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		D = new Rotations(this);
-		B = new RotButtons(this);
+		buttons = new RotButtons(this);
 		D.random(20);
 	}
 }

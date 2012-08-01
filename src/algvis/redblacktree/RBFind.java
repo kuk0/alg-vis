@@ -26,7 +26,7 @@ public class RBFind extends Algorithm {
 	private final int K;
 
 	public RBFind(RB T, int x) {
-		super(T);
+		super(panel, d);
 		this.T = T;
 		v = T.setV(new BSTNode(T, K = x));
 		v.setColor(NodeColor.FIND);
@@ -38,7 +38,7 @@ public class RBFind extends Algorithm {
 		if (T.getRoot() == T.NULL) {
 			v.goToRoot();
 			addStep("empty");
-			mysuspend();
+			pause();
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
@@ -46,7 +46,7 @@ public class RBFind extends Algorithm {
 			BSTNode w = T.getRoot();
 			v.goTo(w);
 			addStep("bstfindstart");
-			mysuspend();
+			pause();
 			while (true) {
 				if (w.getKey() == K) {
 					addStep("found");
@@ -75,7 +75,7 @@ public class RBFind extends Algorithm {
 						break;
 					}
 				}
-				mysuspend();
+				pause();
 			}
 		}
 	}

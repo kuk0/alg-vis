@@ -24,7 +24,7 @@ class HeapAlg extends Algorithm {
 	HeapNode v;
 
 	HeapAlg(Heap H) {
-		super(H);
+		super(panel, d);
 		this.H = H;
 	}
 
@@ -42,7 +42,7 @@ class HeapAlg extends Algorithm {
 			w.setKey(Node.NOKEY);
 			H.getV().goTo(w);
 			H.getV2().goTo(v);
-			mysuspend();
+			pause();
 			v.setKey(H.getV2().getKey());
 			w.setKey(H.getV().getKey());
 			v.setColor(H.getV2().getColor());

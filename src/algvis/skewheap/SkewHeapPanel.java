@@ -26,14 +26,14 @@ public class SkewHeapPanel extends VisPanel {
 	public static Class<? extends DataStructure> DS = SkewHeap.class;
 	
 	public SkewHeapPanel(Settings S, boolean isScenarioEnabled) {
-		super(S, isScenarioEnabled);
+		super(S);
 	}
 
 	@Override
 	public void initDS() {
 		SkewHeap H = new SkewHeap(this);
 		D = H;
-		B = new MeldablePQButtonsNoDecr(this);
+		buttons = new MeldablePQButtonsNoDecr(this);
 		H.active = 1;
 		D.random(13);
 		H.active = 2;
@@ -43,7 +43,7 @@ public class SkewHeapPanel extends VisPanel {
 		D.random(7);
 		H.lowlight();
 		H.active = 1;
-		D.M.screen.V.resetView();
+		D.panel.screen.V.resetView();
 	}
 
 }

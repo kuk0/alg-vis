@@ -26,7 +26,7 @@ public class BDelete extends Algorithm {
 	private final int K;
 
 	public BDelete(BTree T, int x) {
-		super(T);
+		super(panel, d);
 		this.T = T;
 		K = x;
 		v = T.v = new BNode(T, x);
@@ -39,7 +39,7 @@ public class BDelete extends Algorithm {
 		if (T.root == null) {
 			v.goToRoot();
 			addStep("empty");
-			mysuspend();
+			pause();
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
@@ -47,7 +47,7 @@ public class BDelete extends Algorithm {
 			BNode d = T.root;
 			v.goAbove(d);
 			addStep("bstdeletestart");
-			mysuspend();
+			pause();
 
 			while (true) {
 				if (d.isIn(K)) {
@@ -66,7 +66,7 @@ public class BDelete extends Algorithm {
 					break;
 				}
 				v.goAbove(d);
-				mysuspend();
+				pause();
 			}
 
 			if (d == null) { // notfound
@@ -76,7 +76,7 @@ public class BDelete extends Algorithm {
 			}
 
 			d.setColor(NodeColor.FOUND);
-			mysuspend();
+			pause();
 			d.setColor(NodeColor.NORMAL);
 			if (d.isLeaf()) {
 				addStep("bdelete1");
@@ -88,25 +88,25 @@ public class BDelete extends Algorithm {
 					T.v = d.del(K);
 					T.reposition();
 					T.v.goDown();
-					mysuspend();
+					pause();
 				}
 			} else {
 				addStep("bdelete2");
 				BNode s = d.way(K + 1);
 				v = T.v = new BNode(T, -Node.INF, d.x, d.y);
 				v.goAbove(s);
-				mysuspend();
+				pause();
 				while (!s.isLeaf()) {
 					s = s.c[0];
 					v.goAbove(s);
-					mysuspend();
+					pause();
 				}
 				v = T.v = s.delMin();
 				v.goTo(d);
-				mysuspend();
+				pause();
 				d.replace(K, v.key[0]);
 				T.v = null;
-				mysuspend();
+				pause();
 				d.setColor(NodeColor.NORMAL);
 				d = s;
 			}
@@ -143,12 +143,12 @@ public class BDelete extends Algorithm {
 					}
 					T.v = lefts ? s.delMax() : s.delMin();
 					T.v.goTo(p);
-					mysuspend();
+					pause();
 					int pkey = p.key[k];
 					p.key[k] = T.v.key[0];
 					T.v = new BNode(T, pkey, p.x, p.y);
 					T.v.goTo(d);
-					mysuspend();
+					pause();
 					if (lefts) {
 						d.insMin(pkey);
 						if (!d.isLeaf()) {
@@ -173,7 +173,7 @@ public class BDelete extends Algorithm {
 						T.v = new BNode(T.root);
 						T.root.key[0] = Node.NOKEY;
 						T.v.goTo((d.tox + s.tox) / 2, d.y);
-						mysuspend();
+						pause();
 						if (lefts) {
 							T.root = new BNode(s, T.v, d);
 						} else {
@@ -183,7 +183,7 @@ public class BDelete extends Algorithm {
 					} else {
 						T.v = p.del(p.key[k]);
 						T.v.goTo((d.tox + s.tox) / 2, d.y);
-						mysuspend();
+						pause();
 						if (lefts) {
 							p.c[k] = new BNode(s, T.v, d);
 						} else {

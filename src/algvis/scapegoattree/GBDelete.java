@@ -30,7 +30,7 @@ public class GBDelete extends GBAlg {
 		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
-			mysuspend();
+			pause();
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
@@ -38,7 +38,7 @@ public class GBDelete extends GBAlg {
 			GBNode w = (GBNode) T.getRoot();
 			v.goTo(w);
 			addStep("bstfindstart");
-			mysuspend();
+			pause();
 			while (true) {
 				if (w.getKey() == K) {
 					if (w.isDeleted()) {
@@ -76,7 +76,7 @@ public class GBDelete extends GBAlg {
 						break;
 					}
 				}
-				mysuspend();
+				pause();
 			}
 
 			// rebuilding
@@ -86,7 +86,7 @@ public class GBDelete extends GBAlg {
 				GBNode r = b;
 				int s = 0;
 				r.mark();
-				mysuspend();
+				pause();
 				// to vine
 				addStep("gbrebuild1");
 				while (r != null) {
@@ -124,7 +124,7 @@ public class GBDelete extends GBAlg {
 						T.rotate(r);
 					}
 					T.reposition();
-					mysuspend();
+					pause();
 				}
 
 				// to tree

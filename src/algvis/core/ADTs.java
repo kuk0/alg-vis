@@ -16,9 +16,9 @@
  ******************************************************************************/
 package algvis.core;
 
-import algvis.intervaltree.IntervalTrees;
-import algvis.trie.Trie;
-import algvis.unionfind.UnionFind;
+//import algvis.intervaltree.IntervalTrees;
+//import algvis.trie.Trie;
+//import algvis.unionfind.UnionFind;
 
 /**
  * The Class ADTs. This class contains the list of all abstract data types
@@ -31,11 +31,11 @@ public class ADTs {
 	 */
 	@SuppressWarnings("rawtypes")
     private static final Class[] ADT = { Dictionary.class, // insert, find, delete
-			PriorityQueue.class, // insert, decrease-key, delete-min
-			MeldablePQ.class, // insert, decrease-key, delete-min, meld
-			UnionFind.class, // make-set, union, find
-			Trie.class, // insert, find, delete
-			IntervalTrees.class //insert, find sum/min/max of interval, decrease-key
+//			PriorityQueue.class, // insert, decrease-key, delete-min
+//			MeldablePQ.class, // insert, decrease-key, delete-min, meld
+//			UnionFind.class, // make-set, union, find
+//			Trie.class, // insert, find, delete
+//			IntervalTrees.class //insert, find sum/min/max of interval, decrease-key
 	};
 	public static final int N = ADT.length;
 

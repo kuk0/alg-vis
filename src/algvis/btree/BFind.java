@@ -24,7 +24,7 @@ public class BFind extends Algorithm {
 	private final BNode v;
 
 	public BFind(BTree T, int x) {
-		super(T);
+		super(panel, d);
 		this.T = T;
 		v = T.v = new BNode(T, x);
 		v.setColor(NodeColor.FIND);
@@ -36,7 +36,7 @@ public class BFind extends Algorithm {
 		if (T.root == null) {
 			v.goToRoot();
 			addStep("empty");
-			mysuspend();
+			pause();
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
@@ -44,7 +44,7 @@ public class BFind extends Algorithm {
 			BNode w = T.root;
 			v.goTo(w);
 			addStep("bstfindstart");
-			mysuspend();
+			pause();
 
 			while (true) {
 				if (w.isIn(v.key[0])) {
@@ -61,7 +61,7 @@ public class BFind extends Algorithm {
 				}
 				w = w.way(v.key[0]);
 				v.goTo(w);
-				mysuspend();
+				pause();
 			}
 		}
 	}

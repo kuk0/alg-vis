@@ -131,7 +131,7 @@ public class BinHeapNode extends Node {
 			height = child.height + 1;
 			BinHeapNode w = child, v = child.right;
 			while (v != w) {
-				leftw += Node.radius + v.leftw;
+				leftw += Node.RADIUS + v.leftw;
 				v = v.right;
 			}
 		}
@@ -153,7 +153,7 @@ public class BinHeapNode extends Node {
 			child.repos(x, y + DataStructure.minsepy, child);
 		}
 		if (right != first) {
-			right.repos(x + leftw + Node.radius, y, first);
+			right.repos(x + leftw + Node.RADIUS, y, first);
 		}
 	}
 
@@ -254,7 +254,7 @@ public class BinHeapNode extends Node {
 		drawKey(v);
 		if (parent == null) {
 			v.setColor(Color.black);
-			v.drawString("" + rank, x + Node.radius, y - Node.radius, Fonts.SMALL);
+			v.drawString("" + rank, x + Node.RADIUS, y - Node.RADIUS, Fonts.SMALL);
 		}
 	}
 
