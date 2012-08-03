@@ -29,7 +29,6 @@ class DaryHeapAlg extends Algorithm {
 	}
 
 	void bubbleup(DaryHeapNode v) {
-
 		DaryHeapNode w = v.getParent();
 		while (w != null && v.prec(w)) {
 			H.v = new DaryHeapNode(v);

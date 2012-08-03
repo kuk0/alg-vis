@@ -19,6 +19,7 @@ package algvis.btree;
 import algvis.core.Dictionary;
 import algvis.gui.VisPanel;
 import algvis.gui.view.View;
+import algvis.internationalization.Languages;
 
 public class BTree extends Dictionary {
 	public static String dsName = "btree";
@@ -60,17 +61,17 @@ public class BTree extends Dictionary {
 	@Override
 	public String stats() {
 		if (root == null) {
-			return "#" + M.S.L.getString("nodes") + ": 0;   #"
-					+ M.S.L.getString("keys") + ": 0 = 0% "
-					+ M.S.L.getString("full") + ";   "
-					+ M.S.L.getString("height") + ": 0";
+			return "#" + Languages.getString("nodes") + ": 0;   #"
+					+ Languages.getString("keys") + ": 0 = 0% "
+					+ Languages.getString("full") + ";   "
+					+ Languages.getString("height") + ": 0";
 		} else {
 			root.calcTree();
-			return "#" + M.S.L.getString("nodes") + ": " + root.nnodes + ";   "
-					+ "#" + M.S.L.getString("keys") + ": " + root.nkeys + " = "
+			return "#" + Languages.getString("nodes") + ": " + root.nnodes + ";   "
+					+ "#" + Languages.getString("keys") + ": " + root.nkeys + " = "
 					+ (100 * root.nkeys) / (root.nnodes * (order - 1)) + "% "
-					+ M.S.L.getString("full") + ";   "
-					+ M.S.L.getString("height") + ": " + root.height;
+					+ Languages.getString("full") + ";   "
+					+ Languages.getString("height") + ": " + root.height;
 		}
 	}
 

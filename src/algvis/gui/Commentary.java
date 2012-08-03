@@ -46,7 +46,6 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		HyperlinkListener {
 	private static final long serialVersionUID = 9023200331860482960L;
 	private final VisPanel V;
-	private final Languages L;
 	private final JScrollPane sp;
 	private int k = 0, position = 0;
 	private List<String> s = new ArrayList<String>(),
@@ -61,7 +60,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		StyleConstants.setBackground(hoverAttr, new Color(0xDB, 0xF1, 0xF9)); // #DBF1F9
 	}
 
-	public Commentary(VisPanel V, Languages L, JScrollPane sp) {
+	public Commentary(VisPanel V, JScrollPane sp) {
 		super();
 		this.V = V;
 		setContentType("text/html; charset=iso-8859-2");
@@ -74,9 +73,8 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		css.addRule("ol { padding-left: 14px; margin: 0px; }");
 		css.addRule("a { color: black; text-decoration:none; }");
 		css.addRule("p.note { font-style: italic; margin: 0pt; margin-bottom: 5pt; }");
-		this.L = L;
 		this.sp = sp;
-		L.addListener(this);
+		Languages.addListener(this);
 		addHyperlinkListener(this);
 		setText("<html><body></body></html>");
 	}
@@ -100,7 +98,8 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		// if (i < 0) i = s.size() + i;
 		assert (0 <= i && i < s.size());
 		return pre.get(i)
-				+ StringUtils.subst(L.getString(s.get(i)), param.get(i))
+				+ StringUtils
+						.subst(Languages.getString(s.get(i)), param.get(i))
 				+ post.get(i);
 	}
 

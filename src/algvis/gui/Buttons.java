@@ -136,7 +136,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	void initPrevious() {
-		previous = new IButton(M.S.L, "previous");
+		previous = new IButton("previous");
 		previous.setMnemonic(KeyEvent.VK_O);
 		previous.setEnabled(false);
 		previous.addActionListener(this);
@@ -144,32 +144,32 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	void initNext() {
-		next = new IButton(M.S.L, "next");
+		next = new IButton("next");
 		next.setMnemonic(KeyEvent.VK_N);
 		next.setEnabled(false);
 		next.addActionListener(this);
 	}
 
 	void initPause() {
-		pause = new ICheckBox(M.S.L, "button-pause", true);
+		pause = new ICheckBox("button-pause", true);
 		pause.setMnemonic(KeyEvent.VK_P);
 		pause.addActionListener(this);
 	}
 
 	void initClear() {
-		clear = new IButton(M.S.L, "button-clear");
+		clear = new IButton("button-clear");
 		clear.setMnemonic(KeyEvent.VK_C);
 		clear.addActionListener(this);
 	}
 
 	protected void initRandom() {
-		random = new IButton(M.S.L, "button-random");
+		random = new IButton("button-random");
 		random.setMnemonic(KeyEvent.VK_R);
 		random.addActionListener(this);
 	}
 
 	public void initSave() {
-		save = new IButton(M.S.L, "button-save");
+		save = new IButton("button-save");
 		save.setMnemonic(KeyEvent.VK_S);
 		save.setEnabled(D.M.scenario.isEnabled());
 		save.addActionListener(this);
@@ -186,7 +186,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	void initZoom() {
-		// zoomLabel = new ILabel(M.S.L, "zoomio");
+		// zoomLabel = new ILabel("zoomio");
 		// zoomIn = createButton("+", "../images/zoom_in.gif");
 		zoomIn = createButton("+", "/algvis/images/zoom_in.gif");
 		zoomOut = createButton("-", "/algvis/images/zoom_out.gif");

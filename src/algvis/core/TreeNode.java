@@ -28,25 +28,24 @@ public class TreeNode extends Node {
 	private TreeNode child = null, right = null, parent = null;
 
 	// variables for the Reingold-Tilford-Walker layout
-    private int offset = 0; // offset from base line, base line has x-coord
-					// equaled to x-coord of leftmost child
-                    private int level; // distance from the root
+	private int offset = 0; // offset from base line, base line has x-coord
+	// equaled to x-coord of leftmost child
+	private int level; // distance from the root
 	protected boolean thread = false; // is this node threaded?
 
 	private int toExtremeSon = 0; // offset from the leftmost son
 	private int toBaseline = 0; // distance to child's baseline
-	private int modifier = 0;
 	private int tmpx = 0;
-    private int tmpy = 0; // temporary coordinates of the node
+	private int tmpy = 0; // temporary coordinates of the node
 	private int number = 1;
 
 	private int change = 0;
-    private int shift = 0; // for evenly spaced smaller subtrees
+	private int shift = 0; // for evenly spaced smaller subtrees
 	// TreeNode ancestor = this; // unused variable for now
 
 	// statistics
-    private int size = 1;
-    private int height = 1;
+	private int size = 1;
+	private int height = 1;
 	public int nos = 0; // number of sons, probably useless
 
 	// from binary node
@@ -73,7 +72,7 @@ public class TreeNode extends Node {
 	 * Calculate height and size of "this" node assuming these were calculated
 	 * (properly) in its children.
 	 */
-    void calc() {
+	void calc() {
 		size = 1;
 		height = 1;
 		if (!isLeaf()) {
@@ -91,7 +90,7 @@ public class TreeNode extends Node {
 	/**
 	 * Calculate height and size of subtree rooted by "this" node bottom-up
 	 */
-    void calcTree() {
+	void calcTree() {
 		if (!isLeaf()) {
 			TreeNode w = getChild();
 			while (w != null) {
@@ -140,7 +139,7 @@ public class TreeNode extends Node {
 	 * Draw edges, then the node itself. Don't draw invisible nodes and edges
 	 * from and to them
 	 */
-    protected void drawTree(View v) {
+	protected void drawTree(View v) {
 		drawEdges(v);
 		drawVertices(v);
 	}
@@ -170,7 +169,7 @@ public class TreeNode extends Node {
 		return res;
 	}
 
-    /**
+	/**
 	 * Rebox the whole subtree calculating the widths recursively bottom-up.
 	 */
 	public void reboxTree() {
@@ -269,10 +268,10 @@ public class TreeNode extends Node {
 		fTRPetrification(0);
 		fTRBounding(-tmpx);
 		reboxTree();
-		/*D.x1 -= D.minsepx;
-		D.x2 += D.xspan + D.radius;
-		D.y1 -= D.yspan + D.radius;
-		D.y2 += D.yspan + D.radius;*/
+		/*
+		 * D.x1 -= D.minsepx; D.x2 += D.xspan + D.radius; D.y1 -= D.yspan +
+		 * D.radius; D.y2 += D.yspan + D.radius;
+		 */
 	}
 
 	/**
@@ -284,7 +283,7 @@ public class TreeNode extends Node {
 	 */
 	private void fTRInitialization(int level) {
 		this.level = level;
-		offset = modifier = shift = change = 0;
+		offset = shift = change = 0;
 		toExtremeSon = 0;
 		toBaseline = 0;
 		leftw = rightw = 0;
@@ -305,8 +304,7 @@ public class TreeNode extends Node {
 	 * 
 	 * @return Leftmost and rightmost nodes on the last level of subtree
 	 */
-	@SuppressWarnings("SillyAssignment")
-    private NodePair<TreeNode> fTRPrePosition() {
+	private NodePair<TreeNode> fTRPrePosition() {
 		NodePair<TreeNode> result = new NodePair<TreeNode>();
 
 		if (isLeaf()) {
@@ -399,22 +397,18 @@ public class TreeNode extends Node {
 			 */
 			// both left subforest and right subtree have the same height
 			if ((L == null) && (R == null)) {
-                //noinspection SillyAssignment
-                fromLeftSubtree.left = fromLeftSubtree.left;
 				fromLeftSubtree.right = fromRightSubtree.right;
-				// left subforest is more shallow
 			} else if ((L == null) && (R != null)) {
+				// left subforest is more shallow
 				fromLeftSubtree.left.thread = true;
 				fromLeftSubtree.left.setChild(R);
-
 				fromLeftSubtree.left = fromRightSubtree.left;
 				fromLeftSubtree.right = fromRightSubtree.right;
-				// right subtree is more shallow
 			} else if ((L != null) && (R == null)) {
+				// right subtree is more shallow
 				fromRightSubtree.right.thread = true;
 				fromRightSubtree.right.setChild(L);
 			}
-
 			LeftSubtree = LeftSubtree.getRight();
 			RightSubtree = RightSubtree.getRight();
 		}
@@ -453,7 +447,7 @@ public class TreeNode extends Node {
 	/**
 	 * Disposes threads. Useful as stand-alone only for testing.
 	 */
-    void fTRDisposeThreads() {
+	void fTRDisposeThreads() {
 		if (thread) {
 			thread = false;
 			setChild(null);
@@ -629,12 +623,14 @@ public class TreeNode extends Node {
 			Element e = new Element("setParent");
 			e.setAttribute("key", Integer.toString(getKey()));
 			if (newParent != null) {
-				e.setAttribute("newParent", Integer.toString(newParent.getKey()));
+				e.setAttribute("newParent",
+						Integer.toString(newParent.getKey()));
 			} else {
 				e.setAttribute("newParent", "null");
 			}
 			if (oldParent != null) {
-				e.setAttribute("oldParent", Integer.toString(oldParent.getKey()));
+				e.setAttribute("oldParent",
+						Integer.toString(oldParent.getKey()));
 			} else {
 				e.setAttribute("oldParent", "null");
 			}

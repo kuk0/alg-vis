@@ -43,11 +43,11 @@ public class UnionFindButtons extends Buttons {
 
 	@Override
 	public void actionButtons(JPanel P) {
-		findB = new IButton(M.S.L, "button-uffind");
+		findB = new IButton("button-uffind");
 		findB.setMnemonic(KeyEvent.VK_F);
 		findB.addActionListener(this);
 
-		unionB = new IButton(M.S.L, "button-union");
+		unionB = new IButton("button-union");
 		unionB.setMnemonic(KeyEvent.VK_U);
 		unionB.addActionListener(this);
 
@@ -57,7 +57,7 @@ public class UnionFindButtons extends Buttons {
 
 	@Override
 	public void actionButtons2(JPanel P) {
-		makesetB = new IButton(M.S.L, "button-makeset");
+		makesetB = new IButton("button-makeset");
 		makesetB.setMnemonic(KeyEvent.VK_A);
 		makesetB.addActionListener(this);
 
@@ -66,7 +66,7 @@ public class UnionFindButtons extends Buttons {
 
 	@Override
 	public void initRandom() {
-		random = new IButton(M.S.L, "button-random-unions");
+		random = new IButton("button-random-unions");
 		random.setMnemonic(KeyEvent.VK_R);
 		random.addActionListener(this);
 	}
@@ -74,12 +74,12 @@ public class UnionFindButtons extends Buttons {
 	@Override
 	public JPanel initThirdRow() {
 		JPanel P = new JPanel();
-		ILabel uhLabel = new ILabel(M.S.L, "uf-union-heuristic"), fhLabel = new ILabel(
-				M.S.L, "uf-find-heuristic");
+		ILabel uhLabel = new ILabel("uf-union-heuristic"), fhLabel = new ILabel(
+				"uf-find-heuristic");
 		String[] uh = { "uf-none", "uf-byrank" }, fh = { "uf-none",
 				"uf-compresion", "uf-halving", "uf-splitting" };
-		unionHeuristicCB = new IComboBox(M.S.L, uh);
-		findHeuristicCB = new IComboBox(M.S.L, fh);
+		unionHeuristicCB = new IComboBox(uh);
+		findHeuristicCB = new IComboBox(fh);
 		unionHeuristicCB.addActionListener(this);
 		findHeuristicCB.addActionListener(this);
 		P.add(uhLabel);

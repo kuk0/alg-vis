@@ -17,13 +17,12 @@
 package algvis.skewheap;
 
 public class SkewHeapInsert extends SkewHeapAlg {
-	private final int K;
 	private final int i;
 
 	public SkewHeapInsert(SkewHeap H, int i, int x) {
 		super(H);
 		this.i = i;
-		H.root[0] = new SkewHeapNode(H, K = x);
+		H.root[0] = new SkewHeapNode(H, x);
 		setHeader("insertion");
 	}
 	

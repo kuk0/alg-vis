@@ -21,15 +21,12 @@ import java.util.List;
 
 import algvis.gui.view.Layout;
 import algvis.gui.view.LayoutListener;
-import algvis.internationalization.Languages;
 
 public class Settings {
 	public Layout layout;
-	public final Languages L;
 	private final List<LayoutListener> listeners = new LinkedList<LayoutListener>();
 
-	public Settings(Languages L) {
-		this.L = L;
+	public Settings() {
 		layout = Layout.SIMPLE;
 	}
 

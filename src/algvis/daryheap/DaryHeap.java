@@ -21,6 +21,7 @@ import algvis.core.PriorityQueue;
 import algvis.gui.VisPanel;
 import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
+import algvis.internationalization.Languages;
 
 public class DaryHeap extends PriorityQueue implements ClickListener{
 	public static final String dsName = "daryheap";
@@ -83,13 +84,13 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 	public String stats() {
 
 		if (root == null) {
-			return M.S.L.getString("size") + ": 0 ("
-					+ M.S.L.getString("emptyheap") + ")";
+			return Languages.getString("size") + ": 0 ("
+					+ Languages.getString("emptyheap") + ")";
 		} else if (root.nnodes == 1000) {
-			return M.S.L.getString("size") + ": 1000 ("
-					+ M.S.L.getString("fullheap") + ")";
+			return Languages.getString("size") + ": 1000 ("
+					+ Languages.getString("fullheap") + ")";
 		} else {
-			return M.S.L.getString("size") + ": " + root.nnodes;
+			return Languages.getString("size") + ": " + root.nnodes;
 		}
 	}
 
