@@ -22,6 +22,7 @@ import algvis.core.history.HistoryManager;
 import algvis.core.visual.Scene;
 import algvis.internationalization.ILabel;
 import algvis.internationalization.LanguageListener;
+import algvis.internationalization.Languages;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -59,7 +60,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener, State
 		this.setLayout(new GridBagLayout());
 		JPanel screenP = initScreen();
 		JScrollPane commentary = initCommentary();
-		statusBar = new ILabel(S.L, "EMPTYSTR");
+		statusBar = new ILabel("EMPTYSTR");
 		initDS();
 
 		GridBagConstraints cs = new GridBagConstraints();
@@ -120,7 +121,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener, State
 		border = BorderFactory.createTitledBorder("");
 		border.setTitleJustification(TitledBorder.CENTER);
 		border.setTitleFont(new Font("Sans-serif", Font.ITALIC, 12));
-		S.L.addListener(this);
+		Languages.addListener(this);
 		screenP.setBorder(BorderFactory.createCompoundBorder(border,
 				BorderFactory.createEmptyBorder(0, 5, 5, 5)));
 		return screenP;
@@ -147,7 +148,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener, State
 				// return new Dimension(200, 530);
 			}
 		};
-		commentary = new Commentary(this, S.L, SP);
+		commentary = new Commentary(this, SP);
 		SP.setViewportView(commentary);
 		// JPanel CP = new JPanel();
 		// CP.add(SP);
@@ -163,7 +164,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener, State
 
 	@Override
 	public void languageChanged() {
-		border.setTitle("    " + S.L.getString(D.getName()) + "    ");
+		border.setTitle("    " + Languages.getString(D.getName()) + "    ");
 	}
 	
 	public void setOnAir(boolean onAir) {

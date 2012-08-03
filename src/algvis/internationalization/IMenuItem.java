@@ -20,30 +20,32 @@ import javax.swing.JMenuItem;
 
 public class IMenuItem extends JMenuItem implements LanguageListener {
 	private static final long serialVersionUID = -6522159616479156702L;
-	private final Languages L;
-	private String t;
+	private Stringable t;
 
-	public IMenuItem(Languages L, String text) {
-		super(L.getString(text));
-		this.L = L;
+	public IMenuItem(Stringable text) {
+		super(text.getString());
 		this.t = text;
-		L.addListener(this);
+		Languages.addListener(this);
+	}
+	
+	public IMenuItem(String text) {
+		this(new IString(text));
 	}
 
-	public IMenuItem(Languages L, String text, int K) {
-		super(L.getString(text), K);
-		this.L = L;
+
+	public IMenuItem(Stringable text, int K) {
+		super(text.getString(), K);
 		this.t = text;
-		L.addListener(this);
+		Languages.addListener(this);
 	}
 
-	public void setT(String text) {
+	public void setT(Stringable text) {
 		t = text;
-		setText(L.getString(t));
+		setText(t.getString());
 	}
 
 	@Override
 	public void languageChanged() {
-		setText(L.getString(t));
+		setText(t.getString());
 	}
 }

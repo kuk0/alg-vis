@@ -39,11 +39,11 @@ public class PairHeapButtons extends MeldablePQButtons implements
 	public JPanel initThirdRow() {
 		JPanel P = new JPanel();
 
-		ILabel fhLabel = new ILabel(panel.S.L, "pairing");
+		ILabel fhLabel = new ILabel("pairing");
 		String[] pairh = { "pairingnaive", "pairinglrrl" };
 		// , "pairingfb", "pairingbf", "pairingmultipass", "pairinglazymulti" };
 
-		pairVariant = new IComboBox(panel.S.L, pairh);
+		pairVariant = new IComboBox(pairh);
 		pairVariant.addActionListener(this);
 
 		P.add(fhLabel);

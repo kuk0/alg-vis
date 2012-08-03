@@ -18,18 +18,15 @@ package algvis.core;
 
 import algvis.gui.view.Layout;
 import algvis.gui.view.LayoutListener;
-import algvis.internationalization.Languages;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class Settings {
 	public Layout layout;
-	public final Languages L;
 	private final List<LayoutListener> listeners = new LinkedList<LayoutListener>();
 
-	public Settings(Languages L) {
-		this.L = L;
+	public Settings() {
 		layout = Layout.SIMPLE;
 	}
 

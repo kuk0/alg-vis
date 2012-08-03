@@ -41,7 +41,7 @@ public class DaryHeapButtons extends PQButtons implements ChangeListener {
 	public void otherButtons(JPanel P) {
 		OS = new JSpinner(new SpinnerNumberModel(5, 2, 20, 1));
 		OS.addChangeListener(this);
-		orderLabel = new ILabel(panel.S.L, "daryheaporder");
+		orderLabel = new ILabel("daryheaporder");
 		P.add(orderLabel);
 		P.add(OS);	
 

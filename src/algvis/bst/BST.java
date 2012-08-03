@@ -24,6 +24,7 @@ import algvis.gui.view.ClickListener;
 import algvis.gui.view.Layout;
 import algvis.gui.view.LayoutListener;
 import algvis.gui.view.View;
+import algvis.internationalization.Languages;
 
 import java.awt.geom.Rectangle2D;
 
@@ -85,17 +86,17 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 	@Override
 	public String stats() {
 		if (getRoot() == null) {
-			return panel.S.L.getString("size") + ": 0;   "
-					+ panel.S.L.getString("height") + ": 0 =  1.00\u00b7"
-					+ panel.S.L.getString("opt") + ";   "
-					+ panel.S.L.getString("avedepth") + ": 0";
+			return Languages.getString("size") + ": 0;   "
+					+ Languages.getString("height") + ": 0 =  1.00\u00b7"
+					+ Languages.getString("opt") + ";   "
+					+ Languages.getString("avedepth") + ": 0";
 		} else {
 			getRoot().calcTree();
-			return panel.S.L.getString("size")
+			return Languages.getString("size")
 					+ ": "
 					+ getRoot().size
 					+ ";   "
-					+ panel.S.L.getString("height")
+					+ Languages.getString("height")
 					+ ": "
 					+ getRoot().height
 					+ " = "
@@ -104,9 +105,9 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 									/ (Math.floor(lg(getRoot().size)) + 1), 2,
 							5)
 					+ "\u00b7"
-					+ panel.S.L.getString("opt")
+					+ Languages.getString("opt")
 					+ ";   "
-					+ panel.S.L.getString("avedepth")
+					+ Languages.getString("avedepth")
 					+ ": "
 					+ StringUtils.format(getRoot().sumh
 							/ (double) getRoot().size, 2, -5);

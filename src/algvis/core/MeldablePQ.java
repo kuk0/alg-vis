@@ -30,7 +30,6 @@ abstract public class MeldablePQ extends DataStructure implements Highlighting{
 		super(M);
 	}
 
-	@SuppressWarnings("SameReturnValue")
     public static String adtName() {
 		return "meldable-pq";
 	}

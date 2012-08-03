@@ -24,6 +24,7 @@ import algvis.core.PriorityQueue;
 import algvis.gui.VisPanel;
 import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
+import algvis.internationalization.Languages;
 
 public class Heap extends PriorityQueue implements ClickListener {
 	public static final String dsName = "heap";
@@ -70,13 +71,13 @@ public class Heap extends PriorityQueue implements ClickListener {
 	@Override
 	public String stats() {
 		if (getN() == 0) {
-			return panel.S.L.getString("size") + ": 0 ("
-					+ panel.S.L.getString("emptyheap") + ")";
+			return Languages.getString("size") + ": 0 ("
+					+ Languages.getString("emptyheap") + ")";
 		} else if (getN() == 1000) {
-			return panel.S.L.getString("size") + ": 1000 ("
-					+ panel.S.L.getString("fullheap") + ")";
+			return Languages.getString("size") + ": 1000 ("
+					+ Languages.getString("fullheap") + ")";
 		} else {
-			return panel.S.L.getString("size") + ": " + getN();
+			return Languages.getString("size") + ": " + getN();
 		}
 	}
 

@@ -39,7 +39,7 @@ public class RotButtons extends Buttons {
 
 	@Override
 	public void actionButtons(JPanel P) {
-		rotB = new IButton(panel.S.L, "button-rotate");
+		rotB = new IButton("button-rotate");
 		rotB.setMnemonic(KeyEvent.VK_T);
 		rotB.addActionListener(this);
 		P.add(rotB);
@@ -48,12 +48,12 @@ public class RotButtons extends Buttons {
 
 	@Override
 	public void otherButtons(JPanel P) {
-		order = new ICheckBox(panel.S.L, "show-order", false);
+		order = new ICheckBox("show-order", false);
 		order.setMnemonic(KeyEvent.VK_O);
 		order.addActionListener(this);
 		P.add(order);
 
-		subtrees = new ICheckBox(panel.S.L, "show-subtrees", false);
+		subtrees = new ICheckBox("show-subtrees", false);
 		subtrees.setMnemonic(KeyEvent.VK_S);
 		subtrees.addActionListener(this);
 		P.add(subtrees);

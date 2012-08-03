@@ -17,19 +17,17 @@
 package algvis.leftistheap;
 
 public class LeftHeapInsert extends LeftHeapAlg {
-	private final int K;
 	private final int i;
 
 	public LeftHeapInsert(LeftHeap H, int i, int x) {
 		super(H);
 		this.i = i;
-		H.root[0] = new LeftHeapNode(H, K = x);
+		H.root[0] = new LeftHeapNode(H, x);
 		setHeader("insertion");
 	}
 
 	@Override
 	public void run() {
-
 		H.reposition();
 
 		if (H.root[i] == null) {
@@ -56,5 +54,4 @@ public class LeftHeapInsert extends LeftHeapAlg {
 		pause();
 		meld(i);
 	}
-
 }

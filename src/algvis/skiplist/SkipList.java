@@ -22,6 +22,7 @@ import algvis.gui.VisPanel;
 import algvis.gui.view.Alignment;
 import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
+import algvis.internationalization.Languages;
 
 public class SkipList extends Dictionary implements ClickListener {
 	public static String dsName = "skiplist";
@@ -78,13 +79,13 @@ public class SkipList extends Dictionary implements ClickListener {
 	@Override
 	public String stats() {
 		if (getRoot() == null) {
-			return panel.S.L.getString("size") + ": 0;   "
-					+ panel.S.L.getString("height") + ": 0;   #"
-					+ panel.S.L.getString("excess") + ": 0";
+			return Languages.getString("size") + ": 0;   "
+					+ Languages.getString("height") + ": 0;   #"
+					+ Languages.getString("excess") + ": 0";
 		} else {
-			return panel.S.L.getString("size") + ": " + n + ";   "
-					+ panel.S.L.getString("height") + ": " + height + ";   #"
-					+ panel.S.L.getString("excess") + ": " + e;
+			return Languages.getString("size") + ": " + n + ";   "
+					+ Languages.getString("height") + ": " + height + ";   #"
+					+ Languages.getString("excess") + ": " + e;
 		}
 	}
 

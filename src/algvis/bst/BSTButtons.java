@@ -34,7 +34,7 @@ public class BSTButtons extends DictButtons {
 
 	@Override
 	public void otherButtons(JPanel P) {
-		order = new ICheckBox(panel.S.L, "show-order", false);
+		order = new ICheckBox("show-order", false);
 		order.setMnemonic(KeyEvent.VK_2);
 		order.addActionListener(this);
 		P.add(order);

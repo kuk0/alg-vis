@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kov��, Katar�na Kotrlov�, Pavol Luk�a, Viktor Tomkovi�, Tatiana T�thov�
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  ******************************************************************************/
 
 package algvis.leftistheap;
-
 import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.gui.MeldablePQButtonsNoDecr;
@@ -46,5 +45,4 @@ public class LeftHeapPanel extends VisPanel {
 		L.active = 1;
 		D.panel.screen.V.resetView();
 	}
-
 }
