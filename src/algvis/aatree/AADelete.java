@@ -22,6 +22,8 @@ import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 
+import java.util.HashMap;
+
 public class AADelete extends Algorithm {
 	private final AA T;
 	private final int K;
@@ -39,7 +41,7 @@ public class AADelete extends Algorithm {
 		addNote("bstdeletestart");
 		BSTFind find = new BSTFind(T, K, this);
 		find.runAlgorithm();
-		AANode toDelete = (AANode) find.getResult();
+		AANode toDelete = (AANode) find.getResult().get("node");
 
 		if (toDelete != null) {
 			addToScene(toDelete);
@@ -218,7 +220,7 @@ public class AADelete extends Algorithm {
 	}
 
 	@Override
-	public Object getResult() {
+	public HashMap<String, Object> getResult() {
 		return null;
 	}
 }

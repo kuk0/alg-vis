@@ -20,29 +20,18 @@ import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.gui.Fonts;
 import algvis.gui.view.View;
-import org.jdom2.Element;
 
 import java.awt.*;
-
-//import static java.lang.Math.random;
-//import static java.lang.Math.round;
+import java.util.Hashtable;
 
 public class AVLNode extends BSTNode {
 	private int bal = 0;
 
-	private AVLNode(DataStructure D, int key, int x, int y) {
-		super(D, key, x, y);
-	}
-
-	public AVLNode(DataStructure D, int key) {
-		this(D, key, 0, 0);
-		getReady();
-	}
-
-	public AVLNode(BSTNode v) {
-		this(v.D, v.getKey(), v.x, v.y);
+	public AVLNode(DataStructure D, int key, int zDepth) {
+		super(D, key, zDepth);
 	}
 
 	@Override
@@ -68,14 +57,7 @@ public class AVLNode extends BSTNode {
 	}
 
 	void setBalance(int bal) {
-		if (this.bal != bal) {
-			D.panel.scenario.add(new SetBalanceCommand(bal));
-			this.bal = bal;
-		}
-	}
-
-	int getBalance() {
-		return bal;
+		this.bal = bal;
 	}
 
 	@Override
@@ -134,31 +116,16 @@ public class AVLNode extends BSTNode {
 		}
 	}
 
-	private class SetBalanceCommand implements Command {
-		private final int fromBal, toBal;
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "bal", bal);
+	}
 
-		public SetBalanceCommand(int bal) {
-			this.fromBal = getBalance();
-			this.toBal = bal;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setBalance");
-			e.setAttribute("key", Integer.toString(getKey()));
-			e.setAttribute("fromBalance", Integer.toString(fromBal));
-			e.setAttribute("toBalance", Integer.toString(toBal));
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setBalance(toBal);
-		}
-
-		@Override
-		public void unexecute() {
-			setBalance(fromBal);
-		}
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object bal = state.get(hash + "bal");
+		if (bal != null) this.bal = (Integer) HashtableStoreSupport.restore(bal);
 	}
 }

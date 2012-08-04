@@ -20,10 +20,12 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 
+import java.util.HashMap;
+
 public class BSTFind extends Algorithm {
 	private final BST T;
 	private final int K;
-	private BSTNode result = null;
+	private HashMap<String, Object> result = new HashMap<String, Object>(); // node
 
 	public BSTFind(BST T, int x) {
 		super(T.panel);
@@ -39,6 +41,7 @@ public class BSTFind extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		result.put("node", null);
 		BSTNode v = new BSTNode(T, K, ZDepth.ACTIONNODE);
 		addToScene(v);
 		v.setColor(NodeColor.FIND);
@@ -60,7 +63,7 @@ public class BSTFind extends Algorithm {
 					v.goTo(w);
 					addStep("found");
 					v.setColor(NodeColor.FOUND);
-					result = w;
+					result.put("node", w);
 					break;
 				} else if (w.getKey() < K) {
 					if (w.getRight() == null) {
@@ -113,7 +116,7 @@ public class BSTFind extends Algorithm {
 		removeFromScene(v);
 	}
 
-	public BSTNode getResult() {
+	public HashMap<String, Object> getResult() {
 		return result;
 	}
 }

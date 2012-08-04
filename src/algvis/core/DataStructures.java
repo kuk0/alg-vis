@@ -127,8 +127,8 @@ public class DataStructures {
 			return new BSTPanel(S);
 //		case 1:
 //			return new RotPanel(S, false);
-//		case 2:
-//			return new AVLPanel(S, true);
+		case 2:
+			return new AVLPanel(S);
 //		case 3:
 //			return new a23Panel(S, false);
 //		case 4:

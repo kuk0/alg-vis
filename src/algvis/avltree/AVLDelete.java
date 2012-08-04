@@ -16,71 +16,38 @@
  ******************************************************************************/
 package algvis.avltree;
 
+import algvis.bst.BSTFind;
 import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.core.NodeColor;
+import algvis.core.visual.ZDepth;
+
+import java.util.HashMap;
 
 public class AVLDelete extends Algorithm {
 	private final AVL T;
-	private AVLNode v;
 	private final int K;
 
 	public AVLDelete(AVL T, int x) {
-		super(panel, d);
+		super(T.panel);
 		this.T = T;
-		v = (AVLNode) T.setV(new AVLNode(T, K = x));
-		v.setColor(NodeColor.DELETE);
-		setHeader("deletion");
+		K = x;
 	}
 
 	@Override
-	public void run() {
-		if (T.getRoot() == null) {
-			v.goToRoot();
-			addStep("empty");
+	public void runAlgorithm() throws InterruptedException {
+		setHeader("delete", K);
+		addNote("bstdeletestart");
+		BSTFind find = new BSTFind(T, K, this);
+		find.runAlgorithm();
+		AVLNode d = (AVLNode) find.getResult().get("node");
+
+		if (d != null) {
+			addToScene(d);
+			d.setColor(NodeColor.DELETE);
 			pause();
-			v.goDown();
-			v.setColor(NodeColor.NOTFOUND);
-			addStep("notfound");
-        } else {
-			AVLNode d = (AVLNode) T.getRoot();
-			v.goTo(d);
-			addStep("bstdeletestart");
-			pause();
-
-			while (true) {
-				if (d.getKey() == K) { // found
-					v.setColor(NodeColor.FOUND);
-					break;
-				} else if (d.getKey() < K) { // right
-					addStep("bstfindright", K, d.getKey());
-					d = d.getRight();
-					if (d != null) {
-						v.goTo(d);
-					} else {
-						v.goRight();
-						break;
-					}
-				} else { // left
-					addStep("bstfindleft", K, d.getKey());
-					d = d.getLeft();
-					if (d != null) {
-						v.goTo(d);
-					} else {
-						v.goLeft();
-						break;
-					}
-				}
-				pause();
-			}
-
-			if (d == null) { // notfound
-				addStep("notfound");
-				return;
-			}
-
+			
 			AVLNode w = d.getParent();
-			d.setColor(NodeColor.FOUND);
 			if (d.isLeaf()) { // case I - list
 				addStep("bst-delete-case1");
 				pause();
@@ -91,11 +58,9 @@ public class AVLDelete extends Algorithm {
 				} else {
 					d.getParent().unlinkRight();
 				}
-				v.goDown();
-
 			} else if (d.getLeft() == null || d.getRight() == null) { // case
-																		// IIa -
-																		// 1 syn
+				// IIa -
+				// 1 syn
 				addStep("bst-delete-case2");
 				pause();
 				AVLNode s = (d.getLeft() == null) ? d.getRight() : d.getLeft();
@@ -108,12 +73,11 @@ public class AVLDelete extends Algorithm {
 						d.getParent().linkRight(s);
 					}
 				}
-				v.goDown();
-
 			} else { // case III - 2 synovia
 				addStep("bst-delete-case3");
 				AVLNode s = d.getRight();
-				v = (AVLNode) T.setV(new AVLNode(T, -Node.INF));
+				AVLNode v = (AVLNode) (new AVLNode(T, -Node.INF, ZDepth.ACTIONNODE));
+				addToScene(v);
 				v.setColor(NodeColor.FIND);
 				v.goTo(s);
 				pause();
@@ -126,7 +90,9 @@ public class AVLDelete extends Algorithm {
 				if (w == d) {
 					w = s;
 				}
-				v = (AVLNode) T.setV(s);
+				removeFromScene(v);
+				v = s;
+				addToScene(v);
 				if (s.isLeft()) {
 					s.getParent().linkLeft(s.getRight());
 				} else {
@@ -147,9 +113,9 @@ public class AVLDelete extends Algorithm {
 				v.linkRight(d.getRight());
 				v.goTo(d);
 				v.calc();
-				T.setV(d);
-				d.goDown();
 			} // end case III
+			d.goDown();
+			removeFromScene(d);
 
 			addStep("avldeletebal");
 			pause();
@@ -217,5 +183,10 @@ public class AVLDelete extends Algorithm {
 			T.reposition();
 			addStep("done");
 		}
+	}
+
+	@Override
+	public HashMap<String, Object> getResult() {
+		return null;
 	}
 }

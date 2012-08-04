@@ -23,6 +23,7 @@ import algvis.gui.VisPanel;
 import algvis.gui.view.Layout;
 import algvis.gui.view.View;
 
+import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -130,7 +131,7 @@ abstract public class DataStructure extends VisualElement {
 		}
 
 		@Override
-		public Object getResult() {
+		public HashMap<String, Object> getResult() {
 			return null;
 		}
 	}

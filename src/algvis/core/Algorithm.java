@@ -21,6 +21,7 @@ import algvis.core.visual.VisualElement;
 import algvis.gui.VisPanel;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -177,5 +178,5 @@ abstract public class Algorithm implements Runnable {
 		return done;
 	}
 	
-	public abstract Object getResult();
+	public abstract HashMap<String, Object> getResult();
 }

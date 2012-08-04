@@ -20,6 +20,8 @@ import algvis.bst.BSTInsert;
 import algvis.core.Algorithm;
 import algvis.core.visual.ZDepth;
 
+import java.util.HashMap;
+
 public class AAInsert extends Algorithm {
 	private final AA T;
 	private final int K;
@@ -35,52 +37,57 @@ public class AAInsert extends Algorithm {
 	public void runAlgorithm() throws InterruptedException {
 		BSTInsert insert = new BSTInsert(T, new AANode(T, K, ZDepth.ACTIONNODE), this);
 		insert.runAlgorithm();
-		AANode w = (AANode) insert.getResult();
-		pause();
-			
-		// bubleme nahor
-		while (w != null) {
-			w.mark();
-			addStep("aaok");
-			// skew
-			if (w.getLeft() != null
-					&& w.getLeft().getLevel() == w.getLevel()) {
-				addStep("aaskew");
-				pause();
-				w.unmark();
-				w = w.getLeft();
-				w.mark();
-				w.setArc();
-				pause();
-				w.noArc();
-				T.rotate(w);
-				T.reposition();
-			}
-			// split
-			AANode r = w.getRight();
-			if (r != null && r.getRight() != null
-					&& r.getRight().getLevel() == w.getLevel()) {
-				addStep("aasplit");
-				w.unmark();
-				w = r;
-				w.mark();
-				w.setArc();
-				pause();
-				w.noArc();
-				T.rotate(w);
-				w.setLevel(w.getLevel() + 1);
-				T.reposition();
-			}
+		HashMap<String, Object> insertResult = insert.getResult();
+		boolean inserted = (Boolean) insertResult.get("inserted");
+		AANode w = (AANode) insertResult.get("w");
+		
+		if (inserted && w != null) {
 			pause();
-			w.unmark();
-			w = w.getParent();
+				
+			// bubleme nahor
+			while (w != null) {
+				w.mark();
+				addStep("aaok");
+				// skew
+				if (w.getLeft() != null
+						&& w.getLeft().getLevel() == w.getLevel()) {
+					addStep("aaskew");
+					pause();
+					w.unmark();
+					w = w.getLeft();
+					w.mark();
+					w.setArc();
+					pause();
+					w.noArc();
+					T.rotate(w);
+					T.reposition();
+				}
+				// split
+				AANode r = w.getRight();
+				if (r != null && r.getRight() != null
+						&& r.getRight().getLevel() == w.getLevel()) {
+					addStep("aasplit");
+					w.unmark();
+					w = r;
+					w.mark();
+					w.setArc();
+					pause();
+					w.noArc();
+					T.rotate(w);
+					w.setLevel(w.getLevel() + 1);
+					T.reposition();
+				}
+				pause();
+				w.unmark();
+				w = w.getParent();
+			}
+			T.reposition();
+			addStep("done");
 		}
-		T.reposition();
-		addStep("done");
 	}
 
 	@Override
-	public Object getResult() {
+	public HashMap<String, Object> getResult() {
 		return null;
 	}
 }

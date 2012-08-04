@@ -16,71 +16,34 @@
  ******************************************************************************/
 package algvis.avltree;
 
+import algvis.bst.BSTInsert;
 import algvis.core.Algorithm;
-import algvis.core.NodeColor;
+import algvis.core.visual.ZDepth;
+
+import java.util.HashMap;
 
 public class AVLInsert extends Algorithm {
 	private final AVL T;
-	private final AVLNode v;
 	private final int K;
 
 	public AVLInsert(AVL T, int x) {
-		super(panel, d);
+		super(T.panel);
 		this.T = T;
-		v = (AVLNode) T.setV(new AVLNode(T, K = x));
-		v.setColor(NodeColor.INSERT);
-		setHeader("insert", K);
+		K = x;
 	}
-
+	
 	@Override
-	public void run() {
-		AVLNode w = (AVLNode) T.getRoot();
-		if (T.getRoot() == null) {
-			T.setRoot(v);
-			v.goToRoot();
-			addStep("newroot");
-			pause();
-			v.setColor(NodeColor.NORMAL);
-			T.setV(null);
-		} else {
-			v.goAboveRoot();
-			addStep("bst-insert-start");
-			pause();
-
-			while (true) {
-				if (w.getKey() == K) {
-					addStep("alreadythere");
-					v.goDown();
-					v.setColor(NodeColor.NOTFOUND);
-					return;
-				} else if (w.getKey() < K) {
-					addStep("bst-insert-right", K, w.getKey());
-					if (w.getRight() != null) {
-						w = w.getRight();
-					} else {
-						w.linkRight(v);
-						break;
-					}
-				} else {
-					addStep("bst-insert-left", K, w.getKey());
-					if (w.getLeft() != null) {
-						w = w.getLeft();
-					} else {
-						w.linkLeft(v);
-						break;
-					}
-				}
-				v.goAbove(w);
-				pause();
-			}
-
-			v.setColor(NodeColor.NORMAL);
-			T.reposition();
+	public void runAlgorithm() throws InterruptedException {
+		BSTInsert insert = new BSTInsert(T, new AVLNode(T, K, ZDepth.ACTIONNODE), this);
+		insert.runAlgorithm();
+		HashMap<String, Object> insertResult = insert.getResult();
+		boolean inserted = (Boolean) insertResult.get("inserted");
+		
+		if (inserted) {
+			AVLNode w = (AVLNode) insertResult.get("w");
 			addNote("avlinsertbal");
 			pause();
 
-			v.setColor(NodeColor.NORMAL);
-			T.setV(null);
 			// bubleme nahor
 			while (w != null) {
 				w.mark();
@@ -144,5 +107,10 @@ public class AVLInsert extends Algorithm {
 		}
 		T.reposition();
 		addNote("done");
+	}
+
+	@Override
+	public HashMap<String, Object> getResult() {
+		return null;
 	}
 }

@@ -20,11 +20,13 @@ import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 
+import java.util.HashMap;
+
 public class BSTInsert extends Algorithm {
 	private final BST T;
 	private final int K;
 	private final BSTNode v;
-	private BSTNode result = null; // node w
+	private HashMap<String, Object> result = new HashMap<String, Object>(); // "inserted", "w"
 
 	public BSTInsert(BST T, BSTNode v) {
 		super(T.panel);
@@ -97,8 +99,9 @@ public class BSTInsert extends Algorithm {
 				v.goAbove(w);
 				pause();
 			}
-			result = w;
+			result.put("w", w);
 		}
+		result.put("inserted", true);
 		T.reposition();
 		pause();
 		addStep("done");
@@ -108,7 +111,7 @@ public class BSTInsert extends Algorithm {
 	}
 
 	@Override
-	public BSTNode getResult() {
+	public HashMap<String, Object> getResult() {
 		return result;
 	}
 }

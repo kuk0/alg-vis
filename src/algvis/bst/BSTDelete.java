@@ -21,12 +21,21 @@ import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 
+import java.util.HashMap;
+
 public class BSTDelete extends Algorithm {
 	private final BST T;
 	private final int K;
+	private final HashMap<String, Object> result = new HashMap<String, Object>(); // "deleted"
 
 	public BSTDelete(BST T, int x) {
 		super(T.panel);
+		this.T = T;
+		K = x;
+	}
+
+	public BSTDelete(BST T, int x, Algorithm a) {
+		super(T.panel, a);
 		this.T = T;
 		K = x;
 	}
@@ -38,9 +47,10 @@ public class BSTDelete extends Algorithm {
 		addNote("bstdeletestart");
 		BSTFind find = new BSTFind(T, K, this);
 		find.runAlgorithm();
-		BSTNode toDelete = find.getResult();
+		BSTNode toDelete = (BSTNode) find.getResult().get("node");
 
 		if (toDelete != null) {
+			result.put("deleted", true);
 			addToScene(toDelete);
 			toDelete.setColor(NodeColor.DELETE);
 			pause();
@@ -162,11 +172,13 @@ public class BSTDelete extends Algorithm {
 			removeFromScene(toDelete);
 			T.reposition();
 			addStep("done");
+		} else {
+			result.put("deleted", false);
 		}
 	}
 
 	@Override
-	public Object getResult() {
-		return null;
+	public HashMap<String, Object> getResult() {
+		return result;
 	}
 }
