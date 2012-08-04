@@ -151,8 +151,8 @@ public class DataStructures {
 //			return new a234Panel(S, false);
 //		case 5:
 //			return new BPanel(S, false);
-//		case 6:
-//			return new RBPanel(S, true);
+		case 6:
+			return new RBPanel(S);
 		case 7:
 			return new AAPanel(S);
 //		case 8:

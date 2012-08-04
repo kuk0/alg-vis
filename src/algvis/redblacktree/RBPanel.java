@@ -24,7 +24,7 @@ public class RBPanel extends VisPanel {
 	private static final long serialVersionUID = 8641701120532396725L;
 	public static Class<? extends DataStructure> DS = RB.class;
 
-	public RBPanel(Settings S, boolean isScenarioEnabled) {
+	public RBPanel(Settings S) {
 		super(S);
 	}
 

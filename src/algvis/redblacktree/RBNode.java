@@ -20,8 +20,10 @@ import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.gui.view.View;
-import org.jdom2.Element;
+
+import java.util.Hashtable;
 
 public class RBNode extends BSTNode {
 	private boolean red = true;
@@ -30,8 +32,8 @@ public class RBNode extends BSTNode {
 		super(D, key, x, y);
 	}
 
-	public RBNode(DataStructure D, int key) {
-		super(D, key);
+	public RBNode(DataStructure D, int key, int zDepth) {
+		super(D, key, zDepth);
 	}
 
 	public boolean isRed() {
@@ -39,12 +41,7 @@ public class RBNode extends BSTNode {
 	}
 
 	public void setRed(boolean red) {
-		if (this.red != red) {
-			if (D.panel.scenario.isAddingEnabled()) {
-				D.panel.scenario.add(new SetRedCommand(red));
-			}
-			this.red = red;
-		}
+		this.red = red;
 	}
 
 	@Override
@@ -91,11 +88,8 @@ public class RBNode extends BSTNode {
 		if (state == Node.INVISIBLE || getKey() == NULL) {
 			return;
 		}
-		// TODO
-		boolean a = D.panel.scenario.isAddingEnabled();
-		D.panel.scenario.enableAdding(false);
+		// TODO check
 		setColor(isRed() ? NodeColor.RED : NodeColor.BLACK);
-		D.panel.scenario.enableAdding(a);
 		super.draw(v);
 	}
 
@@ -123,31 +117,16 @@ public class RBNode extends BSTNode {
 		drawTree(v);
 	}
 
-	private class SetRedCommand implements Command {
-		private final boolean oldRed, newRed;
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "red", red);
+	}
 
-		public SetRedCommand(boolean newRed) {
-			oldRed = isRed();
-			this.newRed = newRed;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setRed");
-			e.setAttribute("key", Integer.toString(getKey()));
-			e.setAttribute("wasRed", Boolean.toString(oldRed));
-			e.setAttribute("isRed", Boolean.toString(newRed));
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setRed(newRed);
-		}
-
-		@Override
-		public void unexecute() {
-			setRed(oldRed);
-		}
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object red = state.get(hash + "red");
+		if (red != null) this.red = (Boolean) HashtableStoreSupport.restore(red);
 	}
 }

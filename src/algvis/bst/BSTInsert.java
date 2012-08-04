@@ -26,7 +26,7 @@ public class BSTInsert extends Algorithm {
 	private final BST T;
 	private final int K;
 	private final BSTNode v;
-	private HashMap<String, Object> result = new HashMap<String, Object>(); // "inserted", "w"
+	private HashMap<String, Object> result = new HashMap<String, Object>(); // "inserted", "w", "v"
 
 	public BSTInsert(BST T, BSTNode v) {
 		super(T.panel);
@@ -64,6 +64,7 @@ public class BSTInsert extends Algorithm {
 					v.setColor(NodeColor.NOTFOUND);
 					v.goDown();
 					removeFromScene(v);
+					result.put("inserted", false);
 					return;
 				} else if (w.getKey() < K) {
 					if (w.getRight() == null) {
@@ -102,6 +103,7 @@ public class BSTInsert extends Algorithm {
 			result.put("w", w);
 		}
 		result.put("inserted", true);
+		result.put("v", v);
 		T.reposition();
 		pause();
 		addStep("done");

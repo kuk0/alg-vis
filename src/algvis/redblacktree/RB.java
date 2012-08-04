@@ -18,6 +18,7 @@ package algvis.redblacktree;
 
 import algvis.bst.BST;
 import algvis.core.Node;
+import algvis.core.visual.ZDepth;
 import algvis.gui.VisPanel;
 import algvis.gui.view.Layout;
 import algvis.gui.view.View;
@@ -34,7 +35,7 @@ public class RB extends BST {
 
 	public RB(VisPanel M) {
 		super(M);
-		NULL = new RBNode(this, Node.NULL);
+		NULL = new RBNode(this, Node.NULL, ZDepth.NODE);
 		NULL.setParent(NULL);
 		NULL.setRight(NULL);
 		NULL.setLeft(NULL);	
@@ -49,11 +50,6 @@ public class RB extends BST {
 	}
 
 	@Override
-	public void find(int x) {
-		start(new RBFind(this, x));
-	}
-
-	@Override
 	public void delete(int x) {
 		start(new RBDelete(this, x));
 	}
@@ -61,12 +57,7 @@ public class RB extends BST {
 	@Override
 	public void draw(View V) {
 		if (getRoot() != null) {
-			getRoot().moveTree();
 			((RBNode) getRoot()).drawRBTree(V);
-		}
-		if (getV() != null) {
-			getV().move();
-			getV().draw(V);
 		}
 	}
 

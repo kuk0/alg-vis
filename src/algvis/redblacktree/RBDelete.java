@@ -16,74 +16,43 @@
  ******************************************************************************/
 package algvis.redblacktree;
 
+import algvis.bst.BSTFind;
 import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.core.NodeColor;
+import algvis.core.visual.ZDepth;
+
+import java.util.HashMap;
 
 public class RBDelete extends Algorithm {
 	private final RB T;
-	private BSTNode v;
 	private final int K;
 
 	public RBDelete(RB T, int x) {
-		super(panel, d);
+		super(T.panel);
 		this.T = T;
-		v = T.setV(new BSTNode(T, K = x));
-		v.setColor(NodeColor.DELETE);
-		setHeader("deletion");
+		K = x;
 	}
 
 	@Override
-	public void run() {
-		if (T.getRoot() == null) {
-			v.goToRoot();
-			addStep("empty");
-			pause();
-			v.goDown();
-			v.setColor(NodeColor.NOTFOUND);
-			addStep("notfound");
-        } else {
-			RBNode d = (RBNode) T.getRoot();
-			v.goTo(d);
-			addStep("bstdeletestart");
-			pause();
+	public void runAlgorithm() throws InterruptedException {
+		setHeader("delete", K);
+		addNote("bstdeletestart");
+		BSTFind find = new BSTFind(T, K, this);
+		find.runAlgorithm();
+		RBNode d = (RBNode) find.getResult().get("node");
 
-			while (true) {
-				if (d.getKey() == K) { // found
-					v.setColor(NodeColor.FOUND);
-					break;
-				} else if (d.getKey() < K) { // right
-					addStep("bstfindright", K, d.getKey());
-					d = d.getRight();
-					if (d != null) {
-						v.goTo(d);
-					} else {
-						v.goRight();
-						break;
-					}
-				} else { // left
-					addStep("bstfindleft", K, d.getKey());
-					d = d.getLeft();
-					if (d != null) {
-						v.goTo(d);
-					} else {
-						v.goLeft();
-						break;
-					}
-				}
-				pause();
-			}
-
-			if (d == null) { // notfound
-				addNote("notfound");
-				return;
-			}
+		if (d != null) {
+			addToScene(d);
+//			d.setColor(NodeColor.DELETE);
+			d.setColor(NodeColor.FOUND); // TODO aj tak je to jedno, lebo metoda draw zmeni kazdy RBNode na cerveny 
+			// alebo cierny 
+			pause();
 
 			RBNode u = d, w = (u.getLeft() != null) ? u.getLeft() : u
 					.getRight2();
 			T.NULL.setParent(u.getParent2());
-			d.setColor(NodeColor.FOUND);
 			if (d.isLeaf()) { // case I - list
 				addStep("bst-delete-case1");
 				pause();
@@ -94,8 +63,6 @@ public class RBDelete extends Algorithm {
 				} else {
 					d.getParent().setRight(null);
 				}
-				v.goDown();
-
 			} else if (d.getLeft() == null || d.getRight() == null) {
 				// case IIa - 1 syn
 				addStep("bst-delete-case2");
@@ -112,24 +79,27 @@ public class RBDelete extends Algorithm {
 						d.getParent().setRight(s);
 					}
 				}
-				v.goDown();
-
 			} else { // case III - 2 synovia
 				addStep("bst-delete-case3");
 				RBNode s = d.getRight();
-				v = T.setV(new BSTNode(T, -Node.INF));
+				BSTNode v = new BSTNode(T, -Node.INF, ZDepth.ACTIONNODE);
+				addToScene(v);
 				v.setColor(NodeColor.FIND);
 				v.goTo(s);
 				pause();
 				while (s.getLeft() != null) {
 					s = s.getLeft();
 					v.goTo(s);
+					// TODO raz vrchol "v" dosiel az nad prazdnu plochu (akoby nad NULL) a potom sa objavil novy vrchol
+					// na tom prazdnom mieste
 					pause();
 				}
 				u = s;
 				w = u.getRight2();
 				T.NULL.setParent(u.getParent2());
-				v = T.setV(s);
+				removeFromScene(v);
+				v = s;
+				addToScene(v);
 				((RBNode) v).setRed(d.isRed());
 				if (s.isLeft()) {
 					s.getParent().linkLeft(u.getRight());
@@ -152,9 +122,10 @@ public class RBDelete extends Algorithm {
 				v.linkRight(d.getRight());
 				v.goTo(d);
 				v.calc();
-				T.setV(d);
-				d.goDown();
+				removeFromScene(v);
 			} // end case III
+			d.goDown();
+			removeFromScene(d);
 
 			if (!u.isRed()) {
 				// bubleme nahor
@@ -225,5 +196,10 @@ public class RBDelete extends Algorithm {
 			T.reposition();
 			addStep("done");
 		}
+	}
+
+	@Override
+	public HashMap<String, Object> getResult() {
+		return null; // TODO
 	}
 }

@@ -16,66 +16,34 @@
  ******************************************************************************/
 package algvis.redblacktree;
 
+import algvis.bst.BSTInsert;
 import algvis.core.Algorithm;
+import algvis.core.visual.ZDepth;
+
+import java.util.HashMap;
 
 public class RBInsert extends Algorithm {
 	private final RB T;
-	private final RBNode v;
 	private final int K;
 
 	public RBInsert(RB T, int x) {
-		super(panel, d);
+		super(T.panel);
 		this.T = T;
-		v = (RBNode) T.setV(new RBNode(T, K = x));
-		setHeader("insert", K);
+		K = x;
 	}
 
 	@Override
-	public void run() {
-		RBNode w = (RBNode) T.getRoot();
-		if (T.getRoot() == null) {
-			// v.setLeft(v.setRight(v.setParent(T.NULL)));
-			T.setRoot(v);
-			v.goToRoot();
-			addStep("newroot");
-			pause();
-		} else {
-			v.goAboveRoot();
-			addStep("bst-insert-start");
-			pause();
-
-			while (true) {
-				if (w.getKey() == K) {
-					addStep("alreadythere");
-					v.goDown();
-					return;
-				} else if (w.getKey() < K) {
-					addStep("bst-insert-right", K, w.getKey());
-					if (w.getRight() != null) {
-						w = w.getRight();
-					} else {
-						w.linkRight(v);
-						break;
-					}
-				} else {
-					addStep("bst-insert-left", K, w.getKey());
-					if (w.getLeft() != null) {
-						w = w.getLeft();
-					} else {
-						w.linkLeft(v);
-						break;
-					}
-				}
-				v.goAbove(w);
-				pause();
-			}
-			// v.setLeft(v.setRight(T.NULL));
-
-			T.reposition();
+	public void runAlgorithm() throws InterruptedException {
+		BSTInsert insert = new BSTInsert(T, new RBNode(T, K, ZDepth.ACTIONNODE), this);
+		insert.runAlgorithm();
+		HashMap<String, Object> insertResult = insert.getResult();
+		boolean inserted = (Boolean) insertResult.get("inserted");
+		
+		if (inserted) {
 			pause();
 
 			// bubleme nahor
-			w = v;
+			RBNode w = (RBNode) insertResult.get("v");
 			RBNode pw = w.getParent2();
 			while (!w.isRoot() && pw.isRed()) {
 				w.mark();
@@ -120,12 +88,16 @@ public class RBInsert extends Algorithm {
 					break;
 				}
 			}
-		}
-		if (w != null)
+
 			w.unmark();
-		((RBNode) T.getRoot()).setRed(false);
-		T.setV(null);
-		T.reposition();
-		addStep("done");
+			((RBNode) T.getRoot()).setRed(false);
+			T.reposition();
+			addStep("done");
+		}		
+	}
+
+	@Override
+	public HashMap<String, Object> getResult() {
+		return null; // TODO
 	}
 }

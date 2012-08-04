@@ -46,7 +46,8 @@ public class RBButtons extends DictButtons implements ActionListener {
 		super.actionPerformed(evt);
 		if (evt.getSource() == B24) {
 			((RB) panel.D).mode24 = B24.isSelected();
-			((RB) panel.D).reposition();
+			// TODO reposition mimo algoritmu kazi historiu a asi ani nie je potrebny
+//			((RB) panel.D).reposition();
 		}
 	}
 }
