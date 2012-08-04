@@ -16,15 +16,13 @@
  ******************************************************************************/
 package algvis.btree;
 
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import algvis.gui.DictButtons;
 import algvis.gui.VisPanel;
 import algvis.internationalization.ILabel;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class BTreeButtons extends DictButtons implements ChangeListener {
 	private static final long serialVersionUID = -4573594717377516312L;

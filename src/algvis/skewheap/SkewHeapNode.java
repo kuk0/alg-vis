@@ -16,13 +16,13 @@
  ******************************************************************************/
 package algvis.skewheap;
 
-import java.awt.Color;
-
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.MeldablePQ;
 import algvis.core.Node;
 import algvis.gui.view.View;
+
+import java.awt.*;
 
 public class SkewHeapNode extends BSTNode {
 	Color color = Color.yellow;

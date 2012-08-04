@@ -16,13 +16,12 @@
  ******************************************************************************/
 package algvis.redblacktree;
 
-import org.jdom2.Element;
-
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.gui.view.View;
+import org.jdom2.Element;
 
 public class RBNode extends BSTNode {
 	private boolean red = true;

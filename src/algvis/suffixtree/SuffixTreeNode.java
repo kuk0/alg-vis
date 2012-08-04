@@ -16,14 +16,14 @@
  ******************************************************************************/
 package algvis.suffixtree;
 
-import java.awt.Color;
-import java.awt.geom.Point2D;
-
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.gui.Fonts;
 import algvis.gui.view.View;
 import algvis.trie.TrieNode;
+
+import java.awt.*;
+import java.awt.geom.Point2D;
 
 public class SuffixTreeNode extends TrieNode {
 	private SuffixTreeNode suffixLink = null; // also called suffixNode

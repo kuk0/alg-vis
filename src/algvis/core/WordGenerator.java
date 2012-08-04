@@ -16,14 +16,14 @@
  ******************************************************************************/
 package algvis.core;
 
+import algvis.internationalization.Languages;
+
 import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Vector;
 import java.util.regex.Pattern;
-
-import algvis.internationalization.Languages;
 
 public class WordGenerator {
 	private final static WordGenerator INSTANCE = new WordGenerator();

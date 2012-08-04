@@ -19,9 +19,6 @@ package algvis.core.history;
 
 import javax.swing.undo.StateEdit;
 import javax.swing.undo.StateEditable;
-import java.util.Enumeration;
-import java.util.Vector;
-import java.util.zip.CheckedOutputStream;
 
 public class UpdatableStateEdit extends StateEdit {
 	private final long id;

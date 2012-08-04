@@ -16,13 +16,6 @@
  ******************************************************************************/
 package algvis.unionfind;
 
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Random;
-
-import org.jdom2.Element;
-
 import algvis.core.DataStructure;
 import algvis.gui.VisPanel;
 import algvis.gui.view.Alignment;
@@ -30,6 +23,12 @@ import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
 import algvis.unionfind.UnionFindFind.FindHeuristic;
 import algvis.unionfind.UnionFindUnion.UnionHeuristic;
+import org.jdom2.Element;
+
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Random;
 
 public class UnionFind extends DataStructure implements ClickListener {
 	public static String adtName = "ufa";

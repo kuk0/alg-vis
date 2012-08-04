@@ -17,8 +17,8 @@
 package algvis.avltree;
 
 import algvis.core.Algorithm;
-import algvis.core.NodeColor;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 
 public class AVLDelete extends Algorithm {
 	private final AVL T;

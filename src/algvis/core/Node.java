@@ -17,10 +17,10 @@
 package algvis.core;
 
 import algvis.core.history.HashtableStoreSupport;
-import algvis.gui.Fonts;
-import algvis.gui.view.View;
 import algvis.core.visual.VisualElement;
 import algvis.core.visual.ZDepth;
+import algvis.gui.Fonts;
+import algvis.gui.view.View;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;

@@ -16,9 +16,9 @@
  ******************************************************************************/
 package algvis.core;
 
+import algvis.core.history.HashtableStoreSupport;
 import algvis.gui.VisPanel;
 import algvis.gui.view.Layout;
-import algvis.core.history.HashtableStoreSupport;
 
 import java.util.Hashtable;
 

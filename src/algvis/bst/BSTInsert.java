@@ -19,8 +19,6 @@ package algvis.bst;
 import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.core.NodeColor;
-import algvis.core.visual.ZDepth;
-import sun.org.mozilla.javascript.internal.ast.ForInLoop;
 
 public class BSTInsert extends Algorithm {
 	private final BST T;

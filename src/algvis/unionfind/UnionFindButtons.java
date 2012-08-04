@@ -16,18 +16,17 @@
  ******************************************************************************/
 package algvis.unionfind;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.util.Random;
-import java.util.Vector;
-
-import javax.swing.JPanel;
-
 import algvis.gui.Buttons;
 import algvis.gui.VisPanel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.IComboBox;
 import algvis.internationalization.ILabel;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.util.Random;
+import java.util.Vector;
 
 public class UnionFindButtons extends Buttons {
 	private static final long serialVersionUID = 2683381160819263717L;

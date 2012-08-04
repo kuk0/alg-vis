@@ -16,14 +16,14 @@
  ******************************************************************************/
 package algvis.trie;
 
-import java.awt.Color;
-
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.TreeNode;
 import algvis.gui.Fonts;
 import algvis.gui.view.View;
+
+import java.awt.*;
 
 public class TrieNode extends TreeNode {
 	public char ch;

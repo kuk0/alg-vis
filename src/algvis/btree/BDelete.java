@@ -17,8 +17,8 @@
 package algvis.btree;
 
 import algvis.core.Algorithm;
-import algvis.core.NodeColor;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 
 public class BDelete extends Algorithm {
 	private final BTree T;

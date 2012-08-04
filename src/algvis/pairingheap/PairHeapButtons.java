@@ -16,15 +16,14 @@
  ******************************************************************************/
 package algvis.pairingheap;
 
-import java.awt.event.ActionEvent;
-
-import javax.swing.JPanel;
-import javax.swing.event.ChangeListener;
-
 import algvis.gui.MeldablePQButtons;
 import algvis.gui.VisPanel;
 import algvis.internationalization.IComboBox;
 import algvis.internationalization.ILabel;
+
+import javax.swing.*;
+import javax.swing.event.ChangeListener;
+import java.awt.event.ActionEvent;
 
 public class PairHeapButtons extends MeldablePQButtons implements
 		ChangeListener {

@@ -16,9 +16,9 @@
  ******************************************************************************/
 package algvis.core;
 
-import algvis.gui.VisPanel;
 import algvis.core.history.UpdatableStateEdit;
 import algvis.core.visual.VisualElement;
+import algvis.gui.VisPanel;
 
 import java.awt.*;
 import java.util.concurrent.Semaphore;

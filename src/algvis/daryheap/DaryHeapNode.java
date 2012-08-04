@@ -16,12 +16,13 @@
  ******************************************************************************/
 package algvis.daryheap;
 
-import java.awt.Color;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.PriorityQueue;
 import algvis.gui.view.View;
 import algvis.heap.HeapNode;
+
+import java.awt.*;
 
 public class DaryHeapNode extends HeapNode {
 	private int width;// , leftw, rightw;

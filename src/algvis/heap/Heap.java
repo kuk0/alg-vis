@@ -16,8 +16,6 @@
  ******************************************************************************/
 package algvis.heap;
 
-import org.jdom2.Element;
-
 import algvis.bst.BSTNode;
 import algvis.core.Node;
 import algvis.core.PriorityQueue;
@@ -25,6 +23,7 @@ import algvis.gui.VisPanel;
 import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
 import algvis.internationalization.Languages;
+import org.jdom2.Element;
 
 public class Heap extends PriorityQueue implements ClickListener {
 	public static final String dsName = "heap";

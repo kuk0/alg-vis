@@ -20,7 +20,8 @@ import algvis.gui.VisPanel;
 
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
-import java.util.*;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 public class HistoryManager extends UndoManager {
 	private final Map<UndoableEdit, Boolean> algorithmEnds = new WeakHashMap<UndoableEdit, Boolean>();

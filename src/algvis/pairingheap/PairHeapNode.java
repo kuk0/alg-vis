@@ -16,12 +16,12 @@
  ******************************************************************************/
 package algvis.pairingheap;
 
-import java.awt.Color;
-
 import algvis.core.DataStructure;
 import algvis.core.MeldablePQ;
 import algvis.core.TreeNode;
 import algvis.gui.view.View;
+
+import java.awt.*;
 
 public class PairHeapNode extends TreeNode{
 

@@ -1,7 +1,5 @@
 package algvis.intervaltree;
 
-import java.awt.Color;
-
 import algvis.bst.BST;
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
@@ -10,6 +8,8 @@ import algvis.core.NodeColor;
 import algvis.gui.Fonts;
 import algvis.gui.view.View;
 import algvis.intervaltree.IntervalTrees.mimasuType;
+
+import java.awt.*;
 
 public class IntervalNode extends BSTNode {
 	// boolean leaf = true;

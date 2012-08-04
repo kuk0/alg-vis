@@ -16,8 +16,6 @@
  ******************************************************************************/
 package algvis.rotations;
 
-import java.util.Random;
-
 import algvis.bst.BST;
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
@@ -27,6 +25,8 @@ import algvis.gui.view.Alignment;
 import algvis.gui.view.ClickListener;
 import algvis.gui.view.Layout;
 import algvis.gui.view.View;
+
+import java.util.Random;
 
 public class Rotations extends DataStructure implements ClickListener {
 	public static String adtName = "dictionary";

@@ -16,16 +16,15 @@
  ******************************************************************************/
 package algvis.suffixtree;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.util.Vector;
-
-import javax.swing.JPanel;
-
 import algvis.gui.Buttons;
 import algvis.gui.VisPanel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ICheckBox;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.util.Vector;
 
 public class SuffixTreeButtons extends Buttons {
 	private static final long serialVersionUID = -368670840648549217L;

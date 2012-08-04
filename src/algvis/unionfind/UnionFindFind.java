@@ -16,10 +16,10 @@
  ******************************************************************************/
 package algvis.unionfind;
 
-import java.util.Stack;
-
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
+
+import java.util.Stack;
 
 public class UnionFindFind extends Algorithm {
 	public enum FindHeuristic {

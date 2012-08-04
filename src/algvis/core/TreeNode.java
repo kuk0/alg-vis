@@ -16,8 +16,8 @@
  ******************************************************************************/
 package algvis.core;
 
-import algvis.gui.view.View;
 import algvis.core.visual.ZDepth;
+import algvis.gui.view.View;
 
 import java.awt.*;
 import java.util.Hashtable;

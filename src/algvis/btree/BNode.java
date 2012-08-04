@@ -16,13 +16,13 @@
  ******************************************************************************/
 package algvis.btree;
 
-import java.awt.Color;
-
-import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 import algvis.gui.Fonts;
 import algvis.gui.view.View;
+
+import java.awt.*;
 
 public class BNode extends Node {
 	private int width;

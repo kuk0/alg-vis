@@ -16,8 +16,6 @@
  ******************************************************************************/
 package algvis.binomialheap;
 
-import java.awt.Color;
-
 import algvis.core.MeldablePQ;
 import algvis.core.Node;
 import algvis.core.Pair;
@@ -28,6 +26,8 @@ import algvis.gui.view.Alignment;
 import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
 import algvis.internationalization.Languages;
+
+import java.awt.*;
 
 public class BinomialHeap extends MeldablePQ implements ClickListener {
 	public static final String dsName = "binheap";

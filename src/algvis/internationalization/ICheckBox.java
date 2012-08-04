@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.internationalization;
 
-import javax.swing.JCheckBox;
+import javax.swing.*;
 
 public class ICheckBox extends JCheckBox implements LanguageListener {
 	private static final long serialVersionUID = -8231264680063436446L;

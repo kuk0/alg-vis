@@ -16,14 +16,13 @@
  ******************************************************************************/
 package algvis.trie;
 
-import java.awt.Color;
-import java.awt.FontMetrics;
-
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.gui.Fonts;
 import algvis.gui.view.View;
+
+import java.awt.*;
 
 public class TrieWordNode extends Node {
 	private String s = "";

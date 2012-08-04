@@ -16,11 +16,11 @@
  ******************************************************************************/
 package algvis.suffixtree;
 
-import java.util.Vector;
-
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.trie.TrieWordNode;
+
+import java.util.Vector;
 
 public class SuffixTreeInsert extends Algorithm {
 	private final SuffixTree T;

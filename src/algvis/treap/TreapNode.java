@@ -16,11 +16,11 @@
  ******************************************************************************/
 package algvis.treap;
 
-import java.awt.Color;
-
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.NodeColor;
+
+import java.awt.*;
 
 public class TreapNode extends BSTNode {
 	final double p;

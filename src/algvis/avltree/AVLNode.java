@@ -16,16 +16,15 @@
  ******************************************************************************/
 package algvis.avltree;
 
-import java.awt.Color;
-
-import org.jdom2.Element;
-
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.gui.Fonts;
 import algvis.gui.view.View;
+import org.jdom2.Element;
+
+import java.awt.*;
 
 //import static java.lang.Math.random;
 //import static java.lang.Math.round;
