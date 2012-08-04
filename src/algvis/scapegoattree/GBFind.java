@@ -19,15 +19,18 @@ package algvis.scapegoattree;
 import algvis.bst.BSTNode;
 import algvis.core.NodeColor;
 
+import java.util.HashMap;
+
 public class GBFind extends GBAlg {
 	public GBFind(GBTree T, int x) {
 		super(T, x);
-		v.setColor(NodeColor.FIND);
-		setHeader("search");
 	}
 
 	@Override
-	public void run() {
+	public void runAlgorithm() throws InterruptedException {
+		addToScene(v);
+		v.setColor(NodeColor.FIND);
+		setHeader("search");
 		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
@@ -35,6 +38,7 @@ public class GBFind extends GBAlg {
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
+			removeFromScene(v);
 		} else {
 			BSTNode w = T.getRoot();
 			v.goTo(w);
@@ -76,6 +80,12 @@ public class GBFind extends GBAlg {
 				}
 				pause();
 			}
+			removeFromScene(v);
 		}
+	}
+
+	@Override
+	public HashMap<String, Object> getResult() {
+		return null;
 	}
 }

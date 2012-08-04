@@ -18,13 +18,29 @@ package algvis.core;
 
 import algvis.aatree.AAPanel;
 import algvis.avltree.AVLPanel;
+import algvis.binomialheap.BinHeapPanel;
 import algvis.bst.BSTPanel;
 import algvis.btree.BPanel;
 import algvis.btree.a234Panel;
 import algvis.btree.a23Panel;
+import algvis.daryheap.DaryHeapPanel;
+import algvis.fibonacciheap.FibHeapPanel;
 import algvis.gui.VisPanel;
+import algvis.heap.HeapPanel;
+import algvis.intervaltree.IntervalPanel;
+import algvis.lazybinomialheap.LazyBinHeapPanel;
+import algvis.leftistheap.LeftHeapPanel;
+import algvis.pairingheap.PairHeapPanel;
 import algvis.redblacktree.RBPanel;
 import algvis.rotations.RotPanel;
+import algvis.scapegoattree.GBPanel;
+import algvis.skewheap.SkewHeapPanel;
+import algvis.skiplist.SkipListPanel;
+import algvis.splaytree.SplayPanel;
+import algvis.suffixtree.SuffixTreePanel;
+import algvis.treap.TreapPanel;
+import algvis.trie.TriePanel;
+import algvis.unionfind.UnionFindPanel;
 
 import java.lang.reflect.Constructor;
 
@@ -40,12 +56,12 @@ public class DataStructures {
 	@SuppressWarnings("rawtypes")
     private static final Class[] PANEL = { BSTPanel.class, RotPanel.class,
 			AVLPanel.class, a23Panel.class, a234Panel.class, BPanel.class,
-			RBPanel.class, AAPanel.class/*, TreapPanel.class,
+			RBPanel.class, AAPanel.class, TreapPanel.class,
 			SkipListPanel.class, GBPanel.class, SplayPanel.class,
 			HeapPanel.class, DaryHeapPanel.class, LeftHeapPanel.class,
-			SkewHeapPanel.class, PairHeapPanel.class, BinHeapPanel.class,
+			SkewHeapPanel.class, PairHeapPanel.class, BinHeapPanel.class/*,
 			LazyBinHeapPanel.class, FibHeapPanel.class, UnionFindPanel.class,
-			IntervalPanel.class, TriePanel.class, SuffixTreePanel.class */};
+			IntervalPanel.class, TriePanel.class, SuffixTreePanel.class*/};
 
 	public static final int N = PANEL.length;
 
@@ -143,8 +159,8 @@ public class DataStructures {
 //			return new TreapPanel(S, true);
 //		case 9:
 //			return new SkipListPanel(S, true);
-//		case 10:
-//			return new GBPanel(S, true);
+		case 10:
+			return new GBPanel(S);
 //		case 11:
 //			return new SplayPanel(S, true);
 //		case 12:

@@ -69,18 +69,6 @@ public class GBTree extends BST {
 	}
 
 	@Override
-	public void draw(View V) {
-		if (getRoot() != null) {
-			getRoot().moveTree();
-			getRoot().drawTree(V);
-		}
-		if (getV() != null) {
-			getV().move();
-			getV().draw(V);
-		}
-	}
-
-	@Override
 	public String stats() {
 		if (getRoot() == null) {
 			return "#" + Languages.getString("nodes") + ": 0;   #"

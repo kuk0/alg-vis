@@ -17,23 +17,25 @@
 package algvis.scapegoattree;
 
 import algvis.core.Algorithm;
+import algvis.core.visual.ZDepth;
 
-class GBAlg extends Algorithm {
+abstract class GBAlg extends Algorithm {
 	final GBTree T;
 	final GBNode v;
 	final int K;
 
 	GBAlg(GBTree T, int x) {
-		super(panel, d);
+		super(T.panel);
 		this.T = T;
-		v = (GBNode) T.setV(new GBNode(T, K = x));
+		v = new GBNode(T, K = x, ZDepth.ACTIONNODE);
 	}
 
-	GBNode compr(GBNode r, int c) {
+	GBNode compr(GBNode r, int c) throws InterruptedException {
 		GBNode w = r, x = (c > 0) ? r.getRight() : r;
 		w.mark();
 		pause();
 		for (int i = 0; i < c; ++i) {
+			assert w != null;
 			w.unmark();
 			w = w.getRight();
 			T.rotate(w);

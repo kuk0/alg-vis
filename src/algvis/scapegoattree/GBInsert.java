@@ -18,21 +18,25 @@ package algvis.scapegoattree;
 
 import algvis.core.NodeColor;
 
+import java.util.HashMap;
+
 public class GBInsert extends GBAlg {
 	public GBInsert(GBTree T, int x) {
 		super(T, x);
-		v.setColor(NodeColor.INSERT);
-		setHeader("insert", K);
 	}
 
 	@Override
-	public void run() {
+	public void runAlgorithm() throws InterruptedException {
+		addToScene(v);
+		v.setColor(NodeColor.INSERT);
+		setHeader("insert", K);
 		if (T.getRoot() == null) {
 			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
 			pause();
 			v.setColor(NodeColor.NORMAL);
+			removeFromScene(v);
 		} else {
 			GBNode w = (GBNode) T.getRoot();
 			v.goAboveRoot();
@@ -46,12 +50,12 @@ public class GBInsert extends GBAlg {
 						w.setDeleted(false);
 						w.setColor(NodeColor.NORMAL);
 						T.setDel(T.getDel() - 1);
-						T.setV(null);
 					} else {
 						addStep("alreadythere");
 						v.goDown();
 						v.setColor(NodeColor.NOTFOUND);
 					}
+					removeFromScene(v);
 					return;
 				} else if (w.getKey() < K) {
 					addStep("bst-insert-right", K, w.getKey());
@@ -74,6 +78,7 @@ public class GBInsert extends GBAlg {
 				pause();
 			}
 			v.setColor(NodeColor.NORMAL);
+			removeFromScene(v);
 			T.reposition();
 			pause();
 
@@ -103,7 +108,8 @@ public class GBInsert extends GBAlg {
 							if (b == r) {
 								b = r.getRight();
 							}
-							T.setV(r);
+							GBNode v = r;
+							addToScene(v);
 							if (r.getParent() == null) {
 								r = (GBNode) T.setRoot(r.getRight());
 								if (r != null) {
@@ -112,7 +118,8 @@ public class GBInsert extends GBAlg {
 							} else {
 								r.getParent().linkRight(r = r.getRight());
 							}
-							T.getV().goDown();
+							v.goDown();
+							removeFromScene(v);
 						} else {
 							r = r.getRight();
 							++s;
@@ -150,6 +157,10 @@ public class GBInsert extends GBAlg {
 		}
 		T.reposition();
 		addStep("done");
-		T.setV(null);
+	}
+
+	@Override
+	public HashMap<String, Object> getResult() {
+		return null;
 	}
 }

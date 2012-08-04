@@ -18,15 +18,18 @@ package algvis.scapegoattree;
 
 import algvis.core.NodeColor;
 
+import java.util.HashMap;
+
 public class GBDelete extends GBAlg {
 	public GBDelete(GBTree T, int x) {
 		super(T, x);
-		v.setColor(NodeColor.DELETE);
-		setHeader("deletion");
 	}
 
 	@Override
-	public void run() {
+	public void runAlgorithm() throws InterruptedException {
+		addToScene(v);
+		v.setColor(NodeColor.DELETE);
+		setHeader("deletion");
 		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
@@ -34,6 +37,7 @@ public class GBDelete extends GBAlg {
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
+			removeFromScene(v);
 		} else {
 			GBNode w = (GBNode) T.getRoot();
 			v.goTo(w);
@@ -50,7 +54,6 @@ public class GBDelete extends GBAlg {
 						w.setDeleted(true);
 						w.setColor(NodeColor.DELETED);
 						T.setDel(T.getDel() + 1);
-						T.setV(null);
 					}
 					break;
 				} else if (w.getKey() < K) {
@@ -78,6 +81,7 @@ public class GBDelete extends GBAlg {
 				}
 				pause();
 			}
+			removeFromScene(v);
 
 			// rebuilding
 			GBNode b = (GBNode) T.getRoot();
@@ -97,7 +101,8 @@ public class GBDelete extends GBAlg {
 							if (b == r) {
 								b = r.getRight();
 							}
-							T.setV(r);
+							GBNode v = r;
+							addToScene(v);
 							if (r.getParent() == null) {
 								T.setRoot(r = r.getRight());
 								if (r != null) {
@@ -106,7 +111,8 @@ public class GBDelete extends GBAlg {
 							} else {
 								r.getParent().linkRight(r = r.getRight());
 							}
-							T.getV().goDown();
+							v.goDown();
+							removeFromScene(v);
 						} else {
 							r = r.getRight();
 							++s;
@@ -142,5 +148,10 @@ public class GBDelete extends GBAlg {
 				}
 			}
 		}
+	}
+
+	@Override
+	public HashMap<String, Object> getResult() {
+		return null;
 	}
 }

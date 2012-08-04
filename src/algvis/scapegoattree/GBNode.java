@@ -18,18 +18,15 @@ package algvis.scapegoattree;
 
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
+import algvis.core.history.HashtableStoreSupport;
 
 import java.util.Hashtable;
 
 public class GBNode extends BSTNode {
 	private boolean deleted = false;
 
-	public GBNode(DataStructure D, int key, int x, int y) {
-		super(D, key, x, y);
-	}
-
-	public GBNode(DataStructure D, int key) {
-		super(D, key);
+	public GBNode(DataStructure D, int key, int zDepth) {
+		super(D, key, zDepth);
 	}
 
 	public boolean isDeleted() {
@@ -58,13 +55,13 @@ public class GBNode extends BSTNode {
 	@Override
 	public void storeState(Hashtable<Object, Object> state) {
 		super.storeState(state);
-		state.put(hash + "deleted", deleted);
+		HashtableStoreSupport.store(state, hash + "deleted", deleted);
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Boolean deleted = (Boolean) state.get(hash + "deleted");
-		if (deleted != null) this.deleted = deleted;
+		Object deleted = state.get(hash + "deleted");
+		if (deleted != null) this.deleted = (Boolean) HashtableStoreSupport.restore(deleted);
 	}
 }
