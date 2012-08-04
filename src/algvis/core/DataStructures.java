@@ -16,34 +16,17 @@
  ******************************************************************************/
 package algvis.core;
 
+import algvis.aatree.AAPanel;
+import algvis.avltree.AVLPanel;
 import algvis.bst.BSTPanel;
+import algvis.btree.BPanel;
+import algvis.btree.a234Panel;
+import algvis.btree.a23Panel;
 import algvis.gui.VisPanel;
+import algvis.redblacktree.RBPanel;
+import algvis.rotations.RotPanel;
 
 import java.lang.reflect.Constructor;
-
-//import algvis.aatree.AAPanel;
-//import algvis.avltree.AVLPanel;
-//import algvis.binomialheap.BinHeapPanel;
-//import algvis.btree.BPanel;
-//import algvis.btree.a234Panel;
-//import algvis.btree.a23Panel;
-//import algvis.daryheap.DaryHeapPanel;
-//import algvis.fibonacciheap.FibHeapPanel;
-//import algvis.heap.HeapPanel;
-//import algvis.intervaltree.IntervalPanel;
-//import algvis.lazybinomialheap.LazyBinHeapPanel;
-//import algvis.leftistheap.LeftHeapPanel;
-//import algvis.pairingheap.PairHeapPanel;
-//import algvis.redblacktree.RBPanel;
-//import algvis.rotations.RotPanel;
-//import algvis.scapegoattree.GBPanel;
-//import algvis.skewheap.SkewHeapPanel;
-//import algvis.skiplist.SkipListPanel;
-//import algvis.splaytree.SplayPanel;
-//import algvis.suffixtree.SuffixTreePanel;
-//import algvis.treap.TreapPanel;
-//import algvis.trie.TriePanel;
-//import algvis.unionfind.UnionFindPanel;
 
 /**
  * The Class DataStructures. This class contains the list of all visualized data
@@ -55,9 +38,9 @@ import java.lang.reflect.Constructor;
  */
 public class DataStructures {
 	@SuppressWarnings("rawtypes")
-    private static final Class[] PANEL = { BSTPanel.class/*, RotPanel.class,
+    private static final Class[] PANEL = { BSTPanel.class, RotPanel.class,
 			AVLPanel.class, a23Panel.class, a234Panel.class, BPanel.class,
-			RBPanel.class, AAPanel.class, TreapPanel.class,
+			RBPanel.class, AAPanel.class/*, TreapPanel.class,
 			SkipListPanel.class, GBPanel.class, SplayPanel.class,
 			HeapPanel.class, DaryHeapPanel.class, LeftHeapPanel.class,
 			SkewHeapPanel.class, PairHeapPanel.class, BinHeapPanel.class,
@@ -154,8 +137,8 @@ public class DataStructures {
 //			return new BPanel(S, false);
 //		case 6:
 //			return new RBPanel(S, true);
-//		case 7:
-//			return new AAPanel(S, true);
+		case 7:
+			return new AAPanel(S);
 //		case 8:
 //			return new TreapPanel(S, true);
 //		case 9:

@@ -16,15 +16,14 @@
  ******************************************************************************/
 package algvis.aatree;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-
-import javax.swing.JPanel;
-
 import algvis.gui.DictButtons;
 import algvis.gui.VisPanel;
 import algvis.internationalization.ICheckBox;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 public class AAButtons extends DictButtons implements ActionListener {
 	private static final long serialVersionUID = 5326663225787843118L;

@@ -50,6 +50,10 @@ public class BSTNode extends Node {
 		super(D, key, zDepth);
 	}
 
+	public BSTNode(DataStructure d, int key, int x, int y, int zDepth) {
+		super(d, key, x, y, zDepth);
+	}
+
 	public BSTNode getLeft() {
 		if (thread)
 			return null;

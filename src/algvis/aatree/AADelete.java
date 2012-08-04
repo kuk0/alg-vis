@@ -16,106 +16,68 @@
  ******************************************************************************/
 package algvis.aatree;
 
-import algvis.bst.BSTNode;
+import algvis.bst.BSTFind;
 import algvis.core.Algorithm;
-import algvis.core.NodeColor;
 import algvis.core.Node;
+import algvis.core.NodeColor;
+import algvis.core.visual.ZDepth;
 
 public class AADelete extends Algorithm {
 	private final AA T;
-	private BSTNode v;
 	private final int K;
 
 	public AADelete(AA T, int x) {
-		super(panel, d);
+		super(T.panel);
 		this.T = T;
-		v = T.setV(new BSTNode(T, K = x));
-		v.setColor(NodeColor.DELETE);
-		setHeader("deletion");
+		K = x;
 	}
 
+	// TODO niektore kroky ("This node is OK) nemaju pauzy
 	@Override
-	public void run() {
-		if (T.getRoot() == null) {
-			v.goToRoot();
-			addStep("empty");
-			pause();
-			v.goDown();
-			v.setColor(NodeColor.NOTFOUND);
-			addStep("notfound");
-        } else {
-			AANode d = (AANode) T.getRoot();
-			v.goTo(d);
-			addStep("bstdeletestart");
-			pause();
+	public void runAlgorithm() throws InterruptedException {
+		setHeader("delete", K);
+		addNote("bstdeletestart");
+		BSTFind find = new BSTFind(T, K, this);
+		find.runAlgorithm();
+		AANode toDelete = (AANode) find.getResult();
 
-			while (true) {
-				if (d.getKey() == K) { // found
-					v.setColor(NodeColor.FOUND);
-					break;
-				} else if (d.getKey() < K) { // right
-					addStep("bstfindright", K, d.getKey());
-					d = d.getRight();
-					if (d != null) {
-						v.goTo(d);
-					} else {
-						v.goRight();
-						break;
-					}
-				} else { // left
-					addStep("bstfindleft", K, d.getKey());
-					d = d.getLeft();
-					if (d != null) {
-						v.goTo(d);
-					} else {
-						v.goLeft();
-						break;
-					}
-				}
-				pause();
-			}
+		if (toDelete != null) {
+			addToScene(toDelete);
+			toDelete.setColor(NodeColor.DELETE);
+			pause();		
 
-			if (d == null) { // notfound
-				addStep("notfound");
-				return;
-			}
-
-			AANode w = d.getParent();
-			d.setColor(NodeColor.FOUND);
-			if (d.isLeaf()) { // case I - list
+			AANode w = toDelete.getParent();
+			if (toDelete.isLeaf()) { // case I - list
 				addStep("bst-delete-case1");
 				pause();
-				if (d.isRoot()) {
+				if (toDelete.isRoot()) {
 					T.setRoot(null);
-				} else if (d.isLeft()) {
-					d.getParent().unlinkLeft();
+				} else if (toDelete.isLeft()) {
+					toDelete.getParent().unlinkLeft();
 				} else {
-					d.getParent().unlinkRight();
+					toDelete.getParent().unlinkRight();
 				}
-				v.goDown();
-
-			} else if (d.getLeft() == null || d.getRight() == null) { // case
-																		// IIa -
-																		// 1 syn
+			} else if (toDelete.getLeft() == null || toDelete.getRight() == null) { // case
+				// IIa -
+				// 1 syn
 				addStep("bst-delete-case2");
 				pause();
-				AANode s = (d.getLeft() == null) ? d.getRight() : d.getLeft();
-				if (d.isRoot()) {
+				AANode s = (toDelete.getLeft() == null) ? toDelete.getRight() : toDelete.getLeft();
+				if (toDelete.isRoot()) {
 					T.setRoot(s);
 				} else {
-					if (d.isLeft()) {
-						d.getParent().linkLeft(s);
+					if (toDelete.isLeft()) {
+						toDelete.getParent().linkLeft(s);
 					} else {
-						d.getParent().linkRight(s);
+						toDelete.getParent().linkRight(s);
 					}
 				}
-				v.goDown();
-
 			} else { // case III - 2 synovia
 				addStep("bst-delete-case3");
-				int lev = d.getLevel();
-				AANode s = d.getRight();
-				v = T.setV(new AANode(T, -Node.INF));
+				int lev = toDelete.getLevel();
+				AANode s = toDelete.getRight();
+				AANode v = new AANode(T, -Node.INF, ZDepth.ACTIONNODE);
+				addToScene(v);
 				v.setColor(NodeColor.FIND);
 				v.goTo(s);
 				pause();
@@ -125,38 +87,40 @@ public class AADelete extends Algorithm {
 					pause();
 				}
 				w = s.getParent();
-				if (w == d) {
+				if (w == toDelete) {
 					w = s;
 				}
-				v = T.setV(s);
+				removeFromScene(v);
+				v = s;
+				addToScene(v);
 				if (s.isLeft()) {
 					s.getParent().linkLeft(s.getRight());
 				} else {
 					s.getParent().linkRight(s.getRight());
 				}
-				v.goNextTo(d);
+				v.goNextTo(toDelete);
 				v.setLevel(lev);
 				pause();
-				if (d.getParent() == null) {
+				if (toDelete.getParent() == null) {
 					T.setRoot(v);
 				} else {
-					if (d.isLeft()) {
-						d.getParent().linkLeft(v);
+					if (toDelete.isLeft()) {
+						toDelete.getParent().linkLeft(v);
 					} else {
-						d.getParent().linkRight(v);
+						toDelete.getParent().linkRight(v);
 					}
 				}
-				v.linkLeft(d.getLeft());
-				v.linkRight(d.getRight());
-				v.goTo(d);
+				v.linkLeft(toDelete.getLeft());
+				v.linkRight(toDelete.getRight());
+				v.goTo(toDelete);
 				v.calc();
-				T.setV(d);
-				d.goDown();
 			} // end case III
-
-			// bubleme nahor
+			toDelete.goDown();
+			removeFromScene(toDelete);
 			T.reposition();
 			pause();
+			
+			// bubleme nahor
 			while (w != null) {
 				int ll = (w.getLeft() == null) ? 0 : w.getLeft().getLevel(), rl = (w
 						.getRight() == null) ? 0 : w.getRight().getLevel(), wl = w
@@ -226,13 +190,13 @@ public class AADelete extends Algorithm {
 						T.reposition();
 					}
 
-					// pause();
-					if (w != null && w.getRight() != null) {
+					pause();
+					if (w.getRight() != null) {
 						r = w.getRight().getRight();
 						if (r != null
 								&& r.getRight() != null
 								&& r.getRight().getLevel() == w.getRight()
-										.getLevel()) {
+								.getLevel()) {
 							addStep("aasplit2");
 							r.setArc();
 							pause();
@@ -251,5 +215,10 @@ public class AADelete extends Algorithm {
 			T.reposition();
 			addStep("done");
 		}
+	}
+
+	@Override
+	public Object getResult() {
+		return null;
 	}
 }

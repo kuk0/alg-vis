@@ -20,20 +20,30 @@ import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
+import sun.org.mozilla.javascript.internal.ast.ForInLoop;
 
 public class BSTInsert extends Algorithm {
 	private final BST T;
 	private final int K;
+	private final BSTNode v;
+	private BSTNode result = null; // node w
 
-	public BSTInsert(BST T, int x) {
+	public BSTInsert(BST T, BSTNode v) {
 		super(T.panel);
 		this.T = T;
-		K = x;
+		this.v = v;
+		K = v.getKey();
+	}
+
+	public BSTInsert(BST T, BSTNode v, Algorithm a) {
+		super(T.panel, a);
+		this.T = T;
+		this.v = v;
+		K = v.getKey();
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		BSTNode v = new BSTNode(T, K, ZDepth.ACTIONNODE);
 		addToScene(v);
 		v.setState(Node.ALIVE);
 		v.setColor(NodeColor.INSERT);
@@ -89,6 +99,7 @@ public class BSTInsert extends Algorithm {
 				v.goAbove(w);
 				pause();
 			}
+			result = w;
 		}
 		T.reposition();
 		pause();
@@ -99,7 +110,7 @@ public class BSTInsert extends Algorithm {
 	}
 
 	@Override
-	public Object getResult() {
-		return null;
+	public BSTNode getResult() {
+		return result;
 	}
 }

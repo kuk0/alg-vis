@@ -16,108 +16,71 @@
  ******************************************************************************/
 package algvis.aatree;
 
+import algvis.bst.BSTInsert;
 import algvis.core.Algorithm;
-import algvis.core.NodeColor;
+import algvis.core.visual.ZDepth;
 
 public class AAInsert extends Algorithm {
 	private final AA T;
-	private final AANode v;
 	private final int K;
 
 	public AAInsert(AA T, int x) {
-		super(panel, d);
+		super(T.panel);
 		this.T = T;
-		T.setV(v = (AANode) T.setV(new AANode(T, K = x)));
-		v.setColor(NodeColor.INSERT);
-		setHeader("insert", K);
+		K = x;
 	}
 
+	// TODO problem pri prechadzani historie spat - vykresli sa hrana nad vrcholom
 	@Override
-	public void run() {
-		AANode w = (AANode) T.getRoot();
-		if (T.getRoot() == null) {
-			T.setRoot(v);
-			v.goToRoot();
-			addStep("newroot");
-			pause();
-			v.setColor(NodeColor.NORMAL);
-			T.setV(null);
-		} else {
-			v.goAboveRoot();
-			addStep("bst-insert-start");
-			pause();
-
-			while (true) {
-				if (w.getKey() == K) {
-					addStep("alreadythere");
-					v.goDown();
-					v.setColor(NodeColor.NOTFOUND);
-					return;
-				} else if (w.getKey() < K) {
-					addStep("bst-insert-right", K, w.getKey());
-					if (w.getRight() != null) {
-						w = w.getRight();
-					} else {
-						w.linkRight(v);
-						break;
-					}
-				} else {
-					addStep("bst-insert-left", K, w.getKey());
-					if (w.getLeft() != null) {
-						w = w.getLeft();
-					} else {
-						w.linkLeft(v);
-						break;
-					}
-				}
-				v.goAbove(w);
-				pause();
-			}
-
-			T.reposition();
-			pause();
-
-			v.setColor(NodeColor.NORMAL);
-			T.setV(null);
-			// bubleme nahor
-			while (w != null) {
-				w.mark();
-				addStep("aaok");
-				// skew
-				if (w.getLeft() != null
-						&& w.getLeft().getLevel() == w.getLevel()) {
-					addStep("aaskew");
-					pause();
-					w.unmark();
-					w = w.getLeft();
-					w.mark();
-					w.setArc();
-					pause();
-					w.noArc();
-					T.rotate(w);
-					T.reposition();
-				}
-				// split
-				AANode r = w.getRight();
-				if (r != null && r.getRight() != null
-						&& r.getRight().getLevel() == w.getLevel()) {
-					addStep("aasplit");
-					w.unmark();
-					w = r;
-					w.mark();
-					w.setArc();
-					pause();
-					w.noArc();
-					T.rotate(w);
-					w.setLevel(w.getLevel() + 1);
-					T.reposition();
-				}
+	public void runAlgorithm() throws InterruptedException {
+		BSTInsert insert = new BSTInsert(T, new AANode(T, K, ZDepth.ACTIONNODE), this);
+		insert.runAlgorithm();
+		AANode w = (AANode) insert.getResult();
+		pause();
+			
+		// bubleme nahor
+		while (w != null) {
+			w.mark();
+			addStep("aaok");
+			// skew
+			if (w.getLeft() != null
+					&& w.getLeft().getLevel() == w.getLevel()) {
+				addStep("aaskew");
 				pause();
 				w.unmark();
-				w = w.getParent();
+				w = w.getLeft();
+				w.mark();
+				w.setArc();
+				pause();
+				w.noArc();
+				T.rotate(w);
+				T.reposition();
 			}
+			// split
+			AANode r = w.getRight();
+			if (r != null && r.getRight() != null
+					&& r.getRight().getLevel() == w.getLevel()) {
+				addStep("aasplit");
+				w.unmark();
+				w = r;
+				w.mark();
+				w.setArc();
+				pause();
+				w.noArc();
+				T.rotate(w);
+				w.setLevel(w.getLevel() + 1);
+				T.reposition();
+			}
+			pause();
+			w.unmark();
+			w = w.getParent();
 		}
 		T.reposition();
 		addStep("done");
+	}
+
+	@Override
+	public Object getResult() {
+		return null;
 	}
 }

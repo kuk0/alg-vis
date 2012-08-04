@@ -23,18 +23,13 @@ import algvis.gui.Fonts;
 import algvis.gui.view.View;
 
 public class AANode extends BSTNode {
-	private AANode(DataStructure D, int key, int x, int y) {
-		super(D, key, x, y);
+	private AANode(DataStructure D, int key, int x, int y, int zDepth) {
+		super(D, key, x, y, zDepth);
 		setLevel(1);
 	}
 
-	public AANode(DataStructure D, int key) {
-		this(D, key, 0, 0);
-		getReady();
-	}
-
-	public AANode(BSTNode v) {
-		this(v.D, v.getKey(), v.x, v.y);
+	public AANode(DataStructure D, int key, int zDepth) {
+		this(D, key, 0, Node.UPY, zDepth);
 	}
 
 	@Override

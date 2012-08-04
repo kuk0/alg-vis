@@ -78,6 +78,7 @@ public class Node extends VisualElement {
 	public static final int NOARROW = -10000;
     public static final int DIRARROW = -10001;
     public static final int TOARROW = -10002;
+	public static final int UPY = -7 * Node.RADIUS;
 	
 	protected Node(DataStructure D, int key, int x, int y) {
 		this(D, key, x, y, ZDepth.NODE);
@@ -93,7 +94,7 @@ public class Node extends VisualElement {
 	}
 
 	protected Node(DataStructure D, int key, int zDepth) {
-		this(D, key, 0, -7 * Node.RADIUS, zDepth);
+		this(D, key, 0, UPY, zDepth);
 	}
 
 	public Node(Node v) {
@@ -244,7 +245,7 @@ public class Node extends VisualElement {
 	}
 
 	protected void drawArrow(View v) {
-		if (arrow == Node.NOARROW || (/*arrow < 0 && */dir == null)) {
+		if (arrow == Node.NOARROW || (arrow < 0 && dir == null)) {
 			return;
 		}
 		double dx, dy;

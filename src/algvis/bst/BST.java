@@ -19,6 +19,7 @@ package algvis.bst;
 import algvis.core.Dictionary;
 import algvis.core.StringUtils;
 import algvis.core.history.UpdatableStateEdit;
+import algvis.core.visual.ZDepth;
 import algvis.gui.VisPanel;
 import algvis.gui.view.ClickListener;
 import algvis.gui.view.Layout;
@@ -53,7 +54,7 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 
 	@Override
 	public void insert(int x) {
-		start(new BSTInsert(this, x));
+		start(new BSTInsert(this, new BSTNode(this, x, ZDepth.ACTIONNODE)));
 	}
 
 	@Override

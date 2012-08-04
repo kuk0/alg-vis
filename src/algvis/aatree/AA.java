@@ -53,12 +53,8 @@ public class AA extends BST {
 
 	public void setMode23(boolean set) {
 		mode23 = set;
-		panel.scenario.newStep();
-		reposition();
-	}
-
-	public boolean getMode23() {
-		return mode23;
+		// TODO reposition pokazi historiu (je to vobec potrebne?)
+//		reposition();
 	}
 
 	public void skew(BSTNode w) {
@@ -84,12 +80,7 @@ public class AA extends BST {
 	@Override
 	public void draw(View V) {
 		if (getRoot() != null) {
-			getRoot().moveTree();
 			((AANode) getRoot()).drawTree2(V);
-		}
-		if (getV() != null) {
-			getV().move();
-			getV().draw(V);
 		}
 	}
 	
