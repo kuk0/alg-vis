@@ -17,6 +17,7 @@
 package algvis.aatree;
 
 import algvis.bst.BSTFind;
+import algvis.bst.BSTNode;
 import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.core.NodeColor;
@@ -78,9 +79,9 @@ public class AADelete extends Algorithm {
 				addStep("bst-delete-case3");
 				int lev = toDelete.getLevel();
 				AANode s = toDelete.getRight();
-				AANode v = new AANode(T, -Node.INF, ZDepth.ACTIONNODE);
-				addToScene(v);
+				BSTNode v = new BSTNode(T, -Node.INF, ZDepth.ACTIONNODE);
 				v.setColor(NodeColor.FIND);
+				addToScene(v);
 				v.goTo(s);
 				pause();
 				while (s.getLeft() != null) {
@@ -101,8 +102,8 @@ public class AADelete extends Algorithm {
 					s.getParent().linkRight(s.getRight());
 				}
 				v.goNextTo(toDelete);
-				v.setLevel(lev);
 				pause();
+				v.setLevel(lev);
 				if (toDelete.getParent() == null) {
 					T.setRoot(v);
 				} else {
@@ -112,6 +113,7 @@ public class AADelete extends Algorithm {
 						toDelete.getParent().linkRight(v);
 					}
 				}
+				removeFromScene(v);
 				v.linkLeft(toDelete.getLeft());
 				v.linkRight(toDelete.getRight());
 				v.goTo(toDelete);

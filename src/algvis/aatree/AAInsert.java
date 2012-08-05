@@ -32,7 +32,6 @@ public class AAInsert extends Algorithm {
 		K = x;
 	}
 
-	// TODO problem pri prechadzani historie spat - vykresli sa hrana nad vrcholom
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		BSTInsert insert = new BSTInsert(T, new AANode(T, K, ZDepth.ACTIONNODE), this);
