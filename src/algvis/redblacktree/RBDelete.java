@@ -83,15 +83,13 @@ public class RBDelete extends Algorithm {
 				addStep("bst-delete-case3");
 				RBNode s = d.getRight();
 				BSTNode v = new BSTNode(T, -Node.INF, ZDepth.ACTIONNODE);
-				addToScene(v);
 				v.setColor(NodeColor.FIND);
+				addToScene(v);
 				v.goTo(s);
 				pause();
 				while (s.getLeft() != null) {
 					s = s.getLeft();
 					v.goTo(s);
-					// TODO raz vrchol "v" dosiel az nad prazdnu plochu (akoby nad NULL) a potom sa objavil novy vrchol
-					// na tom prazdnom mieste
 					pause();
 				}
 				u = s;
@@ -118,11 +116,11 @@ public class RBDelete extends Algorithm {
 						d.getParent().linkRight(v);
 					}
 				}
+				removeFromScene(v);
 				v.linkLeft(d.getLeft());
 				v.linkRight(d.getRight());
 				v.goTo(d);
 				v.calc();
-				removeFromScene(v);
 			} // end case III
 			d.goDown();
 			removeFromScene(d);

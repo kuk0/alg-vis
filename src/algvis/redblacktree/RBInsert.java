@@ -40,6 +40,7 @@ public class RBInsert extends Algorithm {
 		boolean inserted = (Boolean) insertResult.get("inserted");
 		
 		if (inserted) {
+			// TODO komentar "ideme bublat" (nieco ako pri BSTDelete: "first we have to find a node")
 			pause();
 
 			// bubleme nahor
