@@ -155,8 +155,8 @@ public class DataStructures {
 			return new RBPanel(S);
 		case 7:
 			return new AAPanel(S);
-//		case 8:
-//			return new TreapPanel(S, true);
+		case 8:
+			return new TreapPanel(S);
 //		case 9:
 //			return new SkipListPanel(S, true);
 		case 10:

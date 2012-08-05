@@ -18,6 +18,7 @@ package algvis.treap;
 
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
+import algvis.core.Node;
 import algvis.core.NodeColor;
 
 import java.awt.*;
@@ -25,15 +26,14 @@ import java.awt.*;
 public class TreapNode extends BSTNode {
 	final double p;
 
-	private TreapNode(DataStructure D, int key, int x, int y) {
-		super(D, key, x, y);
+	private TreapNode(DataStructure D, int key, int x, int y, int zDepth) {
+		super(D, key, x, y, zDepth);
 		p = Math.random();
 		bgPColor();
 	}
 
-	public TreapNode(DataStructure D, int key) {
-		this(D, key, 0, 0);
-		getReady();
+	public TreapNode(DataStructure D, int key, int zDepth) {
+		this(D, key, 0, Node.UPY, zDepth);
 	}
 
 	@Override
@@ -59,6 +59,7 @@ public class TreapNode extends BSTNode {
 	public void setColor(NodeColor color) {
 		if (color == NodeColor.NORMAL) {
 			bgPColor();
+			fgColor(color.fgColor);
 		} else {
 			super.setColor(color);
 		}

@@ -226,7 +226,6 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 		@Override
 		public void runAlgorithm() throws InterruptedException {
 			setRoot(null);
-			panel.commentary.clear();
 			panel.scene.clear();
 			addToScene(BST.this);
 			setStats();

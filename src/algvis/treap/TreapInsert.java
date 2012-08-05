@@ -16,68 +16,46 @@
  ******************************************************************************/
 package algvis.treap;
 
+import algvis.bst.BSTInsert;
 import algvis.core.Algorithm;
+import algvis.core.visual.ZDepth;
+
+import java.util.HashMap;
 
 public class TreapInsert extends Algorithm {
 	private final Treap T;
-	private final TreapNode v;
 	private final int K;
 
 	public TreapInsert(Treap T, int x) {
-		super(panel, d);
+		super(T.panel);
 		this.T = T;
-		T.setV(v = new TreapNode(T, K = x));
-		setHeader("insert", K);
+		K = x;
 	}
 
 	@Override
-	public void run() {
-		if (T.getRoot() == null) {
-			T.setRoot(v);
-			v.goToRoot();
-			addStep("newroot");
-			pause();
-		} else {
-			TreapNode w = (TreapNode)T.getRoot();
-			v.goAboveRoot();
-			addStep("bst-insert-start");
-			pause();
-
-			while (true) {
-				if (w.getKey() == K) {
-					addStep("alreadythere");
-					v.goDown();
-					return;
-				} else if (w.getKey() < K) {
-					addStep("bst-insert-right", K, w.getKey());
-					if (w.getRight() != null) {
-						w = w.getRight();
-					} else {
-						w.linkRight(v);
-						break;
-					}
-				} else {
-					addStep("bst-insert-left", K, w.getKey());
-					if (w.getLeft() != null) {
-						w = w.getLeft();
-					} else {
-						w.linkLeft(v);
-						break;
-					}
-				}
-				v.goAbove(w);
-				pause();
-			}
-			T.reposition();
+	public void runAlgorithm() throws InterruptedException {
+		BSTInsert insert = new BSTInsert(T, new TreapNode(T, K, ZDepth.ACTIONNODE), this);
+		insert.runAlgorithm();
+		HashMap<String, Object> insertResult = insert.getResult();
+		boolean inserted = (Boolean) insertResult.get("inserted");
+		
+		if (inserted) {
 			pause();
 			// bubleme nahor
 			addStep("treapbubbleup");
+			TreapNode v = (TreapNode) insertResult.get("v");
+			v.mark();
 			while (!v.isRoot() && v.getParent().p < v.p) {
 				T.rotate(v);
 				pause();
 			}
+			v.unmark();
+			addStep("done");
 		}
-		addStep("done");
-		T.setV(null);
+	}
+
+	@Override
+	public HashMap<String, Object> getResult() {
+		return null;
 	}
 }

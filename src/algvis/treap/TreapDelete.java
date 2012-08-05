@@ -16,71 +16,35 @@
  ******************************************************************************/
 package algvis.treap;
 
+import algvis.bst.BSTFind;
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
+import java.util.HashMap;
+
 public class TreapDelete extends Algorithm {
 	private final Treap T;
-	private final TreapNode v;
 	private final int K;
 
 	public TreapDelete(Treap T, int x) {
-		super(panel, d);
+		super(T.panel);
 		this.T = T;
-		T.setV(v = new TreapNode(T, K = x));
-		v.setColor(NodeColor.DELETE);
-		setHeader("deletion");
+		K = x;
 	}
 
 	@Override
-	public void run() {
-		if (T.getRoot() == null) {
-			v.goToRoot();
-			addStep("empty");
-			pause();
-			v.goDown();
-			v.setColor(NodeColor.NOTFOUND);
-			addStep("notfound");
-        } else {
-			TreapNode d = (TreapNode)T.getRoot();
-			v.goTo(d);
-			addStep("bstdeletestart");
-			pause();
+	public void runAlgorithm() throws InterruptedException {
+		setHeader("delete", K);
+		addNote("bstdeletestart");
+		BSTFind find = new BSTFind(T, K, this);
+		find.runAlgorithm();
+		TreapNode d = (TreapNode) find.getResult().get("node");
 
-			while (true) {
-				if (d.getKey() == K) { // found
-					v.setColor(NodeColor.FOUND);
-					break;
-				} else if (d.getKey() < K) { // right
-					addStep("bstfindright", K, d.getKey());
-					d = d.getRight();
-					if (d != null) {
-						v.goTo(d);
-					} else {
-						v.goRight();
-						break;
-					}
-				} else { // left
-					addStep("bstfindleft", K, d.getKey());
-					d = d.getLeft();
-					if (d != null) {
-						v.goTo(d);
-					} else {
-						v.goLeft();
-						break;
-					}
-				}
-				pause();
-			}
-
-			if (d == null) { // notfound
-				addStep("notfound");
-				return;
-			}
-
-			d.setColor(NodeColor.FOUND);
-			T.setV(null);
+		if (d != null) {
+			d.setColor(NodeColor.DELETE);
+			
 			addStep("treapbubbledown");
+			pause();
 			// prebubleme k listu
 			while (!d.isLeaf()) {
 				if (d.getLeft() == null) {
@@ -94,9 +58,9 @@ public class TreapDelete extends Algorithm {
 				}
 				pause();
 			}
-			T.setV(d);
 			addStep("treapdeletecase1");
 			pause();
+			addToScene(d);
 			if (d.isRoot()) {
 				T.setRoot(null);
 			} else if (d.isLeft()) {
@@ -105,9 +69,15 @@ public class TreapDelete extends Algorithm {
 				d.getParent().setRight(null);
 			}
 			d.goDown();
+			removeFromScene(d);
 
 			T.reposition();
 			addStep("done");
 		}
+	}
+
+	@Override
+	public HashMap<String, Object> getResult() {
+		return null;
 	}
 }
