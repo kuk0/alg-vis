@@ -17,17 +17,22 @@
 package algvis.splaytree;
 
 import algvis.core.NodeColor;
+import algvis.core.visual.ZDepth;
+
+import java.util.HashMap;
 
 public class SplayFind extends SplayAlg {
+	
 	public SplayFind(SplayTree T, int x) {
 		super(T, x);
-		T.setVV(v = new SplayNode(T, x));
-		v.setColor(NodeColor.FIND);
-		setHeader("find", x);
 	}
 
 	@Override
-	public void run() {
+	public void runAlgorithm() throws InterruptedException {
+		SplayNode v = new SplayNode(T, K, ZDepth.ACTIONNODE);
+		v.setColor(NodeColor.FIND);
+		addToScene(v);
+		setHeader("find", K);
 		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("bstfindempty");
@@ -55,5 +60,11 @@ public class SplayFind extends SplayAlg {
 			}
 			pause();
 		}
+		removeFromScene(v);
+	}
+
+	@Override
+	public HashMap<String, Object> getResult() {
+		return null;
 	}
 }

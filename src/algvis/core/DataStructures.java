@@ -161,8 +161,8 @@ public class DataStructures {
 //			return new SkipListPanel(S, true);
 		case 10:
 			return new GBPanel(S);
-//		case 11:
-//			return new SplayPanel(S, true);
+		case 11:
+			return new SplayPanel(S);
 //		case 12:
 //			return new HeapPanel(S, true);
 //		case 13:

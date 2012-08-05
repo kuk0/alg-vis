@@ -17,17 +17,21 @@
 package algvis.splaytree;
 
 import algvis.core.NodeColor;
+import algvis.core.visual.ZDepth;
+
+import java.util.HashMap;
 
 public class SplayInsert extends SplayAlg {
 	public SplayInsert(SplayTree T, int x) {
 		super(T, x);
-		T.setVV(v = new SplayNode(T, x));
-		v.setColor(NodeColor.INSERT);
-		setHeader("insert", x);
 	}
 
 	@Override
-	public void run() {
+	public void runAlgorithm() throws InterruptedException {
+		SplayNode v = new SplayNode(T, K, ZDepth.ACTIONNODE);
+		v.setColor(NodeColor.INSERT);
+		addToScene(v);
+		setHeader("insert", K);
 		if (T.getRoot() == null) {
 			T.setRoot(v);
 			v.goToRoot();
@@ -43,6 +47,7 @@ public class SplayInsert extends SplayAlg {
 				addStep("alreadythere");
 				v.goDown();
 				v.setColor(NodeColor.NOTFOUND);
+				removeFromScene(v);
 				return;
 			} else if (w.getKey() < K) {
 				addNote("splay-insert-left", K);
@@ -65,6 +70,11 @@ public class SplayInsert extends SplayAlg {
 		}
 		addNote("done");
 		v.setColor(NodeColor.NORMAL);
-		T.setVV(null);
+		removeFromScene(v);
+	}
+
+	@Override
+	public HashMap<String, Object> getResult() {
+		return null;
 	}
 }

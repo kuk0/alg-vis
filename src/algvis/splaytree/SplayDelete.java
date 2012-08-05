@@ -18,15 +18,24 @@ package algvis.splaytree;
 
 import algvis.core.Node;
 import algvis.core.NodeColor;
+import algvis.core.visual.ZDepth;
+
+import java.util.HashMap;
 
 public class SplayDelete extends SplayAlg {
+	private final int K;
+	
 	public SplayDelete(SplayTree T, int x) {
 		super(T, x);
-		setHeader("delete", x);
+		K = x;
 	}
 
 	@Override
-	public void run() {
+	public void runAlgorithm() throws InterruptedException {
+		SplayNode s = new SplayNode(T, K, ZDepth.ACTIONNODE);
+		s.setColor(NodeColor.DELETE);
+		addToScene(s);
+		setHeader("delete", K);
 		if (T.getRoot() == null) {
 			s.goToRoot();
 			addStep("empty");
@@ -34,24 +43,30 @@ public class SplayDelete extends SplayAlg {
 			s.goDown();
 			s.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
+			removeFromScene(s);
 			return;
 		}
+		s.goAboveRoot();
 
 		SplayNode w = find(K);
-		splay(w);
-
-		w.setColor(NodeColor.NORMAL);
 
 		if (w.getKey() != s.getKey()) {
 			addStep("notfound");
 			s.setColor(NodeColor.NOTFOUND);
 			s.goDown();
+			removeFromScene(s);
+			splay(w);
+			w.setColor(NodeColor.NORMAL);
 			return;
 		}
+		w.setColor(NodeColor.DELETE);
+		removeFromScene(s);
+		splay(w);
 
-		T.setV(w);
-		T.getV().goDown();
-		T.getV().setColor(NodeColor.DELETE);
+		pause();
+		addToScene(w);
+		w.goDown();
+		removeFromScene(w);
 		if (w.getLeft() == null) {
 			addStep("splaydeleteright");
 			T.setRoot(w.getRight());
@@ -67,11 +82,13 @@ public class SplayDelete extends SplayAlg {
 		} else {
 			addStep("splaydelete");
 			T.setRoot2(w.getLeft());
+			T.getRoot2().shiftTree(-75, 0);
 			T.getRoot2().setParent(null);
 			T.setRoot(w.getRight());
 			T.getRoot().setParent(null);
-			T.setVV(s = new SplayNode(T, -Node.INF));
+			s = new SplayNode(T, -Node.INF, ZDepth.ACTIONNODE);
 			s.setColor(NodeColor.FIND);
+			addToScene(s);
 			w = w.getRight();
 			s.goTo(w);
 			pause();
@@ -81,7 +98,7 @@ public class SplayDelete extends SplayAlg {
 				pause();
 			}
 			w.setColor(NodeColor.FIND);
-			T.setVV(null);
+			removeFromScene(s);
 			// splay
 			while (!w.isRoot()) {
 				if (w.getParent().isRoot()) {
@@ -118,6 +135,10 @@ public class SplayDelete extends SplayAlg {
 		}
 
 		addStep("done");
-		T.setVV(null);
+	}
+
+	@Override
+	public HashMap<String, Object> getResult() {
+		return null;
 	}
 }

@@ -309,6 +309,16 @@ public class BSTNode extends Node {
 		move();
 	}
 
+	public void shiftTree(int dx, int dy) {
+		if (getLeft() != null) {
+			getLeft().shiftTree(dx, dy);
+		}
+		if (getRight() != null) {
+			getRight().shiftTree(dx, dy);
+		}
+		goTo(tox + dx, toy + dy);
+	}
+
 	/**
 	 * Create an (imaginary) box around the subtree rooted at this node.
 	 * Calculate the width from the node to the left side (leftw) and the width

@@ -18,23 +18,23 @@ package algvis.splaytree;
 
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
+import algvis.core.visual.ZDepth;
 
-class SplayAlg extends Algorithm {
+abstract class SplayAlg extends Algorithm {
 	final SplayTree T;
-	SplayNode s, v;
-	int K;
+	protected final int K;
 
 	SplayAlg(SplayTree T, int x) {
-		super(panel, d);
+		super(T.panel, null);
 		this.T = T;
-		if (T.getRoot() != null) {
-			T.setV(s = new SplayNode(T, K = x));
-			s.setColor(NodeColor.FIND);
-		}
+		K = x;
 	}
 
-	SplayNode find(int K) {
+	SplayNode find(int K) throws InterruptedException {
 		SplayNode w = (SplayNode) T.getRoot();
+		SplayNode s = new SplayNode(T, this.K, ZDepth.ACTIONNODE);
+		s.setColor(NodeColor.FIND);
+		addToScene(s);
 		s.goTo(w);
 		addNote("splay-start", K);
 		pause();
@@ -61,12 +61,12 @@ class SplayAlg extends Algorithm {
 			pause();
 		}
 		w.setColor(NodeColor.FIND);
-		T.setV(null);
+		removeFromScene(s);
 		pause();
 		return w;
 	}
 
-	void splay(SplayNode w) {
+	void splay(SplayNode w) throws InterruptedException {
 		while (!w.isRoot()) {
 			T.setW1(w);
 			T.setW2(w.getParent());

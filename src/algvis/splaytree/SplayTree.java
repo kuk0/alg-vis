@@ -17,12 +17,16 @@
 package algvis.splaytree;
 
 import algvis.bst.BST;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.gui.VisPanel;
 import algvis.gui.view.Layout;
 import algvis.gui.view.View;
 
+import java.util.Hashtable;
+
 public class SplayTree extends BST {
 	public static String dsName = "splaytree";
+	private SplayNode root2, w1, w2;
 
 	@Override
 	public String getName() {
@@ -31,39 +35,30 @@ public class SplayTree extends BST {
 
 	public SplayTree(VisPanel M) {
 		super(M);
-		addNodes(4); // root2 (2), vv (3), w1 (4), w2 (5)
 	}
 
 	public SplayNode getRoot2() {
-		return (SplayNode) getNode(2);
+		return root2;
 	}
 
 	public void setRoot2(SplayNode root2) {
-		setNode(2, root2, false);
-	}
-
-	SplayNode getVV() {
-		return (SplayNode) getNode(3);
-	}
-
-	public void setVV(SplayNode vv) {
-		setNode(3, vv, true);
+		this.root2 = root2;
 	}
 
 	SplayNode getW1() {
-		return (SplayNode) getNode(4);
+		return w1;
 	}
 
 	public void setW1(SplayNode w1) {
-		setNode(4, w1, true);
+		this.w1 = w1;
 	}
 
 	SplayNode getW2() {
-		return (SplayNode) getNode(5);
+		return w2;
 	}
 
 	public void setW2(SplayNode w2) {
-		setNode(5, w2, false);
+		this.w2 = w2;
 	}
 
 	@Override
@@ -88,32 +83,26 @@ public class SplayTree extends BST {
 					.getParent().y);
 		}
 		if (getW2() != null && getW2().getParent() != null) {
-			V.drawWideLine(getW2().x, getW2().y, getW2().getParent().x, getW2()
-					.getParent().y);
+			V.drawWideLine(getW2().x, getW2().y, getW2().getParent().x, getW2().getParent().y);
 		}
-
-		if (getRoot() != null) {
-			getRoot().moveTree();
-			getRoot().drawTree(V);
-		}
+		super.draw(V);
 		if (getRoot2() != null) {
-			getRoot2().moveTree();
 			getRoot2().drawTree(V);
 		}
-		if (getV() != null) {
-			getV().move();
-			getV().draw(V);
-		}
-		if (getVV() != null) {
-			getVV().move();
-			getVV().draw(V);
+	}
+
+	@Override
+	public void move() {
+		super.move();
+		if (getRoot2() != null) {
+			getRoot2().moveTree();
 		}
 	}
 
 	/*
-	 * public String stats() { return super.stats()+";   Potential: "+ ((root ==
-	 * null) ? "0" : ((SplayNode)root).pot); }
-	 */
+		 * public String stats() { return super.stats()+";   Potential: "+ ((root ==
+		 * null) ? "0" : ((SplayNode)root).pot); }
+		 */
 
 	public void rotate2(SplayNode v) {
 		if (v.isLeft()) {
@@ -133,8 +122,9 @@ public class SplayTree extends BST {
 
 	@Override
 	public void clear() {
-		super.clear();
-		setVV(null);
+		if (root != null || root2 != null) {
+			start(new Clear());
+		}		
 	}
 
 	@Override
@@ -142,4 +132,32 @@ public class SplayTree extends BST {
 		return Layout.COMPACT;
 	}
 
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "w1", w1);
+		HashtableStoreSupport.store(state, hash + "w2", w2);
+		HashtableStoreSupport.store(state, hash + "root2", root2);
+		if (root2 != null) root2.storeState(state);
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object w1 = state.get(hash + "w1");
+		if (w1 != null) this.w1 = (SplayNode) HashtableStoreSupport.restore(w1);
+		Object w2 = state.get(hash + "w2");
+		if (w2 != null) this.w2 = (SplayNode) HashtableStoreSupport.restore(w2);
+		Object root2 = state.get(hash + "root2");
+		if (root2 != null) this.root2 = (SplayNode) HashtableStoreSupport.restore(root2);
+		if (this.root2 != null) this.root2.restoreState(state);
+	}
+	
+	private class Clear extends BST.Clear {
+		@Override
+		public void runAlgorithm() throws InterruptedException {
+			super.runAlgorithm();
+			root2 = null;	
+		}
+	}
 }

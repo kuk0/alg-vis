@@ -22,13 +22,8 @@ import algvis.core.DataStructure;
 public class SplayNode extends BSTNode {
 	private int pot = 0;
 
-	private SplayNode(DataStructure D, int key, int x, int y) {
-		super(D, key, x, y);
-	}
-
-	public SplayNode(DataStructure D, int key) {
-		this(D, key, 0, 0);
-		getReady();
+	public SplayNode(DataStructure D, int key, int zDepth) {
+		super(D, key, zDepth);
 	}
 
 	@Override
