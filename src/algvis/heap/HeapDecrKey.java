@@ -18,22 +18,25 @@ package algvis.heap;
 
 import algvis.gui.InputField;
 
+import java.util.HashMap;
+
 public class HeapDecrKey extends HeapAlg {
 	private final int delta;
+	private final HeapNode v;
 
 	public HeapDecrKey(Heap H, HeapNode v, int delta) {
 		super(H);
 		this.v = v;
 		this.delta = delta;
+	}
+
+	@Override
+	public void runAlgorithm() throws InterruptedException {
 		if (H.minHeap) {
 			setHeader("decreasekey");
 		} else {
 			setHeader("increasekey");
 		}
-	}
-
-	@Override
-	public void run() {
 		if (H.minHeap) {
 			v.setKey(v.getKey() - delta);
 			if (v.getKey() < 1)
@@ -44,5 +47,10 @@ public class HeapDecrKey extends HeapAlg {
 				v.setKey(InputField.MAX);
 		}
 		bubbleup(v);
+	}
+
+	@Override
+	public HashMap<String, Object> getResult() {
+		return null;
 	}
 }

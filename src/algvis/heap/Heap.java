@@ -17,17 +17,24 @@
 package algvis.heap;
 
 import algvis.bst.BSTNode;
+import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.core.PriorityQueue;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.gui.VisPanel;
 import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
 import algvis.internationalization.Languages;
 import org.jdom2.Element;
 
+import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
+import java.util.Hashtable;
+
 public class Heap extends PriorityQueue implements ClickListener {
 	public static final String dsName = "heap";
 	private int n = 0;
+	private HeapNode root;
 
 	@Override
 	public String getName() {
@@ -36,7 +43,6 @@ public class Heap extends PriorityQueue implements ClickListener {
 
 	public Heap(VisPanel M) {
 		super(M);
-		addNodes(3); // root (0), v (1), v2 (2)
 		M.screen.V.setDS(this);
 	}
 
@@ -60,11 +66,9 @@ public class Heap extends PriorityQueue implements ClickListener {
 
 	@Override
 	public void clear() {
-		setRoot(setV(setV2(null)));
-		setN(0);
-		setStats();
-		// TODO asi nie
-		panel.scenario.clear();
+		if (root != null) {
+			start(new Clear());
+		}
 	}
 
 	@Override
@@ -83,17 +87,32 @@ public class Heap extends PriorityQueue implements ClickListener {
 	@Override
 	public void draw(View V) {
 		if (getRoot() != null) {
-			getRoot().moveTree();
 			getRoot().drawTree(V);
 		}
-		if (getV() != null) {
-			getV().move();
-			getV().draw(V);
+	}
+
+	@Override
+	protected void move() {
+		if (root != null) {
+			root.moveTree();
 		}
-		if (getV2() != null) {
-			getV2().move();
-			getV2().draw(V);
-		}
+	}
+
+	@Override
+	protected Rectangle2D getBoundingBox() {
+		return root.getBoundingBox();
+	}
+
+	@Override
+	protected void endAnimation() {
+		// TODO radsej asi nejak preliezt strom, root.endAnimation by sa malo tykat len roota
+		root.endAnimation();
+	}
+
+	@Override
+	protected boolean isAnimationDone() {
+		// TODO takisto (alebo este sa uvidi)
+		return root.isAnimationDone();
 	}
 
 	public void reposition() {
@@ -122,29 +141,11 @@ public class Heap extends PriorityQueue implements ClickListener {
 	}
 
 	public HeapNode getRoot() {
-		return (HeapNode) getNode(0);
+		return root;
 	}
 
 	public void setRoot(HeapNode root) {
-		setNode(0, root, false);
-	}
-
-	public HeapNode getV() {
-		return (HeapNode) getNode(1);
-	}
-
-	public HeapNode setV(HeapNode v) {
-		setNode(1, v, true);
-		return v;
-	}
-
-	public HeapNode getV2() {
-		return (HeapNode) getNode(2);
-	}
-
-	public HeapNode setV2(HeapNode v2) {
-		setNode(2, v2, true);
-		return v2;
+		this.root = root;
 	}
 
 	public int getN() {
@@ -152,38 +153,43 @@ public class Heap extends PriorityQueue implements ClickListener {
 	}
 
 	public void setN(int n) {
-		if (this.n != n) {
-			if (panel.scenario.isAddingEnabled()) {
-				panel.scenario.add(new SetNCommand(n));
-			}
-			this.n = n;
-		}
+		this.n = n;
 	}
 
-	private class SetNCommand implements Command {
-		private final int fromN, toN;
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "n", n);
+		HashtableStoreSupport.store(state, hash + "root", root);
+		if (root != null) root.storeState(state);
+	}
 
-		public SetNCommand(int toN) {
-			this.fromN = getN();
-			this.toN = toN;
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object n = state.get(hash + "n");
+		if (n != null) this.n = (Integer) HashtableStoreSupport.restore(n);
+		Object root = state.get(hash + "root");
+		if (root != null) this.root = (HeapNode) HashtableStoreSupport.restore(root);
+		if (this.root != null) this.root.restoreState(state);
+	}
+	
+	private class Clear extends Algorithm {
+
+		protected Clear() {
+			super(Heap.this.panel);
 		}
 
 		@Override
-		public Element getXML() {
-			Element e = new Element("setN");
-			e.setAttribute("fromN", Integer.toString(fromN));
-			e.setAttribute("toN", Integer.toString(toN));
-			return e;
+		public void runAlgorithm() throws InterruptedException {
+			setRoot(null);
+			setN(0);
+			setStats();
 		}
 
 		@Override
-		public void execute() {
-			setN(toN);
-		}
-
-		@Override
-		public void unexecute() {
-			setN(fromN);
+		public HashMap<String, Object> getResult() {
+			return null;
 		}
 	}
 }

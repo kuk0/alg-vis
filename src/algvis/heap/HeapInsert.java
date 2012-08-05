@@ -16,18 +16,25 @@
  ******************************************************************************/
 package algvis.heap;
 
+import algvis.core.visual.ZDepth;
+
+import java.util.HashMap;
+
 public class HeapInsert extends HeapAlg {
+	private final int K;
 	public HeapInsert(Heap H, int x) {
 		super(H);
-		H.setV(v = new HeapNode(H, x));
-		setHeader("insertion");
+		K = x;
 	}
 
 	@Override
-	public void run() {
+	public void runAlgorithm() throws InterruptedException {
+		HeapNode v = new HeapNode(H, K, ZDepth.ACTIONNODE);
+		addToScene(v);
+		setHeader("insertion");
 		if (H.getN() == 1000) {
 			addStep("heapfull");
-			H.setV(null);
+			removeFromScene(v);
 			return;
 		}
 		HeapNode w;
@@ -54,12 +61,19 @@ public class HeapInsert extends HeapAlg {
 			} else {
 				w.linkRight(v);
 			}
+			v.mark();
 			H.reposition();
 			pause();
 		}
-		H.setV(null);
+		removeFromScene(v);
+		v.unmark();
 
 		// pause();
 		bubbleup(v);
+	}
+
+	@Override
+	public HashMap<String, Object> getResult() {
+		return null;
 	}
 }

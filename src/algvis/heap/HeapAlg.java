@@ -19,16 +19,15 @@ package algvis.heap;
 import algvis.core.Algorithm;
 import algvis.core.Node;
 
-class HeapAlg extends Algorithm {
+abstract class HeapAlg extends Algorithm {
 	final Heap H;
-	HeapNode v;
 
 	HeapAlg(Heap H) {
-		super(panel, d);
+		super(H.panel, null);
 		this.H = H;
 	}
 
-	void bubbleup(HeapNode v) {
+	void bubbleup(HeapNode v) throws InterruptedException {
 		if (H.minHeap) {
 			addStep("minheapbubbleup");
 		} else {
@@ -36,22 +35,27 @@ class HeapAlg extends Algorithm {
 		}
 		HeapNode w = v.getParent();
 		while (w != null && v.prec(w)) {
-			H.setV(new HeapNode(v));
-			H.setV2(new HeapNode(w));
+			HeapNode v1 = new HeapNode(v);
+			HeapNode v2 = new HeapNode(w);
+			v1.mark();
+			addToScene(v1);
+			addToScene(v2);
 			v.setKey(Node.NOKEY);
 			w.setKey(Node.NOKEY);
-			H.getV().goTo(w);
-			H.getV2().goTo(v);
+			v1.goTo(w);
+			v2.goTo(v);
 			pause();
-			v.setKey(H.getV2().getKey());
-			w.setKey(H.getV().getKey());
-			v.setColor(H.getV2().getColor());
-			w.setColor(H.getV().getColor());
-			H.setV(null);
-			H.setV2(null);
+			v.setKey(v2.getKey());
+			w.setKey(v1.getKey());
+			v.setColor(v2.getColor());
+			w.setColor(v1.getColor());
+			v1.unmark();
+			removeFromScene(v1);
+			removeFromScene(v2);
 			v = w;
 			w = w.getParent();
 		}
+		v.unmark();
 		addStep("done");
 	}
 }

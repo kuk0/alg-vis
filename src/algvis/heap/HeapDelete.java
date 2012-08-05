@@ -18,24 +18,27 @@ package algvis.heap;
 
 import algvis.core.Node;
 
+import java.util.HashMap;
+
 public class HeapDelete extends HeapAlg {
 	public HeapDelete(Heap H) {
 		super(H);
-		setHeader("deletion");
 	}
 
 	@Override
-	public void run() {
+	public void runAlgorithm() throws InterruptedException {
+		setHeader("deletion");
 		if (H.getN() == 0) {
 			addStep("heapempty");
 			return;
 		}
 		if (H.getN() == 1) {
-			H.setV(H.getRoot());
+			HeapNode v = H.getRoot();
+			addToScene(v);
 			H.setRoot(null);
 			H.setN(H.getN() - 1);
-			H.getV().goDown();
-			pause();
+			v.goDown();
+			removeFromScene(v);
 			return;
 		}
 		HeapNode v, w;
@@ -50,19 +53,21 @@ public class HeapDelete extends HeapAlg {
 			w = ((n & k) == 0) ? w.getLeft() : w.getRight();
 			k >>= 1;
 		}
-		H.setV(w);
+		v = w;
+		addToScene(v);
 		H.setN(H.getN() - 1);
 		if ((n & 1) == 0) {
 			w.getParent().setLeft(null);
 		} else {
 			w.getParent().setRight(null);
 		}
-		H.getV().goToRoot();
+		v.goToRoot();
 		H.reposition();
 		pause();
 
-		H.getRoot().setKey(H.getV().getKey());
-		H.setV(null);
+		// TODO Takto asi nie (a mozno hej)
+		H.getRoot().setKey(v.getKey());
+		removeFromScene(v);
 		if (H.minHeap) {
 			addStep("minheapbubbledown");
 		} else {
@@ -82,22 +87,29 @@ public class HeapDelete extends HeapAlg {
 			if (w == null || v.prec(w)) {
 				break;
 			}
-			H.setV(new HeapNode(v));
-			H.setV2(new HeapNode(w));
+			HeapNode v1 = new HeapNode(v);
+			HeapNode v2 = new HeapNode(w);
+			addToScene(v1);
+			addToScene(v2);
 			v.setKey(Node.NOKEY);
 			w.setKey(Node.NOKEY);
-			H.getV().goTo(w);
-			H.getV2().goTo(v);
+			v1.goTo(w);
+			v2.goTo(v);
 			pause();
-			v.setKey(H.getV2().getKey());
-			w.setKey(H.getV().getKey());
-			v.setColor(H.getV2().getColor());
-			w.setColor(H.getV().getColor());
-			H.setV(null);
-			H.setV2(null);
+			v.setKey(v2.getKey());
+			w.setKey(v1.getKey());
+			v.setColor(v2.getColor());
+			w.setColor(v1.getColor());
+			removeFromScene(v1);
+			removeFromScene(v2);
 			v = w;
 		}
 
 		addStep("done");
+	}
+
+	@Override
+	public HashMap<String, Object> getResult() {
+		return null;
 	}
 }

@@ -141,8 +141,8 @@ public class DataStructures {
 		switch (i) {
 		case 0:
 			return new BSTPanel(S);
-//		case 1:
-//			return new RotPanel(S, false);
+		case 1:
+			return new RotPanel(S);
 		case 2:
 			return new AVLPanel(S);
 //		case 3:
@@ -163,8 +163,8 @@ public class DataStructures {
 			return new GBPanel(S);
 		case 11:
 			return new SplayPanel(S);
-//		case 12:
-//			return new HeapPanel(S, true);
+		case 12:
+			return new HeapPanel(S);
 //		case 13:
 //			return new DaryHeapPanel(S, false);
 //		case 14:

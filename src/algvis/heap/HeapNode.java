@@ -32,19 +32,13 @@ public class HeapNode extends BSTNode {
 		bgKeyColor();
 	}
 
-	public HeapNode(DataStructure D, int key) {
-		super(D, key);
+	public HeapNode(DataStructure D, int key, int zDepth) {
+		super(D, key, zDepth);
 		bgKeyColor();
 	}
 
 	public HeapNode(HeapNode v) {
 		this(v.D, v.getKey(), v.tox, v.toy);
-		// TODO !!! v tychto konstruktoroch (mozno aj na inych miestach v
-		// programe) by malo byt tox a toy, lebo pri vykonavani algoritmu
-		// (vytvarani scenara) este vrchol nie je na [tox,toy], lebo sa na nom
-		// ani raz nezavola move(); je stale na [x,y]
-		// - s tymto je problem (len) ked nekrokujeme prve spustenie algoritmu;
-		// aj pri rychlom krokovani, ked sa v este nedostane na [tox,toy]
 	}
 
 	@Override

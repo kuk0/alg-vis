@@ -25,7 +25,7 @@ public class HeapPanel extends VisPanel {
 	private static final long serialVersionUID = -2488725769022251713L;
 	public static Class<? extends DataStructure> DS = Heap.class;
 
-	public HeapPanel(Settings S, boolean isScenarioEnabled) {
+	public HeapPanel(Settings S) {
 		super(S);
 	}
 
