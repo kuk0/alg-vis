@@ -268,7 +268,7 @@ public class BSTNode extends Node {
 			p.addPoint(x + 1, y - 1);
 			v.fillPolygon(p);
 		}
-		if ((state != INVISIBLE || !isAnimationDone()) && parent != null) {
+		if (state != INVISIBLE && parent != null) {
 			v.setColor(Color.black);
 			v.drawLine(x, y, parent.x, parent.y);
 		}
@@ -628,6 +628,10 @@ public class BSTNode extends Node {
 		HashtableStoreSupport.store(state, hash + "right", right);
 		HashtableStoreSupport.store(state, hash + "parent", parent);
 		HashtableStoreSupport.store(state, hash + "level", level);
+		HashtableStoreSupport.store(state, hash + "thread", thread);
+		HashtableStoreSupport.store(state, hash + "leftw", leftw);
+		HashtableStoreSupport.store(state, hash + "rightw", rightw);
+		HashtableStoreSupport.store(state, hash + "markSubtree", markSubtree);
 		if (left != null) left.storeState(state);
 		if (right != null) right.storeState(state);
 	}
@@ -643,6 +647,14 @@ public class BSTNode extends Node {
 		if (parent != null) this.parent = (BSTNode) HashtableStoreSupport.restore(parent);
 		Object level = state.get(hash + "level");
 		if (level != null) this.level = (Integer) HashtableStoreSupport.restore(level);
+		Object thread = state.get(hash + "thread");
+		if (thread != null) this.thread = (Boolean) HashtableStoreSupport.restore(thread);
+		Object leftw = state.get(hash + "leftw");
+		if (leftw != null) this.leftw = (Integer) HashtableStoreSupport.restore(leftw);
+		Object rightw = state.get(hash + "rightw");
+		if (rightw != null) this.rightw = (Integer) HashtableStoreSupport.restore(rightw);
+		Object markSubtree = state.get(hash + "markSubtree");
+		if (markSubtree != null) this.markSubtree = (Boolean) HashtableStoreSupport.restore(markSubtree);
 		
 		if (this.left != null) this.left.restoreState(state);
 		if (this.right != null) this.right.restoreState(state);

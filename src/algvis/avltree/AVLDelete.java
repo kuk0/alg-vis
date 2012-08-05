@@ -76,9 +76,9 @@ public class AVLDelete extends Algorithm {
 			} else { // case III - 2 synovia
 				addStep("bst-delete-case3");
 				AVLNode s = d.getRight();
-				AVLNode v = (AVLNode) (new AVLNode(T, -Node.INF, ZDepth.ACTIONNODE));
-				addToScene(v);
+				AVLNode v = new AVLNode(T, -Node.INF, ZDepth.ACTIONNODE);
 				v.setColor(NodeColor.FIND);
+				addToScene(v);
 				v.goTo(s);
 				pause();
 				while (s.getLeft() != null) {
@@ -109,6 +109,7 @@ public class AVLDelete extends Algorithm {
 						d.getParent().linkRight(v);
 					}
 				}
+				removeFromScene(v);
 				v.linkLeft(d.getLeft());
 				v.linkRight(d.getRight());
 				v.goTo(d);

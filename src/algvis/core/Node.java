@@ -296,7 +296,7 @@ public class Node extends VisualElement {
 	}
 
 	public void draw(View v) {
-		if ((state == Node.INVISIBLE && isAnimationDone()) || getKey() == NULL) {
+		if (state == Node.INVISIBLE || getKey() == NULL) {
 			return;
 		}
 		drawBg(v);

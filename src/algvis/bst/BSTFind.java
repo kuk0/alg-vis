@@ -107,11 +107,12 @@ public class BSTFind extends Algorithm {
 				pause();
 			}
 		}
-		removeFromScene(v);
+		if (result.get("node") == null) removeFromScene(v);
 		pause();
 		if (T.getRoot() != null) {
 			T.getRoot().subtreeColor(NodeColor.NORMAL);
 		}
+		if (result.get("node") != null) removeFromScene(v);
 	}
 
 	public HashMap<String, Object> getResult() {
