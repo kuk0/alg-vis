@@ -24,7 +24,7 @@ import java.util.Hashtable;
 
 abstract public class Dictionary extends DataStructure {
 	public static String adtName = "dictionary";
-	private Node root;
+	protected Node root;
 
 	protected Dictionary(VisPanel M) {
 		super(M);

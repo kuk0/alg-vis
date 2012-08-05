@@ -23,12 +23,12 @@ import java.util.HashMap;
 public class GBDelete extends GBAlg {
 	public GBDelete(GBTree T, int x) {
 		super(T, x);
+		v.setColor(NodeColor.DELETE);
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		addToScene(v);
-		v.setColor(NodeColor.DELETE);
 		setHeader("deletion");
 		if (T.getRoot() == null) {
 			v.goToRoot();

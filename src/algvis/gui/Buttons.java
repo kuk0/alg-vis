@@ -219,6 +219,7 @@ abstract public class Buttons extends JPanel implements ActionListener, StateEdi
 				panel.refresh();
 			}
 		} else if (evt.getSource() == clear) {
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
 			D.clear();
 		} else if (evt.getSource() == random) {
 			D.random(I.getInt(10));
@@ -236,7 +237,7 @@ abstract public class Buttons extends JPanel implements ActionListener, StateEdi
 		I.requestFocusInWindow();
 	}
 	
-	void setOtherEnabled(boolean enabled) {
+	public void setOtherEnabled(boolean enabled) {
 		clear.setEnabled(enabled);
 		random.setEnabled(enabled);
 	}

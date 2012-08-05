@@ -16,6 +16,7 @@
  ******************************************************************************/
 package algvis.bst;
 
+import algvis.core.Algorithm;
 import algvis.core.Dictionary;
 import algvis.core.StringUtils;
 import algvis.core.history.UpdatableStateEdit;
@@ -28,6 +29,7 @@ import algvis.gui.view.View;
 import algvis.internationalization.Languages;
 
 import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
 
 public class BST extends Dictionary implements LayoutListener, ClickListener {
 	public static String dsName = "bst";
@@ -70,17 +72,7 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 	@Override
 	public void clear() {
 		if (getRoot() != null) {
-			UpdatableStateEdit e = new UpdatableStateEdit(panel, panel.history.getNextId());
-			setRoot(null);
-			panel.commentary.clear();
-			panel.scene.clear();
-			addToScene();
-			setStats();
-			reposition();
-			panel.screen.V.resetView();
-			e.end();
-			panel.history.addEdit(e);
-			panel.history.putAlgorithmEnd();
+			start(new Clear());
 		}
 	}
 
@@ -224,5 +216,27 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 	@Override
 	public Layout getLayout() {
 		return Layout.SIMPLE;
+	}
+	
+	protected class Clear extends Algorithm {
+		protected Clear() {
+			super(BST.this.panel);
+		}
+
+		@Override
+		public void runAlgorithm() throws InterruptedException {
+			setRoot(null);
+			panel.commentary.clear();
+			panel.scene.clear();
+			addToScene(BST.this);
+			setStats();
+			reposition();
+			panel.screen.V.resetView();
+		}
+
+		@Override
+		public HashMap<String, Object> getResult() {
+			return null;
+		}
 	}
 }

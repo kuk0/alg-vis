@@ -27,7 +27,7 @@ import java.util.Hashtable;
 
 public class GBTree extends BST {
 	public static String dsName = "scapegoat";
-	double alpha = 1.01;
+	double alpha = 1.01; // TODO mozno nebude fungovat prepinanie alphy pri prehliadani historie
 	private int del = 0;
 
 	@Override
@@ -64,8 +64,9 @@ public class GBTree extends BST {
 
 	@Override
 	public void clear() {
-		super.clear();
-		setDel(0);
+		if (root != null) {
+			start(new Clear());
+		}
 	}
 
 	@Override
@@ -121,5 +122,13 @@ public class GBTree extends BST {
 		super.restoreState(state);
 		Integer del = (Integer) state.get(hash + "del");
 		if (del != null) this.del = del;
+	}
+	
+	private class Clear extends BST.Clear {
+		@Override
+		public void runAlgorithm() throws InterruptedException {
+			super.runAlgorithm();
+			setDel(0);
+		}
 	}
 }

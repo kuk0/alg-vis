@@ -28,7 +28,7 @@ public class Scene extends VisualElement {
 	public static final int MAXZ = 10, MIDZ = 5;
 	private final List<HashSet<VisualElement>> elements = new ArrayList<HashSet<VisualElement>>();
 	private Rectangle2D.Float B;
-	private final RemoveManager removeManager = new RemoveManager(this);
+	private final RemoveManager removeManager = new RemoveManager();
 
 	public Scene() {
 		super(null, 0);
@@ -185,15 +185,15 @@ public class Scene extends VisualElement {
 	private class RemoveManager {
 		public final Set<VisualElement> toRemove = new HashSet<VisualElement>();
 
-		private RemoveManager(final Scene scene) {
+		private RemoveManager() {
 			// this thread wait until element ends its animation and then removes it from scene
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
 					while (true) {
-						synchronized (scene) {
-							int poc = 0;
-							for(Set<VisualElement> set : elements) poc += set.size();
+						synchronized (Scene.this) {
+//							int poc = 0;
+//							for(Set<VisualElement> set : elements) poc += set.size();
 //							System.out.println(toRemove.size());
 //							System.out.println("elemSIZE: " + poc);
 //							System.out.println("elemSIZE2: " + elements.get(5).size());

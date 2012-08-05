@@ -24,12 +24,12 @@ import java.util.HashMap;
 public class GBFind extends GBAlg {
 	public GBFind(GBTree T, int x) {
 		super(T, x);
+		v.setColor(NodeColor.FIND);
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		addToScene(v);
-		v.setColor(NodeColor.FIND);
 		setHeader("search");
 		if (T.getRoot() == null) {
 			v.goToRoot();

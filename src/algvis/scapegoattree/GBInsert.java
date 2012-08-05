@@ -23,12 +23,12 @@ import java.util.HashMap;
 public class GBInsert extends GBAlg {
 	public GBInsert(GBTree T, int x) {
 		super(T, x);
+		v.setColor(NodeColor.INSERT);
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		addToScene(v);
-		v.setColor(NodeColor.INSERT);
 		setHeader("insert", K);
 		if (T.getRoot() == null) {
 			T.setRoot(v);
