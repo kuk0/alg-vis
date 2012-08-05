@@ -55,21 +55,15 @@ public class HistoryManager extends UndoManager {
 	}
 
 	public synchronized void undoAlgorithm() {
-		undo();
-		UndoableEdit edit = editToBeUndone();
-		while(!algorithmEnds.containsKey(edit) && canUndo()) {
+		do {
 			undo();
-			edit = editToBeUndone();
-		}
+		} while (canUndo() && !algorithmEnds.containsKey(editToBeUndone()));
 	}
 	
 	public synchronized void redoAlgorithm() {
-		UndoableEdit edit = editToBeRedone();
-		while(!algorithmEnds.containsKey(edit)) {
+		do {
 			redo();
-			edit = editToBeRedone();
-		}
-		redo();
+		} while (!algorithmEnds.containsKey(editToBeUndone()) && canRedo());
 	}
 	
 	public synchronized void goTo(long id) {

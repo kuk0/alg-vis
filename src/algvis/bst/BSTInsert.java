@@ -29,10 +29,7 @@ public class BSTInsert extends Algorithm {
 	private HashMap<String, Object> result = new HashMap<String, Object>(); // "inserted", "w", "v"
 
 	public BSTInsert(BST T, BSTNode v) {
-		super(T.panel);
-		this.T = T;
-		this.v = v;
-		K = v.getKey();
+		this(T, v, null);
 	}
 
 	public BSTInsert(BST T, BSTNode v, Algorithm a) {
@@ -40,13 +37,12 @@ public class BSTInsert extends Algorithm {
 		this.T = T;
 		this.v = v;
 		K = v.getKey();
+		v.setColor(NodeColor.INSERT);
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		addToScene(v);
-		v.setState(Node.ALIVE);
-		v.setColor(NodeColor.INSERT);
 		setHeader("insert", K);
 		if (T.getRoot() == null) {
 			T.setRoot(v);

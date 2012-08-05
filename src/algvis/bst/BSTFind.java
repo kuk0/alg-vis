@@ -28,9 +28,7 @@ public class BSTFind extends Algorithm {
 	private HashMap<String, Object> result = new HashMap<String, Object>(); // node
 
 	public BSTFind(BST T, int x) {
-		super(T.panel);
-		this.T = T;
-		K = x;
+		this(T, x, null);
 	}
 
 	public BSTFind(BST T, int x, Algorithm a) {
@@ -43,8 +41,8 @@ public class BSTFind extends Algorithm {
 	public void runAlgorithm() throws InterruptedException {
 		result.put("node", null);
 		BSTNode v = new BSTNode(T, K, ZDepth.ACTIONNODE);
-		addToScene(v);
 		v.setColor(NodeColor.FIND);
+		addToScene(v);
 		setHeader("find", K);
 		if (T.getRoot() == null) {
 			v.goToRoot();
@@ -109,11 +107,11 @@ public class BSTFind extends Algorithm {
 				pause();
 			}
 		}
+		removeFromScene(v);
 		pause();
 		if (T.getRoot() != null) {
 			T.getRoot().subtreeColor(NodeColor.NORMAL);
 		}
-		removeFromScene(v);
 	}
 
 	public HashMap<String, Object> getResult() {

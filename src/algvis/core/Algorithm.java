@@ -52,7 +52,7 @@ abstract public class Algorithm implements Runnable {
 
 	protected Algorithm(VisPanel panel, Algorithm a) {
 		this(panel);
-		if (a != this) {
+		if (a != null) {
 			wrapped = true;
 			wrapperAlg = a;
 		}
@@ -149,8 +149,8 @@ abstract public class Algorithm implements Runnable {
 	}
 
 	void begin() {
-		panel.commentary.clear();
 		panel.history.addEdit(panelState = new UpdatableStateEdit(panel, panel.history.getNextId()));
+		panel.commentary.clear();
 		
 		EventQueue.invokeLater(new Runnable() {
 			@Override

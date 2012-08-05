@@ -69,10 +69,12 @@ public class Scene extends VisualElement {
 //		}
 //	}
 
-	public synchronized void draw(View V) {
+	public void draw(View V) {
 		for (int i = MAXZ - 1; i >= 0; --i) {
-			for (VisualElement e : elements.get(i)) {
-				e.draw(V);
+			synchronized (this) {
+				for (VisualElement e : elements.get(i)) {
+					e.draw(V);
+				}
 			}
 		}
 	}

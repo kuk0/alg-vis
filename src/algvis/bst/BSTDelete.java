@@ -29,9 +29,7 @@ public class BSTDelete extends Algorithm {
 	private final HashMap<String, Object> result = new HashMap<String, Object>(); // "deleted"
 
 	public BSTDelete(BST T, int x) {
-		super(T.panel);
-		this.T = T;
-		K = x;
+		this(T, x, null);
 	}
 
 	public BSTDelete(BST T, int x, Algorithm a) {
@@ -40,7 +38,6 @@ public class BSTDelete extends Algorithm {
 		K = x;
 	}
 
-	// TODO history with arrows doesn't work properly
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		setHeader("delete", K);
@@ -108,8 +105,8 @@ public class BSTDelete extends Algorithm {
 				BSTNode son = toDelete.getRight();
 				toDelete.setColor(NodeColor.DELETE);
 				BSTNode v = new BSTNode(T, -Node.INF, ZDepth.ACTIONNODE);
-				addToScene(v);
 				v.setColor(NodeColor.FIND);
+				addToScene(v);
 				v.goAbove(son);
 				addStep("bst-delete-succ-start");
 				pause();
@@ -135,7 +132,6 @@ public class BSTDelete extends Algorithm {
 						r.setArc(p);
 					}
 				}
-				addToScene(son);
 				pause();
 				if (r != null) {
 					r.noArc();
@@ -143,6 +139,7 @@ public class BSTDelete extends Algorithm {
 				}
 				removeFromScene(v);
 				v = son;
+				addToScene(v);
 				if (son.isLeft()) {
 					p.linkLeft(r);
 				} else {

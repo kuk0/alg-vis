@@ -10,16 +10,18 @@ public class HashtableStoreSupport {
 	private static final String nullHash = "47null47";
 
 	/**
-	 * Use if want to store null to HashTable.
+	 * Use if want to store null to HashTable. Vlaue is stored only if state does not contain key. 
 	 * @param state
 	 * @param key
 	 * @param value
 	 */
 	public static void store(Hashtable<Object, Object> state, Object key, Object value) {
-		if (value == null) {
-			state.put(key, nullHash);
-		} else {
-			state.put(key, value);
+		if (!state.containsKey(key)) {
+			if (value == null) {
+				state.put(key, nullHash);
+			} else {
+				state.put(key, value);
+			}
 		}
 	}
 	
@@ -48,22 +50,6 @@ public class HashtableStoreSupport {
 				if (o instanceof StateEditable) {
 					((StateEditable) o).storeState(state);
 				}
-			}
-		}
-	}
-
-	/**
-	 * Store only if state does not contain key. 
-	 * @param state
-	 * @param key
-	 * @param value
-	 */
-	public static void storeFirst(Hashtable<Object, Object> state, Object key, Object value) {
-		if (!state.containsKey(key)) {
-			if (value == null) {
-				state.put(key, nullHash);
-			} else {
-				state.put(key, value);
 			}
 		}
 	}
