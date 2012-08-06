@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kov��, Katar�na Kotrlov�, Pavol Luk�a, Viktor Tomkovi�, Tatiana T�thov�
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,37 +19,39 @@ package algvis.daryheap;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.PriorityQueue;
+import algvis.core.history.HashtableStoreSupport;
+import algvis.core.visual.ZDepth;
 import algvis.gui.view.View;
 import algvis.heap.HeapNode;
 
 import java.awt.*;
+import java.util.Hashtable;
+import java.util.Vector;
 
 public class DaryHeapNode extends HeapNode {
 	private int width;// , leftw, rightw;
 	private DaryHeapNode parent = null;
-	int numChildren = 0;
 	int nson = -1; // kolky je to syn svojho otca
-	final DaryHeapNode[] c;
+	protected Vector<DaryHeapNode> c;
 
 	int nnodes = 1;
 	private int height = 1; // pre setStats
 
-	private DaryHeapNode(DataStructure D, int key, int x, int y) {
-		super(D, key, x, y);
+	private DaryHeapNode(DaryHeap D, int key, int x, int y, int zDepth) {
+		super(D, key, x, y, zDepth);
 		bgKeyColor();
-		c = new DaryHeapNode[((DaryHeap) D).getOrder()];
+		c = new Vector<DaryHeapNode>(D.getOrder());
 		// setColor(NodeColor.NORMAL);
 		width = DaryHeap.minsepx;
 		// mark();
 	}
 
-	public DaryHeapNode(DataStructure D, int key) {
-		this(D, key, 0, 0);
-		getReady();
+	public DaryHeapNode(DaryHeap D, int key, int zDepth) {
+		this(D, key, 0, Node.UPY, zDepth);
 	}
 
 	public DaryHeapNode(DaryHeapNode v) {
-		this(v.D, v.getKey(), v.x, v.y);
+		this((DaryHeap) v.D, v.getKey(), v.tox, v.toy, ZDepth.ACTIONNODE);
 	}
 
 	public boolean isRoot() {
@@ -57,7 +59,7 @@ public class DaryHeapNode extends HeapNode {
 	}
 
 	public boolean isLeaf() {
-		return numChildren == 0;
+		return c.isEmpty();
 	}
 
 	/*
@@ -69,11 +71,11 @@ public class DaryHeapNode extends HeapNode {
 
 	public void calcTree() {
 		nnodes = 1;
-		for (int i = 0; i < numChildren; ++i) {
-			c[i].calcTree();
-			nnodes += c[i].nnodes;
+		for (DaryHeapNode node : c) {
+			node.calcTree();
+			nnodes += node.nnodes;
 		}
-		height = 1 + (isLeaf() ? 0 : c[0].height);
+		height = 1 + (isLeaf() ? 0 : c.get(0).height);
 	}
 
 	/*
@@ -84,8 +86,8 @@ public class DaryHeapNode extends HeapNode {
 	 */
 
 	public int order() {
-		for (int i = 0; i < parent.numChildren; ++i) {
-			if (getParent().c[i] == this) {
+		for (int i = 0; i < parent.c.size(); ++i) {
+			if (getParent().c.get(i) == this) {
 				return i;
 			}
 		}
@@ -100,25 +102,6 @@ public class DaryHeapNode extends HeapNode {
 	 * 2*Node.radius; } }
 	 */
 
-	@Override
-	public void draw(View v) {
-		if (state == Node.INVISIBLE || getKey() == NULL) {
-			return;
-		}
-
-		/*
-		 * TODO to co je? ak netreaba riadok setColor, tak netreba ani tie
-		 * ostatne 3
-		 */
-		boolean a = D.panel.scenario.isAddingEnabled();
-		D.panel.scenario.enableAdding(false);
-		//setColor(isRed() ? NodeColor.RED : NodeColor.BLACK);
-		D.panel.scenario.enableAdding(a);
-		
-
-		super.draw(v);
-	}
-
 	public void drawTree(View v) {
 		drawTree2(v);
 	}
@@ -130,12 +113,12 @@ public class DaryHeapNode extends HeapNode {
 			 */
 			v.setColor(Color.black);
 			// }
-			for (int i = 0; i < numChildren; i++) {
-				v.drawLine(x, y, c[i].x, c[i].y);
+			for (DaryHeapNode node : c) {
+				v.drawLine(x, y, node.x, node.y);
 			}
 		}
-		for (int i = 0; i < numChildren; i++) {
-			c[i].drawTree2(v);
+		for (DaryHeapNode node : c) {
+			node.drawTree2(v);
 		}
 		/*
 		 * v.setColor(Color.LIGHT_GRAY); ++i; v.drawLine(x, y, x, -20);
@@ -154,17 +137,17 @@ public class DaryHeapNode extends HeapNode {
 		 */
 	@Override
 	public void moveTree() {
-		for (int i = 0; i < numChildren; i++) {
-			c[i].moveTree();
+		for (DaryHeapNode node : c) {
+			node.moveTree();
 		}
 		move();
 	}
 
 	public void reboxTree() {
-		for (int i = 0; i < numChildren; ++i) {
-			c[i].reboxTree();
+		for (DaryHeapNode node : c) {
+			node.reboxTree();
 		}
-		this.rebox();
+		rebox();
 	}
 
 	@Override
@@ -179,13 +162,13 @@ public class DaryHeapNode extends HeapNode {
 			return;
 		}
 
-		if (numChildren < ((DaryHeap) D).getOrder()) {
+		if (c.size() < ((DaryHeap) D).getOrder()) {
 			leftw = (((DaryHeap) D).getOrder() / 2) * DaryHeap.minsepx;
 			if (((DaryHeap) D).getOrder() % 2 == 1) {
 				leftw += (DaryHeap.minsepx / 2);
 			}
-			if (numChildren > ((DaryHeap) D).getOrder() / 2) {
-				rightw = leftw - (((DaryHeap) D).getOrder() - numChildren)
+			if (c.size() > ((DaryHeap) D).getOrder() / 2) {
+				rightw = leftw - (((DaryHeap) D).getOrder() - c.size())
 						* DaryHeap.minsepx;
 			} else {
 				rightw = DaryHeap.minsepx / 2;
@@ -198,17 +181,17 @@ public class DaryHeapNode extends HeapNode {
 		leftw = 0;
 		rightw = 0;
 		for (int i = 1; i <= ((DaryHeap) D).getOrder() / 2; i++) {
-			leftw += c[i - 1].width;
+			leftw += c.get(i - 1).width;
 		}
 
 		for (int i = (((DaryHeap) D).getOrder() / 2) + 1; i <= ((DaryHeap) D)
 				.getOrder(); i++) {
-			rightw += c[i - 1].width;
+			rightw += c.get(i - 1).width;
 		}
 
 		if (((DaryHeap) D).getOrder() % 2 == 1) {
-			rightw -= c[(((DaryHeap) D).getOrder() / 2)].leftw;
-			leftw += c[(((DaryHeap) D).getOrder() / 2)].leftw;
+			rightw -= c.get(((DaryHeap) D).getOrder() / 2).leftw;
+			leftw += c.get(((DaryHeap) D).getOrder() / 2).leftw;
 		}
 
 		width = leftw + rightw;
@@ -228,15 +211,15 @@ public class DaryHeapNode extends HeapNode {
 		 * if (numChildren == 0) { return; }
 		 */
 
-		for (int i = 0; i < numChildren; i++) {
+		for (int i = 0; i < c.size(); i++) {
 			if (i == 0) {
-				c[0].goTo(this.tox - (this.leftw) + c[0].leftw, this.toy
-						+ DataStructure.minsepy);
+				c.firstElement().goTo(this.tox - (this.leftw) + c.firstElement().leftw, this.toy + DataStructure
+						.minsepy);
 			} else {
-				c[i].goTo(c[i - 1].tox + c[i - 1].rightw + c[i].leftw, this.toy
+				c.get(i).goTo(c.get(i - 1).tox + c.get(i - 1).rightw + c.get(i).leftw, this.toy
 						+ DataStructure.minsepy);
 			}
-			c[i].repos();
+			c.get(i).repos();
 		}
 	}
 
@@ -274,12 +257,12 @@ public class DaryHeapNode extends HeapNode {
 
 	// vracia otca najblizsieho suseda vpravo
 	// funguje iba pre listy
-	public DaryHeapNode nextneighbour() {
+	public DaryHeapNode nextNeighbour() {
 		if (isRoot()) {
 			return this;
 		}
 
-		if (getParent().numChildren < ((DaryHeap) D).getOrder()) { // pre root
+		if (getParent().c.size() < ((DaryHeap) D).getOrder()) { // pre root
 																	// nson ==
 																	// -1
 			// System.out.print("malo synov kluca " + getParent().key +
@@ -295,15 +278,15 @@ public class DaryHeapNode extends HeapNode {
 		}
 
 		if (v.isRoot()) {
-			while (v.c[0] != null) {
-				v = v.c[0];
+			while (!v.c.isEmpty()) {
+				v = v.c.firstElement();
 			}
 			return v;
 		}
 
-		v = v.getParent().c[v.nson]; // v poli je n-ty syn na mieste (nson - 1)
-		while (v.c[0] != null) {
-			v = v.c[0];
+		v = v.getParent().c.get(v.nson); // v poli je n-ty syn na mieste (nson - 1)
+		while (!v.c.isEmpty()) {
+			v = v.c.firstElement();
 		}
 		return v;
 		// }
@@ -322,7 +305,7 @@ public class DaryHeapNode extends HeapNode {
 			// System.out.print("dost synov, konkretne " +
 			// getParent().numChildren + " a order mame prave " + ((DaryHeap)
 			// D).getOrder() + "\n" );
-			return getParent().c[nson - 2];
+			return getParent().c.get(nson - 2);
 		}
 
 		DaryHeapNode v = this;
@@ -330,31 +313,30 @@ public class DaryHeapNode extends HeapNode {
 			v = v.getParent();
 		}
 		if (!v.isRoot()) {
-			v = v.getParent().c[v.nson - 2];
+			v = v.getParent().c.get(v.nson - 2);
 		}
 
-		while ((v.c[((DaryHeap) D).getOrder() - 1] != null)) { // !v.isLeaf()
-			v = v.c[((DaryHeap) D).getOrder() - 1];
+		while ((v.c.get(((DaryHeap) D).getOrder() - 1) != null)) { // !v.isLeaf()
+			v = v.c.get(((DaryHeap) D).getOrder() - 1);
 		}
 
 		return v;
 
 	}
 
-	public void linknewson(DaryHeapNode v) {
-		numChildren++;
-		v.nson = numChildren;
-		c[numChildren - 1] = v;
-		c[numChildren - 1].setParent(this);
-		((DaryHeap) D).last = c[numChildren - 1];
+	public void linkNewSon(DaryHeapNode v) {
+		v.setParent(this);
+		c.add(v);
+		v.nson = c.size();
+		((DaryHeap) D).last = v;
 	}
 
 	public DaryHeapNode find(int x, int y) {
 		if (inside(x, y))
 			return this;
 
-		for (int i = 0; i < numChildren; i++) {
-			DaryHeapNode tmp = c[i].find(x, y);
+		for (DaryHeapNode node : c) {
+			DaryHeapNode tmp = node.find(x, y);
 			if (tmp != null)
 				return tmp;
 		}
@@ -362,13 +344,40 @@ public class DaryHeapNode extends HeapNode {
 	}
 
 	public DaryHeapNode findMaxSon() {
-		DaryHeapNode v = c[0];
-		for (int i = 0; i < numChildren; i++) {
-			if (c[i].prec(v)) {
-				v = c[i];
+		DaryHeapNode v = c.firstElement();
+		for (DaryHeapNode node : c) {
+			if (node.prec(v)) {
+				v = node;
 			}
 		}
 
 		return v;
+	}
+
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "parent", parent);
+		HashtableStoreSupport.store(state, hash + "c", c.clone());
+		for (DaryHeapNode node : c) {
+			node.storeState(state);
+		}
+		HashtableStoreSupport.store(state, hash + "nson", nson);
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object parent = state.get(hash + "parent");
+		if (parent != null) this.parent = (DaryHeapNode) HashtableStoreSupport.restore(parent);
+		
+		Object c = state.get(hash + "c");
+		if (c != null) this.c = (Vector<DaryHeapNode>) c;
+		for (DaryHeapNode node : this.c) {
+			node.restoreState(state);
+		}
+		
+		Object nson = state.get(hash + "nson");
+		if (nson != null) this.nson = (Integer) HashtableStoreSupport.restore(nson);
 	}
 }

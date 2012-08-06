@@ -121,13 +121,6 @@ public class SplayTree extends BST {
 	}
 
 	@Override
-	public void clear() {
-		if (root != null || root2 != null) {
-			start(new Clear());
-		}		
-	}
-
-	@Override
 	public Layout getLayout() {
 		return Layout.COMPACT;
 	}
@@ -151,13 +144,5 @@ public class SplayTree extends BST {
 		Object root2 = state.get(hash + "root2");
 		if (root2 != null) this.root2 = (SplayNode) HashtableStoreSupport.restore(root2);
 		if (this.root2 != null) this.root2.restoreState(state);
-	}
-	
-	private class Clear extends BST.Clear {
-		@Override
-		public void runAlgorithm() throws InterruptedException {
-			super.runAlgorithm();
-			root2 = null;	
-		}
 	}
 }

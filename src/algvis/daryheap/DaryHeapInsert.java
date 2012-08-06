@@ -16,24 +16,29 @@
  ******************************************************************************/
 package algvis.daryheap;
 
+import algvis.core.visual.ZDepth;
+
+import java.util.HashMap;
+
 public class DaryHeapInsert extends DaryHeapAlg {
 	private final DaryHeap H; // prepisat na H
 	private final DaryHeapNode v;
 
 	public DaryHeapInsert(DaryHeap H, int x) {
 		super(H);
-		H.v = v = new DaryHeapNode(H, x);
+		v = new DaryHeapNode(H, x, ZDepth.ACTIONNODE);
 		this.H = H;
-		setHeader("insertion");
 	}
 
 	@Override
-	public void run() {
+	public void runAlgorithm() throws InterruptedException {
+		setHeader("insertion");
+		addToScene(v);
 		v.mark();
 		if ((H.root != null) && (H.root.nnodes == 1000)) {
 			addStep("heapfull");
-			H.v = null;
 			v.unmark();
+			removeFromScene(v);
 			return;
 		}
 		DaryHeapNode w;
@@ -51,17 +56,22 @@ public class DaryHeapInsert extends DaryHeapAlg {
 			H.last = H.root;
 			pause();
 		} else { //najdeme miesto pre v
-			w = H.last.nextneighbour();
-			w.linknewson(v);
-			H.reposition();			
+			w = H.last.nextNeighbour();
+			w.linkNewSon(v);
+			H.reposition();
 			pause();
 		}
-		H.v = null;
+		removeFromScene(v);
 
 		++H.root.nnodes;
 		// pause();
 		v.unmark();
 		bubbleup(v);
+	}
+
+	@Override
+	public HashMap<String, Object> getResult() {
+		return null;
 	}
 
 }

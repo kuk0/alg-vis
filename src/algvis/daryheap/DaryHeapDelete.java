@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kov��, Katar�na Kotrlov�, Pavol Luk�a, Viktor Tomkovi�, Tatiana T�thov�
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,34 +18,38 @@ package algvis.daryheap;
 
 import algvis.core.Node;
 
+import java.util.HashMap;
+
 
 public class DaryHeapDelete extends DaryHeapAlg {
 	public DaryHeapDelete(DaryHeap H) {
 		super(H);
-		setHeader("deletion");
 	}
 
 	@Override
-	public void run() {
+	public void runAlgorithm() throws InterruptedException {
+		setHeader("deletion");
 		if (H.root == null) {
 			addStep("heapempty");
 			H.last = null;
 			return;
 		}
-		
-		if (H.root.numChildren == 0) {
-			H.v = H.root;
+
+		if (H.root.c.size() == 0) {
+			DaryHeapNode v = H.root;
 			if (H.minHeap){
 				addStep("minimum", H.root.getKey());
 			} else {
 				addStep("maximum", H.root.getKey());
 			}
 			H.root = null;
-			H.v.mark();
+			addToScene(v);
+			v.mark();
 			//--H.n;
 			pause();
-			H.v.unmark();
-			H.v.goDown();
+			v.unmark();
+			v.goDown();
+			removeFromScene(v);
 			return;
 		}
 		if (H.minHeap){
@@ -59,41 +63,48 @@ public class DaryHeapDelete extends DaryHeapAlg {
 		addStep("heapchange");
 		pause();
 		H.root.unmark();
-		
-		H.v = new DaryHeapNode(H.last);
-		H.v2 = new DaryHeapNode(H.root);
+
+		DaryHeapNode v = new DaryHeapNode(H.last);
+		DaryHeapNode v2 = new DaryHeapNode(H.root);
+		addToScene(v);
+		addToScene(v2);
 		H.last.setKey(Node.NOKEY);
 		H.root.setKey(Node.NOKEY);
-		H.v.goToRoot();
-		H.v2.goTo(H.last);
-		H.v2.mark();
+		v.goToRoot();
+		v2.goTo(H.last);
+		v2.mark();
 		pause();
-		H.last.setKey(H.v2.getKey());
-		H.root.setKey(H.v.getKey());
-		H.last.setColor(H.v2.getColor());
-		H.root.setColor(H.v.getColor());
-		H.v = null;
-		H.v2 = null;
-		
-		H.v = H.last;
+		H.last.setKey(v2.getKey());
+		H.root.setKey(v.getKey());
+		H.last.setColor(v2.getColor());
+		H.root.setColor(v.getColor());
+		removeFromScene(v);
+		removeFromScene(v2);
+
+		v = H.last;
+		addToScene(v);
 		H.last = H.last.prevneighbour();
-		H.v.goDown();
-		H.v.getParent().c[H.v.nson - 1] = null;
-		H.v.getParent().numChildren--;
+		v.goDown();
+		removeFromScene(v);
+		v.getParent().c.set(v.nson - 1, null);
+		v.getParent().c.setSize(v.getParent().c.size() - 1);
 		H.root.mark();
 		H.reposition();
-		
+
 		if (H.minHeap) {
 			addStep("mindheapbubbledown");
 		} else {
 			addStep("maxdheapbubbledown");
 		}
 		pause();
-		H.v = null;
-		
-		v = H.root;
+
 		H.root.unmark();
-		bubbledown(v);
+		bubbledown(H.root);
+	}
+
+	@Override
+	public HashMap<String, Object> getResult() {
+		return null;
 	}
 }
 

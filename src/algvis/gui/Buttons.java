@@ -16,6 +16,7 @@
  ******************************************************************************/
 package algvis.gui;
 
+import algvis.core.AlgorithmAdapter;
 import algvis.core.Algorithm;
 import algvis.core.DataStructure;
 import algvis.core.history.HashtableStoreSupport;
@@ -220,7 +221,12 @@ abstract public class Buttons extends JPanel implements ActionListener, StateEdi
 			}
 		} else if (evt.getSource() == clear) {
 			if (panel.history.canRedo()) panel.newAlgorithmPool();
-			D.clear();
+			D.start(new AlgorithmAdapter(panel) {
+				@Override
+				public void runAlgorithm() throws InterruptedException {
+					D.clear();
+				}
+			});
 		} else if (evt.getSource() == random) {
 			D.random(I.getInt(10));
 		} else if (evt.getSource() == pause) {

@@ -23,7 +23,6 @@ import algvis.gui.VisPanel;
 import algvis.gui.view.Layout;
 import algvis.gui.view.View;
 
-import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -56,7 +55,7 @@ abstract public class DataStructure extends VisualElement {
 
 	abstract public void draw(View v);
 
-	protected void start(Algorithm algorithm) {
+	public void start(Algorithm algorithm) {
 		unmark();
 		final Future result = panel.algorithmPool.submit(algorithm);
 		// TODO only for debugging purposes:
@@ -112,7 +111,7 @@ abstract public class DataStructure extends VisualElement {
 		return A;
 	}
 	
-	private class RestorePauses extends Algorithm {
+	private class RestorePauses extends AlgorithmAdapter {
 		private final boolean pauses;
 
 		private RestorePauses(boolean pauses) {
@@ -128,11 +127,6 @@ abstract public class DataStructure extends VisualElement {
 		@Override
 		public void runAlgorithm() {
 			panel.pauses = pauses;
-		}
-
-		@Override
-		public HashMap<String, Object> getResult() {
-			return null;
 		}
 	}
 }

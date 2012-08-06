@@ -20,6 +20,7 @@ import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.PriorityQueue;
+import algvis.core.visual.ZDepth;
 
 public class HeapNode extends BSTNode {
 	// TODO not needed?
@@ -27,8 +28,8 @@ public class HeapNode extends BSTNode {
 	// Color color = Color.yellow;
 	// int height = 1;
 
-	protected HeapNode(DataStructure D, int key, int x, int y) {
-		super(D, key, x, y);
+	protected HeapNode(DataStructure D, int key, int x, int y, int zDepth) {
+		super(D, key, x, y, zDepth);
 		bgKeyColor();
 	}
 
@@ -38,7 +39,7 @@ public class HeapNode extends BSTNode {
 	}
 
 	public HeapNode(HeapNode v) {
-		this(v.D, v.getKey(), v.tox, v.toy);
+		this(v.D, v.getKey(), v.tox, v.toy, ZDepth.ACTIONNODE);
 	}
 
 	@Override

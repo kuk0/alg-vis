@@ -70,11 +70,8 @@ abstract public class Dictionary extends DataStructure {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		if (this.root != null) this.root.restoreState(state);
 		Object root = state.get(hash + "root");
 		if (root != null) this.root = (Node) HashtableStoreSupport.restore(root);
-		
 		if (this.root != null) this.root.restoreState(state);
-		// TODO mozno problem ak root = null -> root != null
 	}
 }

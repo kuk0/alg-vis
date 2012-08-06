@@ -17,7 +17,6 @@
 package algvis.heap;
 
 import algvis.bst.BSTNode;
-import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.core.PriorityQueue;
 import algvis.core.history.HashtableStoreSupport;
@@ -25,10 +24,8 @@ import algvis.gui.VisPanel;
 import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
 import algvis.internationalization.Languages;
-import org.jdom2.Element;
 
 import java.awt.geom.Rectangle2D;
-import java.util.HashMap;
 import java.util.Hashtable;
 
 public class Heap extends PriorityQueue implements ClickListener {
@@ -67,7 +64,9 @@ public class Heap extends PriorityQueue implements ClickListener {
 	@Override
 	public void clear() {
 		if (root != null) {
-			start(new Clear());
+			setRoot(null);
+			setN(0);
+			setStats();
 		}
 	}
 
@@ -172,24 +171,5 @@ public class Heap extends PriorityQueue implements ClickListener {
 		Object root = state.get(hash + "root");
 		if (root != null) this.root = (HeapNode) HashtableStoreSupport.restore(root);
 		if (this.root != null) this.root.restoreState(state);
-	}
-	
-	private class Clear extends Algorithm {
-
-		protected Clear() {
-			super(Heap.this.panel);
-		}
-
-		@Override
-		public void runAlgorithm() throws InterruptedException {
-			setRoot(null);
-			setN(0);
-			setStats();
-		}
-
-		@Override
-		public HashMap<String, Object> getResult() {
-			return null;
-		}
 	}
 }

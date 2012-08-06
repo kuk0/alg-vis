@@ -29,8 +29,6 @@ public class DaryHeapButtons extends PQButtons implements ChangeListener {
 	private JSpinner OS;
 	private ILabel orderLabel;
 
-	
-
 	public DaryHeapButtons(VisPanel M) {
 		super(M);
 	}
@@ -49,10 +47,14 @@ public class DaryHeapButtons extends PQButtons implements ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent evt) {
 		if (evt.getSource() == OS) {
-			((DaryHeap) D).order = (Integer) OS.getValue();
-			D.clear();
-			((DaryHeap) D).reposition();
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			((DaryHeap) D).setOrder((Integer) OS.getValue());
 		}
 	}
 
+	@Override
+	public void setOtherEnabled(boolean enabled) {
+		super.setOtherEnabled(enabled);
+		OS.setEnabled(enabled);
+	}
 }

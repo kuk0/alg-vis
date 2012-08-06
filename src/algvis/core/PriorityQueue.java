@@ -16,7 +16,10 @@
  ******************************************************************************/
 package algvis.core;
 
+import algvis.core.history.HashtableStoreSupport;
 import algvis.gui.VisPanel;
+
+import java.util.Hashtable;
 
 abstract public class PriorityQueue extends DataStructure {
 	public static String adtName = "pq";
@@ -32,4 +35,17 @@ abstract public class PriorityQueue extends DataStructure {
 	abstract public void delete();
 
 	abstract public void decreaseKey(Node v, int delta);
+
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "minHeap", minHeap);
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object minHeap = state.get(hash + "minHeap");
+		if (minHeap != null) this.minHeap = (Boolean) HashtableStoreSupport.restore(minHeap);
+	}
 }

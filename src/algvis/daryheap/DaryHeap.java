@@ -16,23 +16,27 @@
  ******************************************************************************/
 package algvis.daryheap;
 
+import algvis.core.AlgorithmAdapter;
 import algvis.core.Node;
 import algvis.core.PriorityQueue;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.gui.VisPanel;
 import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
 import algvis.internationalization.Languages;
 
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
+
 public class DaryHeap extends PriorityQueue implements ClickListener{
 	public static final String dsName = "daryheap";
-	DaryHeapNode root = null, v = null, v2 = null;
+	DaryHeapNode root = null;
 	DaryHeapNode last = null;
 	int order = 5;
 	public static final int minsepx = 30;  //zmenit na mensie
 
 	public DaryHeap(VisPanel M) {
 		super(M);
-		last = new DaryHeapNode(this, 47); 
 		M.screen.V.setDS(this);
 	}
 
@@ -96,28 +100,54 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 
 	@Override
 	public void clear() {
-		root = v = null;
-		setStats();
-		
+		if (root != null) {
+			root = null;
+			setStats();
+			reposition();
+		}		
+	}
+
+	public void setOrder(final Integer order) {
+		if (root != null || this.order != order) {
+			start(new AlgorithmAdapter(panel) {
+				@Override
+				public void runAlgorithm() throws InterruptedException {
+					DaryHeap.this.order = order;
+					clear();
+				}
+			});
+		}
 	}
 
 	@Override
 	public void draw(View V) {
 		if (root != null) {
-			root.moveTree();
 			root.drawTree(V);
 		}
-		if (v != null) {
-			v.move();
-			v.draw(V);
-		}
-		if (v2 != null) {
-			v2.move();
-			v2.draw(V);
-		}
-		
 	}
-	
+
+	@Override
+	protected void move() {
+		if (root != null) {
+			root.moveTree();
+		}
+	}
+
+	@Override
+	protected Rectangle2D getBoundingBox() {
+		return root.getBoundingBox();
+	}
+
+	@Override
+	protected void endAnimation() {
+		root.endAnimation();
+	}
+
+	@Override
+	protected boolean isAnimationDone() {
+		return root.isAnimationDone();
+	}
+
 	public void reposition() {
 		if (root != null) {
 			root._reposition();
@@ -129,4 +159,24 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 		return this.order;
 	}
 
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "root", root);
+		if (root != null) root.storeState(state);
+		HashtableStoreSupport.store(state, hash + "last", last);
+		HashtableStoreSupport.store(state, hash + "order", order);
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object root = state.get(hash + "root");
+		if (root != null) this.root = (DaryHeapNode) HashtableStoreSupport.restore(root);
+		if (this.root != null) this.root.restoreState(state);
+		Object last = state.get(hash + "last");
+		if (last != null) this.last = (DaryHeapNode) HashtableStoreSupport.restore(last);
+		Object order = state.get(hash + "order");
+		if (order != null) this.order = (Integer) HashtableStoreSupport.restore(order);
+	}
 }

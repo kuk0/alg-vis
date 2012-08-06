@@ -20,7 +20,6 @@ import algvis.bst.BST;
 import algvis.core.StringUtils;
 import algvis.gui.VisPanel;
 import algvis.gui.view.Layout;
-import algvis.gui.view.View;
 import algvis.internationalization.Languages;
 
 import java.util.Hashtable;
@@ -53,6 +52,12 @@ public class GBTree extends BST {
 	}
 
 	@Override
+	public void clear() {
+		super.clear();
+		setDel(0);
+	}
+
+	@Override
 	public void find(int x) {
 		start(new GBFind(this, x));
 	}
@@ -60,13 +65,6 @@ public class GBTree extends BST {
 	@Override
 	public void delete(int x) {
 		start(new GBDelete(this, x));
-	}
-
-	@Override
-	public void clear() {
-		if (root != null) {
-			start(new Clear());
-		}
 	}
 
 	@Override
@@ -122,13 +120,5 @@ public class GBTree extends BST {
 		super.restoreState(state);
 		Integer del = (Integer) state.get(hash + "del");
 		if (del != null) this.del = del;
-	}
-	
-	private class Clear extends BST.Clear {
-		@Override
-		public void runAlgorithm() throws InterruptedException {
-			super.runAlgorithm();
-			setDel(0);
-		}
 	}
 }

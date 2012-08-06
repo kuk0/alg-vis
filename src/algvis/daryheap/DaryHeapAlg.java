@@ -19,33 +19,34 @@ package algvis.daryheap;
 import algvis.core.Algorithm;
 import algvis.core.Node;
 
-class DaryHeapAlg extends Algorithm {
+abstract class DaryHeapAlg extends Algorithm {
 	final DaryHeap H;
-	DaryHeapNode v;
 
 	DaryHeapAlg(DaryHeap H) {
-		super(panel, d);
+		super(H.panel);
 		this.H = H;
 	}
 
-	void bubbleup(DaryHeapNode v) {
+	void bubbleup(DaryHeapNode v) throws InterruptedException {
 		DaryHeapNode w = v.getParent();
 		while (w != null && v.prec(w)) {
-			H.v = new DaryHeapNode(v);
-			H.v.mark();
-			H.v2 = new DaryHeapNode(w);
+			DaryHeapNode v1 = new DaryHeapNode(v);
+			v1.mark();
+			addToScene(v1);
+			DaryHeapNode v2 = new DaryHeapNode(w);
+			addToScene(v2);
 			v.setKey(Node.NOKEY);
 			w.setKey(Node.NOKEY);
-			H.v.goTo(w);
-			H.v2.goTo(v);
+			v1.goTo(w);
+			v2.goTo(v);
 			pause();
-			v.setKey(H.v2.getKey());
-			w.setKey(H.v.getKey());
-			v.setColor(H.v2.getColor());
-			w.setColor(H.v.getColor());
-			H.v.unmark();
-			H.v = null;
-			H.v2 = null;
+			v.setKey(v2.getKey());
+			w.setKey(v1.getKey());
+			v.setColor(v2.getColor());
+			w.setColor(v1.getColor());
+			v1.unmark();
+			removeFromScene(v1);
+			removeFromScene(v2);
 			v = w;
 			w = w.getParent();
 		}
@@ -53,11 +54,10 @@ class DaryHeapAlg extends Algorithm {
 		addNote("done");
 	}
 
-	void bubbledown(DaryHeapNode v) {
+	void bubbledown(DaryHeapNode v) throws InterruptedException {
 		DaryHeapNode w;
 
 		while (true) {
-			w = null;
 			if (v.isLeaf()) {
 				break;
 			}
@@ -66,21 +66,23 @@ class DaryHeapAlg extends Algorithm {
 			if (v.prec(w)) {
 				break;
 			}
-			H.v = new DaryHeapNode(v);
-			H.v.mark();
-			H.v2 = new DaryHeapNode(w);
+			DaryHeapNode v1 = new DaryHeapNode(v);
+			v1.mark();
+			addToScene(v1);
+			DaryHeapNode v2 = new DaryHeapNode(w);
+			addToScene(v2);
 			v.setKey(Node.NOKEY);
 			w.setKey(Node.NOKEY);
-			H.v.goTo(w);
-			H.v2.goTo(v);
+			v1.goTo(w);
+			v2.goTo(v);
 			pause();
-			v.setKey(H.v2.getKey());
-			w.setKey(H.v.getKey());
-			v.setColor(H.v2.getColor());
-			w.setColor(H.v.getColor());
-			H.v.unmark();
-			H.v = null;
-			H.v2 = null;
+			v.setKey(v2.getKey());
+			w.setKey(v1.getKey());
+			v.setColor(v2.getColor());
+			w.setColor(v1.getColor());
+			v1.unmark();
+			removeFromScene(v1);
+			removeFromScene(v2);
 			v = w;
 		}
 

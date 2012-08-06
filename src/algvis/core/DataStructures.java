@@ -165,8 +165,8 @@ public class DataStructures {
 			return new SplayPanel(S);
 		case 12:
 			return new HeapPanel(S);
-//		case 13:
-//			return new DaryHeapPanel(S, false);
+		case 13:
+			return new DaryHeapPanel(S);
 //		case 14:
 //			return new LeftHeapPanel(S, false);
 //		case 15:

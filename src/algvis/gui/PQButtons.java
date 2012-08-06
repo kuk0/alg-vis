@@ -17,6 +17,7 @@
 package algvis.gui;
 
 import algvis.bst.BSTNode;
+import algvis.core.AlgorithmAdapter;
 import algvis.core.PriorityQueue;
 import algvis.internationalization.IButton;
 import algvis.internationalization.IRadioButton;
@@ -39,6 +40,8 @@ public class PQButtons extends Buttons {
 	private IRadioButton minB;
     private IRadioButton maxB;
 	private ButtonGroup minMaxGroup;
+	
+	private boolean lastMinHeap = ((PriorityQueue) D).minHeap;
 
 	public PQButtons(VisPanel M) {
 		super(M);
@@ -86,64 +89,66 @@ public class PQButtons extends Buttons {
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
 		if (evt.getSource() == insertB) {
-			final Vector<Integer> args = I.getNonEmptyVI();
-			Thread t = new Thread(new Runnable() {
-				@Override
-				public void run() {
-					for (int x : args) {
-						D.insert(x);
-					}
-				}
-			});
-			t.start();
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			Vector<Integer> args = I.getNonEmptyVI();
+			for (int x : args) {
+				D.insert(x);
+			}
 		} else if (evt.getSource() == deleteB) {
-			Thread t = new Thread(new Runnable() {
-				@Override
-				public void run() {
-					((PriorityQueue) D).delete();
-				}
-			});
-			t.start();
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			((PriorityQueue) D).delete();
 		} else if (evt.getSource() == decrKeyB) {
-			final int delta = Math.abs(I.getInt(1));
-			final BSTNode w = ((BSTNode) ((PriorityQueue) D).chosen);
-			Thread t = new Thread(new Runnable() {
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			int delta = Math.abs(I.getInt(1));
+			BSTNode w = ((BSTNode) ((PriorityQueue) D).chosen);
+			((PriorityQueue) D).decreaseKey(w, delta);
+		} else if (evt.getSource() == minB && !((PriorityQueue) D).minHeap) {
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			D.start(new AlgorithmAdapter(panel) {
 				@Override
-				public void run() {
-					((PriorityQueue) D).decreaseKey(w, delta);
+				public void runAlgorithm() throws InterruptedException {
+					D.clear();
+					((PriorityQueue) D).minHeap = true;
 				}
 			});
-			t.start();
-		} else if (evt.getSource() == minB && !((PriorityQueue) D).minHeap) {
-			D.clear();
-			deleteB.setT("button-deletemin");
-			decrKeyB.setT("button-decreasekey");
-			((PriorityQueue) D).minHeap = true;
 		} else if (evt.getSource() == maxB && ((PriorityQueue) D).minHeap) {
-			D.clear();
-			deleteB.setT("button-deletemax");
-			decrKeyB.setT("button-increasekey");
-			((PriorityQueue) D).minHeap = false;
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			D.start(new AlgorithmAdapter(panel) {
+				@Override
+				public void runAlgorithm() throws InterruptedException {
+					D.clear();
+					((PriorityQueue) D).minHeap = false;
+				}
+			});
 		}
 	}
 
 	@Override
-	public void enableAll() {
-		super.enableAll();
-		insertB.setEnabled(true);
-		deleteB.setEnabled(true);
-		decrKeyB.setEnabled(true);
-		minB.setEnabled(true);
-		maxB.setEnabled(true);
+	public void setOtherEnabled(boolean enabled) {
+		super.setOtherEnabled(enabled);
+		insertB.setEnabled(enabled);
+		deleteB.setEnabled(enabled);
+		decrKeyB.setEnabled(enabled);
+		minB.setEnabled(enabled);
+		maxB.setEnabled(enabled);
 	}
 
 	@Override
-	public void disableAll() {
-		super.disableAll();
-		insertB.setEnabled(false);
-		deleteB.setEnabled(false);
-		decrKeyB.setEnabled(false);
-		minB.setEnabled(false);
-		maxB.setEnabled(false);
+	public void refresh() {
+		super.refresh();
+		if (lastMinHeap != ((PriorityQueue) D).minHeap) {
+			lastMinHeap = ((PriorityQueue) D).minHeap;
+			if (lastMinHeap) {
+				minB.setSelected(true);
+				maxB.setSelected(false);
+				deleteB.setT("button-deletemin");
+				decrKeyB.setT("button-decreasekey");
+			} else {
+				deleteB.setT("button-deletemax");
+				decrKeyB.setT("button-increasekey");
+				minB.setSelected(false);
+				maxB.setSelected(true);
+			}
+		}
 	}
 }

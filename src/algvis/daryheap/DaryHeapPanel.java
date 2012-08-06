@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kov��, Katar�na Kotrlov�, Pavol Luk�a, Viktor Tomkovi�, Tatiana T�thov�
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ public class DaryHeapPanel extends VisPanel{
 	private static final long serialVersionUID = 5387116424458217311L;
 	public static Class<? extends DataStructure> DS = DaryHeap.class;
 
-	public DaryHeapPanel(Settings S, boolean isScenarioEnabled) {
+	public DaryHeapPanel(Settings S) {
 		super(S);
 	}
 
