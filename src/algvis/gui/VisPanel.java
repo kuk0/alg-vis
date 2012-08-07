@@ -16,10 +16,10 @@
  ******************************************************************************/
 package algvis.gui;
 
-import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.core.history.HistoryManager;
 import algvis.core.visual.Scene;
+import algvis.ds.DataStructure;
 import algvis.internationalization.ILabel;
 import algvis.internationalization.LanguageListener;
 import algvis.internationalization.Languages;

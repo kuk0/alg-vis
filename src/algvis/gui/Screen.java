@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.gui;
 
-import algvis.core.DataStructure;
+import algvis.ds.DataStructure;
 import algvis.gui.view.View;
 
 import javax.swing.*;

@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.gui;
 
-import algvis.core.Dictionary;
+import algvis.ds.dictionaries.Dictionary;
 import algvis.internationalization.IButton;
 
 import javax.swing.*;

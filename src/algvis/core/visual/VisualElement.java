@@ -25,7 +25,7 @@ import java.util.Hashtable;
 
 public abstract class VisualElement implements StateEditable {
 	Scene scene;
-	private int zDepth;
+	protected int zDepth;
 	protected final String hash = Integer.toString(hashCode());
 
 	protected VisualElement(Scene scene, int zDepth) {
@@ -37,7 +37,7 @@ public abstract class VisualElement implements StateEditable {
 		return scene;
 	}
 
-	int getZDepth() {
+	public int getZDepth() {
 		return zDepth;
 	}
 

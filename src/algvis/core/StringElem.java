@@ -1,5 +1,6 @@
 package algvis.core;
 
+import algvis.ds.DataStructure;
 import algvis.gui.Fonts;
 import algvis.gui.view.View;
 

@@ -38,7 +38,7 @@ public enum Fonts {
 					Fonts.class.getResourceAsStream("FreeMonoBold.ttf"));
 			f = f.deriveFont(10.0f);
 		} catch (Exception e) {
-			System.err.println(e.toString());
+			e.printStackTrace();
 		}
 		return f;
 	}

@@ -40,7 +40,7 @@ public class AlgVisStandalone {
 			// and feel.
 			e.printStackTrace();
 		}
-
+		
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {

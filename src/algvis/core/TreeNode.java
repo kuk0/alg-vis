@@ -17,6 +17,7 @@
 package algvis.core;
 
 import algvis.core.visual.ZDepth;
+import algvis.ds.DataStructure;
 import algvis.gui.view.View;
 
 import java.awt.*;

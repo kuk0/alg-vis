@@ -19,6 +19,7 @@ package algvis.core;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.VisualElement;
 import algvis.core.visual.ZDepth;
+import algvis.ds.DataStructure;
 import algvis.gui.Fonts;
 import algvis.gui.view.View;
 
@@ -99,6 +100,10 @@ public class Node extends VisualElement {
 
 	public Node(Node v) {
 		this(v.D, v.getKey(), v.x, v.y);
+	}
+
+	public Node(DataStructure D) {
+		super(D.panel.scene, ZDepth.DS);
 	}
 
 	public void setState(int s) {
