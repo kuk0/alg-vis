@@ -23,33 +23,36 @@ import java.util.HashMap;
 
 public class BFind extends Algorithm {
 	private final BTree T;
-	private final BNode v;
+	private final int K;
 
 	public BFind(BTree T, int x) {
 		super(T.panel);
 		this.T = T;
-		v = T.v = new BNode(T, x);
-		v.setColor(NodeColor.FIND);
-		setHeader("search");
+		K = x;
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		if (T.root == null) {
+		BNode v = new BNode(T, K);
+		v.setColor(NodeColor.FIND);
+		addToScene(v);
+		setHeader("search");
+		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
 			pause();
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
+			removeFromScene(v);
 			addStep("notfound");
 		} else {
-			BNode w = T.root;
+			BNode w = T.getRoot();
 			v.goTo(w);
 			addStep("bstfindstart");
 			pause();
 
 			while (true) {
-				if (w.isIn(v.key[0])) {
+				if (w.isIn(v.keys[0])) {
 					addStep("found");
 					v.goDown();
 					v.setColor(NodeColor.FOUND);
@@ -61,11 +64,12 @@ public class BFind extends Algorithm {
 					v.goDown();
 					break;
 				}
-				w = w.way(v.key[0]);
+				w = w.way(v.keys[0]);
 				v.goTo(w);
 				pause();
 			}
 		}
+		removeFromScene(v);
 	}
 
 	@Override

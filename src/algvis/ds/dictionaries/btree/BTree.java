@@ -16,17 +16,19 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.btree;
 
+import algvis.core.AlgorithmAdapter;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.dictionaries.Dictionary;
 import algvis.gui.VisPanel;
 import algvis.gui.view.View;
 import algvis.internationalization.Languages;
 
 import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
 
 public class BTree extends Dictionary {
 	public static String dsName = "btree";
 	int order = 5;
-	BNode root = null, v = null;
 	final int xspan = 5;
     final int yspan = 15;
 
@@ -56,10 +58,14 @@ public class BTree extends Dictionary {
 
 	@Override
 	public void clear() {
-		root = v = null;
+		root = null;
 		setStats();
 	}
 
+	public BNode getRoot() {
+		return (BNode) root;
+	}
+	
 	@Override
 	public String stats() {
 		if (root == null) {
@@ -68,30 +74,27 @@ public class BTree extends Dictionary {
 					+ Languages.getString("full") + ";   "
 					+ Languages.getString("height") + ": 0";
 		} else {
-			root.calcTree();
-			return "#" + Languages.getString("nodes") + ": " + root.nnodes + ";   "
-					+ "#" + Languages.getString("keys") + ": " + root.nkeys + " = "
-					+ (100 * root.nkeys) / (root.nnodes * (order - 1)) + "% "
+			getRoot().calcTree();
+			return "#" + Languages.getString("nodes") + ": " + getRoot().nnodes + ";   "
+					+ "#" + Languages.getString("keys") + ": " + getRoot().nkeys + " = "
+					+ (100 * getRoot().nkeys) / (getRoot().nnodes * (order - 1)) + "% "
 					+ Languages.getString("full") + ";   "
-					+ Languages.getString("height") + ": " + root.height;
+					+ Languages.getString("height") + ": " + getRoot().height;
 		}
 	}
 
 	@Override
 	public void draw(View V) {
 		if (root != null) {
-			root.moveTree();
-			root.drawTree(V);
-		}
-		if (v != null) {
-			v.move();
-			v.draw(V);
+			getRoot().drawTree(V);
 		}
 	}
 
 	@Override
 	protected void move() {
-		// TODO
+		if (root != null) {
+			getRoot().moveTree();
+		}
 	}
 
 	@Override
@@ -101,8 +104,37 @@ public class BTree extends Dictionary {
 
 	public void reposition() {
 		if (root != null) {
-			root._reposition();
+			getRoot()._reposition();
 			panel.screen.V.setBounds(x1, y1, x2, y2);
+		}
+	}
+
+	public void setOrder(final Integer order) {
+		if (root != null || this.order != order) {
+			start(new AlgorithmAdapter(panel) {
+				@Override
+				public void runAlgorithm() throws InterruptedException {
+					BTree.this.order = order;
+					clear();
+					reposition();
+				}
+			});
+		}
+	}
+
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "order", order);
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object order = state.get(hash + "order");
+		if (order != null) {
+			this.order = (Integer) HashtableStoreSupport.restore(order);
+			((BTreeButtons) panel.buttons).OS.setValue(this.order);
 		}
 	}
 }

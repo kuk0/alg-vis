@@ -18,11 +18,13 @@ package algvis.ds.dictionaries.btree;
 
 import algvis.core.Node;
 import algvis.core.NodeColor;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.DataStructure;
 import algvis.gui.Fonts;
 import algvis.gui.view.View;
 
 import java.awt.*;
+import java.util.Hashtable;
 
 public class BNode extends Node {
 	private int width;
@@ -30,8 +32,8 @@ public class BNode extends Node {
     private int rightw;
 	BNode parent = null;
 	int numKeys = 1, numChildren = 0;
-	final int[] key;
-	final BNode[] c;
+	int[] keys;
+	BNode[] c;
 	// View V;
 
 	// statistics
@@ -39,9 +41,9 @@ public class BNode extends Node {
 
 	public BNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
-		this.key = new int[((BTree) D).order + 5];
+		this.keys = new int[((BTree) D).order + 5];
 		c = new BNode[((BTree) D).order + 5];
-		this.key[0] = key;
+		this.keys[0] = key;
 		numKeys = 1;
 		this.D = D;
 		// this.V = D.panel.S.V;
@@ -53,21 +55,21 @@ public class BNode extends Node {
 	}
 
 	public BNode(DataStructure D, int key) {
-		this(D, key, 0, 0);
+		this(D, key, 0, UPY);
 	}
 
 	public BNode(BNode v) {
-		this(v.D, v.key[0], v.x, v.y);
+		this(v.D, v.keys[0], v.tox, v.toy);
 	}
 
 	public BNode(BNode u, BNode v, BNode w) {
-		this(u.D, Node.NOKEY, v.x, v.y);
+		this(u.D, Node.NOKEY, v.tox, v.toy);
 		int n1 = u.numKeys, n2 = w.numKeys;
 		numKeys = n1 + 1 + n2;
-        System.arraycopy(u.key, 0, key, 0, n1);
-		key[n1] = v.key[0];
+        System.arraycopy(u.keys, 0, keys, 0, n1);
+		keys[n1] = v.keys[0];
 		for (int i = 0; i < n2; ++i) {
-			key[n1 + 1 + i] = w.key[i];
+			keys[n1 + 1 + i] = w.keys[i];
 		}
 		n1 = u.numChildren;
 		n2 = w.numChildren;
@@ -107,12 +109,12 @@ public class BNode extends Node {
 	}
 
 	public void addLeaf(int x) {
-		key[numKeys++] = x;
+		keys[numKeys++] = x;
 		for (int i = numKeys - 1; i > 0; --i) {
-			if (key[i] < key[i - 1]) {
-				int tmp = key[i];
-				key[i] = key[i - 1];
-				key[i - 1] = tmp;
+			if (keys[i] < keys[i - 1]) {
+				int tmp = keys[i];
+				keys[i] = keys[i - 1];
+				keys[i - 1] = tmp;
 			}
 		}
 		width = _width();
@@ -129,12 +131,12 @@ public class BNode extends Node {
 
 	public void add(int k, BNode v) {
 		for (int i = numKeys; i > k; --i) {
-			key[i] = key[i - 1];
+			keys[i] = keys[i - 1];
 			c[i + 1] = c[i];
 		}
 		++numKeys;
 		++numChildren;
-		key[k] = v.key[0];
+		keys[k] = v.keys[0];
 		c[k] = v.c[0];
 		c[k].parent = this;
 		c[k + 1] = v.c[1];
@@ -144,7 +146,7 @@ public class BNode extends Node {
 
 	public boolean isIn(int x) {
 		for (int i = 0; i < numKeys; ++i) {
-			if (key[i] == x) {
+			if (keys[i] == x) {
 				return true;
 			}
 		}
@@ -152,11 +154,11 @@ public class BNode extends Node {
 	}
 
 	public BNode way(int x) {
-		if (x < key[0]) {
+		if (x < keys[0]) {
 			return c[0];
 		}
 		for (int i = 1; i < numKeys; ++i) {
-			if (x < key[i]) {
+			if (x < keys[i]) {
 				return c[i];
 			}
 		}
@@ -164,11 +166,11 @@ public class BNode extends Node {
 	}
 
 	public int search(int x) {
-		if (x < key[0]) {
+		if (x < keys[0]) {
 			return 0;
 		}
 		for (int i = 1; i < numKeys; ++i) {
-			if (x < key[i]) {
+			if (x < keys[i]) {
 				return i;
 			}
 		}
@@ -177,13 +179,13 @@ public class BNode extends Node {
 
 	public BNode split() {
 		int k = numKeys, ku = numKeys / 2; // , kw = numKeys - ku - 1;
-		BNode u = new BNode(D, key[0], x, y), v = new BNode(D, key[ku], x, y), w = new BNode(
-				D, key[k - 1], x, y);
+		BNode u = new BNode(D, keys[0], tox, toy), v = new BNode(D, keys[ku], tox, toy), w = new BNode(
+				D, keys[k - 1], tox, toy);
 		for (int i = 1; i < ku; ++i) {
-			u.addLeaf(key[i]);
+			u.addLeaf(keys[i]);
 		}
 		for (int i = ku + 1; i < k - 1; ++i) {
-			w.addLeaf(key[i]);
+			w.addLeaf(keys[i]);
 		}
 		if (isLeaf()) {
 			u.numChildren = w.numChildren = 0;
@@ -206,29 +208,29 @@ public class BNode extends Node {
 		v.c[1] = w;
 		u.width = u._width();
 		w.width = w._width();
-		u.x = x - u.width / 2 - Node.RADIUS;
-		w.x = x + w.width / 2 + Node.RADIUS;
+		u.x = u.tox = tox - u.width / 2 - Node.RADIUS;
+		w.x = w.tox = tox + w.width / 2 + Node.RADIUS;
 		return v;
 	}
 
 	public BNode del(int k) {
 		int i = -1;
-		while (key[++i] != k) {
+		while (keys[++i] != k) {
 		}
 		int p = i;
 		for (--numKeys; i < numKeys; i++) {
-			key[i] = key[i + 1];
+			keys[i] = keys[i + 1];
 		}
 		width = _width();
-		return new BNode(D, k, x - (numKeys + 1 - 2 * p) * Node.RADIUS, y);
+		return new BNode(D, k, tox - (numKeys + 1 - 2 * p) * Node.RADIUS, toy);
 	}
 
 	public BNode delMin() {
-		int r = key[0];
+		int r = keys[0];
 		--numKeys;
-        System.arraycopy(key, 1, key, 0, numKeys);
+        System.arraycopy(keys, 1, keys, 0, numKeys);
 		width = _width();
-		return new BNode(D, r, x - (numKeys - 1) * Node.RADIUS, y);
+		return new BNode(D, r, tox - (numKeys - 1) * Node.RADIUS, toy);
 	}
 
 	public BNode delMinCh() {
@@ -240,7 +242,7 @@ public class BNode extends Node {
 	}
 
 	public BNode delMax() {
-		BNode r = new BNode(D, key[--numKeys], x + (numKeys - 1) * Node.RADIUS, y);
+		BNode r = new BNode(D, keys[--numKeys], tox + (numKeys - 1) * Node.RADIUS, toy);
 		width = _width();
 		return r;
 	}
@@ -252,8 +254,8 @@ public class BNode extends Node {
 	}
 
 	public void insMin(int k) {
-        System.arraycopy(key, 0, key, 1, numKeys++);
-		key[0] = k;
+        System.arraycopy(keys, 0, keys, 1, numKeys++);
+		keys[0] = k;
 		width = _width();
 	}
 
@@ -264,7 +266,7 @@ public class BNode extends Node {
 	}
 
 	public void insMax(int k) {
-		key[numKeys++] = k;
+		keys[numKeys++] = k;
 		width = _width();
 	}
 
@@ -275,9 +277,9 @@ public class BNode extends Node {
 
 	public void replace(int x, int y) {
 		int i = -1;
-		while (key[++i] != x) {
+		while (keys[++i] != x) {
 		}
-		key[i] = y;
+		keys[i] = y;
 		width = _width();
 	}
 
@@ -286,15 +288,15 @@ public class BNode extends Node {
 			return "";
 		}
 		String str = "";
-		if (key[0] == INF) {
+		if (keys[0] == INF) {
 			str = "\u221e";
-		} else if (key[0] == -INF) {
+		} else if (keys[0] == -INF) {
 			str = "-\u221e";
 		} else {
-			str = "" + key[0];
+			str = "" + keys[0];
 		}
 		for (int i = 1; i < Math.min(numKeys, max); ++i) {
-			str = str + "  " + key[i];
+			str = str + "  " + keys[i];
 		}
 		return str;
 	}
@@ -305,7 +307,7 @@ public class BNode extends Node {
 	}
 
 	int _width() {
-		if (key[0] != Node.NOKEY && numKeys > 0) {
+		if (keys[0] != Node.NOKEY && numKeys > 0) {
 			return Math.max(Fonts.NORMAL.fm.stringWidth(toString()) + 4,
 					2 * Node.RADIUS);
 		} else {
@@ -321,13 +323,13 @@ public class BNode extends Node {
 			return tox + D.panel.screen.V.stringWidth(toString(), Fonts.NORMAL) / 2 + Node.RADIUS;
 		}
 		if (numKeys <= 1) {
-			return x;
+			return tox;
 		}
 		String s = toString(i), t;
 		if (i == 0) {
-			t = "" + key[0];
+			t = "" + keys[0];
 		} else {
-			t = "  " + key[i];
+			t = "  " + keys[i];
 		}
 		return tox - D.panel.screen.V.stringWidth(toString(), Fonts.NORMAL) / 2
 				+ D.panel.screen.V.stringWidth(s, Fonts.NORMAL)
@@ -347,7 +349,7 @@ public class BNode extends Node {
 
 	@Override
 	public void drawKey(View V) {
-		if (key[0] != Node.NOKEY && numKeys > 0) {
+		if (keys[0] != Node.NOKEY && numKeys > 0) {
 			V.drawString(toString(), x, y, Fonts.NORMAL);
 		}
 	}
@@ -448,9 +450,9 @@ public class BNode extends Node {
 	}
 
 	int _goToX(BNode v) {
-		int x = key[0], p = v.numKeys;
+		int x = keys[0], p = v.numKeys;
 		for (int i = 0; i < p; ++i) {
-			if (x <= v.key[i]) {
+			if (x <= v.keys[i]) {
 				p = i;
 			}
 		}
@@ -477,4 +479,55 @@ public class BNode extends Node {
 	 * D.rooty - 2*D.RADIUS); } else { goTo(_goToX(((BTree)D).root),
 	 * D.rooty-2*D.RADIUS); } }
 	 */
+
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "parent", parent);
+		HashtableStoreSupport.store(state, hash + "c", c.clone());
+		for (BNode node : c) {
+			if (node != null) node.storeState(state);
+		}
+		HashtableStoreSupport.store(state, hash + "numKeys", numKeys);
+		HashtableStoreSupport.store(state, hash + "numChildren", numChildren);
+		HashtableStoreSupport.store(state, hash + "keys", keys.clone());
+		HashtableStoreSupport.store(state, hash + "leftw", leftw);
+		HashtableStoreSupport.store(state, hash + "rightw", rightw);
+		HashtableStoreSupport.store(state, hash + "width", width);
+		HashtableStoreSupport.store(state, hash + "nkeys", nkeys);
+		HashtableStoreSupport.store(state, hash + "nnodes", nnodes);
+		HashtableStoreSupport.store(state, hash + "height", height);
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object parent = state.get(hash + "parent");
+		if (parent != null) this.parent = (BNode) HashtableStoreSupport.restore(parent);
+		
+		Object c = state.get(hash + "c");
+		if (c != null) this.c = (BNode[]) HashtableStoreSupport.restore(c);
+		for (BNode node : this.c) {
+			if (node != null) node.restoreState(state);
+		}
+		
+		Object numKeys = state.get(hash + "numKeys");
+		if (numKeys != null) this.numKeys = (Integer) HashtableStoreSupport.restore(numKeys);
+		Object numChildren = state.get(hash + "numChildren");
+		if (numChildren != null) this.numChildren = (Integer) HashtableStoreSupport.restore(numChildren);
+		Object keys = state.get(hash + "keys");
+		if (keys != null) this.keys = (int[]) HashtableStoreSupport.restore(keys);
+		Object leftw = state.get(hash + "leftw");
+		if (leftw != null) this.leftw = (Integer) HashtableStoreSupport.restore(leftw);
+		Object rightw = state.get(hash + "rightw");
+		if (rightw != null) this.rightw = (Integer) HashtableStoreSupport.restore(rightw);
+		Object width = state.get(hash + "width");
+		if (width != null) this.width = (Integer) HashtableStoreSupport.restore(width);
+		Object nkeys = state.get(hash + "nkeys");
+		if (nkeys != null) this.nkeys = (Integer) HashtableStoreSupport.restore(nkeys);
+		Object height = state.get(hash + "height");
+		if (height != null) this.height = (Integer) HashtableStoreSupport.restore(height);
+		Object nnodes = state.get(hash + "nnodes");
+		if (nnodes != null) this.nnodes = (Integer) HashtableStoreSupport.restore(nnodes);
+	}
 }

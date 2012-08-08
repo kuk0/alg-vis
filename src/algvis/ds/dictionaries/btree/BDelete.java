@@ -24,21 +24,21 @@ import java.util.HashMap;
 
 public class BDelete extends Algorithm {
 	private final BTree T;
-	private BNode v;
 	private final int K;
 
 	public BDelete(BTree T, int x) {
 		super(T.panel);
 		this.T = T;
 		K = x;
-		v = T.v = new BNode(T, x);
-		v.setColor(NodeColor.DELETE);
-		setHeader("deletion");
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		if (T.root == null) {
+		BNode v = new BNode(T, K);
+		v.setColor(NodeColor.DELETE);
+		addToScene(v);
+		setHeader("deletion");
+		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
 			pause();
@@ -46,7 +46,7 @@ public class BDelete extends Algorithm {
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
 		} else {
-			BNode d = T.root;
+			BNode d = T.getRoot();
 			v.goAbove(d);
 			addStep("bstdeletestart");
 			pause();
@@ -57,11 +57,11 @@ public class BDelete extends Algorithm {
 				}
 				int p = d.search(K);
 				if (p == 0) {
-					addStep("bfind0", K, d.key[0]);
+					addStep("bfind0", K, d.keys[0]);
 				} else if (p == d.numKeys) {
-					addStep("bfindn", d.key[d.numKeys - 1], K, d.numKeys + 1);
+					addStep("bfindn", d.keys[d.numKeys - 1], K, d.numKeys + 1);
 				} else {
-					addStep("bfind", d.key[p - 1], K, d.key[p], p + 1);
+					addStep("bfind", d.keys[p - 1], K, d.keys[p], p + 1);
 				}
 				d = d.c[p];
 				if (d == null) {
@@ -74,28 +74,34 @@ public class BDelete extends Algorithm {
 			if (d == null) { // notfound
 				addStep("notfound");
 				v.goDown();
+				removeFromScene(v);
 				return;
 			}
 
 			d.setColor(NodeColor.FOUND);
 			pause();
 			d.setColor(NodeColor.NORMAL);
+			removeFromScene(v);
 			if (d.isLeaf()) {
 				addStep("bdelete1");
 				if (d.isRoot() && d.numKeys == 1) {
-					T.v = d;
-					T.root = null;
-					T.v.goDown();
+					v = d;
+					T.setRoot(null);
+					addToScene(v);
+					v.goDown();
 				} else {
-					T.v = d.del(K);
+					v = d.del(K);
+					addToScene(v);
 					T.reposition();
-					T.v.goDown();
+					v.goDown();
 					pause();
 				}
+				removeFromScene(v);
 			} else {
 				addStep("bdelete2");
 				BNode s = d.way(K + 1);
-				v = T.v = new BNode(T, -Node.INF, d.x, d.y);
+				v = new BNode(T, -Node.INF, d.tox, d.toy);
+				addToScene(v);
 				v.goAbove(s);
 				pause();
 				while (!s.isLeaf()) {
@@ -103,11 +109,13 @@ public class BDelete extends Algorithm {
 					v.goAbove(s);
 					pause();
 				}
-				v = T.v = s.delMin();
+				removeFromScene(v);
+				v = s.delMin();
+				addToScene(v);
 				v.goTo(d);
 				pause();
-				d.replace(K, v.key[0]);
-				T.v = null;
+				d.replace(K, v.keys[0]);
+				removeFromScene(v);
 				pause();
 				d.setColor(NodeColor.NORMAL);
 				d = s;
@@ -135,21 +143,24 @@ public class BDelete extends Algorithm {
 				}
 
 				if (s.numKeys > (T.order - 1) / 2) {
-					// treba zobrat prvok z s, nahradit nim p.key[k]
-					// a p.key[k] pridat do d
+					// treba zobrat prvok z s, nahradit nim p.keys[k]
+					// a p.keys[k] pridat do d
 					// tiez treba prehodit pointer z s ku d
 					if (lefts) {
 						addStep("bleft");
 					} else {
 						addStep("bright");
 					}
-					T.v = lefts ? s.delMax() : s.delMin();
-					T.v.goTo(p);
+					v = lefts ? s.delMax() : s.delMin();
+					addToScene(v);
+					v.goTo(p);
 					pause();
-					int pkey = p.key[k];
-					p.key[k] = T.v.key[0];
-					T.v = new BNode(T, pkey, p.x, p.y);
-					T.v.goTo(d);
+					int pkey = p.keys[k];
+					p.keys[k] = v.keys[0];
+					removeFromScene(v);
+					v = new BNode(T, pkey, p.tox, p.toy);
+					addToScene(v);
+					v.goTo(d);
 					pause();
 					if (lefts) {
 						d.insMin(pkey);
@@ -165,31 +176,32 @@ public class BDelete extends Algorithm {
 						}
 					}
 					d.setColor(NodeColor.NORMAL);
-					T.v = null;
 					break;
 				} else {
-					// treba spojit vrchol d + p.key[k] + s
+					// treba spojit vrchol d + p.keys[k] + s
 					// zmenit p.c[k] na novy vrchol a posunut to
 					addStep("bmerge");
 					if (p.isRoot() && p.numKeys == 1) {
-						T.v = new BNode(T.root);
-						T.root.key[0] = Node.NOKEY;
-						T.v.goTo((d.tox + s.tox) / 2, d.y);
+						v = new BNode(T.getRoot());
+						addToScene(v);
+						T.getRoot().keys[0] = Node.NOKEY;
+						v.goTo((d.tox + s.tox) / 2, d.y);
 						pause();
 						if (lefts) {
-							T.root = new BNode(s, T.v, d);
+							T.setRoot(new BNode(s, v, d));
 						} else {
-							T.root = new BNode(d, T.v, s);
+							T.setRoot(new BNode(d, v, s));
 						}
 						break;
 					} else {
-						T.v = p.del(p.key[k]);
-						T.v.goTo((d.tox + s.tox) / 2, d.y);
+						v = p.del(p.keys[k]);
+						addToScene(v);
+						v.goTo((d.tox + s.tox) / 2, d.y);
 						pause();
 						if (lefts) {
-							p.c[k] = new BNode(s, T.v, d);
+							p.c[k] = new BNode(s, v, d);
 						} else {
-							p.c[k] = new BNode(d, T.v, s);
+							p.c[k] = new BNode(d, v, s);
 						}
 						p.c[k].parent = p;
 						--p.numChildren;
@@ -198,10 +210,9 @@ public class BDelete extends Algorithm {
 					}
 				}
 			}
-			T.v = null;
 			T.reposition();
-			
 		}
+		removeFromScene(v);
 	}
 
 	@Override

@@ -177,6 +177,9 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 		Object last = state.get(hash + "last");
 		if (last != null) this.last = (DaryHeapNode) HashtableStoreSupport.restore(last);
 		Object order = state.get(hash + "order");
-		if (order != null) this.order = (Integer) HashtableStoreSupport.restore(order);
+		if (order != null) {
+			this.order = (Integer) HashtableStoreSupport.restore(order);
+			((DaryHeapButtons) panel.buttons).OS.setValue(this.order);
+		}
 	}
 }

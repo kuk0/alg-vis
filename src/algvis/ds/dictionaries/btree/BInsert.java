@@ -18,32 +18,35 @@ package algvis.ds.dictionaries.btree;
 
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
+import algvis.core.visual.VisualElement;
 
 import java.util.HashMap;
 
 public class BInsert extends Algorithm {
 	private final BTree T;
-	private final BNode v;
 	private final int K;
 
 	public BInsert(BTree T, int x) {
 		super(T.panel);
 		this.T = T;
-		v = T.v = new BNode(T, K = x);
-		v.setColor(NodeColor.INSERT);
-		setHeader("insert", K);
+		K = x;
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		if (T.root == null) {
-			T.root = v;
+		BNode v = new BNode(T, K);
+		v.setColor(NodeColor.INSERT);
+		addToScene(v);
+		setHeader("insert", K);
+		if (T.getRoot() == null) {
+			T.setRoot(v);
 			v.goAboveRoot();
 			addStep("newroot");
 			pause();
 			v.setColor(NodeColor.NORMAL);
+			removeFromScene(v);
 		} else {
-			BNode w = T.root;
+			BNode w = T.getRoot();
 			v.goAbove(w);
 			addStep("bst-insert-start");
 			pause();
@@ -52,6 +55,7 @@ public class BInsert extends Algorithm {
 				if (w.isIn(K)) {
 					addStep("alreadythere");
 					v.goDown();
+					removeFromScene(v);
 					return;
 				}
 				if (w.isLeaf()) {
@@ -59,11 +63,11 @@ public class BInsert extends Algorithm {
 				}
 				int p = w.search(K);
 				if (p == 0) {
-					addStep("bfind0", K, w.key[0]);
+					addStep("bfind0", K, w.keys[0]);
 				} else if (p == w.numKeys) {
-					addStep("bfindn", w.key[w.numKeys - 1], K, w.numKeys + 1);
+					addStep("bfindn", w.keys[w.numKeys - 1], K, w.numKeys + 1);
 				} else {
-					addStep("bfind", w.key[p - 1], K, w.key[p], p + 1);
+					addStep("bfind", w.keys[p - 1], K, w.keys[p], p + 1);
 				}
 				w = w.c[p];
 				v.goAbove(w);
@@ -75,7 +79,7 @@ public class BInsert extends Algorithm {
 			if (w.numKeys >= T.order) {
 				w.setColor(NodeColor.NOTFOUND);
 			}
-			T.v = null;
+			removeFromScene(v);
 			pause();
 
 			while (w.numKeys >= T.order) {
@@ -98,7 +102,7 @@ public class BInsert extends Algorithm {
 				pause();
 			}
 			if (w.isRoot()) {
-				T.root = w;
+				T.setRoot(w);
 			}
 			T.reposition();
 		}

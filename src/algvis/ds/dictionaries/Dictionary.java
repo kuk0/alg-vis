@@ -43,7 +43,7 @@ abstract public class Dictionary extends DataStructure {
 		return root;
 	}
 
-	protected void setRoot(Node root) {
+	public void setRoot(Node root) {
 		this.root = root;
 	}
 

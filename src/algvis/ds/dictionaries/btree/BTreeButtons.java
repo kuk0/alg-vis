@@ -26,7 +26,7 @@ import javax.swing.event.ChangeListener;
 
 public class BTreeButtons extends DictButtons implements ChangeListener {
 	private static final long serialVersionUID = -4573594717377516312L;
-	private JSpinner OS;
+	JSpinner OS;
 	private ILabel orderLabel;
 
 	public BTreeButtons(VisPanel M) {
@@ -45,9 +45,14 @@ public class BTreeButtons extends DictButtons implements ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent evt) {
 		if (evt.getSource() == OS) {
-			((BTree) D).order = (Integer) OS.getValue();
-			D.clear();
-			((BTree) D).reposition();
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			((BTree) D).setOrder((Integer) OS.getValue());
 		}
+	}
+
+	@Override
+	public void setOtherEnabled(boolean enabled) {
+		super.setOtherEnabled(enabled);
+		OS.setEnabled(enabled);
 	}
 }

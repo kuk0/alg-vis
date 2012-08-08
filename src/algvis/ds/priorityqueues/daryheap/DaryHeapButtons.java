@@ -26,7 +26,7 @@ import javax.swing.event.ChangeListener;
 
 public class DaryHeapButtons extends PQButtons implements ChangeListener {
 	private static final long serialVersionUID = -2783154701649865993L;
-	private JSpinner OS;
+	JSpinner OS;
 	private ILabel orderLabel;
 
 	public DaryHeapButtons(VisPanel M) {
