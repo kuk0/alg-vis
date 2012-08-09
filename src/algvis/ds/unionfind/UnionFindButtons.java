@@ -16,6 +16,7 @@
  ******************************************************************************/
 package algvis.ds.unionfind;
 
+import algvis.core.AlgorithmAdapter;
 import algvis.gui.Buttons;
 import algvis.gui.VisPanel;
 import algvis.internationalization.IButton;
@@ -94,10 +95,15 @@ public class UnionFindButtons extends Buttons {
 		super.actionPerformed(evt);
 		final UnionFind D = (UnionFind) this.D;
 		if (evt.getSource() == makesetB) {
-			// TODO makeSet je algorithm
-			D.makeSet(I.getInt(10, 1, 1000));
-			panel.refresh();
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			D.start(new AlgorithmAdapter(panel) {
+				@Override
+				public void runAlgorithm() throws InterruptedException {
+					D.makeSet(I.getInt(10, 1, 1000));
+				}
+			});
 		} else if (evt.getSource() == findB) {
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
 			int count = D.count;
 			final Vector<Integer> args = I.getVI(1, count);
 			if (D.firstSelected != null) {
@@ -115,6 +121,7 @@ public class UnionFindButtons extends Buttons {
 			}
 			D.find(D.at(args.elementAt(0)));
 		} else if (evt.getSource() == unionB) {
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
 			int count = D.count;
 			final Vector<Integer> args = I.getVI(1, count);
 			if (D.firstSelected != null) {
@@ -140,11 +147,11 @@ public class UnionFindButtons extends Buttons {
 				args.add(i);
 			}
 			D.union(D.at(args.elementAt(0)), D.at(args.elementAt(1)));
-		} else if (evt.getSource() == unionHeuristicCB) {
+		} else if (evt.getSource() == unionHeuristicCB) { // TODO
 			int i = unionHeuristicCB.getSelectedIndex();
 			if (i == 0 || i == 1)
 				D.unionState = UnionFindUnion.UnionHeuristic.values()[i];
-		} else if (evt.getSource() == findHeuristicCB) {
+		} else if (evt.getSource() == findHeuristicCB) { // TODO
 			int i = findHeuristicCB.getSelectedIndex();
 			if (0 <= i && i < 4)
 				D.pathCompression = UnionFindFind.FindHeuristic.values()[i];

@@ -16,6 +16,7 @@
  ******************************************************************************/
 package algvis.core;
 
+import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
 import algvis.ds.DataStructure;
 import algvis.gui.view.View;
@@ -562,19 +563,22 @@ public class TreeNode extends Node {
 	@Override
 	public void storeState(Hashtable<Object, Object> state) {
 		super.storeState(state);
-		state.put(hash + "child", child);
-		state.put(hash + "right", right);
-		state.put(hash + "parent", parent);
+		HashtableStoreSupport.store(state, hash + "child", child);
+		HashtableStoreSupport.store(state, hash + "right", right);
+		HashtableStoreSupport.store(state, hash + "parent", parent);
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		TreeNode child = (TreeNode) state.get(hash + "child");
-		if (child != null) this.child = child;
-		TreeNode right = (TreeNode) state.get(hash + "right");
-		if (right != null) this.right = right;
-		TreeNode parent = (TreeNode) state.get(hash + "parent");
-		if (parent != null) this.parent = parent;
+		Object child = state.get(hash + "child");
+		if (child != null) this.child = (TreeNode) HashtableStoreSupport.restore(child);
+		Object right = state.get(hash + "right");
+		if (right != null) this.right = (TreeNode) HashtableStoreSupport.restore(right);
+		Object parent = state.get(hash + "parent");
+		if (parent != null) this.parent = (TreeNode) HashtableStoreSupport.restore(parent);
+		
+		if (this.child != null) this.child.restoreState(state);
+		if (this.right != null) this.right.restoreState(state);
 	}
 }

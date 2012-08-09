@@ -28,8 +28,19 @@ public class UnionFindUnion extends UnionFindFind {
 	private final UnionFindNode u;
     private final UnionFindNode v;
 
+	public UnionFindUnion(UnionFind UF, UnionFindNode u, UnionFindNode v) {
+		super(UF);
+		this.UF = UF;
+		this.unionState = UF.unionState;
+		this.u = u;
+		this.v = v;
+	}
+	
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("ufunion");
+		u.mark();
+		v.mark();
 		switch (unionState) {
 			case NONE:
 				unionSimple(u, v);
@@ -40,17 +51,6 @@ public class UnionFindUnion extends UnionFindFind {
 			default:
 				break;
 		}
-	}
-
-	public UnionFindUnion(UnionFind UF, UnionFindNode u, UnionFindNode v) {
-		super(UF);
-		this.UF = UF;
-		this.unionState = UF.unionState;
-		this.u = u;
-		this.v = v;
-		u.mark();
-		v.mark();
-		setHeader("ufunion");
 	}
 
 	public void setState(UnionHeuristic state) {

@@ -17,6 +17,7 @@
 package algvis.ds.unionfind;
 
 import algvis.core.TreeNode;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.DataStructure;
 import algvis.gui.view.View;
 
@@ -88,16 +89,16 @@ public class UnionFindNode extends TreeNode {
 	@Override
 	public void storeState(Hashtable<Object, Object> state) {
 		super.storeState(state);
-		state.put(hash + "rank", rank);
-		state.put(hash + "grey", grey);
+		HashtableStoreSupport.store(state, hash + "rank", rank);
+		HashtableStoreSupport.store(state, hash + "grey", grey);
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Integer rank = (Integer) state.get(hash + "rank");
-		if (rank != null) this.rank = rank;
-		Boolean grey = (Boolean) state.get(hash + "grey");
-		if (grey != null) this.grey = grey;
+		Object rank = state.get(hash + "rank");
+		if (rank != null) this.rank = (Integer) HashtableStoreSupport.restore(rank);
+		Object grey = state.get(hash + "grey");
+		if (grey != null) this.grey = (Boolean) HashtableStoreSupport.restore(grey);
 	}
 }

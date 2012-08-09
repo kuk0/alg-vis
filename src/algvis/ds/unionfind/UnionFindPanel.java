@@ -32,5 +32,6 @@ public class UnionFindPanel extends VisPanel {
 	public void initDS() {
 		D = new UnionFind(this);
 		buttons = new UnionFindButtons(this);
+		((UnionFind) D).makeSet(15);
 	}
 }

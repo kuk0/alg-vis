@@ -38,7 +38,6 @@ public class UnionFind extends DataStructure implements ClickListener {
 	public int count = 0;
 	private ArrayList<UnionFindNode> sets = new ArrayList<UnionFindNode>();
 	private ArrayList<UnionFindNode> vertices = new ArrayList<UnionFindNode>();
-	private UnionFindNode v = null;
 
 	public FindHeuristic pathCompression = FindHeuristic.NONE;
 	public UnionHeuristic unionState = UnionHeuristic.NONE;
@@ -56,11 +55,6 @@ public class UnionFind extends DataStructure implements ClickListener {
 		M.screen.V.align = Alignment.LEFT;
 		M.screen.V.setDS(this);
 		count = 0;
-		makeSet(15);
-	}
-
-	void setV(UnionFindNode v) {
-		this.v = v;
 	}
 
 	/** adds to sets and vertices */
@@ -85,7 +79,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 
 	public void makeSet(int N) {
 		for (int i = 0; i < N; i++) {
-			add(new UnionFindNode(this, count, ZDepth.ACTIONNODE));
+			add(new UnionFindNode(this, count, ZDepth.NODE));
 		}
 		reposition();
 	}
@@ -122,38 +116,33 @@ public class UnionFind extends DataStructure implements ClickListener {
 	public void draw(View V) {
 		if (sets != null) {
             for (UnionFindNode set : sets) {
-                set.moveTree();
                 set.drawTree(V);
             }
-		}
-		if (v != null) {
-			if (isSelected(v) && (!v.marked)) {
-				// v.mark(); // TODO
-			}
-			if (!isSelected(v) && (!!v.marked)) {
-				// v.unmark(); // TODO are these lines needed?
-			}
-			v.move();
-			v.draw(V);
 		}
 	}
 
 	@Override
 	public void move() {
+		if (sets != null) {
+			for (UnionFindNode set : sets) {
+				set.moveTree();
+			}
+		}
 	}
 
 	@Override
 	public Rectangle2D getBoundingBox() {
-		return null;
+		return null; // TODO
 	}
 
 	@Override
 	protected void endAnimation() {
+		// TODO
 	}
 
 	@Override
 	protected boolean isAnimationDone() {
-		return false;
+		return true; // TODO
 	}
 
 	public void reposition() {
@@ -229,12 +218,34 @@ public class UnionFind extends DataStructure implements ClickListener {
 
 	@Override
 	public void storeState(Hashtable<Object, Object> state) {
-		HashtableStoreSupport.store(state, "count", count);
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "count", count);
+		HashtableStoreSupport.store(state, hash + "sets", sets.clone());
+		for (UnionFindNode node : sets) {
+			node.storeState(state);
+		}
+		HashtableStoreSupport.store(state, hash + "vertices", vertices.clone());
+		for (UnionFindNode node : vertices) {
+			node.storeState(state);
+		}
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
-		Integer count = (Integer) state.get(hash + "count");
-		if (count != null) this.count = count;
+		super.restoreState(state);
+		Object count = state.get(hash + "count");
+		if (count != null) this.count = (Integer) HashtableStoreSupport.restore(count);
+		
+		Object sets = state.get(hash + "sets");
+		if (sets != null) this.sets = (ArrayList<UnionFindNode>) HashtableStoreSupport.restore(sets);
+		for (UnionFindNode node : this.sets) {
+			node.restoreState(state);
+		}
+
+		Object vertices = state.get(hash + "vertices");
+		if (vertices != null) this.vertices = (ArrayList<UnionFindNode>) HashtableStoreSupport.restore(vertices);
+		for (UnionFindNode node : this.vertices) {
+			node.restoreState(state);
+		}
 	}
 }

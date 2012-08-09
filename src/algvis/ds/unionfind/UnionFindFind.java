@@ -39,9 +39,7 @@ public class UnionFindFind extends Algorithm {
 	}
 
 	public UnionFindFind(UnionFind UF, UnionFindNode u) {
-		super(UF.panel, null);
-		this.UF = UF;
-		setState(UF.pathCompression);
+		this(UF);
 		this.u = u;
 	}
 
