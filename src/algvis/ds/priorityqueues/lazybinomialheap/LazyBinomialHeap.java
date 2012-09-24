@@ -92,7 +92,7 @@ public class LazyBinomialHeap extends BinomialHeap {
 		if (cleanup != null) {
 			HashtableStoreSupport.store(state, hash + "cleanup", cleanup.clone());
 			// TODO mozno netreba ukladat (ak su vrcholy niekde inde ulozene)
-			for (int i = 0; i <= cleanup.length; ++i) {
+			for (int i = 0; i < cleanup.length; ++i) {
 				if (cleanup[i] != null) cleanup[i].storeTreeState(state);
 			}
 		} else {
@@ -106,7 +106,7 @@ public class LazyBinomialHeap extends BinomialHeap {
 		Object cleanup = state.get(hash + "cleanup");
 		if (cleanup != null) this.cleanup = (BinHeapNode[]) HashtableStoreSupport.restore(cleanup);
 		if (this.cleanup != null) {
-			for (int i = 0; i <= this.cleanup.length; ++i) {
+			for (int i = 0; i < this.cleanup.length; ++i) {
 				if (this.cleanup[i] != null) this.cleanup[i].restoreTreeState(state);
 			}
 		}

@@ -16,6 +16,7 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.fibonacciheap;
 
+import algvis.core.AlgorithmAdapter;
 import algvis.core.Settings;
 import algvis.ds.DataStructure;
 import algvis.ds.priorityqueues.MeldablePQButtons;
@@ -31,18 +32,39 @@ public class FibHeapPanel extends VisPanel {
 
 	@Override
 	public void initDS() {
-		FibonacciHeap H = new FibonacciHeap(this);
+		final FibonacciHeap H = new FibonacciHeap(this);
 		D = H;
 		buttons = new MeldablePQButtons(this);
-		H.active = 1;
+		pauses = false;
 		D.random(7);
-		H.active = 2;
+		D.start(new AlgorithmAdapter(this) {
+			@Override
+			public void runAlgorithm() throws InterruptedException {
+				H.active = 2;
+			}
+		});
 		D.random(3);
-		H.lowlight();
-		H.active = 3;
+		D.start(new AlgorithmAdapter(this) {
+			@Override
+			public void runAlgorithm() throws InterruptedException {
+				H.lowlight();
+				H.active = 3;
+			}
+		});
 		D.random(5);
-		H.lowlight();
-		H.active = 1;
+		D.start(new AlgorithmAdapter(this) {
+			@Override
+			public void runAlgorithm() throws InterruptedException {
+				H.lowlight();
+				H.active = 1;
+			}
+		});
+		D.start(new Runnable() {
+			@Override
+			public void run() {
+				pauses = true;
+			}
+		});
 		D.panel.screen.V.resetView();
 	}
 

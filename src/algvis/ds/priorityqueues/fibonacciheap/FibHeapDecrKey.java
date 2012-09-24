@@ -25,21 +25,19 @@ import java.util.HashMap;
 
 public class FibHeapDecrKey extends Algorithm {
 	private final int delta;
-    private final int i;
 	private final BinomialHeap H;
 	private BinHeapNode v;
 
-	public FibHeapDecrKey(BinomialHeap H, BinHeapNode v, int delta, int i) {
+	public FibHeapDecrKey(BinomialHeap H, BinHeapNode v, int delta) {
 		super(H.panel);
 		this.H = H;
 		this.v = v;
 		this.delta = delta;
-		this.i = i;
-		// setHeader("insertion");
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		int i = H.active;
 		if (H.minHeap) {
 			v.setKey(v.getKey() - delta);
 			if (v.getKey() < 1)

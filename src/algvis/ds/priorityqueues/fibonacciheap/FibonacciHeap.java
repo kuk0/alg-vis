@@ -35,6 +35,6 @@ public class FibonacciHeap extends LazyBinomialHeap {
 
 	@Override
 	public void decreaseKey(Node v, int delta) {
-		start(new FibHeapDecrKey(this, (BinHeapNode) v, delta, active));
+		start(new FibHeapDecrKey(this, (BinHeapNode) v, delta));
 	}
 }

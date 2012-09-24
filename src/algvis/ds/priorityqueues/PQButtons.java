@@ -17,7 +17,7 @@
 package algvis.ds.priorityqueues;
 
 import algvis.core.AlgorithmAdapter;
-import algvis.ds.dictionaries.bst.BSTNode;
+import algvis.core.Node;
 import algvis.gui.Buttons;
 import algvis.gui.VisPanel;
 import algvis.internationalization.IButton;
@@ -101,8 +101,12 @@ public class PQButtons extends Buttons {
 		} else if (evt.getSource() == decrKeyB) {
 			if (panel.history.canRedo()) panel.newAlgorithmPool();
 			int delta = Math.abs(I.getInt(1));
-			BSTNode w = ((BSTNode) ((PriorityQueue) D).chosen);
-			((PriorityQueue) D).decreaseKey(w, delta);
+			Node w = ((PriorityQueue) D).chosen;
+			if (w != null) {
+				// TODO vypisat, ze ziadny vrchol nie je vybraty
+				// nesedi hlaska "using the default value 1"
+				((PriorityQueue) D).decreaseKey(w, delta);
+			}
 		} else if (evt.getSource() == minB && !((PriorityQueue) D).minHeap) {
 			if (panel.history.canRedo()) panel.newAlgorithmPool();
 			D.start(new AlgorithmAdapter(panel) {
