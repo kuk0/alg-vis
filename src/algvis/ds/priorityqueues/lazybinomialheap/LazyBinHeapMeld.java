@@ -55,7 +55,6 @@ public class LazyBinHeapMeld extends Algorithm {
 			H.root[j] = H.min[j] = null;
 		}
 		H.reposition();
-		pause();
 	}
 
 	@Override

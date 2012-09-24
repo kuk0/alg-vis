@@ -24,18 +24,18 @@ import java.util.HashMap;
 
 public class LazyBinHeapInsert extends Algorithm {
 	private final LazyBinomialHeap H;
-	private final BinHeapNode v;
-	private final int i;
+	private final int x;
 
-	public LazyBinHeapInsert(LazyBinomialHeap H, int i, int x) {
+	public LazyBinHeapInsert(LazyBinomialHeap H, int x) {
 		super(H.panel);
 		this.H = H;
-		this.i = i;
-		v = new BinHeapNode(H, x, ZDepth.ACTIONNODE);
+		this.x = x;
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		int i = H.active;
+		BinHeapNode v = new BinHeapNode(H, x, ZDepth.ACTIONNODE);
 		if (H.root[i] == null) {
 			H.root[i] = H.min[i] = v;
 		} else {
@@ -45,7 +45,6 @@ public class LazyBinHeapInsert extends Algorithm {
 			}
 		}
 		H.reposition();
-		pause();
 	}
 
 	@Override

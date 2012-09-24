@@ -23,21 +23,20 @@ import java.util.HashMap;
 
 public class LazyBinHeapDelete extends Algorithm {
 	private final LazyBinomialHeap H;
-	private final int i;
 
 	int lg(int n) {
 		return (int) Math.ceil(Math.log(n) / Math.log(2));
 	}
 
-	public LazyBinHeapDelete(LazyBinomialHeap H, int i) {
+	public LazyBinHeapDelete(LazyBinomialHeap H) {
 		super(H.panel);
 		this.H = H;
-		this.i = i;
-		H.cleanup = new BinHeapNode[lg(H.size(i) + 1) + 1]; // TODO: change to rank
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		int i = H.active;
+		H.cleanup = new BinHeapNode[lg(H.size(i) + 1) + 1]; // TODO: change to rank
 		if (H.root[i] == null) {
 			// empty
 			H.cleanup = null;

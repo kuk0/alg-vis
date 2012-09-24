@@ -18,12 +18,15 @@ package algvis.ds.priorityqueues.lazybinomialheap;
 
 import algvis.core.Node;
 import algvis.core.Pair;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.priorityqueues.MeldablePQButtons;
 import algvis.ds.priorityqueues.binomialheap.BinHeapNode;
 import algvis.ds.priorityqueues.binomialheap.BinomialHeap;
 import algvis.gui.Fonts;
 import algvis.gui.VisPanel;
 import algvis.gui.view.View;
+
+import java.util.Hashtable;
 
 public class LazyBinomialHeap extends BinomialHeap {
 	public static String dsName = "lazybinheap";
@@ -42,12 +45,12 @@ public class LazyBinomialHeap extends BinomialHeap {
 
 	@Override
 	public void insert(int x) {
-		start(new LazyBinHeapInsert(this, active, x));
+		start(new LazyBinHeapInsert(this, x));
 	}
 
 	@Override
 	public void delete() {
-		start(new LazyBinHeapDelete(this, active));
+		start(new LazyBinHeapDelete(this));
 	}
 
 	@Override
@@ -81,5 +84,31 @@ public class LazyBinomialHeap extends BinomialHeap {
 	public void reposition() {
 		super.reposition();
 		panel.screen.V.miny = -arrayheight - 50;
+	}
+
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		if (cleanup != null) {
+			HashtableStoreSupport.store(state, hash + "cleanup", cleanup.clone());
+			// TODO mozno netreba ukladat (ak su vrcholy niekde inde ulozene)
+			for (int i = 0; i <= cleanup.length; ++i) {
+				if (cleanup[i] != null) cleanup[i].storeTreeState(state);
+			}
+		} else {
+			HashtableStoreSupport.store(state, hash + "cleanup", null);
+		}
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object cleanup = state.get(hash + "cleanup");
+		if (cleanup != null) this.cleanup = (BinHeapNode[]) HashtableStoreSupport.restore(cleanup);
+		if (this.cleanup != null) {
+			for (int i = 0; i <= this.cleanup.length; ++i) {
+				if (this.cleanup[i] != null) this.cleanup[i].restoreTreeState(state);
+			}
+		}
 	}
 }
