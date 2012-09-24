@@ -35,7 +35,7 @@ import java.util.Hashtable;
  */
 public class Node extends VisualElement {
 	protected DataStructure D;
-	private int key;
+	protected int key;
 	/**
 	 * x, y - node position tox, toy - the position, where the node is heading
 	 * steps - the number of steps to reach the destination

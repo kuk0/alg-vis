@@ -37,6 +37,27 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 	public BinHeapNode[] root; // root[0] je pomocny, prave meldujuci
 	public BinHeapNode[] min;
 
+//	void debug() {
+//		for (int i = 0, rootLength = root.length; i < rootLength; i++) {
+//			BinHeapNode node = root[i];
+//			System.out.println("Debugging root " + i + ":");
+//			if (node == null) {
+//				System.out.println("null");
+//			} else {
+//				node.debugTree();
+//			}
+//		}
+//		for (int i = 0, minLength = min.length; i < minLength; i++) {
+//			BinHeapNode node = min[i];
+//			System.out.println("Debugging min " + i + ":");
+//			if (node == null) {
+//				System.out.println("null");
+//			} else {
+//				node.debugTree();
+//			}
+//		}
+//	}
+	
 	@Override
 	public String getName() {
 		return "binheap";

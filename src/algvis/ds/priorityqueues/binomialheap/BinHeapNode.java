@@ -304,8 +304,8 @@ public class BinHeapNode extends Node {
 	
 	private void storeTreeState(Hashtable<Object, Object> state, BinHeapNode first) {
 		storeState(state);
-		if (child != null) child.storeState(state);
-		if (right != first) right.storeState(state);
+		if (child != null) child.storeTreeState(state);
+		if (right != first) right.storeTreeState(state, first);
 	}
 
 	@Override
@@ -333,7 +333,28 @@ public class BinHeapNode extends Node {
 
 	private void restoreTreeState(Hashtable<?, ?> state, BinHeapNode first) {
 		restoreState(state);
-		if (this.child != null) this.child.restoreState(state);
-		if (this.right != first) this.right.restoreState(state);
+		if (this.child != null) this.child.restoreTreeState(state);
+		if (this.right != first) this.right.restoreTreeState(state, first);
 	}
+
+//	public void debug() {
+//		System.out.println("NodeKey: " + key);
+//		System.out.println("left: " + (left == null ? "null" : left.key));
+//		System.out.println("right: " + (right == null ? "null" : right.key));
+//		System.out.println("parent: " + (parent == null ? "null" : parent.key));
+//		System.out.println("child: " + (child == null ? "null" : child.key));
+//		System.out.println("leftw: " + leftw);
+//		System.out.println("height: " + height);
+//		System.out.println("rank: " + rank);
+//	}
+//	
+//	public void debugTree() {
+//		debugTree(this);
+//	}
+//	
+//	public void debugTree(BinHeapNode first) {
+//		debug();
+//		if (child != null) child.debugTree();
+//		if (right != first) right.debugTree(first);
+//	}
 }

@@ -57,7 +57,7 @@ public class AlgVis extends JPanel implements ActionListener {
      * 21 - Interval tree ("intervaltree")
      * 22 - Trie ("trie") 
      * 23 - Suffix Tree ("suffixtree") */
-	private final static int DEFAULT_DS = 0;
+	private final static int DEFAULT_DS = 17;
 	
 	private static final long serialVersionUID = -5202486006824196688L;
 
