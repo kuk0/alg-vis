@@ -16,6 +16,7 @@
  ******************************************************************************/
 package algvis.ds.rotations;
 
+import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
 import algvis.ds.DataStructure;
 import algvis.ds.dictionaries.bst.BST;
@@ -28,6 +29,7 @@ import algvis.gui.view.Layout;
 import algvis.gui.view.View;
 
 import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
 import java.util.Random;
 
 public class Rotations extends DataStructure implements ClickListener {
@@ -53,7 +55,7 @@ public class Rotations extends DataStructure implements ClickListener {
 	}
 
 	public void rotate(int x) {
-		v = T.getRoot();
+		BSTNode v = T.getRoot();
 		while (v != null && v.getKey() != x) {
 			if (v.getKey() < x) {
 				v = v.getRight();
@@ -67,7 +69,6 @@ public class Rotations extends DataStructure implements ClickListener {
 		} else {
 			start(new Rotate(this, v));
 		}
-		T.getRoot().calcTree();
 	}
 
 	@Override
@@ -151,11 +152,18 @@ public class Rotations extends DataStructure implements ClickListener {
 	@Override
 	public void random(int n) {
 		Random g = new Random(System.currentTimeMillis());
+		final boolean p = panel.pauses;
 		for (int i = 0; i < n; ++i) {
 			insert(g.nextInt(InputField.MAX + 1));
 		}
-		T.getRoot().calcTree();
-		setStats();
+		start(new Runnable() {
+			@Override
+			public void run() {
+				T.getRoot().calcTree();
+				setStats();
+				panel.pauses = p;
+			}
+		});
 		//panel.screen.V.resetView();
 	}
 
@@ -182,5 +190,23 @@ public class Rotations extends DataStructure implements ClickListener {
 	@Override
 	public Layout getLayout() {
 		return Layout.SIMPLE;
+	}
+
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		T.storeState(state);
+		HashtableStoreSupport.store(state, hash + "v", v);
+		if (v != null) v.storeState(state);
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		T.restoreState(state);
+		Object v = state.get(hash + "v");
+		if (v != null) this.v = (BSTNode) HashtableStoreSupport.restore(v);
+		
+		if (this.v != null) this.v.restoreState(state); 
 	}
 }

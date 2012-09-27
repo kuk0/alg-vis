@@ -37,6 +37,7 @@ public class Rotate extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		R.v = v;
 		setHeader("rotate-header", v.getKey());
 		if (v == T.getRoot()) {
 			addNote("rotate-root", v.getKey());
@@ -71,7 +72,11 @@ public class Rotate extends Algorithm {
 		if (u == T.getRoot() && b != null) {
 			addNote("rotate-newroot", v.getKey(), b.getKey(), u.getKey());
 		} else {
-			addNote("rotate-changes", v.getKey(), b.getKey(), u.getKey(), u.getParent().getKey());
+			if (b != null) {
+				addNote("rotate-changes", v.getKey(), b.getKey(), u.getKey(), u.getParent().getKey());
+			} else {
+				// TODO co ak b je null?
+			}
 		}
 		pause();
 
@@ -97,6 +102,8 @@ public class Rotate extends Algorithm {
 			u.getRight().subtreeColor(NodeColor.NORMAL);
 			u.getRight().markSubtree = false;
 		}
+
+		T.getRoot().calcTree();
 	}
 
 	@Override
