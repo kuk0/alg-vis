@@ -22,7 +22,6 @@ import java.util.HashMap;
 
 public class PairHeapInsert extends PairHeapAlg{
 	private final int x;
-	PairHeapNode w;
 	
 	public PairHeapInsert(PairingHeap H, int x) {
 		super(H);

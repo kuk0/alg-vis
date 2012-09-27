@@ -21,21 +21,17 @@ import algvis.ds.DataStructure;
 import java.util.HashMap;
 
 public class PairHeapDelete extends PairHeapAlg{
-	private Pairing pairState;
-	
+
 	public PairHeapDelete(DataStructure H) {
 		super(H);
-		this.pairState = this.H.pairState;
-	}
-	
-	public void setState(Pairing state) {
-		this.pairState = state;
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		Pairing pairState = this.H.pairState;
 		int i = H.active;
 		setHeader("deletion");
+		
 		if (H.root[i] == null) {
 			return;
 		}
@@ -46,14 +42,16 @@ public class PairHeapDelete extends PairHeapAlg{
 			addStep("minimum", H.root[i].getKey());
 		}
 
-		H.v = new PairHeapNode(H.root[i]);
-		H.v.mark();
+		PairHeapNode v = new PairHeapNode(H.root[i]);
+		v.mark();
+		addToScene(v);
 
 		pause();
 
 		//spravime neviditelneho roota (vymazane minimum) a posunieme to o minsepy hore.
 
-		H.v.goDown();
+		v.goDown();
+		removeFromScene(v);
 
 		H.root[i].state = -1; //<<----- potom odkomentovat
 		H.root[i].shift(0, - PairingHeap.minsepy);

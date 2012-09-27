@@ -18,6 +18,7 @@ package algvis.ds.priorityqueues.pairingheap;
 
 import algvis.core.Node;
 import algvis.core.Pair;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.DataStructure;
 import algvis.ds.priorityqueues.MeldablePQ;
 import algvis.ds.priorityqueues.MeldablePQButtons;
@@ -27,12 +28,11 @@ import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
 
 import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
 
 public class PairingHeap extends MeldablePQ implements ClickListener{
 	public static final String dsName = "pairingheap";
 	PairHeapNode root[] = null;
-    PairHeapNode v = null;
-    private final PairHeapNode v2 = null;
 	public Pairing pairState = Pairing.NAIVE;
 	//public PairHeapNode children[] = null;
 	
@@ -244,5 +244,24 @@ public class PairingHeap extends MeldablePQ implements ClickListener{
 			
 		}
 		panel.screen.V.setBounds(0, 0, sumx, y2);
+	}
+
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "root", root.clone());
+		for (int i = 0; i <= numHeaps; ++i) {
+			if (root[i] != null) root[i].storeState(state);
+		}
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object root = state.get(hash + "root");
+		if (root != null) this.root = (PairHeapNode[]) HashtableStoreSupport.restore(root);
+		for (int i = 0; i <= numHeaps; ++i) {
+			if (this.root[i] != null) this.root[i].restoreState(state);
+		}
 	}
 }

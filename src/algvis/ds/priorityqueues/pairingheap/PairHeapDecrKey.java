@@ -27,15 +27,16 @@ public class PairHeapDecrKey extends PairHeapAlg {
 		super(D);
 		this.v = v;
 		this.delta = delta;
+	}
+
+	@Override
+	public void runAlgorithm() throws InterruptedException {
 		if (H.minHeap) {
 			setHeader("decreasekey");
 		} else {
 			setHeader("increasekey");
 		}
-	}
-
-	@Override
-	public void runAlgorithm() throws InterruptedException {
+		
 		if (H.minHeap) {
 			v.setKey(v.getKey() - delta);
 			if (v.getKey() < 1)
