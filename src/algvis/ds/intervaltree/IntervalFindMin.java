@@ -8,8 +8,8 @@ import algvis.ds.intervaltree.IntervalTrees.mimasuType;
 import java.util.HashMap;
 
 public class IntervalFindMin extends IntervalAlg {
-	private final int i;
-    private final int j;
+	private int i;
+    private int j;
 	private IntervalNode maxi;
 	private static final int ninf = -2147483648;
 	private static final int pinf = 2147483647;
@@ -17,6 +17,12 @@ public class IntervalFindMin extends IntervalAlg {
 	public IntervalFindMin(IntervalTree T, int i, int j) {
 		super(T);
 		this.T = T;
+		this.i = i;
+		this.j = j;
+	}
+
+	@Override
+	public void runAlgorithm() throws InterruptedException {
 		if (i > j) {
 			int tmp = j;
 			j = i;
@@ -28,8 +34,6 @@ public class IntervalFindMin extends IntervalAlg {
 		if (j > T.numLeafs || j < 1) {
 			j = T.numLeafs;
 		}
-		this.i = i;
-		this.j = j;
 		if (T.minTree == mimasuType.MAX) {
 			maxi = new IntervalNode(T, ninf, ZDepth.NODE);
 			setHeader("findmax", i, j);
@@ -43,10 +47,7 @@ public class IntervalFindMin extends IntervalAlg {
 		T.markColor(T.root, i, j);
 		// System.out.println(i + " " + j);
 		// System.out.println(T.root.b + " " + T.root.e);
-	}
-
-	@Override
-	public void runAlgorithm() throws InterruptedException {
+		
 		// kazdy vrchol ma zapamatany interval, ktory reprezentuje (je to
 		// b-e+1=2^k
 

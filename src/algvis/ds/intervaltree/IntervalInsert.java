@@ -6,21 +6,23 @@ import java.util.HashMap;
 
 public class IntervalInsert extends IntervalAlg{
 	private final int K;
-
+	
 	public IntervalInsert(IntervalTree T, int x) {
 		super(T);
 		this.T = T;
 		if (x > 333){
 			x = x/3;
 		}
-		v = new IntervalNode(T, K = x, ZDepth.ACTIONNODE);
-		v.setInterval(T.numLeafs+1, T.numLeafs+1);
-		//v.setColor(NodeColor.INSERT);
-		setHeader("insert", K);
+		K = x;
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		v = new IntervalNode(T, K, ZDepth.ACTIONNODE);
+		v.setInterval(T.numLeafs+1, T.numLeafs+1);
+		//v.setColor(NodeColor.INSERT);
+		setHeader("insert", K);
+		
 		T.reposition();
 
 		if (T.root == null) {

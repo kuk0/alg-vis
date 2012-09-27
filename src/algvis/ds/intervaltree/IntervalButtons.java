@@ -84,37 +84,24 @@ public class IntervalButtons extends Buttons{
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
 		if (evt.getSource() == insertB) {
-			final Vector<Integer> args = I.getNonEmptyVI();
-			Thread t = new Thread(new Runnable() {
-				@Override
-				public void run() {
-					for (int x : args) {
-						D.insert(x);
-					}
-				}
-			});
-			t.start();
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			Vector<Integer> args = I.getNonEmptyVI();
+			for (int x : args) {
+				D.insert(x);
+			}
 		} else if (evt.getSource() == findsumB) {
-			final Vector<Integer> args = I.getVI();
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			Vector<Integer> args = I.getVI();
 			if (args.size() > 1) {
-				Thread t = new Thread(new Runnable() {
-					@Override
-					public void run() {
-						((IntervalTrees) D).ofinterval(args.elementAt(0), args.elementAt(1));
-					}
-				});
-				t.start();
+				((IntervalTrees) D).ofinterval(args.elementAt(0), args.elementAt(1));
+			} else {
+				((IntervalTrees) D).ofinterval(1, ((IntervalTree) D).numLeafs);
 			}
 		} else if (evt.getSource() == changeKeyB) {
-			final int delta = Math.abs(I.getInt(1));
-			final BSTNode w = ((BSTNode) ((IntervalTrees) D).chosen);
-			Thread t = new Thread(new Runnable() {
-				@Override
-				public void run() {
-					((IntervalTrees) D).changeKey(w, delta);
-				}
-			});
-			t.start();
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			int delta = Math.abs(I.getInt(1));
+			BSTNode w = ((BSTNode) ((IntervalTrees) D).chosen);
+			((IntervalTrees) D).changeKey(w, delta);
 		} else if (evt.getSource() == minB && ((IntervalTrees) D).minTree != mimasuType.MIN) {
 			D.clear();
 			findsumB.setT("button-findmin");

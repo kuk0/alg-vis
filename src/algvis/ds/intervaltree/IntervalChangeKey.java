@@ -11,12 +11,13 @@ public class IntervalChangeKey extends IntervalAlg{
 		super(T);
 		this.v = v;
 		this.value = value;
-		setHeader("changekey");
-		//addStep("changekeyv");
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("changekey");
+		//addStep("changekeyv");
+		
 		v.setKey(value);
 		if (v.getKey() < 1)
 			v.setKey(1);

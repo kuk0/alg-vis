@@ -2,6 +2,7 @@ package algvis.ds.intervaltree;
 
 import algvis.core.Node;
 import algvis.core.NodeColor;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.DataStructure;
 import algvis.ds.dictionaries.bst.BST;
 import algvis.ds.dictionaries.bst.BSTNode;
@@ -10,6 +11,7 @@ import algvis.gui.Fonts;
 import algvis.gui.view.View;
 
 import java.awt.*;
+import java.util.Hashtable;
 
 public class IntervalNode extends BSTNode {
 	// boolean leaf = true;
@@ -137,8 +139,8 @@ public class IntervalNode extends BSTNode {
 			v.setColor(this.getFgColor());
 			int c = (e - b + 1);
 			int d = (int) (Math.log10(c) / Math.log10(2));
-			System.out.println(d + " =vyska-1, minsepy= "
-					+ IntervalTree.minsepy);
+//			System.out.println(d + " =vyska-1, minsepy= "
+//					+ IntervalTree.minsepy);
 			int width = (c) * IntervalTree.minsepx;
 			int height = (d) * IntervalTree.minsepy + 4 + 2 * Node.RADIUS;
 			v.drawRoundRectangle(x, y + height / 2 - Node.RADIUS - 3,
@@ -267,4 +269,25 @@ public class IntervalNode extends BSTNode {
 		return null;
 	}
 
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "b", b);
+		HashtableStoreSupport.store(state, hash + "e", e);
+		HashtableStoreSupport.store(state, hash + "focused", focused);
+		HashtableStoreSupport.store(state, hash + "markedColor", markedColor);
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object b = state.get(hash + "b");
+		if (b != null) this.b = (Integer) HashtableStoreSupport.restore(b);
+		Object e = state.get(hash + "e");
+		if (e != null) this.e = (Integer) HashtableStoreSupport.restore(e);
+		Object focused = state.get(hash + "focused");
+		if (focused != null) this.focused = (focusType) HashtableStoreSupport.restore(focused);
+		Object markedColor = state.get(hash + "markedColor");
+		if (markedColor != null) this.markedColor = (Boolean) HashtableStoreSupport.restore(markedColor);
+	}
 }

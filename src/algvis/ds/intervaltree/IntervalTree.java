@@ -1,6 +1,7 @@
 package algvis.ds.intervaltree;
 
 import algvis.core.Node;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
 import algvis.ds.intervaltree.IntervalNode.focusType;
 import algvis.gui.VisPanel;
@@ -8,12 +9,11 @@ import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
 
 import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
 
 public class IntervalTree extends IntervalTrees implements ClickListener {
 	public static String dsName = "intervaltree";
 	IntervalNode root = null;
-    private IntervalNode v = null;
-    private IntervalNode v2 = null;
 	int numLeafs = 0; // pocet obsadenych listov
 	public static final int minsepx = 22;
 
@@ -40,31 +40,21 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 	@Override
 	public void clear() {
 		root = null;
-		v = null;
-		v2 = null;
 		numLeafs = 0;
 	}
 
 	@Override
 	public void draw(View V) {
 		if (getRoot() != null) {
-			getRoot().moveTree();
 			getRoot().drawTree(V);
-		}
-
-		if (v != null) {
-			v.move();
-			v.draw(V);
-		}
-		if (v2 != null) {
-			v2.move();
-			v2.draw(V);
 		}
 	}
 
 	@Override
 	protected void move() {
-		// TODO
+		if (getRoot() != null) {
+			getRoot().moveTree();
+		}
 	}
 
 	@Override
@@ -126,15 +116,6 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 	public IntervalNode setRoot(IntervalNode root) {
 		this.root = root;
 		return this.root;
-	}
-
-	public IntervalNode getV() {
-		return v;
-	}
-
-	public IntervalNode setV(IntervalNode v) {
-		this.v = v;
-		return v;
 	}
 
 	public void reposition() {
@@ -225,4 +206,22 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 		markColor(w.getRight(), i, j);
 	}
 
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "root", root);
+		HashtableStoreSupport.store(state, hash + "numLeafs", numLeafs);
+		if (root != null) root.storeState(state);
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object root = state.get(hash + "root");
+		if (root != null) this.root = (IntervalNode) HashtableStoreSupport.restore(root);
+		Object numLeafs = state.get(hash + "numLeafs");
+		if (numLeafs != null) this.numLeafs = (Integer) HashtableStoreSupport.restore(numLeafs);
+		
+		if (this.root != null) this.root.restoreState(state);
+	}
 }
