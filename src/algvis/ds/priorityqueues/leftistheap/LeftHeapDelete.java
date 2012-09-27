@@ -19,16 +19,17 @@ package algvis.ds.priorityqueues.leftistheap;
 import java.util.HashMap;
 
 public class LeftHeapDelete extends LeftHeapAlg {
-	private final int i;
+	private int i;
 
-	public LeftHeapDelete(LeftHeap H, int i) {
+	public LeftHeapDelete(LeftHeap H) {
 		super(H);
-		this.i = i;
-		setHeader("deletion");
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		i = H.active;
+		setHeader("deletion");
+		
 		if (H.root[i] == null) {
 			return;
 		}

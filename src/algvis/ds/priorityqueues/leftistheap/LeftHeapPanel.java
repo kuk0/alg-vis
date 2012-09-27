@@ -17,6 +17,7 @@
 
 package algvis.ds.priorityqueues.leftistheap;
 
+import algvis.core.AlgorithmAdapter;
 import algvis.core.Settings;
 import algvis.ds.DataStructure;
 import algvis.ds.priorityqueues.MeldablePQButtonsNoDecr;
@@ -32,18 +33,40 @@ public class LeftHeapPanel extends VisPanel {
 
 	@Override
 	public void initDS() {
-		LeftHeap L = new LeftHeap(this);
+		final LeftHeap L = new LeftHeap(this);
 		D = L;
 		buttons = new MeldablePQButtonsNoDecr(this);
+		pauses = false;
 		L.active = 1;
 		D.random(13);
-		L.active = 2;
+		D.start(new AlgorithmAdapter(this) {
+			@Override
+			public void runAlgorithm() throws InterruptedException {
+				L.active = 2;
+			}
+		});
 		D.random(10);
-		L.lowlight();
-		L.active = 3;
+		D.start(new AlgorithmAdapter(this) {
+			@Override
+			public void runAlgorithm() throws InterruptedException {
+				L.lowlight();
+				L.active = 3;
+			}
+		});
 		D.random(7);
-		L.lowlight();
-		L.active = 1;
+		D.start(new AlgorithmAdapter(this) {
+			@Override
+			public void runAlgorithm() throws InterruptedException {
+				L.lowlight();
+				L.active = 1;
+			}
+		});
+		D.start(new Runnable() {
+			@Override
+			public void run() {
+				pauses = true;
+			}
+		});
 		D.panel.screen.V.resetView();
 	}
 }
