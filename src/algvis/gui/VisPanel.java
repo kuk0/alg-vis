@@ -184,7 +184,6 @@ public abstract class VisPanel extends JPanel implements LanguageListener, State
 	public void storeState(Hashtable<Object, Object> state) {
 		buttons.storeState(state);
 		commentary.storeState(state);
-		D.storeState(state);
 		scene.storeState(state);
 	}
 
@@ -192,7 +191,6 @@ public abstract class VisPanel extends JPanel implements LanguageListener, State
 	public void restoreState(Hashtable<?, ?> state) {
 		buttons.restoreState(state);
 		commentary.restoreState(state);
-		D.restoreState(state);
 		scene.restoreState(state);
 	}
 

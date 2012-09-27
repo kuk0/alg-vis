@@ -286,7 +286,7 @@ abstract public class Buttons extends JPanel implements ActionListener, StateEdi
 
 	@Override
 	public void storeState(Hashtable<Object, Object> state) {
-		HashtableStoreSupport.store(state, hash + "statsText", stats.getText());
+		HashtableStoreSupport.store(state, hash + "statsText", statsText);
 	}
 
 	@Override
