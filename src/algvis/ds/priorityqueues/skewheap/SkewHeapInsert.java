@@ -22,16 +22,19 @@ import java.util.HashMap;
 
 public class SkewHeapInsert extends SkewHeapAlg {
 	private final int i;
+	private final int x;
 
 	public SkewHeapInsert(SkewHeap H, int i, int x) {
 		super(H);
 		this.i = i;
-		H.root[0] = new SkewHeapNode(H, x, ZDepth.ACTIONNODE);
-		setHeader("insertion");
+		this.x = x;
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		H.root[0] = new SkewHeapNode(H, x, ZDepth.ACTIONNODE);
+		setHeader("insertion");
+		
 		H.reposition();
 
 		if (H.root[i] == null) {

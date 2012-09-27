@@ -26,11 +26,12 @@ public class SkewHeapMeld extends SkewHeapAlg{
 		super(H);
 		this.i = i;
 		this.j = j;
-		setHeader("melding");
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("melding");
+		
 		if (i == j) {
 			return;
 		}

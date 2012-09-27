@@ -24,11 +24,12 @@ public class SkewHeapDelete extends SkewHeapAlg {
 	public SkewHeapDelete(SkewHeap H, int i) {
 		super(H);
 		this.i = i;
-		setHeader("deletion");
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("deletion");
+		
 		if (H.root[i] == null) {
 			return;
 		}

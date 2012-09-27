@@ -16,6 +16,7 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.skewheap;
 
+import algvis.core.AlgorithmAdapter;
 import algvis.core.Settings;
 import algvis.ds.DataStructure;
 import algvis.ds.priorityqueues.MeldablePQButtonsNoDecr;
@@ -31,18 +32,40 @@ public class SkewHeapPanel extends VisPanel {
 
 	@Override
 	public void initDS() {
-		SkewHeap H = new SkewHeap(this);
+		final SkewHeap H = new SkewHeap(this);
 		D = H;
 		buttons = new MeldablePQButtonsNoDecr(this);
+		pauses = false;
 		H.active = 1;
 		D.random(13);
-		H.active = 2;
+		D.start(new AlgorithmAdapter(this) {
+			@Override
+			public void runAlgorithm() throws InterruptedException {
+				H.active = 2;
+			}
+		});
 		D.random(10);
-		H.lowlight();
-		H.active = 3;
+		D.start(new AlgorithmAdapter(this) {
+			@Override
+			public void runAlgorithm() throws InterruptedException {
+				H.lowlight();
+				H.active = 3;
+			}
+		});
 		D.random(7);
-		H.lowlight();
-		H.active = 1;
+		D.start(new AlgorithmAdapter(this) {
+			@Override
+			public void runAlgorithm() throws InterruptedException {
+				H.lowlight();
+				H.active = 1;
+			}
+		});
+		D.start(new Runnable() {
+			@Override
+			public void run() {
+				pauses = true;
+			}
+		});
 		D.panel.screen.V.resetView();
 	}
 

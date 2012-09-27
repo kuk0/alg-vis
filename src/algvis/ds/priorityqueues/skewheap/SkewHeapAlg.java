@@ -70,7 +70,7 @@ abstract class SkewHeapAlg extends Algorithm {
 			}
 
 			if (w.getParent() != null) {
-				w.getParent().dashedrightl = false;
+				w.getParent().dashedRightLine = false;
 			}
 
 			H.root[0].repos(H.root[0].tox, H.root[0].toy + SkewHeap.minsepy);// + 2* SkewHeapNode.RADIUS);
@@ -86,7 +86,7 @@ abstract class SkewHeapAlg extends Algorithm {
 				break;
 			}
 
-			w.dashedrightl = true;
+			w.dashedRightLine = true;
 			w = w.getRight();
 			pause();
 		}
@@ -137,22 +137,25 @@ abstract class SkewHeapAlg extends Algorithm {
 		pause();
 		v.unmark();		
 		SkewHeapNode w = v.getParent();
+		SkewHeapNode v1, v2;
 		while (w != null && v.prec(w)) {
-			H.v = new SkewHeapNode(v);
-			H.v.mark();
-			H.v2 = new SkewHeapNode(w);
+			v1 = new SkewHeapNode(v);
+			v1.mark();
+			v2 = new SkewHeapNode(w);
+			addToScene(v1);
+			addToScene(v2);
 			v.setKey(Node.NOKEY);
 			w.setKey(Node.NOKEY);
-			H.v.goTo(w);
-			H.v2.goTo(v);
+			v1.goTo(w);
+			v2.goTo(v);
 			pause();
-			v.setKey(H.v2.getKey());
-			w.setKey(H.v.getKey());
-			v.setColor(H.v2.getColor());
-			w.setColor(H.v.getColor());
-			H.v.unmark();
-			H.v = null;
-			H.v2 = null;		
+			v.setKey(v2.getKey());
+			w.setKey(v1.getKey());
+			v.setColor(v2.getColor());
+			w.setColor(v1.getColor());
+			v1.unmark();
+			removeFromScene(v1);
+			removeFromScene(v2);
 			v = w;			
 			w = w.getParent();
 		}

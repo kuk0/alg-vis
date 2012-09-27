@@ -21,21 +21,22 @@ import algvis.gui.InputField;
 import java.util.HashMap;
 
 public class SkewHeapDecrKey extends SkewHeapAlg{
-private final int delta;
+	private final int delta;
 	
 	public SkewHeapDecrKey(SkewHeap H, SkewHeapNode v, int delta) {
 		super(H);
 		this.v = v;
 		this.delta = delta;
+	}
+
+	@Override
+	public void runAlgorithm() throws InterruptedException {
 		if (H.minHeap) {
 			setHeader("decreasekey");
 		} else {
 			setHeader("increasekey");
 		}
-	}
-
-	@Override
-	public void runAlgorithm() throws InterruptedException {
+		
 		if (H.minHeap) {
 			v.setKey(v.getKey() - delta);
 			if (v.getKey() < 1)

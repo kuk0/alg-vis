@@ -19,6 +19,7 @@ package algvis.ds.priorityqueues.skewheap;
 import algvis.core.Node;
 import algvis.core.Pair;
 import algvis.core.StringUtils;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.priorityqueues.MeldablePQ;
 import algvis.ds.priorityqueues.MeldablePQButtonsNoDecr;
 import algvis.gui.VisPanel;
@@ -27,10 +28,11 @@ import algvis.gui.view.View;
 import algvis.internationalization.Languages;
 
 import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
 
 public class SkewHeap extends MeldablePQ implements ClickListener{
 	public static final String dsName = "skewheap";
-	SkewHeapNode root[] = null, v = null, v2 = null;
+	SkewHeapNode root[] = null;
 	
 	public SkewHeap(VisPanel M) {
 		super(M);
@@ -194,18 +196,7 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 				root[i].moveTree();
 				root[i].drawTree(V);
 			}
-		}
-		
-		if (v != null) { 
-			v.moveTree(); 
-			v.drawTree(V); 
-		}
-		
-		if (v2 != null) {
-			v2.moveTree(); 
-			v2.drawTree(V); 
-		}
-		
+		}		
 	}
 
 	@Override
@@ -261,5 +252,24 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 			}
 		}
 		panel.screen.V.setBounds(0, 0, sumx, y2);
+	}
+
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "root", root.clone());
+		for (int i = 0; i <= numHeaps; ++i) {
+			if (root[i] != null) root[i].storeState(state);
+		}
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object root = state.get(hash + "root");
+		if (root != null) this.root = (SkewHeapNode[]) HashtableStoreSupport.restore(root);
+		for (int i = 0; i <= numHeaps; ++i) {
+			if (this.root[i] != null) this.root[i].restoreState(state);
+		}
 	}
 }
