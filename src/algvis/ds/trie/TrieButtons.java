@@ -55,51 +55,29 @@ public class TrieButtons extends Buttons {
 	}
 
 	@Override
-	public void initRandom() {
-		random = new IButton("button-random");
-		random.setMnemonic(KeyEvent.VK_R);
-		random.addActionListener(this);
-	}
-
-	@Override
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
 		if (evt.getSource() == insertB) {
-			final Vector<String> args = I.getVS();
-			Thread t = new Thread(new Runnable() {
-				@Override
-				public void run() {
-					for (String s : args) {
-						((Trie) D).insert(s);
-					}
-				}
-			});
-			t.start();
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			Vector<String> args = I.getVS();
+			for (String s : args) {
+				((Trie) D).insert(s);
+			}
 		} else if (evt.getSource() == findB) {
-			final Vector<String> args = I.getVS();
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			Vector<String> args = I.getVS();
 			if (args.size() > 0) {
-				Thread t = new Thread(new Runnable() {
-					@Override
-					public void run() {
-						for (String s : args) {
-							((Trie) D).find(s);
-						}
-					}
-				});
-				t.start();
+				for (String s : args) {
+					((Trie) D).find(s);
+				}
 			}
 		} else if (evt.getSource() == deleteB) {
-			final Vector<String> args = I.getVS();
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			Vector<String> args = I.getVS();
 			if (args.size() > 0) {
-				Thread t = new Thread(new Runnable() {
-					@Override
-					public void run() {
-						for (String s : args) {
-							((Trie) D).delete(s);
-						}
-					}
-				});
-				t.start();
+				for (String s : args) {
+					((Trie) D).delete(s);
+				}
 			}
 		}
 	}

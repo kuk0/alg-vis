@@ -18,11 +18,13 @@ package algvis.ds.trie;
 
 import algvis.core.Node;
 import algvis.core.NodeColor;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.DataStructure;
 import algvis.gui.Fonts;
 import algvis.gui.view.View;
 
 import java.awt.*;
+import java.util.Hashtable;
 
 public class TrieWordNode extends Node {
 	private String s = "";
@@ -88,5 +90,18 @@ public class TrieWordNode extends Node {
 		v.drawRoundRectangle(x + width, y - height / 2, width, height, 3, 3);
 		v.setColor(getColor().fgColor);
 		v.drawString(s, x + width, y - height / 2, Fonts.TYPEWRITER);
+	}
+
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "s", s);
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object s = state.get(hash + "s");
+		if (s != null) this.s = (String) HashtableStoreSupport.restore(s);
 	}
 }

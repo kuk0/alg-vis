@@ -24,22 +24,23 @@ import java.util.HashMap;
 public class TrieDelete extends Algorithm {
 	private final Trie T;
 	private String s;
+	private TrieWordNode hw;
 
 	public TrieDelete(Trie T, String s) {
 		super(T.panel);
 		this.T = T;
 		this.s = s;
-		setHeader("triedelete", s.substring(0, s.length() - 1));
 	}
 
 	void beforeReturn() {
-		T.hw = null;
+		removeFromScene(hw);
 		T.clearExtraColor();
 		addStep("done");
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("triedelete", s.substring(0, s.length() - 1));
 		if (s.compareTo("$") == 0) {
 			addNote("badword");
 		}
@@ -50,9 +51,10 @@ public class TrieDelete extends Algorithm {
 		v.mark();
 		pause();
 		v.unmark();
-		T.hw = new TrieWordNode(T, s);
-		T.hw.setColor(NodeColor.CACHED);
-		T.hw.goNextTo(v);
+		hw = new TrieWordNode(T, s);
+		hw.setColor(NodeColor.CACHED);
+		addToScene(hw);
+		hw.goNextTo(v);
 
 		while (s.compareTo("$") != 0) {
 			TrieNode vd = (TrieNode) v.getChild();
@@ -63,7 +65,7 @@ public class TrieDelete extends Algorithm {
 			vd = (TrieNode) v.getChild();
 
 			char ch = s.charAt(0);
-			T.hw.setAndGoNextTo(s, v);
+			hw.setAndGoNextTo(s, v);
 			TrieNode ww = v.getChildWithCH(ch);
 			if (ww == null) {
 				while (vd != null) {
@@ -88,7 +90,7 @@ public class TrieDelete extends Algorithm {
 			v.setColor(NodeColor.CACHED);
 			s = s.substring(1);
 		}
-		T.hw.setAndGoNextTo(s, v);
+		hw.setAndGoNextTo(s, v);
 		TrieNode w = v.getChildWithCH('$');
 		if (w == null) {
 			addStep("triefindending2");
@@ -101,7 +103,7 @@ public class TrieDelete extends Algorithm {
 			addStep("triefindsucc");
 		}
 		pause();
-		T.hw = null;
+		removeFromScene(hw);
 		T.clearExtraColor();
 		addNote("triedeletenote2");
 		v.deleteChild(w);
@@ -141,7 +143,7 @@ public class TrieDelete extends Algorithm {
 
 	@Override
 	public HashMap<String, Object> getResult() {
-		return null; // TODO
+		return null;
 	}
 
 }

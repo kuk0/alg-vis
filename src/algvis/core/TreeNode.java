@@ -566,6 +566,9 @@ public class TreeNode extends Node {
 		HashtableStoreSupport.store(state, hash + "child", child);
 		HashtableStoreSupport.store(state, hash + "right", right);
 		HashtableStoreSupport.store(state, hash + "parent", parent);
+		
+		if (child != null) child.storeState(state);
+		if (right != null) right.storeState(state);
 	}
 
 	@Override

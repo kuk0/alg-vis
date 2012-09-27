@@ -17,21 +17,20 @@
 package algvis.ds.trie;
 
 import algvis.core.WordGenerator;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.DataStructure;
 import algvis.gui.Fonts;
 import algvis.gui.VisPanel;
 import algvis.gui.view.View;
 
 import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
 
 public class Trie extends DataStructure {
 	public static String adtName = "stringology";
 	public static String dsName = "trie";
 
 	private TrieNode root = null;
-	private TrieNode v = null;
-
-	public TrieWordNode hw = null;
 
 	// public final static String EPSILON = "\u025B";
 
@@ -59,16 +58,6 @@ public class Trie extends DataStructure {
 	public void clear() {
 		root = new TrieNode(this);
 		root.reposition();
-		v = null;
-	}
-
-	TrieNode getV() {
-		return v;
-	}
-
-	public TrieNode setV(TrieNode v) {
-		this.v = v;
-		return v;
 	}
 
 	public TrieNode getRoot() {
@@ -86,15 +75,6 @@ public class Trie extends DataStructure {
 			v.moveTree();
 			v.drawTree(V);
 			V.drawString("\u025B", v.x, v.y-8, Fonts.NORMAL);
-		}
-		v = getV();
-		if (v != null) {
-			v.move();
-			v.drawLabel(V);
-		}
-		if (hw != null) {
-			hw.move();
-			hw.draw(V);
 		}
 	}
 
@@ -120,7 +100,7 @@ public class Trie extends DataStructure {
 
 	@Override
 	public void random(int n) {
-		boolean p = panel.pauses;
+		final boolean p = panel.pauses;
 		panel.pauses = false;
 		for (int i = 0; i < n; i++) {
 			if (panel.S == null) {
@@ -129,7 +109,12 @@ public class Trie extends DataStructure {
 				insert(WordGenerator.getWord(panel.S));
 			}
 		}
-		panel.pauses = p;
+		start(new Runnable() {
+			@Override
+			public void run() {
+				panel.pauses = p;
+			}
+		});
 	}
 
 	public void insert(String s) {
@@ -155,4 +140,18 @@ public class Trie extends DataStructure {
 		}
 	}
 
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "root", root);
+		if (root != null) root.storeState(state);
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object root = state.get(hash + "root");
+		if (root != null) this.root = (TrieNode) HashtableStoreSupport.restore(root);
+		if (this.root != null) this.root.restoreState(state);
+	}
 }

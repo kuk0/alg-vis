@@ -24,22 +24,23 @@ import java.util.HashMap;
 public class TrieInsert extends Algorithm {
 	private final Trie T;
 	private String s;
+	private TrieWordNode hw;
 
 	public TrieInsert(Trie T, String s) {
 		super(T.panel);
 		this.T = T;
 		this.s = s;
-		setHeader("trieinsert", s.substring(0, s.length() - 1));
 	}
 
 	void beforeReturn() {
-		T.hw = null;
+		removeFromScene(hw);
 		T.clearExtraColor();
 		addStep("done");
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("trieinsert", s.substring(0, s.length() - 1));
 		if (s.compareTo("$") == 0) {
 			addNote("badword");
 		}
@@ -50,19 +51,20 @@ public class TrieInsert extends Algorithm {
 		addStep("trierootstart");
 		pause();
 		v.unmark();
-		T.hw = new TrieWordNode(T, s);
-		T.hw.setColor(NodeColor.INSERT);
-		T.hw.goNextTo(v);
+		hw = new TrieWordNode(T, s);
+		addToScene(hw);
+		hw.setColor(NodeColor.INSERT);
+		hw.goNextTo(v);
 
 		while (s.compareTo("$") != 0) {
 			char ch = s.charAt(0);
-			T.hw.setAndGoNextTo(s, v);
+			hw.setAndGoNextTo(s, v);
 			TrieNode w = v.getChildWithCH(ch);
 			if (w != null) {
 				addStep("trieinsertwch", ""+ch);
 			} else {
 				addStep("trieinsertwoch", ""+ch);
-				w = v.addChild(ch, T.hw.x, T.hw.y);
+				w = v.addChild(ch, hw.x, hw.y);
 			}
 			w.setColor(NodeColor.CACHED);
 			T.reposition();
@@ -72,7 +74,7 @@ public class TrieInsert extends Algorithm {
 			T.reposition();
 			s = s.substring(1);
 		}
-		T.hw.setAndGoNextTo(s, v);
+		hw.setAndGoNextTo(s, v);
 		TrieNode w = v.getChildWithCH('$');
 		if (w == null) {
 			addStep("trieinserteow");
@@ -81,14 +83,14 @@ public class TrieInsert extends Algorithm {
 		}
 		pause();
 		v.setColor(NodeColor.NORMAL);
-		v = v.addChild('$', T.hw.x, T.hw.y);
+		v = v.addChild('$', hw.x, hw.y);
 		T.reposition();
-		T.hw.setAndGoNextTo(s, v);
+		hw.setAndGoNextTo(s, v);
 		beforeReturn();
 	}
 
 	@Override
 	public HashMap<String, Object> getResult() {
-		return null; // TODO
+		return null;
 	}
 }

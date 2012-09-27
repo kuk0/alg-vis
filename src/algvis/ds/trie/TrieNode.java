@@ -19,12 +19,14 @@ package algvis.ds.trie;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.TreeNode;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
 import algvis.ds.DataStructure;
 import algvis.gui.Fonts;
 import algvis.gui.view.View;
 
 import java.awt.*;
+import java.util.Hashtable;
 
 public class TrieNode extends TreeNode {
 	public char ch;
@@ -271,5 +273,18 @@ public class TrieNode extends TreeNode {
 	@Override
 	public String toString() {
 		return ""+ch;
+	}
+
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "ch", ch);
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object ch = state.get(hash + "ch");
+		if (ch != null) this.ch = (Character) HashtableStoreSupport.restore(ch);
 	}
 }

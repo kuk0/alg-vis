@@ -24,22 +24,23 @@ import java.util.HashMap;
 public class TrieFind extends Algorithm {
 	private final Trie T;
 	private String s;
+	private TrieWordNode hw;
 
 	public TrieFind(Trie T, String s) {
 		super(T.panel);
 		this.T = T;
 		this.s = s;
-		setHeader("triefind", s.substring(0, s.length() - 1));
 	}
 
 	void beforeReturn() {
-		T.hw = null;
+		removeFromScene(hw);
 		T.clearExtraColor();
 		addStep("done");
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("triefind", s.substring(0, s.length() - 1));
 		if (s.compareTo("$") == 0) {
 			addNote("badword");
 		}
@@ -50,9 +51,10 @@ public class TrieFind extends Algorithm {
 		v.mark();
 		pause();
 		v.unmark();
-		T.hw = new TrieWordNode(T, s);
-		T.hw.setColor(NodeColor.CACHED);
-		T.hw.goNextTo(v);
+		hw = new TrieWordNode(T, s);
+		addToScene(hw);
+		hw.setColor(NodeColor.CACHED);
+		hw.goNextTo(v);
 
 		while (s.compareTo("$") != 0) {
 			TrieNode wd = (TrieNode) v.getChild();
@@ -63,7 +65,7 @@ public class TrieFind extends Algorithm {
 			wd = (TrieNode) v.getChild();
 
 			char ch = s.charAt(0);
-			T.hw.setAndGoNextTo(s, v);
+			hw.setAndGoNextTo(s, v);
 			TrieNode w = v.getChildWithCH(ch);
 			if (w == null) {
 				while (wd != null) {
@@ -85,7 +87,7 @@ public class TrieFind extends Algorithm {
 			v.setColor(NodeColor.CACHED);
 			s = s.substring(1);
 		}
-		T.hw.setAndGoNextTo(s, v);
+		hw.setAndGoNextTo(s, v);
 		TrieNode w = v.getChildWithCH('$');
 		if (w == null) {
 			addStep("triefindending2");
@@ -99,6 +101,6 @@ public class TrieFind extends Algorithm {
 
 	@Override
 	public HashMap<String, Object> getResult() {
-		return null; // TODO
+		return null;
 	}
 }
