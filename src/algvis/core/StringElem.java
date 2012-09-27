@@ -1,20 +1,24 @@
 package algvis.core;
 
+import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.DataStructure;
 import algvis.gui.Fonts;
 import algvis.gui.view.View;
 
+import javax.swing.undo.StateEditable;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
-public class StringElem {
+public class StringElem implements StateEditable {
 	private static final int span = 12;
 	//private final DataStructure D;
 	private final int x;
     private final int y;
     private int len;
 	private final String s;
-	private final ArrayList<Color> col;
+	private ArrayList<Color> col;
+	protected final String hash = Integer.toString(hashCode());
 
 	public StringElem(DataStructure D, String s, int x, int y) {
 		//this.D = D;
@@ -62,5 +66,19 @@ public class StringElem {
 		v.setColor(NodeColor.NORMAL.fgColor);
 		v.drawRoundRectangle(x, y, len * span / 2 + 7, Node.RADIUS,
 				2 * Node.RADIUS, 2 * Node.RADIUS);
+	}
+
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		HashtableStoreSupport.store(state, hash + "len", len);
+		HashtableStoreSupport.store(state, hash + "col", col.clone());
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		Object len = state.get(hash + "len");
+		if (len != null) this.len = (Integer) HashtableStoreSupport.restore(len);
+		Object col = state.get(hash + "col");
+		if (col != null) this.col = (ArrayList<Color>) HashtableStoreSupport.restore(col);
 	}
 }

@@ -18,24 +18,21 @@ package algvis.ds.suffixtree;
 
 import algvis.core.StringElem;
 import algvis.core.WordGenerator;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.DataStructure;
-import algvis.ds.trie.TrieWordNode;
 import algvis.gui.Fonts;
 import algvis.gui.VisPanel;
 import algvis.gui.view.View;
 
 import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
 
 public class SuffixTree extends DataStructure {
-	private static final int textpos = -40;
+	public static final int textpos = -40;
 	public static String adtName = "stringology";
 	public static String dsName = "suffixtree";
 
 	private SuffixTreeNode root = null;
-	private SuffixTreeNode v = null;
-
-	public TrieWordNode hw = null;
-	private final TrieWordNode cs = null;
 
 	public String text;
 	StringElem str;
@@ -69,17 +66,7 @@ public class SuffixTree extends DataStructure {
 	public void clear() {
 		root = new SuffixTreeNode(this);
 		root.reposition();
-		v = null;
 		str = null;
-	}
-
-	SuffixTreeNode getV() {
-		return v;
-	}
-
-	public SuffixTreeNode setV(SuffixTreeNode v) {
-		this.v = v;
-		return v;
 	}
 
 	public SuffixTreeNode getRoot() {
@@ -99,17 +86,6 @@ public class SuffixTree extends DataStructure {
 			v.moveTree();
 			v.drawTree(V);
 			V.drawString("\u025B", v.x, v.y - 8, Fonts.NORMAL);
-		}
-		v = getV();
-		if (v != null) {
-			v.move();
-			v.drawLabel(V);
-		}
-		if (hw != null) {
-			hw.draw(V);
-		}
-		if (cs != null) {
-			cs.draw(V);
 		}
 	}
 
@@ -135,7 +111,7 @@ public class SuffixTree extends DataStructure {
 
 	@Override
 	public void random(int n) {
-		boolean p = panel.pauses;
+		final boolean p = panel.pauses;
 		panel.pauses = false;
 		for (int i = 0; i < n; i++) {
 			if (panel.S == null) {
@@ -144,12 +120,15 @@ public class SuffixTree extends DataStructure {
 				insert(WordGenerator.getWord(panel.S));
 			}
 		}
-		panel.pauses = p;
+		start(new Runnable() {
+			@Override
+			public void run() {
+				panel.pauses = p;
+			}
+		});
 	}
 
 	public void insert(String s) {
-		text = s;
-		str = new StringElem(this, text, 0, textpos);
 		start(new SuffixTreeInsert(this, s));
 	}
 
@@ -166,5 +145,29 @@ public class SuffixTree extends DataStructure {
 		if (r != null) {
 			getRoot().clearExtraColor();
 		}
+	}
+
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "root", root);
+		if (root != null) root.storeState(state);
+		HashtableStoreSupport.store(state, hash + "text", text);
+		HashtableStoreSupport.store(state, hash + "str", str);
+		if (str != null) str.storeState(state);
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object root = state.get(hash + "root");
+		if (root != null) this.root = (SuffixTreeNode) HashtableStoreSupport.restore(root);
+		if (this.root != null) this.root.restoreState(state);
+		Object text = state.get(hash + "text");
+		if (text != null) this.text = (String) HashtableStoreSupport.restore(text);
+		Object str = state.get(hash + "str");
+		if (str != null) this.str = (StringElem) HashtableStoreSupport.restore(str);
+		
+		if (this.str != null) this.str.restoreState(state);
 	}
 }

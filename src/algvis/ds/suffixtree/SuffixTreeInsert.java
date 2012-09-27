@@ -18,6 +18,7 @@ package algvis.ds.suffixtree;
 
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
+import algvis.core.StringElem;
 import algvis.ds.trie.TrieWordNode;
 
 import java.util.HashMap;
@@ -26,22 +27,26 @@ import java.util.Vector;
 public class SuffixTreeInsert extends Algorithm {
 	private final SuffixTree T;
 	private final String s;
+	private TrieWordNode hw;
 
 	public SuffixTreeInsert(SuffixTree T, String s) {
 		super(T.panel);
 		this.T = T;
 		this.s = s;
-		setHeader("trieinsert", s.substring(0, s.length() - 1));
 	}
 
 	void beforeReturn() {
-		T.hw = null;
+		removeFromScene(hw);
 		// T.clearExtraColor();
 		addStep("done");
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		T.text = s;
+		T.str = new StringElem(T, T.text, 0, SuffixTree.textpos);
+		
+		setHeader("trieinsert", s.substring(0, s.length() - 1));
 		if (s.compareTo("$") == 0) {
 			addNote("badword");
 		}
@@ -134,9 +139,10 @@ public class SuffixTreeInsert extends Algorithm {
 					addStep("sxbdownwalk", "" + ch);
 				else
 					addStep("sxbdownwalk", "\\$");
-				T.hw = new TrieWordNode(T, cachedUpWalk, current.x, current.y,
+				hw = new TrieWordNode(T, cachedUpWalk, current.x, current.y,
 						NodeColor.INSERT);
-				T.hw.goNextTo(current);
+				addToScene(hw);
+				hw.goNextTo(current);
 				T.reposition();
 				pause();
 				Vector<SuffixTreeNode> downWalk = new Vector<SuffixTreeNode>();
@@ -150,7 +156,7 @@ public class SuffixTreeInsert extends Algorithm {
 					for (SuffixTreeNode u : downWalk) {
 						u.setColor(NodeColor.INSERT);
 					}
-					T.hw.setAndGoNextTo(cachedUpWalk, current);
+					hw.setAndGoNextTo(cachedUpWalk, current);
 					// addStep("sxbdownwalkedge");
 					// T.reposition();
 					// pause();
@@ -168,7 +174,7 @@ public class SuffixTreeInsert extends Algorithm {
 					u.setColor(NodeColor.NORMAL);
 				}
 				upWalk.clear();
-				T.hw.setAndGoNextTo(cachedUpWalk, current);
+				hw.setAndGoNextTo(cachedUpWalk, current);
 				T.reposition();
 				current = caching;
 				current.mark();
@@ -220,7 +226,7 @@ public class SuffixTreeInsert extends Algorithm {
 						current = (SuffixTreeNode) current.getParent();
 					}
 				}
-				T.hw = null;
+				removeFromScene(hw);
 			}
 
 		}
@@ -243,6 +249,6 @@ public class SuffixTreeInsert extends Algorithm {
 
 	@Override
 	public HashMap<String, Object> getResult() {
-		return null; // TODO
+		return null;
 	}
 }

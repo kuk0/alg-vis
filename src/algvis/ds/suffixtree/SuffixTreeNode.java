@@ -17,6 +17,7 @@
 package algvis.ds.suffixtree;
 
 import algvis.core.Node;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.DataStructure;
 import algvis.ds.trie.TrieNode;
 import algvis.gui.Fonts;
@@ -24,6 +25,7 @@ import algvis.gui.view.View;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.Hashtable;
 
 public class SuffixTreeNode extends TrieNode {
 	private SuffixTreeNode suffixLink = null; // also called suffixNode
@@ -227,4 +229,19 @@ public class SuffixTreeNode extends TrieNode {
 		}
 	}
 
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "suffixLink", suffixLink);
+		HashtableStoreSupport.store(state, hash + "packed", packed);
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object suffixLink = state.get(hash + "suffixLink");
+		if (suffixLink != null) this.suffixLink = (SuffixTreeNode) HashtableStoreSupport.restore(suffixLink);
+		Object packed = state.get(hash + "packed");
+		if (packed != null) this.packed = (Boolean) HashtableStoreSupport.restore(packed);
+	}
 }

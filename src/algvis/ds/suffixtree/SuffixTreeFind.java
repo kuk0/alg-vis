@@ -28,7 +28,6 @@ public class SuffixTreeFind extends Algorithm {
 		super(T.panel);
 		this.T = T;
 		this.s = s;
-		setHeader("triefind", s.substring(0, s.length() - 1));
 	}
 
 	void beforeReturn() {
@@ -38,6 +37,7 @@ public class SuffixTreeFind extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("triefind", s.substring(0, s.length() - 1));
 		if (s.compareTo("$") == 0) {
 			addNote("badword");
 		}
@@ -57,6 +57,6 @@ public class SuffixTreeFind extends Algorithm {
 
 	@Override
 	public HashMap<String, Object> getResult() {
-		return null; // TODO
+		return null;
 	}
 }
