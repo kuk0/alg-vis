@@ -29,13 +29,13 @@ public class UnionFindFind extends Algorithm {
 
     private UnionFindNode u = null;
 
-	private FindHeuristic findState;
+	private final FindHeuristic findState;
 	private final UnionFind UF;
 
 	UnionFindFind(UnionFind UF) {
 		super(UF.panel, null);
 		this.UF = UF;
-		setState(UF.pathCompression);
+		this.findState = UF.pathCompression;
 	}
 
 	public UnionFindFind(UnionFind UF, UnionFindNode u) {
@@ -54,10 +54,6 @@ public class UnionFindFind extends Algorithm {
 	@Override
 	public HashMap<String, Object> getResult() {
 		return null;
-	}
-
-	void setState(FindHeuristic state) {
-		this.findState = state;
 	}
 
 	UnionFindNode find(UnionFindNode u) throws InterruptedException {

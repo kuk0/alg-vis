@@ -23,7 +23,7 @@ public class UnionFindUnion extends UnionFindFind {
 		NONE, BYRANK
 	}
 
-	private UnionHeuristic unionState;
+	private final UnionHeuristic unionState;
 	private final UnionFind UF;
 	private final UnionFindNode u;
     private final UnionFindNode v;
@@ -51,10 +51,6 @@ public class UnionFindUnion extends UnionFindFind {
 			default:
 				break;
 		}
-	}
-
-	public void setState(UnionHeuristic state) {
-		this.unionState = state;
 	}
 
 	private void unionSimple(UnionFindNode V, UnionFindNode W) throws InterruptedException {

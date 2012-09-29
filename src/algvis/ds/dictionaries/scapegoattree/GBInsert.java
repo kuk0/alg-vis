@@ -17,17 +17,19 @@
 package algvis.ds.dictionaries.scapegoattree;
 
 import algvis.core.NodeColor;
+import algvis.core.visual.ZDepth;
 
 import java.util.HashMap;
 
 public class GBInsert extends GBAlg {
 	public GBInsert(GBTree T, int x) {
 		super(T, x);
-		v.setColor(NodeColor.INSERT);
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		v = new GBNode(T, K, ZDepth.ACTIONNODE);
+		v.setColor(NodeColor.INSERT);
 		addToScene(v);
 		setHeader("insert", K);
 		if (T.getRoot() == null) {

@@ -44,11 +44,11 @@ public class RBDelete extends Algorithm {
 		RBNode d = (RBNode) find.getResult().get("node");
 
 		if (d != null) {
+			setHeader("delete", K);
 			addToScene(d);
 //			d.setColor(NodeColor.DELETE);
 			d.setColor(NodeColor.FOUND); // TODO aj tak je to jedno, lebo metoda draw zmeni kazdy RBNode na cerveny 
-			// alebo cierny 
-			pause();
+			// alebo cierny
 
 			RBNode u = d, w = (u.getLeft() != null) ? u.getLeft() : u
 					.getRight2();

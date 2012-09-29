@@ -106,6 +106,7 @@ public class BInsert extends Algorithm {
 			}
 			T.reposition();
 		}
+		addStep("done");
 	}
 
 	@Override

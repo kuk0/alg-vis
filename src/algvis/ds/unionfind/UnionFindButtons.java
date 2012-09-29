@@ -29,7 +29,6 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 import java.util.Vector;
 
-// TODO dorobit buttony
 public class UnionFindButtons extends Buttons {
 	private static final long serialVersionUID = 2683381160819263717L;
 	private IButton makesetB;
@@ -147,11 +146,11 @@ public class UnionFindButtons extends Buttons {
 				args.add(i);
 			}
 			D.union(D.at(args.elementAt(0)), D.at(args.elementAt(1)));
-		} else if (evt.getSource() == unionHeuristicCB) { // TODO
+		} else if (evt.getSource() == unionHeuristicCB) {
 			int i = unionHeuristicCB.getSelectedIndex();
 			if (i == 0 || i == 1)
 				D.unionState = UnionFindUnion.UnionHeuristic.values()[i];
-		} else if (evt.getSource() == findHeuristicCB) { // TODO
+		} else if (evt.getSource() == findHeuristicCB) {
 			int i = findHeuristicCB.getSelectedIndex();
 			if (0 <= i && i < 4)
 				D.pathCompression = UnionFindFind.FindHeuristic.values()[i];

@@ -18,6 +18,7 @@ package algvis.core.history;
 
 import algvis.gui.VisPanel;
 
+import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
 import java.util.Map;
@@ -90,5 +91,13 @@ public class HistoryManager extends UndoManager {
 	@Override
 	protected UpdatableStateEdit editToBeRedone() {
 		return (UpdatableStateEdit) super.editToBeRedone();
+	}
+
+	public void trimToEnd() {
+		AbstractUndoableEdit fakeEdit = new AbstractUndoableEdit();
+		if (super.addEdit(fakeEdit)) {
+			int lastEditIndex = edits.size() - 1;
+			trimEdits(lastEditIndex, lastEditIndex);
+		}
 	}
 }

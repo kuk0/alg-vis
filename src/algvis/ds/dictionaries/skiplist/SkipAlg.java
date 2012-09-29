@@ -17,7 +17,6 @@
 package algvis.ds.dictionaries.skiplist;
 
 import algvis.core.Algorithm;
-import algvis.core.visual.ZDepth;
 
 abstract class SkipAlg extends Algorithm {
 	final SkipList L;
@@ -28,7 +27,6 @@ abstract class SkipAlg extends Algorithm {
 	SkipAlg(SkipList L, int x) {
 		super(L.panel);
 		this.L = L;
-		v = new SkipNode(L, x, ZDepth.ACTIONNODE);
 		K = x;
 	}
 

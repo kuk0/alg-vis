@@ -65,7 +65,15 @@ abstract public class Algorithm implements Runnable {
 		try {
 			runAlgorithm();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			this.done = true;
+			panel.history.trimToEnd();
+			EventQueue.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					panel.refresh();
+				}
+			});
+//			e.printStackTrace();
 			return;
 		}
 		end();

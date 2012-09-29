@@ -37,7 +37,6 @@ public class Rotations extends DataStructure implements ClickListener {
 	public static String dsName = "rotations";
 	public final BST T;
 	BSTNode v;
-	public boolean subtrees = false;
 
 	@Override
 	public String getName() {

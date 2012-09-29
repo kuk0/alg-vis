@@ -45,9 +45,9 @@ public class AADelete extends Algorithm {
 		AANode toDelete = (AANode) find.getResult().get("node");
 
 		if (toDelete != null) {
+			setHeader("delete", K);
 			addToScene(toDelete);
 			toDelete.setColor(NodeColor.DELETE);
-			pause();		
 
 			AANode w = toDelete.getParent();
 			if (toDelete.isLeaf()) { // case I - list

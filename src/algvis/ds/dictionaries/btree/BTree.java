@@ -116,7 +116,6 @@ public class BTree extends Dictionary {
 				public void runAlgorithm() throws InterruptedException {
 					BTree.this.order = order;
 					clear();
-					reposition();
 				}
 			});
 		}

@@ -54,19 +54,17 @@ public class Rotate extends Algorithm {
 			b = v.getLeft();
 			c = v.getRight();
 		}
-		if (R.subtrees) {
-			if (a != null) {
-				a.subtreeColor(NodeColor.RED);
-				a.markSubtree = true;
-			}
-			if (b != null) {
-				b.subtreeColor(NodeColor.GREEN);
-				b.markSubtree = true;
-			}
-			if (c != null) {
-				c.subtreeColor(NodeColor.BLUE);
-				c.markSubtree = true;
-			}
+		if (a != null) {
+			a.markedSubtreeColor(NodeColor.RED);
+			a.markSubtree = true;
+		}
+		if (b != null) {
+			b.markedSubtreeColor(NodeColor.GREEN);
+			b.markSubtree = true;
+		}
+		if (c != null) {
+			c.markedSubtreeColor(NodeColor.BLUE);
+			c.markSubtree = true;
 		}
 
 		if (u == T.getRoot() && b != null) {
@@ -87,19 +85,19 @@ public class Rotate extends Algorithm {
 
 		R.v = null;
 		if (v.getLeft() != null) {
-			v.getLeft().subtreeColor(NodeColor.NORMAL);
+			v.getLeft().markedSubtreeColor(NodeColor.NORMAL);
 			v.getLeft().markSubtree = false;
 		}
 		if (v.getRight() != null) {
-			v.getRight().subtreeColor(NodeColor.NORMAL);
+			v.getRight().markedSubtreeColor(NodeColor.NORMAL);
 			v.getRight().markSubtree = false;
 		}
 		if (u.getLeft() != null) {
-			u.getLeft().subtreeColor(NodeColor.NORMAL);
+			u.getLeft().markedSubtreeColor(NodeColor.NORMAL);
 			u.getLeft().markSubtree = false;
 		}
 		if (u.getRight() != null) {
-			u.getRight().subtreeColor(NodeColor.NORMAL);
+			u.getRight().markedSubtreeColor(NodeColor.NORMAL);
 			u.getRight().markSubtree = false;
 		}
 

@@ -43,9 +43,9 @@ public class AVLDelete extends Algorithm {
 		AVLNode d = (AVLNode) find.getResult().get("node");
 
 		if (d != null) {
+			setHeader("delete", K);
 			addToScene(d);
 			d.setColor(NodeColor.DELETE);
-			pause();
 			
 			AVLNode w = d.getParent();
 			if (d.isLeaf()) { // case I - list

@@ -31,6 +31,7 @@ import java.awt.geom.Rectangle2D;
 public class BST extends Dictionary implements LayoutListener, ClickListener {
 	public static String dsName = "bst";
 	public boolean order = false;
+	public boolean subtrees = false;
 
 	@Override
 	public String getName() {

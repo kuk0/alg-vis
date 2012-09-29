@@ -101,6 +101,7 @@ public class BDelete extends Algorithm {
 				addStep("bdelete2");
 				BNode s = d.way(K + 1);
 				v = new BNode(T, -Node.INF, d.tox, d.toy);
+				v.setColor(NodeColor.FIND);
 				addToScene(v);
 				v.goAbove(s);
 				pause();
@@ -213,6 +214,7 @@ public class BDelete extends Algorithm {
 			T.reposition();
 		}
 		removeFromScene(v);
+		addStep("done");
 	}
 
 	@Override

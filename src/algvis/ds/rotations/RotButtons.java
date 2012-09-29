@@ -71,7 +71,7 @@ public class RotButtons extends Buttons {
 		} else if (evt.getSource() == order) {
 			R.T.order = order.isSelected();
 		} else if (evt.getSource() == subtrees) {
-			R.subtrees = subtrees.isSelected(); 
+			R.T.subtrees = subtrees.isSelected();
 		}
 	}
 

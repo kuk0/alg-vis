@@ -17,17 +17,16 @@
 package algvis.ds.dictionaries.scapegoattree;
 
 import algvis.core.Algorithm;
-import algvis.core.visual.ZDepth;
 
 abstract class GBAlg extends Algorithm {
 	final GBTree T;
-	final GBNode v;
+	GBNode v;
 	final int K;
 
 	GBAlg(GBTree T, int x) {
 		super(T.panel);
 		this.T = T;
-		v = new GBNode(T, K = x, ZDepth.ACTIONNODE);
+		K = x;
 	}
 
 	GBNode compr(GBNode r, int c) throws InterruptedException {

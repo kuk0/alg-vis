@@ -18,6 +18,7 @@ package algvis.ds.dictionaries.skiplist;
 
 import algvis.core.Node;
 import algvis.core.NodeColor;
+import algvis.core.visual.ZDepth;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -31,6 +32,7 @@ public class SkipInsert extends SkipAlg {
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		p = new SkipNode[L.height];
+		v = new SkipNode(L, K, ZDepth.ACTIONNODE);
 		v.setColor(NodeColor.INSERT);
 		addToScene(v);
 		setHeader("insert", K);

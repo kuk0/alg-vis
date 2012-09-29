@@ -18,6 +18,7 @@ package algvis.ds.dictionaries.skiplist;
 
 import algvis.core.Node;
 import algvis.core.NodeColor;
+import algvis.core.visual.ZDepth;
 
 import java.util.HashMap;
 
@@ -28,6 +29,7 @@ public class SkipDelete extends SkipAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		v = new SkipNode(L, K, ZDepth.ACTIONNODE);
 		v.setColor(NodeColor.DELETE);
 		addToScene(v);
 		p = new SkipNode[L.height];

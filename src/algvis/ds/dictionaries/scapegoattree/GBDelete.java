@@ -17,17 +17,19 @@
 package algvis.ds.dictionaries.scapegoattree;
 
 import algvis.core.NodeColor;
+import algvis.core.visual.ZDepth;
 
 import java.util.HashMap;
 
 public class GBDelete extends GBAlg {
 	public GBDelete(GBTree T, int x) {
 		super(T, x);
-		v.setColor(NodeColor.DELETE);
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		v = new GBNode(T, K, ZDepth.ACTIONNODE);
+		v.setColor(NodeColor.DELETE);
 		addToScene(v);
 		setHeader("deletion");
 		if (T.getRoot() == null) {

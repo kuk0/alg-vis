@@ -41,6 +41,7 @@ public class TreapDelete extends Algorithm {
 		TreapNode d = (TreapNode) find.getResult().get("node");
 
 		if (d != null) {
+			setHeader("delete", K);
 			d.setColor(NodeColor.DELETE);
 			
 			addStep("treapbubbledown");

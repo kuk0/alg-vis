@@ -93,14 +93,19 @@ public class UnionFind extends DataStructure implements ClickListener {
 	}
 
 	@Override
-	public void random(int n) {
+	public void random(int n) {		
 		Random g = new Random(System.currentTimeMillis());
-		boolean p = panel.pauses;
+		final boolean p = panel.pauses;
 		panel.pauses = false;
-			for (int i = 0; i < n; ++i) {
-				union(at(g.nextInt(count)), at(g.nextInt(count)));
+		for (int i = 0; i < n; ++i) {
+			union(at(g.nextInt(count)), at(g.nextInt(count)));
+		}
+		start(new Runnable() {
+			@Override
+			public void run() {
+				panel.pauses = p;
 			}
-		panel.pauses = p;
+		});
 	}
 
 	@Override

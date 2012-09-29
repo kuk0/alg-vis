@@ -228,6 +228,7 @@ abstract public class Buttons extends JPanel implements ActionListener, StateEdi
 				}
 			});
 		} else if (evt.getSource() == random) {
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
 			D.random(I.getInt(10));
 		} else if (evt.getSource() == pause) {
 			panel.pauses = pause.isSelected();
