@@ -40,23 +40,21 @@ public class LazyBinHeapPanel extends VisPanel {
 		D.start(new AlgorithmAdapter(this) {
 			@Override
 			public void runAlgorithm() throws InterruptedException {
-				H.active = 2;
+				((MeldablePQButtons) buttons).activeHeap.setValue(2);
 			}
 		});
 		D.random(3);
 		D.start(new AlgorithmAdapter(this) {
 			@Override
 			public void runAlgorithm() throws InterruptedException {
-				H.lowlight();
-				H.active = 3;
+				((MeldablePQButtons) buttons).activeHeap.setValue(3);
 			}
 		});
 		D.random(5);
 		D.start(new AlgorithmAdapter(this) {
 			@Override
 			public void runAlgorithm() throws InterruptedException {
-				H.lowlight();
-				H.active = 1;
+				((MeldablePQButtons) buttons).activeHeap.setValue(1);
 			}
 		});
 		D.start(new Runnable() {

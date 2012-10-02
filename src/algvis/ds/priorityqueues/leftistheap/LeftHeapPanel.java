@@ -20,6 +20,7 @@ package algvis.ds.priorityqueues.leftistheap;
 import algvis.core.AlgorithmAdapter;
 import algvis.core.Settings;
 import algvis.ds.DataStructure;
+import algvis.ds.priorityqueues.MeldablePQButtons;
 import algvis.ds.priorityqueues.MeldablePQButtonsNoDecr;
 import algvis.gui.VisPanel;
 
@@ -42,23 +43,21 @@ public class LeftHeapPanel extends VisPanel {
 		D.start(new AlgorithmAdapter(this) {
 			@Override
 			public void runAlgorithm() throws InterruptedException {
-				L.active = 2;
+				((MeldablePQButtons) buttons).activeHeap.setValue(2);
 			}
 		});
 		D.random(10);
 		D.start(new AlgorithmAdapter(this) {
 			@Override
 			public void runAlgorithm() throws InterruptedException {
-				L.lowlight();
-				L.active = 3;
+				((MeldablePQButtons) buttons).activeHeap.setValue(3);
 			}
 		});
 		D.random(7);
 		D.start(new AlgorithmAdapter(this) {
 			@Override
 			public void runAlgorithm() throws InterruptedException {
-				L.lowlight();
-				L.active = 1;
+				((MeldablePQButtons) buttons).activeHeap.setValue(1);
 			}
 		});
 		D.start(new Runnable() {

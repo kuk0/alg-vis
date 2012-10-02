@@ -80,15 +80,24 @@ public class MeldablePQButtons extends PQButtons implements ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent evt) {
 		if (evt.getSource() == activeHeap) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
 			final MeldablePQ H = ((MeldablePQ) D);
-			D.start(new AlgorithmAdapter(panel) {
-				@Override
-				public void runAlgorithm() throws InterruptedException {
-					H.lowlight();
-					H.highlight((Integer) activeHeap.getValue());
-				}
-			});
+			
+			// ak pouzivatel zmenil activeHeap
+			if (panel.history.isBetweenAlgorithms()) {
+				if (panel.history.canRedo()) panel.newAlgorithmPool();
+				D.start(new AlgorithmAdapter(panel) {
+					@Override
+					public void runAlgorithm() throws InterruptedException {
+						H.lowlight();
+						H.highlight((Integer) activeHeap.getValue());
+					}
+				});
+			} else {
+				// ak activeHeap bola zmenena v algoritme
+				H.lowlight();
+				H.highlight((Integer) activeHeap.getValue());
+			}
+			
 			if (H.chosen != null)
 				H.chosen.unmark();
 		}

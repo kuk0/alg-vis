@@ -133,7 +133,10 @@ public class BTree extends Dictionary {
 		Object order = state.get(hash + "order");
 		if (order != null) {
 			this.order = (Integer) HashtableStoreSupport.restore(order);
-			((BTreeButtons) panel.buttons).OS.setValue(this.order);
+			BTreeButtons buttons = (BTreeButtons) panel.buttons;
+			buttons.OS.removeChangeListener(buttons);
+			buttons.OS.setValue(this.order);
+			buttons.OS.addChangeListener(buttons);
 		}
 	}
 }

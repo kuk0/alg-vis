@@ -55,7 +55,7 @@ abstract public class Buttons extends JPanel implements ActionListener, StateEdi
 	private JButton zoomIn;
     private JButton zoomOut;
     private JButton resetView;
-	private final String hash = Integer.toString(hashCode());
+	protected final String hash = Integer.toString(hashCode());
 
 	protected abstract void actionButtons(JPanel P);
 

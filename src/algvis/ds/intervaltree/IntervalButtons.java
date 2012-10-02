@@ -1,5 +1,6 @@
 package algvis.ds.intervaltree;
 
+import algvis.core.AlgorithmAdapter;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ds.intervaltree.IntervalTrees.mimasuType;
 import algvis.gui.Buttons;
@@ -22,6 +23,8 @@ public class IntervalButtons extends Buttons{
     private IRadioButton maxB;
     private IRadioButton sumB;
 	private ButtonGroup minMaxSumGroup;
+
+	private mimasuType lastMinTree = ((IntervalTrees) D).minTree;
 
 	public IntervalButtons(VisPanel M) {
 		super(M);
@@ -103,17 +106,32 @@ public class IntervalButtons extends Buttons{
 			BSTNode w = ((BSTNode) ((IntervalTrees) D).chosen);
 			((IntervalTrees) D).changeKey(w, delta);
 		} else if (evt.getSource() == minB && ((IntervalTrees) D).minTree != mimasuType.MIN) {
-			D.clear();
-			findsumB.setT("button-findmin");
-			((IntervalTrees) D).minTree = mimasuType.MIN;
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			D.start(new AlgorithmAdapter(panel) {
+				@Override
+				public void runAlgorithm() throws InterruptedException {
+					D.clear();
+					((IntervalTrees) D).minTree = mimasuType.MIN;
+				}
+			});
 		} else if (evt.getSource() == maxB && ((IntervalTrees) D).minTree != mimasuType.MAX) {
-			D.clear();
-			findsumB.setT("button-findmax");
-			((IntervalTrees) D).minTree = mimasuType.MAX;
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			D.start(new AlgorithmAdapter(panel) {
+				@Override
+				public void runAlgorithm() throws InterruptedException {
+					D.clear();
+					((IntervalTrees) D).minTree = mimasuType.MAX;
+				}
+			});
 		} else if (evt.getSource() == sumB && ((IntervalTrees) D).minTree != mimasuType.SUM) {
-			D.clear();
-			findsumB.setT("button-findsum");
-			((IntervalTrees) D).minTree = mimasuType.SUM;
+			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			D.start(new AlgorithmAdapter(panel) {
+				@Override
+				public void runAlgorithm() throws InterruptedException {
+					D.clear();
+					((IntervalTrees) D).minTree = mimasuType.SUM;
+				}
+			});
 		}
 	}
 
@@ -124,5 +142,20 @@ public class IntervalButtons extends Buttons{
 		findsumB.setEnabled(enabled);
 		//deleteB.setEnabled(enabled);
 		changeKeyB.setEnabled(enabled);
+	}
+
+	@Override
+	public void refresh() {
+		super.refresh();
+		if (lastMinTree != ((IntervalTrees) D).minTree) {
+			lastMinTree = ((IntervalTrees) D).minTree;
+			if (lastMinTree == mimasuType.MIN) {
+				findsumB.setT("button-findmin");
+			} else if (lastMinTree == mimasuType.MAX) {
+				findsumB.setT("button-findmax");
+			} else if (lastMinTree == mimasuType.SUM) {
+				findsumB.setT("button-findsum");
+			}
+		}
 	}
 }
