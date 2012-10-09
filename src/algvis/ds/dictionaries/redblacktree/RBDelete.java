@@ -198,6 +198,6 @@ public class RBDelete extends Algorithm {
 
 	@Override
 	public HashMap<String, Object> getResult() {
-		return null; // TODO
+		return null;
 	}
 }

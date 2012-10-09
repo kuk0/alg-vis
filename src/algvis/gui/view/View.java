@@ -38,7 +38,6 @@ public class View implements MouseListener, MouseMotionListener,
 	private int mouseX, mouseY; // mouse position
 	public Alignment align = Alignment.CENTER;
 
-	//private double x, y, f; // TODO not needed 120429
 	public final AffineTransform at;
 	private AffineTransform oldTransform;
 	private ClickListener D;
@@ -344,6 +343,10 @@ public class View implements MouseListener, MouseMotionListener,
 	public void fillArc(double x, double y, double w, double h, double a1,
 			double a2) {
 		g.fillArc((int) x, (int) y, (int) w, (int) h, (int) a1, (int) a2);
+	}
+	
+	public void drawRectangle(Rectangle2D r) {
+		g.draw(r);
 	}
 
 	public void drawRoundRectangle(double x, double y, double w, double h,

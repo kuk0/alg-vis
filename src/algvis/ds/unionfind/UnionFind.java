@@ -137,17 +137,34 @@ public class UnionFind extends DataStructure implements ClickListener {
 
 	@Override
 	public Rectangle2D getBoundingBox() {
-		return null; // TODO
+		Rectangle2D retVal = null;
+		if (sets != null) {
+			for (UnionFindNode set : sets) {
+				Rectangle2D sBB = set.getBoundingBox();
+				if (retVal == null) retVal = sBB;
+				else if (sBB != null) retVal = retVal.createUnion(sBB);
+			}
+		}
+		return retVal;
 	}
 
 	@Override
 	protected void endAnimation() {
-		// TODO
+		if (sets != null) {
+			for (UnionFindNode set : sets) {
+				set.endAnimation();
+			}
+		}
 	}
 
 	@Override
 	protected boolean isAnimationDone() {
-		return true; // TODO
+		if (sets != null) {
+			for (UnionFindNode set : sets) {
+				if (!set.isAnimationDone()) return false;
+			}
+		}
+		return true;
 	}
 
 	public void reposition() {

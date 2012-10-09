@@ -97,11 +97,6 @@ public class BTree extends Dictionary {
 		}
 	}
 
-	@Override
-	protected Rectangle2D getBoundingBox() {
-		return null; // TODO
-	}
-
 	public void reposition() {
 		if (root != null) {
 			getRoot()._reposition();

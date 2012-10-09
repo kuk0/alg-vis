@@ -99,7 +99,7 @@ public class Heap extends PriorityQueue implements ClickListener {
 
 	@Override
 	protected Rectangle2D getBoundingBox() {
-		return root.getBoundingBox();
+		return root == null ? null : root.getBoundingBox();
 	}
 
 	@Override

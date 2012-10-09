@@ -22,6 +22,7 @@ import algvis.ds.DataStructure;
 import algvis.gui.VisPanel;
 import algvis.gui.view.Layout;
 
+import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
 
 abstract public class Dictionary extends DataStructure {
@@ -45,6 +46,11 @@ abstract public class Dictionary extends DataStructure {
 
 	public void setRoot(Node root) {
 		this.root = root;
+	}
+
+	@Override
+	public Rectangle2D getBoundingBox() {
+		return root == null ? null : root.getBoundingBox();
 	}
 
 	@Override

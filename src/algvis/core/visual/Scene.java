@@ -21,8 +21,10 @@ import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.gui.view.View;
 
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
+import java.util.List;
 
 public class Scene extends VisualElement {
 	public static final int MAXZ = 10, MIDZ = 5;
@@ -74,6 +76,11 @@ public class Scene extends VisualElement {
 			synchronized (this) {
 				for (VisualElement e : elements.get(i)) {
 					e.draw(V);
+					Rectangle2D r = e.getBoundingBox();
+					if (r != null) {
+						V.setColor(Color.RED);
+						V.drawRectangle(r);
+					}
 				}
 			}
 		}
@@ -91,10 +98,11 @@ public class Scene extends VisualElement {
 		Rectangle2D retVal = null;
 		for (Set<VisualElement> set : elements) {
 			for (VisualElement e : set) {
+				Rectangle2D eBB = e.getBoundingBox();
 				if (retVal == null) {
-					retVal = e.getBoundingBox();
-				} else {
-					retVal = retVal.createUnion(e.getBoundingBox());	
+					retVal = eBB;
+				} else if (eBB != null) {
+					retVal = retVal.createUnion(eBB);	
 				}
 			}
 		}

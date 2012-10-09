@@ -102,11 +102,6 @@ public class SkipList extends Dictionary implements ClickListener {
 		}
 	}
 
-	@Override
-	protected Rectangle2D getBoundingBox() {
-		return null; // TODO
-	}
-
 	public void reposition() {
 		x1 = 0;
 		y1 = 0;

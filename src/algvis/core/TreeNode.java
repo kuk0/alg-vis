@@ -109,7 +109,7 @@ public class TreeNode extends Node {
 	public void drawEdges(View v) {
 		if (state != INVISIBLE) {
 			if (thread) {
-				v.setColor(Color.red); // TODO
+				v.setColor(Color.red);
 				if (getChild() != null) {
 					v.drawLine(x, y, getChild().x, getChild().y);
 				}
@@ -117,8 +117,7 @@ public class TreeNode extends Node {
 			} else {
 				TreeNode w = getChild();
 				while (w != null) {
-					v.setColor(Color.black); // TODO maybe these lines would
-												// make problems
+					v.setColor(Color.black);
 					v.drawLine(x, y, w.x, w.y);
 					w.drawEdges(v);
 					w = w.getRight();

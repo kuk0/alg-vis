@@ -59,17 +59,17 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 
 	@Override
 	protected Rectangle2D getBoundingBox() {
-		return null; // TODO
+		return root == null ? null : root.getBoundingBox();
 	}
 
 	@Override
 	protected void endAnimation() {
-		// TODO
+		if (root != null) root.endAnimation();
 	}
 
 	@Override
 	protected boolean isAnimationDone() {
-		return false; // TODO
+		return root == null || root.isAnimationDone();
 	}
 
 	@Override

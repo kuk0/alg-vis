@@ -83,7 +83,6 @@ public class SuffixTree extends DataStructure {
 			str.draw(V);
 		SuffixTreeNode v = getRoot();
 		if (v != null) {
-			v.moveTree();
 			v.drawTree(V);
 			V.drawString("\u025B", v.x, v.y - 8, Fonts.NORMAL);
 		}
@@ -91,22 +90,22 @@ public class SuffixTree extends DataStructure {
 
 	@Override
 	protected void move() {
-		// TODO
+		if (root != null) root.moveTree();
 	}
 
 	@Override
 	protected Rectangle2D getBoundingBox() {
-		return null; // TODO
+		return root == null ? null : root.getBoundingBox();
 	}
 
 	@Override
 	protected void endAnimation() {
-		// TODO
+		if (root != null) root.endAnimation();
 	}
 
 	@Override
 	protected boolean isAnimationDone() {
-		return false; // TODO
+		return root == null || root.isAnimationDone();
 	}
 
 	@Override

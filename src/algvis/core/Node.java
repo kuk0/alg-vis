@@ -419,12 +419,12 @@ public class Node extends VisualElement {
 
 	@Override
 	public Rectangle2D getBoundingBox() {
-		return null;
+		int r = RADIUS + 1;
+		return new Rectangle2D.Double(x - r, y - r, 2 * r, 2 * r);
 	}
 
 	@Override
 	public void endAnimation() {
-		// pozor nemal by som menit tox, toy a steps (alebo synchronizovat, vsade)
 		if (state == ALIVE || state == INVISIBLE) {
 			steps = 0;
 			x = tox;

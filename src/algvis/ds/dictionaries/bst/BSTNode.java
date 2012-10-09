@@ -26,6 +26,7 @@ import algvis.gui.view.Layout;
 import algvis.gui.view.View;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
 import java.util.Stack;
 
@@ -318,6 +319,27 @@ public class BSTNode extends Node {
 			getRight().shiftTree(dx, dy);
 		}
 		goTo(tox + dx, toy + dy);
+	}
+
+	@Override
+	public Rectangle2D getBoundingBox() {
+		Rectangle2D retVal = super.getBoundingBox();
+		if (left != null) retVal = retVal.createUnion(left.getBoundingBox());
+		if (right != null) retVal = retVal.createUnion(right.getBoundingBox());
+		return retVal;
+	}
+
+	@Override
+	public void endAnimation() {
+		super.endAnimation();
+		if (left != null) left.endAnimation();
+		if (right != null) right.endAnimation();
+	}
+
+	@Override
+	public boolean isAnimationDone() {
+		return super.isAnimationDone() && (left == null || left.isAnimationDone()) && (right == null || right
+				.isAnimationDone());
 	}
 
 	/**

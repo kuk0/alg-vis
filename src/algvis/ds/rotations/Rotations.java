@@ -124,17 +124,17 @@ public class Rotations extends DataStructure implements ClickListener {
 
 	@Override
 	protected Rectangle2D getBoundingBox() {
-		return null; // TODO
+		return T.getBoundingBox();
 	}
 
 	@Override
 	protected void endAnimation() {
-		// TODO
+		T.endAnimation();
 	}
 
 	@Override
 	protected boolean isAnimationDone() {
-		return true; // TODO
+		return T.isAnimationDone();
 	}
 
 	public void reposition() {

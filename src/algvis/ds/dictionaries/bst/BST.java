@@ -126,11 +126,6 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 		if (getRoot() != null) getRoot().moveTree();
 	}
 
-	@Override
-	public Rectangle2D getBoundingBox() {
-		return new Rectangle2D.Float(x1, y1, x2-x1, y2-y1);
-	}
-
 	protected void leftrot(BSTNode v) {
 		BSTNode u = v.getParent();
 		if (v.getLeft() == null) {

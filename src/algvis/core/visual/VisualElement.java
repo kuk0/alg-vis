@@ -56,6 +56,10 @@ public abstract class VisualElement implements StateEditable {
 		scene.remove(this);
 	}
 
+	public void removeFromSceneNow() {
+		scene.removeNow(this);
+	}
+
 	protected abstract void draw(View v);
 
 	protected abstract void move();

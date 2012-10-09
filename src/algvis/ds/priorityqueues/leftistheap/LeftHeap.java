@@ -204,30 +204,55 @@ public class LeftHeap extends MeldablePQ implements ClickListener{
 	public void draw(View V) {
 		for (int i = 0; i <= numHeaps; ++i) {
 			if (root[i] != null) {
-				root[i].moveTree();
 				root[i].drawTree(V);
 			}
-		}		 
+		} 
 	}
 
 	@Override
 	protected void move() {
-		// TODO
+		for (int i = 0; i <= numHeaps; ++i) {
+			if (root[i] != null) {
+				root[i].moveTree();
+			}
+		}
 	}
 
 	@Override
 	protected Rectangle2D getBoundingBox() {
-		return null; // TODO
+		Rectangle2D retVal = null;
+		if (root != null) {
+			for (int i = 0; i <= numHeaps; ++i) {
+				if (root[i] != null) {
+					Rectangle2D riBB = root[i].getBoundingBox();
+					if (retVal == null) {
+						retVal = riBB;
+					} else if (riBB != null) {
+						retVal = retVal.createUnion(riBB);
+					}
+				}
+			}
+		}
+		return retVal;
 	}
 
 	@Override
 	protected void endAnimation() {
-		// TODO
+		if (root != null) {
+			for (int i = 0; i <= numHeaps; ++i) {
+				if (root[i] != null) root[i].endAnimation();
+			}
+		}
 	}
 
 	@Override
 	protected boolean isAnimationDone() {
-		return false; // TODO
+		if (root != null) {
+			for (int i = 0; i <= numHeaps; ++i) {
+				if (root[i] != null && !root[i].isAnimationDone()) return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
