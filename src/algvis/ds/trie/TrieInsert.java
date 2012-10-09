@@ -52,8 +52,8 @@ public class TrieInsert extends Algorithm {
 		pause();
 		v.unmark();
 		hw = new TrieWordNode(T, s);
-		addToScene(hw);
 		hw.setColor(NodeColor.INSERT);
+		addToScene(hw);
 		hw.goNextTo(v);
 
 		while (s.compareTo("$") != 0) {

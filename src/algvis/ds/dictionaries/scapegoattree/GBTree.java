@@ -17,6 +17,7 @@
 package algvis.ds.dictionaries.scapegoattree;
 
 import algvis.core.StringUtils;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.dictionaries.bst.BST;
 import algvis.ui.VisPanel;
 import algvis.ui.view.Layout;
@@ -112,13 +113,13 @@ public class GBTree extends BST {
 	@Override
 	public void storeState(Hashtable<Object, Object> state) {
 		super.storeState(state);
-		state.put(hash + "del", del);
+		HashtableStoreSupport.store(state, hash + "del", del);
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Integer del = (Integer) state.get(hash + "del");
-		if (del != null) this.del = del;
+		Object del = state.get(hash + "del");
+		if (del != null) this.del = (Integer) HashtableStoreSupport.restore(del);
 	}
 }

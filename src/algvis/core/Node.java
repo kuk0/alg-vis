@@ -472,22 +472,23 @@ public class Node extends VisualElement {
 		Object key = state.get(hash + "key");
 		if (key != null) this.key = (Integer) HashtableStoreSupport.restore(key);
 		
-		Integer stat = (Integer) state.get(hash + "state");
+		Object stat = state.get(hash + "state");
 		if (stat != null) {
-			stat = (Integer) HashtableStoreSupport.restore(stat);
+			stat = HashtableStoreSupport.restore(stat);
 			// tu nechcem mat invisible (inak spravit)
-			if ((this.state == OUT || this.state == DOWN || this.state == LEFT || this.state == RIGHT) && stat == ALIVE) {
+			if ((this.state == OUT || this.state == DOWN || this.state == LEFT || this.state == RIGHT) && stat
+					.equals(ALIVE)) {
 				goTo(tox, toy);
 			}
-			this.state = stat;
+			this.state = (Integer) stat;
 		}
 		
 		boolean isMoved = false;
-		Integer tox = (Integer) state.get(hash + "tox");
-		Integer toy = (Integer) state.get(hash + "toy");
+		Object tox = state.get(hash + "tox");
+		Object toy = state.get(hash + "toy");
 		if (tox != null) isMoved = true; else tox = this.tox;
 		if (toy != null) isMoved = true; else toy = this.toy;
-		if (isMoved) goTo(tox, toy);
+		if (isMoved) goTo((Integer) tox, (Integer) toy);
 		
 		Object color = state.get(hash + "color");
 		if (color != null) this.color = (NodeColor) HashtableStoreSupport.restore(color);
