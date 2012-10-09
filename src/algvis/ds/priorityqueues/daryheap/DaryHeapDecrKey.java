@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.daryheap;
 
-import algvis.gui.InputField;
+import algvis.ui.InputField;
 
 import java.util.HashMap;
 

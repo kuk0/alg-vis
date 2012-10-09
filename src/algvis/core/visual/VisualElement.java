@@ -17,7 +17,7 @@
 
 package algvis.core.visual;
 
-import algvis.gui.view.View;
+import algvis.ui.view.View;
 
 import javax.swing.undo.StateEditable;
 import java.awt.geom.Rectangle2D;

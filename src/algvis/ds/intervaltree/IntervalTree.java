@@ -4,9 +4,9 @@ import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
 import algvis.ds.intervaltree.IntervalNode.focusType;
-import algvis.gui.VisPanel;
-import algvis.gui.view.ClickListener;
-import algvis.gui.view.View;
+import algvis.ui.VisPanel;
+import algvis.ui.view.ClickListener;
+import algvis.ui.view.View;
 
 import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;

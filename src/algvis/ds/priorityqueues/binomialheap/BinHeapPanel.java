@@ -20,7 +20,7 @@ import algvis.core.AlgorithmAdapter;
 import algvis.core.Settings;
 import algvis.ds.DataStructure;
 import algvis.ds.priorityqueues.MeldablePQButtons;
-import algvis.gui.VisPanel;
+import algvis.ui.VisPanel;
 
 public class BinHeapPanel extends VisPanel {
 	private static final long serialVersionUID = 2070258718656241421L;

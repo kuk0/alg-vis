@@ -18,7 +18,7 @@ package algvis.core;
 
 import algvis.core.history.UpdatableStateEdit;
 import algvis.core.visual.VisualElement;
-import algvis.gui.VisPanel;
+import algvis.ui.VisPanel;
 
 import java.awt.*;
 import java.util.HashMap;

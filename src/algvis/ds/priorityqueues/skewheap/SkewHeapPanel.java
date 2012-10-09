@@ -21,7 +21,7 @@ import algvis.core.Settings;
 import algvis.ds.DataStructure;
 import algvis.ds.priorityqueues.MeldablePQButtons;
 import algvis.ds.priorityqueues.MeldablePQButtonsNoDecr;
-import algvis.gui.VisPanel;
+import algvis.ui.VisPanel;
 
 public class SkewHeapPanel extends VisPanel {
 	private static final long serialVersionUID = -2947713003292797010L;

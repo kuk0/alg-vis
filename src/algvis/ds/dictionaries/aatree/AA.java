@@ -19,9 +19,9 @@ package algvis.ds.dictionaries.aatree;
 import algvis.ds.dictionaries.bst.BST;
 import algvis.ds.dictionaries.bst.BSTFind;
 import algvis.ds.dictionaries.bst.BSTNode;
-import algvis.gui.VisPanel;
-import algvis.gui.view.Layout;
-import algvis.gui.view.View;
+import algvis.ui.VisPanel;
+import algvis.ui.view.Layout;
+import algvis.ui.view.View;
 
 public class AA extends BST {
 	public static String dsName = "aatree";

@@ -20,8 +20,8 @@ import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.DataStructure;
 import algvis.ds.trie.TrieNode;
-import algvis.gui.Fonts;
-import algvis.gui.view.View;
+import algvis.ui.Fonts;
+import algvis.ui.view.View;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

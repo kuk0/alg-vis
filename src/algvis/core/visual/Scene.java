@@ -19,7 +19,7 @@ package algvis.core.visual;
 
 import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
-import algvis.gui.view.View;
+import algvis.ui.view.View;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;

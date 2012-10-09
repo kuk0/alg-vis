@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues;
 
-import algvis.gui.VisPanel;
+import algvis.ui.VisPanel;
 
 import javax.swing.*;
 import javax.swing.event.ChangeListener;

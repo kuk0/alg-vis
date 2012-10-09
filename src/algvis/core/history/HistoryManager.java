@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.core.history;
 
-import algvis.gui.VisPanel;
+import algvis.ui.VisPanel;
 
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.UndoManager;

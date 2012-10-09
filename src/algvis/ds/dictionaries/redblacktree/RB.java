@@ -19,9 +19,9 @@ package algvis.ds.dictionaries.redblacktree;
 import algvis.core.Node;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BST;
-import algvis.gui.VisPanel;
-import algvis.gui.view.Layout;
-import algvis.gui.view.View;
+import algvis.ui.VisPanel;
+import algvis.ui.view.Layout;
+import algvis.ui.view.View;
 
 public class RB extends BST {
 	public static String dsName = "redblack";

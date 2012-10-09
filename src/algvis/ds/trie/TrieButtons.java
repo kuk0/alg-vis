@@ -16,8 +16,8 @@
  ******************************************************************************/
 package algvis.ds.trie;
 
-import algvis.gui.Buttons;
-import algvis.gui.VisPanel;
+import algvis.ui.Buttons;
+import algvis.ui.VisPanel;
 import algvis.internationalization.IButton;
 
 import javax.swing.*;

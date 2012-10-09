@@ -20,10 +20,10 @@ import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.core.visual.VisualElement;
 import algvis.core.visual.ZDepth;
-import algvis.gui.InputField;
-import algvis.gui.VisPanel;
-import algvis.gui.view.Layout;
-import algvis.gui.view.View;
+import algvis.ui.InputField;
+import algvis.ui.VisPanel;
+import algvis.ui.view.Layout;
+import algvis.ui.view.View;
 
 import java.util.Random;
 import java.util.concurrent.ExecutionException;

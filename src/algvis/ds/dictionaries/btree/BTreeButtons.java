@@ -16,8 +16,8 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.btree;
 
-import algvis.gui.DictButtons;
-import algvis.gui.VisPanel;
+import algvis.ui.DictButtons;
+import algvis.ui.VisPanel;
 import algvis.internationalization.ILabel;
 
 import javax.swing.*;

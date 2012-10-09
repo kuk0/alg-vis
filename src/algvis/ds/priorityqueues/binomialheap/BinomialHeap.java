@@ -21,11 +21,11 @@ import algvis.core.Pair;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.priorityqueues.MeldablePQ;
 import algvis.ds.priorityqueues.MeldablePQButtons;
-import algvis.gui.Fonts;
-import algvis.gui.VisPanel;
-import algvis.gui.view.Alignment;
-import algvis.gui.view.ClickListener;
-import algvis.gui.view.View;
+import algvis.ui.Fonts;
+import algvis.ui.VisPanel;
+import algvis.ui.view.Alignment;
+import algvis.ui.view.ClickListener;
+import algvis.ui.view.View;
 import algvis.internationalization.Languages;
 
 import java.awt.*;

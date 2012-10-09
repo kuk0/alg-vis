@@ -18,7 +18,7 @@ package algvis.ds.priorityqueues.daryheap;
 
 import algvis.core.Settings;
 import algvis.ds.DataStructure;
-import algvis.gui.VisPanel;
+import algvis.ui.VisPanel;
 
 public class DaryHeapPanel extends VisPanel{
 	private static final long serialVersionUID = 5387116424458217311L;

@@ -41,7 +41,7 @@ import algvis.ds.rotations.RotPanel;
 import algvis.ds.suffixtree.SuffixTreePanel;
 import algvis.ds.trie.TriePanel;
 import algvis.ds.unionfind.UnionFindPanel;
-import algvis.gui.VisPanel;
+import algvis.ui.VisPanel;
 
 import java.lang.reflect.Constructor;
 

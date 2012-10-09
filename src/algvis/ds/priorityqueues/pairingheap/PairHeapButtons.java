@@ -17,7 +17,7 @@
 package algvis.ds.priorityqueues.pairingheap;
 
 import algvis.ds.priorityqueues.MeldablePQButtons;
-import algvis.gui.VisPanel;
+import algvis.ui.VisPanel;
 import algvis.internationalization.IComboBox;
 import algvis.internationalization.ILabel;
 

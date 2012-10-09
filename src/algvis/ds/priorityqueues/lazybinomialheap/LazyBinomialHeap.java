@@ -22,9 +22,9 @@ import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.priorityqueues.MeldablePQButtons;
 import algvis.ds.priorityqueues.binomialheap.BinHeapNode;
 import algvis.ds.priorityqueues.binomialheap.BinomialHeap;
-import algvis.gui.Fonts;
-import algvis.gui.VisPanel;
-import algvis.gui.view.View;
+import algvis.ui.Fonts;
+import algvis.ui.VisPanel;
+import algvis.ui.view.View;
 
 import java.util.Hashtable;
 

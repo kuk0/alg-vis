@@ -18,8 +18,8 @@ package algvis.ds.dictionaries.avltree;
 
 import algvis.ds.dictionaries.bst.BST;
 import algvis.ds.dictionaries.bst.BSTFind;
-import algvis.gui.VisPanel;
-import algvis.gui.view.Layout;
+import algvis.ui.VisPanel;
+import algvis.ui.view.Layout;
 
 public class AVL extends BST {
 	public static String dsName = "avltree";

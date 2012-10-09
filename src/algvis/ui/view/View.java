@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package algvis.gui.view;
+package algvis.ui.view;
 
-import algvis.gui.Fonts;
+import algvis.ui.Fonts;
 
 import javax.swing.*;
 import java.awt.*;

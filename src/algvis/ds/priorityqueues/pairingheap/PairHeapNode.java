@@ -19,7 +19,7 @@ package algvis.ds.priorityqueues.pairingheap;
 import algvis.core.TreeNode;
 import algvis.ds.DataStructure;
 import algvis.ds.priorityqueues.MeldablePQ;
-import algvis.gui.view.View;
+import algvis.ui.view.View;
 
 import java.awt.*;
 

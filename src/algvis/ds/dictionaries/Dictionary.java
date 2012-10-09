@@ -19,8 +19,8 @@ package algvis.ds.dictionaries;
 import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.DataStructure;
-import algvis.gui.VisPanel;
-import algvis.gui.view.Layout;
+import algvis.ui.VisPanel;
+import algvis.ui.view.Layout;
 
 import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;

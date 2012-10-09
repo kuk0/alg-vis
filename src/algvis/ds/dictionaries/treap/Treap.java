@@ -18,8 +18,8 @@ package algvis.ds.dictionaries.treap;
 
 import algvis.ds.dictionaries.bst.BST;
 import algvis.ds.dictionaries.bst.BSTFind;
-import algvis.gui.VisPanel;
-import algvis.gui.view.Layout;
+import algvis.ui.VisPanel;
+import algvis.ui.view.Layout;
 
 public class Treap extends BST {
 	public static String dsName = "treap";

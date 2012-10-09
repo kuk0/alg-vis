@@ -20,7 +20,7 @@ import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
 import algvis.ds.DataStructure;
-import algvis.gui.view.View;
+import algvis.ui.view.View;
 
 import java.awt.*;
 import java.util.Hashtable;

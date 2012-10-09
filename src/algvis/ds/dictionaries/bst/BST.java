@@ -19,14 +19,12 @@ package algvis.ds.dictionaries.bst;
 import algvis.core.StringUtils;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.Dictionary;
-import algvis.gui.VisPanel;
-import algvis.gui.view.ClickListener;
-import algvis.gui.view.Layout;
-import algvis.gui.view.LayoutListener;
-import algvis.gui.view.View;
+import algvis.ui.VisPanel;
+import algvis.ui.view.ClickListener;
+import algvis.ui.view.Layout;
+import algvis.ui.view.LayoutListener;
+import algvis.ui.view.View;
 import algvis.internationalization.Languages;
-
-import java.awt.geom.Rectangle2D;
 
 public class BST extends Dictionary implements LayoutListener, ClickListener {
 	public static String dsName = "bst";

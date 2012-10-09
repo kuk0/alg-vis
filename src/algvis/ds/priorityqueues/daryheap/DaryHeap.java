@@ -20,9 +20,9 @@ import algvis.core.AlgorithmAdapter;
 import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.priorityqueues.PriorityQueue;
-import algvis.gui.VisPanel;
-import algvis.gui.view.ClickListener;
-import algvis.gui.view.View;
+import algvis.ui.VisPanel;
+import algvis.ui.view.ClickListener;
+import algvis.ui.view.View;
 import algvis.internationalization.Languages;
 
 import java.awt.geom.Rectangle2D;

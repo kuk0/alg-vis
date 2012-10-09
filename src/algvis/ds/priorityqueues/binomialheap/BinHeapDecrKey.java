@@ -18,7 +18,7 @@ package algvis.ds.priorityqueues.binomialheap;
 
 import algvis.core.Algorithm;
 import algvis.core.Node;
-import algvis.gui.InputField;
+import algvis.ui.InputField;
 
 import java.util.HashMap;
 

@@ -17,8 +17,8 @@
 package algvis.ds.unionfind;
 
 import algvis.core.AlgorithmAdapter;
-import algvis.gui.Buttons;
-import algvis.gui.VisPanel;
+import algvis.ui.Buttons;
+import algvis.ui.VisPanel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.IComboBox;
 import algvis.internationalization.ILabel;

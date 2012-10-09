@@ -19,8 +19,8 @@ package algvis.ds.dictionaries.aatree;
 import algvis.core.Node;
 import algvis.ds.DataStructure;
 import algvis.ds.dictionaries.bst.BSTNode;
-import algvis.gui.Fonts;
-import algvis.gui.view.View;
+import algvis.ui.Fonts;
+import algvis.ui.view.View;
 
 public class AANode extends BSTNode {
 	private AANode(DataStructure D, int key, int x, int y, int zDepth) {

@@ -22,8 +22,8 @@ import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
 import algvis.ds.DataStructure;
 import algvis.ds.priorityqueues.MeldablePQ;
-import algvis.gui.Fonts;
-import algvis.gui.view.View;
+import algvis.ui.Fonts;
+import algvis.ui.view.View;
 
 import java.awt.*;
 import java.util.Hashtable;

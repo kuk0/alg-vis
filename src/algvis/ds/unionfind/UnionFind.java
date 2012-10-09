@@ -21,10 +21,10 @@ import algvis.core.visual.ZDepth;
 import algvis.ds.DataStructure;
 import algvis.ds.unionfind.UnionFindFind.FindHeuristic;
 import algvis.ds.unionfind.UnionFindUnion.UnionHeuristic;
-import algvis.gui.VisPanel;
-import algvis.gui.view.Alignment;
-import algvis.gui.view.ClickListener;
-import algvis.gui.view.View;
+import algvis.ui.VisPanel;
+import algvis.ui.view.Alignment;
+import algvis.ui.view.ClickListener;
+import algvis.ui.view.View;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;

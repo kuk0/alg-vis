@@ -21,12 +21,12 @@ import algvis.core.visual.ZDepth;
 import algvis.ds.DataStructure;
 import algvis.ds.dictionaries.bst.BST;
 import algvis.ds.dictionaries.bst.BSTNode;
-import algvis.gui.InputField;
-import algvis.gui.VisPanel;
-import algvis.gui.view.Alignment;
-import algvis.gui.view.ClickListener;
-import algvis.gui.view.Layout;
-import algvis.gui.view.View;
+import algvis.ui.InputField;
+import algvis.ui.VisPanel;
+import algvis.ui.view.Alignment;
+import algvis.ui.view.ClickListener;
+import algvis.ui.view.Layout;
+import algvis.ui.view.View;
 
 import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;

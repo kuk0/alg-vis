@@ -18,9 +18,9 @@ package algvis.ds.dictionaries.splaytree;
 
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.dictionaries.bst.BST;
-import algvis.gui.VisPanel;
-import algvis.gui.view.Layout;
-import algvis.gui.view.View;
+import algvis.ui.VisPanel;
+import algvis.ui.view.Layout;
+import algvis.ui.view.View;
 
 import java.util.Hashtable;
 

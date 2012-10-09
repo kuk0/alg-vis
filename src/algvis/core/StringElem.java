@@ -2,8 +2,8 @@ package algvis.core;
 
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.DataStructure;
-import algvis.gui.Fonts;
-import algvis.gui.view.View;
+import algvis.ui.Fonts;
+import algvis.ui.view.View;
 
 import javax.swing.undo.StateEditable;
 import java.awt.*;

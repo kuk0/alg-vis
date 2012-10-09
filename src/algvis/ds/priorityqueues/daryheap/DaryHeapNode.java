@@ -22,7 +22,7 @@ import algvis.core.visual.ZDepth;
 import algvis.ds.DataStructure;
 import algvis.ds.priorityqueues.PriorityQueue;
 import algvis.ds.priorityqueues.heap.HeapNode;
-import algvis.gui.view.View;
+import algvis.ui.view.View;
 
 import java.awt.*;
 import java.util.Hashtable;

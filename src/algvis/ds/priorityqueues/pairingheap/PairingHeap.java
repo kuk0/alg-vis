@@ -23,9 +23,9 @@ import algvis.ds.DataStructure;
 import algvis.ds.priorityqueues.MeldablePQ;
 import algvis.ds.priorityqueues.MeldablePQButtons;
 import algvis.ds.priorityqueues.pairingheap.PairHeapAlg.Pairing;
-import algvis.gui.VisPanel;
-import algvis.gui.view.ClickListener;
-import algvis.gui.view.View;
+import algvis.ui.VisPanel;
+import algvis.ui.view.ClickListener;
+import algvis.ui.view.View;
 
 import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;

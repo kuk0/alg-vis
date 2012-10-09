@@ -17,7 +17,7 @@
 
 package algvis.core;
 
-import algvis.gui.VisPanel;
+import algvis.ui.VisPanel;
 
 import java.util.HashMap;
 

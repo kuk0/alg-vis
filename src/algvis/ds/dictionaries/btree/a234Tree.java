@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.btree;
 
-import algvis.gui.VisPanel;
+import algvis.ui.VisPanel;
 
 public class a234Tree extends BTree {
 	public static String dsName = "234tree";

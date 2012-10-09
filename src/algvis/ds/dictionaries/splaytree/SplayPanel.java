@@ -18,8 +18,8 @@ package algvis.ds.dictionaries.splaytree;
 
 import algvis.core.Settings;
 import algvis.ds.DataStructure;
-import algvis.gui.DictButtons;
-import algvis.gui.VisPanel;
+import algvis.ui.DictButtons;
+import algvis.ui.VisPanel;
 
 public class SplayPanel extends VisPanel {
 	private static final long serialVersionUID = 7896254510404637883L;

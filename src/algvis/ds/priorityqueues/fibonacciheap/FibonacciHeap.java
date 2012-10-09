@@ -19,7 +19,7 @@ package algvis.ds.priorityqueues.fibonacciheap;
 import algvis.core.Node;
 import algvis.ds.priorityqueues.binomialheap.BinHeapNode;
 import algvis.ds.priorityqueues.lazybinomialheap.LazyBinomialHeap;
-import algvis.gui.VisPanel;
+import algvis.ui.VisPanel;
 
 public class FibonacciHeap extends LazyBinomialHeap {
 	public static String dsName = "fibheap";

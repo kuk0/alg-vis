@@ -19,7 +19,7 @@ package algvis.ds.priorityqueues.fibonacciheap;
 import algvis.core.Algorithm;
 import algvis.ds.priorityqueues.binomialheap.BinHeapNode;
 import algvis.ds.priorityqueues.binomialheap.BinomialHeap;
-import algvis.gui.InputField;
+import algvis.ui.InputField;
 
 import java.util.HashMap;
 

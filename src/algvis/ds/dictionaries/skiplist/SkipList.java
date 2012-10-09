@@ -19,13 +19,12 @@ package algvis.ds.dictionaries.skiplist;
 import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.dictionaries.Dictionary;
-import algvis.gui.VisPanel;
-import algvis.gui.view.Alignment;
-import algvis.gui.view.ClickListener;
-import algvis.gui.view.View;
+import algvis.ui.VisPanel;
+import algvis.ui.view.Alignment;
+import algvis.ui.view.ClickListener;
+import algvis.ui.view.View;
 import algvis.internationalization.Languages;
 
-import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
 
 public class SkipList extends Dictionary implements ClickListener {

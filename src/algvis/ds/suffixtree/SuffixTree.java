@@ -20,9 +20,9 @@ import algvis.core.StringElem;
 import algvis.core.WordGenerator;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.DataStructure;
-import algvis.gui.Fonts;
-import algvis.gui.VisPanel;
-import algvis.gui.view.View;
+import algvis.ui.Fonts;
+import algvis.ui.VisPanel;
+import algvis.ui.view.View;
 
 import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;

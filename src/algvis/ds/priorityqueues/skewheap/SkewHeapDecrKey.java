@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.skewheap;
 
-import algvis.gui.InputField;
+import algvis.ui.InputField;
 
 import java.util.HashMap;
 

@@ -17,7 +17,7 @@
 package algvis.ds.priorityqueues.daryheap;
 
 import algvis.ds.priorityqueues.PQButtons;
-import algvis.gui.VisPanel;
+import algvis.ui.VisPanel;
 import algvis.internationalization.ILabel;
 
 import javax.swing.*;

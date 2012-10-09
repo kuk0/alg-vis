@@ -17,8 +17,8 @@
 package algvis.ds.priorityqueues;
 
 import algvis.core.history.HashtableStoreSupport;
-import algvis.gui.VisPanel;
-import algvis.gui.view.Highlighting;
+import algvis.ui.VisPanel;
+import algvis.ui.view.Highlighting;
 
 import java.util.Hashtable;
 

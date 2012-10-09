@@ -21,7 +21,7 @@ import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.DataStructure;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ds.priorityqueues.MeldablePQ;
-import algvis.gui.view.View;
+import algvis.ui.view.View;
 
 import java.awt.*;
 import java.util.Hashtable;

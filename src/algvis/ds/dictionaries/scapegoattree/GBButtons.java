@@ -16,8 +16,8 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.scapegoattree;
 
-import algvis.gui.DictButtons;
-import algvis.gui.VisPanel;
+import algvis.ui.DictButtons;
+import algvis.ui.VisPanel;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;

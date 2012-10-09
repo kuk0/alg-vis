@@ -17,7 +17,7 @@
 package algvis.ds.priorityqueues;
 
 import algvis.core.AlgorithmAdapter;
-import algvis.gui.VisPanel;
+import algvis.ui.VisPanel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ILabel;
 

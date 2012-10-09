@@ -18,7 +18,7 @@ package algvis.ds.dictionaries.redblacktree;
 
 import algvis.core.Settings;
 import algvis.ds.DataStructure;
-import algvis.gui.VisPanel;
+import algvis.ui.VisPanel;
 
 public class RBPanel extends VisPanel {
 	private static final long serialVersionUID = 8641701120532396725L;

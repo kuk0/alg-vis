@@ -16,8 +16,8 @@
  ******************************************************************************/
 package algvis.core;
 
-import algvis.gui.view.Layout;
-import algvis.gui.view.LayoutListener;
+import algvis.ui.view.Layout;
+import algvis.ui.view.LayoutListener;
 
 import java.util.LinkedList;
 import java.util.List;

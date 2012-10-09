@@ -16,8 +16,8 @@
  ******************************************************************************/
 package algvis.ds.suffixtree;
 
-import algvis.gui.Buttons;
-import algvis.gui.VisPanel;
+import algvis.ui.Buttons;
+import algvis.ui.VisPanel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ICheckBox;
 
