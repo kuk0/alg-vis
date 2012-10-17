@@ -1,45 +1,60 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.avltree;
 
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class AVLInsert extends Algorithm {
-	AVL T;
-	AVLNode v;
-	int K;
+	private final AVL T;
+	private final AVLNode v;
+	private final int K;
 
 	public AVLInsert(AVL T, int x) {
 		super(T);
 		this.T = T;
-		v = (AVLNode) T.setNodeV(new AVLNode(T, K = x));
+		v = (AVLNode) T.setV(new AVLNode(T, K = x));
 		v.setColor(NodeColor.INSERT);
-		setHeader("insertion");
+		setHeader("insert", K);
 	}
 
 	@Override
 	public void run() {
-		AVLNode w = (AVLNode) T.root;
-		if (T.root == null) {
+		AVLNode w = (AVLNode) T.getRoot();
+		if (T.getRoot() == null) {
 			T.setRoot(v);
 			v.goToRoot();
 			addStep("newroot");
 			mysuspend();
 			v.setColor(NodeColor.NORMAL);
-			T.setNodeV(null);
+			T.setV(null);
 		} else {
 			v.goAboveRoot();
-			addStep("bstinsertstart");
+			addStep("bst-insert-start");
 			mysuspend();
 
 			while (true) {
-				if (w.key == K) {
+				if (w.getKey() == K) {
 					addStep("alreadythere");
 					v.goDown();
 					v.setColor(NodeColor.NOTFOUND);
-					finish();
 					return;
-				} else if (w.key < K) {
-					addStep("bstinsertright", K, w.key);
+				} else if (w.getKey() < K) {
+					addStep("bst-insert-right", K, w.getKey());
 					if (w.getRight() != null) {
 						w = w.getRight();
 					} else {
@@ -47,7 +62,7 @@ public class AVLInsert extends Algorithm {
 						break;
 					}
 				} else {
-					addStep("bstinsertleft", K, w.key);
+					addStep("bst-insert-left", K, w.getKey());
 					if (w.getLeft() != null) {
 						w = w.getLeft();
 					} else {
@@ -65,7 +80,7 @@ public class AVLInsert extends Algorithm {
 			mysuspend();
 
 			v.setColor(NodeColor.NORMAL);
-			T.setNodeV(null);
+			T.setV(null);
 			// bubleme nahor
 			while (w != null) {
 				w.mark();
@@ -129,6 +144,5 @@ public class AVLInsert extends Algorithm {
 		}
 		T.reposition();
 		addNote("done");
-		finish();
 	}
 }

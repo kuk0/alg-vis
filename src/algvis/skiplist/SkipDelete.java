@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.skiplist;
 
 import algvis.core.NodeColor;
@@ -7,7 +23,6 @@ public class SkipDelete extends SkipAlg {
 	public SkipDelete(SkipList L, int x) {
 		super(L, x);
 		v.setColor(NodeColor.DELETE);
-		p = new SkipNode[L.height];
 		setHeader("insertion");
 	}
 
@@ -16,42 +31,45 @@ public class SkipDelete extends SkipAlg {
 		addStep("bstdeletestart");
 		SkipNode w = find();
 
-		if (w.right.key != K) {
+		if (w.getKey() != K) {
 			addStep("notfound");
 			v.goDown();
 			mysuspend();
 			return;
 		}
+		L.setV(null);
 
+		addNote("skiplist-delete-found");
 		L.n--;
 		L.e++;
 		addStep("skipdelete");
 		for (int i = 0; i < L.height; ++i) {
-			if (p[i].right.key != K) {
+			if (w == null || w.getKey() != K) {
 				break;
 			}
 			L.e--;
-			L.v = p[i].right;
-			p[i].linkright(p[i].right.right);
-			if (L.v.up != null) {
-				L.v.up.down = null;
+			SkipNode left = w.getLeft(), right = w.getRight(), up = w.getUp();
+			left.linkright(right);
+			if (up != null) {
+				up.setDown(null);
 			}
-			L.v.isolate();
-			L.v.goDown();
+			w.isolate();
+			w.goDown();
 			mysuspend();
-			if (i > 0 && p[i].key == -Node.INF && p[i].right.key == Node.INF) {
-				L.root = p[i].down;
-				L.sent = p[i].right.down;
-				L.root.up = null;
-				L.sent.up = null;
+			w = up;
+			if (i > 0 && left.getKey() == -Node.INF
+					&& right.getKey() == Node.INF) {
+				L.setRoot(left.getDown());
+				L.sent = right.getDown();
+				L.getRoot().setUp(null);
+				L.sent.setUp(null);
 				L.height = i;
 				break;
 			}
 		}
-
-		addStep("done");
 		L.reposition();
 		mysuspend();
-		L.v = null;
+
+		addNote("done");
 	}
 }

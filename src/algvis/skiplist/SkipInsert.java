@@ -1,19 +1,30 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.skiplist;
 
-import java.util.Random;
-
-import algvis.core.NodeColor;
+import algvis.core.MyRandom;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 
 public class SkipInsert extends SkipAlg {
-	Random R;
-
 	public SkipInsert(SkipList L, int x) { // Buttons B,
 		super(L, x);
 		v.setColor(NodeColor.INSERT);
-		p = new SkipNode[L.height];
-		setHeader("insertion");
-		R = new Random();
+		setHeader("insert", K);
 	}
 
 	@Override
@@ -21,26 +32,28 @@ public class SkipInsert extends SkipAlg {
 		addStep("skipinsertstart");
 		SkipNode w = find();
 
-		if (w.right.key == v.key) {
+		if (w.getKey() == v.getKey()) {
 			addStep("alreadythere");
 			v.goDown();
 			mysuspend();
-			// System.out.println("dupl");
+			addNote("done");
 			return;
 		}
 
 		L.n++;
 		addStep("skipinsertafter");
+		mysuspend();
 		SkipNode z, oldv = null;
+		addNote("skiplist-tossing");
 		int i = 0;
 		do {
 			if (i > 0) {
-				addStep("skippromote");
+				addStep("skiplist-head", i);
 				L.e++;
 			}
 			if (i < L.height) {
 				w = p[i++];
-				z = w.right;
+				z = w.getRight();
 				w.linkright(v);
 				z.linkleft(v);
 				if (oldv != null) {
@@ -48,28 +61,28 @@ public class SkipInsert extends SkipAlg {
 				}
 				L.reposition();
 				oldv = v;
-				v = new SkipNode(L, v.key, v.tox, -10);
+				v = new SkipNode(L, v.getKey(), v.tox, -10);
 			} else {
 				v.linkdown(oldv);
-				SkipNode oldr = L.root, olds = L.sent;
-				v.linkleft(L.root = new SkipNode(L, -Node.INF));
+				SkipNode oldr = L.getRoot(), olds = L.sent;
+				v.linkleft(L.setRoot(new SkipNode(L, -Node.INF)));
 				v.linkright(L.sent = new SkipNode(L, Node.INF));
-				L.root.linkdown(oldr);
+				L.getRoot().linkdown(oldr);
 				L.sent.linkdown(olds);
 				L.reposition();
 				oldv = v;
-				v = new SkipNode(L, v.key, v.tox, -10);
+				v = new SkipNode(L, v.getKey(), v.tox, -10);
 				++i;
 				++L.height;
 			}
 			mysuspend();
-		} while (R.nextInt(2) == 1);
+		} while (MyRandom.heads());
 
-		addStep("skipend");
+		addStep("skiplist-tail", i);
 		mysuspend();
+		addNote("done");
 
-		addStep("done");
-		L.v.setColor(NodeColor.NORMAL);
-		L.v = null;
+		L.getV().setColor(NodeColor.NORMAL);
+		L.setV(null);
 	}
 }

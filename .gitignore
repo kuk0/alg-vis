@@ -6,3 +6,6 @@ bin/
 *.pdf
 *.png
 *.pyc
+*.xml
+!format.xml
+*.iml

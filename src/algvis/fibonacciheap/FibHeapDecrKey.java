@@ -1,14 +1,31 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.fibonacciheap;
 
 import algvis.binomialheap.BinHeapNode;
 import algvis.binomialheap.BinomialHeap;
 import algvis.core.Algorithm;
-import algvis.core.InputField;
+import algvis.gui.InputField;
 
 public class FibHeapDecrKey extends Algorithm {
-	int delta, i;
-	BinomialHeap H;
-	BinHeapNode v;
+	private final int delta;
+    private final int i;
+	private final BinomialHeap H;
+	private BinHeapNode v;
 
 	public FibHeapDecrKey(BinomialHeap H, BinHeapNode v, int delta, int i) {
 		super(H);
@@ -22,13 +39,13 @@ public class FibHeapDecrKey extends Algorithm {
 	@Override
 	public void run() {
 		if (H.minHeap) {
-			v.key -= delta;
-			if (v.key < 1)
-				v.key = 1;
+			v.setKey(v.getKey() - delta);
+			if (v.getKey() < 1)
+				v.setKey(1);
 		} else {
-			v.key += delta;
-			if (v.key > InputField.MAX)
-				v.key = InputField.MAX;
+			v.setKey(v.getKey() + delta);
+			if (v.getKey() > InputField.MAX)
+				v.setKey(InputField.MAX);
 		}
 		BinHeapNode w = v.parent;
 		// if (w == null) return;

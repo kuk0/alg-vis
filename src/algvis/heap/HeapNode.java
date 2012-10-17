@@ -1,6 +1,20 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.heap;
-
-import java.awt.Color;
 
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
@@ -8,11 +22,12 @@ import algvis.core.Node;
 import algvis.core.PriorityQueue;
 
 public class HeapNode extends BSTNode {
-	HeapNode left, right, parent;
-	Color color = Color.yellow;
-	int height = 1;
+	// TODO not needed?
+	// HeapNode left, right, parent;
+	// Color color = Color.yellow;
+	// int height = 1;
 
-	public HeapNode(DataStructure D, int key, int x, int y) {
+	protected HeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 		bgKeyColor();
 	}
@@ -23,7 +38,13 @@ public class HeapNode extends BSTNode {
 	}
 
 	public HeapNode(HeapNode v) {
-		this(v.D, v.key, v.x, v.y);
+		this(v.D, v.getKey(), v.tox, v.toy);
+		// TODO !!! v tychto konstruktoroch (mozno aj na inych miestach v
+		// programe) by malo byt tox a toy, lebo pri vykonavani algoritmu
+		// (vytvarani scenara) este vrchol nie je na [tox,toy], lebo sa na nom
+		// ani raz nezavola move(); je stale na [x,y]
+		// - s tymto je problem (len) ked nekrokujeme prve spustenie algoritmu;
+		// aj pri rychlom krokovani, ked sa v este nedostane na [tox,toy]
 	}
 
 	@Override
@@ -48,9 +69,9 @@ public class HeapNode extends BSTNode {
 	 */
 	public boolean prec(Node v) {
 		if (((PriorityQueue) D).minHeap) {
-			return this.key < v.key;
+			return this.getKey() < v.getKey();
 		} else {
-			return this.key > v.key;
+			return this.getKey() > v.getKey();
 		}
 	}
 
@@ -59,9 +80,9 @@ public class HeapNode extends BSTNode {
 	 */
 	public boolean preceq(Node v) {
 		if (((PriorityQueue) D).minHeap) {
-			return this.key <= v.key;
+			return this.getKey() <= v.getKey();
 		} else {
-			return this.key >= v.key;
+			return this.getKey() >= v.getKey();
 		}
 	}
 }

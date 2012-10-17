@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.redblacktree;
 
 import algvis.bst.BSTNode;
@@ -5,21 +21,21 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class RBFind extends Algorithm {
-	RB T;
-	BSTNode v;
-	int K;
+	private final RB T;
+	private final BSTNode v;
+	private final int K;
 
 	public RBFind(RB T, int x) {
 		super(T);
 		this.T = T;
-		v = T.v = new BSTNode(T, K = x);
+		v = T.setV(new BSTNode(T, K = x));
 		v.setColor(NodeColor.FIND);
 		setHeader("search");
 	}
 
 	@Override
 	public void run() {
-		if (T.root == T.NULL) {
+		if (T.getRoot() == T.NULL) {
 			v.goToRoot();
 			addStep("empty");
 			mysuspend();
@@ -27,17 +43,17 @@ public class RBFind extends Algorithm {
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
 		} else {
-			BSTNode w = T.root;
+			BSTNode w = T.getRoot();
 			v.goTo(w);
 			addStep("bstfindstart");
 			mysuspend();
 			while (true) {
-				if (w.key == K) {
+				if (w.getKey() == K) {
 					addStep("found");
 					v.setColor(NodeColor.FOUND);
 					break;
-				} else if (w.key < K) {
-					addStep("bstfindright", K, w.key);
+				} else if (w.getKey() < K) {
+					addStep("bstfindright", K, w.getKey());
 					w = w.getRight();
 					if (w != T.NULL) {
 						v.goTo(w);
@@ -48,7 +64,7 @@ public class RBFind extends Algorithm {
 						break;
 					}
 				} else {
-					addStep("bstfindleft", K, w.key);
+					addStep("bstfindleft", K, w.getKey());
 					w = w.getLeft();
 					if (w != T.NULL) {
 						v.goTo(w);

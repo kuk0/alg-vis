@@ -1,20 +1,38 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.binomialheap;
 
 import java.awt.Color;
 
-import algvis.core.Alignment;
-import algvis.core.ClickListener;
 import algvis.core.MeldablePQ;
-import algvis.core.MeldablePQButtons;
 import algvis.core.Node;
 import algvis.core.Pair;
-import algvis.core.View;
-import algvis.core.VisPanel;
+import algvis.gui.Fonts;
+import algvis.gui.MeldablePQButtons;
+import algvis.gui.VisPanel;
+import algvis.gui.view.Alignment;
+import algvis.gui.view.ClickListener;
+import algvis.gui.view.View;
+import algvis.internationalization.Languages;
 
 public class BinomialHeap extends MeldablePQ implements ClickListener {
-	public static String dsName = "binheap";
-	public BinHeapNode[] root; // root[0] je pomocny, prave meldujuci
-	public BinHeapNode[] min;
+	public static final String dsName = "binheap";
+	public final BinHeapNode[] root; // root[0] je pomocny, prave meldujuci
+	public final BinHeapNode[] min;
 	public BinHeapNode d, v, v2;
 
 	@Override
@@ -23,9 +41,10 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 	}
 
 	public BinomialHeap(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		root = new BinHeapNode[numHeaps + 1];
 		min = new BinHeapNode[numHeaps + 1];
+		
 		M.screen.V.setDS(this);
 		M.screen.V.align = Alignment.LEFT;
 	}
@@ -119,16 +138,16 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 				root[i].drawTree(V, root[i], null);
 				if (i > 0) {
 					V.setColor(Color.black);
-					V.drawStringLeft(M.S.L.getString("heap") + " #" + i + ":",
-							root[i].x - Node.radius - 5, root[i].y, 9);
+					V.drawStringLeft(Languages.getString("heap") + " #" + i + ":",
+							root[i].x - Node.radius - 5, root[i].y, Fonts.NORMAL);
 				}
 				if (min[i] != null) {
 					if (minHeap) {
-						V.drawStringTop(M.S.L.getString("min"), min[i].x,
-								min[i].y - Node.radius - 2, 9);
+						V.drawStringTop(Languages.getString("min"), min[i].x,
+								min[i].y - Node.radius - 2, Fonts.NORMAL);
 					} else {
-						V.drawStringTop(M.S.L.getString("max"), min[i].x,
-								min[i].y - Node.radius - 2, 9);
+						V.drawStringTop(Languages.getString("max"), min[i].x,
+								min[i].y - Node.radius - 2, Fonts.NORMAL);
 					}
 				}
 			}

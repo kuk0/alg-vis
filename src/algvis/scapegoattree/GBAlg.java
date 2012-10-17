@@ -1,19 +1,35 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.scapegoattree;
 
 import algvis.core.Algorithm;
 
-public class GBAlg extends Algorithm {
-	GBTree T;
-	GBNode v;
-	int K;
+class GBAlg extends Algorithm {
+	final GBTree T;
+	final GBNode v;
+	final int K;
 
-	public GBAlg(GBTree T, int x) {
+	GBAlg(GBTree T, int x) {
 		super(T);
 		this.T = T;
-		T.v = v = new GBNode(T, K = x);
+		v = (GBNode) T.setV(new GBNode(T, K = x));
 	}
 
-	public GBNode compr(GBNode r, int c) {
+	GBNode compr(GBNode r, int c) {
 		GBNode w = r, x = (c > 0) ? r.getRight() : r;
 		w.mark();
 		mysuspend();

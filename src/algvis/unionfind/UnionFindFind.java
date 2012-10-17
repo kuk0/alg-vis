@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.unionfind;
 
 import java.util.Stack;
@@ -8,14 +24,14 @@ import algvis.core.NodeColor;
 public class UnionFindFind extends Algorithm {
 	public enum FindHeuristic {
 		NONE, COMPRESSION, HALVING, SPLITTING
-	};
+	}
 
-	UnionFindNode u = null;
+    private UnionFindNode u = null;
 
-	public FindHeuristic findState;
-	UnionFind UF;
+	private FindHeuristic findState;
+	private final UnionFind UF;
 
-	public UnionFindFind(UnionFind UF) {
+	UnionFindFind(UnionFind UF) {
 		super(UF);
 		this.UF = UF;
 		setState(UF.pathCompression);
@@ -36,11 +52,11 @@ public class UnionFindFind extends Algorithm {
 		addNote("done");
 	}
 
-	public void setState(FindHeuristic state) {
+	void setState(FindHeuristic state) {
 		this.findState = state;
 	}
 
-	public UnionFindNode find(UnionFindNode u) {
+	UnionFindNode find(UnionFindNode u) {
 		switch (findState) {
 		case NONE:
 			return findSimple(u);
@@ -55,14 +71,14 @@ public class UnionFindFind extends Algorithm {
 		}
 	}
 
-	public UnionFindNode findSimple(UnionFindNode u) {
+	UnionFindNode findSimple(UnionFindNode u) {
 		Stack<UnionFindNode> S = new Stack<UnionFindNode>();
 		UnionFindNode result = null;
 		UnionFindNode v = null;
 
 		u.setColor(NodeColor.FIND);
 		u.mark();
-		addStep("uffindstart", u.key);
+		addStep("uffindstart", u.getKey());
 		mysuspend();
 
 		// u is a representative
@@ -88,7 +104,7 @@ public class UnionFindFind extends Algorithm {
 		// root found
 		result = v;
 		v.setColor(NodeColor.FOUND);
-		addStep("ufrootfound", result.key);
+		addStep("ufrootfound", result.getKey());
 		mysuspend();
 
 		// traveling back
@@ -103,14 +119,14 @@ public class UnionFindFind extends Algorithm {
 		return result;
 	}
 
-	public UnionFindNode findWithCompression(UnionFindNode u) {
+	UnionFindNode findWithCompression(UnionFindNode u) {
 		Stack<UnionFindNode> S = new Stack<UnionFindNode>();
 		UnionFindNode result = null;
 		UnionFindNode v = null;
 
 		u.setColor(NodeColor.FIND);
 		u.mark();
-		addStep("uffindstart", u.key);
+		addStep("uffindstart", u.getKey());
 		mysuspend();
 
 		// u is a representative
@@ -128,7 +144,7 @@ public class UnionFindFind extends Algorithm {
 		while (v.getParent() != null) {
 			S.add(v);
 			//v.setColor(NodeColor.FIND);
-			v.greyPair = true;
+			v.setGrey(true);
 			addStep("ufup");
 			mysuspend();
 			v = v.getParent();
@@ -137,7 +153,7 @@ public class UnionFindFind extends Algorithm {
 		// root found
 		result = v;
 		v.setColor(NodeColor.FOUND);
-		addStep("ufrootfound", result.key);
+		addStep("ufrootfound", result.getKey());
 		addStep("ufdownstart");
 		mysuspend();
 
@@ -167,11 +183,11 @@ public class UnionFindFind extends Algorithm {
 		// u.bgcolor = Colors.NORMAL;
 		mysuspend();
 		u.unmark();
-		result.unsetGrey();
+		result.setGrey(false);
 		return result;
 	}
 
-	public UnionFindNode findHalving(UnionFindNode u) {
+	UnionFindNode findHalving(UnionFindNode u) {
 		UnionFindNode result = null;
 		UnionFindNode v = null;
 
@@ -180,12 +196,12 @@ public class UnionFindFind extends Algorithm {
 		// grey path
 		UnionFindNode t = u;
 		while (t.getParent() != null) {
-			t.greyPair = true;
+			t.setGrey(true);
 			t = t.getParent();
 		}
 		
 		u.mark();
-		addStep("uffindstart", u.key);
+		addStep("uffindstart", u.getKey());
 		mysuspend();
 
 		// u is a representative
@@ -222,7 +238,7 @@ public class UnionFindFind extends Algorithm {
 				addStep("ufup");
 				mysuspend();
 				v.setColor(NodeColor.FIND);
-				v.greyPair = true;
+				v.setGrey(true);
 				v = v.getParent();
 				v.setColor(NodeColor.INSERT);
 				if (odd) {
@@ -249,26 +265,26 @@ public class UnionFindFind extends Algorithm {
 			child.setColor(NodeColor.NORMAL);
 		v.setColor(NodeColor.FOUND);
 		result = v;
-		addStep("ufrootfound", result.key);
+		addStep("ufrootfound", result.getKey());
 		mysuspend();
 
 		u.unmark();
-		result.unsetGrey();
+		result.setGrey(false);
 		return result;
 	}
 
-	public UnionFindNode findSplitting(UnionFindNode u) {
+	UnionFindNode findSplitting(UnionFindNode u) {
 		UnionFindNode result = null;
 		UnionFindNode v = null;
 
 		u.setColor(NodeColor.FIND);
 		u.mark();
-		addStep("uffindstart", u.key);
+		addStep("uffindstart", u.getKey());
 
 		// grey path
 		UnionFindNode t = u;
 		while (t.getParent() != null) {
-			t.greyPair = true;
+			t.setGrey(true);
 			t = t.getParent();
 		}
 		
@@ -328,11 +344,11 @@ public class UnionFindFind extends Algorithm {
 			child.setColor(NodeColor.NORMAL);
 		v.setColor(NodeColor.FOUND);
 		result = v;
-		addStep("ufrootfound", result.key);
+		addStep("ufrootfound", result.getKey());
 		mysuspend();
 
 		u.unmark();
-		result.unsetGrey();
+		result.setGrey(false);
 		return result;
 	}
 }

@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.scapegoattree;
 
 import algvis.core.NodeColor;
@@ -11,7 +27,7 @@ public class GBDelete extends GBAlg {
 
 	@Override
 	public void run() {
-		if (T.root == null) {
+		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");
 			mysuspend();
@@ -19,26 +35,26 @@ public class GBDelete extends GBAlg {
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
 		} else {
-			GBNode w = (GBNode) T.root;
+			GBNode w = (GBNode) T.getRoot();
 			v.goTo(w);
 			addStep("bstfindstart");
 			mysuspend();
 			while (true) {
-				if (w.key == K) {
-					if (w.deleted) {
+				if (w.getKey() == K) {
+					if (w.isDeleted()) {
 						addStep("gbdeletedeleted");
 						v.setColor(NodeColor.NOTFOUND);
 						v.goDown();
 					} else {
 						addStep("gbdeletemark");
-						w.deleted = true;
+						w.setDeleted(true);
 						w.setColor(NodeColor.DELETED);
-						++T.del;
-						T.v = null;
+						T.setDel(T.getDel() + 1);
+						T.setV(null);
 					}
 					break;
-				} else if (w.key < K) {
-					addStep("bstfindright", K, w.key);
+				} else if (w.getKey() < K) {
+					addStep("bstfindright", K, w.getKey());
 					w = w.getRight();
 					if (w != null) {
 						v.goTo(w);
@@ -49,7 +65,7 @@ public class GBDelete extends GBAlg {
 						break;
 					}
 				} else {
-					addStep("bstfindleft", K, w.key);
+					addStep("bstfindleft", K, w.getKey());
 					w = w.getLeft();
 					if (w != null) {
 						v.goTo(w);
@@ -64,8 +80,8 @@ public class GBDelete extends GBAlg {
 			}
 
 			// rebuilding
-			GBNode b = (GBNode) T.root;
-			if (b.size < 2 * T.del) {
+			GBNode b = (GBNode) T.getRoot();
+			if (b.size < 2 * T.getDel()) {
 				addStep("gbdeleterebuild");
 				GBNode r = b;
 				int s = 0;
@@ -76,21 +92,21 @@ public class GBDelete extends GBAlg {
 				while (r != null) {
 					if (r.getLeft() == null) {
 						r.unmark();
-						if (r.deleted) {
-							--T.del;
+						if (r.isDeleted()) {
+							T.setDel(T.getDel() - 1);
 							if (b == r) {
 								b = r.getRight();
 							}
-							T.v = r;
+							T.setV(r);
 							if (r.getParent() == null) {
-								T.root = r = r.getRight();
+								T.setRoot(r = r.getRight());
 								if (r != null) {
 									r.setParent(null);
 								}
 							} else {
 								r.getParent().linkRight(r = r.getRight());
 							}
-							T.v.goDown();
+							T.getV().goDown();
 						} else {
 							r = r.getRight();
 							++s;

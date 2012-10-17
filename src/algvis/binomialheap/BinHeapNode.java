@@ -1,3 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.binomialheap;
 
 import java.awt.Color;
@@ -6,16 +22,17 @@ import algvis.core.NodeColor;
 import algvis.core.DataStructure;
 import algvis.core.MeldablePQ;
 import algvis.core.Node;
-import algvis.core.View;
+import algvis.gui.Fonts;
+import algvis.gui.view.View;
 
 public class BinHeapNode extends Node {
-	public int leftw, height, rank; // TODO: size -> rank (treba ale
-									// zmenit aj pomocne upratovacie
-									// pole....)
+	private int leftw;
+    public int height;
+    public int rank; // TODO: size -> rank (treba ale zmenit aj pomocne upratovacie pole....)
 	public BinHeapNode parent, left, right, child;
 	public boolean cut;
 
-	public BinHeapNode(DataStructure D, int key, int x, int y) {
+	private BinHeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 		parent = child = null;
 		left = right = this;
@@ -31,14 +48,14 @@ public class BinHeapNode extends Node {
 	}
 
 	public BinHeapNode(BinHeapNode v) {
-		this(v.D, v.key, v.x, v.y);
+		this(v.D, v.getKey(), v.x, v.y);
 	}
 
 	public boolean isRoot() {
 		return parent == null;
 	}
 
-	public boolean isLeaf() {
+	boolean isLeaf() {
 		return child == null;
 	}
 
@@ -101,7 +118,7 @@ public class BinHeapNode extends Node {
 		w.right = this;
 	}
 
-	public void rebox() {
+	void rebox() {
 		if (isLeaf()) {
 			leftw = DataStructure.minsepx / 2;
 			height = 1;
@@ -116,7 +133,7 @@ public class BinHeapNode extends Node {
 		}
 	}
 
-	public void reboxTree(BinHeapNode first) {
+	void reboxTree(BinHeapNode first) {
 		if (!isLeaf()) {
 			child.reboxTree(child);
 		}
@@ -166,7 +183,7 @@ public class BinHeapNode extends Node {
 		moveTree(this);
 	}
 
-	public void moveTree(BinHeapNode first) {
+	void moveTree(BinHeapNode first) {
 		move();
 		if (!isLeaf()) {
 			child.moveTree(child);
@@ -176,11 +193,11 @@ public class BinHeapNode extends Node {
 		}
 	}
 
-	public void lowlight() {
-		bgColor(new Color(200, 200 - key / 10, 0));
+	void lowlight() {
+		bgColor(new Color(200, 200 - getKey() / 10, 0));
 	}
 
-	public void highlight() {
+	void highlight() {
 		bgKeyColor();
 	}
 
@@ -188,7 +205,7 @@ public class BinHeapNode extends Node {
 		lowlightTree(this);
 	}
 
-	public void lowlightTree(BinHeapNode first) {
+	void lowlightTree(BinHeapNode first) {
 		lowlight();
 		if (!isLeaf()) {
 			child.lowlightTree(child);
@@ -214,30 +231,30 @@ public class BinHeapNode extends Node {
 
 	public boolean prec(Node v) {
 		if (((MeldablePQ) D).minHeap) {
-			return this.key < v.key;
+			return this.getKey() < v.getKey();
 		} else {
-			return this.key > v.key;
+			return this.getKey() > v.getKey();
 		}
 	}
 
 	public boolean preceq(Node v) {
 		if (((MeldablePQ) D).minHeap) {
-			return this.key <= v.key;
+			return this.getKey() <= v.getKey();
 		} else {
-			return this.key >= v.key;
+			return this.getKey() >= v.getKey();
 		}
 	}
 
 	@Override
 	public void draw(View v) {
-		if (state == Node.INVISIBLE || key == NULL) {
+		if (state == Node.INVISIBLE || getKey() == NULL) {
 			return;
 		}
 		drawBg(v);
 		drawKey(v);
 		if (parent == null) {
 			v.setColor(Color.black);
-			v.drawString("" + rank, x + Node.radius, y - Node.radius, 8);
+			v.drawString("" + rank, x + Node.radius, y - Node.radius, Fonts.SMALL);
 		}
 		if (v.output) {
 			System.out.println("  Node(" + id + "," + key + "," + cpos() + ","

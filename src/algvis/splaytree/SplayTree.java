@@ -1,15 +1,28 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
 package algvis.splaytree;
 
 import algvis.bst.BST;
-import algvis.core.Layout;
-import algvis.core.View;
-import algvis.core.VisPanel;
+import algvis.gui.VisPanel;
+import algvis.gui.view.Layout;
+import algvis.gui.view.View;
 
 public class SplayTree extends BST {
 	public static String dsName = "splaytree";
-	SplayNode root2 = null, vv = null;
-	SplayNode w1 = null, w2 = null;
-
 
 	@Override
 	public String getName() {
@@ -18,7 +31,39 @@ public class SplayTree extends BST {
 
 	public SplayTree(VisPanel M) {
 		super(M);
-		scenario.enable(false);
+		addNodes(4); // root2 (2), vv (3), w1 (4), w2 (5)
+	}
+
+	public SplayNode getRoot2() {
+		return (SplayNode) getNode(2);
+	}
+
+	public void setRoot2(SplayNode root2) {
+		setNode(2, root2, false);
+	}
+
+	SplayNode getVV() {
+		return (SplayNode) getNode(3);
+	}
+
+	public void setVV(SplayNode vv) {
+		setNode(3, vv, true);
+	}
+
+	SplayNode getW1() {
+		return (SplayNode) getNode(4);
+	}
+
+	public void setW1(SplayNode w1) {
+		setNode(4, w1, true);
+	}
+
+	SplayNode getW2() {
+		return (SplayNode) getNode(5);
+	}
+
+	public void setW2(SplayNode w2) {
+		setNode(5, w2, false);
 	}
 
 	@Override
@@ -38,28 +83,30 @@ public class SplayTree extends BST {
 
 	@Override
 	public void draw(View V) {
-		if (w1 != null && w1.getParent() != null) {
-			V.drawWideLine(w1.x, w1.y, w1.getParent().x, w1.getParent().y);
+		if (getW1() != null && getW1().getParent() != null) {
+			V.drawWideLine(getW1().x, getW1().y, getW1().getParent().x, getW1()
+					.getParent().y);
 		}
-		if (w2 != null && w2.getParent() != null) {
-			V.drawWideLine(w2.x, w2.y, w2.getParent().x, w2.getParent().y);
+		if (getW2() != null && getW2().getParent() != null) {
+			V.drawWideLine(getW2().x, getW2().y, getW2().getParent().x, getW2()
+					.getParent().y);
 		}
 
-		if (root != null) {
-			root.moveTree();
-			root.drawTree(V);
+		if (getRoot() != null) {
+			getRoot().moveTree();
+			getRoot().drawTree(V);
 		}
-		if (root2 != null) {
-			root2.moveTree();
-			root2.drawTree(V);
+		if (getRoot2() != null) {
+			getRoot2().moveTree();
+			getRoot2().drawTree(V);
 		}
-		if (v != null) {
-			v.move();
-			v.draw(V);
+		if (getV() != null) {
+			getV().move();
+			getV().draw(V);
 		}
-		if (vv != null) {
-			vv.move();
-			vv.draw(V);
+		if (getVV() != null) {
+			getVV().move();
+			getVV().draw(V);
 		}
 	}
 
@@ -87,11 +134,12 @@ public class SplayTree extends BST {
 	@Override
 	public void clear() {
 		super.clear();
-		vv = null;
+		setVV(null);
 	}
-	
+
 	@Override
 	public Layout getLayout() {
 		return Layout.COMPACT;
 	}
+
 }
