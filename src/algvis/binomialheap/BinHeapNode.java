@@ -10,16 +10,13 @@ import algvis.core.View;
 
 public class BinHeapNode extends Node {
 	public int leftw, height, rank; // TODO: size -> rank (treba ale
-											// zmenit aj pomocne upratovacie
-											// pole....)
+									// zmenit aj pomocne upratovacie
+									// pole....)
 	public BinHeapNode parent, left, right, child;
 	public boolean cut;
 
 	public BinHeapNode(DataStructure D, int key, int x, int y) {
-		this.key = key;
-		this.D = D;
-		this.x = tox = x;
-		this.y = toy = y;
+		super(D, key, x, y);
 		parent = child = null;
 		left = right = this;
 		rank = 0;
@@ -154,9 +151,13 @@ public class BinHeapNode extends Node {
 		if (parent != null) { // edge to parent
 			v.setColor(Color.black);
 			v.drawLine(x, y, parent.x, parent.y);
+			if (v.output)
+				System.out.println("  Edge(" + id + "," + parent.id + ")");
 		} else if (this != first) { // edge to left
 			v.setColor(Color.black);
 			v.drawLine(x, y, left.x, left.y);
+			if (v.output)
+				System.out.println("  Edge(" + id + "," + left.id + ")");
 		}
 		draw(v);
 	}
@@ -237,6 +238,10 @@ public class BinHeapNode extends Node {
 		if (parent == null) {
 			v.setColor(Color.black);
 			v.drawString("" + rank, x + Node.radius, y - Node.radius, 8);
+		}
+		if (v.output) {
+			System.out.println("  Node(" + id + "," + key + "," + cpos() + ","
+					+ (marked ? 1 : 0) + ")");
 		}
 	}
 
