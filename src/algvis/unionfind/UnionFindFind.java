@@ -24,14 +24,14 @@ import algvis.core.NodeColor;
 public class UnionFindFind extends Algorithm {
 	public enum FindHeuristic {
 		NONE, COMPRESSION, HALVING, SPLITTING
-	};
+	}
 
-	UnionFindNode u = null;
+    private UnionFindNode u = null;
 
-	public FindHeuristic findState;
-	UnionFind UF;
+	private FindHeuristic findState;
+	private final UnionFind UF;
 
-	public UnionFindFind(UnionFind UF) {
+	UnionFindFind(UnionFind UF) {
 		super(UF);
 		this.UF = UF;
 		setState(UF.pathCompression);
@@ -52,11 +52,11 @@ public class UnionFindFind extends Algorithm {
 		addNote("done");
 	}
 
-	public void setState(FindHeuristic state) {
+	void setState(FindHeuristic state) {
 		this.findState = state;
 	}
 
-	public UnionFindNode find(UnionFindNode u) {
+	UnionFindNode find(UnionFindNode u) {
 		switch (findState) {
 		case NONE:
 			return findSimple(u);
@@ -71,7 +71,7 @@ public class UnionFindFind extends Algorithm {
 		}
 	}
 
-	public UnionFindNode findSimple(UnionFindNode u) {
+	UnionFindNode findSimple(UnionFindNode u) {
 		Stack<UnionFindNode> S = new Stack<UnionFindNode>();
 		UnionFindNode result = null;
 		UnionFindNode v = null;
@@ -119,7 +119,7 @@ public class UnionFindFind extends Algorithm {
 		return result;
 	}
 
-	public UnionFindNode findWithCompression(UnionFindNode u) {
+	UnionFindNode findWithCompression(UnionFindNode u) {
 		Stack<UnionFindNode> S = new Stack<UnionFindNode>();
 		UnionFindNode result = null;
 		UnionFindNode v = null;
@@ -187,7 +187,7 @@ public class UnionFindFind extends Algorithm {
 		return result;
 	}
 
-	public UnionFindNode findHalving(UnionFindNode u) {
+	UnionFindNode findHalving(UnionFindNode u) {
 		UnionFindNode result = null;
 		UnionFindNode v = null;
 
@@ -273,7 +273,7 @@ public class UnionFindFind extends Algorithm {
 		return result;
 	}
 
-	public UnionFindNode findSplitting(UnionFindNode u) {
+	UnionFindNode findSplitting(UnionFindNode u) {
 		UnionFindNode result = null;
 		UnionFindNode v = null;
 

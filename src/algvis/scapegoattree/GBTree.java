@@ -23,6 +23,7 @@ import algvis.core.StringUtils;
 import algvis.gui.VisPanel;
 import algvis.gui.view.Layout;
 import algvis.gui.view.View;
+import algvis.internationalization.Languages;
 import algvis.scenario.Command;
 
 public class GBTree extends BST {
@@ -45,8 +46,8 @@ public class GBTree extends BST {
 
 	public void setDel(int del) {
 		if (this.del != del) {
-			if (scenario.isAddingEnabled()) {
-				scenario.add(new SetDelCommand(del));
+			if (M.scenario.isAddingEnabled()) {
+				M.scenario.add(new SetDelCommand(del));
 			}
 			this.del = del;
 		}
@@ -88,23 +89,23 @@ public class GBTree extends BST {
 	@Override
 	public String stats() {
 		if (getRoot() == null) {
-			return "#" + M.S.L.getString("nodes") + ": 0;   #"
-					+ M.S.L.getString("deleted") + ": 0;   "
-					+ M.S.L.getString("height") + ": 0 =  1.00\u00b7"
-					+ M.S.L.getString("opt") + ";   "
-					+ M.S.L.getString("avedepth") + ": 0";
+			return "#" + Languages.getString("nodes") + ": 0;   #"
+					+ Languages.getString("deleted") + ": 0;   "
+					+ Languages.getString("height") + ": 0 =  1.00\u00b7"
+					+ Languages.getString("opt") + ";   "
+					+ Languages.getString("avedepth") + ": 0";
 		} else {
 			getRoot().calcTree();
 			return "#"
-					+ M.S.L.getString("nodes")
+					+ Languages.getString("nodes")
 					+ ": "
 					+ getRoot().size
 					+ ";   #"
-					+ M.S.L.getString("deleted")
+					+ Languages.getString("deleted")
 					+ ": "
 					+ getDel()
 					+ ";   "
-					+ M.S.L.getString("height")
+					+ Languages.getString("height")
 					+ ": "
 					+ getRoot().height
 					+ " = "
@@ -113,9 +114,9 @@ public class GBTree extends BST {
 									/ (Math.floor(lg(getRoot().size - getDel())) + 1),
 									2, 5)
 					+ "\u00b7"
-					+ M.S.L.getString("opt")
+					+ Languages.getString("opt")
 					+ ";   "
-					+ M.S.L.getString("avedepth")
+					+ Languages.getString("avedepth")
 					+ ": "
 					+ StringUtils.format(getRoot().sumh
 							/ (double) getRoot().size, 2, -5);

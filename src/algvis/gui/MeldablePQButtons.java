@@ -35,11 +35,15 @@ import algvis.internationalization.IRadioButton;
 
 public class MeldablePQButtons extends Buttons implements ChangeListener {
 	private static final long serialVersionUID = 1242711038059609653L;
-	IButton insertB, deleteB, decrKeyB, meldB;
+	private IButton insertB;
+    private IButton deleteB;
+    private IButton decrKeyB;
+    private IButton meldB;
 	public JSpinner activeHeap;
-	ILabel activeLabel;
-	IRadioButton minB, maxB;
-	ButtonGroup minMaxGroup;
+	private ILabel activeLabel;
+	private IRadioButton minB;
+    private IRadioButton maxB;
+	private ButtonGroup minMaxGroup;
 
 	public MeldablePQButtons(VisPanel M) {
 		super(M);
@@ -47,23 +51,23 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 
 	@Override
 	public void actionButtons(JPanel P) {
-		insertB = new IButton(M.S.L, "button-insert");
+		insertB = new IButton("button-insert");
 		insertB.setMnemonic(KeyEvent.VK_I);
 		insertB.addActionListener(this);
 
-		deleteB = new IButton(M.S.L, "button-deletemax");
+		deleteB = new IButton("button-deletemax");
 		deleteB.setMnemonic(KeyEvent.VK_D);
 		deleteB.addActionListener(this);
 
 		if (((MeldablePQ) D).minHeap) {
-			decrKeyB = new IButton(M.S.L, "button-decreasekey");
+			decrKeyB = new IButton("button-decreasekey");
 		} else {
-			decrKeyB = new IButton(M.S.L, "button-increasekey");
+			decrKeyB = new IButton("button-increasekey");
 		}
 		decrKeyB.setMnemonic(KeyEvent.VK_K);
 		decrKeyB.addActionListener(this);
 
-		meldB = new IButton(M.S.L, "button-meld");
+		meldB = new IButton("button-meld");
 		deleteB.setMnemonic(KeyEvent.VK_M);
 		meldB.addActionListener(this);
 
@@ -78,11 +82,11 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 		activeHeap = new JSpinner(new SpinnerNumberModel(1, 1,
 				MeldablePQ.numHeaps, 1));
 		activeHeap.addChangeListener(this);
-		activeLabel = new ILabel(M.S.L, "activeheap");
-		minB = new IRadioButton(M.S.L, "min");
+		activeLabel = new ILabel("activeheap");
+		minB = new IRadioButton("min");
 		minB.setSelected(false);
 		minB.addActionListener(this);
-		maxB = new IRadioButton(M.S.L, "max");
+		maxB = new IRadioButton("max");
 		maxB.setSelected(true);
 		maxB.addActionListener(this);
 		minMaxGroup = new ButtonGroup();
@@ -103,7 +107,7 @@ public class MeldablePQButtons extends Buttons implements ChangeListener {
 				@Override
 				public void run() {
 					for (int x : args) {
-						((MeldablePQ) D).insert(x);
+						D.insert(x);
 					}
 				}
 			});

@@ -20,8 +20,8 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class TrieDelete extends Algorithm {
-	Trie T;
-	String s;
+	private final Trie T;
+	private String s;
 
 	public TrieDelete(Trie T, String s) {
 		super(T);
@@ -30,7 +30,7 @@ public class TrieDelete extends Algorithm {
 		setHeader("triedelete", s.substring(0, s.length() - 1));
 	}
 
-	public void beforeReturn() {
+	void beforeReturn() {
 		T.hw = null;
 		T.clearExtraColor();
 		addStep("done");
@@ -87,7 +87,7 @@ public class TrieDelete extends Algorithm {
 			s = s.substring(1);
 		}
 		T.hw.setAndGoNextTo(s, v);
-		TrieNode w = (TrieNode) v.getChildWithCH('$');
+		TrieNode w = v.getChildWithCH('$');
 		if (w == null) {
 			addStep("triefindending2");
 			mysuspend();
@@ -115,7 +115,7 @@ public class TrieDelete extends Algorithm {
 		w = v;
 		do {
 			w.setColor(NodeColor.DELETE);
-			w = (TrieNode) w.getParent();
+			w = w.getParent();
 			countOfSons = 0;
 			TrieNode ww = (TrieNode) w.getChild();
 			while (ww != null) {
@@ -128,7 +128,7 @@ public class TrieDelete extends Algorithm {
 		do {
 			addStep("triedeletedbdb");
 			mysuspend();
-			w = (TrieNode) v.getParent();
+			w = v.getParent();
 			w.deleteChild(v);
 			T.reposition();
 			v = w;

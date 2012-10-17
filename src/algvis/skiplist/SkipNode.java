@@ -173,14 +173,14 @@ public class SkipNode extends Node {
 		return null;
 	}
 
-	public SkipNode getLeft() {
+	SkipNode getLeft() {
 		return left;
 	}
 
-	public void setLeft(SkipNode left) {
+	void setLeft(SkipNode left) {
 		if (this.left != left) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetLeftCommand(left));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetLeftCommand(left));
 			}
 			this.left = left;
 		}
@@ -190,10 +190,10 @@ public class SkipNode extends Node {
 		return right;
 	}
 
-	public SkipNode setRight(SkipNode right) {
+	SkipNode setRight(SkipNode right) {
 		if (this.right != right) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetRightCommand(right));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetRightCommand(right));
 			}
 			this.right = right;
 		}
@@ -206,8 +206,8 @@ public class SkipNode extends Node {
 
 	public SkipNode setUp(SkipNode up) {
 		if (this.up != up) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetUpCommand(up));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetUpCommand(up));
 			}
 			this.up = up;
 		}
@@ -220,8 +220,8 @@ public class SkipNode extends Node {
 
 	public SkipNode setDown(SkipNode down) {
 		if (this.down != down) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetDownCommand(down));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetDownCommand(down));
 			}
 			this.down = down;
 		}

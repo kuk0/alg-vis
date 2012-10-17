@@ -60,7 +60,7 @@ public class Trie extends DataStructure {
 		v = null;
 	}
 
-	public TrieNode getV() {
+	TrieNode getV() {
 		return v;
 	}
 

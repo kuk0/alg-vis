@@ -51,7 +51,7 @@ public class SuffixTreeNode extends TrieNode {
 		setPacked(packed);
 	}
 
-	public SuffixTreeNode(DataStructure D, char ch, boolean packed) {
+	private SuffixTreeNode(DataStructure D, char ch, boolean packed) {
 		super(D, ch);
 		setPacked(packed);
 	}
@@ -89,7 +89,7 @@ public class SuffixTreeNode extends TrieNode {
 		}
 	}
 
-	public SuffixTreeNode addRight(char ch, int x, int y, boolean packed) {
+	SuffixTreeNode addRight(char ch, int x, int y, boolean packed) {
 		if (getLabel() > ch) {
 			SuffixTreeNode u = new SuffixTreeNode(D, ch, packed);
 			u.setParent(getParent());
@@ -156,7 +156,7 @@ public class SuffixTreeNode extends TrieNode {
 		}
 	}
 
-	public void drawSuffixLinks(View v) {
+	void drawSuffixLinks(View v) {
 		SuffixTreeNode child = (SuffixTreeNode) getChild();
 		while (child != null) {
 			child.drawSuffixLinks(v);
@@ -190,7 +190,7 @@ public class SuffixTreeNode extends TrieNode {
 			if (getParent() == null)
 				return;
 			TrieNode u = this;
-			StringBuffer s = new StringBuffer("");
+			StringBuilder s = new StringBuilder("");
 			if (getChild() == null || getChild().getRight() != null) {
 				while (u != null && u.getParent() != null
 						&& u.getParent().getChild() == u

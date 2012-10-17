@@ -19,7 +19,8 @@ package algvis.pairingheap;
 import algvis.core.DataStructure;
 
 public class PairHeapMeld extends PairHeapAlg{
-	int i, j;
+	private final int i;
+    private final int j;
 	
 	public PairHeapMeld(DataStructure H, int i, int j) {
 		super(H);

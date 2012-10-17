@@ -24,15 +24,15 @@ public class PairHeapAlg extends Algorithm {
 		NAIVE, LRRL // , FB, BF, MULTI, LAZYM
 	}
 
-	PairingHeap H;
+	final PairingHeap H;
 	PairHeapNode v;
 
-	public PairHeapAlg(DataStructure D) {
+	PairHeapAlg(DataStructure D) {
 		super(D);
 		this.H = (PairingHeap) D;
 	}
 
-	public void link(int i, int j) {
+	void link(int i, int j) {
 
 		if (!H.root[i].prec(H.root[j])) {
 			PairHeapNode w = H.root[i];
@@ -43,7 +43,7 @@ public class PairHeapAlg extends Algorithm {
 		H.reposition();
 	}
 
-	public void linkchlr(int i, int j) {
+	void linkchlr(int i, int j) {
 		// if (H.root[j].state == -1){
 		PairHeapNode w = H.root[j].getChild();
 		H.root[j].deleteChild(H.root[j].leftmostChild());
@@ -60,7 +60,7 @@ public class PairHeapAlg extends Algorithm {
 	// H.root[i].shift(0, - PairingHeap.minsepy);
 	// problemy s posunutim
 	// zobereme hocake dieta a ostatne k nemu prilinkujeme.
-	public void pairNaive(int i) {
+    void pairNaive(int i) {
 		int j = H.root[i].numChildren();
 		if (j > 0) {
 			if (j == 1) {
@@ -90,7 +90,7 @@ public class PairHeapAlg extends Algorithm {
 		}
 	}
 
-	public void linkchrl(int i, int j) {
+	void linkchrl(int i, int j) {
 		// if (H.root[j].state == -1){
 		PairHeapNode w = (PairHeapNode) H.root[j].rightmostChild();
 		H.root[j].deleteChild(H.root[j].rightmostChild());
@@ -104,7 +104,7 @@ public class PairHeapAlg extends Algorithm {
 		// }
 	}
 
-	public void pairLRRL(int i) {
+	void pairLRRL(int i) {
 		int j = H.root[i].numChildren();
 		if (j > 0) {
 			if (j == 1) {

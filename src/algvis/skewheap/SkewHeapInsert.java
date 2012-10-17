@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kováè, Katarína Kotrlová, Pavol Lukèa, Viktor Tomkoviè, Tatiana Tóthová
+ * Copyright (c) 2012 Jakub KovÃ¡Ä, KatarÃ­na KotrlovÃ¡, Pavol LukÄa, Viktor TomkoviÄ, Tatiana TÃ³thovÃ¡
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,12 @@
 package algvis.skewheap;
 
 public class SkewHeapInsert extends SkewHeapAlg {
-	int K;
-	int i;
+	private final int i;
 
 	public SkewHeapInsert(SkewHeap H, int i, int x) {
 		super(H);
 		this.i = i;
-		H.root[0] = new SkewHeapNode(H, K = x);
+		H.root[0] = new SkewHeapNode(H, x);
 		setHeader("insertion");
 	}
 	

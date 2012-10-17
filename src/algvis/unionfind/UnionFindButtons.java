@@ -31,8 +31,11 @@ import algvis.internationalization.ILabel;
 
 public class UnionFindButtons extends Buttons {
 	private static final long serialVersionUID = 2683381160819263717L;
-	IButton makesetB, findB, unionB;
-	IComboBox unionHeuristicCB, findHeuristicCB;
+	private IButton makesetB;
+	private IButton findB;
+	private IButton unionB;
+	private IComboBox unionHeuristicCB;
+	private IComboBox findHeuristicCB;
 
 	public UnionFindButtons(VisPanel M) {
 		super(M);
@@ -40,11 +43,11 @@ public class UnionFindButtons extends Buttons {
 
 	@Override
 	public void actionButtons(JPanel P) {
-		findB = new IButton(M.S.L, "button-uffind");
+		findB = new IButton("button-uffind");
 		findB.setMnemonic(KeyEvent.VK_F);
 		findB.addActionListener(this);
 
-		unionB = new IButton(M.S.L, "button-union");
+		unionB = new IButton("button-union");
 		unionB.setMnemonic(KeyEvent.VK_U);
 		unionB.addActionListener(this);
 
@@ -54,7 +57,7 @@ public class UnionFindButtons extends Buttons {
 
 	@Override
 	public void actionButtons2(JPanel P) {
-		makesetB = new IButton(M.S.L, "button-makeset");
+		makesetB = new IButton("button-makeset");
 		makesetB.setMnemonic(KeyEvent.VK_A);
 		makesetB.addActionListener(this);
 
@@ -63,7 +66,7 @@ public class UnionFindButtons extends Buttons {
 
 	@Override
 	public void initRandom() {
-		random = new IButton(M.S.L, "button-random-unions");
+		random = new IButton("button-random-unions");
 		random.setMnemonic(KeyEvent.VK_R);
 		random.addActionListener(this);
 	}
@@ -71,12 +74,12 @@ public class UnionFindButtons extends Buttons {
 	@Override
 	public JPanel initThirdRow() {
 		JPanel P = new JPanel();
-		ILabel uhLabel = new ILabel(M.S.L, "uf-union-heuristic"), fhLabel = new ILabel(
-				M.S.L, "uf-find-heuristic");
+		ILabel uhLabel = new ILabel("uf-union-heuristic"), fhLabel = new ILabel(
+				"uf-find-heuristic");
 		String[] uh = { "uf-none", "uf-byrank" }, fh = { "uf-none",
 				"uf-compresion", "uf-halving", "uf-splitting" };
-		unionHeuristicCB = new IComboBox(M.S.L, uh);
-		findHeuristicCB = new IComboBox(M.S.L, fh);
+		unionHeuristicCB = new IComboBox(uh);
+		findHeuristicCB = new IComboBox(fh);
 		unionHeuristicCB.addActionListener(this);
 		findHeuristicCB.addActionListener(this);
 		P.add(uhLabel);
@@ -95,8 +98,8 @@ public class UnionFindButtons extends Buttons {
 			Thread t = new Thread(new Runnable() {
 				@Override
 				public void run() {
-					D.scenario.newAlgorithm();
-					D.scenario.newStep();
+					D.M.scenario.newAlgorithm();
+					D.M.scenario.newStep();
 					D.makeSet(N);
 					M.B.update();
 				}
@@ -114,9 +117,9 @@ public class UnionFindButtons extends Buttons {
 					}
 					if (D.secondSelected != null) {
 						args.insertElementAt(D.secondSelected.getKey(), 1);
-						D.scenario.enableAdding(false);
+						D.M.scenario.enableAdding(false);
 						D.secondSelected.unmark();
-						D.scenario.enableAdding(true);
+						D.M.scenario.enableAdding(true);
 						D.secondSelected = null;
 					}
 					if (args.size() == 0) {
@@ -132,7 +135,7 @@ public class UnionFindButtons extends Buttons {
 				public void run() {
 					int count = D.count;
 					final Vector<Integer> args = I.getVI(1, count);
-					D.scenario.enableAdding(false);
+					D.M.scenario.enableAdding(false);
 					if (D.firstSelected != null) {
 						args.insertElementAt(D.firstSelected.getKey(), 0);
 						D.firstSelected.unmark();
@@ -143,7 +146,7 @@ public class UnionFindButtons extends Buttons {
 						D.secondSelected.unmark();
 						D.secondSelected = null;
 					}
-					D.scenario.enableAdding(true);
+					D.M.scenario.enableAdding(true);
 					switch (args.size()) {
 					case 0:
 						args.add(MyRandom.Int(count));

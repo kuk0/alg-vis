@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kováè, Katarína Kotrlová, Pavol Lukèa, Viktor Tomkoviè, Tatiana Tóthová
+ * Copyright (c) 2012 Jakub KovÃ¡Ä, KatarÃ­na KotrlovÃ¡, Pavol LukÄa, Viktor TomkoviÄ, Tatiana TÃ³thovÃ¡
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ package algvis.skewheap;
 import algvis.gui.InputField;
 
 public class SkewHeapDecrKey extends SkewHeapAlg{
-int delta;
+private final int delta;
 	
 	public SkewHeapDecrKey(SkewHeap H, SkewHeapNode v, int delta) {
 		super(H);

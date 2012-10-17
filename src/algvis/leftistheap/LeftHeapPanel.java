@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kov·Ë, KatarÌna Kotrlov·, Pavol LukËa, Viktor TomkoviË, Tatiana TÛthov·
+ * Copyright (c) 2012 Jakub Kov√°ƒç, Katar√≠na Kotrlov√°, Pavol Lukƒça, Viktor Tomkoviƒç, Tatiana T√≥thov√°
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  ******************************************************************************/
 
 package algvis.leftistheap;
-
 import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.gui.MeldablePQButtonsNoDecr;
@@ -26,8 +25,8 @@ public class LeftHeapPanel extends VisPanel {
 	private static final long serialVersionUID = -6885107230514971633L;
 	public static Class<? extends DataStructure> DS = LeftHeap.class;
 
-	public LeftHeapPanel(Settings S) {
-		super(S);
+	public LeftHeapPanel(Settings S, boolean isScenarioEnabled) {
+		super(S, isScenarioEnabled);
 	}
 
 	@Override
@@ -46,5 +45,4 @@ public class LeftHeapPanel extends VisPanel {
 		L.active = 1;
 		D.M.screen.V.resetView();
 	}
-
 }

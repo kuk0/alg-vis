@@ -45,23 +45,22 @@ import algvis.scenario.Command;
 public class Commentary extends JEditorPane implements LanguageListener,
 		HyperlinkListener {
 	private static final long serialVersionUID = 9023200331860482960L;
-	private VisPanel V;
-	Languages L;
-	JScrollPane sp;
+	private final VisPanel V;
+	private final JScrollPane sp;
 	private int k = 0, position = 0;
 	private List<String> s = new ArrayList<String>(),
 			pre = new ArrayList<String>(), post = new ArrayList<String>();
 	private List<String[]> param = new ArrayList<String[]>();
 	private boolean updatingEnabled = true;
 
-	static SimpleAttributeSet normalAttr = new SimpleAttributeSet();
-	static SimpleAttributeSet hoverAttr = new SimpleAttributeSet();
+	private static final SimpleAttributeSet normalAttr = new SimpleAttributeSet();
+	private static final SimpleAttributeSet hoverAttr = new SimpleAttributeSet();
 	static {
 		StyleConstants.setBackground(normalAttr, Color.WHITE);
 		StyleConstants.setBackground(hoverAttr, new Color(0xDB, 0xF1, 0xF9)); // #DBF1F9
 	}
 
-	public Commentary(VisPanel V, Languages L, JScrollPane sp) {
+	public Commentary(VisPanel V, JScrollPane sp) {
 		super();
 		this.V = V;
 		setContentType("text/html; charset=iso-8859-2");
@@ -74,9 +73,8 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		css.addRule("ol { padding-left: 14px; margin: 0px; }");
 		css.addRule("a { color: black; text-decoration:none; }");
 		css.addRule("p.note { font-style: italic; margin: 0pt; margin-bottom: 5pt; }");
-		this.L = L;
 		this.sp = sp;
-		L.addListener(this);
+		Languages.addListener(this);
 		addHyperlinkListener(this);
 		setText("<html><body></body></html>");
 	}
@@ -88,8 +86,8 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		pre = new ArrayList<String>();
 		post = new ArrayList<String>();
 		param = new ArrayList<String[]>();
-		if (V.D.scenario.isAddingEnabled()) {
-			V.D.scenario.add(new SetCommentaryStateCommand(state));
+		if (V.D.M.scenario.isAddingEnabled()) {
+			V.D.M.scenario.add(new SetCommentaryStateCommand(state));
 		}
 		if (updatingEnabled) {
 			setText("<html><body></body></html>");
@@ -100,7 +98,8 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		// if (i < 0) i = s.size() + i;
 		assert (0 <= i && i < s.size());
 		return pre.get(i)
-				+ StringUtils.subst(L.getString(s.get(i)), param.get(i))
+				+ StringUtils
+						.subst(Languages.getString(s.get(i)), param.get(i))
 				+ post.get(i);
 	}
 
@@ -110,10 +109,10 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	}
 
 	public synchronized void update() {
-		StringBuffer text = new StringBuffer("");
+		StringBuilder text = new StringBuilder("");
 		for (int i = 0; i < s.size(); ++i) {
 			if (i == position - 1) {
-				text.append("<B>" + str(i) + "</B>");
+				text.append("<B>").append(str(i)).append("</B>");
 			} else {
 				text.append(str(i));
 			}
@@ -159,15 +158,15 @@ public class Commentary extends JEditorPane implements LanguageListener,
 
 	}
 
-	public void add(String u, String v, String w, String... par) {
+	void add(String u, String v, String w, String... par) {
 		State state = new State(position, s, pre, post, param);
 		++position;
 		pre.add(u);
 		s.add(v);
 		post.add(w);
 		param.add(par);
-		if (V.D.scenario.isAddingEnabled()) {
-			V.D.scenario.add(new SetCommentaryStateCommand(state));
+		if (V.D.M.scenario.isAddingEnabled()) {
+			V.D.M.scenario.add(new SetCommentaryStateCommand(state));
 		}
 		if (updatingEnabled) {
 			update();
@@ -210,7 +209,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 
 	public void addStep(String s, String... par) {
 		++k;
-		int scenPos = V.D.scenario.getAlgPos();
+		int scenPos = V.D.M.scenario.getAlgPos();
 		add("<ol start=\"" + k + "\"><li class=\"step\"><p><a href=\""
 				+ scenPos + "\"> ", s, "</a></p></li></ol>", par);
 	}
@@ -226,10 +225,10 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	@Override
 	public void hyperlinkUpdate(HyperlinkEvent e) {
 		if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-			if (V.D.scenario.isEnabled()) {
-				V.D.scenario.goBeforeStep(Integer.parseInt(e.getDescription()),
+			if (V.D.M.scenario.isEnabled()) {
+				V.D.M.scenario.goBeforeStep(Integer.parseInt(e.getDescription()),
 						false);
-				V.D.scenario.next(true, true);
+				V.D.M.scenario.next(true, true);
 			}
 		} else {
 			Element element = e.getSourceElement();
@@ -246,7 +245,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		}
 	}
 
-	public void restoreState(State state) {
+	void restoreState(State state) {
 		position = state.position;
 		s = state.s;
 		pre = state.pre;
@@ -257,7 +256,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		}
 	}
 
-	public State getState() {
+	State getState() {
 		return new State(position, s, pre, post, param);
 	}
 

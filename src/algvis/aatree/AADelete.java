@@ -22,9 +22,9 @@ import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class AADelete extends Algorithm {
-	AA T;
-	BSTNode v;
-	int K;
+	private final AA T;
+	private BSTNode v;
+	private final int K;
 
 	public AADelete(AA T, int x) {
 		super(T);
@@ -43,8 +43,7 @@ public class AADelete extends Algorithm {
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 			addStep("notfound");
-			return;
-		} else {
+        } else {
 			AANode d = (AANode) T.getRoot();
 			v.goTo(d);
 			addStep("bstdeletestart");

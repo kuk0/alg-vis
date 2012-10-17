@@ -23,8 +23,8 @@ import algvis.core.NodeColor;
 import algvis.trie.TrieWordNode;
 
 public class SuffixTreeInsert extends Algorithm {
-	SuffixTree T;
-	String s;
+	private final SuffixTree T;
+	private final String s;
 
 	public SuffixTreeInsert(SuffixTree T, String s) {
 		super(T);
@@ -33,7 +33,7 @@ public class SuffixTreeInsert extends Algorithm {
 		setHeader("trieinsert", s.substring(0, s.length() - 1));
 	}
 
-	public void beforeReturn() {
+	void beforeReturn() {
 		T.hw = null;
 		// T.clearExtraColor();
 		addStep("done");
@@ -87,7 +87,7 @@ public class SuffixTreeInsert extends Algorithm {
 			T.reposition();
 			mysuspend();
 			Vector<SuffixTreeNode> upWalk = new Vector<SuffixTreeNode>();
-			String cachedUpWalk = new String();
+			String cachedUpWalk = "";
 			setUpSuffixLinkOnThis = T.getRoot();
 			SuffixTreeNode current = starting;
 			boolean pathEnded = false;

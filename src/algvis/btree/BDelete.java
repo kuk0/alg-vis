@@ -21,9 +21,9 @@ import algvis.core.NodeColor;
 import algvis.core.Node;
 
 public class BDelete extends Algorithm {
-	BTree T;
-	BNode v;
-	int K;
+	private final BTree T;
+	private BNode v;
+	private final int K;
 
 	public BDelete(BTree T, int x) {
 		super(T);
@@ -191,9 +191,7 @@ public class BDelete extends Algorithm {
 						}
 						p.c[k].parent = p;
 						--p.numChildren;
-						for (int i = k + 1; i < p.numChildren; ++i) {
-							p.c[i] = p.c[i + 1];
-						}
+                        System.arraycopy(p.c, k + 1 + 1, p.c, k + 1, p.numChildren - (k + 1));
 						d = p;
 					}
 				}

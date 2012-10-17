@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kov·Ë, KatarÌna Kotrlov·, Pavol LukËa, Viktor TomkoviË, Tatiana TÛthov·
+ * Copyright (c) 2012 Jakub Kov√°ƒç, Katar√≠na Kotrlov√°, Pavol Lukƒça, Viktor Tomkoviƒç, Tatiana T√≥thov√°
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,11 +26,11 @@ import algvis.gui.view.View;
 
 public class SkewHeapNode extends BSTNode {
 	Color color = Color.yellow;
-	boolean doubleArrow = false;
+	private boolean doubleArrow = false;
 	boolean dashedrightl = false; // if true the line leading to the right son is dashed
-	boolean dashedleftl = false;  // if true the line leading to the left son is dashed
+	private final boolean dashedleftl = false;  // if true the line leading to the left son is dashed
 
-	public SkewHeapNode(DataStructure D, int key, int x, int y) {
+	private SkewHeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 		bgKeyColor();
 	}
@@ -191,7 +191,7 @@ public class SkewHeapNode extends BSTNode {
 	}
 
 	public void setRight(SkewHeapNode v) {
-		super.setRight((BSTNode) v);
+		super.setRight(v);
 	}
 
 	@Override
@@ -199,8 +199,8 @@ public class SkewHeapNode extends BSTNode {
 		return (SkewHeapNode) super.getLeft();
 	}
 
-	public void setLeft(SkewHeapNode v) {
-		super.setLeft((BSTNode) v);
+	void setLeft(SkewHeapNode v) {
+		super.setLeft(v);
 	}
 
 	@Override
@@ -209,7 +209,7 @@ public class SkewHeapNode extends BSTNode {
 	}
 
 	public void setParent(SkewHeapNode v) {
-		super.setParent((BSTNode) v);
+		super.setParent(v);
 	}
 
 

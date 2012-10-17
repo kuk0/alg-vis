@@ -20,8 +20,8 @@ import algvis.core.DataStructure;
 
 public class PairHeapDelete extends PairHeapAlg{
 
-	int i;
-	public Pairing pairState;
+	private final int i;
+	private Pairing pairState;
 	
 	public PairHeapDelete(DataStructure H, int i) {
 		super(H);

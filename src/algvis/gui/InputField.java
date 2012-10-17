@@ -33,7 +33,7 @@ public class InputField extends JTextField {
 	private static final long serialVersionUID = -1263697952255226926L;
 	public final static int MAX = 999;
 	final ILabel sb; // status bar
-	Settings s;
+	private final Settings s;
 
 	public InputField(int cols, ILabel sb, Settings s) {
 		super(cols);
@@ -143,7 +143,7 @@ public class InputField extends JTextField {
 	 * the input may be delimited by whitespaces and/or commas. If no input is
 	 * given, a vector with 1 random value in the range min..max is returned.
 	 */
-	public Vector<Integer> getNonEmptyVI(int min, int max) {
+    Vector<Integer> getNonEmptyVI(int min, int max) {
 		Vector<Integer> args = getVI();
 		if (args.size() == 0) {
 			args.add(MyRandom.Int(min,max));

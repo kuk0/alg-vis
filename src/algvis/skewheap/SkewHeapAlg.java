@@ -1,6 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kov·Ë, KatarÌna Kotrlov·, Pavol LukËa, Viktor TomkoviË, Tatiana TÛthov·
- * 
+ * Copyright (c) 2012 Jakub Kov√°ƒç, Katar√≠na Kotrlov√°, Pavol Lukƒça, Viktor Tomkoviƒç, Tatiana T√≥thov√°
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -19,16 +19,16 @@ package algvis.skewheap;
 import algvis.core.Algorithm;
 import algvis.core.Node;
 
-public class SkewHeapAlg extends Algorithm {
-	SkewHeap H;
+class SkewHeapAlg extends Algorithm {
+	final SkewHeap H;
 	SkewHeapNode v;
 
-	public SkewHeapAlg(SkewHeap H) {
+	SkewHeapAlg(SkewHeap H) {
 		super(H);
 		this.H = H;
 	}
 	
-	public void meld(int i) {
+	void meld(int i) {
 		SkewHeapNode w = H.root[i];
 		H.root[0].mark();
 		w.mark();
@@ -127,7 +127,7 @@ public class SkewHeapAlg extends Algorithm {
 		addNote("done");
 	}
 	
-	public void bubbleup(SkewHeapNode v) {
+	void bubbleup(SkewHeapNode v) {
 		if (H.minHeap) {
 			addStep("minheapbubbleup");
 		} else {

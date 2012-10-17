@@ -28,7 +28,7 @@ import algvis.gui.view.View;
 public class LazyBinomialHeap extends BinomialHeap {
 	public static String dsName = "lazybinheap";
 	BinHeapNode[] cleanup;
-	public static int arrayheight = 2 * minsepy;
+	private static final int arrayheight = 2 * minsepy;
 
 	@Override
 	public String getName() {

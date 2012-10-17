@@ -19,16 +19,16 @@ package algvis.heap;
 import algvis.core.Algorithm;
 import algvis.core.Node;
 
-public class HeapAlg extends Algorithm {
-	Heap H;
+class HeapAlg extends Algorithm {
+	final Heap H;
 	HeapNode v;
 
-	public HeapAlg(Heap H) {
+	HeapAlg(Heap H) {
 		super(H);
 		this.H = H;
 	}
 
-	public void bubbleup(HeapNode v) {
+	void bubbleup(HeapNode v) {
 		if (H.minHeap) {
 			addStep("minheapbubbleup");
 		} else {

@@ -30,7 +30,8 @@ import algvis.internationalization.Languages;
 
 public class AlgVisApplet extends JApplet {
 	private static final long serialVersionUID = -76009301274562874L;
-	static final int WIDTH = 1080, HEIGHT = 680;
+	private static final int WIDTH = 1080;
+    private static final int HEIGHT = 680;
 
 	@Override
 	public void init() {
@@ -75,8 +76,8 @@ public class AlgVisApplet extends JApplet {
 			A.init();
 		} else {
 			// data structure ds
-			Languages L = new Languages(getParameter("lang"));
-			Settings S = new Settings(L);
+			Languages.selectLanguage(getParameter("lang"));
+			Settings S = new Settings();
 			VisPanel P = DataStructures.createPanel(ds, S);
 			P.setSize(WIDTH, HEIGHT); // same size as defined in the HTML APPLET
 			add(P);

@@ -24,7 +24,7 @@ import algvis.gui.view.View;
 
 public class RB extends BST {
 	public static String dsName = "redblack";
-	RBNode NULL;
+	final RBNode NULL;
 	public boolean mode24 = false;
 
 	@Override

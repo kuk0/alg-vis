@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kov·Ë, KatarÌna Kotrlov·, Pavol LukËa, Viktor TomkoviË, Tatiana TÛthov·
+ * Copyright (c) 2012 Jakub Kov√°ƒç, Katar√≠na Kotrlov√°, Pavol Lukƒça, Viktor Tomkoviƒç, Tatiana T√≥thov√°
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,17 +19,16 @@ package algvis.daryheap;
 import algvis.core.Algorithm;
 import algvis.core.Node;
 
-public class DaryHeapAlg extends Algorithm {
-	DaryHeap H;
+class DaryHeapAlg extends Algorithm {
+	final DaryHeap H;
 	DaryHeapNode v;
 
-	public DaryHeapAlg(DaryHeap H) {
+	DaryHeapAlg(DaryHeap H) {
 		super(H);
 		this.H = H;
 	}
 
-	public void bubbleup(DaryHeapNode v) {
-
+	void bubbleup(DaryHeapNode v) {
 		DaryHeapNode w = v.getParent();
 		while (w != null && v.prec(w)) {
 			H.v = new DaryHeapNode(v);
@@ -54,7 +53,7 @@ public class DaryHeapAlg extends Algorithm {
 		addNote("done");
 	}
 
-	public void bubbledown(DaryHeapNode v) {
+	void bubbledown(DaryHeapNode v) {
 		DaryHeapNode w;
 
 		while (true) {

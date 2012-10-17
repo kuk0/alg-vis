@@ -25,8 +25,8 @@ public class SkipListPanel extends VisPanel {
 	private static final long serialVersionUID = -283805545295164774L;
 	public static Class<? extends DataStructure> DS = SkipList.class;
 
-	public SkipListPanel(Settings S) {
-		super(S);
+	public SkipListPanel(Settings S, boolean isScenarioEnabled) {
+		super(S, isScenarioEnabled);
 	}
 
 	@Override

@@ -29,8 +29,9 @@ import algvis.internationalization.ICheckBox;
 
 public class RotButtons extends Buttons {
 	private static final long serialVersionUID = 3851020370059429766L;
-	IButton rotB;
-	ICheckBox order, subtrees;
+	private IButton rotB;
+	private ICheckBox order;
+    private ICheckBox subtrees;
 
 	public RotButtons(VisPanel M) {
 		super(M);
@@ -38,7 +39,7 @@ public class RotButtons extends Buttons {
 
 	@Override
 	public void actionButtons(JPanel P) {
-		rotB = new IButton(M.S.L, "button-rotate");
+		rotB = new IButton("button-rotate");
 		rotB.setMnemonic(KeyEvent.VK_T);
 		rotB.addActionListener(this);
 		P.add(rotB);
@@ -47,12 +48,12 @@ public class RotButtons extends Buttons {
 
 	@Override
 	public void otherButtons(JPanel P) {
-		order = new ICheckBox(M.S.L, "show-order", false);
+		order = new ICheckBox("show-order", false);
 		order.setMnemonic(KeyEvent.VK_O);
 		order.addActionListener(this);
 		P.add(order);
 
-		subtrees = new ICheckBox(M.S.L, "show-subtrees", false);
+		subtrees = new ICheckBox("show-subtrees", false);
 		subtrees.setMnemonic(KeyEvent.VK_S);
 		subtrees.addActionListener(this);
 		P.add(subtrees);

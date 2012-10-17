@@ -61,7 +61,7 @@ public class AlgVis extends JPanel implements ActionListener {
      * 21 - Interval tree ("intervaltree")
      * 22 - Trie ("trie") 
      * 23 - Suffix Tree ("suffixtree") */
-	final static int DEFAULT_DS = 0;
+	private final static int DEFAULT_DS = 0;
 	
 	private static final long serialVersionUID = -5202486006824196688L;
 
@@ -70,11 +70,10 @@ public class AlgVis extends JPanel implements ActionListener {
 	private final VisPanel[] panels;
 	private int activePanel = -1;
 	private final JRootPane P;
-	private final Languages L;
 	private final Settings S;
 
-	Map<String, IMenu> adtItems = new HashMap<String, IMenu>();
-	IMenuItem[] dsItems;
+	private final Map<String, IMenu> adtItems = new HashMap<String, IMenu>();
+	private IMenuItem[] dsItems;
 
 	public AlgVis(JRootPane P) {
 		this(P, "en");
@@ -82,8 +81,8 @@ public class AlgVis extends JPanel implements ActionListener {
 
 	public AlgVis(JRootPane P, String s) {
 		this.P = P;
-		L = new Languages(s);
-		S = new Settings(L);
+		Languages.selectLanguage(s);
+		S = new Settings();
 		cards = new JPanel(new CardLayout());
 		panels = new VisPanel[DataStructures.N];
 	}
@@ -94,11 +93,11 @@ public class AlgVis extends JPanel implements ActionListener {
 		// Menu
 		JMenuBar menuBar;
 		menuBar = new JMenuBar();
-		IMenu dsMenu = new IMenu(L, "datastructures");
+		IMenu dsMenu = new IMenu("datastructures");
 		dsMenu.setMnemonic(KeyEvent.VK_D);
-		IMenu langMenu = new IMenu(L, "language");
+		IMenu langMenu = new IMenu("language");
 		langMenu.setMnemonic(KeyEvent.VK_L);
-		IMenu layoutMenu = new IMenu(L, "layout");
+		IMenu layoutMenu = new IMenu("layout");
 		layoutMenu.setMnemonic(KeyEvent.VK_Y);
 
 		// Data structures menu
@@ -109,7 +108,7 @@ public class AlgVis extends JPanel implements ActionListener {
 		 */
 		for (int i = 0; i < ADTs.N; ++i) {
 			String adtName = ADTs.getName(i);
-			adtItems.put(adtName, new IMenu(L, adtName));
+			adtItems.put(adtName, new IMenu(adtName));
 		}
 		/**
 		 * Create menu items for each data structure listed in the class
@@ -117,7 +116,7 @@ public class AlgVis extends JPanel implements ActionListener {
 		 */
 		dsItems = new IMenuItem[DataStructures.N];
 		for (int i = 0; i < DataStructures.N; ++i) {
-			dsItems[i] = new IMenuItem(L, DataStructures.getName(i));
+			dsItems[i] = new IMenuItem(DataStructures.getName(i));
 			adtItems.get(DataStructures.getADT(i)).add(dsItems[i]);
 			dsItems[i].setActionCommand("ds-" + DataStructures.getName(i));
 			dsItems[i].addActionListener(this);
@@ -175,7 +174,7 @@ public class AlgVis extends JPanel implements ActionListener {
 
 		// set language
 		if ("lang".equals(cmd[0])) {
-			L.selectLanguage(cmd[1]);
+			Languages.selectLanguage(cmd[1]);
 		}
 
 		// set layout

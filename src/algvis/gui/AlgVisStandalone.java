@@ -25,7 +25,8 @@ import javax.swing.border.TitledBorder;
 
 
 public class AlgVisStandalone {
-	static final int WIDTH = 1080, HEIGHT = 680;
+	private static final int WIDTH = 1080;
+    private static final int HEIGHT = 680;
 
 	public static void main(String[] args) {
 		try {
@@ -50,7 +51,7 @@ public class AlgVisStandalone {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent e) {
 				System.exit(0);
-			};
+			}
 		});
 
 		AlgVis A = new AlgVis(f.getRootPane());

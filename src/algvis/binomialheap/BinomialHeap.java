@@ -27,11 +27,12 @@ import algvis.gui.VisPanel;
 import algvis.gui.view.Alignment;
 import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
+import algvis.internationalization.Languages;
 
 public class BinomialHeap extends MeldablePQ implements ClickListener {
-	public static String dsName = "binheap";
-	public BinHeapNode[] root; // root[0] je pomocny, prave meldujuci
-	public BinHeapNode[] min;
+	public static final String dsName = "binheap";
+	public final BinHeapNode[] root; // root[0] je pomocny, prave meldujuci
+	public final BinHeapNode[] min;
 	public BinHeapNode d, v, v2;
 
 	@Override
@@ -40,7 +41,7 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 	}
 
 	public BinomialHeap(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		root = new BinHeapNode[numHeaps + 1];
 		min = new BinHeapNode[numHeaps + 1];
 		
@@ -137,15 +138,15 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 				root[i].drawTree(V, root[i], null);
 				if (i > 0) {
 					V.setColor(Color.black);
-					V.drawStringLeft(M.S.L.getString("heap") + " #" + i + ":",
+					V.drawStringLeft(Languages.getString("heap") + " #" + i + ":",
 							root[i].x - Node.radius - 5, root[i].y, Fonts.NORMAL);
 				}
 				if (min[i] != null) {
 					if (minHeap) {
-						V.drawStringTop(M.S.L.getString("min"), min[i].x,
+						V.drawStringTop(Languages.getString("min"), min[i].x,
 								min[i].y - Node.radius - 2, Fonts.NORMAL);
 					} else {
-						V.drawStringTop(M.S.L.getString("max"), min[i].x,
+						V.drawStringTop(Languages.getString("max"), min[i].x,
 								min[i].y - Node.radius - 2, Fonts.NORMAL);
 					}
 				}

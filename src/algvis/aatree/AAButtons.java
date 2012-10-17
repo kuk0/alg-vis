@@ -28,7 +28,7 @@ import algvis.internationalization.ICheckBox;
 
 public class AAButtons extends DictButtons implements ActionListener {
 	private static final long serialVersionUID = 5326663225787843118L;
-	ICheckBox B23;
+	private ICheckBox B23;
 
 	public AAButtons(VisPanel M) {
 		super(M);
@@ -36,7 +36,7 @@ public class AAButtons extends DictButtons implements ActionListener {
 
 	@Override
 	public void otherButtons(JPanel P) {
-		B23 = new ICheckBox(M.S.L, "mode23", false);
+		B23 = new ICheckBox("mode23", false);
 		B23.setMnemonic(KeyEvent.VK_2);
 		B23.addActionListener(this);
 		P.add(B23);

@@ -22,8 +22,10 @@ import java.util.Locale;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
+import algvis.internationalization.Languages;
+
 public class WordGenerator {
-	private volatile static WordGenerator INSTANCE = new WordGenerator();
+	private final static WordGenerator INSTANCE = new WordGenerator();
 	private Vector<String> enWords;
 	private Vector<String> skWords;
 
@@ -48,7 +50,7 @@ public class WordGenerator {
 		return skWords;
 	}
 
-	public static String getEnWord() {
+	private static String getEnWord() {
 		WordGenerator wg = WordGenerator.getInstance();
 		return wg.getEnWords().get(MyRandom.Int(wg.getEnWords().size()));
 	}
@@ -59,7 +61,7 @@ public class WordGenerator {
 	}
 
 	public static String getABWord(int n) {
-		StringBuffer s = new StringBuffer("");
+		StringBuilder s = new StringBuilder("");
 		for (int i = 0; i < n; ++i) {
 			if (MyRandom.heads()) {
 				s.append("A");
@@ -72,7 +74,7 @@ public class WordGenerator {
 	}
 
 	public static String getWord(Settings s) {
-		int current_language = s.L.getCurrentLanguage();
+		int current_language = Languages.getCurrentLanguage();
 		switch (current_language) {
 		case 0:
 			return getEnWord();

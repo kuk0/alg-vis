@@ -34,11 +34,14 @@ import algvis.internationalization.IRadioButton;
 
 public class MeldablePQButtonsNoDecr extends Buttons implements ChangeListener {
 	private static final long serialVersionUID = 1242711038059609653L;
-	IButton insertB, deleteB, meldB;
+	private IButton insertB;
+    private IButton deleteB;
+    private IButton meldB;
 	public JSpinner activeHeap;
-	ILabel activeLabel;
-	IRadioButton minB, maxB;
-	ButtonGroup minMaxGroup;
+	private ILabel activeLabel;
+	private IRadioButton minB;
+    private IRadioButton maxB;
+	private ButtonGroup minMaxGroup;
 
 	public MeldablePQButtonsNoDecr(VisPanel M) {
 		super(M);
@@ -46,15 +49,15 @@ public class MeldablePQButtonsNoDecr extends Buttons implements ChangeListener {
 
 	@Override
 	public void actionButtons(JPanel P) {
-		insertB = new IButton(M.S.L, "button-insert");
+		insertB = new IButton("button-insert");
 		insertB.setMnemonic(KeyEvent.VK_I);
 		insertB.addActionListener(this);
 
-		deleteB = new IButton(M.S.L, "button-deletemax");
+		deleteB = new IButton("button-deletemax");
 		deleteB.setMnemonic(KeyEvent.VK_D);
 		deleteB.addActionListener(this);
 
-		meldB = new IButton(M.S.L, "button-meld");
+		meldB = new IButton("button-meld");
 		deleteB.setMnemonic(KeyEvent.VK_M);
 		meldB.addActionListener(this);
 
@@ -68,11 +71,11 @@ public class MeldablePQButtonsNoDecr extends Buttons implements ChangeListener {
 		activeHeap = new JSpinner(new SpinnerNumberModel(1, 1,
 				MeldablePQ.numHeaps, 1));
 		activeHeap.addChangeListener(this);
-		activeLabel = new ILabel(M.S.L, "activeheap");
-		minB = new IRadioButton(M.S.L, "min");
+		activeLabel = new ILabel("activeheap");
+		minB = new IRadioButton("min");
 		minB.setSelected(false);
 		minB.addActionListener(this);
-		maxB = new IRadioButton(M.S.L, "max");
+		maxB = new IRadioButton("max");
 		maxB.setSelected(true);
 		maxB.addActionListener(this);
 		minMaxGroup = new ButtonGroup();
@@ -93,7 +96,7 @@ public class MeldablePQButtonsNoDecr extends Buttons implements ChangeListener {
 				@Override
 				public void run() {
 					for (int x : args) {
-						((MeldablePQ) D).insert(x);
+						D.insert(x);
 					}
 				}
 			});

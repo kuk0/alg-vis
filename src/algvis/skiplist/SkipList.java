@@ -22,6 +22,7 @@ import algvis.gui.VisPanel;
 import algvis.gui.view.Alignment;
 import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
+import algvis.internationalization.Languages;
 
 public class SkipList extends Dictionary implements ClickListener {
 	public static String dsName = "skiplist";
@@ -35,7 +36,6 @@ public class SkipList extends Dictionary implements ClickListener {
 
 	public SkipList(VisPanel M) {
 		super(M);
-		scenario.enable(true);
 		M.screen.V.setDS(this);
 		M.screen.V.align = Alignment.LEFT;
 		setRoot(new SkipNode(this, -Node.INF));
@@ -60,9 +60,10 @@ public class SkipList extends Dictionary implements ClickListener {
 
 	@Override
 	public void clear() {
-		if (n != 0 || scenario.hasNext()) {
-			scenario.newAlgorithm();
-			scenario.newStep();
+		// TODO asi nezmazat historiu
+		if (n != 0 || M.scenario.hasNext()) {
+			M.scenario.newAlgorithm();
+			M.scenario.newStep();
 			height = 1;
 			n = e = 0;
 			setRoot(new SkipNode(this, -Node.INF));
@@ -78,13 +79,13 @@ public class SkipList extends Dictionary implements ClickListener {
 	@Override
 	public String stats() {
 		if (getRoot() == null) {
-			return M.S.L.getString("size") + ": 0;   "
-					+ M.S.L.getString("height") + ": 0;   #"
-					+ M.S.L.getString("excess") + ": 0";
+			return Languages.getString("size") + ": 0;   "
+					+ Languages.getString("height") + ": 0;   #"
+					+ Languages.getString("excess") + ": 0";
 		} else {
-			return M.S.L.getString("size") + ": " + n + ";   "
-					+ M.S.L.getString("height") + ": " + height + ";   #"
-					+ M.S.L.getString("excess") + ": " + e;
+			return Languages.getString("size") + ": " + n + ";   "
+					+ Languages.getString("height") + ": " + height + ";   #"
+					+ Languages.getString("excess") + ": " + e;
 		}
 	}
 

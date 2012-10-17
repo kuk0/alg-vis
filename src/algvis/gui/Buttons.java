@@ -45,20 +45,26 @@ import algvis.scenario.Command;
  */
 abstract public class Buttons extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1417759004124906334L;
-	public VisPanel M;
-	public DataStructure D;
+	protected final VisPanel M;
+	protected final DataStructure D;
 	public InputField I;
-	public IButton previous, next, clear, random, save;
-	ICheckBox pause;
-	ChLabel stats;
-	JButton zoomIn, zoomOut, resetView;
+	private IButton previous;
+    protected IButton next;
+    private IButton clear;
+    protected IButton random;
+    private IButton save;
+	private ICheckBox pause;
+	private ChLabel stats;
+	private JButton zoomIn;
+    private JButton zoomOut;
+    private JButton resetView;
 
-	abstract public void actionButtons(JPanel P);
+	protected abstract void actionButtons(JPanel P);
 
-	public void actionButtons2(JPanel P) {
+	protected void actionButtons2(JPanel P) {
 	}
 
-	public Buttons(VisPanel M) {
+	protected Buttons(VisPanel M) {
 		this.M = M;
 		D = M.D;
 		assert D != null : "data structure not initialized yet";
@@ -79,7 +85,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	// input field, actions (insert, find, delete,...), previous, next
-	public JPanel initFirstRow() {
+    JPanel initFirstRow() {
 		JPanel first = new JPanel();
 		first.setLayout(new FlowLayout());
 
@@ -95,7 +101,7 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	// [x] pause, clear, random, zoom in/out
-	public JPanel initSecondRow() {
+    JPanel initSecondRow() {
 		JPanel second = new JPanel();
 		initPause();
 		initClear();
@@ -116,12 +122,12 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		return second;
 	}
 
-	public JPanel initThirdRow() {
+	protected JPanel initThirdRow() {
 		return null;
 	}
 
 	// statistics
-	public JPanel initStats() {
+    JPanel initStats() {
 		JPanel statsPanel = new JPanel();
 		statsPanel.setLayout(new FlowLayout());
 		stats = new ChLabel(D.stats());
@@ -129,43 +135,43 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		return statsPanel;
 	}
 
-	public void initPrevious() {
-		previous = new IButton(M.S.L, "previous");
+	void initPrevious() {
+		previous = new IButton("previous");
 		previous.setMnemonic(KeyEvent.VK_O);
 		previous.setEnabled(false);
 		previous.addActionListener(this);
-		previous.setVisible(D.scenario.isEnabled());
+		previous.setVisible(D.M.scenario.isEnabled());
 	}
 
-	public void initNext() {
-		next = new IButton(M.S.L, "next");
+	void initNext() {
+		next = new IButton("next");
 		next.setMnemonic(KeyEvent.VK_N);
 		next.setEnabled(false);
 		next.addActionListener(this);
 	}
 
-	public void initPause() {
-		pause = new ICheckBox(M.S.L, "button-pause", true);
+	void initPause() {
+		pause = new ICheckBox("button-pause", true);
 		pause.setMnemonic(KeyEvent.VK_P);
 		pause.addActionListener(this);
 	}
 
-	public void initClear() {
-		clear = new IButton(M.S.L, "button-clear");
+	void initClear() {
+		clear = new IButton("button-clear");
 		clear.setMnemonic(KeyEvent.VK_C);
 		clear.addActionListener(this);
 	}
 
-	public void initRandom() {
-		random = new IButton(M.S.L, "button-random");
+	protected void initRandom() {
+		random = new IButton("button-random");
 		random.setMnemonic(KeyEvent.VK_R);
 		random.addActionListener(this);
 	}
 
 	public void initSave() {
-		save = new IButton(M.S.L, "button-save");
+		save = new IButton("button-save");
 		save.setMnemonic(KeyEvent.VK_S);
-		save.setEnabled(D.scenario.isEnabled());
+		save.setEnabled(D.M.scenario.isEnabled());
 		save.addActionListener(this);
 	}
 
@@ -179,8 +185,8 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		}
 	}
 
-	public void initZoom() {
-		// zoomLabel = new ILabel(M.S.L, "zoomio");
+	void initZoom() {
+		// zoomLabel = new ILabel("zoomio");
 		// zoomIn = createButton("+", "../images/zoom_in.gif");
 		zoomIn = createButton("+", "/algvis/images/zoom_in.gif");
 		zoomOut = createButton("-", "/algvis/images/zoom_out.gif");
@@ -195,17 +201,17 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		I.sb.setText(" ");
 		if (evt.getSource() == previous) {
 			disablePrevious();
-			D.scenario.previous(M.pause, true);
+			D.M.scenario.previous(M.pause, true);
 		} else if (evt.getSource() == next) {
-			if (!D.scenario.isEnabled() || !D.scenario.hasNext()) {
+			if (!D.M.scenario.isEnabled() || !D.M.scenario.hasNext()) {
 				D.next();
 			} else {
 				disableNext();
-				D.scenario.next(M.pause, true);
+				D.M.scenario.next(M.pause, true);
 			}
 			// repaint();
 		} else if (evt.getSource() == clear) {
-			D.scenario.traverser.startNew(new Runnable() {
+			D.M.scenario.traverser.startNew(new Runnable() {
 				@Override
 				public void run() {
 					D.clear();
@@ -222,25 +228,25 @@ abstract public class Buttons extends JPanel implements ActionListener {
 		} else if (evt.getSource() == zoomOut) {
 			M.screen.V.zoomOut();
 		} else if (evt.getSource() == save) {
-			D.scenario.saveXML("test.xml");
+			D.M.scenario.saveXML("test.xml");
 		} else if (evt.getSource() == resetView) {
 			M.screen.V.resetView();
 		}
 	}
 
 	public void update() {
-		if (D.scenario.isAlgorithmRunning()
+		if (D.M.scenario.isAlgorithmRunning()
 				|| (D.getA() != null && D.getA().isSuspended())) {
 			disableAll();
 		} else {
 			enableAll();
 		}
-		if (D.scenario.hasNext() || (D.getA() != null && D.getA().isSuspended())) {
+		if (D.M.scenario.hasNext() || (D.getA() != null && D.getA().isSuspended())) {
 			enableNext();
 		} else {
 			disableNext();
 		}
-		if (D.scenario.hasPrevious()) {
+		if (D.M.scenario.hasPrevious()) {
 			enablePrevious();
 		} else {
 			disablePrevious();
@@ -257,12 +263,12 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 
 	public void enablePrevious() {
-		if (D.scenario.isEnabled()) {
+		if (D.M.scenario.isEnabled()) {
 			previous.setEnabled(true);
 		}
 	}
 
-	public void disablePrevious() {
+	void disablePrevious() {
 		previous.setEnabled(false);
 	}
 
@@ -287,15 +293,15 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	public void setStats(String s) {
 		String oldText = stats.getText();
 		if (!oldText.equals(s)) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetStatsCommand(oldText, s));
+			if (D.M.scenario.isAddingEnabled()) {
+				D.M.scenario.add(new SetStatsCommand(oldText, s));
 			}
 			stats.setText(s);
 			stats.refresh();
 		}
 	}
 
-	public void otherButtons(JPanel P) {
+	protected void otherButtons(JPanel P) {
 	}
 
 	@Override
@@ -314,13 +320,13 @@ abstract public class Buttons extends JPanel implements ActionListener {
 	}
 	
 	/**
-	 * if D.scenario is enabled, all algorithm is done, so we must go at start
-	 * (in scenario) of algorithm to watch it
+	 * if D.M.scenario is enabled, all algorithm is done, so we must go at start
+	 * (in M.scenario) of algorithm to watch it
 	 */
-	protected void startLastAlg() {
-		D.scenario.previous(false, false);
-		D.scenario.next(M.pause, true);
-		D.scenario.traverser.join();
+    void startLastAlg() {
+		D.M.scenario.previous(false, false);
+		D.M.scenario.next(M.pause, true);
+		D.M.scenario.traverser.join();
 		D.setStats();
 		M.C.update();
 		update();

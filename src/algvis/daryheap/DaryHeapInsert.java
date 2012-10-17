@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kov·Ë, KatarÌna Kotrlov·, Pavol LukËa, Viktor TomkoviË, Tatiana TÛthov·
+ * Copyright (c) 2012 Jakub Kov√°ƒç, Katar√≠na Kotrlov√°, Pavol Lukƒça, Viktor Tomkoviƒç, Tatiana T√≥thov√°
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,29 +16,26 @@
  ******************************************************************************/
 package algvis.daryheap;
 
+public class DaryHeapInsert extends DaryHeapAlg {
+	private final DaryHeap H; // prepisat na H
+	private final DaryHeapNode v;
 
-public class DaryHeapInsert extends DaryHeapAlg{
-	DaryHeap T; //prepisat na H
-	DaryHeapNode v;
-	int K;
-
-	public DaryHeapInsert(DaryHeap T, int x) {
-		super(T);
-		T.v = v = new DaryHeapNode(T, K = x);
-		this.T = T;
+	public DaryHeapInsert(DaryHeap H, int x) {
+		super(H);
+		H.v = v = new DaryHeapNode(H, x);
+		this.H = H;
 		setHeader("insertion");
 	}
-	
+
 	@Override
 	public void run() {
-
 		v.mark();
-		if ( (H.root != null) && (H.root.nnodes == 1000) ) {
+		if ((H.root != null) && (H.root.nnodes == 1000)) {
 			addStep("heapfull");
 			H.v = null;
 			v.unmark();
 			return;
-		}		
+		}
 		DaryHeapNode w;
 
 		if (H.minHeap) {
@@ -46,21 +43,21 @@ public class DaryHeapInsert extends DaryHeapAlg{
 		} else {
 			addStep("maxheapbubbleup");
 		}
-		
-		//int n = H.root.nnodes - 1;
+
+		// int n = H.root.nnodes - 1;
 		if (H.root == null) {
 			H.root = w = v;
 			v.goToRoot();
 			H.last = H.root;
 			mysuspend();
-		} else { //najdeme miesto pre v
+		} else { // najdeme miesto pre v
 			w = H.last.nextneighbour();
 			w.linknewson(v);
-			H.reposition();			
+			H.reposition();
 			mysuspend();
 		}
 		H.v = null;
-		
+
 		++H.root.nnodes;
 		// mysuspend();
 		v.unmark();

@@ -24,8 +24,8 @@ public class SuffixTreePanel extends VisPanel {
 	private static final long serialVersionUID = -8652425842838569507L;
 	public static Class<? extends DataStructure> DS = SuffixTree.class;
 
-	public SuffixTreePanel(Settings S) {
-		super(S);
+	public SuffixTreePanel(Settings S, boolean isScenarioEnabled) {
+		super(S, isScenarioEnabled);
 	}
 	
 	@Override

@@ -44,9 +44,8 @@ public class TrieWordNode extends Node {
 		return s;
 	}
 
-	public String setS(String s) {
+	void setS(String s) {
 		this.s = s;
-		return s;
 	}
 
 	/**
@@ -54,7 +53,7 @@ public class TrieWordNode extends Node {
 	 * @param x
 	 *            how many chars will be cut from the beginning of the string
 	 */
-	public String cut(int x) {
+    String cut(int x) {
 		s = s.substring(x, s.length());
 		return s;
 	}

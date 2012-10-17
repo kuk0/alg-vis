@@ -25,8 +25,8 @@ public class TreapPanel extends VisPanel {
 	private static final long serialVersionUID = -6193823024855399059L;
 	public static Class<? extends DataStructure> DS = Treap.class;
 
-	public TreapPanel(Settings S) {
-		super(S);
+	public TreapPanel(Settings S, boolean isScenarioEnabled) {
+		super(S, isScenarioEnabled);
 	}
 
 	@Override

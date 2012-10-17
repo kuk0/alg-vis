@@ -20,9 +20,9 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class AAInsert extends Algorithm {
-	AA T;
-	AANode v;
-	int K;
+	private final AA T;
+	private final AANode v;
+	private final int K;
 
 	public AAInsert(AA T, int x) {
 		super(T);

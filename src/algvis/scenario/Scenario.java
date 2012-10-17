@@ -34,7 +34,7 @@ import algvis.gui.VisPanel;
 public class Scenario implements XMLable {
 	private final ScenarioCommand scenario;
 	public final Traverser traverser;
-	private VisPanel V;
+	private final VisPanel V;
 	private boolean addingEnabled = true;
 	private boolean enabled;
 
@@ -91,12 +91,7 @@ public class Scenario implements XMLable {
 	}
 
 	public boolean isAlgorithmRunning() {
-		if (scenario.isEmpty()) {
-			return false;
-		} else {
-			return scenario.getCurrent().hasPrevious()
-					&& scenario.getCurrent().hasNext();
-		}
+        return !scenario.isEmpty() && scenario.getCurrent().hasPrevious() && scenario.getCurrent().hasNext();
 	}
 
 	public boolean hasPrevious() {
@@ -200,11 +195,7 @@ public class Scenario implements XMLable {
 				e.printStackTrace();
 				return;
 			}
-			if (!visible) {
-				interrupted = true;
-			} else {
-				interrupted = false;
-			}
+            interrupted = !visible;
 			threadInstance.start();
 			if (!visible) {
 				threadInstance.interrupt();

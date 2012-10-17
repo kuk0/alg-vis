@@ -23,49 +23,39 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class Languages {
-	final static int N = 2;
-	int current_lang;
-	Locale[] all_locales = new Locale[N];
-	ResourceBundle[] all_msgs = new ResourceBundle[N];
-	Locale locale;
-	ResourceBundle msg;
-	List<LanguageListener> listeners = new LinkedList<LanguageListener>();
+	private static final int N = 2;
+	private static int current_lang;
+	private static final Locale[] all_locales = new Locale[N];
+	private static final ResourceBundle[] all_msgs = new ResourceBundle[N];
+	//private static Locale locale;
+	//private static ResourceBundle msg;
+	private static final List<LanguageListener> listeners = new LinkedList<LanguageListener>();
 
-	public Languages() {
+	static {
 		all_locales[0] = new Locale("en");
 		all_msgs[0] = ResourceBundle.getBundle("Messages", all_locales[0]);
 		all_locales[1] = new Locale("sk");
 		all_msgs[1] = ResourceBundle.getBundle("Messages", all_locales[1]);
 	}
 
-	public Languages(int i) {
-		this();
-		selectLanguage(i);
+	public static void addListener(LanguageListener l) {
+		Languages.listeners.add(l);
 	}
 
-	public Languages(String s) {
-		this();
-		selectLanguage(s);
-	}
-
-	public void addListener(LanguageListener l) {
-		listeners.add(l);
-	}
-
-	public void selectLanguage(int i) {
+	static void selectLanguage(int i) {
 		if (i < 0 || i >= N) {
 			i = 0;
 		}
 		current_lang = i;
-		locale = all_locales[current_lang];
-		msg = all_msgs[current_lang];
+		//locale = all_locales[current_lang];
+		//msg = all_msgs[current_lang];
 		// notify all listeners
 		for (LanguageListener l : listeners) {
 			l.languageChanged();
 		}
 	}
 
-	public void selectLanguage(String s) {
+	public static void selectLanguage(String s) {
 		int i;
 		if ("sk".equals(s)) {
 			i = 1;
@@ -75,7 +65,7 @@ public class Languages {
 		selectLanguage(i);
 	}
 
-	public String getString(String s) {
+	public static String getString(String s) {
 		try {
 			return all_msgs[current_lang].getString(s);
 		} catch (MissingResourceException e) {
@@ -83,8 +73,8 @@ public class Languages {
 			return "???";
 		}
 	}
-	
-	public int getCurrentLanguage() {
+
+	public static int getCurrentLanguage() {
 		return current_lang;
 	}
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kov·Ë, KatarÌna Kotrlov·, Pavol LukËa, Viktor TomkoviË, Tatiana TÛthov·
+ * Copyright (c) 2012 Jakub Kov√°ƒç, Katar√≠na Kotrlov√°, Pavol Lukƒça, Viktor Tomkoviƒç, Tatiana T√≥thov√°
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,16 +21,17 @@ import algvis.core.PriorityQueue;
 import algvis.gui.VisPanel;
 import algvis.gui.view.ClickListener;
 import algvis.gui.view.View;
+import algvis.internationalization.Languages;
 
 public class DaryHeap extends PriorityQueue implements ClickListener{
-	public static String dsName = "daryheap";
+	public static final String dsName = "daryheap";
 	DaryHeapNode root = null, v = null, v2 = null;
 	DaryHeapNode last = null;
 	int order = 5;
 	public static final int minsepx = 30;  //zmenit na mensie
 
 	public DaryHeap(VisPanel M) {
-		super(M, dsName);
+		super(M);
 		last = new DaryHeapNode(this, 47); 
 		M.screen.V.setDS(this);
 	}
@@ -83,13 +84,13 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 	public String stats() {
 
 		if (root == null) {
-			return M.S.L.getString("size") + ": 0 ("
-					+ M.S.L.getString("emptyheap") + ")";
+			return Languages.getString("size") + ": 0 ("
+					+ Languages.getString("emptyheap") + ")";
 		} else if (root.nnodes == 1000) {
-			return M.S.L.getString("size") + ": 1000 ("
-					+ M.S.L.getString("fullheap") + ")";
+			return Languages.getString("size") + ": 1000 ("
+					+ Languages.getString("fullheap") + ")";
 		} else {
-			return M.S.L.getString("size") + ": " + root.nnodes;
+			return Languages.getString("size") + ": " + root.nnodes;
 		}
 	}
 

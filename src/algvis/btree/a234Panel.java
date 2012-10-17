@@ -25,8 +25,8 @@ public class a234Panel extends VisPanel {
 	private static final long serialVersionUID = 3849830550882705599L;
 	public static Class<? extends DataStructure> DS = a234Tree.class;
 
-	public a234Panel(Settings S) {
-		super(S);
+	public a234Panel(Settings S, boolean isScenarioEnabled) {
+		super(S, isScenarioEnabled);
 	}
 
 	@Override

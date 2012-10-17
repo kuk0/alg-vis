@@ -27,7 +27,7 @@ import algvis.internationalization.ICheckBox;
 
 public class BSTButtons extends DictButtons {
 	private static final long serialVersionUID = -6884955717665753504L;
-	ICheckBox order;
+	private ICheckBox order;
 
 	public BSTButtons(VisPanel M) {
 		super(M);
@@ -35,7 +35,7 @@ public class BSTButtons extends DictButtons {
 
 	@Override
 	public void otherButtons(JPanel P) {
-		order = new ICheckBox(M.S.L, "show-order", false);
+		order = new ICheckBox("show-order", false);
 		order.setMnemonic(KeyEvent.VK_2);
 		order.addActionListener(this);
 		P.add(order);
