@@ -22,6 +22,7 @@ import org.jdom.Element;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 import algvis.gui.view.View;
 import algvis.scenario.Command;
 
@@ -126,6 +127,38 @@ public class SkipNode extends Node {
 		}
 	}
 
+	// we assume this is a bottom node
+	private void colorColumn(NodeColor color) {
+		SkipNode w = this;
+		while (w != null) {
+			w.setColor(color);
+			w = w.getUp(); // stand up
+		}
+	}
+
+	// color all the columns to the right of this one (inclusive)
+	public void colorAfter(NodeColor color) {
+		SkipNode w = this;
+		while (w.getDown() != null)
+			w = w.getDown();
+		while (w != null) {
+			w.colorColumn(color);
+			w = w.getRight();
+		}
+	}
+
+	// color all the columns to the left of this one (NON-inclusive)
+	public void colorBefore(NodeColor color) {
+		SkipNode w = this;
+		while (w.getDown() != null)
+			w = w.getDown();
+		w = w.getLeft();
+		while (w != null) {
+			w.colorColumn(color);
+			w = w.getLeft();
+		}
+	}
+
 	public SkipNode find(int x, int y) {
 		if (inside(x, y))
 			return this;
@@ -194,7 +227,7 @@ public class SkipNode extends Node {
 		}
 		return down;
 	}
-	
+
 	private class SetDownCommand implements Command {
 		private final SkipNode oldDown, newDown;
 
@@ -230,7 +263,7 @@ public class SkipNode extends Node {
 			setDown(oldDown);
 		}
 	}
-	
+
 	private class SetLeftCommand implements Command {
 		private final SkipNode oldLeft, newLeft;
 

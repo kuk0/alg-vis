@@ -16,11 +16,10 @@
  ******************************************************************************/
 package algvis.rotations;
 
-import java.util.Random;
-
 import algvis.bst.BST;
 import algvis.bst.BSTNode;
 import algvis.core.DataStructure;
+import algvis.core.MyRandom;
 import algvis.gui.InputField;
 import algvis.gui.VisPanel;
 import algvis.gui.view.Alignment;
@@ -124,11 +123,10 @@ public class Rotations extends DataStructure implements ClickListener {
 
 	@Override
 	public void random(int n) {
-		Random g = new Random(System.currentTimeMillis());
 		boolean p = M.pause;
 		M.pause = false;
 		for (int i = 0; i < n; ++i) {
-			insert(g.nextInt(InputField.MAX + 1));
+			insert(MyRandom.Int(InputField.MAX + 1));
 		}
 		T.getRoot().calcTree();
 		setStats();

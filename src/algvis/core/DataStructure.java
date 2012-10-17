@@ -18,7 +18,6 @@ package algvis.core;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import algvis.gui.InputField;
 import algvis.gui.VisPanel;
@@ -118,7 +117,6 @@ abstract public class DataStructure {
 		scenario.traverser.startNew(new Runnable() {
 			@Override
 			public void run() {
-				Random g = new Random(System.currentTimeMillis());
 				boolean p = M.pause;
 				M.pause = false;
 				{
@@ -126,11 +124,11 @@ abstract public class DataStructure {
 					scenario.enableAdding(false);
 					M.C.enableUpdating(false);
 					for (; i < n - Scenario.maxAlgorithms; ++i) {
-						insert(g.nextInt(InputField.MAX + 1));
+						insert(MyRandom.Int(InputField.MAX + 1));
 					}
 					scenario.enableAdding(true);
 					for (; i < n; ++i) {
-						insert(g.nextInt(InputField.MAX + 1));
+						insert(MyRandom.Int(InputField.MAX + 1));
 					}
 					M.C.enableUpdating(true);
 					M.C.update();

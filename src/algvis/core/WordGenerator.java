@@ -19,7 +19,6 @@ package algvis.core;
 import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.Locale;
-import java.util.Random;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
@@ -27,10 +26,8 @@ public class WordGenerator {
 	private volatile static WordGenerator INSTANCE = new WordGenerator();
 	private Vector<String> enWords;
 	private Vector<String> skWords;
-	private Random generator;
 
 	private WordGenerator() {
-		generator = new Random(System.currentTimeMillis());
 		initRandomEnText();
 		initRandomSkText();
 	}
@@ -40,10 +37,9 @@ public class WordGenerator {
 	}
 
 	private WordGenerator changeGenerator() {
-		generator = new Random(System.currentTimeMillis());
 		return this;
 	}
-	
+
 	private Vector<String> getEnWords() {
 		return enWords;
 	}
@@ -52,33 +48,29 @@ public class WordGenerator {
 		return skWords;
 	}
 
-	private Random getGenerator() {
-		return generator;
-	}
-
 	public static String getEnWord() {
 		WordGenerator wg = WordGenerator.getInstance();
-		return wg.getEnWords().get(
-				wg.getGenerator().nextInt(wg.getEnWords().size()));
+		return wg.getEnWords().get(MyRandom.Int(wg.getEnWords().size()));
 	}
 
 	public static String getSkWord() {
 		WordGenerator wg = WordGenerator.getInstance();
-		return wg.getSkWords().get(
-				wg.getGenerator().nextInt(wg.getSkWords().size()));
+		return wg.getSkWords().get(MyRandom.Int(wg.getSkWords().size()));
 	}
-	
+
 	public static String getABWord(int n) {
-		Random r = WordGenerator.getInstance().getGenerator();
 		StringBuffer s = new StringBuffer("");
-		for (int i=0; i<n; ++i) {
-			if (r.nextBoolean()) s.append("A");
-			else s.append("B");
+		for (int i = 0; i < n; ++i) {
+			if (MyRandom.heads()) {
+				s.append("A");
+			} else {
+				s.append("B");
+			}
 		}
 		s.append("$");
 		return s.toString();
 	}
-	
+
 	public static String getWord(Settings s) {
 		int current_language = s.L.getCurrentLanguage();
 		switch (current_language) {
@@ -91,8 +83,8 @@ public class WordGenerator {
 	}
 
 	public static Vector<String> parseString(String ss) {
-		Vector<String> ll = new Vector<String>(Arrays.asList(ss
-				.replaceAll("'", " ").split("(\\s|,)+")));
+		Vector<String> ll = new Vector<String>(Arrays.asList(ss.replaceAll("'",
+				" ").split("(\\s|,)+")));
 		Vector<String> result = new Vector<String>();
 		Pattern p = Pattern
 				.compile("[\\p{InCombiningDiacriticalMarks}\\p{IsLm}\\p{IsSk}]+");

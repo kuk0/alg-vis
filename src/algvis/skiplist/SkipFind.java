@@ -30,13 +30,11 @@ public class SkipFind extends SkipAlg {
 		addStep("skipfindstart");
 		SkipNode w = find();
 
-		w = w.getRight();
-		v.goTo(w);
 		if (w.getKey() == v.getKey()) {
-			addStep("found");
+			addNote("found");
 			v.setColor(NodeColor.FOUND);
 		} else {
-			addStep("notfound");
+			addNote("notfound");
 			v.setColor(NodeColor.NOTFOUND);
 			v.goDown();
 		}

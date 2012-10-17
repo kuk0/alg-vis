@@ -16,11 +16,9 @@
  ******************************************************************************/
 package algvis.gui;
 
-import java.util.Random;
 import java.util.Vector;
-
 import javax.swing.JTextField;
-
+import algvis.core.MyRandom;
 import algvis.core.Settings;
 import algvis.core.WordGenerator;
 import algvis.internationalization.ILabel;
@@ -34,13 +32,11 @@ import algvis.internationalization.ILabel;
 public class InputField extends JTextField {
 	private static final long serialVersionUID = -1263697952255226926L;
 	public final static int MAX = 999;
-	Random G;
 	final ILabel sb; // status bar
 	Settings s;
 
 	public InputField(int cols, ILabel sb, Settings s) {
 		super(cols);
-		G = new Random(System.currentTimeMillis());
 		this.sb = sb;
 		this.s = s;
 	}
@@ -150,7 +146,7 @@ public class InputField extends JTextField {
 	public Vector<Integer> getNonEmptyVI(int min, int max) {
 		Vector<Integer> args = getVI();
 		if (args.size() == 0) {
-			args.add(G.nextInt(max - min + 1) + min);
+			args.add(MyRandom.Int(min,max));
 			sb.setText("no input; using random value");
 		}
 		return args;
