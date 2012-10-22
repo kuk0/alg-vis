@@ -18,11 +18,11 @@ package algvis.unionfind;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.JPanel;
 
+import algvis.core.MyRandom;
 import algvis.gui.Buttons;
 import algvis.gui.VisPanel;
 import algvis.internationalization.IButton;
@@ -32,10 +32,10 @@ import algvis.internationalization.ILabel;
 public class UnionFindButtons extends Buttons {
 	private static final long serialVersionUID = 2683381160819263717L;
 	private IButton makesetB;
-    private IButton findB;
-    private IButton unionB;
+	private IButton findB;
+	private IButton unionB;
 	private IComboBox unionHeuristicCB;
-    private IComboBox findHeuristicCB;
+	private IComboBox findHeuristicCB;
 
 	public UnionFindButtons(VisPanel M) {
 		super(M);
@@ -123,8 +123,7 @@ public class UnionFindButtons extends Buttons {
 						D.secondSelected = null;
 					}
 					if (args.size() == 0) {
-						Random G = new Random(System.currentTimeMillis());
-						args.add(G.nextInt(count));
+						args.add(MyRandom.Int(count));
 					}
 					D.find(D.at(args.elementAt(0)));
 				}
@@ -148,15 +147,14 @@ public class UnionFindButtons extends Buttons {
 						D.secondSelected = null;
 					}
 					D.M.scenario.enableAdding(true);
-					Random G = new Random(System.currentTimeMillis());
 					switch (args.size()) {
 					case 0:
-						args.add(G.nextInt(count));
+						args.add(MyRandom.Int(count));
 					case 1:
 						int i;
 						int ii = args.elementAt(0);
 						do {
-							i = G.nextInt(count);
+							i = MyRandom.Int(count);
 						} while (i == ii);
 						args.add(i);
 					}

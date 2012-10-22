@@ -17,6 +17,7 @@
 package algvis.skiplist;
 
 import algvis.core.Algorithm;
+import algvis.core.NodeColor;
 
 class SkipAlg extends Algorithm {
 	final SkipList L;
@@ -38,22 +39,26 @@ class SkipAlg extends Algorithm {
 		mysuspend();
 
 		for (int i = L.height - 1;; --i) {
-			while (w.getRight().getKey() < K) {
-				addStep("skipnext");
+			while (w.getRight().getKey() <= K) {
+				addStep("skiplist-next", K);
 				w = w.getRight();
+				w.colorBefore(NodeColor.DARKER);
 				v.goTo(w);
 				mysuspend();
 			}
-			addStep("skipdown");
+			if (w.getRight().getKey() > K) {
+				w.getRight().colorAfter(NodeColor.DARKER);
+			}
 			p[i] = w;
 			if (w.getDown() == null) {
 				break;
 			}
+			addStep("skiplist-down", K);
 			w = w.getDown();
 			v.goTo(w);
 			mysuspend();
 		}
-		mysuspend();
+		L.getRoot().colorAfter(NodeColor.NORMAL);
 		return w;
 	}
 }

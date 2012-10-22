@@ -17,11 +17,11 @@
 package algvis.unionfind;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import org.jdom2.Element;
 
 import algvis.core.DataStructure;
+import algvis.core.MyRandom;
 import algvis.gui.VisPanel;
 import algvis.gui.view.Alignment;
 import algvis.gui.view.ClickListener;
@@ -118,7 +118,6 @@ public class UnionFind extends DataStructure implements ClickListener {
 		M.scenario.traverser.startNew(new Runnable() {
 			@Override
 			public void run() {
-				Random g = new Random(System.currentTimeMillis());
 				boolean p = M.pause;
 				M.pause = false;
 				{
@@ -126,11 +125,11 @@ public class UnionFind extends DataStructure implements ClickListener {
 					M.scenario.enableAdding(false);
 					M.C.enableUpdating(false);
 					for (; i < n - Scenario.maxAlgorithms; ++i) {
-						union(at(g.nextInt(count)), at(g.nextInt(count)));
+						union(at(MyRandom.Int(count)), at(MyRandom.Int(count)));
 					}
 					M.scenario.enableAdding(true);
 					for (; i < n; ++i) {
-						union(at(g.nextInt(count)), at(g.nextInt(count)));
+						union(at(MyRandom.Int(count)), at(MyRandom.Int(count)));
 					}
 					M.C.enableUpdating(true);
 					M.C.update();

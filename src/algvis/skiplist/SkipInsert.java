@@ -16,19 +16,15 @@
  ******************************************************************************/
 package algvis.skiplist;
 
-import java.util.Random;
-
-import algvis.core.NodeColor;
+import algvis.core.MyRandom;
 import algvis.core.Node;
+import algvis.core.NodeColor;
 
 public class SkipInsert extends SkipAlg {
-	private final Random R;
-
 	public SkipInsert(SkipList L, int x) { // Buttons B,
 		super(L, x);
 		v.setColor(NodeColor.INSERT);
 		setHeader("insert", K);
-		R = new Random();
 	}
 
 	@Override
@@ -36,20 +32,23 @@ public class SkipInsert extends SkipAlg {
 		addStep("skipinsertstart");
 		SkipNode w = find();
 
-		if (w.getRight().getKey() == v.getKey()) {
+		if (w.getKey() == v.getKey()) {
 			addStep("alreadythere");
 			v.goDown();
 			mysuspend();
+			addNote("done");
 			return;
 		}
 
 		L.n++;
 		addStep("skipinsertafter");
+		mysuspend();
 		SkipNode z, oldv = null;
+		addNote("skiplist-tossing");
 		int i = 0;
 		do {
 			if (i > 0) {
-				addStep("skippromote");
+				addStep("skiplist-head", i);
 				L.e++;
 			}
 			if (i < L.height) {
@@ -77,12 +76,12 @@ public class SkipInsert extends SkipAlg {
 				++L.height;
 			}
 			mysuspend();
-		} while (R.nextInt(2) == 1);
+		} while (MyRandom.heads());
 
-		addStep("skipend");
+		addStep("skiplist-tail", i);
 		mysuspend();
+		addNote("done");
 
-		addStep("done");
 		L.getV().setColor(NodeColor.NORMAL);
 		L.setV(null);
 	}
