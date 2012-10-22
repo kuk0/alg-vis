@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.core;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class NodeColor {
 	public static final NodeColor BLACK = new NodeColor(Color.WHITE,
@@ -47,5 +47,11 @@ public class NodeColor {
 	public NodeColor(Color fgColor, Color bgColor) {
 		this.fgColor = fgColor;
 		this.bgColor = bgColor;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof NodeColor && bgColor == ((NodeColor) obj).bgColor && fgColor == ((NodeColor) obj)
+				.fgColor;
 	}
 }

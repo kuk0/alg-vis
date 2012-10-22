@@ -16,13 +16,14 @@
  ******************************************************************************/
 package algvis.core;
 
-import java.awt.Color;
+import algvis.core.history.HashtableStoreSupport;
+import algvis.core.visual.ZDepth;
+import algvis.ds.DataStructure;
+import algvis.ui.view.View;
+
+import java.awt.*;
+import java.util.Hashtable;
 import java.util.Stack;
-
-import org.jdom2.Element;
-
-import algvis.gui.view.View;
-import algvis.scenario.Command;
 
 public class TreeNode extends Node {
 	private TreeNode child = null, right = null, parent = null;
@@ -55,8 +56,8 @@ public class TreeNode extends Node {
 		super(D, key, x, y);
 	}
 
-	protected TreeNode(DataStructure D, int key) {
-		super(D, key);
+	protected TreeNode(DataStructure D, int key, int zDepth) {
+		super(D, key, zDepth);
 	}
 
 	public boolean isRoot() {
@@ -108,7 +109,7 @@ public class TreeNode extends Node {
 	public void drawEdges(View v) {
 		if (state != INVISIBLE) {
 			if (thread) {
-				v.setColor(Color.red); // TODO
+				v.setColor(Color.red);
 				if (getChild() != null) {
 					v.drawLine(x, y, getChild().x, getChild().y);
 				}
@@ -116,8 +117,7 @@ public class TreeNode extends Node {
 			} else {
 				TreeNode w = getChild();
 				while (w != null) {
-					v.setColor(Color.black); // TODO maybe these lines would
-												// make problems
+					v.setColor(Color.black);
 					v.drawLine(x, y, w.x, w.y);
 					w.drawEdges(v);
 					w = w.getRight();
@@ -251,7 +251,7 @@ public class TreeNode extends Node {
 
 	void append(int x, int j) {
 		if (getKey() == x) {
-			addChild(new TreeNode(D, j));
+			addChild(new TreeNode(D, j, ZDepth.NODE));
 		} else {
 			TreeNode w = getChild();
 			while (w != null) {
@@ -531,12 +531,7 @@ public class TreeNode extends Node {
 	}
 
 	public void setChild(TreeNode child) {
-		if (this.child != child) {
-			if (D.M.scenario.isAddingEnabled()) {
-				D.M.scenario.add(new SetChildCommand(child));
-			}
-			this.child = child;
-		}
+		this.child = child;
 	}
 
 	public TreeNode getRight() {
@@ -544,12 +539,7 @@ public class TreeNode extends Node {
 	}
 
 	public void setRight(TreeNode right) {
-		if (this.right != right) {
-			if (D.M.scenario.isAddingEnabled()) {
-				D.M.scenario.add(new SetRightCommand(right));
-			}
-			this.right = right;
-		}
+		this.right = right;
 	}
 
 	protected TreeNode getParent() {
@@ -557,12 +547,7 @@ public class TreeNode extends Node {
 	}
 
 	public void setParent(TreeNode parent) {
-		if (this.parent != parent) {
-			if (D.M.scenario.isAddingEnabled()) {
-				D.M.scenario.add(new SetParentCommand(parent));
-			}
-			this.parent = parent;
-		}
+		this.parent = parent;
 	}
 
 	// private void fTRGetInfo(int phase, int variable) {
@@ -574,114 +559,28 @@ public class TreeNode extends Node {
 	// + phase + ")");
 	// }
 
-	private class SetRightCommand implements Command {
-		private final TreeNode oldRight, newRight;
-
-		public SetRightCommand(TreeNode newRight) {
-			oldRight = getRight();
-			this.newRight = newRight;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setRight");
-			e.setAttribute("key", Integer.toString(getKey()));
-			if (newRight != null) {
-				e.setAttribute("newRight", Integer.toString(newRight.getKey()));
-			} else {
-				e.setAttribute("newRight", "null");
-			}
-			if (oldRight != null) {
-				e.setAttribute("oldRight", Integer.toString(oldRight.getKey()));
-			} else {
-				e.setAttribute("oldRight", "null");
-			}
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setRight(newRight);
-		}
-
-		@Override
-		public void unexecute() {
-			setRight(oldRight);
-		}
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "child", child);
+		HashtableStoreSupport.store(state, hash + "right", right);
+		HashtableStoreSupport.store(state, hash + "parent", parent);
+		
+		if (child != null) child.storeState(state);
+		if (right != null) right.storeState(state);
 	}
 
-	private class SetParentCommand implements Command {
-		private final TreeNode oldParent, newParent;
-
-		public SetParentCommand(TreeNode newParent) {
-			oldParent = getParent();
-			this.newParent = newParent;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setParent");
-			e.setAttribute("key", Integer.toString(getKey()));
-			if (newParent != null) {
-				e.setAttribute("newParent",
-						Integer.toString(newParent.getKey()));
-			} else {
-				e.setAttribute("newParent", "null");
-			}
-			if (oldParent != null) {
-				e.setAttribute("oldParent",
-						Integer.toString(oldParent.getKey()));
-			} else {
-				e.setAttribute("oldParent", "null");
-			}
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setParent(newParent);
-		}
-
-		@Override
-		public void unexecute() {
-			setParent(oldParent);
-		}
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object child = state.get(hash + "child");
+		if (child != null) this.child = (TreeNode) HashtableStoreSupport.restore(child);
+		Object right = state.get(hash + "right");
+		if (right != null) this.right = (TreeNode) HashtableStoreSupport.restore(right);
+		Object parent = state.get(hash + "parent");
+		if (parent != null) this.parent = (TreeNode) HashtableStoreSupport.restore(parent);
+		
+		if (this.child != null) this.child.restoreState(state);
+		if (this.right != null) this.right.restoreState(state);
 	}
-
-	private class SetChildCommand implements Command {
-		private final TreeNode oldChild, newChild;
-
-		public SetChildCommand(TreeNode newChild) {
-			oldChild = getChild();
-			this.newChild = newChild;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setChild");
-			e.setAttribute("key", Integer.toString(getKey()));
-			if (newChild != null) {
-				e.setAttribute("newChild", Integer.toString(newChild.getKey()));
-			} else {
-				e.setAttribute("newChild", "null");
-			}
-			if (oldChild != null) {
-				e.setAttribute("oldChild", Integer.toString(oldChild.getKey()));
-			} else {
-				e.setAttribute("oldChild", "null");
-			}
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setChild(newChild);
-		}
-
-		@Override
-		public void unexecute() {
-			setChild(oldChild);
-		}
-	}
-
 }
