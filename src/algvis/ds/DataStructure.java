@@ -61,19 +61,19 @@ abstract public class DataStructure extends VisualElement {
 		unmark();
 		final Future result = panel.algorithmPool.submit(runnable);
 		// TODO only for debugging purposes:
-		Thread t = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					result.get();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		t.start();
+//		Thread t = new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//				try {
+//					result.get();
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				} catch (ExecutionException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//		t.start();
 	}
 
 	public void setStats() {

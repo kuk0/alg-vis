@@ -21,15 +21,12 @@ import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.view.View;
 
-import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
-import java.util.List;
 
 public class Scene extends VisualElement {
 	public static final int MAXZ = 10, MIDZ = 5;
 	private final List<HashSet<VisualElement>> elements = new ArrayList<HashSet<VisualElement>>();
-	private Rectangle2D.Float B;
 	private final RemoveManager removeManager = new RemoveManager();
 
 	public Scene() {
@@ -76,11 +73,11 @@ public class Scene extends VisualElement {
 			synchronized (this) {
 				for (VisualElement e : elements.get(i)) {
 					e.draw(V);
-					Rectangle2D r = e.getBoundingBox();
-					if (r != null) {
-						V.setColor(Color.RED);
-						V.drawRectangle(r);
-					}
+//					Rectangle2D r = e.getBoundingBox();
+//					if (r != null) {
+//						V.setColor(Color.RED);
+//						V.drawRectangle(r);
+//					}
 				}
 			}
 		}

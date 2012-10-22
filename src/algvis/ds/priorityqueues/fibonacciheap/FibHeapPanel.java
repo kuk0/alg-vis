@@ -32,8 +32,7 @@ public class FibHeapPanel extends VisPanel {
 
 	@Override
 	public void initDS() {
-		final FibonacciHeap H = new FibonacciHeap(this);
-		D = H;
+		D = new FibonacciHeap(this);
 		buttons = new MeldablePQButtons(this);
 		pauses = false;
 		D.random(7);

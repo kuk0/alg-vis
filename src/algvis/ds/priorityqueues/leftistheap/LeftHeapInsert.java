@@ -21,7 +21,6 @@ import algvis.core.visual.ZDepth;
 import java.util.HashMap;
 
 public class LeftHeapInsert extends LeftHeapAlg {
-	private int i;
 	private final int x;
 
 	public LeftHeapInsert(LeftHeap H, int x) {
@@ -31,7 +30,7 @@ public class LeftHeapInsert extends LeftHeapAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		i = H.active;
+		int i = H.active;
 		H.root[0] = new LeftHeapNode(H, x, ZDepth.ACTIONNODE);
 		setHeader("insertion");
 		

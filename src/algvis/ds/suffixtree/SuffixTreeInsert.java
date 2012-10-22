@@ -55,8 +55,7 @@ public class SuffixTreeInsert extends Algorithm {
 
 		T.getRoot().ch = ':';
 		T.text = s;
-		SuffixTreeNode v = T.getRoot();
-		SuffixTreeNode starting = v;
+		SuffixTreeNode starting = T.getRoot();
 		int startingJ = 0;
 
 		SuffixTreeNode setUpSuffixLinkOnThis = T.getRoot();
