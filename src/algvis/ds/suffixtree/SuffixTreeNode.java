@@ -18,7 +18,7 @@ package algvis.ds.suffixtree;
 
 import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
-import algvis.ds.DataStructure;
+import algvis.core.DataStructure;
 import algvis.ds.trie.TrieNode;
 import algvis.ui.Fonts;
 import algvis.ui.view.View;

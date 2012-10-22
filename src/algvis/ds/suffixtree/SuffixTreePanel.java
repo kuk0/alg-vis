@@ -17,7 +17,7 @@
 package algvis.ds.suffixtree;
 
 import algvis.core.Settings;
-import algvis.ds.DataStructure;
+import algvis.core.DataStructure;
 import algvis.ui.VisPanel;
 
 public class SuffixTreePanel extends VisPanel {

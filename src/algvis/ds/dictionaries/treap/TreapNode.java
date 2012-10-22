@@ -18,7 +18,7 @@ package algvis.ds.dictionaries.treap;
 
 import algvis.core.Node;
 import algvis.core.NodeColor;
-import algvis.ds.DataStructure;
+import algvis.core.DataStructure;
 import algvis.ds.dictionaries.bst.BSTNode;
 
 import java.awt.*;

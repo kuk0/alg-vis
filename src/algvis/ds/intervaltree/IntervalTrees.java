@@ -1,7 +1,7 @@
 package algvis.ds.intervaltree;
 
 import algvis.core.Node;
-import algvis.ds.DataStructure;
+import algvis.core.DataStructure;
 import algvis.ui.VisPanel;
 
 public abstract class IntervalTrees extends DataStructure{

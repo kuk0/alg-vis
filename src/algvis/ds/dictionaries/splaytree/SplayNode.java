@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.splaytree;
 
-import algvis.ds.DataStructure;
+import algvis.core.DataStructure;
 import algvis.ds.dictionaries.bst.BSTNode;
 
 public class SplayNode extends BSTNode {

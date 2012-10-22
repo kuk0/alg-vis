@@ -18,7 +18,7 @@ package algvis.ds.dictionaries.skiplist;
 
 import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
-import algvis.ds.dictionaries.Dictionary;
+import algvis.core.Dictionary;
 import algvis.ui.VisPanel;
 import algvis.ui.view.Alignment;
 import algvis.ui.view.ClickListener;

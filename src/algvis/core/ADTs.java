@@ -16,7 +16,6 @@
  ******************************************************************************/
 package algvis.core;
 
-import algvis.ds.dictionaries.Dictionary;
 import algvis.ds.intervaltree.IntervalTrees;
 import algvis.ds.priorityqueues.MeldablePQ;
 import algvis.ds.priorityqueues.PriorityQueue;

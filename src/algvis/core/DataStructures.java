@@ -16,7 +16,6 @@
  ******************************************************************************/
 package algvis.core;
 
-import algvis.ds.DataStructure;
 import algvis.ds.dictionaries.aatree.AAPanel;
 import algvis.ds.dictionaries.avltree.AVLPanel;
 import algvis.ds.dictionaries.bst.BSTPanel;

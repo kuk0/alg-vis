@@ -18,7 +18,7 @@ package algvis.ds.trie;
 
 import algvis.core.WordGenerator;
 import algvis.core.history.HashtableStoreSupport;
-import algvis.ds.DataStructure;
+import algvis.core.DataStructure;
 import algvis.ui.Fonts;
 import algvis.ui.VisPanel;
 import algvis.ui.view.View;

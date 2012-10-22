@@ -19,7 +19,7 @@ package algvis.ds.priorityqueues.leftistheap;
 
 import algvis.core.AlgorithmAdapter;
 import algvis.core.Settings;
-import algvis.ds.DataStructure;
+import algvis.core.DataStructure;
 import algvis.ds.priorityqueues.MeldablePQButtons;
 import algvis.ds.priorityqueues.MeldablePQButtonsNoDecr;
 import algvis.ui.VisPanel;

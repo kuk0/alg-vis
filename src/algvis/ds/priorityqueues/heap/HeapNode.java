@@ -18,7 +18,7 @@ package algvis.ds.priorityqueues.heap;
 
 import algvis.core.Node;
 import algvis.core.visual.ZDepth;
-import algvis.ds.DataStructure;
+import algvis.core.DataStructure;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ds.priorityqueues.PriorityQueue;
 

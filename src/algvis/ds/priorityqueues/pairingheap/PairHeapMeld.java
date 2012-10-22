@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.pairingheap;
 
-import algvis.ds.DataStructure;
+import algvis.core.DataStructure;
 
 import java.util.HashMap;
 

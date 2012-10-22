@@ -21,7 +21,7 @@ import algvis.core.NodeColor;
 import algvis.core.TreeNode;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
-import algvis.ds.DataStructure;
+import algvis.core.DataStructure;
 import algvis.ui.Fonts;
 import algvis.ui.view.View;
 

@@ -17,7 +17,7 @@
 package algvis.ds.dictionaries.aatree;
 
 import algvis.core.Settings;
-import algvis.ds.DataStructure;
+import algvis.core.DataStructure;
 import algvis.ui.VisPanel;
 
 public class AAPanel extends VisPanel {

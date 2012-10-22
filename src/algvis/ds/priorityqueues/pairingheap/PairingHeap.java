@@ -19,7 +19,7 @@ package algvis.ds.priorityqueues.pairingheap;
 import algvis.core.Node;
 import algvis.core.Pair;
 import algvis.core.history.HashtableStoreSupport;
-import algvis.ds.DataStructure;
+import algvis.core.DataStructure;
 import algvis.ds.priorityqueues.MeldablePQ;
 import algvis.ds.priorityqueues.MeldablePQButtons;
 import algvis.ds.priorityqueues.pairingheap.PairHeapAlg.Pairing;

@@ -18,7 +18,7 @@ package algvis.ds.dictionaries.btree;
 
 import algvis.core.AlgorithmAdapter;
 import algvis.core.history.HashtableStoreSupport;
-import algvis.ds.dictionaries.Dictionary;
+import algvis.core.Dictionary;
 import algvis.ui.VisPanel;
 import algvis.ui.view.View;
 import algvis.internationalization.Languages;

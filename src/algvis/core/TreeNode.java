@@ -18,7 +18,6 @@ package algvis.core;
 
 import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
-import algvis.ds.DataStructure;
 import algvis.ui.view.View;
 
 import java.awt.*;

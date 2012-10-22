@@ -3,7 +3,7 @@ package algvis.ds.intervaltree;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.history.HashtableStoreSupport;
-import algvis.ds.DataStructure;
+import algvis.core.DataStructure;
 import algvis.ds.dictionaries.bst.BST;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ds.intervaltree.IntervalTrees.mimasuType;

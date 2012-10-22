@@ -17,7 +17,7 @@
 package algvis.ds.trie;
 
 import algvis.core.Settings;
-import algvis.ds.DataStructure;
+import algvis.core.DataStructure;
 import algvis.ui.VisPanel;
 
 public class TriePanel extends VisPanel {

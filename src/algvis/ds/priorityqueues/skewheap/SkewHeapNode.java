@@ -18,7 +18,7 @@ package algvis.ds.priorityqueues.skewheap;
 
 import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
-import algvis.ds.DataStructure;
+import algvis.core.DataStructure;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ds.priorityqueues.MeldablePQ;
 import algvis.ui.view.View;

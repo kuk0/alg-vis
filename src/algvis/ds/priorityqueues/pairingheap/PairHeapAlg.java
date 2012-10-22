@@ -17,7 +17,7 @@
 package algvis.ds.priorityqueues.pairingheap;
 
 import algvis.core.Algorithm;
-import algvis.ds.DataStructure;
+import algvis.core.DataStructure;
 
 public abstract class PairHeapAlg extends Algorithm {
 	public enum Pairing {

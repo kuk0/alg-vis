@@ -18,7 +18,7 @@ package algvis.ds.dictionaries.bst;
 
 import algvis.core.StringUtils;
 import algvis.core.visual.ZDepth;
-import algvis.ds.dictionaries.Dictionary;
+import algvis.core.Dictionary;
 import algvis.ui.VisPanel;
 import algvis.ui.view.ClickListener;
 import algvis.ui.view.Layout;
