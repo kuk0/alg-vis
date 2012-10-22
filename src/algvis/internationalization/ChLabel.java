@@ -16,11 +16,8 @@
  ******************************************************************************/
 package algvis.internationalization;
 
-import java.awt.Dimension;
-import java.awt.FontMetrics;
-import java.awt.Rectangle;
-
-import javax.swing.JLabel;
+import javax.swing.*;
+import java.awt.*;
 
 public class ChLabel extends JLabel {
 	private static final long serialVersionUID = 8534784764906070592L;

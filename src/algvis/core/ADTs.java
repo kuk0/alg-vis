@@ -16,9 +16,11 @@
  ******************************************************************************/
 package algvis.core;
 
-import algvis.intervaltree.IntervalTrees;
-import algvis.trie.Trie;
-import algvis.unionfind.UnionFind;
+import algvis.ds.intervaltree.IntervalTrees;
+import algvis.ds.priorityqueues.MeldablePQ;
+import algvis.ds.priorityqueues.PriorityQueue;
+import algvis.ds.trie.Trie;
+import algvis.ds.unionfind.UnionFind;
 
 /**
  * The Class ADTs. This class contains the list of all abstract data types

@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.internationalization;
 
-import javax.swing.JRadioButton;
+import javax.swing.*;
 
 public class IRadioButton extends JRadioButton implements LanguageListener {
 	private static final long serialVersionUID = -8675513915804080311L;
