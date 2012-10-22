@@ -16,8 +16,8 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.bst;
 
-import algvis.core.Settings;
 import algvis.core.DataStructure;
+import algvis.core.Settings;
 import algvis.ui.VisPanel;
 import algvis.ui.view.LayoutListener;
 

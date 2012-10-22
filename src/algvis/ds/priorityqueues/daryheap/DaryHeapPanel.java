@@ -16,8 +16,8 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.daryheap;
 
-import algvis.core.Settings;
 import algvis.core.DataStructure;
+import algvis.core.Settings;
 import algvis.ui.VisPanel;
 
 public class DaryHeapPanel extends VisPanel{

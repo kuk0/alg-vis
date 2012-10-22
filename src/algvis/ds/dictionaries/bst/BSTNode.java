@@ -16,11 +16,11 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.bst;
 
+import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.NodePair;
 import algvis.core.history.HashtableStoreSupport;
-import algvis.core.DataStructure;
 import algvis.ui.Fonts;
 import algvis.ui.view.Layout;
 import algvis.ui.view.View;

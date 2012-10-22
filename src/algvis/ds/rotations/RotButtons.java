@@ -16,10 +16,10 @@
  ******************************************************************************/
 package algvis.ds.rotations;
 
-import algvis.ui.Buttons;
-import algvis.ui.VisPanel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ICheckBox;
+import algvis.ui.Buttons;
+import algvis.ui.VisPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

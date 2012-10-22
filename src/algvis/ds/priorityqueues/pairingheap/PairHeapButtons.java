@@ -17,9 +17,9 @@
 package algvis.ds.priorityqueues.pairingheap;
 
 import algvis.ds.priorityqueues.MeldablePQButtons;
-import algvis.ui.VisPanel;
 import algvis.internationalization.IComboBox;
 import algvis.internationalization.ILabel;
+import algvis.ui.VisPanel;
 
 import javax.swing.*;
 import javax.swing.event.ChangeListener;

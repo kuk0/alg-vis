@@ -16,10 +16,10 @@
  ******************************************************************************/
 package algvis.ds.rotations;
 
+import algvis.core.DataStructure;
 import algvis.core.MyRandom;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
-import algvis.core.DataStructure;
 import algvis.ds.dictionaries.bst.BST;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.InputField;

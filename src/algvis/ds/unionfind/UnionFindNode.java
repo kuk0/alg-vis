@@ -16,9 +16,9 @@
  ******************************************************************************/
 package algvis.ds.unionfind;
 
+import algvis.core.DataStructure;
 import algvis.core.TreeNode;
 import algvis.core.history.HashtableStoreSupport;
-import algvis.core.DataStructure;
 import algvis.ui.view.View;
 
 import java.util.Hashtable;

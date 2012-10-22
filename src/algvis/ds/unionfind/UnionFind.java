@@ -16,10 +16,10 @@
  ******************************************************************************/
 package algvis.ds.unionfind;
 
+import algvis.core.DataStructure;
 import algvis.core.MyRandom;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
-import algvis.core.DataStructure;
 import algvis.ds.unionfind.UnionFindFind.FindHeuristic;
 import algvis.ds.unionfind.UnionFindUnion.UnionHeuristic;
 import algvis.ui.VisPanel;

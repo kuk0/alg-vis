@@ -16,9 +16,9 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.aatree;
 
+import algvis.internationalization.ICheckBox;
 import algvis.ui.DictButtons;
 import algvis.ui.VisPanel;
-import algvis.internationalization.ICheckBox;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

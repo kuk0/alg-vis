@@ -17,9 +17,9 @@
 package algvis.ds.priorityqueues;
 
 import algvis.core.AlgorithmAdapter;
-import algvis.ui.VisPanel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ILabel;
+import algvis.ui.VisPanel;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;

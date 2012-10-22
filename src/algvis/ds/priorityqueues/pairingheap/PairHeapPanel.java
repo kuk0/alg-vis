@@ -17,8 +17,8 @@
 package algvis.ds.priorityqueues.pairingheap;
 
 
-import algvis.core.Settings;
 import algvis.core.DataStructure;
+import algvis.core.Settings;
 import algvis.ui.VisPanel;
 
 public class PairHeapPanel extends VisPanel{

@@ -16,8 +16,8 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.pairingheap;
 
-import algvis.core.TreeNode;
 import algvis.core.DataStructure;
+import algvis.core.TreeNode;
 import algvis.ds.priorityqueues.MeldablePQ;
 import algvis.ui.view.View;
 

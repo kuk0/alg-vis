@@ -16,8 +16,8 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.redblacktree;
 
-import algvis.core.Settings;
 import algvis.core.DataStructure;
+import algvis.core.Settings;
 import algvis.ui.VisPanel;
 
 public class RBPanel extends VisPanel {

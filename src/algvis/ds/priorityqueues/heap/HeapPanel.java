@@ -16,8 +16,8 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.heap;
 
-import algvis.core.Settings;
 import algvis.core.DataStructure;
+import algvis.core.Settings;
 import algvis.ds.priorityqueues.PQButtons;
 import algvis.ui.VisPanel;
 

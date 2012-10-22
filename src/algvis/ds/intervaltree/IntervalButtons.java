@@ -3,10 +3,10 @@ package algvis.ds.intervaltree;
 import algvis.core.AlgorithmAdapter;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ds.intervaltree.IntervalTrees.mimasuType;
-import algvis.ui.Buttons;
-import algvis.ui.VisPanel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.IRadioButton;
+import algvis.ui.Buttons;
+import algvis.ui.VisPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

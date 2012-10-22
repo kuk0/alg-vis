@@ -16,14 +16,14 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.skiplist;
 
+import algvis.core.Dictionary;
 import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
-import algvis.core.Dictionary;
+import algvis.internationalization.Languages;
 import algvis.ui.VisPanel;
 import algvis.ui.view.Alignment;
 import algvis.ui.view.ClickListener;
 import algvis.ui.view.View;
-import algvis.internationalization.Languages;
 
 import java.util.Hashtable;
 

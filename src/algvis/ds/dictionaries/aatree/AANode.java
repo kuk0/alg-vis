@@ -16,8 +16,8 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.aatree;
 
-import algvis.core.Node;
 import algvis.core.DataStructure;
+import algvis.core.Node;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.Fonts;
 import algvis.ui.view.View;

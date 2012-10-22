@@ -16,10 +16,10 @@
  ******************************************************************************/
 package algvis.ds.suffixtree;
 
+import algvis.core.DataStructure;
 import algvis.core.StringElem;
 import algvis.core.WordGenerator;
 import algvis.core.history.HashtableStoreSupport;
-import algvis.core.DataStructure;
 import algvis.ui.Fonts;
 import algvis.ui.VisPanel;
 import algvis.ui.view.View;

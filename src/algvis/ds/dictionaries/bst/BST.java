@@ -16,15 +16,15 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.bst;
 
+import algvis.core.Dictionary;
 import algvis.core.StringUtils;
 import algvis.core.visual.ZDepth;
-import algvis.core.Dictionary;
+import algvis.internationalization.Languages;
 import algvis.ui.VisPanel;
 import algvis.ui.view.ClickListener;
 import algvis.ui.view.Layout;
 import algvis.ui.view.LayoutListener;
 import algvis.ui.view.View;
-import algvis.internationalization.Languages;
 
 public class BST extends Dictionary implements LayoutListener, ClickListener {
 	public static String dsName = "bst";

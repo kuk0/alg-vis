@@ -1,7 +1,7 @@
 package algvis.ds.intervaltree;
 
-import algvis.core.Settings;
 import algvis.core.DataStructure;
+import algvis.core.Settings;
 import algvis.ui.VisPanel;
 
 public class IntervalPanel extends VisPanel{

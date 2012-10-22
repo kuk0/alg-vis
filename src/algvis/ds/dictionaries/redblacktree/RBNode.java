@@ -16,10 +16,10 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.redblacktree;
 
+import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.history.HashtableStoreSupport;
-import algvis.core.DataStructure;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.view.View;
 

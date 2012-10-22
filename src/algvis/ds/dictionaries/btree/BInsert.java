@@ -18,7 +18,6 @@ package algvis.ds.dictionaries.btree;
 
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
-import algvis.core.visual.VisualElement;
 
 import java.util.HashMap;
 

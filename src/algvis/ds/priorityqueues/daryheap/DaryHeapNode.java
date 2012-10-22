@@ -16,10 +16,10 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.daryheap;
 
+import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
-import algvis.core.DataStructure;
 import algvis.ds.priorityqueues.PriorityQueue;
 import algvis.ds.priorityqueues.heap.HeapNode;
 import algvis.ui.view.View;

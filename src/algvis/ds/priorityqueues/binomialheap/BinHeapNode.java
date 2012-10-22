@@ -16,11 +16,11 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.binomialheap;
 
+import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
-import algvis.core.DataStructure;
 import algvis.ds.priorityqueues.MeldablePQ;
 import algvis.ui.Fonts;
 import algvis.ui.view.View;

@@ -18,10 +18,10 @@ package algvis.ds.priorityqueues;
 
 import algvis.core.AlgorithmAdapter;
 import algvis.core.Node;
-import algvis.ui.Buttons;
-import algvis.ui.VisPanel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.IRadioButton;
+import algvis.ui.Buttons;
+import algvis.ui.VisPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

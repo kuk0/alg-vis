@@ -16,9 +16,9 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues;
 
+import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
-import algvis.core.DataStructure;
 import algvis.ui.VisPanel;
 
 import java.util.Hashtable;

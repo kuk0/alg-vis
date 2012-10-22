@@ -17,8 +17,8 @@
 package algvis.ds.priorityqueues.lazybinomialheap;
 
 import algvis.core.AlgorithmAdapter;
-import algvis.core.Settings;
 import algvis.core.DataStructure;
+import algvis.core.Settings;
 import algvis.ds.priorityqueues.MeldablePQButtons;
 import algvis.ui.VisPanel;
 

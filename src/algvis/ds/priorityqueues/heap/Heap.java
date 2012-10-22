@@ -20,10 +20,10 @@ import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ds.priorityqueues.PriorityQueue;
+import algvis.internationalization.Languages;
 import algvis.ui.VisPanel;
 import algvis.ui.view.ClickListener;
 import algvis.ui.view.View;
-import algvis.internationalization.Languages;
 
 import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;

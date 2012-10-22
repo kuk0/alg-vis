@@ -19,9 +19,9 @@ package algvis.ds.dictionaries.scapegoattree;
 import algvis.core.StringUtils;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.dictionaries.bst.BST;
+import algvis.internationalization.Languages;
 import algvis.ui.VisPanel;
 import algvis.ui.view.Layout;
-import algvis.internationalization.Languages;
 
 import java.util.Hashtable;
 

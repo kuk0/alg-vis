@@ -22,10 +22,10 @@ import algvis.core.StringUtils;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.priorityqueues.MeldablePQ;
 import algvis.ds.priorityqueues.MeldablePQButtonsNoDecr;
+import algvis.internationalization.Languages;
 import algvis.ui.VisPanel;
 import algvis.ui.view.ClickListener;
 import algvis.ui.view.View;
-import algvis.internationalization.Languages;
 
 import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;

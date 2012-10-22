@@ -18,8 +18,8 @@ package algvis.ui;
 
 import algvis.core.Algorithm;
 import algvis.core.AlgorithmAdapter;
-import algvis.core.history.HashtableStoreSupport;
 import algvis.core.DataStructure;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.internationalization.ChLabel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ICheckBox;

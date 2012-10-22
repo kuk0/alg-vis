@@ -18,11 +18,11 @@ package algvis.ds.unionfind;
 
 import algvis.core.AlgorithmAdapter;
 import algvis.core.MyRandom;
-import algvis.ui.Buttons;
-import algvis.ui.VisPanel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.IComboBox;
 import algvis.internationalization.ILabel;
+import algvis.ui.Buttons;
+import algvis.ui.VisPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

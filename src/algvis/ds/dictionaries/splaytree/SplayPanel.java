@@ -16,8 +16,8 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.splaytree;
 
-import algvis.core.Settings;
 import algvis.core.DataStructure;
+import algvis.core.Settings;
 import algvis.ui.DictButtons;
 import algvis.ui.VisPanel;
 

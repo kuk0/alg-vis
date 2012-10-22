@@ -16,9 +16,7 @@
  ******************************************************************************/
 package algvis.core;
 
-import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
-import algvis.core.DataStructure;
 import algvis.ui.VisPanel;
 import algvis.ui.view.Layout;
 

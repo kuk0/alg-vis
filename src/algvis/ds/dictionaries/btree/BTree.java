@@ -17,11 +17,11 @@
 package algvis.ds.dictionaries.btree;
 
 import algvis.core.AlgorithmAdapter;
-import algvis.core.history.HashtableStoreSupport;
 import algvis.core.Dictionary;
+import algvis.core.history.HashtableStoreSupport;
+import algvis.internationalization.Languages;
 import algvis.ui.VisPanel;
 import algvis.ui.view.View;
-import algvis.internationalization.Languages;
 
 import java.util.Hashtable;
 

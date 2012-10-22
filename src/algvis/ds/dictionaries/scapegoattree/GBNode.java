@@ -16,8 +16,8 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.scapegoattree;
 
-import algvis.core.history.HashtableStoreSupport;
 import algvis.core.DataStructure;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.dictionaries.bst.BSTNode;
 
 import java.util.Hashtable;
