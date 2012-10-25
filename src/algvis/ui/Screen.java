@@ -21,12 +21,14 @@ import algvis.ui.view.View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ConcurrentModificationException;
 
-public class Screen extends JPanel implements Runnable {
+public class Screen extends JPanel {
 	private static final long serialVersionUID = -8279768206774288161L;
 	// obrazovka (ak nie je suspendnuta) neustale vykresluje poziciu
-	private final Thread t;
-	private boolean suspended = true;
+	private final Timer timer;
 	private DataStructure D = null;
 	private final VisPanel panel;
 
@@ -39,7 +41,11 @@ public class Screen extends JPanel implements Runnable {
 	public Screen(VisPanel panel) {
 		this.panel = panel;
 		V = new View(this);
-		t = new Thread(this);
+		timer = new Timer(50, new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				repaint();
+			}
+		});
 	}
 
 	public void setDS(DataStructure D) {
@@ -68,8 +74,11 @@ public class Screen extends JPanel implements Runnable {
 		clear();
 		if (D != null) {
 			V.startDrawing();
-			panel.scene.move();
-			panel.scene.draw(V);
+			try {
+				panel.scene.move();
+				panel.scene.draw(V);
+			} catch (ConcurrentModificationException ignored) {
+			}
 			V.endDrawing();
 			// V.resetView();
 		} else {
@@ -79,41 +88,14 @@ public class Screen extends JPanel implements Runnable {
 	}
 
 	public void suspend() {
-		suspended = true;
+		timer.stop();
 	}
 
 	public void resume() {
-		if (suspended) {
-			suspended = false;
-			synchronized (this) {
-				notify();
-			}
-		}
+		timer.start();
 	}
 
 	public void start() {
-		//suspended = false;
-		if (!t.isAlive()) {
-			t.start();
-		}
-	}
-
-	@Override
-	public void run() {
-		// repaint();
-		try {
-			while (true) {
-				if (suspended) {
-					synchronized (this) {
-						while (suspended) {
-							wait();
-						}
-					}
-				}
-				repaint();
-				Thread.sleep(50);
-			}
-		} catch (InterruptedException e) {
-		}
+		timer.start();
 	}
 }
