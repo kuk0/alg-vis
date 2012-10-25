@@ -30,29 +30,29 @@ import algvis.ui.view.View;
 import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
 
-public class SkewHeap extends MeldablePQ implements ClickListener{
+public class SkewHeap extends MeldablePQ implements ClickListener {
 	public static final String dsName = "skewheap";
 	SkewHeapNode root[] = null;
-	
+
 	public SkewHeap(VisPanel M) {
 		super(M);
 		root = new SkewHeapNode[numHeaps + 1];
 		M.screen.V.setDS(this);
-	}	
-	
+	}
+
 	@Override
 	public void highlight(int i) {
 		active = i;
 		if (root[active] != null) {
 			root[active].highlightTree();
-		}		
+		}
 	}
 
 	@Override
 	public void lowlight() {
 		if (root[active] != null) {
 			root[active].lowlightTree();
-		}		
+		}
 	}
 
 	@Override
@@ -79,26 +79,27 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 					v.mark();
 					chosen = v;
 				} else {
-					((MeldablePQButtonsNoDecr) panel.buttons).activeHeap.setValue(h);
+					((MeldablePQButtonsNoDecr) panel.buttons).activeHeap
+							.setValue(h);
 					// lowlight();
 					// highlight(h);
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
 	public void insert(int x) {
-		start(new SkewHeapInsert(this, active, x));
-		
+		start(new SkewHeapInsert(this, x));
+
 	}
 
 	@Override
 	public void delete() {
-		start(new SkewHeapDelete(this, active));
-		
+		start(new SkewHeapDelete(this));
 	}
+
 	Pair chooseHeaps(int i, int j) {
 		if (i < 1 || i > numHeaps) {
 			i = -1;
@@ -129,7 +130,7 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 		j = p.second;
 		((MeldablePQButtonsNoDecr) panel.buttons).activeHeap.setValue(i);
 		start(new SkewHeapMeld(this, i, j));
-		
+
 	}
 
 	@Override
@@ -138,7 +139,6 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 		} else {
 			start(new SkewHeapDecrKey(this, (SkewHeapNode) v, delta));
 		}
-		
 	}
 
 	@Override
@@ -186,7 +186,7 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 		}
 
 		setStats();
-		
+
 	}
 
 	@Override
@@ -195,7 +195,7 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 			if (root[i] != null) {
 				root[i].drawTree(V);
 			}
-		}	
+		}
 	}
 
 	@Override
@@ -229,7 +229,8 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 	protected void endAnimation() {
 		if (root != null) {
 			for (int i = 0; i <= numHeaps; ++i) {
-				if (root[i] != null) root[i].endAnimation();
+				if (root[i] != null)
+					root[i].endAnimation();
 			}
 		}
 	}
@@ -238,30 +239,25 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 	protected boolean isAnimationDone() {
 		if (root != null) {
 			for (int i = 0; i <= numHeaps; ++i) {
-				if (root[i] != null && !root[i].isAnimationDone()) return false;
+				if (root[i] != null && !root[i].isAnimationDone())
+					return false;
 			}
 		}
 		return true;
 	}
 
 	public void reposition() {
-
+		final int HEAP_SEP = 20;
 		int sumx = 0;
 		for (int i = 1; i <= numHeaps; ++i) {
 			if (root[i] != null) {
 				root[i].reposition();
 				root[i].reboxTree();
-				//sumx += root[i].leftw;
+				sumx += root[i].leftw;
 				root[i].repos(sumx, root[i].toy);
-				sumx += root[i].rightw + 20;
+				sumx += root[i].rightw + HEAP_SEP;
 			}
-			
-			if (i+1 <= numHeaps){
-				if (root[i+1] != null) {
-					sumx += root[i+1].leftw;
-				}
-			}
-			
+
 			if (i == active) {
 				if (root[0] != null) {
 					root[0].reposition();
@@ -272,7 +268,7 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 					} else {
 						root[0].repos(sumx, root[0].toy);
 					}
-					sumx += root[0].rightw;
+					sumx += root[0].rightw + HEAP_SEP;
 				}
 			}
 		}
@@ -284,7 +280,8 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "root", root.clone());
 		for (int i = 0; i <= numHeaps; ++i) {
-			if (root[i] != null) root[i].storeState(state);
+			if (root[i] != null)
+				root[i].storeState(state);
 		}
 	}
 
@@ -292,9 +289,11 @@ public class SkewHeap extends MeldablePQ implements ClickListener{
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object root = state.get(hash + "root");
-		if (root != null) this.root = (SkewHeapNode[]) HashtableStoreSupport.restore(root);
+		if (root != null)
+			this.root = (SkewHeapNode[]) HashtableStoreSupport.restore(root);
 		for (int i = 0; i <= numHeaps; ++i) {
-			if (this.root[i] != null) this.root[i].restoreState(state);
+			if (this.root[i] != null)
+				this.root[i].restoreState(state);
 		}
 	}
 }

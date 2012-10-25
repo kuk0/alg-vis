@@ -174,7 +174,7 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 		IntervalNode tmp = generateEmpty(getHeight() - 1);
 		root.setRight(tmp);
 		tmp.setParent(root);
-		System.out.println(this.getHeight());
+		//System.out.println(this.getHeight());
 		reposition();
 		// root.add();
 

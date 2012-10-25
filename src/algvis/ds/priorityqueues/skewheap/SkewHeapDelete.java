@@ -19,15 +19,14 @@ package algvis.ds.priorityqueues.skewheap;
 import java.util.HashMap;
 
 public class SkewHeapDelete extends SkewHeapAlg {
-	private final int i;
 
-	public SkewHeapDelete(SkewHeap H, int i) {
+	public SkewHeapDelete(SkewHeap H) {
 		super(H);
-		this.i = i;
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		int i = H.active;
 		setHeader("deletion");
 		
 		if (H.root[i] == null) {
