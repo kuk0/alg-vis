@@ -19,8 +19,6 @@ package algvis.ds.trie;
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
-import java.util.HashMap;
-
 public class TrieInsert extends Algorithm {
 	private final Trie T;
 	private String s;
@@ -87,10 +85,5 @@ public class TrieInsert extends Algorithm {
 		T.reposition();
 		hw.setAndGoNextTo(s, v);
 		beforeReturn();
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

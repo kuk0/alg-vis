@@ -20,11 +20,9 @@ import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 
-import java.util.HashMap;
-
 public class SplayDelete extends SplayAlg {
 	private final int K;
-	
+
 	public SplayDelete(SplayTree T, int x) {
 		super(T, x);
 		K = x;
@@ -99,7 +97,7 @@ public class SplayDelete extends SplayAlg {
 			}
 			w.setColor(NodeColor.FIND);
 			removeFromScene(s);
-			// splay 		TODO: shades
+			// splay TODO: shades
 			// TODO: reuse splaying
 			while (!w.isRoot()) {
 				if (w.getParent().isRoot()) {
@@ -136,10 +134,5 @@ public class SplayDelete extends SplayAlg {
 		}
 
 		addStep("done");
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

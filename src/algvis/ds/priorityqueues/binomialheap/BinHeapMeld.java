@@ -16,7 +16,6 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.binomialheap;
 
-import java.util.HashMap;
 
 public class BinHeapMeld extends BinHeapAlg {
 	private final int i;
@@ -54,10 +53,5 @@ public class BinHeapMeld extends BinHeapAlg {
 		H.reposition();
 
 		meld(i);
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

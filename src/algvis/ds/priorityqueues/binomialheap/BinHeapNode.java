@@ -16,6 +16,9 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.binomialheap;
 
+import java.awt.Color;
+import java.util.Hashtable;
+
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
@@ -24,9 +27,6 @@ import algvis.core.visual.ZDepth;
 import algvis.ds.priorityqueues.MeldablePQ;
 import algvis.ui.Fonts;
 import algvis.ui.view.View;
-
-import java.awt.*;
-import java.util.Hashtable;
 
 public class BinHeapNode extends Node {
 	private int leftw;

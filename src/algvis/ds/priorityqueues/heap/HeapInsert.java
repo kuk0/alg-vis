@@ -18,8 +18,6 @@ package algvis.ds.priorityqueues.heap;
 
 import algvis.core.visual.ZDepth;
 
-import java.util.HashMap;
-
 public class HeapInsert extends HeapAlg {
 	private final int K;
 	public HeapInsert(Heap H, int x) {
@@ -70,10 +68,5 @@ public class HeapInsert extends HeapAlg {
 
 		// pause();
 		bubbleup(v);
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

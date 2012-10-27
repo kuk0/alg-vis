@@ -16,13 +16,12 @@
  ******************************************************************************/
 package algvis.ds.suffixtree;
 
+import java.util.Vector;
+
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.core.StringElem;
 import algvis.ds.trie.TrieWordNode;
-
-import java.util.HashMap;
-import java.util.Vector;
 
 public class SuffixTreeInsert extends Algorithm {
 	private final SuffixTree T;
@@ -244,10 +243,5 @@ public class SuffixTreeInsert extends Algorithm {
 
 		T.reposition();
 		beforeReturn();
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

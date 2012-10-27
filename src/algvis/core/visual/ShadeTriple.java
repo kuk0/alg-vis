@@ -1,6 +1,7 @@
 package algvis.core.visual;
 
 import java.awt.geom.Rectangle2D;
+
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.view.View;
 

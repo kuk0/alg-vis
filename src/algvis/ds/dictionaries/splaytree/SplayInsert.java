@@ -19,8 +19,6 @@ package algvis.ds.dictionaries.splaytree;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 
-import java.util.HashMap;
-
 public class SplayInsert extends SplayAlg {
 	public SplayInsert(SplayTree T, int x) {
 		super(T, x);
@@ -71,10 +69,5 @@ public class SplayInsert extends SplayAlg {
 		addNote("done");
 		v.setColor(NodeColor.NORMAL);
 		removeFromScene(v);
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

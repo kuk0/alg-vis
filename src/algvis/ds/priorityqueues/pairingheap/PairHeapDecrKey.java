@@ -18,8 +18,6 @@ package algvis.ds.priorityqueues.pairingheap;
 
 import algvis.ui.InputField;
 
-import java.util.HashMap;
-
 public class PairHeapDecrKey extends PairHeapAlg {
 	private final int delta;
 
@@ -70,10 +68,4 @@ public class PairHeapDecrKey extends PairHeapAlg {
 
 		addNote("done");
 	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
-	}
-
 }

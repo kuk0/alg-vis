@@ -16,11 +16,11 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.redblacktree;
 
+import java.util.HashMap;
+
 import algvis.core.Algorithm;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTInsert;
-
-import java.util.HashMap;
 
 public class RBInsert extends Algorithm {
 	private final RB T;
@@ -95,10 +95,5 @@ public class RBInsert extends Algorithm {
 			T.reposition();
 			addStep("done");
 		}		
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

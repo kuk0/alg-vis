@@ -18,8 +18,6 @@ package algvis.ds.priorityqueues.daryheap;
 
 import algvis.core.visual.ZDepth;
 
-import java.util.HashMap;
-
 public class DaryHeapInsert extends DaryHeapAlg {
 	private final DaryHeap H; // prepisat na H
 	private final DaryHeapNode v;
@@ -68,10 +66,4 @@ public class DaryHeapInsert extends DaryHeapAlg {
 		v.unmark();
 		bubbleup(v);
 	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
-	}
-
 }

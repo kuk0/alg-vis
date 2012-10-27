@@ -16,8 +16,6 @@
  ******************************************************************************/
 package algvis.ds.rotations;
 
-import java.util.HashMap;
-
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.core.visual.ShadePair;
@@ -58,7 +56,7 @@ public class Rotate extends Algorithm {
 			c = v.getRight();
 		}
 		ShadeSubtree shadeA = null, shadeB = null, shadeC = null;
-		if (true) { // TODO: only if show subtrees set
+		if (R.subtrees) {
 			if (a != null) {
 				a.subtreeColor(NodeColor.RED);
 				shadeA = new ShadeSubtree(T.panel.scene, a);
@@ -105,10 +103,5 @@ public class Rotate extends Algorithm {
 		}
 
 		T.getRoot().calcTree();
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

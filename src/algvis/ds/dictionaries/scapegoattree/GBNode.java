@@ -16,11 +16,11 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.scapegoattree;
 
+import java.util.Hashtable;
+
 import algvis.core.DataStructure;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.dictionaries.bst.BSTNode;
-
-import java.util.Hashtable;
 
 public class GBNode extends BSTNode {
 	private boolean deleted = false;

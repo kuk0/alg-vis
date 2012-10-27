@@ -19,8 +19,6 @@ package algvis.ds.dictionaries.btree;
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
-import java.util.HashMap;
-
 public class BFind extends Algorithm {
 	private final BTree T;
 	private final int K;
@@ -70,10 +68,5 @@ public class BFind extends Algorithm {
 			}
 		}
 		removeFromScene(v);
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

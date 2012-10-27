@@ -18,8 +18,6 @@ package algvis.ds.priorityqueues.skewheap;
 
 import algvis.core.visual.ZDepth;
 
-import java.util.HashMap;
-
 public class SkewHeapInsert extends SkewHeapAlg {
 	private final int x;
 
@@ -59,10 +57,5 @@ public class SkewHeapInsert extends SkewHeapAlg {
 
 		pause();
 		meld(i);
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

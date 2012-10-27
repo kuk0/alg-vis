@@ -5,8 +5,6 @@ import algvis.core.visual.ZDepth;
 import algvis.ds.intervaltree.IntervalNode.focusType;
 import algvis.ds.intervaltree.IntervalTrees.mimasuType;
 
-import java.util.HashMap;
-
 public class IntervalFindMin extends IntervalAlg {
 	private int i;
     private int j;
@@ -79,11 +77,6 @@ public class IntervalFindMin extends IntervalAlg {
 		} else {
 			// addNote(); //strom je prazdny/zly interval
 		}
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 
 	void find(IntervalNode w, int b, int e) throws InterruptedException {

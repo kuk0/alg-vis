@@ -16,6 +16,20 @@
  ******************************************************************************/
 package algvis.ui;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.Hashtable;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.undo.StateEditable;
+
 import algvis.core.Algorithm;
 import algvis.core.AlgorithmAdapter;
 import algvis.core.DataStructure;
@@ -23,14 +37,6 @@ import algvis.core.history.HashtableStoreSupport;
 import algvis.internationalization.ChLabel;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ICheckBox;
-
-import javax.swing.*;
-import javax.swing.undo.StateEditable;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.util.Hashtable;
 
 /**
  * The Class Buttons. This is a panel with standard buttons such as input field,

@@ -16,14 +16,14 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.redblacktree;
 
+import java.util.Hashtable;
+
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.view.View;
-
-import java.util.Hashtable;
 
 public class RBNode extends BSTNode {
 	private boolean red = true;

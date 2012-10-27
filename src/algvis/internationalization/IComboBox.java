@@ -16,8 +16,9 @@
  ******************************************************************************/
 package algvis.internationalization;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+
+import javax.swing.JComboBox;
 
 public class IComboBox extends JComboBox implements LanguageListener {
 	private static final long serialVersionUID = 8795452558528688577L;

@@ -16,11 +16,11 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.bst;
 
+import java.util.HashMap;
+
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
-
-import java.util.HashMap;
 
 public class BSTFind extends Algorithm {
 	private final BST T;

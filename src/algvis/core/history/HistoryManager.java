@@ -16,13 +16,14 @@
  ******************************************************************************/
 package algvis.core.history;
 
-import algvis.ui.VisPanel;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
-import java.util.Map;
-import java.util.WeakHashMap;
+
+import algvis.ui.VisPanel;
 
 public class HistoryManager extends UndoManager {
 	private final Map<UndoableEdit, Boolean> algorithmEnds = new WeakHashMap<UndoableEdit, Boolean>();

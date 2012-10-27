@@ -16,6 +16,8 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.skiplist;
 
+import java.util.Hashtable;
+
 import algvis.core.Dictionary;
 import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
@@ -24,8 +26,6 @@ import algvis.ui.VisPanel;
 import algvis.ui.view.Alignment;
 import algvis.ui.view.ClickListener;
 import algvis.ui.view.View;
-
-import java.util.Hashtable;
 
 public class SkipList extends Dictionary implements ClickListener {
 	public static String dsName = "skiplist";

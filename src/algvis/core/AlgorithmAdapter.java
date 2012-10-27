@@ -19,15 +19,8 @@ package algvis.core;
 
 import algvis.ui.VisPanel;
 
-import java.util.HashMap;
-
 public abstract class AlgorithmAdapter extends Algorithm {
 	protected AlgorithmAdapter(VisPanel panel) {
 		super(panel);
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

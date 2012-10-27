@@ -16,7 +16,9 @@
  ******************************************************************************/
 package algvis.ui;
 
-import java.awt.*;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 
 public enum Fonts {
 	NORMAL(new Font(Font.SANS_SERIF, Font.PLAIN, 9)),

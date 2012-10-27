@@ -16,6 +16,10 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.daryheap;
 
+import java.awt.Color;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
@@ -23,10 +27,6 @@ import algvis.core.visual.ZDepth;
 import algvis.ds.priorityqueues.PriorityQueue;
 import algvis.ds.priorityqueues.heap.HeapNode;
 import algvis.ui.view.View;
-
-import java.awt.*;
-import java.util.Hashtable;
-import java.util.Vector;
 
 public class DaryHeapNode extends HeapNode {
 	private int width;// , leftw, rightw;

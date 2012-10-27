@@ -16,7 +16,6 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.binomialheap;
 
-import java.util.HashMap;
 
 public class BinHeapDelete extends BinHeapAlg {
 
@@ -91,10 +90,5 @@ public class BinHeapDelete extends BinHeapAlg {
 		}
 
 		meld(i);
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

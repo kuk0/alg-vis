@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.internationalization;
 
-import javax.swing.*;
+import javax.swing.JMenu;
 
 public class IMenu extends JMenu implements LanguageListener {
 	private static final long serialVersionUID = -6631532284442911505L;

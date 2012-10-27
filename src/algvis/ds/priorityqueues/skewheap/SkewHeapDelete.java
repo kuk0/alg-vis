@@ -16,7 +16,6 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.skewheap;
 
-import java.util.HashMap;
 
 public class SkewHeapDelete extends SkewHeapAlg {
 
@@ -72,10 +71,4 @@ public class SkewHeapDelete extends SkewHeapAlg {
 		pause();
 		meld(i);
 	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
-	}
-
 }

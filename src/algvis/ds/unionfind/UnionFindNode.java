@@ -16,12 +16,12 @@
  ******************************************************************************/
 package algvis.ds.unionfind;
 
+import java.util.Hashtable;
+
 import algvis.core.DataStructure;
 import algvis.core.TreeNode;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.view.View;
-
-import java.util.Hashtable;
 
 public class UnionFindNode extends TreeNode {
 	private int rank = 0;

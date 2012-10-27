@@ -1,13 +1,14 @@
 package algvis.core;
 
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Hashtable;
+
+import javax.swing.undo.StateEditable;
+
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.Fonts;
 import algvis.ui.view.View;
-
-import javax.swing.undo.StateEditable;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Hashtable;
 
 public class StringElem implements StateEditable {
 	private static final int span = 12;

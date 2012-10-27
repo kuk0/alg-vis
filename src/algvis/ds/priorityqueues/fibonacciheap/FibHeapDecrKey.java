@@ -21,8 +21,6 @@ import algvis.ds.priorityqueues.binomialheap.BinHeapNode;
 import algvis.ds.priorityqueues.binomialheap.BinomialHeap;
 import algvis.ui.InputField;
 
-import java.util.HashMap;
-
 public class FibHeapDecrKey extends Algorithm {
 	private final int delta;
 	private final BinomialHeap H;
@@ -67,10 +65,5 @@ public class FibHeapDecrKey extends Algorithm {
 				break;
 			}
 		}
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

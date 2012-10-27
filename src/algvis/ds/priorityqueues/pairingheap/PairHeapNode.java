@@ -16,12 +16,12 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.pairingheap;
 
+import java.awt.Color;
+
 import algvis.core.DataStructure;
 import algvis.core.TreeNode;
 import algvis.ds.priorityqueues.MeldablePQ;
 import algvis.ui.view.View;
-
-import java.awt.*;
 
 public class PairHeapNode extends TreeNode{
 

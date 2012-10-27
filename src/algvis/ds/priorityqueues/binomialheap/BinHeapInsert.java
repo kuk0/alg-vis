@@ -18,8 +18,6 @@ package algvis.ds.priorityqueues.binomialheap;
 
 import algvis.core.visual.ZDepth;
 
-import java.util.HashMap;
-
 public class BinHeapInsert extends BinHeapAlg {
 	private final int x;
 
@@ -50,10 +48,5 @@ public class BinHeapInsert extends BinHeapAlg {
 		}
 
 		meld(i);
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

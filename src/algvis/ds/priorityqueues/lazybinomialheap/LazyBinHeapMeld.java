@@ -18,8 +18,6 @@ package algvis.ds.priorityqueues.lazybinomialheap;
 
 import algvis.core.Algorithm;
 
-import java.util.HashMap;
-
 public class LazyBinHeapMeld extends Algorithm {
 	private final LazyBinomialHeap H;
 	private final int i;
@@ -55,10 +53,5 @@ public class LazyBinHeapMeld extends Algorithm {
 			H.root[j] = H.min[j] = null;
 		}
 		H.reposition();
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

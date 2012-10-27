@@ -16,6 +16,10 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.bst;
 
+import java.awt.Color;
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
+
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
@@ -25,16 +29,9 @@ import algvis.ui.Fonts;
 import algvis.ui.view.Layout;
 import algvis.ui.view.View;
 
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.util.Hashtable;
-import java.util.Stack;
-
 public class BSTNode extends Node {
 	private BSTNode left = null, right = null, parent = null;
 	public int leftw, rightw;
-	public boolean markSubtree = false;
-	private NodeColor markedSubtreeColor;
 
 	// variables for the Reingold-Tilford layout
     private int offset = 0; // offset from parent node
@@ -234,42 +231,6 @@ public class BSTNode extends Node {
 	}
 
 	private void drawTree2(View v) {
-		if (D instanceof BST && ((BST) D).subtrees && markSubtree) {
-			Polygon p = new Polygon();
-			p.addPoint(x - 1, y - 1);
-			if (D.getLayout() == Layout.SIMPLE) {
-				if (height == 1) {
-					p.addPoint(x - 7, y + 10);
-					p.addPoint(x + 7, y + 10);
-				} else {
-					int x1 = x - leftw + DataStructure.minsepx / 2, x2 = x
-							+ rightw - DataStructure.minsepx / 2, y1 = y
-							+ DataStructure.minsepy, y2 = y + (height - 1)
-							* DataStructure.minsepy;
-					p.addPoint(x1, y1);
-					p.addPoint(x1, y2);
-					p.addPoint(x2, y2);
-					p.addPoint(x2, y1);
-				}
-			} else {
-				BSTNode u = this, w = this;
-				Stack<BSTNode> tmp = new Stack<BSTNode>();
-				while (u != null && w != null) {
-					p.addPoint(u.x - 1, u.y);
-					tmp.add(w);
-					if (u.thread && w.thread)
-						break;
-					u = (u.left != null) ? u.left : u.right;
-					w = (w.right != null) ? w.right : w.left;
-				}
-				while (!tmp.isEmpty()) {
-					w = tmp.pop();
-					p.addPoint(w.x + 1, w.y);
-				}
-			}
-			p.addPoint(x + 1, y - 1);
-			v.fillPolygon(p);
-		}
 		if (state != INVISIBLE && parent != null) {
 			v.setColor(Color.black);
 			v.drawLine(x, y, parent.x, parent.y);
@@ -658,37 +619,6 @@ public class BSTNode extends Node {
 			getRight().subtreeColor(color);
 	}
 
-	/**
-	 * Similar to subtreeColor(NodeColor color), but subtree has this color only if this subtree is 
-	 * marked. Set markSubtree property to mark this subtree.
-	 * @param color
-	 */
-	public void markedSubtreeColor(NodeColor color) {
-		markedSubtreeColor = color;
-		if (getLeft() != null)
-			getLeft().markedSubtreeColor(color);
-		if (getRight() != null)
-			getRight().markedSubtreeColor(color);
-	}
-
-	@Override
-	protected Color getBgColor() {
-		if (D instanceof BST && ((BST) D).subtrees && markedSubtreeColor != null) {
-			return markedSubtreeColor.bgColor;
-		} else {
-			return super.getBgColor();
-		}
-	}
-
-	@Override
-	protected Color getFgColor() {
-		if (D instanceof BST && ((BST) D).subtrees && markedSubtreeColor != null) {
-			return markedSubtreeColor.fgColor;
-		} else {
-			return super.getFgColor();
-		}
-	}
-
 	@Override
 	public void storeState(Hashtable<Object, Object> state) {
 		super.storeState(state);
@@ -699,8 +629,6 @@ public class BSTNode extends Node {
 		HashtableStoreSupport.store(state, hash + "thread", thread);
 		HashtableStoreSupport.store(state, hash + "leftw", leftw);
 		HashtableStoreSupport.store(state, hash + "rightw", rightw);
-		HashtableStoreSupport.store(state, hash + "markSubtree", markSubtree);
-		HashtableStoreSupport.store(state, hash + "markedSubtreeColor", markedSubtreeColor);
 		if (left != null) left.storeState(state);
 		if (right != null) right.storeState(state);
 	}
@@ -722,11 +650,6 @@ public class BSTNode extends Node {
 		if (leftw != null) this.leftw = (Integer) HashtableStoreSupport.restore(leftw);
 		Object rightw = state.get(hash + "rightw");
 		if (rightw != null) this.rightw = (Integer) HashtableStoreSupport.restore(rightw);
-		Object markSubtree = state.get(hash + "markSubtree");
-		if (markSubtree != null) this.markSubtree = (Boolean) HashtableStoreSupport.restore(markSubtree);
-		Object markedSubtreeColor = state.get(hash + "markedSubtreeColor");
-		if (markedSubtreeColor != null) this.markedSubtreeColor = (NodeColor) HashtableStoreSupport.restore
-				(markedSubtreeColor);
 		
 		if (this.left != null) this.left.restoreState(state);
 		if (this.right != null) this.right.restoreState(state);

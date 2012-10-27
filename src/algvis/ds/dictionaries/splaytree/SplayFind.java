@@ -19,8 +19,6 @@ package algvis.ds.dictionaries.splaytree;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 
-import java.util.HashMap;
-
 public class SplayFind extends SplayAlg {
 	
 	public SplayFind(SplayTree T, int x) {
@@ -61,10 +59,5 @@ public class SplayFind extends SplayAlg {
 			pause();
 		}
 		removeFromScene(v);
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

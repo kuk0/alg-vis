@@ -16,13 +16,15 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.daryheap;
 
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import algvis.ds.priorityqueues.PQButtons;
 import algvis.internationalization.ILabel;
 import algvis.ui.VisPanel;
-
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public class DaryHeapButtons extends PQButtons implements ChangeListener {
 	private static final long serialVersionUID = -2783154701649865993L;

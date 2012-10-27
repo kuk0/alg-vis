@@ -2,8 +2,6 @@ package algvis.ds.intervaltree;
 
 import algvis.ui.InputField;
 
-import java.util.HashMap;
-
 public class IntervalChangeKey extends IntervalAlg{
 	private final int value;
 
@@ -32,10 +30,5 @@ public class IntervalChangeKey extends IntervalAlg{
 		v = v.getParent();
 		adjustValues(v);
 		addNote("done");
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

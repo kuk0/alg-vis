@@ -16,11 +16,11 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.aatree;
 
+import java.util.HashMap;
+
 import algvis.core.Algorithm;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTInsert;
-
-import java.util.HashMap;
 
 public class AAInsert extends Algorithm {
 	private final AA T;
@@ -83,10 +83,5 @@ public class AAInsert extends Algorithm {
 			T.reposition();
 			addStep("done");
 		}
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

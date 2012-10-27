@@ -16,14 +16,15 @@
  ******************************************************************************/
 package algvis.ds.trie;
 
-import algvis.internationalization.IButton;
-import algvis.ui.Buttons;
-import algvis.ui.VisPanel;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
+
+import javax.swing.JPanel;
+
+import algvis.internationalization.IButton;
+import algvis.ui.Buttons;
+import algvis.ui.VisPanel;
 
 public class TrieButtons extends Buttons {
 	private static final long serialVersionUID = -368670840648549217L;

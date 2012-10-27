@@ -16,12 +16,12 @@
  ******************************************************************************/
 package algvis.core;
 
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
+
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.VisPanel;
 import algvis.ui.view.Layout;
-
-import java.awt.geom.Rectangle2D;
-import java.util.Hashtable;
 
 abstract public class Dictionary extends DataStructure {
 	public static String adtName = "dictionary";

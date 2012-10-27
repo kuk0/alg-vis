@@ -20,8 +20,6 @@ import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTNode;
 
-import java.util.HashMap;
-
 public class GBFind extends GBAlg {
 	public GBFind(GBTree T, int x) {
 		super(T, x);
@@ -86,10 +84,5 @@ public class GBFind extends GBAlg {
 			}
 			removeFromScene(v);
 		}
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

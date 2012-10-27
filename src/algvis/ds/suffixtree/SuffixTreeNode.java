@@ -16,16 +16,16 @@
  ******************************************************************************/
 package algvis.ds.suffixtree;
 
+import java.awt.Color;
+import java.awt.geom.Point2D;
+import java.util.Hashtable;
+
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.trie.TrieNode;
 import algvis.ui.Fonts;
 import algvis.ui.view.View;
-
-import java.awt.*;
-import java.awt.geom.Point2D;
-import java.util.Hashtable;
 
 public class SuffixTreeNode extends TrieNode {
 	private SuffixTreeNode suffixLink = null; // also called suffixNode

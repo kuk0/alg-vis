@@ -16,6 +16,12 @@
  ******************************************************************************/
 package algvis.ds.unionfind;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.util.Vector;
+
+import javax.swing.JPanel;
+
 import algvis.core.AlgorithmAdapter;
 import algvis.core.MyRandom;
 import algvis.internationalization.IButton;
@@ -23,11 +29,6 @@ import algvis.internationalization.IComboBox;
 import algvis.internationalization.ILabel;
 import algvis.ui.Buttons;
 import algvis.ui.VisPanel;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.util.Vector;
 
 public class UnionFindButtons extends Buttons {
 	private static final long serialVersionUID = 2683381160819263717L;

@@ -18,8 +18,6 @@ package algvis.ds.priorityqueues.skewheap;
 
 import algvis.ui.InputField;
 
-import java.util.HashMap;
-
 public class SkewHeapDecrKey extends SkewHeapAlg{
 	private final int delta;
 	
@@ -47,10 +45,5 @@ public class SkewHeapDecrKey extends SkewHeapAlg{
 				v.setKey(InputField.MAX);
 		}
 		bubbleup(v);
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

@@ -16,6 +16,9 @@
  ******************************************************************************/
 package algvis.ds.trie;
 
+import java.awt.Color;
+import java.util.Hashtable;
+
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
@@ -24,9 +27,6 @@ import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
 import algvis.ui.Fonts;
 import algvis.ui.view.View;
-
-import java.awt.*;
-import java.util.Hashtable;
 
 public class TrieNode extends TreeNode {
 	public char ch;

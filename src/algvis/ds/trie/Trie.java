@@ -16,15 +16,15 @@
  ******************************************************************************/
 package algvis.ds.trie;
 
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
+
 import algvis.core.DataStructure;
 import algvis.core.WordGenerator;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.Fonts;
 import algvis.ui.VisPanel;
 import algvis.ui.view.View;
-
-import java.awt.geom.Rectangle2D;
-import java.util.Hashtable;
 
 public class Trie extends DataStructure {
 	public static String adtName = "stringology";

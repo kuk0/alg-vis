@@ -16,11 +16,11 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.treap;
 
+import java.util.HashMap;
+
 import algvis.core.Algorithm;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTInsert;
-
-import java.util.HashMap;
 
 public class TreapInsert extends Algorithm {
 	private final Treap T;
@@ -52,10 +52,5 @@ public class TreapInsert extends Algorithm {
 			v.unmark();
 			addStep("done");
 		}
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

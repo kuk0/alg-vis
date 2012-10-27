@@ -18,8 +18,6 @@ package algvis.ds.priorityqueues.leftistheap;
 
 import algvis.core.visual.ZDepth;
 
-import java.util.HashMap;
-
 public class LeftHeapInsert extends LeftHeapAlg {
 	private final int x;
 
@@ -59,10 +57,5 @@ public class LeftHeapInsert extends LeftHeapAlg {
 
 		pause();
 		meld(i);
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

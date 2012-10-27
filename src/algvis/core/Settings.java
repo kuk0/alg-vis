@@ -16,11 +16,11 @@
  ******************************************************************************/
 package algvis.core;
 
-import algvis.ui.view.Layout;
-import algvis.ui.view.LayoutListener;
-
 import java.util.LinkedList;
 import java.util.List;
+
+import algvis.ui.view.Layout;
+import algvis.ui.view.LayoutListener;
 
 public class Settings {
 	public Layout layout;

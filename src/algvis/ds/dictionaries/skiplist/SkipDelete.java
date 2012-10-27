@@ -20,8 +20,6 @@ import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 
-import java.util.HashMap;
-
 public class SkipDelete extends SkipAlg {
 	public SkipDelete(SkipList L, int x) {
 		super(L, x);
@@ -80,10 +78,5 @@ public class SkipDelete extends SkipAlg {
 
 		addStep("done");
 		L.reposition();
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

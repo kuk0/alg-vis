@@ -16,14 +16,14 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.btree;
 
+import java.util.Hashtable;
+
 import algvis.core.AlgorithmAdapter;
 import algvis.core.Dictionary;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.internationalization.Languages;
 import algvis.ui.VisPanel;
 import algvis.ui.view.View;
-
-import java.util.Hashtable;
 
 public class BTree extends Dictionary {
 	public static String dsName = "btree";

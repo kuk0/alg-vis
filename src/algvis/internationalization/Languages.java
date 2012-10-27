@@ -16,7 +16,11 @@
  ******************************************************************************/
 package algvis.internationalization;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 public class Languages {
 	private static final int N = 2;

@@ -16,7 +16,7 @@
  ******************************************************************************/
 package algvis.core;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class NodeColor {
 	public static final NodeColor BLACK = new NodeColor(Color.WHITE,

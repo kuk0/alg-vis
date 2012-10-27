@@ -23,8 +23,6 @@ import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTFind;
 import algvis.ds.dictionaries.bst.BSTNode;
 
-import java.util.HashMap;
-
 public class RBDelete extends Algorithm {
 	private final RB T;
 	private final int K;
@@ -194,10 +192,5 @@ public class RBDelete extends Algorithm {
 			T.reposition();
 			addStep("done");
 		}
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

@@ -16,7 +16,6 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.skewheap;
 
-import java.util.HashMap;
 
 public class SkewHeapMeld extends SkewHeapAlg{
 	private final int i;
@@ -62,10 +61,4 @@ public class SkewHeapMeld extends SkewHeapAlg{
 		pause();
 		meld(i);
 	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
-	}
-
 }

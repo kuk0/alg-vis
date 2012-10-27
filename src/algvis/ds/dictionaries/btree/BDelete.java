@@ -20,8 +20,6 @@ import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 
-import java.util.HashMap;
-
 public class BDelete extends Algorithm {
 	private final BTree T;
 	private final int K;
@@ -215,10 +213,5 @@ public class BDelete extends Algorithm {
 		}
 		removeFromScene(v);
 		addStep("done");
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

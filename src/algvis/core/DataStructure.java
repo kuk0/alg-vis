@@ -16,15 +16,15 @@
  ******************************************************************************/
 package algvis.core;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
 import algvis.core.visual.VisualElement;
 import algvis.core.visual.ZDepth;
 import algvis.ui.InputField;
 import algvis.ui.VisPanel;
 import algvis.ui.view.Layout;
 import algvis.ui.view.View;
-
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 abstract public class DataStructure extends VisualElement {
 	// datova struktura musi vediet gombikom povedat, kolko ich potrebuje,

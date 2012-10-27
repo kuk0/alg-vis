@@ -16,12 +16,12 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.treap;
 
+import java.awt.Color;
+
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.ds.dictionaries.bst.BSTNode;
-
-import java.awt.*;
 
 public class TreapNode extends BSTNode {
 	final double p;

@@ -16,6 +16,9 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.pairingheap;
 
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
+
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.Pair;
@@ -26,9 +29,6 @@ import algvis.ds.priorityqueues.pairingheap.PairHeapAlg.Pairing;
 import algvis.ui.VisPanel;
 import algvis.ui.view.ClickListener;
 import algvis.ui.view.View;
-
-import java.awt.geom.Rectangle2D;
-import java.util.Hashtable;
 
 public class PairingHeap extends MeldablePQ implements ClickListener{
 	public static final String dsName = "pairingheap";

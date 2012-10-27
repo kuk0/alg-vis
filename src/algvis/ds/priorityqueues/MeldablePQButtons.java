@@ -16,17 +16,20 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.util.Vector;
+
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import algvis.core.AlgorithmAdapter;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ILabel;
 import algvis.ui.VisPanel;
-
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.util.Vector;
 
 public class MeldablePQButtons extends PQButtons implements ChangeListener {
 	private static final long serialVersionUID = 1242711038059609653L;

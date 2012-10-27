@@ -16,12 +16,15 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.scapegoattree;
 
-import algvis.ui.DictButtons;
-import algvis.ui.VisPanel;
-
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import algvis.ui.DictButtons;
+import algvis.ui.VisPanel;
 
 public class GBButtons extends DictButtons implements ChangeListener {
 	private static final long serialVersionUID = -4200856610929537432L;

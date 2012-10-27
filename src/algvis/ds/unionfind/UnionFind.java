@@ -16,6 +16,10 @@
  ******************************************************************************/
 package algvis.ds.unionfind;
 
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Hashtable;
+
 import algvis.core.DataStructure;
 import algvis.core.MyRandom;
 import algvis.core.history.HashtableStoreSupport;
@@ -26,10 +30,6 @@ import algvis.ui.VisPanel;
 import algvis.ui.view.Alignment;
 import algvis.ui.view.ClickListener;
 import algvis.ui.view.View;
-
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.Hashtable;
 
 public class UnionFind extends DataStructure implements ClickListener {
 	public static String adtName = "ufa";

@@ -16,11 +16,11 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.avltree;
 
+import java.util.HashMap;
+
 import algvis.core.Algorithm;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTInsert;
-
-import java.util.HashMap;
 
 public class AVLInsert extends Algorithm {
 	private final AVL T;
@@ -107,10 +107,5 @@ public class AVLInsert extends Algorithm {
 		}
 		T.reposition();
 		addStep("done");
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

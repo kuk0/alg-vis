@@ -21,8 +21,6 @@ import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 
-import java.util.HashMap;
-
 public class SkipInsert extends SkipAlg {
 	
 	public SkipInsert(SkipList L, int x) {
@@ -95,10 +93,5 @@ public class SkipInsert extends SkipAlg {
 		addNote("done");
 
 		inserted.setColor(NodeColor.NORMAL);
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

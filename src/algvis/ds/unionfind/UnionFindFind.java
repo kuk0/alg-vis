@@ -16,11 +16,10 @@
  ******************************************************************************/
 package algvis.ds.unionfind;
 
+import java.util.Stack;
+
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
-
-import java.util.HashMap;
-import java.util.Stack;
 
 public class UnionFindFind extends Algorithm {
 	public enum FindHeuristic {
@@ -49,11 +48,6 @@ public class UnionFindFind extends Algorithm {
 		UnionFindNode v = find(u);
 		v.setColor(NodeColor.NORMAL);
 		addNote("done");
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 
 	UnionFindNode find(UnionFindNode u) throws InterruptedException {

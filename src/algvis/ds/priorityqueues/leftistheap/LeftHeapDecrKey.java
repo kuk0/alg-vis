@@ -18,8 +18,6 @@ package algvis.ds.priorityqueues.leftistheap;
 
 import algvis.ui.InputField;
 
-import java.util.HashMap;
-
 public class LeftHeapDecrKey extends LeftHeapAlg{
 	private final int delta;
 	
@@ -48,10 +46,5 @@ public class LeftHeapDecrKey extends LeftHeapAlg{
 		}
 
 		bubbleup(v);
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

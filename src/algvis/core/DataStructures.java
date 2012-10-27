@@ -16,6 +16,8 @@
  ******************************************************************************/
 package algvis.core;
 
+import java.lang.reflect.Constructor;
+
 import algvis.ds.dictionaries.aatree.AAPanel;
 import algvis.ds.dictionaries.avltree.AVLPanel;
 import algvis.ds.dictionaries.bst.BSTPanel;
@@ -41,8 +43,6 @@ import algvis.ds.suffixtree.SuffixTreePanel;
 import algvis.ds.trie.TriePanel;
 import algvis.ds.unionfind.UnionFindPanel;
 import algvis.ui.VisPanel;
-
-import java.lang.reflect.Constructor;
 
 /**
  * The Class DataStructures. This class contains the list of all visualized data

@@ -18,8 +18,6 @@ package algvis.ds.priorityqueues.daryheap;
 
 import algvis.core.Node;
 
-import java.util.HashMap;
-
 
 public class DaryHeapDelete extends DaryHeapAlg {
 	public DaryHeapDelete(DaryHeap H) {
@@ -100,11 +98,6 @@ public class DaryHeapDelete extends DaryHeapAlg {
 
 		H.root.unmark();
 		bubbledown(H.root);
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }
 

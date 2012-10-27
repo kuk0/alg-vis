@@ -18,8 +18,6 @@ package algvis.ds.priorityqueues.daryheap;
 
 import algvis.ui.InputField;
 
-import java.util.HashMap;
-
 public class DaryHeapDecrKey extends DaryHeapAlg{
 	private final int delta;
 	private final DaryHeapNode v;
@@ -55,10 +53,5 @@ public class DaryHeapDecrKey extends DaryHeapAlg{
 			addStep("maxheapbubbleup");
 		}
 		bubbleup(v);
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

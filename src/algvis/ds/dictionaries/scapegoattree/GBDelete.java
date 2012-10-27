@@ -19,8 +19,6 @@ package algvis.ds.dictionaries.scapegoattree;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 
-import java.util.HashMap;
-
 public class GBDelete extends GBAlg {
 	public GBDelete(GBTree T, int x) {
 		super(T, x);
@@ -150,10 +148,5 @@ public class GBDelete extends GBAlg {
 				}
 			}
 		}
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

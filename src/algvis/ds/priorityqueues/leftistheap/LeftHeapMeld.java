@@ -16,7 +16,6 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.leftistheap;
 
-import java.util.HashMap;
 
 public class LeftHeapMeld extends LeftHeapAlg {
 	private final int i;
@@ -62,10 +61,4 @@ public class LeftHeapMeld extends LeftHeapAlg {
 		pause();
 		meld(i);
 	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
-	}
-
 }

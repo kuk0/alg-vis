@@ -19,8 +19,6 @@ package algvis.ds.dictionaries.skiplist;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 
-import java.util.HashMap;
-
 public class SkipFind extends SkipAlg {
 	public SkipFind(SkipList L, int x) {
 		super(L, x);
@@ -47,10 +45,5 @@ public class SkipFind extends SkipAlg {
 			v.goDown();
 		}
 		removeFromScene(v);
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

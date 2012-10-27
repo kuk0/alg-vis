@@ -20,8 +20,6 @@ import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.ui.InputField;
 
-import java.util.HashMap;
-
 public class BinHeapDecrKey extends Algorithm {
 	private final int delta;
 	private final BinomialHeap H;
@@ -69,10 +67,5 @@ public class BinHeapDecrKey extends Algorithm {
 		if (v.prec(H.min[H.active])) {
 			H.min[H.active] = v;
 		}
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

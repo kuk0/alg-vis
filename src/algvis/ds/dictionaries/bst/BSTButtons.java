@@ -16,13 +16,14 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.bst;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
+import javax.swing.JPanel;
+
 import algvis.internationalization.ICheckBox;
 import algvis.ui.DictButtons;
 import algvis.ui.VisPanel;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 
 public class BSTButtons extends DictButtons {
 	private static final long serialVersionUID = -6884955717665753504L;

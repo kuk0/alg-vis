@@ -2,8 +2,6 @@ package algvis.ds.intervaltree;
 
 import algvis.core.visual.ZDepth;
 
-import java.util.HashMap;
-
 public class IntervalInsert extends IntervalAlg{
 	private final int K;
 	
@@ -95,10 +93,5 @@ public class IntervalInsert extends IntervalAlg{
 		//toto prerobit na iba prechod od prave pridaneho vrcholu po koren
 		adjustValues(w);
 		addNote("done");
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

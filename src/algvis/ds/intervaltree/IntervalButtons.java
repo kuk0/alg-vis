@@ -1,5 +1,12 @@
 package algvis.ds.intervaltree;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.util.Vector;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JPanel;
+
 import algvis.core.AlgorithmAdapter;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ds.intervaltree.IntervalTrees.mimasuType;
@@ -7,11 +14,6 @@ import algvis.internationalization.IButton;
 import algvis.internationalization.IRadioButton;
 import algvis.ui.Buttons;
 import algvis.ui.VisPanel;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.util.Vector;
 
 public class IntervalButtons extends Buttons{
 

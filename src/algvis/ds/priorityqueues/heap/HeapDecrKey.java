@@ -18,8 +18,6 @@ package algvis.ds.priorityqueues.heap;
 
 import algvis.ui.InputField;
 
-import java.util.HashMap;
-
 public class HeapDecrKey extends HeapAlg {
 	private final int delta;
 	private final HeapNode v;
@@ -47,10 +45,5 @@ public class HeapDecrKey extends HeapAlg {
 				v.setKey(InputField.MAX);
 		}
 		bubbleup(v);
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

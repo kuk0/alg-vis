@@ -16,15 +16,16 @@
  ******************************************************************************/
 package algvis.ds.rotations;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.util.Vector;
+
+import javax.swing.JPanel;
+
 import algvis.internationalization.IButton;
 import algvis.internationalization.ICheckBox;
 import algvis.ui.Buttons;
 import algvis.ui.VisPanel;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.util.Vector;
 
 public class RotButtons extends Buttons {
 	private static final long serialVersionUID = 3851020370059429766L;
@@ -71,7 +72,7 @@ public class RotButtons extends Buttons {
 		} else if (evt.getSource() == order) {
 			R.T.order = order.isSelected();
 		} else if (evt.getSource() == subtrees) {
-			R.T.subtrees = subtrees.isSelected();
+			R.subtrees = subtrees.isSelected();
 		}
 	}
 

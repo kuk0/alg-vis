@@ -18,8 +18,6 @@ package algvis.ds.suffixtree;
 
 import algvis.core.Algorithm;
 
-import java.util.HashMap;
-
 public class SuffixTreeFind extends Algorithm {
 	private final SuffixTree T;
 	private final String s;
@@ -53,10 +51,5 @@ public class SuffixTreeFind extends Algorithm {
 		  T.hw.goNextTo(v);
   */
 		beforeReturn();
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

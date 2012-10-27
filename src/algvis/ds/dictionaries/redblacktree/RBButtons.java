@@ -16,14 +16,15 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.redblacktree;
 
-import algvis.internationalization.ICheckBox;
-import algvis.ui.DictButtons;
-import algvis.ui.VisPanel;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+
+import javax.swing.JPanel;
+
+import algvis.internationalization.ICheckBox;
+import algvis.ui.DictButtons;
+import algvis.ui.VisPanel;
 
 public class RBButtons extends DictButtons implements ActionListener {
 	private static final long serialVersionUID = 5601437441473816995L;

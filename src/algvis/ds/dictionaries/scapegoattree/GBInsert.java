@@ -19,8 +19,6 @@ package algvis.ds.dictionaries.scapegoattree;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 
-import java.util.HashMap;
-
 public class GBInsert extends GBAlg {
 	public GBInsert(GBTree T, int x) {
 		super(T, x);
@@ -159,10 +157,5 @@ public class GBInsert extends GBAlg {
 		}
 		T.reposition();
 		addStep("done");
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

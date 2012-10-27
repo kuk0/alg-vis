@@ -16,11 +16,11 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues;
 
+import java.util.Hashtable;
+
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.VisPanel;
 import algvis.ui.view.Highlighting;
-
-import java.util.Hashtable;
 
 abstract public class MeldablePQ extends PriorityQueue implements Highlighting{
 	public static String adtName = "meldable-pq";

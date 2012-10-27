@@ -16,12 +16,17 @@
  ******************************************************************************/
 package algvis.ui;
 
-import algvis.core.StringUtils;
-import algvis.core.history.HashtableStoreSupport;
-import algvis.internationalization.LanguageListener;
-import algvis.internationalization.Languages;
+import java.awt.Color;
+import java.awt.Font;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
 
-import javax.swing.*;
+import javax.swing.JEditorPane;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.UIManager;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.text.BadLocationException;
@@ -32,11 +37,11 @@ import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.StyleSheet;
 import javax.swing.undo.StateEditable;
-import java.awt.*;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
+
+import algvis.core.StringUtils;
+import algvis.core.history.HashtableStoreSupport;
+import algvis.internationalization.LanguageListener;
+import algvis.internationalization.Languages;
 
 public class Commentary extends JEditorPane implements LanguageListener,
 		HyperlinkListener, StateEditable {

@@ -16,12 +16,12 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues;
 
+import java.util.Hashtable;
+
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.VisPanel;
-
-import java.util.Hashtable;
 
 abstract public class PriorityQueue extends DataStructure {
 	public static String adtName = "pq";

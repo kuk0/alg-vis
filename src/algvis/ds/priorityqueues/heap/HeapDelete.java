@@ -18,8 +18,6 @@ package algvis.ds.priorityqueues.heap;
 
 import algvis.core.Node;
 
-import java.util.HashMap;
-
 public class HeapDelete extends HeapAlg {
 	public HeapDelete(Heap H) {
 		super(H);
@@ -106,10 +104,5 @@ public class HeapDelete extends HeapAlg {
 		}
 
 		addStep("done");
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

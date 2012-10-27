@@ -19,8 +19,6 @@ package algvis.ds.trie;
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
-import java.util.HashMap;
-
 public class TrieFind extends Algorithm {
 	private final Trie T;
 	private String s;
@@ -97,10 +95,5 @@ public class TrieFind extends Algorithm {
 		pause();
 
 		beforeReturn();
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

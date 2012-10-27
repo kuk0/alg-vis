@@ -16,6 +16,8 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.lazybinomialheap;
 
+import java.util.Hashtable;
+
 import algvis.core.Node;
 import algvis.core.Pair;
 import algvis.core.history.HashtableStoreSupport;
@@ -25,8 +27,6 @@ import algvis.ds.priorityqueues.binomialheap.BinomialHeap;
 import algvis.ui.Fonts;
 import algvis.ui.VisPanel;
 import algvis.ui.view.View;
-
-import java.util.Hashtable;
 
 public class LazyBinomialHeap extends BinomialHeap {
 	public static String dsName = "lazybinheap";

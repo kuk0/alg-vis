@@ -1,5 +1,8 @@
 package algvis.ds.intervaltree;
 
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
+
 import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
@@ -7,9 +10,6 @@ import algvis.ds.intervaltree.IntervalNode.focusType;
 import algvis.ui.VisPanel;
 import algvis.ui.view.ClickListener;
 import algvis.ui.view.View;
-
-import java.awt.geom.Rectangle2D;
-import java.util.Hashtable;
 
 public class IntervalTree extends IntervalTrees implements ClickListener {
 	public static String dsName = "intervaltree";

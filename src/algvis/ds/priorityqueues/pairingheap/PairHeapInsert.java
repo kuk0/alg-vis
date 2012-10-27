@@ -18,8 +18,6 @@ package algvis.ds.priorityqueues.pairingheap;
 
 import algvis.core.visual.ZDepth;
 
-import java.util.HashMap;
-
 public class PairHeapInsert extends PairHeapAlg{
 	private final int x;
 	
@@ -66,10 +64,5 @@ public class PairHeapInsert extends PairHeapAlg{
 		H.root[0] = null;
 		H.reposition();
 		addNote("done");
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

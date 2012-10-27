@@ -16,6 +16,9 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.leftistheap;
 
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
+
 import algvis.core.Node;
 import algvis.core.Pair;
 import algvis.core.StringUtils;
@@ -26,9 +29,6 @@ import algvis.internationalization.Languages;
 import algvis.ui.VisPanel;
 import algvis.ui.view.ClickListener;
 import algvis.ui.view.View;
-
-import java.awt.geom.Rectangle2D;
-import java.util.Hashtable;
 
 public class LeftHeap extends MeldablePQ implements ClickListener {
 	public static String dsName = "leftheap";

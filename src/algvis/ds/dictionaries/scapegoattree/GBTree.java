@@ -16,14 +16,14 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.scapegoattree;
 
+import java.util.Hashtable;
+
 import algvis.core.StringUtils;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.dictionaries.bst.BST;
 import algvis.internationalization.Languages;
 import algvis.ui.VisPanel;
 import algvis.ui.view.Layout;
-
-import java.util.Hashtable;
 
 public class GBTree extends BST {
 	public static String dsName = "scapegoat";

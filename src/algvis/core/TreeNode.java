@@ -16,13 +16,13 @@
  ******************************************************************************/
 package algvis.core;
 
+import java.awt.Color;
+import java.util.Hashtable;
+import java.util.Stack;
+
 import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
 import algvis.ui.view.View;
-
-import java.awt.*;
-import java.util.Hashtable;
-import java.util.Stack;
 
 public class TreeNode extends Node {
 	private TreeNode child = null, right = null, parent = null;

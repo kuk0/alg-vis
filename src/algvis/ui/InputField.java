@@ -16,13 +16,14 @@
  ******************************************************************************/
 package algvis.ui;
 
+import java.util.Vector;
+
+import javax.swing.JTextField;
+
 import algvis.core.MyRandom;
 import algvis.core.Settings;
 import algvis.core.WordGenerator;
 import algvis.internationalization.ILabel;
-
-import javax.swing.*;
-import java.util.Vector;
 
 /**
  * The Class InputField. This is a smart version of JTextField with methods that

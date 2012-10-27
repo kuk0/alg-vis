@@ -16,15 +16,17 @@
  ******************************************************************************/
 package algvis.ui;
 
+import java.awt.Color;
+
+import javax.swing.JApplet;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.border.TitledBorder;
+
 import algvis.core.DataStructures;
 import algvis.core.MyParserDelegator;
 import algvis.core.Settings;
 import algvis.internationalization.Languages;
-
-import javax.swing.*;
-import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
 
 public class AlgVisApplet extends JApplet {
 	private static final long serialVersionUID = -76009301274562874L;

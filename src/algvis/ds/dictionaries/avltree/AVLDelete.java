@@ -22,8 +22,6 @@ import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTFind;
 
-import java.util.HashMap;
-
 public class AVLDelete extends Algorithm {
 	private final AVL T;
 	private final int K;
@@ -184,10 +182,5 @@ public class AVLDelete extends Algorithm {
 			T.reposition();
 			addStep("done");
 		}
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

@@ -18,8 +18,6 @@ package algvis.ds.priorityqueues.pairingheap;
 
 import algvis.core.DataStructure;
 
-import java.util.HashMap;
-
 public class PairHeapMeld extends PairHeapAlg{
 	private final int i;
     private final int j;
@@ -83,10 +81,4 @@ public class PairHeapMeld extends PairHeapAlg{
 		H.reposition();
 		addNote("done");
 	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
-	}
-
 }

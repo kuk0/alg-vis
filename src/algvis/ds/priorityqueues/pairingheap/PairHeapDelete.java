@@ -18,8 +18,6 @@ package algvis.ds.priorityqueues.pairingheap;
 
 import algvis.core.DataStructure;
 
-import java.util.HashMap;
-
 public class PairHeapDelete extends PairHeapAlg{
 
 	public PairHeapDelete(DataStructure H) {
@@ -76,10 +74,5 @@ public class PairHeapDelete extends PairHeapAlg{
 			default:
 				break;
 		}
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

@@ -19,8 +19,6 @@ package algvis.ds.priorityqueues.lazybinomialheap;
 import algvis.core.Algorithm;
 import algvis.ds.priorityqueues.binomialheap.BinHeapNode;
 
-import java.util.HashMap;
-
 public class LazyBinHeapDelete extends Algorithm {
 	private final LazyBinomialHeap H;
 
@@ -136,10 +134,5 @@ public class LazyBinHeapDelete extends Algorithm {
 				w = w.right;
 			} while (w != v);
 		}
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

@@ -16,14 +16,20 @@
  ******************************************************************************/
 package algvis.ui;
 
-import algvis.core.DataStructure;
-import algvis.ui.view.View;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ConcurrentModificationException;
+
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+import algvis.core.DataStructure;
+import algvis.ui.view.View;
 
 public class Screen extends JPanel {
 	private static final long serialVersionUID = -8279768206774288161L;

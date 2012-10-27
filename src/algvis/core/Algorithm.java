@@ -16,13 +16,13 @@
  ******************************************************************************/
 package algvis.core;
 
+import java.awt.EventQueue;
+import java.util.HashMap;
+import java.util.concurrent.Semaphore;
+
 import algvis.core.history.UpdatableStateEdit;
 import algvis.core.visual.VisualElement;
 import algvis.ui.VisPanel;
-
-import java.awt.*;
-import java.util.HashMap;
-import java.util.concurrent.Semaphore;
 
 /**
  * The Class Algorithm. Each visualized data structure consists of data and
@@ -190,5 +190,7 @@ abstract public class Algorithm implements Runnable {
 		return done;
 	}
 	
-	public abstract HashMap<String, Object> getResult();
+	public HashMap<String, Object> getResult() {
+		return null;
+	}
 }

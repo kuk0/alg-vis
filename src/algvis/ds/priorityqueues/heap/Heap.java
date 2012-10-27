@@ -16,6 +16,9 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.heap;
 
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
+
 import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.dictionaries.bst.BSTNode;
@@ -24,9 +27,6 @@ import algvis.internationalization.Languages;
 import algvis.ui.VisPanel;
 import algvis.ui.view.ClickListener;
 import algvis.ui.view.View;
-
-import java.awt.geom.Rectangle2D;
-import java.util.Hashtable;
 
 public class Heap extends PriorityQueue implements ClickListener {
 	public static final String dsName = "heap";

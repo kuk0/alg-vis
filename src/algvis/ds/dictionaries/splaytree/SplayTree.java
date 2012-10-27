@@ -16,13 +16,13 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.splaytree;
 
+import java.util.Hashtable;
+
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.dictionaries.bst.BST;
 import algvis.ui.VisPanel;
 import algvis.ui.view.Layout;
 import algvis.ui.view.View;
-
-import java.util.Hashtable;
 
 public class SplayTree extends BST {
 	public static String dsName = "splaytree";

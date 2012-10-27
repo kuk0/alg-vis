@@ -20,8 +20,6 @@ import algvis.core.Algorithm;
 import algvis.core.visual.ZDepth;
 import algvis.ds.priorityqueues.binomialheap.BinHeapNode;
 
-import java.util.HashMap;
-
 public class LazyBinHeapInsert extends Algorithm {
 	private final LazyBinomialHeap H;
 	private final int x;
@@ -45,10 +43,5 @@ public class LazyBinHeapInsert extends Algorithm {
 			}
 		}
 		H.reposition();
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }

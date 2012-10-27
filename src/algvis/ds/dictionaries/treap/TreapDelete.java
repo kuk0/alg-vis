@@ -20,8 +20,6 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.ds.dictionaries.bst.BSTFind;
 
-import java.util.HashMap;
-
 public class TreapDelete extends Algorithm {
 	private final Treap T;
 	private final int K;
@@ -75,10 +73,5 @@ public class TreapDelete extends Algorithm {
 			T.reposition();
 			addStep("done");
 		}
-	}
-
-	@Override
-	public HashMap<String, Object> getResult() {
-		return null;
 	}
 }
