@@ -16,9 +16,11 @@
  ******************************************************************************/
 package algvis.ds.rotations;
 
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
+
 import algvis.core.DataStructure;
 import algvis.core.MyRandom;
-import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BST;
 import algvis.ds.dictionaries.bst.BSTNode;
@@ -29,14 +31,10 @@ import algvis.ui.view.ClickListener;
 import algvis.ui.view.Layout;
 import algvis.ui.view.View;
 
-import java.awt.geom.Rectangle2D;
-import java.util.Hashtable;
-
 public class Rotations extends DataStructure implements ClickListener {
 	public static String adtName = "dictionary";
 	public static String dsName = "rotations";
 	public final BST T;
-	BSTNode v;
 
 	@Override
 	public String getName() {
@@ -107,9 +105,6 @@ public class Rotations extends DataStructure implements ClickListener {
 
 	@Override
 	public void draw(View V) {
-		if (v != null && v.getParent() != null) {
-			V.drawWideLine(v.x, v.y, v.getParent().x, v.getParent().y);
-		}
 		if (T.getRoot() != null) {
 			T.getRoot().drawTree(V);
 		}
@@ -142,7 +137,7 @@ public class Rotations extends DataStructure implements ClickListener {
 		T.getRoot().repos(T.getRoot().leftw, 0);
 		panel.screen.V.setBounds(T.x1, T.y1, T.x2, T.y2);
 	}
-	
+
 	@Override
 	public String stats() {
 		return T.stats();
@@ -162,7 +157,7 @@ public class Rotations extends DataStructure implements ClickListener {
 				panel.pauses = p;
 			}
 		});
-		//panel.screen.V.resetView();
+		// panel.screen.V.resetView();
 	}
 
 	@Override
@@ -184,7 +179,7 @@ public class Rotations extends DataStructure implements ClickListener {
 			}
 		}
 	}
-	
+
 	@Override
 	public Layout getLayout() {
 		return Layout.SIMPLE;
@@ -194,17 +189,11 @@ public class Rotations extends DataStructure implements ClickListener {
 	public void storeState(Hashtable<Object, Object> state) {
 		super.storeState(state);
 		T.storeState(state);
-		HashtableStoreSupport.store(state, hash + "v", v);
-		if (v != null) v.storeState(state);
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		T.restoreState(state);
-		Object v = state.get(hash + "v");
-		if (v != null) this.v = (BSTNode) HashtableStoreSupport.restore(v);
-		
-		if (this.v != null) this.v.restoreState(state); 
 	}
 }

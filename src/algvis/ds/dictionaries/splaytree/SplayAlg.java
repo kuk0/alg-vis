@@ -18,6 +18,8 @@ package algvis.ds.dictionaries.splaytree;
 
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
+import algvis.core.visual.ShadePair;
+import algvis.core.visual.ShadeTriple;
 import algvis.core.visual.ZDepth;
 
 abstract class SplayAlg extends Algorithm {
@@ -68,39 +70,46 @@ abstract class SplayAlg extends Algorithm {
 
 	void splay(SplayNode w) throws InterruptedException {
 		while (!w.isRoot()) {
-			T.setW1(w);
-			T.setW2(w.getParent());
 			if (w.getParent().isRoot()) {
+				ShadePair shade = new ShadePair(T.panel.scene, w, w.getParent());
+				addToScene(shade);
 				addNote("splay-root");
 				w.setArc(w.getParent());
 				pause();
 				w.noArc();
 				T.rotate(w);
+				pause();
+				shade.removeFromScene();
 			} else {
+				ShadeTriple shade = new ShadeTriple(T.panel.scene, w,
+						w.getParent(), w.getParent().getParent());
+				addToScene(shade);
 				if (w.isLeft() == w.getParent().isLeft()) {
 					if (w.isLeft()) {
-						addNote("splay-zig-zig-left", w.getKey(), w.getParent().getKey());
+						addNote("splay-zig-zig-left", w.getKey(), w.getParent()
+								.getKey());
 					} else {
-						addNote("splay-zig-zig-right", w.getKey(), w.getParent().getKey());
+						addNote("splay-zig-zig-right", w.getKey(), w
+								.getParent().getKey());
 					}
 					addStep("rotate", w.getParent().getKey());
 					w.getParent().setArc(w.getParent().getParent());
 					pause();
 					w.getParent().noArc();
-					T.setW2(w.getParent().getParent());
 					T.rotate(w.getParent());
 					w.setArc(w.getParent());
 					addStep("rotate", w.getKey());
 					pause();
 					w.noArc();
-					T.setW1(w.getParent());
 					T.rotate(w);
 					pause();
 				} else {
 					if (!w.isLeft()) {
-						addNote("splay-zig-zag-left", w.getKey(), w.getParent().getKey());
+						addNote("splay-zig-zag-left", w.getKey(), w.getParent()
+								.getKey());
 					} else {
-						addNote("splay-zig-zag-right", w.getKey(), w.getParent().getKey());
+						addNote("splay-zig-zag-right", w.getKey(), w
+								.getParent().getKey());
 					}
 					w.setArc(w.getParent());
 					addStep("rotate", w.getKey());
@@ -111,14 +120,12 @@ abstract class SplayAlg extends Algorithm {
 					addStep("rotate", w.getKey());
 					pause();
 					w.noArc();
-					T.setW1(w.getParent());
 					T.rotate(w);
 					pause();
 				}
+				shade.removeFromScene();
 			}
 		}
-		T.setW1(null);
-		T.setW2(null);
 		T.setRoot(w);
 	}
 }

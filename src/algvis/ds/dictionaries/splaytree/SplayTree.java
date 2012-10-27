@@ -78,13 +78,13 @@ public class SplayTree extends BST {
 
 	@Override
 	public void draw(View V) {
-		if (getW1() != null && getW1().getParent() != null) {
+		/*if (getW1() != null && getW1().getParent() != null) {
 			V.drawWideLine(getW1().x, getW1().y, getW1().getParent().x, getW1()
 					.getParent().y);
 		}
 		if (getW2() != null && getW2().getParent() != null) {
 			V.drawWideLine(getW2().x, getW2().y, getW2().getParent().x, getW2().getParent().y);
-		}
+		}*/
 		super.draw(V);
 		if (getRoot2() != null) {
 			getRoot2().drawTree(V);

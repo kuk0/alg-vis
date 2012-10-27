@@ -99,7 +99,8 @@ public class SplayDelete extends SplayAlg {
 			}
 			w.setColor(NodeColor.FIND);
 			removeFromScene(s);
-			// splay
+			// splay 		TODO: shades
+			// TODO: reuse splaying
 			while (!w.isRoot()) {
 				if (w.getParent().isRoot()) {
 					T.rotate2(w);

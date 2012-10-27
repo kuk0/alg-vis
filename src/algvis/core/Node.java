@@ -33,7 +33,7 @@ import java.util.Hashtable;
  * middle.
  */
 public class Node extends VisualElement {
-	protected DataStructure D;
+	public DataStructure D;
 	protected int key;
 	/**
 	 * x, y - node position tox, toy - the position, where the node is heading

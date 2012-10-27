@@ -16,12 +16,14 @@
  ******************************************************************************/
 package algvis.ds.rotations;
 
+import java.util.HashMap;
+
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
+import algvis.core.visual.ShadePair;
+import algvis.core.visual.ShadeSubtree;
 import algvis.ds.dictionaries.bst.BST;
 import algvis.ds.dictionaries.bst.BSTNode;
-
-import java.util.HashMap;
 
 public class Rotate extends Algorithm {
 	private final Rotations R;
@@ -37,13 +39,14 @@ public class Rotate extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		R.v = v;
 		setHeader("rotate-header", v.getKey());
 		if (v == T.getRoot()) {
 			addNote("rotate-root", v.getKey());
 			return;
 		}
 		BSTNode u = v.getParent(), a, b, c;
+		ShadePair shade = new ShadePair(T.panel.scene, v, u);
+		addToScene(shade);
 		boolean rotR = v.isLeft();
 		if (rotR) {
 			a = v.getLeft();
@@ -54,24 +57,31 @@ public class Rotate extends Algorithm {
 			b = v.getLeft();
 			c = v.getRight();
 		}
-		if (a != null) {
-			a.markedSubtreeColor(NodeColor.RED);
-			a.markSubtree = true;
-		}
-		if (b != null) {
-			b.markedSubtreeColor(NodeColor.GREEN);
-			b.markSubtree = true;
-		}
-		if (c != null) {
-			c.markedSubtreeColor(NodeColor.BLUE);
-			c.markSubtree = true;
+		ShadeSubtree shadeA = null, shadeB = null, shadeC = null;
+		if (true) { // TODO: only if show subtrees set
+			if (a != null) {
+				a.subtreeColor(NodeColor.RED);
+				shadeA = new ShadeSubtree(T.panel.scene, a);
+				addToScene(shadeA);
+			}
+			if (b != null) {
+				b.subtreeColor(NodeColor.GREEN);
+				shadeB = new ShadeSubtree(T.panel.scene, b);
+				addToScene(shadeB);
+			}
+			if (c != null) {
+				c.subtreeColor(NodeColor.BLUE);
+				shadeC = new ShadeSubtree(T.panel.scene, c);
+				addToScene(shadeC);
+			}
 		}
 
 		if (u == T.getRoot() && b != null) {
 			addNote("rotate-newroot", v.getKey(), b.getKey(), u.getKey());
 		} else {
 			if (b != null) {
-				addNote("rotate-changes", v.getKey(), b.getKey(), u.getKey(), u.getParent().getKey());
+				addNote("rotate-changes", v.getKey(), b.getKey(), u.getKey(), u
+						.getParent().getKey());
 			} else {
 				// TODO co ak b je null?
 			}
@@ -79,26 +89,19 @@ public class Rotate extends Algorithm {
 		pause();
 
 		T.rotate(v);
-		R.v = u;
 		R.reposition();
 		pause();
 
-		R.v = null;
-		if (v.getLeft() != null) {
-			v.getLeft().markedSubtreeColor(NodeColor.NORMAL);
-			v.getLeft().markSubtree = false;
+		v.subtreeColor(NodeColor.NORMAL);
+		shade.removeFromScene();
+		if (shadeA != null) {
+			shadeA.removeFromScene();
 		}
-		if (v.getRight() != null) {
-			v.getRight().markedSubtreeColor(NodeColor.NORMAL);
-			v.getRight().markSubtree = false;
+		if (shadeB != null) {
+			shadeB.removeFromScene();
 		}
-		if (u.getLeft() != null) {
-			u.getLeft().markedSubtreeColor(NodeColor.NORMAL);
-			u.getLeft().markSubtree = false;
-		}
-		if (u.getRight() != null) {
-			u.getRight().markedSubtreeColor(NodeColor.NORMAL);
-			u.getRight().markSubtree = false;
+		if (shadeC != null) {
+			shadeC.removeFromScene();
 		}
 
 		T.getRoot().calcTree();
