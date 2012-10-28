@@ -72,7 +72,7 @@ public class StringElem implements StateEditable {
 			v.drawString("" + (i + 1), x0, y - Node.RADIUS - 5, Fonts.SMALL);
 			v.drawString("" + s.charAt(i), x0, y - 1, Fonts.TYPEWRITER);
 			if (marked.get(i)) {
-				v.drawArrow(x0, y - 30, x0, y - 20);
+				v.drawArrow(x0, y - 32, x0, y - 22);
 			}
 			x0 += span;
 		}

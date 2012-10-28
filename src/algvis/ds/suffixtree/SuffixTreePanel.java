@@ -41,6 +41,8 @@ public class SuffixTreePanel extends VisPanel {
 				pauses = p;
 			}
 		});
+		D.panel.screen.V.miny = -70;
+		D.panel.screen.V.resetView();
 	}
 
 }

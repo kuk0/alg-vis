@@ -25,7 +25,7 @@ import algvis.ds.trie.TrieWordNode;
 
 public class SuffixTreeFind extends Algorithm {
 	private final SuffixTree T;
-	private String s;
+	private final String s;
 	private TrieWordNode hw;
 
 	public SuffixTreeFind(SuffixTree T, String s) {
@@ -37,7 +37,7 @@ public class SuffixTreeFind extends Algorithm {
 	void beforeReturn() {
 		removeFromScene(hw);
 		T.clearExtraColor();
-		addStep("done");
+		addNote("done");
 	}
 
 	@Override
@@ -58,7 +58,8 @@ public class SuffixTreeFind extends Algorithm {
 		hw.setColor(NodeColor.CACHED);
 		hw.goNextTo(v);
 
-		while (s.length() > 0) {
+		int i = 0;
+		while (i < s.length()) {
 			SuffixTreeNode wd = v.getChild();
 			while (wd != null) {
 				wd.setColor(NodeColor.FIND);
@@ -66,8 +67,8 @@ public class SuffixTreeFind extends Algorithm {
 			}
 			wd = v.getChild();
 
-			char ch = s.charAt(0);
-			hw.setAndGoNextTo(s, v);
+			char ch = s.charAt(i);
+			hw.setAndGoNextTo(s.substring(i), v);
 			SuffixTreeNode w = v.getChildWithCH(ch);
 			if (w == null) {
 				while (wd != null) {
@@ -87,9 +88,9 @@ public class SuffixTreeFind extends Algorithm {
 				wd = wd.getRight();
 			}
 			v.setColor(NodeColor.CACHED);
-			s = s.substring(1);
+			++i;
 		}
-		hw.setAndGoNextTo(s, v);
+		hw.setAndGoNextTo("", v);
 		Vector<TreeNode> leaves = v.getLeaves();
 		Vector<Integer> pos = new Vector<Integer>();
 		for (TreeNode w : leaves) {
@@ -97,9 +98,8 @@ public class SuffixTreeFind extends Algorithm {
 			w.mark();
 			T.str.mark(p);
 			pos.add(p);
-			System.out.print(p + ", ");
 		}
-		System.out.println();
+		addStep("suffixtree-found", s, "" + leaves.size());
 
 		pause();
 		for (TreeNode w : leaves) {

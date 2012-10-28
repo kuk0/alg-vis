@@ -253,8 +253,8 @@ public class SuffixTreeNode extends TrieNode {
 						cc = col.pop();
 						v.setColor(cc);
 						v.fillRect(xx, yy, 6, fonth / 2.0);
-						v.setColor(Color.BLACK);
-						v.drawRoundRectangle(xx, yy, 6, fonth / 2.0, 0, 0);
+						//v.setColor(Color.BLACK);
+						//v.drawRoundRectangle(xx, yy, 6, fonth / 2.0, 0, 0);
 						yy += fonth;
 					}
 					cc = col.pop();
