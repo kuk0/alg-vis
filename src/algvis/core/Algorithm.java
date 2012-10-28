@@ -30,8 +30,8 @@ import algvis.ui.VisPanel;
  * are descendants of the class Algorithm.
  * <p/>
  * A visualized algorithm has its own thread which can be suspended (e.g., after
- * each step of the algorithm; see method pause) and is automatically
- * resumed (method myresume) after pressing the "Next" button.
+ * each step of the algorithm; see method pause) and is automatically resumed
+ * (method myresume) after pressing the "Next" button.
  */
 abstract public class Algorithm implements Runnable {
 	private final VisPanel panel;
@@ -73,7 +73,7 @@ abstract public class Algorithm implements Runnable {
 					panel.refresh();
 				}
 			});
-//			e.printStackTrace();
+			// e.printStackTrace();
 			return;
 		}
 		end();
@@ -95,10 +95,11 @@ abstract public class Algorithm implements Runnable {
 				});
 				gate.acquire();
 			}
-			panel.history.addEdit(panelState = new UpdatableStateEdit(panel, panel.history.getNextId()));
+			panel.history.addEdit(panelState = new UpdatableStateEdit(panel,
+					panel.history.getNextId()));
 		}
 	}
-	
+
 	public void resume() {
 		if (wrapped) {
 			wrapperAlg.resume();
@@ -142,7 +143,7 @@ abstract public class Algorithm implements Runnable {
 	protected void addStep(String s, int... par) {
 		panel.commentary.addStep(s, par);
 	}
-	
+
 	protected void addToScene(VisualElement element) {
 		if (wrapped) {
 			wrapperAlg.addToScene(element);
@@ -153,17 +154,18 @@ abstract public class Algorithm implements Runnable {
 	}
 
 	protected void removeFromScene(VisualElement element) {
-//		if (panel.pauses) {
-			element.removeFromScene();
-//		} else {
-//			element.removeFromSceneNow();
-//		}
+		// if (panel.pauses) {
+		element.removeFromScene();
+		// } else {
+		// element.removeFromSceneNow();
+		// }
 	}
 
 	void begin() {
-		panel.history.addEdit(panelState = new UpdatableStateEdit(panel, panel.history.getNextId()));
+		panel.history.addEdit(panelState = new UpdatableStateEdit(panel,
+				panel.history.getNextId()));
 		panel.commentary.clear();
-		
+
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -176,7 +178,7 @@ abstract public class Algorithm implements Runnable {
 		panel.D.setStats();
 		panelState.end();
 		panel.history.putAlgorithmEnd();
-		
+
 		this.done = true;
 		EventQueue.invokeLater(new Runnable() {
 			@Override
@@ -189,7 +191,7 @@ abstract public class Algorithm implements Runnable {
 	public boolean isDone() {
 		return done;
 	}
-	
+
 	public HashMap<String, Object> getResult() {
 		return null;
 	}

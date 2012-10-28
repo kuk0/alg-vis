@@ -2,7 +2,7 @@ package algvis.ds.intervaltree;
 
 import algvis.ui.InputField;
 
-public class IntervalChangeKey extends IntervalAlg{
+public class IntervalChangeKey extends IntervalAlg {
 	private final int value;
 
 	public IntervalChangeKey(IntervalTree T, IntervalNode v, int value) {
@@ -14,15 +14,15 @@ public class IntervalChangeKey extends IntervalAlg{
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		setHeader("changekey");
-		//addStep("changekeyv");
-		
+		// addStep("changekeyv");
+
 		v.setKey(value);
 		if (v.getKey() < 1)
 			v.setKey(1);
 		if (v.getKey() > InputField.MAX)
 			v.setKey(InputField.MAX);
 
-		//if (H.minHeap) { //<<------
+		// if (H.minHeap) { //<<------
 		addNote("intervalchangev");
 		v.mark();
 		pause();

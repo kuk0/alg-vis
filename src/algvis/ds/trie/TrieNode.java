@@ -66,9 +66,17 @@ public class TrieNode extends TreeNode {
 	}
 
 	public TrieNode getParent() {
-		return (TrieNode)super.getParent();
+		return (TrieNode) super.getParent();
 	}
-	
+
+	public TrieNode getChild() {
+		return (TrieNode) super.getChild();
+	}
+
+	public TrieNode getRight() {
+		return (TrieNode) super.getRight();
+	}
+
 	void unsetGrey() {
 		TrieNode w = (TrieNode) getChild();
 		while (w != null) {
@@ -153,7 +161,7 @@ public class TrieNode extends TreeNode {
 				// }
 
 				v.setColor(Color.BLACK);
-				v.drawString(""+ch, midx, midy-1, Fonts.TYPEWRITER);
+				v.drawString("" + ch, midx, midy - 1, Fonts.TYPEWRITER);
 			} else {
 				midx = x - ((x - u.x) / 15);
 				midy = y - ((y - u.y) / 5 * 2) - 1;
@@ -166,7 +174,7 @@ public class TrieNode extends TreeNode {
 				v.drawRoundRectangle(midx, midy, w, h, 6, 10);
 
 				v.setColor(getFgColor());
-				v.drawString(""+ch, midx, midy-1, Fonts.TYPEWRITER);
+				v.drawString("" + ch, midx, midy - 1, Fonts.TYPEWRITER);
 			}
 		}
 	}
@@ -219,7 +227,7 @@ public class TrieNode extends TreeNode {
 	 *            A character which will be inserted in lexicographical order
 	 * @return A node with proper label
 	 */
-    TrieNode addRight(char ch, int x, int y) {
+	TrieNode addRight(char ch, int x, int y) {
 		if (getLabel() > ch) {
 			TrieNode u = new TrieNode(D, ch);
 			u.setParent(getParent());
@@ -272,7 +280,7 @@ public class TrieNode extends TreeNode {
 
 	@Override
 	public String toString() {
-		return ""+ch;
+		return "" + ch;
 	}
 
 	@Override
@@ -285,6 +293,7 @@ public class TrieNode extends TreeNode {
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object ch = state.get(hash + "ch");
-		if (ch != null) this.ch = (Character) HashtableStoreSupport.restore(ch);
+		if (ch != null)
+			this.ch = (Character) HashtableStoreSupport.restore(ch);
 	}
 }

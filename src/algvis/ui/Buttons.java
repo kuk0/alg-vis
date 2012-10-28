@@ -45,22 +45,23 @@ import algvis.internationalization.ICheckBox;
  * structure-specific buttons (such "Insert" or "Delete") are created by
  * extending this class (see for example classes DictButtons, PQButtons).
  */
-abstract public class Buttons extends JPanel implements ActionListener, StateEditable {
+abstract public class Buttons extends JPanel implements ActionListener,
+		StateEditable {
 	private static final long serialVersionUID = 1417759004124906334L;
 	protected final VisPanel panel;
 	protected final DataStructure D;
 	public InputField I;
 	private IButton previous;
-    protected IButton next;
-    private IButton clear;
-    protected IButton random;
-    private IButton save;
+	protected IButton next;
+	private IButton clear;
+	protected IButton random;
+	private IButton save;
 	private ICheckBox pause;
 	private ChLabel stats;
 	private String statsText;
 	private JButton zoomIn;
-    private JButton zoomOut;
-    private JButton resetView;
+	private JButton zoomOut;
+	private JButton resetView;
 	protected final String hash = Integer.toString(hashCode());
 
 	protected abstract void actionButtons(JPanel P);
@@ -89,7 +90,7 @@ abstract public class Buttons extends JPanel implements ActionListener, StateEdi
 	}
 
 	// input field, actions (insert, find, delete,...), previous, next
-    JPanel initFirstRow() {
+	JPanel initFirstRow() {
 		JPanel first = new JPanel();
 		first.setLayout(new FlowLayout());
 
@@ -105,7 +106,7 @@ abstract public class Buttons extends JPanel implements ActionListener, StateEdi
 	}
 
 	// [x] pause, clear, random, zoom in/out
-    JPanel initSecondRow() {
+	JPanel initSecondRow() {
 		JPanel second = new JPanel();
 		initPause();
 		initClear();
@@ -131,7 +132,7 @@ abstract public class Buttons extends JPanel implements ActionListener, StateEdi
 	}
 
 	// statistics
-    JPanel initStats() {
+	JPanel initStats() {
 		JPanel statsPanel = new JPanel();
 		statsPanel.setLayout(new FlowLayout());
 		stats = new ChLabel(D.stats());
@@ -173,12 +174,12 @@ abstract public class Buttons extends JPanel implements ActionListener, StateEdi
 	}
 
 	// TODO
-//	public void initSave() {
-//		save = new IButton("button-save");
-//		save.setMnemonic(KeyEvent.VK_S);
-//		save.setEnabled(panel.scenario.isEnabled());
-//		save.addActionListener(this);
-//	}
+	// public void initSave() {
+	// save = new IButton("button-save");
+	// save.setMnemonic(KeyEvent.VK_S);
+	// save.setEnabled(panel.scenario.isEnabled());
+	// save.addActionListener(this);
+	// }
 
 	private JButton createButton(String alt, String path) {
 		java.net.URL imgURL = getClass().getResource(path);
@@ -226,7 +227,8 @@ abstract public class Buttons extends JPanel implements ActionListener, StateEdi
 				panel.refresh();
 			}
 		} else if (evt.getSource() == clear) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			D.start(new AlgorithmAdapter(panel) {
 				@Override
 				public void runAlgorithm() throws InterruptedException {
@@ -234,7 +236,8 @@ abstract public class Buttons extends JPanel implements ActionListener, StateEdi
 				}
 			});
 		} else if (evt.getSource() == random) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			D.random(I.getInt(10));
 		} else if (evt.getSource() == pause) {
 			panel.pauses = pause.isSelected();
@@ -249,23 +252,24 @@ abstract public class Buttons extends JPanel implements ActionListener, StateEdi
 		}
 		I.requestFocusInWindow();
 	}
-	
+
 	public void setOtherEnabled(boolean enabled) {
 		clear.setEnabled(enabled);
 		random.setEnabled(enabled);
 	}
-	
+
 	public void refresh() {
 		previous.setEnabled(panel.history.canUndo());
-		next.setEnabled(panel.history.canRedo() || (panel.D.getA() != null && !panel.D.getA().isDone()));
+		next.setEnabled(panel.history.canRedo()
+				|| (panel.D.getA() != null && !panel.D.getA().isDone()));
 		setOtherEnabled(panel.history.isBetweenAlgorithms());
 		refreshStats();
 	}
-	
+
 	public void setStats(String s) {
 		statsText = s;
 	}
-	
+
 	void refreshStats() {
 		if (!statsText.equals(stats.getText())) {
 			stats.setText(statsText);
@@ -299,6 +303,7 @@ abstract public class Buttons extends JPanel implements ActionListener, StateEdi
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		Object statsText = state.get(hash + "statsText");
-		if (statsText != null) this.statsText = (String) HashtableStoreSupport.restore(statsText);
+		if (statsText != null)
+			this.statsText = (String) HashtableStoreSupport.restore(statsText);
 	}
 }

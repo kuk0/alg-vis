@@ -4,10 +4,10 @@ import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.ui.VisPanel;
 
-public class IntervalPanel extends VisPanel{
+public class IntervalPanel extends VisPanel {
 	private static final long serialVersionUID = -5655533916806349111L;
 	public static Class<? extends DataStructure> DS = IntervalTree.class;
-	
+
 	public IntervalPanel(Settings S) {
 		super(S);
 	}

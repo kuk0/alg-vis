@@ -18,7 +18,7 @@ package algvis.ds.priorityqueues.pairingheap;
 
 import algvis.core.DataStructure;
 
-public class PairHeapDelete extends PairHeapAlg{
+public class PairHeapDelete extends PairHeapAlg {
 
 	public PairHeapDelete(DataStructure H) {
 		super(H);
@@ -29,7 +29,7 @@ public class PairHeapDelete extends PairHeapAlg{
 		Pairing pairState = this.H.pairState;
 		int i = H.active;
 		setHeader("deletion");
-		
+
 		if (H.root[i] == null) {
 			return;
 		}
@@ -46,33 +46,27 @@ public class PairHeapDelete extends PairHeapAlg{
 
 		pause();
 
-		//spravime neviditelneho roota (vymazane minimum) a posunieme to o minsepy hore.
+		// spravime neviditelneho roota (vymazane minimum) a posunieme to o
+		// minsepy hore.
 
 		v.goDown();
 		removeFromScene(v);
 
-		H.root[i].state = -1; //<<----- potom odkomentovat
-		H.root[i].shift(0, - PairingHeap.minsepy);
+		H.root[i].state = -1; // <<----- potom odkomentovat
+		H.root[i].shift(0, -PairingHeap.minsepy);
 
 		switch (pairState) {
-			case NAIVE:
-				pairNaive(i);
-				break;
-			case LRRL:
-				pairLRRL(i);
-				break;
-			/*
-		 case FB:
-			 break;
-		 case BF:
-			 break;
-		 case MULTI:
-			 break;
-		 case LAZYM:
-			 break;
+		case NAIVE:
+			pairNaive(i);
+			break;
+		case LRRL:
+			pairLRRL(i);
+			break;
+		/*
+		 * case FB: break; case BF: break; case MULTI: break; case LAZYM: break;
 		 */
-			default:
-				break;
+		default:
+			break;
 		}
 	}
 }

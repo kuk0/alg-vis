@@ -30,7 +30,7 @@ import algvis.ui.VisPanel;
 public class SuffixTreeButtons extends Buttons {
 	private static final long serialVersionUID = -368670840648549217L;
 	private IButton insertB;
-    private IButton findB;
+	private IButton findB;
 	private ICheckBox implicitB;
 
 	public SuffixTreeButtons(VisPanel M) {
@@ -63,13 +63,15 @@ public class SuffixTreeButtons extends Buttons {
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
 		if (evt.getSource() == insertB) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			Vector<String> args = I.getVABS();
 			for (String s : args) {
 				((SuffixTree) D).insert(s);
 			}
 		} else if (evt.getSource() == findB) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			Vector<String> args = I.getVS();
 			if (args.size() > 0) {
 				for (String s : args) {

@@ -27,11 +27,10 @@ public class IMenuItem extends JMenuItem implements LanguageListener {
 		this.t = text;
 		Languages.addListener(this);
 	}
-	
+
 	public IMenuItem(String text) {
 		this(new IString(text));
 	}
-
 
 	public IMenuItem(Stringable text, int K) {
 		super(text.getString(), K);

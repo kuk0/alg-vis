@@ -30,18 +30,19 @@ import algvis.ui.VisPanel;
 import algvis.ui.view.ClickListener;
 import algvis.ui.view.View;
 
-public class PairingHeap extends MeldablePQ implements ClickListener{
+public class PairingHeap extends MeldablePQ implements ClickListener {
 	public static final String dsName = "pairingheap";
 	PairHeapNode root[] = null;
 	public Pairing pairState = Pairing.NAIVE;
-	//public PairHeapNode children[] = null;
-	
+
+	// public PairHeapNode children[] = null;
+
 	public PairingHeap(VisPanel M) {
 		super(M);
 		root = new PairHeapNode[numHeaps + 1];
-		M.screen.V.setDS(this); 
+		M.screen.V.setDS(this);
 	}
-	
+
 	@Override
 	public void mouseClicked(int x, int y) {
 		int h = 0;
@@ -72,13 +73,13 @@ public class PairingHeap extends MeldablePQ implements ClickListener{
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
 	public void insert(int x) {
 		start(new PairHeapInsert(this, x));
-		
+
 	}
 
 	@Override
@@ -86,7 +87,6 @@ public class PairingHeap extends MeldablePQ implements ClickListener{
 		start(new PairHeapDelete(this));
 	}
 
-	
 	@Override
 	public void meld(int i, int j) {
 		Pair p = chooseHeaps(i, j);
@@ -103,7 +103,7 @@ public class PairingHeap extends MeldablePQ implements ClickListener{
 		} else {
 			start(new PairHeapDecrKey(this, (PairHeapNode) v, delta));
 		}
-		
+
 	}
 
 	@Override
@@ -119,10 +119,10 @@ public class PairingHeap extends MeldablePQ implements ClickListener{
 
 	@Override
 	public void clear() {
-		for(int i = 0; i <= numHeaps; i++){
+		for (int i = 0; i <= numHeaps; i++) {
 			root[i] = null;
 		}
-		
+
 	}
 
 	@Override
@@ -131,7 +131,7 @@ public class PairingHeap extends MeldablePQ implements ClickListener{
 			if (root[i] != null) {
 				root[i].drawTree(V);
 			}
-		}		 
+		}
 	}
 
 	@Override
@@ -165,7 +165,8 @@ public class PairingHeap extends MeldablePQ implements ClickListener{
 	protected void endAnimation() {
 		if (root != null) {
 			for (int i = 0; i <= numHeaps; ++i) {
-				if (root[i] != null) root[i].endAnimation();
+				if (root[i] != null)
+					root[i].endAnimation();
 			}
 		}
 	}
@@ -174,7 +175,8 @@ public class PairingHeap extends MeldablePQ implements ClickListener{
 	protected boolean isAnimationDone() {
 		if (root != null) {
 			for (int i = 0; i <= numHeaps; ++i) {
-				if (root[i] != null && !root[i].isAnimationDone()) return false;
+				if (root[i] != null && !root[i].isAnimationDone())
+					return false;
 			}
 		}
 		return true;
@@ -194,7 +196,7 @@ public class PairingHeap extends MeldablePQ implements ClickListener{
 			root[active].lowlightTree();
 		}
 	}
-	
+
 	Pair chooseHeaps(int i, int j) {
 		if (i < 1 || i > numHeaps) {
 			i = -1;
@@ -217,51 +219,49 @@ public class PairingHeap extends MeldablePQ implements ClickListener{
 		}
 		return new Pair(i, j);
 	}
-	
+
 	public void reposition() {
 		int sumx = 0;
 		for (int i = 1; i <= numHeaps; ++i) {
 			if (root[i] != null) {
 				root[i].reposition();
 				root[i].reboxTree();
-				//sumx += root[i].leftw; 
-				//root[i].reposition();			//(sumx, root[i].toy);
-				if (root[i].state == -1){
-					root[i].shift(sumx, -1*(DataStructure.minsepy));
-				}else{
+				// sumx += root[i].leftw;
+				// root[i].reposition(); //(sumx, root[i].toy);
+				if (root[i].state == -1) {
+					root[i].shift(sumx, -1 * (DataStructure.minsepy));
+				} else {
 					root[i].shift(sumx, 0);
 				}
-				sumx += root[i].rightw + 20;	// 20 + minsepx = vzdialenost medzi haldami
+				sumx += root[i].rightw + 20; // 20 + minsepx = vzdialenost medzi
+												// haldami
 			}
-			if (i+1 <= numHeaps){
-				if (root[i+1] != null) {
-					sumx += root[i+1].leftw;
+			if (i + 1 <= numHeaps) {
+				if (root[i + 1] != null) {
+					sumx += root[i + 1].leftw;
 				}
 			}
-			
+
 			if (i == active) {
 				if (root[0] != null) {
 					root[0].reposition();
 					root[0].reboxTree();
-					sumx += root[0].leftw + 20;	//20
+					sumx += root[0].leftw + 20; // 20
 					/*
-					if (root[0].y >= 0) { 		// nie je na zaciatku vkladania
-						//root[0].reposition();	//(sumx, root[0].y);
-						root[0].shift(sumx, 0);
+					 * if (root[0].y >= 0) { // nie je na zaciatku vkladania
+					 * //root[0].reposition(); //(sumx, root[0].y);
+					 * root[0].shift(sumx, 0); } else { //root[0].reposition();
+					 * //(sumx, root[0].toy); root[0].shift(sumx, 0); }
+					 */
+					if (root[0].state == -1) {
+						root[0].shift(sumx, -1 * (DataStructure.minsepy));
 					} else {
-						//root[0].reposition();	//(sumx, root[0].toy);
-						root[0].shift(sumx, 0);
-					}
-					*/
-					if (root[0].state == -1){
-						root[0].shift(sumx, -1*(DataStructure.minsepy));
-					}else{
 						root[0].shift(sumx, 0);
 					}
 					sumx += root[0].rightw;
 				}
 			}
-			
+
 		}
 		panel.screen.V.setBounds(0, 0, sumx, y2);
 	}
@@ -271,7 +271,8 @@ public class PairingHeap extends MeldablePQ implements ClickListener{
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "root", root.clone());
 		for (int i = 0; i <= numHeaps; ++i) {
-			if (root[i] != null) root[i].storeState(state);
+			if (root[i] != null)
+				root[i].storeState(state);
 		}
 	}
 
@@ -279,9 +280,11 @@ public class PairingHeap extends MeldablePQ implements ClickListener{
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object root = state.get(hash + "root");
-		if (root != null) this.root = (PairHeapNode[]) HashtableStoreSupport.restore(root);
+		if (root != null)
+			this.root = (PairHeapNode[]) HashtableStoreSupport.restore(root);
 		for (int i = 0; i <= numHeaps; ++i) {
-			if (this.root[i] != null) this.root[i].restoreState(state);
+			if (this.root[i] != null)
+				this.root[i].restoreState(state);
 		}
 	}
 }

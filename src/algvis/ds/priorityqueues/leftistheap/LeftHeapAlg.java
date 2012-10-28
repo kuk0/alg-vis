@@ -72,7 +72,9 @@ abstract class LeftHeapAlg extends Algorithm {
 			if (w.getParent() != null) {
 				w.getParent().dashedRightLine = false;
 			}
-			H.root[0].repos(H.root[0].tox, H.root[0].toy + LeftHeap.minsepy);// + 2* LeftHeapNode.RADIUS);
+			H.root[0].repos(H.root[0].tox, H.root[0].toy + LeftHeap.minsepy);// +
+																				// 2*
+																				// LeftHeapNode.RADIUS);
 			H.root[0].unmark();
 			w.unmark();
 
@@ -141,8 +143,7 @@ abstract class LeftHeapAlg extends Algorithm {
 		H.reposition();
 		addNote("done");
 	}
-	
-	
+
 	void bubbleup(LeftHeapNode v) throws InterruptedException {
 		if (H.minHeap) {
 			addStep("minheapbubbleup");
@@ -151,13 +152,13 @@ abstract class LeftHeapAlg extends Algorithm {
 		}
 		v.mark();
 		pause();
-		v.unmark();		
+		v.unmark();
 		LeftHeapNode w = v.getParent();
 		LeftHeapNode v1, v2;
 		while (w != null && v.prec(w)) {
 			v1 = new LeftHeapNode(v);
 			v1.rank = -1;
-			v1.mark();			
+			v1.mark();
 			v2 = new LeftHeapNode(w);
 			v2.rank = -1;
 			addToScene(v1);
@@ -171,7 +172,7 @@ abstract class LeftHeapAlg extends Algorithm {
 			w.setKey(v1.getKey());
 			v.setColor(v2.getColor());
 			w.setColor(v1.getColor());
-			v1.unmark();			
+			v1.unmark();
 			removeFromScene(v1);
 			removeFromScene(v2);
 			v = w;

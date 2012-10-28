@@ -16,10 +16,9 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.skewheap;
 
-
-public class SkewHeapMeld extends SkewHeapAlg{
+public class SkewHeapMeld extends SkewHeapAlg {
 	private final int i;
-    private final int j;
+	private final int j;
 
 	public SkewHeapMeld(SkewHeap H, int i, int j) {
 		super(H);
@@ -30,7 +29,7 @@ public class SkewHeapMeld extends SkewHeapAlg{
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		setHeader("melding");
-		
+
 		if (i == j) {
 			return;
 		}

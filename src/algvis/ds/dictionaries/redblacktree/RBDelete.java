@@ -44,8 +44,10 @@ public class RBDelete extends Algorithm {
 		if (d != null) {
 			setHeader("delete", K);
 			addToScene(d);
-//			d.setColor(NodeColor.DELETE);
-			d.setColor(NodeColor.FOUND); // TODO aj tak je to jedno, lebo metoda draw zmeni kazdy RBNode na cerveny 
+			// d.setColor(NodeColor.DELETE);
+			d.setColor(NodeColor.FOUND); // TODO aj tak je to jedno, lebo metoda
+											// draw zmeni kazdy RBNode na
+											// cerveny
 			// alebo cierny
 
 			RBNode u = d, w = (u.getLeft() != null) ? u.getLeft() : u
@@ -135,7 +137,8 @@ public class RBDelete extends Algorithm {
 							s.setRed(false);
 							w.getParent2().setRed(true);
 							T.rotate(s);
-						} else if (!s.getLeft2().isRed() && !s.getRight2().isRed()) {
+						} else if (!s.getLeft2().isRed()
+								&& !s.getRight2().isRed()) {
 							addStep("rbdelete2");
 							pause();
 							s.setRed(true);
@@ -163,7 +166,8 @@ public class RBDelete extends Algorithm {
 							s.setRed(false);
 							w.getParent2().setRed(true);
 							T.rotate(s);
-						} else if (!s.getRight2().isRed() && !s.getLeft2().isRed()) {
+						} else if (!s.getRight2().isRed()
+								&& !s.getLeft2().isRed()) {
 							addStep("rbdelete2");
 							pause();
 							s.setRed(true);

@@ -31,7 +31,7 @@ public class LeftHeapInsert extends LeftHeapAlg {
 		int i = H.active;
 		H.root[0] = new LeftHeapNode(H, x, ZDepth.ACTIONNODE);
 		setHeader("insertion");
-		
+
 		H.reposition();
 
 		if (H.root[i] == null) {

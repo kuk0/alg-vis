@@ -16,10 +16,9 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.leftistheap;
 
-
 public class LeftHeapMeld extends LeftHeapAlg {
 	private final int i;
-    private final int j;
+	private final int j;
 
 	public LeftHeapMeld(LeftHeap H, int i, int j) {
 		super(H);
@@ -30,7 +29,7 @@ public class LeftHeapMeld extends LeftHeapAlg {
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		setHeader("melding");
-		
+
 		if (i == j) {
 			return;
 		}

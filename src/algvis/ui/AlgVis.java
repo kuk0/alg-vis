@@ -36,33 +36,20 @@ import algvis.internationalization.IMenuItem;
 import algvis.internationalization.Languages;
 
 public class AlgVis extends JPanel implements ActionListener {
-	/* set the default panel
-     * 0 - BST ("bst")
-     * 1 - Rotations ("rotations")
-     * 2 - AVL ("avltree")
-     * 3 - 23 tree ("23tree")
-     * 4 - 234 tree ("234tree")
-     * 5 - B-tree ("btree")
-     * 6 - Red-black tree ("redblack")
-     * 7 - AA-tree ("aatree")
-     * 8 - Treap ("treap")
-     * 9 - SkipList ("skiplist")
-     * 10 - Scapegoat tree ("scapegoat")
-     * 11 - Splay tree ("splaytree")
-     * 12 - Heap ("heap")
-     * 13 - d-ary heap ("daryheap")
-     * 14 - Leftist heap ("leftheap")
-     * 15 - Skew heap ("skewheap")
-     * 16 - Pairing heap ("pairheap")
-     * 17 - Binomial heap ("binheap")
-     * 18 - Lazy Binomial heap ("lazybinheap")
-     * 19 - Fibonacci heap ("fibheap")
-     * 20 - Union-find ("ufi")
-     * 21 - Interval tree ("intervaltree")
-     * 22 - Trie ("trie") 
-     * 23 - Suffix Tree ("suffixtree") */
+	/*
+	 * set the default panel 0 - BST ("bst") 1 - Rotations ("rotations") 2 - AVL
+	 * ("avltree") 3 - 23 tree ("23tree") 4 - 234 tree ("234tree") 5 - B-tree
+	 * ("btree") 6 - Red-black tree ("redblack") 7 - AA-tree ("aatree") 8 -
+	 * Treap ("treap") 9 - SkipList ("skiplist") 10 - Scapegoat tree
+	 * ("scapegoat") 11 - Splay tree ("splaytree") 12 - Heap ("heap") 13 - d-ary
+	 * heap ("daryheap") 14 - Leftist heap ("leftheap") 15 - Skew heap
+	 * ("skewheap") 16 - Pairing heap ("pairheap") 17 - Binomial heap
+	 * ("binheap") 18 - Lazy Binomial heap ("lazybinheap") 19 - Fibonacci heap
+	 * ("fibheap") 20 - Union-find ("ufi") 21 - Interval tree ("intervaltree")
+	 * 22 - Trie ("trie") 23 - Suffix Tree ("suffixtree")
+	 */
 	private final static int DEFAULT_DS = 0;
-	
+
 	private static final long serialVersionUID = -5202486006824196688L;
 
 	/** Cards with data structures */
@@ -142,18 +129,15 @@ public class AlgVis extends JPanel implements ActionListener {
 		menuBar.add(langMenu);
 
 		/*
-		// Layout menu
-		IMenuItem sItem = new IMenuItem(L, "layout-simple", KeyEvent.VK_S);
-		IMenuItem cItem = new IMenuItem(L, "layout-compact", KeyEvent.VK_C);
-		sItem.setActionCommand("layout-simple");
-		cItem.setActionCommand("layout-compact");
-		sItem.addActionListener(this);
-		cItem.addActionListener(this);
-
-		layoutMenu.add(sItem);
-		layoutMenu.add(cItem);
-		menuBar.add(layoutMenu);
-		*/
+		 * // Layout menu IMenuItem sItem = new IMenuItem(L, "layout-simple",
+		 * KeyEvent.VK_S); IMenuItem cItem = new IMenuItem(L, "layout-compact",
+		 * KeyEvent.VK_C); sItem.setActionCommand("layout-simple");
+		 * cItem.setActionCommand("layout-compact");
+		 * sItem.addActionListener(this); cItem.addActionListener(this);
+		 * 
+		 * layoutMenu.add(sItem); layoutMenu.add(cItem);
+		 * menuBar.add(layoutMenu);
+		 */
 
 		for (int i = 0; i < DataStructures.N; ++i) {
 			panels[i] = DataStructures.createPanel(i, S);
@@ -192,7 +176,7 @@ public class AlgVis extends JPanel implements ActionListener {
 			}
 		}
 	}
-	
+
 	private void showCard(int i) {
 		CardLayout cl = (CardLayout) (cards.getLayout());
 		if (activePanel != -1) {

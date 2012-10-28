@@ -138,10 +138,13 @@ public class SkipList extends Dictionary implements ClickListener {
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object height = state.get(hash + "height");
-		if (height != null) this.height = (Integer) HashtableStoreSupport.restore(height);
+		if (height != null)
+			this.height = (Integer) HashtableStoreSupport.restore(height);
 		Object n = state.get(hash + "n");
-		if (n != null) this.n = (Integer) HashtableStoreSupport.restore(n);
+		if (n != null)
+			this.n = (Integer) HashtableStoreSupport.restore(n);
 		Object e = state.get(hash + "e");
-		if (e != null) this.e = (Integer) HashtableStoreSupport.restore(e);
+		if (e != null)
+			this.e = (Integer) HashtableStoreSupport.restore(e);
 	}
 }

@@ -18,7 +18,7 @@ package algvis.ds.priorityqueues.daryheap;
 
 import algvis.ui.InputField;
 
-public class DaryHeapDecrKey extends DaryHeapAlg{
+public class DaryHeapDecrKey extends DaryHeapAlg {
 	private final int delta;
 	private final DaryHeapNode v;
 

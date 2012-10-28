@@ -44,7 +44,7 @@ public class AVLDelete extends Algorithm {
 			setHeader("delete", K);
 			addToScene(d);
 			d.setColor(NodeColor.DELETE);
-			
+
 			AVLNode w = d.getParent();
 			if (d.isLeaf()) { // case I - list
 				addStep("bst-delete-case1");

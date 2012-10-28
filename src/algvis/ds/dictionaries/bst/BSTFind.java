@@ -73,7 +73,8 @@ public class BSTFind extends Algorithm {
 					pause();
 					v.noArrow();
 					w.setColor(NodeColor.DARKER);
-					if (w.getLeft() != null) w.getLeft().subtreeColor(NodeColor.DARKER);
+					if (w.getLeft() != null)
+						w.getLeft().subtreeColor(NodeColor.DARKER);
 					w = w.getRight();
 					if (w != null) {
 						v.goAbove(w);
@@ -93,7 +94,8 @@ public class BSTFind extends Algorithm {
 					pause();
 					v.noArrow();
 					w.setColor(NodeColor.DARKER);
-					if (w.getRight() != null) w.getRight().subtreeColor(NodeColor.DARKER);
+					if (w.getRight() != null)
+						w.getRight().subtreeColor(NodeColor.DARKER);
 					w = w.getLeft();
 					if (w != null) {
 						v.goAbove(w);
@@ -107,12 +109,14 @@ public class BSTFind extends Algorithm {
 				pause();
 			}
 		}
-		if (result.get("node") == null) removeFromScene(v);
+		if (result.get("node") == null)
+			removeFromScene(v);
 		pause();
 		if (T.getRoot() != null) {
 			T.getRoot().subtreeColor(NodeColor.NORMAL);
 		}
-		if (result.get("node") != null) removeFromScene(v);
+		if (result.get("node") != null)
+			removeFromScene(v);
 	}
 
 	public HashMap<String, Object> getResult() {

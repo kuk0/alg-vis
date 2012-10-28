@@ -27,7 +27,7 @@ public class TriePanel extends VisPanel {
 	public TriePanel(Settings S) {
 		super(S);
 	}
-	
+
 	@Override
 	public void initDS() {
 		D = new Trie(this);

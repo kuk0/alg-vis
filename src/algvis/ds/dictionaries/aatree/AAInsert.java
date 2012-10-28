@@ -34,15 +34,16 @@ public class AAInsert extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		BSTInsert insert = new BSTInsert(T, new AANode(T, K, ZDepth.ACTIONNODE), this);
+		BSTInsert insert = new BSTInsert(T,
+				new AANode(T, K, ZDepth.ACTIONNODE), this);
 		insert.runAlgorithm();
 		HashMap<String, Object> insertResult = insert.getResult();
 		boolean inserted = (Boolean) insertResult.get("inserted");
 		AANode w = (AANode) insertResult.get("w");
-		
+
 		if (inserted && w != null) {
 			pause();
-				
+
 			// bubleme nahor
 			while (w != null) {
 				w.mark();

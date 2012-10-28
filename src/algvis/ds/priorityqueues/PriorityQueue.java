@@ -48,6 +48,7 @@ abstract public class PriorityQueue extends DataStructure {
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object minHeap = state.get(hash + "minHeap");
-		if (minHeap != null) this.minHeap = (Boolean) HashtableStoreSupport.restore(minHeap);
+		if (minHeap != null)
+			this.minHeap = (Boolean) HashtableStoreSupport.restore(minHeap);
 	}
 }

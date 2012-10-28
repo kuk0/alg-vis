@@ -34,7 +34,7 @@ public class PairHeapDecrKey extends PairHeapAlg {
 		} else {
 			setHeader("increasekey");
 		}
-		
+
 		if (H.minHeap) {
 			v.setKey(v.getKey() - delta);
 			if (v.getKey() < 1)

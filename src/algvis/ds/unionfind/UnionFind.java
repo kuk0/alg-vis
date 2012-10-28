@@ -58,7 +58,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 	}
 
 	/** adds to sets and vertices */
-    void add(UnionFindNode n) {
+	void add(UnionFindNode n) {
 		count++;
 		sets.add(n);
 		vertices.add(n);
@@ -93,7 +93,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 	}
 
 	@Override
-	public void random(int n) {		
+	public void random(int n) {
 		final boolean p = panel.pauses;
 		panel.pauses = false;
 		for (int i = 0; i < n; ++i) {
@@ -119,9 +119,9 @@ public class UnionFind extends DataStructure implements ClickListener {
 	@Override
 	public void draw(View V) {
 		if (sets != null) {
-            for (UnionFindNode set : sets) {
-                set.drawTree(V);
-            }
+			for (UnionFindNode set : sets) {
+				set.drawTree(V);
+			}
 		}
 	}
 
@@ -140,8 +140,10 @@ public class UnionFind extends DataStructure implements ClickListener {
 		if (sets != null) {
 			for (UnionFindNode set : sets) {
 				Rectangle2D sBB = set.getBoundingBox();
-				if (retVal == null) retVal = sBB;
-				else if (sBB != null) retVal = retVal.createUnion(sBB);
+				if (retVal == null)
+					retVal = sBB;
+				else if (sBB != null)
+					retVal = retVal.createUnion(sBB);
 			}
 		}
 		return retVal;
@@ -160,7 +162,8 @@ public class UnionFind extends DataStructure implements ClickListener {
 	protected boolean isAnimationDone() {
 		if (sets != null) {
 			for (UnionFindNode set : sets) {
-				if (!set.isAnimationDone()) return false;
+				if (!set.isAnimationDone())
+					return false;
 			}
 		}
 		return true;
@@ -170,27 +173,27 @@ public class UnionFind extends DataStructure implements ClickListener {
 		if (sets != null) {
 			int ey2 = -9999999;
 			int ey1 = 9999999;
-            for (UnionFindNode set : sets) {
-                y1 = y2 = 0;
-                set.reposition();
-                if (y1 < ey1) {
-                    ey1 = y1;
-                }
-                if (y2 > ey2) {
-                    ey2 = y2;
-                }
-            }
+			for (UnionFindNode set : sets) {
+				y1 = y2 = 0;
+				set.reposition();
+				if (y1 < ey1) {
+					ey1 = y1;
+				}
+				if (y2 > ey2) {
+					ey2 = y2;
+				}
+			}
 			y1 = ey1;
 			y2 = ey2;
 
 			x1 = x2 = 0;
 			int shift = -sets.get(0).leftw;
 			x1 = shift;
-            for (UnionFindNode set : sets) {
-                shift += set.leftw;
-                set.shift(shift, 0);
-                shift += set.rightw;
-            }
+			for (UnionFindNode set : sets) {
+				shift += set.leftw;
+				set.shift(shift, 0);
+				shift += set.rightw;
+			}
 			x2 = shift;
 			panel.screen.V.setBounds(x1, y1, x2, y2);
 		}
@@ -201,7 +204,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 	}
 
 	boolean isSelected(UnionFindNode u) {
-        return (u == firstSelected) || (u == secondSelected);
+		return (u == firstSelected) || (u == secondSelected);
 	}
 
 	@Override
@@ -255,16 +258,21 @@ public class UnionFind extends DataStructure implements ClickListener {
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object count = state.get(hash + "count");
-		if (count != null) this.count = (Integer) HashtableStoreSupport.restore(count);
-		
+		if (count != null)
+			this.count = (Integer) HashtableStoreSupport.restore(count);
+
 		Object sets = state.get(hash + "sets");
-		if (sets != null) this.sets = (ArrayList<UnionFindNode>) HashtableStoreSupport.restore(sets);
+		if (sets != null)
+			this.sets = (ArrayList<UnionFindNode>) HashtableStoreSupport
+					.restore(sets);
 		for (UnionFindNode node : this.sets) {
 			node.restoreState(state);
 		}
 
 		Object vertices = state.get(hash + "vertices");
-		if (vertices != null) this.vertices = (ArrayList<UnionFindNode>) HashtableStoreSupport.restore(vertices);
+		if (vertices != null)
+			this.vertices = (ArrayList<UnionFindNode>) HashtableStoreSupport
+					.restore(vertices);
 		for (UnionFindNode node : this.vertices) {
 			node.restoreState(state);
 		}

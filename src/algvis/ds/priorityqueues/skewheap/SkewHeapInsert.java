@@ -31,7 +31,7 @@ public class SkewHeapInsert extends SkewHeapAlg {
 		int i = H.active;
 		H.root[0] = new SkewHeapNode(H, x, ZDepth.ACTIONNODE);
 		setHeader("insertion");
-		
+
 		H.reposition();
 
 		if (H.root[i] == null) {

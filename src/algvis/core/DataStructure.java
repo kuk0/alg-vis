@@ -58,7 +58,8 @@ abstract public class DataStructure extends VisualElement {
 		unmark();
 		final Future result = panel.algorithmPool.submit(runnable);
 		// TODO only for debugging purposes:
-		// mozno to trochu spomali vkladanie vrcholov, ale bez tohto by sa nedal najst bug v algoritmoch (nevypisal 
+		// mozno to trochu spomali vkladanie vrcholov, ale bez tohto by sa nedal
+		// najst bug v algoritmoch (nevypisal
 		// by sa ziadny exception)
 		Thread t = new Thread(new Runnable() {
 			@Override

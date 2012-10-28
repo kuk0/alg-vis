@@ -28,12 +28,12 @@ import algvis.ui.VisPanel;
 import algvis.ui.view.ClickListener;
 import algvis.ui.view.View;
 
-public class DaryHeap extends PriorityQueue implements ClickListener{
+public class DaryHeap extends PriorityQueue implements ClickListener {
 	public static final String dsName = "daryheap";
 	DaryHeapNode root = null;
 	DaryHeapNode last = null;
 	int order = 5;
-	public static final int minsepx = 30;  //zmenit na mensie
+	public static final int minsepx = 30; // zmenit na mensie
 
 	public DaryHeap(VisPanel M) {
 		super(M);
@@ -61,19 +61,19 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 	@Override
 	public void insert(int x) {
 		start(new DaryHeapInsert(this, x));
-		
+
 	}
 
 	@Override
 	public void delete() {
 		start(new DaryHeapDelete(this));
-		
+
 	}
 
 	@Override
 	public void decreaseKey(Node v, int delta) {
 		if (v == null) {
-		// TODO: vypindat
+			// TODO: vypindat
 		} else {
 			start(new DaryHeapDecrKey(this, (DaryHeapNode) v, delta));
 		}
@@ -104,7 +104,7 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 			root = null;
 			setStats();
 			reposition();
-		}		
+		}
 	}
 
 	public void setOrder(final Integer order) {
@@ -155,7 +155,7 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 		}
 	}
 
-	public int getOrder(){
+	public int getOrder() {
 		return this.order;
 	}
 
@@ -163,7 +163,8 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 	public void storeState(Hashtable<Object, Object> state) {
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "root", root);
-		if (root != null) root.storeState(state);
+		if (root != null)
+			root.storeState(state);
 		HashtableStoreSupport.store(state, hash + "last", last);
 		HashtableStoreSupport.store(state, hash + "order", order);
 	}
@@ -172,10 +173,13 @@ public class DaryHeap extends PriorityQueue implements ClickListener{
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object root = state.get(hash + "root");
-		if (root != null) this.root = (DaryHeapNode) HashtableStoreSupport.restore(root);
-		if (this.root != null) this.root.restoreState(state);
+		if (root != null)
+			this.root = (DaryHeapNode) HashtableStoreSupport.restore(root);
+		if (this.root != null)
+			this.root.restoreState(state);
 		Object last = state.get(hash + "last");
-		if (last != null) this.last = (DaryHeapNode) HashtableStoreSupport.restore(last);
+		if (last != null)
+			this.last = (DaryHeapNode) HashtableStoreSupport.restore(last);
 		Object order = state.get(hash + "order");
 		if (order != null) {
 			this.order = (Integer) HashtableStoreSupport.restore(order);

@@ -32,7 +32,7 @@ public class BinHeapInsert extends BinHeapAlg {
 		H.root[0] = H.min[0] = new BinHeapNode(H, x, ZDepth.ACTIONNODE);
 		addToScene(H.root[0]); // TODO hm, naco je aj v datovej strukture
 		if (H.root[i] != null) {
-//			H.root[0].x = H.root[i].x;
+			// H.root[0].x = H.root[i].x;
 			H.root[0].goTo(H.root[i].tox, H.root[0].toy);
 		}
 		H.reposition();

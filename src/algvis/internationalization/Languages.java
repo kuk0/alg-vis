@@ -27,8 +27,8 @@ public class Languages {
 	private static int current_lang;
 	private static final Locale[] all_locales = new Locale[N];
 	private static final ResourceBundle[] all_msgs = new ResourceBundle[N];
-	//private static Locale locale;
-	//private static ResourceBundle msg;
+	// private static Locale locale;
+	// private static ResourceBundle msg;
 	private static final List<LanguageListener> listeners = new LinkedList<LanguageListener>();
 
 	static {
@@ -47,8 +47,8 @@ public class Languages {
 			i = 0;
 		}
 		current_lang = i;
-		//locale = all_locales[current_lang];
-		//msg = all_msgs[current_lang];
+		// locale = all_locales[current_lang];
+		// msg = all_msgs[current_lang];
 		// notify all listeners
 		for (LanguageListener l : listeners) {
 			l.languageChanged();

@@ -26,7 +26,7 @@ public class UnionFindUnion extends UnionFindFind {
 	private final UnionHeuristic unionState;
 	private final UnionFind UF;
 	private final UnionFindNode u;
-    private final UnionFindNode v;
+	private final UnionFindNode v;
 
 	public UnionFindUnion(UnionFind UF, UnionFindNode u, UnionFindNode v) {
 		super(UF);
@@ -35,25 +35,26 @@ public class UnionFindUnion extends UnionFindFind {
 		this.u = u;
 		this.v = v;
 	}
-	
+
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		setHeader("ufunion");
 		u.mark();
 		v.mark();
 		switch (unionState) {
-			case NONE:
-				unionSimple(u, v);
-				break;
-			case BYRANK:
-				unionByRank(u, v);
-				break;
-			default:
-				break;
+		case NONE:
+			unionSimple(u, v);
+			break;
+		case BYRANK:
+			unionByRank(u, v);
+			break;
+		default:
+			break;
 		}
 	}
 
-	private void unionSimple(UnionFindNode V, UnionFindNode W) throws InterruptedException {
+	private void unionSimple(UnionFindNode V, UnionFindNode W)
+			throws InterruptedException {
 		UnionFindNode r1 = find(V);
 		UnionFindNode r2 = find(W);
 		if (r1 == r2) {
@@ -78,7 +79,8 @@ public class UnionFindUnion extends UnionFindFind {
 		// be some correction.
 	}
 
-	private void unionByRank(UnionFindNode V, UnionFindNode W) throws InterruptedException {
+	private void unionByRank(UnionFindNode V, UnionFindNode W)
+			throws InterruptedException {
 		UnionFindNode r1 = find(V);
 		UnionFindNode r2 = find(W);
 		if (r1 == r2) {

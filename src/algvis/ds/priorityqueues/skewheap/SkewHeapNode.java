@@ -28,8 +28,10 @@ import algvis.ui.view.View;
 
 public class SkewHeapNode extends BSTNode {
 	private boolean doubleArrow = false;
-	boolean dashedRightLine = false; // if true the line leading to the right son is dashed
-	private boolean dashedLeftLine = false;  // if true the line leading to the left son is dashed
+	boolean dashedRightLine = false; // if true the line leading to the right
+										// son is dashed
+	private boolean dashedLeftLine = false; // if true the line leading to the
+											// left son is dashed
 
 	private SkewHeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
@@ -44,7 +46,7 @@ public class SkewHeapNode extends BSTNode {
 	public SkewHeapNode(SkewHeapNode v) {
 		this(v.D, v.getKey(), v.x, v.y);
 	}
-	
+
 	public boolean prec(Node v) {
 		if (((MeldablePQ) D).minHeap) {
 			return this.getKey() < v.getKey();
@@ -102,7 +104,8 @@ public class SkewHeapNode extends BSTNode {
 			x1 = dir.x;
 			y1 = dir.y;
 		}
-		v.drawDoubleArrow(x1 + 2 * SkewHeapNode.RADIUS, y1, x2 - 2 * SkewHeapNode.RADIUS, y2);
+		v.drawDoubleArrow(x1 + 2 * SkewHeapNode.RADIUS, y1, x2 - 2
+				* SkewHeapNode.RADIUS, y2);
 	}
 
 	@Override
@@ -119,8 +122,11 @@ public class SkewHeapNode extends BSTNode {
 					py + (SkewHeap.minsepy));// + 2 * SkewHeapNode.RADIUS));
 		}
 		if (this.getLeft() != null) {
-			this.getLeft().repos(px - getLeft().rightw,
-					py + (SkewHeap.minsepy));// + 2 * SkewHeapNode.RADIUS));
+			this.getLeft()
+					.repos(px - getLeft().rightw, py + (SkewHeap.minsepy));// +
+																			// 2
+																			// *
+																			// SkewHeapNode.RADIUS));
 		}
 	}
 
@@ -157,10 +163,9 @@ public class SkewHeapNode extends BSTNode {
 
 		if (this.state != INVISIBLE) {
 
-			
-			//if (thread) { v.setColor(Color.red); } else {			
+			// if (thread) { v.setColor(Color.red); } else {
 			v.setColor(Color.black);
-			//}
+			// }
 
 			if ((getLeft() != null) && (getLeft().state != INVISIBLE)) {
 				if (dashedLeftLine) {
@@ -217,18 +222,26 @@ public class SkewHeapNode extends BSTNode {
 	public void storeState(Hashtable<Object, Object> state) {
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "doubleArrow", doubleArrow);
-		HashtableStoreSupport.store(state, hash + "dashedRightLine", dashedRightLine);
-		HashtableStoreSupport.store(state, hash + "dashedLeftLine", dashedLeftLine);
+		HashtableStoreSupport.store(state, hash + "dashedRightLine",
+				dashedRightLine);
+		HashtableStoreSupport.store(state, hash + "dashedLeftLine",
+				dashedLeftLine);
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object doubleArrow = state.get(hash + "doubleArrow");
-		if (doubleArrow != null) this.doubleArrow = (Boolean) HashtableStoreSupport.restore(doubleArrow);
+		if (doubleArrow != null)
+			this.doubleArrow = (Boolean) HashtableStoreSupport
+					.restore(doubleArrow);
 		Object dashedRightLine = state.get(hash + "dashedRightLine");
-		if (dashedRightLine != null) this.dashedRightLine = (Boolean) HashtableStoreSupport.restore(dashedRightLine);
+		if (dashedRightLine != null)
+			this.dashedRightLine = (Boolean) HashtableStoreSupport
+					.restore(dashedRightLine);
 		Object dashedLeftLine = state.get(hash + "dashedLeftLine");
-		if (dashedLeftLine != null) this.dashedLeftLine = (Boolean) HashtableStoreSupport.restore(dashedLeftLine);
+		if (dashedLeftLine != null)
+			this.dashedLeftLine = (Boolean) HashtableStoreSupport
+					.restore(dashedLeftLine);
 	}
 }

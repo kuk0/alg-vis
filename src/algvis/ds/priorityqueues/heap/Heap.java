@@ -104,7 +104,8 @@ public class Heap extends PriorityQueue implements ClickListener {
 
 	@Override
 	protected void endAnimation() {
-		// TODO radsej asi nejak preliezt strom, root.endAnimation by sa malo tykat len roota
+		// TODO radsej asi nejak preliezt strom, root.endAnimation by sa malo
+		// tykat len roota
 		root.endAnimation();
 	}
 
@@ -160,16 +161,20 @@ public class Heap extends PriorityQueue implements ClickListener {
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "n", n);
 		HashtableStoreSupport.store(state, hash + "root", root);
-		if (root != null) root.storeState(state);
+		if (root != null)
+			root.storeState(state);
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object n = state.get(hash + "n");
-		if (n != null) this.n = (Integer) HashtableStoreSupport.restore(n);
+		if (n != null)
+			this.n = (Integer) HashtableStoreSupport.restore(n);
 		Object root = state.get(hash + "root");
-		if (root != null) this.root = (HeapNode) HashtableStoreSupport.restore(root);
-		if (this.root != null) this.root.restoreState(state);
+		if (root != null)
+			this.root = (HeapNode) HashtableStoreSupport.restore(root);
+		if (this.root != null)
+			this.root.restoreState(state);
 	}
 }

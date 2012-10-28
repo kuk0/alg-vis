@@ -127,6 +127,7 @@ public class RBNode extends BSTNode {
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object red = state.get(hash + "red");
-		if (red != null) this.red = (Boolean) HashtableStoreSupport.restore(red);
+		if (red != null)
+			this.red = (Boolean) HashtableStoreSupport.restore(red);
 	}
 }

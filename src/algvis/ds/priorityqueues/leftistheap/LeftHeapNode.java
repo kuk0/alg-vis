@@ -30,8 +30,10 @@ import algvis.ui.view.View;
 public class LeftHeapNode extends BSTNode {
 	int rank = 1;
 	private boolean doubleArrow = false;
-	boolean dashedRightLine = false; // if true the line leading to the right son is dashed
-	private boolean dashedLeftLine = false; // if true the line leading to the left son is dashed
+	boolean dashedRightLine = false; // if true the line leading to the right
+										// son is dashed
+	private boolean dashedLeftLine = false; // if true the line leading to the
+											// left son is dashed
 
 	private LeftHeapNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
@@ -142,7 +144,10 @@ public class LeftHeapNode extends BSTNode {
 		}
 		if (this.getLeft() != null) {
 			this.getLeft()
-					.repos(px - getLeft().rightw, py + (LeftHeap.minsepy));// + 2 * LeftHeapNode.RADIUS));
+					.repos(px - getLeft().rightw, py + (LeftHeap.minsepy));// +
+																			// 2
+																			// *
+																			// LeftHeapNode.RADIUS));
 		}
 	}
 
@@ -241,20 +246,29 @@ public class LeftHeapNode extends BSTNode {
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "rank", rank);
 		HashtableStoreSupport.store(state, hash + "doubleArrow", doubleArrow);
-		HashtableStoreSupport.store(state, hash + "dashedRightLine", dashedRightLine);
-		HashtableStoreSupport.store(state, hash + "dashedLeftLine", dashedLeftLine);
+		HashtableStoreSupport.store(state, hash + "dashedRightLine",
+				dashedRightLine);
+		HashtableStoreSupport.store(state, hash + "dashedLeftLine",
+				dashedLeftLine);
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object rank = state.get(hash + "rank");
-		if (rank != null) this.rank = (Integer) HashtableStoreSupport.restore(rank);
+		if (rank != null)
+			this.rank = (Integer) HashtableStoreSupport.restore(rank);
 		Object doubleArrow = state.get(hash + "doubleArrow");
-		if (doubleArrow != null) this.doubleArrow = (Boolean) HashtableStoreSupport.restore(doubleArrow);
+		if (doubleArrow != null)
+			this.doubleArrow = (Boolean) HashtableStoreSupport
+					.restore(doubleArrow);
 		Object dashedRightLine = state.get(hash + "dashedRightLine");
-		if (dashedRightLine != null) this.dashedRightLine = (Boolean) HashtableStoreSupport.restore(dashedRightLine);
+		if (dashedRightLine != null)
+			this.dashedRightLine = (Boolean) HashtableStoreSupport
+					.restore(dashedRightLine);
 		Object dashedLeftLine = state.get(hash + "dashedLeftLine");
-		if (dashedLeftLine != null) this.dashedLeftLine = (Boolean) HashtableStoreSupport.restore(dashedLeftLine);
+		if (dashedLeftLine != null)
+			this.dashedLeftLine = (Boolean) HashtableStoreSupport
+					.restore(dashedLeftLine);
 	}
 }

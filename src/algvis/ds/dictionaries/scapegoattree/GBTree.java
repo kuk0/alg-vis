@@ -27,7 +27,8 @@ import algvis.ui.view.Layout;
 
 public class GBTree extends BST {
 	public static String dsName = "scapegoat";
-	double alpha = 1.01; // TODO mozno nebude fungovat prepinanie alphy pri prehliadani historie
+	double alpha = 1.01; // TODO mozno nebude fungovat prepinanie alphy pri
+							// prehliadani historie
 	private int del = 0;
 
 	@Override
@@ -120,6 +121,7 @@ public class GBTree extends BST {
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object del = state.get(hash + "del");
-		if (del != null) this.del = (Integer) HashtableStoreSupport.restore(del);
+		if (del != null)
+			this.del = (Integer) HashtableStoreSupport.restore(del);
 	}
 }

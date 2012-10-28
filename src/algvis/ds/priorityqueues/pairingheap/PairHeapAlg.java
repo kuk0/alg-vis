@@ -60,7 +60,7 @@ public abstract class PairHeapAlg extends Algorithm {
 	// H.root[i].shift(0, - PairingHeap.minsepy);
 	// problemy s posunutim
 	// zobereme hocake dieta a ostatne k nemu prilinkujeme.
-    void pairNaive(int i) throws InterruptedException {
+	void pairNaive(int i) throws InterruptedException {
 		int j = H.root[i].numChildren();
 		if (j > 0) {
 			if (j == 1) {

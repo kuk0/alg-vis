@@ -39,7 +39,8 @@ import algvis.internationalization.ILabel;
 import algvis.internationalization.LanguageListener;
 import algvis.internationalization.Languages;
 
-public abstract class VisPanel extends JPanel implements LanguageListener, StateEditable {
+public abstract class VisPanel extends JPanel implements LanguageListener,
+		StateEditable {
 	private static final long serialVersionUID = 5104769085118210624L;
 	public static Class<? extends DataStructure> DS;
 
@@ -173,7 +174,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener, State
 	public void languageChanged() {
 		border.setTitle("    " + Languages.getString(D.getName()) + "    ");
 	}
-	
+
 	public void setOnAir(boolean onAir) {
 		if (!onAir) {
 			screen.suspend();
@@ -181,7 +182,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener, State
 			screen.resume();
 		}
 	}
-	
+
 	public void refresh() {
 		buttons.refresh();
 		commentary.refresh();

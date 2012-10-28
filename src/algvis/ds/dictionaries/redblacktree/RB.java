@@ -38,7 +38,7 @@ public class RB extends BST {
 		NULL = new RBNode(this, Node.NULL, ZDepth.NODE);
 		NULL.setParent(NULL);
 		NULL.setRight(NULL);
-		NULL.setLeft(NULL);	
+		NULL.setLeft(NULL);
 		NULL.setRed(false);
 		NULL.size = NULL.height = NULL.sumh = 0;
 		NULL.state = Node.INVISIBLE;

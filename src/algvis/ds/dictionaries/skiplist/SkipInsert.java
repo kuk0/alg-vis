@@ -22,7 +22,7 @@ import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 
 public class SkipInsert extends SkipAlg {
-	
+
 	public SkipInsert(SkipList L, int x) {
 		super(L, x);
 	}

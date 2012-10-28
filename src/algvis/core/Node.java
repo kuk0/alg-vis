@@ -40,10 +40,10 @@ public class Node extends VisualElement {
 	 * steps - the number of steps to reach the destination
 	 */
 	public volatile int x;
-    public volatile int y;
-    public int tox;
-    public int toy;
-    protected int steps;
+	public volatile int y;
+	public int tox;
+	public int toy;
+	protected int steps;
 	/** the state of a node - either ALIVE, DOWN, LEFT, or RIGHT. */
 	public int state = ALIVE;
 	private NodeColor color = NodeColor.NORMAL;
@@ -51,7 +51,7 @@ public class Node extends VisualElement {
 	protected Node dir = null;
 	private int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S,
 										// 135=SW, 180=W)
-                                        private boolean arc = false;
+	private boolean arc = false;
 
 	public static final int STEPS = 10;
 	public static final int RADIUS = 10;
@@ -70,16 +70,16 @@ public class Node extends VisualElement {
 	 * then turns INVISIBLE)
 	 */
 	public static final int INVISIBLE = -1;
-    public static final int ALIVE = 0;
-    public static final int DOWN = 2;
-    public static final int LEFT = 3;
-    public static final int RIGHT = 4;
+	public static final int ALIVE = 0;
+	public static final int DOWN = 2;
+	public static final int LEFT = 3;
+	public static final int RIGHT = 4;
 	public static final int OUT = 5;
 	public static final int NOARROW = -10000;
-    public static final int DIRARROW = -10001;
-    public static final int TOARROW = -10002;
+	public static final int DIRARROW = -10001;
+	public static final int TOARROW = -10002;
 	public static final int UPY = -7 * Node.RADIUS;
-	
+
 	protected Node(DataStructure D, int key, int x, int y) {
 		this(D, key, x, y, ZDepth.NODE);
 	}
@@ -135,7 +135,7 @@ public class Node extends VisualElement {
 		return color.fgColor;
 	}
 
-	protected Color getBgColor() {
+	public Color getBgColor() {
 		return color.bgColor;
 	}
 
@@ -143,7 +143,7 @@ public class Node extends VisualElement {
 	 * Set background color depending on the key (the higher the key, the darker
 	 * the color).
 	 */
-    protected void bgKeyColor() {
+	protected void bgKeyColor() {
 		bgColor(new Color(255, 255 - getKey() / 20, 0));
 	}
 
@@ -285,7 +285,7 @@ public class Node extends VisualElement {
 	}
 
 	// Assumption: dir (the node we are pointing to) is above this node
-    protected void drawArc(View v) {
+	protected void drawArc(View v) {
 		if (!arc || dir == null) {
 			return;
 		}
@@ -313,7 +313,7 @@ public class Node extends VisualElement {
 	 * Is the given point inside the node? (Used mainly to decide whether a user
 	 * clicked at the node.)
 	 */
-    protected boolean inside(int x, int y) {
+	protected boolean inside(int x, int y) {
 		return (this.x - x) * (this.x - x) + (this.y - y) * (this.y - y) <= Node.RADIUS
 				* Node.RADIUS;
 	}
@@ -406,8 +406,10 @@ public class Node extends VisualElement {
 		case Node.LEFT:
 		case Node.RIGHT:
 			y += 20;
-			if (state == Node.LEFT) x -= 20;
-			else if (state == Node.RIGHT) x += 20;
+			if (state == Node.LEFT)
+				x -= 20;
+			else if (state == Node.RIGHT)
+				x += 20;
 			// robi problem, ked rychlo dozadu a potom rychlo dopredu
 			if (!D.panel.screen.V.inside(x, y - Node.RADIUS)) {
 				state = OUT;
@@ -431,8 +433,10 @@ public class Node extends VisualElement {
 		} else if (state == DOWN || state == LEFT || state == RIGHT) {
 			while (D.panel.screen.V.inside(x, y - Node.RADIUS)) {
 				y += 20;
-				if (state == Node.LEFT) x -= 20;
-				else if (state == Node.RIGHT) x += 20;
+				if (state == Node.LEFT)
+					x -= 20;
+				else if (state == Node.RIGHT)
+					x += 20;
 			}
 			state = OUT;
 		}
@@ -469,35 +473,48 @@ public class Node extends VisualElement {
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object key = state.get(hash + "key");
-		if (key != null) this.key = (Integer) HashtableStoreSupport.restore(key);
-		
+		if (key != null)
+			this.key = (Integer) HashtableStoreSupport.restore(key);
+
 		Object stat = state.get(hash + "state");
 		if (stat != null) {
 			stat = HashtableStoreSupport.restore(stat);
 			// tu nechcem mat invisible (inak spravit)
-			if ((this.state == OUT || this.state == DOWN || this.state == LEFT || this.state == RIGHT) && stat
-					.equals(ALIVE)) {
+			if ((this.state == OUT || this.state == DOWN || this.state == LEFT || this.state == RIGHT)
+					&& stat.equals(ALIVE)) {
 				goTo(tox, toy);
 			}
 			this.state = (Integer) stat;
 		}
-		
+
 		boolean isMoved = false;
 		Object tox = state.get(hash + "tox");
 		Object toy = state.get(hash + "toy");
-		if (tox != null) isMoved = true; else tox = this.tox;
-		if (toy != null) isMoved = true; else toy = this.toy;
-		if (isMoved) goTo((Integer) tox, (Integer) toy);
-		
+		if (tox != null)
+			isMoved = true;
+		else
+			tox = this.tox;
+		if (toy != null)
+			isMoved = true;
+		else
+			toy = this.toy;
+		if (isMoved)
+			goTo((Integer) tox, (Integer) toy);
+
 		Object color = state.get(hash + "color");
-		if (color != null) this.color = (NodeColor) HashtableStoreSupport.restore(color);
+		if (color != null)
+			this.color = (NodeColor) HashtableStoreSupport.restore(color);
 		Object marked = state.get(hash + "marked");
-		if (marked != null) this.marked = (Boolean) HashtableStoreSupport.restore(marked);
+		if (marked != null)
+			this.marked = (Boolean) HashtableStoreSupport.restore(marked);
 		Object dir = state.get(hash + "dir");
-		if (dir != null) this.dir = (Node) HashtableStoreSupport.restore(dir);
+		if (dir != null)
+			this.dir = (Node) HashtableStoreSupport.restore(dir);
 		Object arrow = state.get(hash + "arrow");
-		if (arrow != null) this.arrow = (Integer) HashtableStoreSupport.restore(arrow);
+		if (arrow != null)
+			this.arrow = (Integer) HashtableStoreSupport.restore(arrow);
 		Object arc = state.get(hash + "arc");
-		if (arc != null) this.arc = (Boolean) HashtableStoreSupport.restore(arc);
+		if (arc != null)
+			this.arc = (Boolean) HashtableStoreSupport.restore(arc);
 	}
 }

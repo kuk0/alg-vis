@@ -34,11 +34,12 @@ public class TreapInsert extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		BSTInsert insert = new BSTInsert(T, new TreapNode(T, K, ZDepth.ACTIONNODE), this);
+		BSTInsert insert = new BSTInsert(T, new TreapNode(T, K,
+				ZDepth.ACTIONNODE), this);
 		insert.runAlgorithm();
 		HashMap<String, Object> insertResult = insert.getResult();
 		boolean inserted = (Boolean) insertResult.get("inserted");
-		
+
 		if (inserted) {
 			pause();
 			// bubleme nahor

@@ -27,7 +27,8 @@ import algvis.ui.VisPanel;
 
 public class HistoryManager extends UndoManager {
 	private final Map<UndoableEdit, Boolean> algorithmEnds = new WeakHashMap<UndoableEdit, Boolean>();
-	private long id = -1; // ak sa v paneli vykona viac ako 2^63 krokov, tak mame problem 
+	private long id = -1; // ak sa v paneli vykona viac ako 2^63 krokov, tak
+							// mame problem
 	private final VisPanel panel;
 
 	public HistoryManager(VisPanel panel) {
@@ -44,11 +45,11 @@ public class HistoryManager extends UndoManager {
 	public long getNextId() {
 		return ++id;
 	}
-	
+
 	public long getLastEditId() {
 		return id;
 	}
-	
+
 	public synchronized void putAlgorithmEnd() {
 		UndoableEdit edit = editToBeUndone();
 		if (edit != null) {
@@ -61,24 +62,26 @@ public class HistoryManager extends UndoManager {
 			undo();
 		} while (canUndo() && !algorithmEnds.containsKey(editToBeUndone()));
 	}
-	
+
 	public synchronized void redoAlgorithm() {
 		do {
 			redo();
 		} while (!algorithmEnds.containsKey(editToBeUndone()) && canRedo());
 	}
-	
+
 	public synchronized void goTo(long id) {
 		if (id <= editToBeUndone().getId()) {
-			while(canUndo() && editToBeUndone().getId() >= id) undo();
+			while (canUndo() && editToBeUndone().getId() >= id)
+				undo();
 			panel.scene.endAnimation();
 			redo();
 		} else {
-			while(editToBeRedone().getId() < id) redo();
+			while (editToBeRedone().getId() < id)
+				redo();
 			redo();
 		}
 	}
-	
+
 	public synchronized boolean isBetweenAlgorithms() {
 		UndoableEdit e = editToBeUndone();
 		return e == null || algorithmEnds.containsKey(e);

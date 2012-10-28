@@ -31,7 +31,7 @@ public class RotButtons extends Buttons {
 	private static final long serialVersionUID = 3851020370059429766L;
 	private IButton rotB;
 	private ICheckBox order;
-    private ICheckBox subtrees;
+	private ICheckBox subtrees;
 
 	public RotButtons(VisPanel M) {
 		super(M);
@@ -44,7 +44,6 @@ public class RotButtons extends Buttons {
 		rotB.addActionListener(this);
 		P.add(rotB);
 	}
-
 
 	@Override
 	public void otherButtons(JPanel P) {
@@ -64,7 +63,8 @@ public class RotButtons extends Buttons {
 		super.actionPerformed(evt);
 		final Rotations R = (Rotations) D;
 		if (evt.getSource() == rotB) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			Vector<Integer> args = I.getNonEmptyVI();
 			for (int x : args) {
 				R.rotate(x);

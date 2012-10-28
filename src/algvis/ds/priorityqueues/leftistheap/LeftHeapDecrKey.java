@@ -18,9 +18,9 @@ package algvis.ds.priorityqueues.leftistheap;
 
 import algvis.ui.InputField;
 
-public class LeftHeapDecrKey extends LeftHeapAlg{
+public class LeftHeapDecrKey extends LeftHeapAlg {
 	private final int delta;
-	
+
 	public LeftHeapDecrKey(LeftHeap H, LeftHeapNode v, int delta) {
 		super(H);
 		this.v = v;
@@ -34,7 +34,7 @@ public class LeftHeapDecrKey extends LeftHeapAlg{
 		} else {
 			setHeader("increasekey");
 		}
-		
+
 		if (H.minHeap) {
 			v.setKey(v.getKey() - delta);
 			if (v.getKey() < 1)

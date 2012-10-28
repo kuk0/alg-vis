@@ -39,7 +39,7 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 		super(M);
 		M.screen.V.setDS(this);
 	}
-	
+
 	public BSTNode getRoot() {
 		return (BSTNode) super.getRoot();
 	}
@@ -120,7 +120,8 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 
 	@Override
 	public void move() {
-		if (getRoot() != null) getRoot().moveTree();
+		if (getRoot() != null)
+			getRoot().moveTree();
 	}
 
 	protected void leftrot(BSTNode v) {

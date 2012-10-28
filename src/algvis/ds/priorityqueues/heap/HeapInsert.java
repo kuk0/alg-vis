@@ -20,6 +20,7 @@ import algvis.core.visual.ZDepth;
 
 public class HeapInsert extends HeapAlg {
 	private final int K;
+
 	public HeapInsert(Heap H, int x) {
 		super(H);
 		K = x;

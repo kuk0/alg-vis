@@ -25,11 +25,10 @@ public class IButton extends ChButton implements LanguageListener {
 		t = text;
 		Languages.addListener(this);
 	}
-	
+
 	public IButton(String text) {
 		this(new IString(text));
 	}
-
 
 	public void setT(Stringable text) {
 		t = text;

@@ -34,7 +34,7 @@ public class BSTNode extends Node {
 	public int leftw, rightw;
 
 	// variables for the Reingold-Tilford layout
-    private int offset = 0; // offset from parent node
+	private int offset = 0; // offset from parent node
 	private int level; // distance to root
 	private boolean thread = false; // is this node threaded?
 
@@ -236,24 +236,25 @@ public class BSTNode extends Node {
 			v.drawLine(x, y, parent.x, parent.y);
 		}
 		if (getLeft() != null) {
-			//System.out.println("kreslim lavy " + getLeft().key + " " + this.key);
+			// System.out.println("kreslim lavy " + getLeft().key + " " +
+			// this.key);
 			getLeft().drawTree2(v);
 		}
 		if (D instanceof BST && ((BST) D).order) { // && D.panel.S.layout ==
 													// Layout.SIMPLE
 			v.setColor(Color.LIGHT_GRAY);
 			++i;
-			if (i%10 == 0) {
+			if (i % 10 == 0) {
 				v.drawLine(x, y, x, -22);
 			} else {
 				v.drawLine(x, y, x, -20);
 			}
-			if (i%10 == 0) {
+			if (i % 10 == 0) {
 				v.drawString("" + i, x, -29, Fonts.NORMAL);
-			} else if (i%10 == 5) {
+			} else if (i % 10 == 5) {
 				v.drawString("5", x, -27, Fonts.NORMAL);
 			} else {
-				v.drawString("" + i%10, x, -27, Fonts.SMALL);
+				v.drawString("" + i % 10, x, -27, Fonts.SMALL);
 			}
 		}
 		if (getRight() != null) {
@@ -285,22 +286,27 @@ public class BSTNode extends Node {
 	@Override
 	public Rectangle2D getBoundingBox() {
 		Rectangle2D retVal = super.getBoundingBox();
-		if (left != null) retVal = retVal.createUnion(left.getBoundingBox());
-		if (right != null) retVal = retVal.createUnion(right.getBoundingBox());
+		if (left != null)
+			retVal = retVal.createUnion(left.getBoundingBox());
+		if (right != null)
+			retVal = retVal.createUnion(right.getBoundingBox());
 		return retVal;
 	}
 
 	@Override
 	public void endAnimation() {
 		super.endAnimation();
-		if (left != null) left.endAnimation();
-		if (right != null) right.endAnimation();
+		if (left != null)
+			left.endAnimation();
+		if (right != null)
+			right.endAnimation();
 	}
 
 	@Override
 	public boolean isAnimationDone() {
-		return super.isAnimationDone() && (left == null || left.isAnimationDone()) && (right == null || right
-				.isAnimationDone());
+		return super.isAnimationDone()
+				&& (left == null || left.isAnimationDone())
+				&& (right == null || right.isAnimationDone());
 	}
 
 	/**
@@ -309,7 +315,7 @@ public class BSTNode extends Node {
 	 * from the node to the right side (rightw). Assumption: this box has
 	 * already been created for both children.
 	 */
-    protected void rebox() {
+	protected void rebox() {
 		/*
 		 * if there is a left child, leftw = width of the box enclosing the
 		 * whole left subtree, i.e., leftw+rightw; otherwise the width is the
@@ -609,6 +615,7 @@ public class BSTNode extends Node {
 
 	/**
 	 * Set color to this subtree.
+	 * 
 	 * @param color
 	 */
 	public void subtreeColor(NodeColor color) {
@@ -629,29 +636,40 @@ public class BSTNode extends Node {
 		HashtableStoreSupport.store(state, hash + "thread", thread);
 		HashtableStoreSupport.store(state, hash + "leftw", leftw);
 		HashtableStoreSupport.store(state, hash + "rightw", rightw);
-		if (left != null) left.storeState(state);
-		if (right != null) right.storeState(state);
+		if (left != null)
+			left.storeState(state);
+		if (right != null)
+			right.storeState(state);
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object left = state.get(hash + "left");
-		if (left != null) this.left = (BSTNode) HashtableStoreSupport.restore(left);
+		if (left != null)
+			this.left = (BSTNode) HashtableStoreSupport.restore(left);
 		Object right = state.get(hash + "right");
-		if (right != null) this.right = (BSTNode) HashtableStoreSupport.restore(right);
+		if (right != null)
+			this.right = (BSTNode) HashtableStoreSupport.restore(right);
 		Object parent = state.get(hash + "parent");
-		if (parent != null) this.parent = (BSTNode) HashtableStoreSupport.restore(parent);
+		if (parent != null)
+			this.parent = (BSTNode) HashtableStoreSupport.restore(parent);
 		Object level = state.get(hash + "level");
-		if (level != null) this.level = (Integer) HashtableStoreSupport.restore(level);
+		if (level != null)
+			this.level = (Integer) HashtableStoreSupport.restore(level);
 		Object thread = state.get(hash + "thread");
-		if (thread != null) this.thread = (Boolean) HashtableStoreSupport.restore(thread);
+		if (thread != null)
+			this.thread = (Boolean) HashtableStoreSupport.restore(thread);
 		Object leftw = state.get(hash + "leftw");
-		if (leftw != null) this.leftw = (Integer) HashtableStoreSupport.restore(leftw);
+		if (leftw != null)
+			this.leftw = (Integer) HashtableStoreSupport.restore(leftw);
 		Object rightw = state.get(hash + "rightw");
-		if (rightw != null) this.rightw = (Integer) HashtableStoreSupport.restore(rightw);
-		
-		if (this.left != null) this.left.restoreState(state);
-		if (this.right != null) this.right.restoreState(state);
+		if (rightw != null)
+			this.rightw = (Integer) HashtableStoreSupport.restore(rightw);
+
+		if (this.left != null)
+			this.left.restoreState(state);
+		if (this.right != null)
+			this.right.restoreState(state);
 	}
 }

@@ -95,7 +95,8 @@ public class UnionFindButtons extends Buttons {
 		super.actionPerformed(evt);
 		final UnionFind D = (UnionFind) this.D;
 		if (evt.getSource() == makesetB) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			D.start(new AlgorithmAdapter(panel) {
 				@Override
 				public void runAlgorithm() throws InterruptedException {
@@ -103,7 +104,8 @@ public class UnionFindButtons extends Buttons {
 				}
 			});
 		} else if (evt.getSource() == findB) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			int count = D.count;
 			final Vector<Integer> args = I.getVI(1, count);
 			if (D.firstSelected != null) {
@@ -120,7 +122,8 @@ public class UnionFindButtons extends Buttons {
 			}
 			D.find(D.at(args.elementAt(0)));
 		} else if (evt.getSource() == unionB) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			int count = D.count;
 			final Vector<Integer> args = I.getVI(1, count);
 			if (D.firstSelected != null) {

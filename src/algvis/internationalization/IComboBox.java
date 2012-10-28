@@ -32,17 +32,17 @@ public class IComboBox extends JComboBox implements LanguageListener {
 	public IComboBox(String[] choices) {
 		super();
 		Stringable[] ch = new Stringable[choices.length];
-		for (int i=0; i < choices.length; ++i) {
+		for (int i = 0; i < choices.length; ++i) {
 			ch[i] = new IString(choices[i]);
 		}
 		setChoices(ch);
 	}
-	
+
 	public void setChoices(Stringable[] choices) {
 		this.choices = choices;
 		languageChanged();
 		Languages.addListener(this);
-		setBackground(Color.WHITE);		
+		setBackground(Color.WHITE);
 	}
 
 	@Override

@@ -2,14 +2,14 @@ package algvis.ds.intervaltree;
 
 import algvis.core.visual.ZDepth;
 
-public class IntervalInsert extends IntervalAlg{
+public class IntervalInsert extends IntervalAlg {
 	private final int K;
-	
+
 	public IntervalInsert(IntervalTree T, int x) {
 		super(T);
 		this.T = T;
-		if (x > 333){
-			x = x/3;
+		if (x > 333) {
+			x = x / 3;
 		}
 		K = x;
 	}
@@ -17,10 +17,10 @@ public class IntervalInsert extends IntervalAlg{
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		v = new IntervalNode(T, K, ZDepth.ACTIONNODE);
-		v.setInterval(T.numLeafs+1, T.numLeafs+1);
-		//v.setColor(NodeColor.INSERT);
+		v.setInterval(T.numLeafs + 1, T.numLeafs + 1);
+		// v.setColor(NodeColor.INSERT);
 		setHeader("insert", K);
-		
+
 		T.reposition();
 
 		if (T.root == null) {
@@ -36,28 +36,27 @@ public class IntervalInsert extends IntervalAlg{
 		}
 
 		int tmp = T.numLeafs;
-		while (tmp % 2 == 0){
+		while (tmp % 2 == 0) {
 			tmp /= 2;
 		}
 
-		if (tmp == 1){
+		if (tmp == 1) {
 			T.extend();
 			addStep("intervalextend");
 			pause();
 		}
 		T.reposition();
-		//pause();
+		// pause();
 
 		/*
-		T.root.linkRight(v);
-		T.reposition();
-		*/
+		 * T.root.linkRight(v); T.reposition();
+		 */
 		/*
-		pridaj na T.numLeafs + 1 novy prvok;
-		*/
+		 * pridaj na T.numLeafs + 1 novy prvok;
+		 */
 
 		IntervalNode w;
-		//T.numLeafs++;
+		// T.numLeafs++;
 		int n = T.numLeafs, k = 1 << 10;
 		if (n == 0) {
 			T.root = w = v;
@@ -67,7 +66,7 @@ public class IntervalInsert extends IntervalAlg{
 			while ((k & n) == 0) {
 				k >>= 1;
 			}
-			//k >>= 1;
+			// k >>= 1;
 			w = T.root;
 			while (k > 1) {
 				w = ((n & k) == 0) ? w.getLeft() : w.getRight();
@@ -87,10 +86,10 @@ public class IntervalInsert extends IntervalAlg{
 		pause();
 		v.unmark();
 		/*
-		uprav strom na min/max z intervalu;
-		*/
-		//w = w.getParent();
-		//toto prerobit na iba prechod od prave pridaneho vrcholu po koren
+		 * uprav strom na min/max z intervalu;
+		 */
+		// w = w.getParent();
+		// toto prerobit na iba prechod od prave pridaneho vrcholu po koren
 		adjustValues(w);
 		addNote("done");
 	}

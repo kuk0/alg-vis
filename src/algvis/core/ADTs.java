@@ -32,12 +32,14 @@ public class ADTs {
 	 * The list of all abstract data types.
 	 */
 	@SuppressWarnings("rawtypes")
-    private static final Class[] ADT = { Dictionary.class, // insert, find, delete
+	private static final Class[] ADT = { Dictionary.class, // insert, find,
+															// delete
 			PriorityQueue.class, // insert, decrease-key, delete-min
 			MeldablePQ.class, // insert, decrease-key, delete-min, meld
 			UnionFind.class, // make-set, union, find
 			Trie.class, // insert, find, delete
-			IntervalTrees.class //insert, find sum/min/max of interval, decrease-key
+			IntervalTrees.class // insert, find sum/min/max of interval,
+								// decrease-key
 	};
 	public static final int N = ADT.length;
 

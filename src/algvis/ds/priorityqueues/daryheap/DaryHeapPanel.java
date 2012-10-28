@@ -20,7 +20,7 @@ import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.ui.VisPanel;
 
-public class DaryHeapPanel extends VisPanel{
+public class DaryHeapPanel extends VisPanel {
 	private static final long serialVersionUID = 5387116424458217311L;
 	public static Class<? extends DataStructure> DS = DaryHeap.class;
 

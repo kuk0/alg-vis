@@ -28,7 +28,8 @@ public class NodeColor {
 
 	public static final NodeColor NORMAL = new NodeColor(Color.BLACK,
 			Color.YELLOW);
-	public static final NodeColor DARKER = new NodeColor(Color.BLACK, new Color(0xCDCD00));
+	public static final NodeColor DARKER = new NodeColor(Color.BLACK,
+			new Color(0xCDCD00));
 
 	public static final NodeColor INSERT = new NodeColor(Color.WHITE,
 			new Color(0x3366ff));
@@ -51,7 +52,7 @@ public class NodeColor {
 
 	@Override
 	public boolean equals(Object obj) {
-		return obj instanceof NodeColor && bgColor == ((NodeColor) obj).bgColor && fgColor == ((NodeColor) obj)
-				.fgColor;
+		return obj instanceof NodeColor && bgColor == ((NodeColor) obj).bgColor
+				&& fgColor == ((NodeColor) obj).fgColor;
 	}
 }

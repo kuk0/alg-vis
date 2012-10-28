@@ -19,6 +19,7 @@ package algvis.core;
 import java.awt.Color;
 import java.util.Hashtable;
 import java.util.Stack;
+import java.util.Vector;
 
 import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
@@ -558,28 +559,58 @@ public class TreeNode extends Node {
 	// + phase + ")");
 	// }
 
+	private Vector<TreeNode> _getLeaves(Vector<TreeNode> result) {
+		if (isLeaf()) {
+			result.add(this);
+			return result;
+		} else {
+			result = child._getLeaves(result);
+			if (right != null) {
+				result = right._getLeaves(result);
+			}
+			return result;
+		}
+	}
+
+	public Vector<TreeNode> getLeaves() {
+		Vector<TreeNode> result = new Vector<TreeNode>();
+		if (isLeaf()) {
+			result.add(this);
+			return result;
+		} else {
+			return child._getLeaves(result);
+		}
+	}
+
 	@Override
 	public void storeState(Hashtable<Object, Object> state) {
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "child", child);
 		HashtableStoreSupport.store(state, hash + "right", right);
 		HashtableStoreSupport.store(state, hash + "parent", parent);
-		
-		if (child != null) child.storeState(state);
-		if (right != null) right.storeState(state);
+
+		if (child != null)
+			child.storeState(state);
+		if (right != null)
+			right.storeState(state);
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object child = state.get(hash + "child");
-		if (child != null) this.child = (TreeNode) HashtableStoreSupport.restore(child);
+		if (child != null)
+			this.child = (TreeNode) HashtableStoreSupport.restore(child);
 		Object right = state.get(hash + "right");
-		if (right != null) this.right = (TreeNode) HashtableStoreSupport.restore(right);
+		if (right != null)
+			this.right = (TreeNode) HashtableStoreSupport.restore(right);
 		Object parent = state.get(hash + "parent");
-		if (parent != null) this.parent = (TreeNode) HashtableStoreSupport.restore(parent);
-		
-		if (this.child != null) this.child.restoreState(state);
-		if (this.right != null) this.right.restoreState(state);
+		if (parent != null)
+			this.parent = (TreeNode) HashtableStoreSupport.restore(parent);
+
+		if (this.child != null)
+			this.child.restoreState(state);
+		if (this.right != null)
+			this.right.restoreState(state);
 	}
 }

@@ -19,6 +19,7 @@ package algvis.ds.suffixtree;
 import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.util.Hashtable;
+import java.util.Stack;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -47,8 +48,7 @@ public class SuffixTreeNode extends TrieNode {
 		setPacked(packed);
 	}
 
-	public SuffixTreeNode(DataStructure D, char ch, int x, int y,
-			boolean packed) {
+	public SuffixTreeNode(DataStructure D, char ch, int x, int y, boolean packed) {
 		super(D, ch, x, y);
 		setPacked(packed);
 	}
@@ -66,6 +66,22 @@ public class SuffixTreeNode extends TrieNode {
 	public SuffixTreeNode(DataStructure D) {
 		super(D);
 		setPacked(false);
+	}
+
+	public SuffixTreeNode getParent() {
+		return (SuffixTreeNode) super.getParent();
+	}
+
+	public SuffixTreeNode getChild() {
+		return (SuffixTreeNode) super.getChild();
+	}
+
+	public SuffixTreeNode getRight() {
+		return (SuffixTreeNode) super.getRight();
+	}
+
+	public SuffixTreeNode getChildWithCH(char ch) {
+		return (SuffixTreeNode) super.getChildWithCH(ch);
 	}
 
 	public boolean isPacked() {
@@ -153,7 +169,13 @@ public class SuffixTreeNode extends TrieNode {
 		drawLabel(v);
 		drawArrow(v);
 		drawArc(v);
-		if ((isLeaf()) && (!isRoot())) {
+		if (isLeaf() && !isRoot()) {
+			v.setColor(Color.WHITE);
+			v.fillCircle(x, y + 11, 7);
+			v.setColor(Color.BLACK);
+			if (marked) {
+				v.drawCircle(x, y + 11, 7);
+			}
 			v.drawString(String.valueOf(getKey()), x, y + 10, Fonts.TYPEWRITER);
 		}
 	}
@@ -193,15 +215,18 @@ public class SuffixTreeNode extends TrieNode {
 				return;
 			TrieNode u = this;
 			StringBuilder s = new StringBuilder("");
+			Stack<Color> col = new Stack<Color>();
 			if (getChild() == null || getChild().getRight() != null) {
 				while (u != null && u.getParent() != null
 						&& u.getParent().getChild() == u
 						&& u.getRight() == null) {
 					s.append(u.ch);
+					col.add(u.getBgColor());
 					u = u.getParent();
 				}
 				if (u != null && u.getParent() != null) {
 					s.append(u.ch);
+					col.add(u.getBgColor());
 				}
 				if (u == null) {
 					System.out.println("Something went wrong at [" + x + ","
@@ -213,11 +238,31 @@ public class SuffixTreeNode extends TrieNode {
 					py += 30;
 				}
 				s.reverse();
-				int midy = (py + y) / 2, w = 6, h = s.length()
-						* Fonts.TYPEWRITER.fm.getHeight() / 2;
+				int fonth = Fonts.TYPEWRITER.fm.getHeight(), len = s.length();
+				int midy = (py + y) / 2, w = 6, h = len * fonth / 2;
+				int xx = x, yy = midy - fonth * len / 2 - 4;
+				Color cc = col.pop();
+				v.setColor(cc);
+				if (col.empty()) {
+					v.fillRoundRectangle(xx, yy, 6, fonth / 2.0, 6, 10);
+				} else {
+					v.fillRoundRectangle(xx, yy - 3, 6, fonth / 2.0 - 3, 6, 10);
+					v.fillRect(xx, yy + 3, 6, fonth / 2.0 - 3);
+					yy += fonth;
+					while (col.size() > 1) {
+						cc = col.pop();
+						v.setColor(cc);
+						v.fillRect(xx, yy, 6, fonth / 2.0);
+						v.setColor(Color.BLACK);
+						v.drawRoundRectangle(xx, yy, 6, fonth / 2.0, 0, 0);
+						yy += fonth;
+					}
+					cc = col.pop();
+					v.setColor(cc);
+					v.fillRect(xx, yy - 3, 6, fonth / 2.0 - 3);
+					v.fillRoundRectangle(xx, yy + 3, 6, fonth / 2.0 - 3, 6, 10);
+				}
 
-				v.setColor(getBgColor());
-				v.fillRoundRectangle(x, midy - 12, w, h, 6, 10);
 				v.setColor(Color.BLACK);
 				v.drawRoundRectangle(x, midy - 12, w, h, 6, 10);
 
@@ -240,8 +285,11 @@ public class SuffixTreeNode extends TrieNode {
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object suffixLink = state.get(hash + "suffixLink");
-		if (suffixLink != null) this.suffixLink = (SuffixTreeNode) HashtableStoreSupport.restore(suffixLink);
+		if (suffixLink != null)
+			this.suffixLink = (SuffixTreeNode) HashtableStoreSupport
+					.restore(suffixLink);
 		Object packed = state.get(hash + "packed");
-		if (packed != null) this.packed = (Boolean) HashtableStoreSupport.restore(packed);
+		if (packed != null)
+			this.packed = (Boolean) HashtableStoreSupport.restore(packed);
 	}
 }

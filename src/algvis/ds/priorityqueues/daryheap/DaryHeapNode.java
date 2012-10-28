@@ -213,11 +213,14 @@ public class DaryHeapNode extends HeapNode {
 
 		for (int i = 0; i < c.size(); i++) {
 			if (i == 0) {
-				c.firstElement().goTo(this.tox - (this.leftw) + c.firstElement().leftw, this.toy + DataStructure
-						.minsepy);
+				c.firstElement().goTo(
+						this.tox - (this.leftw) + c.firstElement().leftw,
+						this.toy + DataStructure.minsepy);
 			} else {
-				c.get(i).goTo(c.get(i - 1).tox + c.get(i - 1).rightw + c.get(i).leftw, this.toy
-						+ DataStructure.minsepy);
+				c.get(i)
+						.goTo(c.get(i - 1).tox + c.get(i - 1).rightw
+								+ c.get(i).leftw,
+								this.toy + DataStructure.minsepy);
 			}
 			c.get(i).repos();
 		}
@@ -263,8 +266,8 @@ public class DaryHeapNode extends HeapNode {
 		}
 
 		if (getParent().c.size() < ((DaryHeap) D).getOrder()) { // pre root
-																	// nson ==
-																	// -1
+																// nson ==
+																// -1
 			// System.out.print("malo synov kluca " + getParent().key +
 			// ", konkretne " + getParent().numChildren + " a order mame prave "
 			// + ((DaryHeap) D).getOrder() + "\n" );
@@ -284,7 +287,8 @@ public class DaryHeapNode extends HeapNode {
 			return v;
 		}
 
-		v = v.getParent().c.get(v.nson); // v poli je n-ty syn na mieste (nson - 1)
+		v = v.getParent().c.get(v.nson); // v poli je n-ty syn na mieste (nson -
+											// 1)
 		while (!v.c.isEmpty()) {
 			v = v.c.firstElement();
 		}
@@ -369,15 +373,18 @@ public class DaryHeapNode extends HeapNode {
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object parent = state.get(hash + "parent");
-		if (parent != null) this.parent = (DaryHeapNode) HashtableStoreSupport.restore(parent);
-		
+		if (parent != null)
+			this.parent = (DaryHeapNode) HashtableStoreSupport.restore(parent);
+
 		Object c = state.get(hash + "c");
-		if (c != null) this.c = (Vector<DaryHeapNode>) HashtableStoreSupport.restore(c);
+		if (c != null)
+			this.c = (Vector<DaryHeapNode>) HashtableStoreSupport.restore(c);
 		for (DaryHeapNode node : this.c) {
 			node.restoreState(state);
 		}
-		
+
 		Object nson = state.get(hash + "nson");
-		if (nson != null) this.nson = (Integer) HashtableStoreSupport.restore(nson);
+		if (nson != null)
+			this.nson = (Integer) HashtableStoreSupport.restore(nson);
 	}
 }

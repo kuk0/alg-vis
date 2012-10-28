@@ -18,7 +18,6 @@ package algvis.ds.priorityqueues.daryheap;
 
 import algvis.core.Node;
 
-
 public class DaryHeapDelete extends DaryHeapAlg {
 	public DaryHeapDelete(DaryHeap H) {
 		super(H);
@@ -35,7 +34,7 @@ public class DaryHeapDelete extends DaryHeapAlg {
 
 		if (H.root.c.size() == 0) {
 			DaryHeapNode v = H.root;
-			if (H.minHeap){
+			if (H.minHeap) {
 				addStep("minimum", H.root.getKey());
 			} else {
 				addStep("maximum", H.root.getKey());
@@ -43,21 +42,21 @@ public class DaryHeapDelete extends DaryHeapAlg {
 			H.root = null;
 			addToScene(v);
 			v.mark();
-			//--H.n;
+			// --H.n;
 			pause();
 			v.unmark();
 			v.goDown();
 			removeFromScene(v);
 			return;
 		}
-		if (H.minHeap){
+		if (H.minHeap) {
 			addStep("minimum", H.root.getKey());
 		} else {
 			addStep("maximum", H.root.getKey());
 		}
 		H.root.mark();
 		pause();
-		//H.root.unmark();
+		// H.root.unmark();
 		addStep("heapchange");
 		pause();
 		H.root.unmark();
@@ -100,4 +99,3 @@ public class DaryHeapDelete extends DaryHeapAlg {
 		bubbledown(H.root);
 	}
 }
-

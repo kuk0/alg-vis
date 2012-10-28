@@ -29,7 +29,7 @@ public class BTree extends Dictionary {
 	public static String dsName = "btree";
 	int order = 5;
 	final int xspan = 5;
-    final int yspan = 15;
+	final int yspan = 15;
 
 	@Override
 	public String getName() {
@@ -64,7 +64,7 @@ public class BTree extends Dictionary {
 	public BNode getRoot() {
 		return (BNode) root;
 	}
-	
+
 	@Override
 	public String stats() {
 		if (root == null) {
@@ -74,9 +74,10 @@ public class BTree extends Dictionary {
 					+ Languages.getString("height") + ": 0";
 		} else {
 			getRoot().calcTree();
-			return "#" + Languages.getString("nodes") + ": " + getRoot().nnodes + ";   "
-					+ "#" + Languages.getString("keys") + ": " + getRoot().nkeys + " = "
-					+ (100 * getRoot().nkeys) / (getRoot().nnodes * (order - 1)) + "% "
+			return "#" + Languages.getString("nodes") + ": " + getRoot().nnodes
+					+ ";   " + "#" + Languages.getString("keys") + ": "
+					+ getRoot().nkeys + " = " + (100 * getRoot().nkeys)
+					/ (getRoot().nnodes * (order - 1)) + "% "
 					+ Languages.getString("full") + ";   "
 					+ Languages.getString("height") + ": " + getRoot().height;
 		}

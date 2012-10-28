@@ -18,10 +18,10 @@ package algvis.ds.priorityqueues.pairingheap;
 
 import algvis.core.DataStructure;
 
-public class PairHeapMeld extends PairHeapAlg{
+public class PairHeapMeld extends PairHeapAlg {
 	private final int i;
-    private final int j;
-	
+	private final int j;
+
 	public PairHeapMeld(DataStructure H, int i, int j) {
 		super(H);
 		this.i = i;
@@ -31,7 +31,7 @@ public class PairHeapMeld extends PairHeapAlg{
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		setHeader("melding");
-		
+
 		if (i == j) {
 			return;
 		}
@@ -60,14 +60,14 @@ public class PairHeapMeld extends PairHeapAlg{
 		H.root[i].highlightTree();
 		H.root[0].mark();
 		H.root[i].mark();
-		if (H.root[i].getKey() < H.root[0].getKey()){
-			if(H.minHeap){
+		if (H.root[i].getKey() < H.root[0].getKey()) {
+			if (H.minHeap) {
 				addStep("pairlinkmin", H.root[i].getKey(), H.root[0].getKey());
 			} else {
 				addStep("pairlinkmax", H.root[i].getKey(), H.root[0].getKey());
 			}
 		} else {
-			if(H.minHeap){
+			if (H.minHeap) {
 				addStep("pairlinkmin", H.root[0].getKey(), H.root[i].getKey());
 			} else {
 				addStep("pairlinkmax", H.root[0].getKey(), H.root[i].getKey());
@@ -76,7 +76,7 @@ public class PairHeapMeld extends PairHeapAlg{
 		pause();
 		H.root[0].unmark();
 		H.root[i].unmark();
-		link(i,0);
+		link(i, 0);
 		H.root[0] = null;
 		H.reposition();
 		addNote("done");

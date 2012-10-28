@@ -32,8 +32,8 @@ import algvis.internationalization.IButton;
 public class DictButtons extends Buttons {
 	private static final long serialVersionUID = 8331529914377645715L;
 	private IButton insertB;
-    private IButton findB;
-    private IButton deleteB;
+	private IButton findB;
+	private IButton deleteB;
 
 	public DictButtons(VisPanel M) {
 		super(M);
@@ -62,19 +62,22 @@ public class DictButtons extends Buttons {
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
 		if (evt.getSource() == insertB) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			Vector<Integer> args = I.getNonEmptyVI();
-			for(int x : args) {
+			for (int x : args) {
 				D.insert(x);
 			}
 		} else if (evt.getSource() == findB) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			Vector<Integer> args = I.getVI();
 			for (int x : args) {
 				((Dictionary) D).find(x);
 			}
 		} else if (evt.getSource() == deleteB) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			Vector<Integer> args = I.getVI();
 			for (int x : args) {
 				((Dictionary) D).delete(x);

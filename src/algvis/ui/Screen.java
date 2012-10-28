@@ -41,7 +41,7 @@ public class Screen extends JPanel {
 	private Image I;
 	private Graphics G;
 	private Dimension size;
-	
+
 	public final View V;
 
 	public Screen(VisPanel panel) {

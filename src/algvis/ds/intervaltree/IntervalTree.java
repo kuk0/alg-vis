@@ -64,7 +64,8 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 
 	@Override
 	protected void endAnimation() {
-		if (root != null) root.endAnimation();
+		if (root != null)
+			root.endAnimation();
 	}
 
 	@Override
@@ -162,8 +163,10 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 	}
 
 	public void extend() {
-		IntervalNode w = new IntervalNode(this, 0, ZDepth.NODE); // pre suctovy strom je 0,
-													// min je +inf, max je -inf
+		IntervalNode w = new IntervalNode(this, 0, ZDepth.NODE); // pre suctovy
+																	// strom je
+																	// 0,
+		// min je +inf, max je -inf
 		w.setKey(Node.NOKEY);
 		IntervalNode w2 = root;
 		w.setLeft(w2);
@@ -174,13 +177,13 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 		IntervalNode tmp = generateEmpty(getHeight() - 1);
 		root.setRight(tmp);
 		tmp.setParent(root);
-		//System.out.println(this.getHeight());
+		// System.out.println(this.getHeight());
 		reposition();
 		// root.add();
 
 	}
 
-    public int getMinsepx() {
+	public int getMinsepx() {
 		return IntervalTree.minsepx;
 	}
 
@@ -211,17 +214,21 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "root", root);
 		HashtableStoreSupport.store(state, hash + "numLeafs", numLeafs);
-		if (root != null) root.storeState(state);
+		if (root != null)
+			root.storeState(state);
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object root = state.get(hash + "root");
-		if (root != null) this.root = (IntervalNode) HashtableStoreSupport.restore(root);
+		if (root != null)
+			this.root = (IntervalNode) HashtableStoreSupport.restore(root);
 		Object numLeafs = state.get(hash + "numLeafs");
-		if (numLeafs != null) this.numLeafs = (Integer) HashtableStoreSupport.restore(numLeafs);
-		
-		if (this.root != null) this.root.restoreState(state);
+		if (numLeafs != null)
+			this.numLeafs = (Integer) HashtableStoreSupport.restore(numLeafs);
+
+		if (this.root != null)
+			this.root.restoreState(state);
 	}
 }

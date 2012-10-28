@@ -30,10 +30,10 @@ import algvis.ui.view.View;
 
 public class BinHeapNode extends Node {
 	private int leftw;
-    public int height;
-    public int rank; // TODO: size -> rank (treba ale
-											// zmenit aj pomocne upratovacie
-											// pole....)
+	public int height;
+	public int rank; // TODO: size -> rank (treba ale
+						// zmenit aj pomocne upratovacie
+						// pole....)
 	public BinHeapNode parent, left, right, child;
 	public boolean cut; // TODO hm?
 
@@ -257,7 +257,8 @@ public class BinHeapNode extends Node {
 		drawKey(v);
 		if (parent == null) {
 			v.setColor(Color.black);
-			v.drawString("" + rank, x + Node.RADIUS, y - Node.RADIUS, Fonts.SMALL);
+			v.drawString("" + rank, x + Node.RADIUS, y - Node.RADIUS,
+					Fonts.SMALL);
 		}
 	}
 
@@ -297,34 +298,44 @@ public class BinHeapNode extends Node {
 		HashtableStoreSupport.store(state, hash + "height", height);
 		HashtableStoreSupport.store(state, hash + "rank", rank);
 	}
-	
+
 	public void storeTreeState(Hashtable<Object, Object> state) {
 		storeTreeState(state, this);
 	}
-	
-	private void storeTreeState(Hashtable<Object, Object> state, BinHeapNode first) {
+
+	private void storeTreeState(Hashtable<Object, Object> state,
+			BinHeapNode first) {
 		storeState(state);
-		if (child != null) child.storeTreeState(state);
-		if (right != first) right.storeTreeState(state, first);
+		if (child != null)
+			child.storeTreeState(state);
+		if (right != first)
+			right.storeTreeState(state, first);
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object left = state.get(hash + "left");
-		if (left != null) this.left = (BinHeapNode) HashtableStoreSupport.restore(left);
+		if (left != null)
+			this.left = (BinHeapNode) HashtableStoreSupport.restore(left);
 		Object right = state.get(hash + "right");
-		if (right != null) this.right = (BinHeapNode) HashtableStoreSupport.restore(right);
+		if (right != null)
+			this.right = (BinHeapNode) HashtableStoreSupport.restore(right);
 		Object parent = state.get(hash + "parent");
-		if (parent != null) this.parent = (BinHeapNode) HashtableStoreSupport.restore(parent);
+		if (parent != null)
+			this.parent = (BinHeapNode) HashtableStoreSupport.restore(parent);
 		Object child = state.get(hash + "child");
-		if (child != null) this.child = (BinHeapNode) HashtableStoreSupport.restore(child);
+		if (child != null)
+			this.child = (BinHeapNode) HashtableStoreSupport.restore(child);
 		Object leftw = state.get(hash + "leftw");
-		if (leftw != null) this.leftw = (Integer) HashtableStoreSupport.restore(leftw);
+		if (leftw != null)
+			this.leftw = (Integer) HashtableStoreSupport.restore(leftw);
 		Object height = state.get(hash + "height");
-		if (height != null) this.height = (Integer) HashtableStoreSupport.restore(height);
+		if (height != null)
+			this.height = (Integer) HashtableStoreSupport.restore(height);
 		Object rank = state.get(hash + "rank");
-		if (rank != null) this.rank = (Integer) HashtableStoreSupport.restore(rank);
+		if (rank != null)
+			this.rank = (Integer) HashtableStoreSupport.restore(rank);
 	}
 
 	public void restoreTreeState(Hashtable<?, ?> state) {
@@ -333,28 +344,30 @@ public class BinHeapNode extends Node {
 
 	private void restoreTreeState(Hashtable<?, ?> state, BinHeapNode first) {
 		restoreState(state);
-		if (this.child != null) this.child.restoreTreeState(state);
-		if (this.right != first) this.right.restoreTreeState(state, first);
+		if (this.child != null)
+			this.child.restoreTreeState(state);
+		if (this.right != first)
+			this.right.restoreTreeState(state, first);
 	}
 
-//	public void debug() {
-//		System.out.println("NodeKey: " + key);
-//		System.out.println("left: " + (left == null ? "null" : left.key));
-//		System.out.println("right: " + (right == null ? "null" : right.key));
-//		System.out.println("parent: " + (parent == null ? "null" : parent.key));
-//		System.out.println("child: " + (child == null ? "null" : child.key));
-//		System.out.println("leftw: " + leftw);
-//		System.out.println("height: " + height);
-//		System.out.println("rank: " + rank);
-//	}
-//	
-//	public void debugTree() {
-//		debugTree(this);
-//	}
-//	
-//	public void debugTree(BinHeapNode first) {
-//		debug();
-//		if (child != null) child.debugTree();
-//		if (right != first) right.debugTree(first);
-//	}
+	// public void debug() {
+	// System.out.println("NodeKey: " + key);
+	// System.out.println("left: " + (left == null ? "null" : left.key));
+	// System.out.println("right: " + (right == null ? "null" : right.key));
+	// System.out.println("parent: " + (parent == null ? "null" : parent.key));
+	// System.out.println("child: " + (child == null ? "null" : child.key));
+	// System.out.println("leftw: " + leftw);
+	// System.out.println("height: " + height);
+	// System.out.println("rank: " + rank);
+	// }
+	//
+	// public void debugTree() {
+	// debugTree(this);
+	// }
+	//
+	// public void debugTree(BinHeapNode first) {
+	// debug();
+	// if (child != null) child.debugTree();
+	// if (right != first) right.debugTree(first);
+	// }
 }

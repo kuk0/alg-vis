@@ -18,14 +18,14 @@ package algvis.ds.priorityqueues.pairingheap;
 
 import algvis.core.visual.ZDepth;
 
-public class PairHeapInsert extends PairHeapAlg{
+public class PairHeapInsert extends PairHeapAlg {
 	private final int x;
-	
+
 	public PairHeapInsert(PairingHeap H, int x) {
 		super(H);
 		this.x = x;
 	}
-	
+
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		int i = H.active;
@@ -42,23 +42,28 @@ public class PairHeapInsert extends PairHeapAlg{
 		} else {
 			H.root[i].highlightTree();
 			H.root[i].mark();
-			//kedze je <cislo> viac/menej ako <cislo> tak to prilinkujeme k tomu
-			if (H.root[i].getKey() < H.root[0].getKey()){
-				if(H.minHeap){
-					addStep("pairlinkmin", H.root[i].getKey(), H.root[0].getKey());
+			// kedze je <cislo> viac/menej ako <cislo> tak to prilinkujeme k
+			// tomu
+			if (H.root[i].getKey() < H.root[0].getKey()) {
+				if (H.minHeap) {
+					addStep("pairlinkmin", H.root[i].getKey(),
+							H.root[0].getKey());
 				} else {
-					addStep("pairlinkmax", H.root[i].getKey(), H.root[0].getKey());
+					addStep("pairlinkmax", H.root[i].getKey(),
+							H.root[0].getKey());
 				}
 			} else {
-				if(H.minHeap){
-					addStep("pairlinkmin", H.root[0].getKey(), H.root[i].getKey());
+				if (H.minHeap) {
+					addStep("pairlinkmin", H.root[0].getKey(),
+							H.root[i].getKey());
 				} else {
-					addStep("pairlinkmax", H.root[0].getKey(), H.root[i].getKey());
+					addStep("pairlinkmax", H.root[0].getKey(),
+							H.root[i].getKey());
 				}
 			}
 			pause();
 			H.root[i].unmark();
-			link(i,0);
+			link(i, 0);
 			H.reposition();
 		}
 		H.root[0] = null;

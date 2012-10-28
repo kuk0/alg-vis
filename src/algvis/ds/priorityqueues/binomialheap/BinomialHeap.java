@@ -37,27 +37,27 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 	public BinHeapNode[] root; // root[0] je pomocny, prave meldujuci
 	public BinHeapNode[] min;
 
-//	void debug() {
-//		for (int i = 0, rootLength = root.length; i < rootLength; i++) {
-//			BinHeapNode node = root[i];
-//			System.out.println("Debugging root " + i + ":");
-//			if (node == null) {
-//				System.out.println("null");
-//			} else {
-//				node.debugTree();
-//			}
-//		}
-//		for (int i = 0, minLength = min.length; i < minLength; i++) {
-//			BinHeapNode node = min[i];
-//			System.out.println("Debugging min " + i + ":");
-//			if (node == null) {
-//				System.out.println("null");
-//			} else {
-//				node.debugTree();
-//			}
-//		}
-//	}
-	
+	// void debug() {
+	// for (int i = 0, rootLength = root.length; i < rootLength; i++) {
+	// BinHeapNode node = root[i];
+	// System.out.println("Debugging root " + i + ":");
+	// if (node == null) {
+	// System.out.println("null");
+	// } else {
+	// node.debugTree();
+	// }
+	// }
+	// for (int i = 0, minLength = min.length; i < minLength; i++) {
+	// BinHeapNode node = min[i];
+	// System.out.println("Debugging min " + i + ":");
+	// if (node == null) {
+	// System.out.println("null");
+	// } else {
+	// node.debugTree();
+	// }
+	// }
+	// }
+
 	@Override
 	public String getName() {
 		return "binheap";
@@ -67,7 +67,7 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 		super(M);
 		root = new BinHeapNode[numHeaps + 1];
 		min = new BinHeapNode[numHeaps + 1];
-		
+
 		M.screen.V.setDS(this);
 		M.screen.V.align = Alignment.LEFT;
 	}
@@ -155,8 +155,9 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 				root[i].drawTree(V, root[i], null);
 				if (i > 0) {
 					V.setColor(Color.black);
-					V.drawStringLeft(Languages.getString("heap") + " #" + i + ":",
-							root[i].x - Node.RADIUS - 5, root[i].y, Fonts.NORMAL);
+					V.drawStringLeft(Languages.getString("heap") + " #" + i
+							+ ":", root[i].x - Node.RADIUS - 5, root[i].y,
+							Fonts.NORMAL);
 				}
 				if (min[i] != null) {
 					if (minHeap) {
@@ -210,7 +211,8 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 	@Override
 	protected boolean isAnimationDone() {
 		for (int i = 0; i <= numHeaps; ++i) {
-			if (root[i] != null && !root[i].isAnimationDone()) return false;
+			if (root[i] != null && !root[i].isAnimationDone())
+				return false;
 		}
 		return true;
 	}
@@ -230,8 +232,8 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 				}
 			}
 		}
-		//  maxy = maxheight * (2 * RADIUS + yspan) - yspan;
-		//  // height*(2*RADIUS+yspan)-RADIUS-yspan je sur. najnizsieho
+		// maxy = maxheight * (2 * RADIUS + yspan) - yspan;
+		// // height*(2*RADIUS+yspan)-RADIUS-yspan je sur. najnizsieho
 		// maxy += 4 * (RADIUS + yspan);
 		maxy = (maxheight + 2) * minsepy;
 		if (root[0] != null) {
@@ -291,7 +293,8 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "root", root.clone());
 		for (int i = 0; i <= numHeaps; ++i) {
-			if (root[i] != null) root[i].storeTreeState(state);
+			if (root[i] != null)
+				root[i].storeTreeState(state);
 		}
 		HashtableStoreSupport.store(state, hash + "min", min.clone());
 	}
@@ -300,12 +303,15 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object root = state.get(hash + "root");
-		if (root != null) this.root = (BinHeapNode[]) HashtableStoreSupport.restore(root);
+		if (root != null)
+			this.root = (BinHeapNode[]) HashtableStoreSupport.restore(root);
 		for (int i = 0; i <= numHeaps; ++i) {
-			if (this.root[i] != null) this.root[i].restoreTreeState(state);
+			if (this.root[i] != null)
+				this.root[i].restoreTreeState(state);
 		}
-		
+
 		Object min = state.get(hash + "min");
-		if (min != null) this.min = (BinHeapNode[]) HashtableStoreSupport.restore(min);
+		if (min != null)
+			this.min = (BinHeapNode[]) HashtableStoreSupport.restore(min);
 	}
 }

@@ -7,7 +7,7 @@ import algvis.ds.intervaltree.IntervalTrees.mimasuType;
 
 public class IntervalFindMin extends IntervalAlg {
 	private int i;
-    private int j;
+	private int j;
 	private IntervalNode maxi;
 	private static final int ninf = -2147483648;
 	private static final int pinf = 2147483647;
@@ -36,16 +36,16 @@ public class IntervalFindMin extends IntervalAlg {
 			maxi = new IntervalNode(T, ninf, ZDepth.NODE);
 			setHeader("findmax", i, j);
 		} else if (T.minTree == mimasuType.MIN) {
-			maxi = new IntervalNode(T, pinf,ZDepth.NODE);
+			maxi = new IntervalNode(T, pinf, ZDepth.NODE);
 			setHeader("findmin", i, j);
 		} else {
-			maxi = new IntervalNode(T, 0,ZDepth.NODE);
+			maxi = new IntervalNode(T, 0, ZDepth.NODE);
 			setHeader("findsum", i, j);
 		}
 		T.markColor(T.root, i, j);
 		// System.out.println(i + " " + j);
 		// System.out.println(T.root.b + " " + T.root.e);
-		
+
 		// kazdy vrchol ma zapamatany interval, ktory reprezentuje (je to
 		// b-e+1=2^k
 
@@ -115,7 +115,8 @@ public class IntervalFindMin extends IntervalAlg {
 		}
 
 		if ((w.b <= b) || (w.e >= e)) {
-			addStep("intervalpart", i, j, w.getKey(), w.b, w.e); // neprazdny prienik
+			addStep("intervalpart", i, j, w.getKey(), w.b, w.e); // neprazdny
+																	// prienik
 			w.focused = focusType.TOUT;
 			pause();
 			w.focused = focusType.TWAIT;

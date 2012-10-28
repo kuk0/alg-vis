@@ -78,13 +78,13 @@ public class SplayTree extends BST {
 
 	@Override
 	public void draw(View V) {
-		/*if (getW1() != null && getW1().getParent() != null) {
-			V.drawWideLine(getW1().x, getW1().y, getW1().getParent().x, getW1()
-					.getParent().y);
-		}
-		if (getW2() != null && getW2().getParent() != null) {
-			V.drawWideLine(getW2().x, getW2().y, getW2().getParent().x, getW2().getParent().y);
-		}*/
+		/*
+		 * if (getW1() != null && getW1().getParent() != null) {
+		 * V.drawWideLine(getW1().x, getW1().y, getW1().getParent().x, getW1()
+		 * .getParent().y); } if (getW2() != null && getW2().getParent() !=
+		 * null) { V.drawWideLine(getW2().x, getW2().y, getW2().getParent().x,
+		 * getW2().getParent().y); }
+		 */
 		super.draw(V);
 		if (getRoot2() != null) {
 			getRoot2().drawTree(V);
@@ -100,9 +100,9 @@ public class SplayTree extends BST {
 	}
 
 	/*
-		 * public String stats() { return super.stats()+";   Potential: "+ ((root ==
-		 * null) ? "0" : ((SplayNode)root).pot); }
-		 */
+	 * public String stats() { return super.stats()+";   Potential: "+ ((root ==
+	 * null) ? "0" : ((SplayNode)root).pot); }
+	 */
 
 	public void rotate2(SplayNode v) {
 		if (v.isLeft()) {
@@ -131,18 +131,23 @@ public class SplayTree extends BST {
 		HashtableStoreSupport.store(state, hash + "w1", w1);
 		HashtableStoreSupport.store(state, hash + "w2", w2);
 		HashtableStoreSupport.store(state, hash + "root2", root2);
-		if (root2 != null) root2.storeState(state);
+		if (root2 != null)
+			root2.storeState(state);
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object w1 = state.get(hash + "w1");
-		if (w1 != null) this.w1 = (SplayNode) HashtableStoreSupport.restore(w1);
+		if (w1 != null)
+			this.w1 = (SplayNode) HashtableStoreSupport.restore(w1);
 		Object w2 = state.get(hash + "w2");
-		if (w2 != null) this.w2 = (SplayNode) HashtableStoreSupport.restore(w2);
+		if (w2 != null)
+			this.w2 = (SplayNode) HashtableStoreSupport.restore(w2);
 		Object root2 = state.get(hash + "root2");
-		if (root2 != null) this.root2 = (SplayNode) HashtableStoreSupport.restore(root2);
-		if (this.root2 != null) this.root2.restoreState(state);
+		if (root2 != null)
+			this.root2 = (SplayNode) HashtableStoreSupport.restore(root2);
+		if (this.root2 != null)
+			this.root2.restoreState(state);
 	}
 }

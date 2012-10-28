@@ -26,7 +26,7 @@ import algvis.ui.VisPanel;
 public class SkewHeapPanel extends VisPanel {
 	private static final long serialVersionUID = -2947713003292797010L;
 	public static Class<? extends DataStructure> DS = SkewHeap.class;
-	
+
 	public SkewHeapPanel(Settings S) {
 		super(S);
 	}

@@ -53,7 +53,7 @@ public class DaryHeapInsert extends DaryHeapAlg {
 			v.goToRoot();
 			H.last = H.root;
 			pause();
-		} else { //najdeme miesto pre v
+		} else { // najdeme miesto pre v
 			w = H.last.nextNeighbour();
 			w.linkNewSon(v);
 			H.reposition();

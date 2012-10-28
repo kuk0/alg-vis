@@ -47,7 +47,8 @@ public class BTreeButtons extends DictButtons implements ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent evt) {
 		if (evt.getSource() == OS) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			((BTree) D).setOrder((Integer) OS.getValue());
 		}
 	}

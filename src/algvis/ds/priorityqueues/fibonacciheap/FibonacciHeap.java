@@ -23,7 +23,7 @@ import algvis.ui.VisPanel;
 
 public class FibonacciHeap extends LazyBinomialHeap {
 	public static String dsName = "fibheap";
-	
+
 	@Override
 	public String getName() {
 		return "fibheap";

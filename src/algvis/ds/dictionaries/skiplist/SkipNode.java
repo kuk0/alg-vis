@@ -212,23 +212,31 @@ public class SkipNode extends Node {
 		HashtableStoreSupport.store(state, hash + "left", left);
 		HashtableStoreSupport.store(state, hash + "right", right);
 		HashtableStoreSupport.store(state, hash + "up", up);
-		if (right != null) right.storeState(state);
-		if (down != null) down.storeState(state);
+		if (right != null)
+			right.storeState(state);
+		if (down != null)
+			down.storeState(state);
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object down = state.get(hash + "down");
-		if (down != null) this.down = (SkipNode) HashtableStoreSupport.restore(down);
+		if (down != null)
+			this.down = (SkipNode) HashtableStoreSupport.restore(down);
 		Object left = state.get(hash + "left");
-		if (left != null) this.left = (SkipNode) HashtableStoreSupport.restore(left);
+		if (left != null)
+			this.left = (SkipNode) HashtableStoreSupport.restore(left);
 		Object right = state.get(hash + "right");
-		if (right != null) this.right = (SkipNode) HashtableStoreSupport.restore(right);
+		if (right != null)
+			this.right = (SkipNode) HashtableStoreSupport.restore(right);
 		Object up = state.get(hash + "up");
-		if (up != null) this.up = (SkipNode) HashtableStoreSupport.restore(up);
-		
-		if (this.right != null) this.right.restoreState(state);
-		if (this.down != null) this.down.restoreState(state);
+		if (up != null)
+			this.up = (SkipNode) HashtableStoreSupport.restore(up);
+
+		if (this.right != null)
+			this.right.restoreState(state);
+		if (this.down != null)
+			this.down.restoreState(state);
 	}
 }

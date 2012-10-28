@@ -41,7 +41,7 @@ public class TreapDelete extends Algorithm {
 		if (d != null) {
 			setHeader("delete", K);
 			d.setColor(NodeColor.DELETE);
-			
+
 			addStep("treapbubbledown");
 			pause();
 			// prebubleme k listu

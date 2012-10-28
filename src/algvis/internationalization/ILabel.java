@@ -36,7 +36,7 @@ public class ILabel extends ChLabel implements LanguageListener {
 		setText(t.getString());
 		refresh();
 	}
-	
+
 	public void setT(String text) {
 		setT(new IString(text));
 	}

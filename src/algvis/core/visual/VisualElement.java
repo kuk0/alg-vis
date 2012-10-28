@@ -43,17 +43,17 @@ public abstract class VisualElement implements StateEditable {
 		return zDepth;
 	}
 
-//	public void setZDepth(int zDepth) {
-//		if (zDepth != this.zDepth) {
-//			scene.changeZDepth(this, this.zDepth, zDepth);
-//			this.zDepth = zDepth;
-//		}
-//	}
-	
+	// public void setZDepth(int zDepth) {
+	// if (zDepth != this.zDepth) {
+	// scene.changeZDepth(this, this.zDepth, zDepth);
+	// this.zDepth = zDepth;
+	// }
+	// }
+
 	public void addToScene() {
 		scene.add(this, zDepth);
 	}
-	
+
 	public void removeFromScene() {
 		scene.remove(this);
 	}
@@ -67,19 +67,20 @@ public abstract class VisualElement implements StateEditable {
 	protected abstract void move() throws ConcurrentModificationException;
 
 	protected abstract Rectangle2D getBoundingBox();
-	
+
 	protected abstract void endAnimation();
-	
+
 	protected abstract boolean isAnimationDone();
 
 	@Override
 	public void storeState(Hashtable<Object, Object> state) {
-//		HashtableStoreSupport.store(state, hash + "zDepth", zDepth);
+		// HashtableStoreSupport.store(state, hash + "zDepth", zDepth);
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
-//		Object zDepth = state.get(hash + "zDepth");
-//		if (zDepth != null) setZDepth((Integer) HashtableStoreSupport.restore(zDepth));
+		// Object zDepth = state.get(hash + "zDepth");
+		// if (zDepth != null) setZDepth((Integer)
+		// HashtableStoreSupport.restore(zDepth));
 	}
 }

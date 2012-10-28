@@ -59,9 +59,9 @@ public class TrieInsert extends Algorithm {
 			hw.setAndGoNextTo(s, v);
 			TrieNode w = v.getChildWithCH(ch);
 			if (w != null) {
-				addStep("trieinsertwch", ""+ch);
+				addStep("trieinsertwch", "" + ch);
 			} else {
-				addStep("trieinsertwoch", ""+ch);
+				addStep("trieinsertwoch", "" + ch);
 				w = v.addChild(ch, hw.x, hw.y);
 			}
 			w.setColor(NodeColor.CACHED);

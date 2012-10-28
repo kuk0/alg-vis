@@ -22,7 +22,7 @@ import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.VisPanel;
 import algvis.ui.view.Highlighting;
 
-abstract public class MeldablePQ extends PriorityQueue implements Highlighting{
+abstract public class MeldablePQ extends PriorityQueue implements Highlighting {
 	public static String adtName = "meldable-pq";
 
 	public static final int numHeaps = 10;
@@ -33,7 +33,7 @@ abstract public class MeldablePQ extends PriorityQueue implements Highlighting{
 	}
 
 	abstract public void meld(int i, int j);
-	
+
 	@Override
 	public void storeState(Hashtable<Object, Object> state) {
 		super.storeState(state);

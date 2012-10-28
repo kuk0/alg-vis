@@ -54,7 +54,7 @@ public class AA extends BST {
 	public void setMode23(boolean set) {
 		mode23 = set;
 		// TODO reposition pokazi historiu (je to vobec potrebne?)
-//		reposition();
+		// reposition();
 	}
 
 	public void skew(BSTNode w) {
@@ -83,7 +83,7 @@ public class AA extends BST {
 			((AANode) getRoot()).drawTree2(V);
 		}
 	}
-	
+
 	@Override
 	public Layout getLayout() {
 		return Layout.COMPACT;

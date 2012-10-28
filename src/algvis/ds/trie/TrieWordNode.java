@@ -56,7 +56,7 @@ public class TrieWordNode extends Node {
 	 * @param x
 	 *            how many chars will be cut from the beginning of the string
 	 */
-    String cut(int x) {
+	String cut(int x) {
 		s = s.substring(x, s.length());
 		return s;
 	}
@@ -103,6 +103,7 @@ public class TrieWordNode extends Node {
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object s = state.get(hash + "s");
-		if (s != null) this.s = (String) HashtableStoreSupport.restore(s);
+		if (s != null)
+			this.s = (String) HashtableStoreSupport.restore(s);
 	}
 }

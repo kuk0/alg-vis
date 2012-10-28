@@ -26,7 +26,7 @@ public class UnionFindFind extends Algorithm {
 		NONE, COMPRESSION, HALVING, SPLITTING
 	}
 
-    private UnionFindNode u = null;
+	private UnionFindNode u = null;
 
 	private final FindHeuristic findState;
 	private final UnionFind UF;
@@ -113,7 +113,8 @@ public class UnionFindFind extends Algorithm {
 		return result;
 	}
 
-	UnionFindNode findWithCompression(UnionFindNode u) throws InterruptedException {
+	UnionFindNode findWithCompression(UnionFindNode u)
+			throws InterruptedException {
 		Stack<UnionFindNode> S = new Stack<UnionFindNode>();
 		UnionFindNode result = null;
 		UnionFindNode v = null;
@@ -137,7 +138,7 @@ public class UnionFindFind extends Algorithm {
 		// looking for root
 		while (v.getParent() != null) {
 			S.add(v);
-			//v.setColor(NodeColor.FIND);
+			// v.setColor(NodeColor.FIND);
 			v.setGrey(true);
 			addStep("ufup");
 			pause();
@@ -162,9 +163,9 @@ public class UnionFindFind extends Algorithm {
 		while (!S.empty()) {
 			addStep("ufdown");
 			v = S.pop();
-			//v.pointTo(result);
+			// v.pointTo(result);
 			pause();
-			//v.noArrow();
+			// v.noArrow();
 			v.setColor(NodeColor.NORMAL);
 			v.getParent().deleteChild(v);
 			UF.reposition();
@@ -193,7 +194,7 @@ public class UnionFindFind extends Algorithm {
 			t.setGrey(true);
 			t = t.getParent();
 		}
-		
+
 		u.mark();
 		addStep("uffindstart", u.getKey());
 		pause();
@@ -281,7 +282,7 @@ public class UnionFindFind extends Algorithm {
 			t.setGrey(true);
 			t = t.getParent();
 		}
-		
+
 		pause();
 
 		// u is a representative

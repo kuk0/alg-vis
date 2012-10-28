@@ -34,13 +34,15 @@ public class RBInsert extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		BSTInsert insert = new BSTInsert(T, new RBNode(T, K, ZDepth.ACTIONNODE), this);
+		BSTInsert insert = new BSTInsert(T,
+				new RBNode(T, K, ZDepth.ACTIONNODE), this);
 		insert.runAlgorithm();
 		HashMap<String, Object> insertResult = insert.getResult();
 		boolean inserted = (Boolean) insertResult.get("inserted");
-		
+
 		if (inserted) {
-			// TODO komentar "ideme bublat" (nieco ako pri BSTDelete: "first we have to find a node")
+			// TODO komentar "ideme bublat" (nieco ako pri BSTDelete:
+			// "first we have to find a node")
 			pause();
 
 			// bubleme nahor
@@ -94,6 +96,6 @@ public class RBInsert extends Algorithm {
 			((RBNode) T.getRoot()).setRed(false);
 			T.reposition();
 			addStep("done");
-		}		
+		}
 	}
 }

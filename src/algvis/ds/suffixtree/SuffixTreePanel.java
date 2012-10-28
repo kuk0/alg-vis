@@ -27,12 +27,20 @@ public class SuffixTreePanel extends VisPanel {
 	public SuffixTreePanel(Settings S) {
 		super(S);
 	}
-	
+
 	@Override
 	public void initDS() {
 		D = new SuffixTree(this);
 		buttons = new SuffixTreeButtons(this);
-		//D.random(10);
+		final boolean p = pauses;
+		pauses = false;
+		((SuffixTree) D).insert("BANANA$");
+		D.start(new Runnable() {
+			@Override
+			public void run() {
+				pauses = p;
+			}
+		});
 	}
 
 }

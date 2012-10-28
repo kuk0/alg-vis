@@ -47,7 +47,7 @@ public class AVL extends BST {
 	public void delete(int x) {
 		start(new AVLDelete(this, x));
 	}
-	
+
 	@Override
 	public Layout getLayout() {
 		return Layout.COMPACT;

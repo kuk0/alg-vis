@@ -44,7 +44,7 @@ public class SuffixTreeInsert extends Algorithm {
 	public void runAlgorithm() throws InterruptedException {
 		T.text = s;
 		T.str = new StringElem(T, T.text, 0, SuffixTree.textpos);
-		
+
 		setHeader("trieinsert", s.substring(0, s.length() - 1));
 		if (s.compareTo("$") == 0) {
 			addNote("badword");

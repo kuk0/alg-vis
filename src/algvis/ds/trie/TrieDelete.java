@@ -70,14 +70,14 @@ public class TrieDelete extends Algorithm {
 					vd.setColor(NodeColor.NORMAL);
 					vd = (TrieNode) vd.getRight();
 				}
-				addStep("triefindending1", ""+ch);
+				addStep("triefindending1", "" + ch);
 				pause();
 				addStep("triedeletefindunsu");
 				pause();
 				beforeReturn();
 				return;
 			}
-			addStep("triefindmovedown", ""+ch);
+			addStep("triefindmovedown", "" + ch);
 			pause();
 			while (vd != null) {
 				vd.setColor(NodeColor.NORMAL);

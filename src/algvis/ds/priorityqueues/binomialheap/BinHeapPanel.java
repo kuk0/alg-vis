@@ -62,6 +62,6 @@ public class BinHeapPanel extends VisPanel {
 				pauses = true;
 			}
 		});
-		D.panel.screen.V.resetView();		
+		D.panel.screen.V.resetView();
 	}
 }

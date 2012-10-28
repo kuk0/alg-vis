@@ -44,14 +44,14 @@ public class View implements MouseListener, MouseMotionListener,
 		MouseWheelListener {
 	private Graphics2D g;
 	private final static double SCALE_FACTOR = 1.1;
-    private final static double MIN_ZOOM = 0.16;
-    private final static double MAX_ZOOM = 5.5;
+	private final static double MIN_ZOOM = 0.16;
+	private final static double MAX_ZOOM = 5.5;
 	private int W;
-    private int H; // display width&height
+	private int H; // display width&height
 	private int minx;
-    public int miny;
-    private int maxx;
-    private int maxy;
+	public int miny;
+	private int maxx;
+	private int maxy;
 	private int mouseX, mouseY; // mouse position
 	public Alignment align = Alignment.CENTER;
 
@@ -230,17 +230,18 @@ public class View implements MouseListener, MouseMotionListener,
 		g.setTransform(oldTransform);
 	}
 
-	public Point2D cut (double x, double y, double x2, double y2, double c) {
+	public Point2D cut(double x, double y, double x2, double y2, double c) {
 		double d = new Point2D.Double(x, y).distance(x2, y2);
-		return new Point2D.Double(x + (x2-x)*(d-c)/d, y + (y2-y)*(d-c)/d);
+		return new Point2D.Double(x + (x2 - x) * (d - c) / d, y + (y2 - y)
+				* (d - c) / d);
 	}
 
 	public void fillRect(double x, double y, double a, double b) {
-		g.fillRect((int) (x - a), (int) (y - b), 2 * (int) a, 2 * (int) b);
+		g.fillRect((int) (x - a), (int) (y - b), (int) (2 * a), (int) (2 * b));
 	}
 
 	void drawRect(double x, double y, double a, double b) {
-		g.drawRect((int) (x - a), (int) (y - b), 2 * (int) a, 2 * (int) b);
+		g.drawRect((int) (x - a), (int) (y - b), (int) (2 * a), (int) (2 * b));
 	}
 
 	public void fillSqr(double x, double y, double a) {
@@ -271,8 +272,8 @@ public class View implements MouseListener, MouseMotionListener,
 		g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
 	}
 
-	void drawWideLine(double x1, double y1, double x2, double y2,
-                      float width, Color col) {
+	void drawWideLine(double x1, double y1, double x2, double y2, float width,
+			Color col) {
 		final Stroke old = g.getStroke(), wide = new BasicStroke(width,
 				BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 		final Color c = g.getColor();
@@ -330,7 +331,7 @@ public class View implements MouseListener, MouseMotionListener,
 		g.setFont(f.font);
 		g.drawString(str, (int) x, (int) y);
 	}
-	
+
 	/**
 	 * draw string horizontally; first character is at (x, y)
 	 */
@@ -348,11 +349,11 @@ public class View implements MouseListener, MouseMotionListener,
 	}
 
 	public void drawVerticalString(String str, double x, double y, Fonts f) {
-		int xx = (int)x;
-		int yy = (int)y - str.length() * f.fm.getHeight() / 2;
+		int xx = (int) x;
+		int yy = (int) y - str.length() * f.fm.getHeight() / 2;
 		g.setFont(f.font);
-		for (int i=0; i<str.length(); ++i) {
-			g.drawString(""+str.charAt(i), xx, yy);
+		for (int i = 0; i < str.length(); ++i) {
+			g.drawString("" + str.charAt(i), xx, yy);
 			yy += f.fm.getHeight();
 		}
 	}
@@ -361,7 +362,7 @@ public class View implements MouseListener, MouseMotionListener,
 			double a2) {
 		g.fillArc((int) x, (int) y, (int) w, (int) h, (int) a1, (int) a2);
 	}
-	
+
 	public void drawRectangle(Rectangle2D r) {
 		g.draw(r);
 	}
@@ -410,20 +411,19 @@ public class View implements MouseListener, MouseMotionListener,
 
 	public void drawArrow(double x1, double y1, double x2, double y2) {
 		g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
-		arrowHead((int)x1, (int)y1, (int)x2, (int)y2);
+		arrowHead((int) x1, (int) y1, (int) x2, (int) y2);
 	}
 
 	public void drawDoubleArrow(double x1, double y1, double x2, double y2) {
 		g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
-		arrowHead((int)x1, (int)y1, (int)x2, (int)y2);
-		arrowHead((int)x2, (int)y2, (int)x1, (int)y1);
+		arrowHead((int) x1, (int) y1, (int) x2, (int) y2);
+		arrowHead((int) x2, (int) y2, (int) x1, (int) y1);
 	}
 
 	// elliptical arc
 	// x,y,w,h is the bounding rectangle
 	// a1,a2 is the starting and ending angle in degrees
-    void drawArc(double x, double y, double w, double h, double a1,
-                 double a2) {
+	void drawArc(double x, double y, double w, double h, double a1, double a2) {
 		g.drawArc((int) x, (int) y, (int) w, (int) h, (int) a1, (int) (a2 - a1));
 	}
 
@@ -479,8 +479,8 @@ public class View implements MouseListener, MouseMotionListener,
 		arrowHead(x, y, x2, y2);
 	}
 
-	public void drawCurve(double x1, double y1, double cx1, double cy1, double cx2, double cy2,
-			double x2, double y2) {
+	public void drawCurve(double x1, double y1, double cx1, double cy1,
+			double cx2, double cy2, double x2, double y2) {
 		g.draw(new CubicCurve2D.Double(x1, y1, cx1, cy1, cx2, cy2, x2, y2));
 	}
 
@@ -497,7 +497,7 @@ public class View implements MouseListener, MouseMotionListener,
 	}
 
 	public void drawImage(Image img, double x, double y, double w, double h) {
-		g.drawImage(img, (int)x, (int)y, (int)w, (int)h, null);
+		g.drawImage(img, (int) x, (int) y, (int) w, (int) h, null);
 	}
 
 	public void setDS(ClickListener D) {

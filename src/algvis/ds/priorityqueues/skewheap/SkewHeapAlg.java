@@ -27,7 +27,7 @@ abstract class SkewHeapAlg extends Algorithm {
 		super(H.panel);
 		this.H = H;
 	}
-	
+
 	void meld(int i) throws InterruptedException {
 		SkewHeapNode w = H.root[i];
 		H.root[0].mark();
@@ -73,7 +73,9 @@ abstract class SkewHeapAlg extends Algorithm {
 				w.getParent().dashedRightLine = false;
 			}
 
-			H.root[0].repos(H.root[0].tox, H.root[0].toy + SkewHeap.minsepy);// + 2* SkewHeapNode.RADIUS);
+			H.root[0].repos(H.root[0].tox, H.root[0].toy + SkewHeap.minsepy);// +
+																				// 2*
+																				// SkewHeapNode.RADIUS);
 			H.root[0].unmark();
 			w.unmark();
 
@@ -91,17 +93,18 @@ abstract class SkewHeapAlg extends Algorithm {
 			pause();
 		}
 
-		//povymiename synov, ale nie na zaklade ranku, ale vsetkych okrem synov posledneho vrcholu z pravej cesty 
+		// povymiename synov, ale nie na zaklade ranku, ale vsetkych okrem synov
+		// posledneho vrcholu z pravej cesty
 		addNote("skewheapswap");
 		pause();
 
 		SkewHeapNode tmp = w;
-		//najdeme predposledny vrchol v pravej ceste 
-		while (tmp.getRight() != null){			
+		// najdeme predposledny vrchol v pravej ceste
+		while (tmp.getRight() != null) {
 			tmp = tmp.getRight();
 		}
 		tmp = tmp.getParent();
-		
+
 		while (tmp != null) {
 			if (tmp.getLeft() != null) {
 				tmp.getLeft().mark();
@@ -109,7 +112,7 @@ abstract class SkewHeapAlg extends Algorithm {
 			if (tmp.getRight() != null) {
 				tmp.getRight().mark();
 			}
-			
+
 			tmp.swapChildren();
 			pause();
 			H.reposition();
@@ -126,7 +129,7 @@ abstract class SkewHeapAlg extends Algorithm {
 		H.reposition();
 		addNote("done");
 	}
-	
+
 	void bubbleup(SkewHeapNode v) throws InterruptedException {
 		if (H.minHeap) {
 			addStep("minheapbubbleup");
@@ -135,7 +138,7 @@ abstract class SkewHeapAlg extends Algorithm {
 		}
 		v.mark();
 		pause();
-		v.unmark();		
+		v.unmark();
 		SkewHeapNode w = v.getParent();
 		SkewHeapNode v1, v2;
 		while (w != null && v.prec(w)) {
@@ -156,7 +159,7 @@ abstract class SkewHeapAlg extends Algorithm {
 			v1.unmark();
 			removeFromScene(v1);
 			removeFromScene(v2);
-			v = w;			
+			v = w;
 			w = w.getParent();
 		}
 		addNote("done");

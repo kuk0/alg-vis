@@ -51,7 +51,7 @@ public class BSTDelete extends Algorithm {
 			result.put("deleted", true);
 			addToScene(toDelete);
 			toDelete.setColor(NodeColor.DELETE);
-		
+
 			if (toDelete.isLeaf()) { // case I - leaf
 				addNote("bst-delete-case1");
 				addStep("bst-delete-unlink");
@@ -63,7 +63,8 @@ public class BSTDelete extends Algorithm {
 					toDelete.getParent().unlinkRight();
 				}
 				pause();
-			} else if (toDelete.getLeft() == null || toDelete.getRight() == null) {
+			} else if (toDelete.getLeft() == null
+					|| toDelete.getRight() == null) {
 				// case II - 1 child
 				addNote("bst-delete-case2");
 				BSTNode son;
@@ -80,7 +81,8 @@ public class BSTDelete extends Algorithm {
 				if (toDelete.isRoot()) {
 					addStep("bst-delete-newroot", K, son.getKey());
 				} else {
-					addStep("bst-delete-linkpar", K, son.getKey(), toDelete.getParent().getKey());
+					addStep("bst-delete-linkpar", K, son.getKey(), toDelete
+							.getParent().getKey());
 				}
 				pause();
 				son.noArc();
@@ -101,7 +103,7 @@ public class BSTDelete extends Algorithm {
 				}
 			} else { // case III - 2 children
 				addNote("bst-delete-case3", K);
-//				pause();
+				// pause();
 				BSTNode son = toDelete.getRight();
 				toDelete.setColor(NodeColor.DELETE);
 				BSTNode v = new BSTNode(T, -Node.INF, ZDepth.ACTIONNODE);

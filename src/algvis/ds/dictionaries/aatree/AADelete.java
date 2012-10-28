@@ -58,12 +58,14 @@ public class AADelete extends Algorithm {
 				} else {
 					toDelete.getParent().unlinkRight();
 				}
-			} else if (toDelete.getLeft() == null || toDelete.getRight() == null) { // case
+			} else if (toDelete.getLeft() == null
+					|| toDelete.getRight() == null) { // case
 				// IIa -
 				// 1 syn
 				addStep("bst-delete-case2");
 				pause();
-				AANode s = (toDelete.getLeft() == null) ? toDelete.getRight() : toDelete.getLeft();
+				AANode s = (toDelete.getLeft() == null) ? toDelete.getRight()
+						: toDelete.getLeft();
 				if (toDelete.isRoot()) {
 					T.setRoot(s);
 				} else {
@@ -121,7 +123,7 @@ public class AADelete extends Algorithm {
 			removeFromScene(toDelete);
 			T.reposition();
 			pause();
-			
+
 			// bubleme nahor
 			while (w != null) {
 				int ll = (w.getLeft() == null) ? 0 : w.getLeft().getLevel(), rl = (w
@@ -198,7 +200,7 @@ public class AADelete extends Algorithm {
 						if (r != null
 								&& r.getRight() != null
 								&& r.getRight().getLevel() == w.getRight()
-								.getLevel()) {
+										.getLevel()) {
 							addStep("aasplit2");
 							r.setArc();
 							pause();

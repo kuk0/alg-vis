@@ -16,7 +16,6 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.binomialheap;
 
-
 public class BinHeapDelete extends BinHeapAlg {
 
 	public BinHeapDelete(BinomialHeap H) {

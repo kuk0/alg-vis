@@ -22,12 +22,12 @@ import javax.swing.undo.StateEditable;
 
 public class UpdatableStateEdit extends StateEdit {
 	private final long id;
-	
+
 	public UpdatableStateEdit(StateEditable anObject, long id) {
 		super(anObject);
 		this.id = id;
 	}
-	
+
 	public void addToPreState(StateEditable element) {
 		element.storeState(preState);
 	}

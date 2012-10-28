@@ -21,7 +21,7 @@ import algvis.core.Algorithm;
 public class LazyBinHeapMeld extends Algorithm {
 	private final LazyBinomialHeap H;
 	private final int i;
-    private final int j;
+	private final int j;
 
 	public LazyBinHeapMeld(LazyBinomialHeap H, int i, int j) {
 		super(H.panel);

@@ -71,9 +71,11 @@ public class LazyBinomialHeap extends BinomialHeap {
 				V.drawSquare(x, y, Node.RADIUS);
 				V.drawStringTop("" + i, x, y - Node.RADIUS + 1, Fonts.NORMAL);
 				if (cleanup[i] == null) {
-					V.drawLine(x-Node.RADIUS, y+Node.RADIUS, x+Node.RADIUS, y-Node.RADIUS);
+					V.drawLine(x - Node.RADIUS, y + Node.RADIUS, x
+							+ Node.RADIUS, y - Node.RADIUS);
 				} else {
-					V.drawArrow(x, y, cleanup[i].x, cleanup[i].y - minsepy + Node.RADIUS);
+					V.drawArrow(x, y, cleanup[i].x, cleanup[i].y - minsepy
+							+ Node.RADIUS);
 				}
 				x += 2 * Node.RADIUS;
 			}
@@ -90,10 +92,12 @@ public class LazyBinomialHeap extends BinomialHeap {
 	public void storeState(Hashtable<Object, Object> state) {
 		super.storeState(state);
 		if (cleanup != null) {
-			HashtableStoreSupport.store(state, hash + "cleanup", cleanup.clone());
+			HashtableStoreSupport.store(state, hash + "cleanup",
+					cleanup.clone());
 			// TODO mozno netreba ukladat (ak su vrcholy niekde inde ulozene)
 			for (int i = 0; i < cleanup.length; ++i) {
-				if (cleanup[i] != null) cleanup[i].storeTreeState(state);
+				if (cleanup[i] != null)
+					cleanup[i].storeTreeState(state);
 			}
 		} else {
 			HashtableStoreSupport.store(state, hash + "cleanup", null);
@@ -104,10 +108,13 @@ public class LazyBinomialHeap extends BinomialHeap {
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object cleanup = state.get(hash + "cleanup");
-		if (cleanup != null) this.cleanup = (BinHeapNode[]) HashtableStoreSupport.restore(cleanup);
+		if (cleanup != null)
+			this.cleanup = (BinHeapNode[]) HashtableStoreSupport
+					.restore(cleanup);
 		if (this.cleanup != null) {
 			for (int i = 0; i < this.cleanup.length; ++i) {
-				if (this.cleanup[i] != null) this.cleanup[i].restoreTreeState(state);
+				if (this.cleanup[i] != null)
+					this.cleanup[i].restoreTreeState(state);
 			}
 		}
 	}

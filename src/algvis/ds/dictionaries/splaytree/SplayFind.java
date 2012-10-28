@@ -20,7 +20,7 @@ import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 
 public class SplayFind extends SplayAlg {
-	
+
 	public SplayFind(SplayTree T, int x) {
 		super(T, x);
 	}

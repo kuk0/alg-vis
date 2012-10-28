@@ -81,7 +81,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	}
 
 	public synchronized void clear() {
-		currentPosition = -1; 
+		currentPosition = -1;
 		indexOfNextStep = 0;
 		s = new ArrayList<String>();
 		pre = new ArrayList<String>();
@@ -163,12 +163,12 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	}
 
 	public void setHeader(String h) {
-//		clear();
+		// clear();
 		add("<h2>", h, "</h2>");
 	}
 
 	public void setHeader(String h, String... par) {
-//		clear();
+		// clear();
 		add("<h2>", h, "</h2>", par);
 	}
 
@@ -189,8 +189,10 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	}
 
 	public void addStep(String s, String... par) {
-		add("<ol start=\"" + (indexOfNextStep + 1) + "\"><li class=\"step\"><p><a href=\"" +
-				panel.history.getLastEditId() + "\"> ", s, "</a></p></li></ol>", par);
+		add("<ol start=\"" + (indexOfNextStep + 1)
+				+ "\"><li class=\"step\"><p><a href=\""
+				+ panel.history.getLastEditId() + "\"> ", s,
+				"</a></p></li></ol>", par);
 		++indexOfNextStep;
 	}
 
@@ -224,7 +226,8 @@ public class Commentary extends JEditorPane implements LanguageListener,
 
 	@Override
 	public void storeState(Hashtable<Object, Object> state) {
-		HashtableStoreSupport.store(state, hash + "currentPosition", currentPosition);
+		HashtableStoreSupport.store(state, hash + "currentPosition",
+				currentPosition);
 		HashtableStoreSupport.store(state, hash + "s", s);
 		HashtableStoreSupport.store(state, hash + "pre", pre);
 		HashtableStoreSupport.store(state, hash + "post", post);
@@ -234,14 +237,20 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	@Override
 	public synchronized void restoreState(Hashtable<?, ?> state) {
 		Object position = state.get(hash + "currentPosition");
-		if (position != null) this.currentPosition = (Integer) HashtableStoreSupport.restore(position);
+		if (position != null)
+			this.currentPosition = (Integer) HashtableStoreSupport
+					.restore(position);
 		Object s = state.get(hash + "s");
-		if (s != null) this.s = (List<String>) HashtableStoreSupport.restore(s);
+		if (s != null)
+			this.s = (List<String>) HashtableStoreSupport.restore(s);
 		Object pre = state.get(hash + "pre");
-		if (pre != null) this.pre = (List<String>) HashtableStoreSupport.restore(pre);
+		if (pre != null)
+			this.pre = (List<String>) HashtableStoreSupport.restore(pre);
 		Object post = state.get(hash + "post");
-		if (post != null) this.post = (List<String>) HashtableStoreSupport.restore(post);
+		if (post != null)
+			this.post = (List<String>) HashtableStoreSupport.restore(post);
 		Object param = state.get(hash + "param");
-		if (param != null) this.param = (List<String[]>) HashtableStoreSupport.restore(param);
+		if (param != null)
+			this.param = (List<String[]>) HashtableStoreSupport.restore(param);
 	}
 }

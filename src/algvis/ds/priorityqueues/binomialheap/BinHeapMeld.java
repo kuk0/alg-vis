@@ -16,10 +16,9 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.binomialheap;
 
-
 public class BinHeapMeld extends BinHeapAlg {
 	private final int i;
-    private final int j;
+	private final int j;
 
 	public BinHeapMeld(BinomialHeap H, int i, int j) {
 		super(H);

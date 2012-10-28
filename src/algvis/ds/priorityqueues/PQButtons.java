@@ -38,12 +38,12 @@ import algvis.ui.VisPanel;
 public class PQButtons extends Buttons {
 	private static final long serialVersionUID = 5632185496171660196L;
 	private IButton insertB;
-    private IButton deleteB;
-    protected IButton decrKeyB;
+	private IButton deleteB;
+	protected IButton decrKeyB;
 	protected IRadioButton minB;
-    protected IRadioButton maxB;
+	protected IRadioButton maxB;
 	private ButtonGroup minMaxGroup;
-	
+
 	private boolean lastMinHeap = ((PriorityQueue) D).minHeap;
 
 	public PQButtons(VisPanel M) {
@@ -92,16 +92,19 @@ public class PQButtons extends Buttons {
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
 		if (evt.getSource() == insertB) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			Vector<Integer> args = I.getNonEmptyVI();
 			for (int x : args) {
 				D.insert(x);
 			}
 		} else if (evt.getSource() == deleteB) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			((PriorityQueue) D).delete();
 		} else if (evt.getSource() == decrKeyB) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			int delta = Math.abs(I.getInt(1));
 			Node w = ((PriorityQueue) D).chosen;
 			if (w != null) {
@@ -110,7 +113,8 @@ public class PQButtons extends Buttons {
 				((PriorityQueue) D).decreaseKey(w, delta);
 			}
 		} else if (evt.getSource() == minB && !((PriorityQueue) D).minHeap) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			D.start(new AlgorithmAdapter(panel) {
 				@Override
 				public void runAlgorithm() throws InterruptedException {
@@ -119,7 +123,8 @@ public class PQButtons extends Buttons {
 				}
 			});
 		} else if (evt.getSource() == maxB && ((PriorityQueue) D).minHeap) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			D.start(new AlgorithmAdapter(panel) {
 				@Override
 				public void runAlgorithm() throws InterruptedException {

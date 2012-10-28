@@ -16,40 +16,96 @@
  ******************************************************************************/
 package algvis.ds.suffixtree;
 
+import java.util.Vector;
+
 import algvis.core.Algorithm;
+import algvis.core.NodeColor;
+import algvis.core.TreeNode;
+import algvis.ds.trie.TrieWordNode;
 
 public class SuffixTreeFind extends Algorithm {
 	private final SuffixTree T;
-	private final String s;
+	private String s;
+	private TrieWordNode hw;
 
 	public SuffixTreeFind(SuffixTree T, String s) {
 		super(T.panel);
 		this.T = T;
-		this.s = s;
+		this.s = s.substring(0, s.length() - 1);
 	}
 
 	void beforeReturn() {
+		removeFromScene(hw);
 		T.clearExtraColor();
 		addStep("done");
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		setHeader("triefind", s.substring(0, s.length() - 1));
-		if (s.compareTo("$") == 0) {
-			addNote("badword");
+		setHeader("triefind", s);
+		if (s.length() == 0) {
+			// addNote("badword");
 		}
-		/*
-		  SuffixTreeNode v = T.getRoot();
-		  addNote("triefindnote");
-		  addStep("trierootstart");
-		  v.mark();
-		  pause();
-		  v.unmark();
-		  T.hw = new SuffixTreeWordNode(T, s);
-		  T.hw.setC(NodeColor.CACHED);
-		  T.hw.goNextTo(v);
-  */
+
+		SuffixTreeNode v = T.getRoot();
+		// addNote("triefindnote");
+		addStep("trierootstart");
+		v.mark();
+		pause();
+		v.unmark();
+		hw = new TrieWordNode(T, s);
+		addToScene(hw);
+		hw.setColor(NodeColor.CACHED);
+		hw.goNextTo(v);
+
+		while (s.length() > 0) {
+			SuffixTreeNode wd = v.getChild();
+			while (wd != null) {
+				wd.setColor(NodeColor.FIND);
+				wd = wd.getRight();
+			}
+			wd = v.getChild();
+
+			char ch = s.charAt(0);
+			hw.setAndGoNextTo(s, v);
+			SuffixTreeNode w = v.getChildWithCH(ch);
+			if (w == null) {
+				while (wd != null) {
+					wd.setColor(NodeColor.NORMAL);
+					wd = wd.getRight();
+				}
+				addStep("triefindending1", "" + ch);
+				pause();
+				beforeReturn();
+				return;
+			}
+			addStep("triefindmovedown", "" + ch);
+			pause();
+			v = w;
+			while (wd != null) {
+				wd.setColor(NodeColor.NORMAL);
+				wd = wd.getRight();
+			}
+			v.setColor(NodeColor.CACHED);
+			s = s.substring(1);
+		}
+		hw.setAndGoNextTo(s, v);
+		Vector<TreeNode> leaves = v.getLeaves();
+		Vector<Integer> pos = new Vector<Integer>();
+		for (TreeNode w : leaves) {
+			int p = w.getKey();
+			w.mark();
+			T.str.mark(p);
+			pos.add(p);
+			System.out.print(p + ", ");
+		}
+		System.out.println();
+
+		pause();
+		for (TreeNode w : leaves) {
+			w.unmark();
+			T.str.unmark(w.getKey());
+		}
 		beforeReturn();
 	}
 }

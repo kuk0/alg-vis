@@ -29,8 +29,8 @@ import algvis.ui.VisPanel;
 public class TrieButtons extends Buttons {
 	private static final long serialVersionUID = -368670840648549217L;
 	private IButton insertB;
-    private IButton findB;
-    private IButton deleteB;
+	private IButton findB;
+	private IButton deleteB;
 
 	public TrieButtons(VisPanel M) {
 		super(M);
@@ -59,13 +59,15 @@ public class TrieButtons extends Buttons {
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
 		if (evt.getSource() == insertB) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			Vector<String> args = I.getVS();
 			for (String s : args) {
 				((Trie) D).insert(s);
 			}
 		} else if (evt.getSource() == findB) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			Vector<String> args = I.getVS();
 			if (args.size() > 0) {
 				for (String s : args) {
@@ -73,7 +75,8 @@ public class TrieButtons extends Buttons {
 				}
 			}
 		} else if (evt.getSource() == deleteB) {
-			if (panel.history.canRedo()) panel.newAlgorithmPool();
+			if (panel.history.canRedo())
+				panel.newAlgorithmPool();
 			Vector<String> args = I.getVS();
 			if (args.size() > 0) {
 				for (String s : args) {

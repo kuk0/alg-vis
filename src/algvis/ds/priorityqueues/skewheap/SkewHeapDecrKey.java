@@ -18,9 +18,9 @@ package algvis.ds.priorityqueues.skewheap;
 
 import algvis.ui.InputField;
 
-public class SkewHeapDecrKey extends SkewHeapAlg{
+public class SkewHeapDecrKey extends SkewHeapAlg {
 	private final int delta;
-	
+
 	public SkewHeapDecrKey(SkewHeap H, SkewHeapNode v, int delta) {
 		super(H);
 		this.v = v;
@@ -34,7 +34,7 @@ public class SkewHeapDecrKey extends SkewHeapAlg{
 		} else {
 			setHeader("increasekey");
 		}
-		
+
 		if (H.minHeap) {
 			v.setKey(v.getKey() - delta);
 			if (v.getKey() < 1)

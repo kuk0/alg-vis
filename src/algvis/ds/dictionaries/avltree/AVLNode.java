@@ -126,6 +126,7 @@ public class AVLNode extends BSTNode {
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
 		Object bal = state.get(hash + "bal");
-		if (bal != null) this.bal = (Integer) HashtableStoreSupport.restore(bal);
+		if (bal != null)
+			this.bal = (Integer) HashtableStoreSupport.restore(bal);
 	}
 }

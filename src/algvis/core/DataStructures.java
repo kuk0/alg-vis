@@ -54,14 +54,14 @@ import algvis.ui.VisPanel;
  */
 public class DataStructures {
 	@SuppressWarnings("rawtypes")
-    private static final Class[] PANEL = { BSTPanel.class, RotPanel.class,
+	private static final Class[] PANEL = { BSTPanel.class, RotPanel.class,
 			AVLPanel.class, a23Panel.class, a234Panel.class, BPanel.class,
 			RBPanel.class, AAPanel.class, TreapPanel.class,
 			SkipListPanel.class, GBPanel.class, SplayPanel.class,
 			HeapPanel.class, DaryHeapPanel.class, LeftHeapPanel.class,
 			SkewHeapPanel.class, PairHeapPanel.class, BinHeapPanel.class,
 			LazyBinHeapPanel.class, FibHeapPanel.class, UnionFindPanel.class,
-			IntervalPanel.class, TriePanel.class, SuffixTreePanel.class};
+			IntervalPanel.class, TriePanel.class, SuffixTreePanel.class };
 
 	public static final int N = PANEL.length;
 
@@ -74,7 +74,7 @@ public class DataStructures {
 	}
 
 	@SuppressWarnings("unchecked")
-    private static Class<? extends DataStructure> DS(int i) {
+	private static Class<? extends DataStructure> DS(int i) {
 		if (!check_range(i))
 			return null;
 		try {
