@@ -31,6 +31,7 @@ public class GBPanel extends VisPanel {
 	@Override
 	public void initDS() {
 		D = new GBTree(this);
+		scene.add(D);
 		buttons = new GBButtons(this);
 		D.random(25);
 	}

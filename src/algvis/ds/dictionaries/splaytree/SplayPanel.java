@@ -32,6 +32,7 @@ public class SplayPanel extends VisPanel {
 	@Override
 	public void initDS() {
 		D = new SplayTree(this);
+		scene.add(D);
 		buttons = new DictButtons(this);
 		D.random(20);
 	}

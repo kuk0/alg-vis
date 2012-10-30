@@ -85,7 +85,7 @@ public class Node extends VisualElement {
 	}
 
 	protected Node(DataStructure D, int key, int x, int y, int zDepth) {
-		super(D.panel.scene, zDepth);
+		super(zDepth);
 		this.D = D;
 		this.setKey(key);
 		this.x = tox = x;
@@ -102,7 +102,7 @@ public class Node extends VisualElement {
 	}
 
 	public Node(DataStructure D) {
-		super(D.panel.scene, ZDepth.DS);
+		super(ZDepth.DS);
 	}
 
 	public void setState(int s) {

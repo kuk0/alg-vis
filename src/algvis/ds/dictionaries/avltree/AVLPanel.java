@@ -32,6 +32,7 @@ public class AVLPanel extends VisPanel {
 	@Override
 	public void initDS() {
 		D = new AVL(this);
+		scene.add(D);
 		buttons = new DictButtons(this);
 		D.random(30);
 	}

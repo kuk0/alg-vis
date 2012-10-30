@@ -39,14 +39,9 @@ public class BinHeapNode extends Node {
 
 	private BinHeapNode(DataStructure D, int key, int x, int y, int zDepth) {
 		super(D, key, x, y, zDepth);
-		this.setKey(key);
-		this.D = D;
-		this.x = tox = x;
-		this.y = toy = y;
 		parent = child = null;
 		left = right = this;
 		rank = 0;
-		steps = 0;
 		bgKeyColor();
 	}
 

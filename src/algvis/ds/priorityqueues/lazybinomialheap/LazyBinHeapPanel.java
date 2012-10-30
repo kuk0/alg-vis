@@ -33,6 +33,7 @@ public class LazyBinHeapPanel extends VisPanel {
 	@Override
 	public void initDS() {
 		D = new LazyBinomialHeap(this);
+		scene.add(D);
 		buttons = new MeldablePQButtons(this);
 		pauses = false;
 		D.random(7);

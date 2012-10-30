@@ -32,6 +32,7 @@ public class HeapPanel extends VisPanel {
 	@Override
 	public void initDS() {
 		D = new Heap(this);
+		scene.add(D);
 		buttons = new PQButtons(this);
 		D.random(20);
 	}

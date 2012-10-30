@@ -8,8 +8,8 @@ import algvis.ui.view.View;
 public class ShadeTriple extends VisualElement {
 	BSTNode u, v, w;
 
-	public ShadeTriple(Scene scene, BSTNode u, BSTNode v, BSTNode w) {
-		super(scene, Scene.MAXZ - 1);
+	public ShadeTriple(BSTNode u, BSTNode v, BSTNode w) {
+		super(Scene.MAXZ - 1);
 		this.u = u;
 		this.v = v;
 		this.w = w;
@@ -45,14 +45,5 @@ public class ShadeTriple extends VisualElement {
 	@Override
 	protected Rectangle2D getBoundingBox() {
 		return null;
-	}
-
-	@Override
-	protected void endAnimation() {
-	}
-
-	@Override
-	protected boolean isAnimationDone() {
-		return true;
 	}
 }

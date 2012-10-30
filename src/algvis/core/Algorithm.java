@@ -148,14 +148,14 @@ abstract public class Algorithm implements Runnable {
 		if (wrapped) {
 			wrapperAlg.addToScene(element);
 		} else {
-			element.addToScene();
+			panel.scene.add(element);
 			panelState.addToPreState(element);
 		}
 	}
 
 	protected void removeFromScene(VisualElement element) {
 		// if (panel.pauses) {
-		element.removeFromScene();
+		panel.scene.remove(element);
 		// } else {
 		// element.removeFromSceneNow();
 		// }

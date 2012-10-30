@@ -45,12 +45,7 @@ public class BNode extends Node {
 		c = new BNode[((BTree) D).order + 5];
 		this.keys[0] = key;
 		numKeys = 1;
-		this.D = D;
 		// this.V = D.panel.S.V;
-		this.x = tox = x;
-		this.y = toy = y;
-		steps = 0;
-		setColor(NodeColor.NORMAL);
 		width = _width();
 	}
 

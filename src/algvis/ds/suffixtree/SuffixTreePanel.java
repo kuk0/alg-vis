@@ -31,6 +31,7 @@ public class SuffixTreePanel extends VisPanel {
 	@Override
 	public void initDS() {
 		D = new SuffixTree(this);
+		scene.add(D);
 		buttons = new SuffixTreeButtons(this);
 		final boolean p = pauses;
 		pauses = false;

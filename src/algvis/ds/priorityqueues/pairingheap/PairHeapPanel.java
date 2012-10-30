@@ -31,6 +31,7 @@ public class PairHeapPanel extends VisPanel {
 	@Override
 	public void initDS() {
 		D = new PairingHeap(this);
+		scene.add(D);
 		buttons = new PairHeapButtons(this);
 		((PairHeapButtons) buttons).pairVariant.setSelectedIndex(1);
 		D.random(15);

@@ -39,9 +39,8 @@ abstract public class DataStructure extends VisualElement {
 	public static String dsName = "";
 
 	protected DataStructure(VisPanel panel) {
-		super(panel.scene, ZDepth.DS);
+		super(ZDepth.DS);
 		this.panel = panel;
-		addToScene();
 	}
 
 	abstract public String getName();

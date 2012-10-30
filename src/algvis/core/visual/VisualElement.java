@@ -26,17 +26,11 @@ import javax.swing.undo.StateEditable;
 import algvis.ui.view.View;
 
 public abstract class VisualElement implements StateEditable {
-	Scene scene;
 	protected int zDepth;
 	protected final String hash = Integer.toString(hashCode());
 
-	protected VisualElement(Scene scene, int zDepth) {
-		this.scene = scene;
+	protected VisualElement(int zDepth) {
 		this.zDepth = zDepth;
-	}
-
-	public Scene getScene() {
-		return scene;
 	}
 
 	public int getZDepth() {
@@ -50,27 +44,18 @@ public abstract class VisualElement implements StateEditable {
 	// }
 	// }
 
-	public void addToScene() {
-		scene.add(this, zDepth);
-	}
-
-	public void removeFromScene() {
-		scene.remove(this);
-	}
-
-	public void removeFromSceneNow() {
-		scene.removeNow(this);
-	}
-
 	protected abstract void draw(View v) throws ConcurrentModificationException;
 
 	protected abstract void move() throws ConcurrentModificationException;
 
 	protected abstract Rectangle2D getBoundingBox();
 
-	protected abstract void endAnimation();
+	protected void endAnimation() {
+	}
 
-	protected abstract boolean isAnimationDone();
+	protected boolean isAnimationDone() {
+		return true;
+	}
 
 	@Override
 	public void storeState(Hashtable<Object, Object> state) {

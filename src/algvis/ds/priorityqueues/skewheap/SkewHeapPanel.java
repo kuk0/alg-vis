@@ -35,6 +35,7 @@ public class SkewHeapPanel extends VisPanel {
 	public void initDS() {
 		final SkewHeap H = new SkewHeap(this);
 		D = H;
+		scene.add(D);
 		buttons = new MeldablePQButtonsNoDecr(this);
 		pauses = false;
 		H.active = 1;

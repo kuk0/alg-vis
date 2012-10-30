@@ -31,6 +31,7 @@ public class RotPanel extends VisPanel {
 	@Override
 	public void initDS() {
 		D = new Rotations(this);
+		scene.add(D);
 		buttons = new RotButtons(this);
 		D.random(20);
 	}

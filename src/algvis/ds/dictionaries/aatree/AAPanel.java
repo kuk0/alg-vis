@@ -31,6 +31,7 @@ public class AAPanel extends VisPanel {
 	@Override
 	public void initDS() {
 		D = new AA(this);
+		scene.add(D);
 		buttons = new AAButtons(this);
 		D.random(30);
 	}

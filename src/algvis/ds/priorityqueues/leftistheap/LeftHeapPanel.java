@@ -36,6 +36,7 @@ public class LeftHeapPanel extends VisPanel {
 	public void initDS() {
 		final LeftHeap L = new LeftHeap(this);
 		D = L;
+		scene.add(D);
 		buttons = new MeldablePQButtonsNoDecr(this);
 		pauses = false;
 		L.active = 1;

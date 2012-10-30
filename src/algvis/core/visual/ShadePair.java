@@ -8,8 +8,8 @@ import algvis.ui.view.View;
 public class ShadePair extends VisualElement {
 	Node u, v;
 
-	public ShadePair(Scene scene, Node u, Node v) {
-		super(scene, Scene.MAXZ - 1);
+	public ShadePair(Node u, Node v) {
+		super(Scene.MAXZ - 1);
 		this.u = u;
 		this.v = v;
 	}
@@ -26,14 +26,5 @@ public class ShadePair extends VisualElement {
 	@Override
 	protected Rectangle2D getBoundingBox() {
 		return null;
-	}
-
-	@Override
-	protected void endAnimation() {
-	}
-
-	@Override
-	protected boolean isAnimationDone() {
-		return true;
 	}
 }
