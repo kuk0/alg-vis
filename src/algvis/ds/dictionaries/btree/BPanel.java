@@ -33,6 +33,11 @@ public class BPanel extends VisPanel {
 		D = new BTree(this);
 		scene.add(D);
 		buttons = new BTreeButtons(this);
+	}
+
+	@Override
+	public void start() {
+		super.start();
 		D.random(25);
 	}
 }

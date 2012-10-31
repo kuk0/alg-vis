@@ -33,6 +33,11 @@ public class SuffixTreePanel extends VisPanel {
 		D = new SuffixTree(this);
 		scene.add(D);
 		buttons = new SuffixTreeButtons(this);
+	}
+
+	@Override
+	public void start() {
+		super.start();
 		final boolean p = pauses;
 		pauses = false;
 		((SuffixTree) D).insert("BANANA$");
@@ -42,8 +47,7 @@ public class SuffixTreePanel extends VisPanel {
 				pauses = p;
 			}
 		});
-		D.panel.screen.V.miny = -70;
-		D.panel.screen.V.resetView();
+		screen.V.miny = -70;
+		screen.V.resetView();
 	}
-
 }

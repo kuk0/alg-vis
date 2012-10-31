@@ -36,6 +36,11 @@ public class BinHeapPanel extends VisPanel {
 		scene.add(D);
 		buttons = new MeldablePQButtons(this);
 		pauses = false;
+	}
+
+	@Override
+	public void start() {
+		super.start();
 		D.random(13);
 		D.start(new AlgorithmAdapter(this) {
 			@Override
@@ -63,6 +68,6 @@ public class BinHeapPanel extends VisPanel {
 				pauses = true;
 			}
 		});
-		D.panel.screen.V.resetView();
+		screen.V.resetView();
 	}
 }

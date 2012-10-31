@@ -33,6 +33,11 @@ public class RotPanel extends VisPanel {
 		D = new Rotations(this);
 		scene.add(D);
 		buttons = new RotButtons(this);
+	}
+
+	@Override
+	public void start() {
+		super.start();
 		D.random(20);
 	}
 }

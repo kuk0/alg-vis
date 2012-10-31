@@ -17,7 +17,11 @@ public class IntervalPanel extends VisPanel {
 		D = new IntervalTree(this);
 		scene.add(D);
 		buttons = new IntervalButtons(this);
-		D.random(14);
 	}
 
+	@Override
+	public void start() {
+		super.start();
+		D.random(14);
+	}
 }

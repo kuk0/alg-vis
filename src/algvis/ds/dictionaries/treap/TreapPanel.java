@@ -34,6 +34,11 @@ public class TreapPanel extends VisPanel {
 		D = new Treap(this);
 		scene.add(D);
 		buttons = new DictButtons(this);
+	}
+
+	@Override
+	public void start() {
+		super.start();
 		D.random(20);
 	}
 }

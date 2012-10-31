@@ -35,6 +35,11 @@ public class LazyBinHeapPanel extends VisPanel {
 		D = new LazyBinomialHeap(this);
 		scene.add(D);
 		buttons = new MeldablePQButtons(this);
+	}
+
+	@Override
+	public void start() {
+		super.start();
 		pauses = false;
 		D.random(7);
 		D.start(new AlgorithmAdapter(this) {
@@ -63,6 +68,6 @@ public class LazyBinHeapPanel extends VisPanel {
 				pauses = true;
 			}
 		});
-		D.panel.screen.V.resetView();
+		screen.V.resetView();
 	}
 }

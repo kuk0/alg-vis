@@ -33,6 +33,11 @@ public class GBPanel extends VisPanel {
 		D = new GBTree(this);
 		scene.add(D);
 		buttons = new GBButtons(this);
+	}
+
+	@Override
+	public void start() {
+		super.start();
 		D.random(25);
 	}
 }

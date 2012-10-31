@@ -58,6 +58,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
 	public boolean small = false;
 	public ExecutorService algorithmPool = Executors.newSingleThreadExecutor();
 	public final HistoryManager history = new HistoryManager(this);
+	private boolean started = false;
 
 	protected VisPanel(Settings S) {
 		this.S = S;
@@ -95,7 +96,10 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
 		csb.gridy = 2;
 		csb.fill = GridBagConstraints.HORIZONTAL;
 		add(statusBar, csb);
-
+	}
+	
+	public void start() {
+		started = true;
 		screen.setDS(D);
 		screen.start();
 		languageChanged();
@@ -179,6 +183,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
 		if (!onAir) {
 			screen.suspend();
 		} else {
+			if (!started) start();
 			screen.resume();
 		}
 	}

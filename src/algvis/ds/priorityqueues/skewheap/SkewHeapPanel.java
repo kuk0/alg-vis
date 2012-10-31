@@ -33,12 +33,16 @@ public class SkewHeapPanel extends VisPanel {
 
 	@Override
 	public void initDS() {
-		final SkewHeap H = new SkewHeap(this);
-		D = H;
+		D = new SkewHeap(this);
 		scene.add(D);
 		buttons = new MeldablePQButtonsNoDecr(this);
+	}
+
+	@Override
+	public void start() {
+		super.start();
 		pauses = false;
-		H.active = 1;
+		((SkewHeap) D).active = 1;
 		D.random(13);
 		D.start(new AlgorithmAdapter(this) {
 			@Override
@@ -66,7 +70,6 @@ public class SkewHeapPanel extends VisPanel {
 				pauses = true;
 			}
 		});
-		D.panel.screen.V.resetView();
+		screen.V.resetView();
 	}
-
 }

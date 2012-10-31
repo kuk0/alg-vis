@@ -33,6 +33,11 @@ public class UnionFindPanel extends VisPanel {
 		D = new UnionFind(this);
 		scene.add(D);
 		buttons = new UnionFindButtons(this);
+	}
+
+	@Override
+	public void start() {
+		super.start();
 		((UnionFind) D).makeSet(15);
 	}
 }

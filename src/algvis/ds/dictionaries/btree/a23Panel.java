@@ -34,6 +34,11 @@ public class a23Panel extends VisPanel {
 		D = new a23Tree(this);
 		scene.add(D);
 		buttons = new DictButtons(this);
+	}
+
+	@Override
+	public void start() {
+		super.start();
 		D.random(30);
 	}
 }

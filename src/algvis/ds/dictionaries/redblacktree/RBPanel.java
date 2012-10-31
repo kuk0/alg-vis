@@ -33,6 +33,11 @@ public class RBPanel extends VisPanel {
 		D = new RB(this);
 		scene.add(D);
 		buttons = new RBButtons(this);
+	}
+
+	@Override
+	public void start() {
+		super.start();
 		D.random(30);
 	}
 }
