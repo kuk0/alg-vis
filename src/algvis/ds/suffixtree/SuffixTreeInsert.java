@@ -32,6 +32,7 @@ public class SuffixTreeInsert extends Algorithm {
 		super(T.panel);
 		this.T = T;
 		this.s = s;
+		T.clear();
 	}
 
 	void beforeReturn() {
