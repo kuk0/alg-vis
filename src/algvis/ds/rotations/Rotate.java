@@ -43,7 +43,7 @@ public class Rotate extends Algorithm {
 			return;
 		}
 		BSTNode u = v.getParent(), a, b, c;
-		ShadePair shade = new ShadePair(T.panel.scene, v, u);
+		ShadePair shade = new ShadePair(v, u);
 		addToScene(shade);
 		boolean rotR = v.isLeft();
 		if (rotR) {
@@ -59,17 +59,17 @@ public class Rotate extends Algorithm {
 		if (R.subtrees) {
 			if (a != null) {
 				a.subtreeColor(NodeColor.RED);
-				shadeA = new ShadeSubtree(T.panel.scene, a);
+				shadeA = new ShadeSubtree(a);
 				addToScene(shadeA);
 			}
 			if (b != null) {
 				b.subtreeColor(NodeColor.GREEN);
-				shadeB = new ShadeSubtree(T.panel.scene, b);
+				shadeB = new ShadeSubtree(b);
 				addToScene(shadeB);
 			}
 			if (c != null) {
 				c.subtreeColor(NodeColor.BLUE);
-				shadeC = new ShadeSubtree(T.panel.scene, c);
+				shadeC = new ShadeSubtree(c);
 				addToScene(shadeC);
 			}
 		}
@@ -91,15 +91,15 @@ public class Rotate extends Algorithm {
 		pause();
 
 		v.subtreeColor(NodeColor.NORMAL);
-		shade.removeFromScene();
+		removeFromScene(shade);
 		if (shadeA != null) {
-			shadeA.removeFromScene();
+			removeFromScene(shadeA);
 		}
 		if (shadeB != null) {
-			shadeB.removeFromScene();
+			removeFromScene(shadeB);
 		}
 		if (shadeC != null) {
-			shadeC.removeFromScene();
+			removeFromScene(shadeC);
 		}
 
 		T.getRoot().calcTree();

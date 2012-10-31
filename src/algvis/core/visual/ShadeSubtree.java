@@ -13,13 +13,15 @@ import algvis.ui.view.View;
 public class ShadeSubtree extends VisualElement {
 	BSTNode u;
 
-	public ShadeSubtree(Scene scene, BSTNode u) {
-		super(scene, Scene.MAXZ - 1);
+	public ShadeSubtree(BSTNode u) {
+		super(Scene.MAXZ - 1);
 		this.u = u;
 	}
 
 	@Override
 	protected void draw(View v) throws ConcurrentModificationException {
+		// TODO to sa mozno zbytocne pocita kazdych 50ms, stacilo by to prepocitat len ked sa zmenia premenne, 
+		// od ktorych zavisi polygon. (takisto aj v inych metodach move/draw)
 		Polygon p = new Polygon();
 		p.addPoint(u.x - 1, u.y - 1);
 		if (u.D.getLayout() == Layout.SIMPLE) {
@@ -61,14 +63,5 @@ public class ShadeSubtree extends VisualElement {
 	@Override
 	protected Rectangle2D getBoundingBox() {
 		return null;
-	}
-
-	@Override
-	protected void endAnimation() {
-	}
-
-	@Override
-	protected boolean isAnimationDone() {
-		return true;
 	}
 }

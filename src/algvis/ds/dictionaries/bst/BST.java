@@ -69,7 +69,7 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 		if (getRoot() != null) {
 			setRoot(null);
 			panel.scene.clear();
-			addToScene();
+			panel.scene.add(this);
 			setStats();
 			reposition();
 			panel.screen.V.resetView();

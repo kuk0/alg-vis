@@ -31,7 +31,13 @@ public class DaryHeapPanel extends VisPanel {
 	@Override
 	public void initDS() {
 		D = new DaryHeap(this);
+		scene.add(D);
 		buttons = new DaryHeapButtons(this);
+	}
+
+	@Override
+	public void start() {
+		super.start();
 		D.random(14);
 	}
 }

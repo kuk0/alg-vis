@@ -71,7 +71,7 @@ abstract class SplayAlg extends Algorithm {
 	void splay(SplayNode w) throws InterruptedException {
 		while (!w.isRoot()) {
 			if (w.getParent().isRoot()) {
-				ShadePair shade = new ShadePair(T.panel.scene, w, w.getParent());
+				ShadePair shade = new ShadePair(w, w.getParent());
 				addToScene(shade);
 				addNote("splay-root");
 				w.setArc(w.getParent());
@@ -79,9 +79,9 @@ abstract class SplayAlg extends Algorithm {
 				w.noArc();
 				T.rotate(w);
 				pause();
-				shade.removeFromScene();
+				removeFromScene(shade);
 			} else {
-				ShadeTriple shade = new ShadeTriple(T.panel.scene, w,
+				ShadeTriple shade = new ShadeTriple(w,
 						w.getParent(), w.getParent().getParent());
 				addToScene(shade);
 				if (w.isLeft() == w.getParent().isLeft()) {
@@ -123,7 +123,7 @@ abstract class SplayAlg extends Algorithm {
 					T.rotate(w);
 					pause();
 				}
-				shade.removeFromScene();
+				removeFromScene(shade);
 			}
 		}
 		T.setRoot(w);

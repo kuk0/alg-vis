@@ -31,8 +31,13 @@ public class TriePanel extends VisPanel {
 	@Override
 	public void initDS() {
 		D = new Trie(this);
+		scene.add(D);
 		buttons = new TrieButtons(this);
-		D.random(10);
 	}
 
+	@Override
+	public void start() {
+		super.start();
+		D.random(10);
+	}
 }

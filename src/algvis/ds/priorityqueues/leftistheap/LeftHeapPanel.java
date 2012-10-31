@@ -34,11 +34,16 @@ public class LeftHeapPanel extends VisPanel {
 
 	@Override
 	public void initDS() {
-		final LeftHeap L = new LeftHeap(this);
-		D = L;
+		D = new LeftHeap(this);
+		scene.add(D);
 		buttons = new MeldablePQButtonsNoDecr(this);
+	}
+
+	@Override
+	public void start() {
+		super.start();
 		pauses = false;
-		L.active = 1;
+		((LeftHeap) D).active = 1;
 		D.random(13);
 		D.start(new AlgorithmAdapter(this) {
 			@Override
@@ -66,6 +71,6 @@ public class LeftHeapPanel extends VisPanel {
 				pauses = true;
 			}
 		});
-		D.panel.screen.V.resetView();
+		screen.V.resetView();
 	}
 }

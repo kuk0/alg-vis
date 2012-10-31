@@ -35,13 +35,16 @@ public class Scene extends VisualElement {
 	private final RemoveManager removeManager = new RemoveManager();
 
 	public Scene() {
-		super(null, 0);
-		scene = this;
+		super(0);
 		for (int i = 0; i < MAXZ; ++i) {
 			elements.add(new HashSet<VisualElement>());
 		}
 	}
 
+	public synchronized void add(VisualElement element) {
+		this.add(element, element.getZDepth());
+	}
+	
 	public synchronized void add(VisualElement element, int zDepth) {
 		removeManager.add(element, zDepth);
 	}

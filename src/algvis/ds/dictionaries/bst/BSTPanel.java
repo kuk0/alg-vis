@@ -32,8 +32,14 @@ public class BSTPanel extends VisPanel {
 	@Override
 	public void initDS() {
 		D = new BST(this);
+		scene.add(D);
 		buttons = new BSTButtons(this);
 		S.addLayoutListener((LayoutListener) D);
+	}
+
+	@Override
+	public void start() {
+		super.start();
 		D.random(20);
 	}
 }
