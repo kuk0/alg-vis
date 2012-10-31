@@ -96,13 +96,14 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
 		csb.gridy = 2;
 		csb.fill = GridBagConstraints.HORIZONTAL;
 		add(statusBar, csb);
+		
+		screen.setDS(D);
+		languageChanged();
 	}
 	
 	public void start() {
 		started = true;
-		screen.setDS(D);
 		screen.start();
-		languageChanged();
 		buttons.I.requestFocusInWindow();
 	}
 
