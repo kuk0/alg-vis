@@ -93,6 +93,26 @@ public class FenwickNode extends BSTNode {
 		return true;
 	}
 	
+	private void alignRight()
+	{
+		if (getLeft() != null)
+		{
+			getLeft().alignRight();
+		}
+		
+		if (getRight() != null)
+		{
+			getRight().alignRight();
+			this.tox = getRight().tox;
+		}
+	}
+	
+	@Override
+	public void reposition() {
+		super.reposition();
+		alignRight();
+	}
+
 	@Override
 	public FenwickNode getLeft() {
 		return (FenwickNode) super.getLeft();
