@@ -1,7 +1,5 @@
 package algvis.ds.intervaltree.fenwick;
 
-import java.awt.geom.Rectangle2D;
-
 import algvis.core.DataStructure;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTNode;

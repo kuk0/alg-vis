@@ -4,8 +4,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.ConcurrentModificationException;
 
 import algvis.core.DataStructure;
-import algvis.core.visual.ZDepth;
-import algvis.ds.intervaltree.fenwick.FenwickNode.FenwickNodeType;
 import algvis.ui.VisPanel;
 import algvis.ui.view.View;
 
@@ -39,7 +37,7 @@ public class FenwickTree extends DataStructure {
 	
 		if (root.isFull())
 		{
-			extend();
+			extend();			
 		}
 		
 		root.insert(x);
