@@ -34,18 +34,15 @@ public class FenwickTree extends DataStructure {
 	public void insert(int x) {
 		if (root == null)
 		{
-			root = new FenwickNode(this, 1, x, FenwickNodeType.Leaf);
-			reposition();
+			root = FenwickNode.createEmptyLeaf(this, 1);
 		}
-		else
+	
+		if (root.isFull())
 		{
-			if (root.isFull())
-			{
-				extend();
-			}
-			
-			root.insert(x);
+			extend();
 		}
+		
+		root.insert(x);
 	}
 
 	private void reposition() {
@@ -60,7 +57,7 @@ public class FenwickTree extends DataStructure {
 
 	// TODO move to static method in fenwicknode / fenwickalgo
 	private void extend() {
-		FenwickNode r = new FenwickNode(this, root.idx*2, root.idx*2, FenwickNodeType.Node);
+		FenwickNode r = FenwickNode.createNode(this, 1, root.idx*2);
 		FenwickNode s = createEmptySubtree(root.idx+1, root.idx*2);
 		
 		r.setLeftWithParent(root);
@@ -74,10 +71,10 @@ public class FenwickTree extends DataStructure {
 	{
 		if (idxlo == idxhi)
 		{
-			return new FenwickNode(this, idxlo, idxlo, FenwickNodeType.EmptyLeaf);
+			return FenwickNode.createEmptyLeaf(this, idxlo);
 		}
 		// TODO node vs. fakenode
-		FenwickNode n = new FenwickNode(this, idxhi, idxhi, FenwickNodeType.Node);
+		FenwickNode n = FenwickNode.createNode(this, idxlo, idxhi);
 		int midleft = (idxlo + idxhi)/2;
 		
 		n.setLeftWithParent(createEmptySubtree(idxlo, midleft));

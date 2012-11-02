@@ -16,14 +16,38 @@ public class FenwickNode extends BSTNode {
 		FakeNode,
 	}
 	
-	public int idx;
 	public FenwickNodeType type;
+	public int idx;
+	public int rangeMin;
+	public int rangeMax;
+	public int realValue;	
 	
-	public FenwickNode(DataStructure D, int idx, int value, FenwickNodeType type) {
-		super(D, value, ZDepth.ACTIONNODE);
-		this.idx = idx;
+	private FenwickNode(DataStructure D, FenwickNodeType type, int idx, int rangeMin, int rangeMax, int realValue) {
+		super(D, 0, ZDepth.ACTIONNODE);
+		
 		this.type = type;
+		this.idx = idx;
+		this.rangeMin = rangeMin;
+		this.rangeMax = rangeMax;
+		this.realValue = realValue;
 	}
+	
+	public static FenwickNode createEmptyLeaf(DataStructure D, int idx)
+	{
+		return new FenwickNode(D, FenwickNodeType.EmptyLeaf, idx, 0, 0, 0);
+	}
+	public static FenwickNode createLeaf(DataStructure D, int idx, int value)
+	{
+		return new FenwickNode(D, FenwickNodeType.Leaf, idx, 0, 0, value);
+	}
+	public static FenwickNode createNode(DataStructure D, int rangeMin, int rangeMax)
+	{
+		return new FenwickNode(D, FenwickNodeType.Node, rangeMax, rangeMin, rangeMax, 0);
+	}
+	public static FenwickNode createFakeNode(DataStructure D, int rangeMin, int rangeMax)
+	{
+		return new FenwickNode(D, FenwickNodeType.FakeNode, rangeMax, rangeMin, rangeMax, 0);
+	}	
 
 	public void insert(int x) {
 		if (type == FenwickNodeType.EmptyLeaf)
