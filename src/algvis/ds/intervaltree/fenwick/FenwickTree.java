@@ -4,6 +4,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ConcurrentModificationException;
 
 import algvis.core.DataStructure;
+import algvis.core.Node;
 import algvis.ui.VisPanel;
 import algvis.ui.view.View;
 
@@ -26,6 +27,10 @@ public class FenwickTree extends DataStructure {
 	@Override
 	public String stats() {
 		return "";
+	}
+
+	public int getMinsepx() {
+		return Node.RADIUS*3 + 2;
 	}
 
 	@Override

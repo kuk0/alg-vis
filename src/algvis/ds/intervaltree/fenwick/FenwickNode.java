@@ -1,5 +1,7 @@
 package algvis.ds.intervaltree.fenwick;
 
+import java.awt.geom.Rectangle2D;
+
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.visual.ZDepth;
@@ -76,9 +78,23 @@ public class FenwickNode extends BSTNode {
 		if (type == FenwickNodeType.Node || type == FenwickNodeType.FakeNode) {
 			v.drawString(getRangeLabel(), x, y, Fonts.NORMAL);
 		} else {
-			v.drawString(Integer.toString(realValue), x, y, Fonts.NORMAL);
+			// idx
+			v.drawString(Integer.toString(idx), x, y, Fonts.NORMAL);
+
+			// stored value
+			// TODO show stored value from this leaf or some parent
+
+			// real value
+			if (type == FenwickNodeType.Leaf) {
+				v.drawString(Integer.toString(realValue), x, y + 4 * rh,
+						Fonts.NORMAL);
+			}
 		}
 	}
+
+	// TODO move to FenwickTree ?
+	static final double rw = 1.5 * Node.RADIUS + 1;
+	static final double rh = Node.RADIUS;
 
 	@Override
 	protected void drawBg(View v) {
@@ -90,8 +106,17 @@ public class FenwickNode extends BSTNode {
 			v.drawRoundRectangle(x, y, getRangeWidth(), Node.RADIUS,
 					Node.RADIUS * 2, Node.RADIUS * 2);
 		} else {
+			// 3 boxes - idx, stored value, real value
+			for (int i = 0; i < 3; i++) {
+				double rx = x;
+				double ry = y + i * 2 * rh;
 
-			super.drawBg(v);
+				v.setColor(getBgColor());
+				v.fillRect(rx, ry, rw, rh);
+				v.setColor(getFgColor());
+				v.drawRectangle(new Rectangle2D.Double(rx - rw, ry - rh,
+						rw * 2, rh * 2));
+			}
 		}
 	}
 
@@ -119,6 +144,15 @@ public class FenwickNode extends BSTNode {
 	public void reposition() {
 		super.reposition();
 		alignSubtreeRight();
+	}
+
+	@Override
+	protected void rebox() {
+		// TODO: this should really be done in BSTNode with polymorphism
+		leftw = (getLeft() == null) ? ((FenwickTree) D).getMinsepx() / 2
+				: getLeft().leftw + getLeft().rightw;
+		rightw = (getRight() == null) ? ((FenwickTree) D).getMinsepx() / 2
+				: getRight().leftw + getRight().rightw;
 	}
 
 	public boolean isFull() {
