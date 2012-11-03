@@ -12,9 +12,9 @@ import algvis.ui.VisPanel;
 public class FenwickButtons extends Buttons {
 
 	private static final long serialVersionUID = 1141788026164919081L;
-	
+
 	private IButton insertB;
-	
+
 	protected FenwickButtons(VisPanel panel) {
 		super(panel);
 		// TODO Auto-generated constructor stub
@@ -25,18 +25,16 @@ public class FenwickButtons extends Buttons {
 		insertB = new IButton("button-insert");
 		insertB.setMnemonic(KeyEvent.VK_I);
 		insertB.addActionListener(this);
-		
+
 		P.add(insertB);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
-		
-		if (evt.getSource() == insertB)
-		{
-			for(int x : I.getNonEmptyVI())
-			{
+
+		if (evt.getSource() == insertB) {
+			for (int x : I.getNonEmptyVI()) {
 				D.insert(x);
 			}
 		}
