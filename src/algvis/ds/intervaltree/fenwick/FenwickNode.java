@@ -1,5 +1,6 @@
 package algvis.ds.intervaltree.fenwick;
 
+import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 
 import algvis.core.DataStructure;
@@ -99,7 +100,12 @@ public class FenwickNode extends BSTNode {
 	@Override
 	protected void drawBg(View v) {
 		if (type == FenwickNodeType.Node || type == FenwickNodeType.FakeNode) {
-			v.setColor(getBgColor());
+			if (type == FenwickNodeType.Node) {
+				v.setColor(getBgColor());
+			} else {
+				// TODO configurable somewhere
+				v.setColor(Color.WHITE);
+			}
 			v.fillRoundRectangle(x, y, getRangeWidth(), Node.RADIUS,
 					Node.RADIUS * 2, Node.RADIUS * 2);
 			v.setColor(getFgColor());

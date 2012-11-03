@@ -30,7 +30,7 @@ public class FenwickTree extends DataStructure {
 	}
 
 	public int getMinsepx() {
-		return Node.RADIUS*3 + 2;
+		return Node.RADIUS * 3 + 2;
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class FenwickTree extends DataStructure {
 	// TODO move to static method in fenwicknode / fenwickalgo
 	private void extend() {
 		FenwickNode r = FenwickNode.createNode(this, 1, root.idx * 2);
-		FenwickNode s = createEmptySubtree(root.idx + 1, root.idx * 2);
+		FenwickNode s = createEmptySubtree(root.idx + 1, root.idx * 2, true);
 
 		r.linkLeft(root);
 		r.linkRight(s);
@@ -68,16 +68,21 @@ public class FenwickTree extends DataStructure {
 		reposition();
 	}
 
-	private FenwickNode createEmptySubtree(int idxlo, int idxhi) {
+	private FenwickNode createEmptySubtree(int idxlo, int idxhi, boolean fake) {
 		if (idxlo == idxhi) {
 			return FenwickNode.createEmptyLeaf(this, idxlo);
 		}
 		// TODO node vs. fakenode
-		FenwickNode n = FenwickNode.createNode(this, idxlo, idxhi);
+		FenwickNode n;
+		if (fake) {
+			n = FenwickNode.createFakeNode(this, idxlo, idxhi);
+		} else {
+			n = FenwickNode.createNode(this, idxlo, idxhi);
+		}
 		int midleft = (idxlo + idxhi) / 2;
 
-		n.linkLeft(createEmptySubtree(idxlo, midleft));
-		n.linkRight(createEmptySubtree(midleft + 1, idxhi));
+		n.linkLeft(createEmptySubtree(idxlo, midleft, false));
+		n.linkRight(createEmptySubtree(midleft + 1, idxhi, true));
 
 		return n;
 	}
