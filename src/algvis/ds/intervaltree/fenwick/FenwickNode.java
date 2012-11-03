@@ -1,6 +1,7 @@
 package algvis.ds.intervaltree.fenwick;
 
 import algvis.core.DataStructure;
+import algvis.core.Node;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.Fonts;
@@ -67,18 +68,40 @@ public class FenwickNode extends BSTNode {
 			getRight().insert(x);
 		}
 	}
-	
+
 	@Override
 	protected void drawKey(View v) {
 		v.setColor(getFgColor());
-		if (type == FenwickNodeType.Node || type == FenwickNodeType.FakeNode)
-		{
-			v.drawString(rangeMin + "-" + rangeMax, x, y, Fonts.NORMAL);
-		}
-		else
-		{
+		// TODO isnode/isleaf/...
+		if (type == FenwickNodeType.Node || type == FenwickNodeType.FakeNode) {
+			v.drawString(getRangeLabel(), x, y, Fonts.NORMAL);
+		} else {
 			v.drawString(Integer.toString(realValue), x, y, Fonts.NORMAL);
 		}
+	}
+
+	@Override
+	protected void drawBg(View v) {
+		if (type == FenwickNodeType.Node || type == FenwickNodeType.FakeNode) {
+			v.setColor(getBgColor());
+			v.fillRoundRectangle(x, y, getRangeWidth(), Node.RADIUS,
+					Node.RADIUS * 2, Node.RADIUS * 2);
+			v.setColor(getFgColor());
+			v.drawRoundRectangle(x, y, getRangeWidth(), Node.RADIUS,
+					Node.RADIUS * 2, Node.RADIUS * 2);
+		} else {
+
+			super.drawBg(v);
+		}
+	}
+
+	private int getRangeWidth() {
+		return Math.max(Node.RADIUS,
+				Fonts.NORMAL.fm.stringWidth(getRangeLabel()));
+	}
+
+	private String getRangeLabel() {
+		return rangeMin + "-" + rangeMax;
 	}
 
 	private void alignSubtreeRight() {
