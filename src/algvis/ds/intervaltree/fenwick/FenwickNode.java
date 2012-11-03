@@ -21,6 +21,7 @@ public class FenwickNode extends BSTNode {
 	public int rangeMin;
 	public int rangeMax;
 	public int realValue;
+	public int storedValue;
 
 	private FenwickNode(DataStructure D, FenwickNodeType type, int idx,
 			int rangeMin, int rangeMax, int realValue) {
@@ -31,6 +32,7 @@ public class FenwickNode extends BSTNode {
 		this.rangeMin = rangeMin;
 		this.rangeMax = rangeMax;
 		this.realValue = realValue;
+		this.storedValue = 0;
 	}
 
 	public static FenwickNode createEmptyLeaf(DataStructure D, int idx) {
@@ -54,14 +56,16 @@ public class FenwickNode extends BSTNode {
 	}
 
 	public void insert(int x) {
+		if (type == FenwickNodeType.Leaf) {
+			return; // TODO error message / exception
+		}
+
 		if (type == FenwickNodeType.EmptyLeaf) {
 			this.realValue = x;
 			type = FenwickNodeType.Leaf;
-			return;
-		}
 
-		if (type == FenwickNodeType.Leaf) {
-			return; // TODO error message / exception
+			updateStoredValue(x);
+			return;
 		}
 
 		// Put in the left-most empty node (leaf)
@@ -70,6 +74,31 @@ public class FenwickNode extends BSTNode {
 		} else {
 			getRight().insert(x);
 		}
+	}
+
+	public void updateStoredValue(int dx) {
+		storedValue += dx;
+		if (getParent() != null) {
+			getParent().updateStoredValue(dx);
+		}
+	}
+
+	public int getStoredValue() {
+		if ((type == FenwickNodeType.Leaf || type == FenwickNodeType.EmptyLeaf)
+				&& idx % 2 == 1) {
+			// Odd leaves store just their value
+			return storedValue;
+		}
+
+		if (type == FenwickNodeType.Node) {
+			// First "real" parent node is also the one that has a path to the
+			// desired leaf using only right edges
+			return storedValue;
+		}
+
+		// TODO check for null? should never happen
+		return getParent().getStoredValue();
+		// return storedValue;
 	}
 
 	@Override
@@ -83,14 +112,32 @@ public class FenwickNode extends BSTNode {
 			v.drawString(Integer.toString(idx), x, y, Fonts.NORMAL);
 
 			// stored value
-			// TODO show stored value from this leaf or some parent
+			v.drawString(Integer.toString(getStoredValue()), x, y + 2 * rh,
+					Fonts.NORMAL);
 
 			// real value
 			if (type == FenwickNodeType.Leaf) {
 				v.drawString(Integer.toString(realValue), x, y + 4 * rh,
 						Fonts.NORMAL);
 			}
+
+			if (idx == 1) {
+				drawLabels(v);
+			}
 		}
+	}
+
+	// TODO move?
+	static final int labelPadding = 8;
+
+	private void drawLabels(View v) {
+		v.setColor(getFgColor());
+		double rx = x - labelPadding - rw;
+		
+		// TODO not aligned properly, bug in drawString?
+		v.drawStringLeft("idx:", rx, y, Fonts.NORMAL);
+		v.drawStringLeft("Stored value:", rx, y + 2 * rh, Fonts.NORMAL);
+		v.drawStringLeft("Real value:", rx, y + 4 * rh, Fonts.NORMAL);
 	}
 
 	// TODO move to FenwickTree ?

@@ -59,12 +59,13 @@ public class FenwickTree extends DataStructure {
 	// TODO move to static method in fenwicknode / fenwickalgo
 	private void extend() {
 		FenwickNode r = FenwickNode.createNode(this, 1, root.idx * 2);
-		FenwickNode s = createEmptySubtree(root.idx + 1, root.idx * 2, true);
-
 		r.linkLeft(root);
+		r.updateStoredValue(root.getStoredValue());
+		
+		FenwickNode s = createEmptySubtree(root.idx + 1, root.idx * 2, true);
 		r.linkRight(s);
+		
 		root = r;
-
 		reposition();
 	}
 
@@ -72,7 +73,7 @@ public class FenwickTree extends DataStructure {
 		if (idxlo == idxhi) {
 			return FenwickNode.createEmptyLeaf(this, idxlo);
 		}
-		// TODO node vs. fakenode
+		
 		FenwickNode n;
 		if (fake) {
 			n = FenwickNode.createFakeNode(this, idxlo, idxhi);
