@@ -3,6 +3,8 @@ package algvis.ds.intervaltree.fenwick;
 import algvis.core.DataStructure;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTNode;
+import algvis.ui.Fonts;
+import algvis.ui.view.View;
 
 public class FenwickNode extends BSTNode {
 
@@ -18,7 +20,7 @@ public class FenwickNode extends BSTNode {
 
 	private FenwickNode(DataStructure D, FenwickNodeType type, int idx,
 			int rangeMin, int rangeMax, int realValue) {
-		super(D, 0, ZDepth.ACTIONNODE);
+		super(D, 47, ZDepth.ACTIONNODE); // Key is never used
 
 		this.type = type;
 		this.idx = idx;
@@ -49,7 +51,7 @@ public class FenwickNode extends BSTNode {
 
 	public void insert(int x) {
 		if (type == FenwickNodeType.EmptyLeaf) {
-			this.key = x;
+			this.realValue = x;
 			type = FenwickNodeType.Leaf;
 			return;
 		}
@@ -64,6 +66,36 @@ public class FenwickNode extends BSTNode {
 		} else {
 			getRight().insert(x);
 		}
+	}
+	
+	@Override
+	protected void drawKey(View v) {
+		v.setColor(getFgColor());
+		if (type == FenwickNodeType.Node || type == FenwickNodeType.FakeNode)
+		{
+			v.drawString(rangeMin + "-" + rangeMax, x, y, Fonts.NORMAL);
+		}
+		else
+		{
+			v.drawString(Integer.toString(realValue), x, y, Fonts.NORMAL);
+		}
+	}
+
+	private void alignSubtreeRight() {
+		if (getLeft() != null) {
+			getLeft().alignSubtreeRight();
+		}
+
+		if (getRight() != null) {
+			getRight().alignSubtreeRight();
+			this.tox = getRight().tox;
+		}
+	}
+
+	@Override
+	public void reposition() {
+		super.reposition();
+		alignSubtreeRight();
 	}
 
 	public boolean isFull() {
@@ -82,23 +114,6 @@ public class FenwickNode extends BSTNode {
 		}
 
 		return true;
-	}
-
-	private void alignSubtreeRight() {
-		if (getLeft() != null) {
-			getLeft().alignSubtreeRight();
-		}
-
-		if (getRight() != null) {
-			getRight().alignSubtreeRight();
-			this.tox = getRight().tox;
-		}
-	}
-
-	@Override
-	public void reposition() {
-		super.reposition();
-		alignSubtreeRight();
 	}
 
 	@Override
