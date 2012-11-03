@@ -90,7 +90,7 @@ public class FenwickTree extends DataStructure {
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+		root = null;
 	}
 
 	@Override
