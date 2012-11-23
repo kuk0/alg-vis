@@ -66,7 +66,7 @@ public class MeldablePQButtons extends PQButtons implements ChangeListener {
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
 		if (evt.getSource() == meldB) {
-			Vector<Integer> args = I.getVI();
+			final Vector<Integer> args = I.getVI();
 			args.add(-1);
 			args.add(-1);
 			((MeldablePQ) D).meld(args.get(0), args.get(1));
@@ -87,8 +87,9 @@ public class MeldablePQButtons extends PQButtons implements ChangeListener {
 
 			// ak pouzivatel zmenil activeHeap
 			if (panel.history.isBetweenAlgorithms()) {
-				if (panel.history.canRedo())
+				if (panel.history.canRedo()) {
 					panel.newAlgorithmPool();
+				}
 				D.start(new AlgorithmAdapter(panel) {
 					@Override
 					public void runAlgorithm() throws InterruptedException {
@@ -102,8 +103,9 @@ public class MeldablePQButtons extends PQButtons implements ChangeListener {
 				H.highlight((Integer) activeHeap.getValue());
 			}
 
-			if (H.chosen != null)
+			if (H.chosen != null) {
 				H.chosen.unmark();
+			}
 		}
 	}
 }

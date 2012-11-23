@@ -65,10 +65,11 @@ public class BinHeapNode extends Node {
 	public void unlink() {
 		if (parent != null) {
 			if (parent.child == this) {
-				if (right == this)
+				if (right == this) {
 					parent.child = null;
-				else
+				} else {
 					parent.child = right;
+				}
 			}
 			parent.rank--;
 			parent = null;
@@ -113,7 +114,7 @@ public class BinHeapNode extends Node {
 	public void linkAll(BinHeapNode v) {
 		// ku this-x-x-x-u pripoj v-x-x-x-x-w
 		// linkLeft prilinkuje len samotne v
-		BinHeapNode u = this.left, w = v.left;
+		final BinHeapNode u = this.left, w = v.left;
 		u.right = v;
 		v.left = u;
 		this.left = w;
@@ -127,7 +128,8 @@ public class BinHeapNode extends Node {
 		} else {
 			leftw = child.leftw;
 			height = child.height + 1;
-			BinHeapNode w = child, v = child.right;
+			final BinHeapNode w = child;
+			BinHeapNode v = child.right;
 			while (v != w) {
 				leftw += Node.RADIUS + v.leftw;
 				v = v.right;
@@ -258,12 +260,14 @@ public class BinHeapNode extends Node {
 	}
 
 	public BinHeapNode find(BinHeapNode first, int x, int y) {
-		if (inside(x, y))
+		if (inside(x, y)) {
 			return this;
+		}
 		if (!isLeaf()) {
-			BinHeapNode tmp = child.find(child, x, y);
-			if (tmp != null)
+			final BinHeapNode tmp = child.find(child, x, y);
+			if (tmp != null) {
 				return tmp;
+			}
 		}
 		if (right != first) {
 			return right.find(first, x, y);
@@ -301,36 +305,45 @@ public class BinHeapNode extends Node {
 	private void storeTreeState(Hashtable<Object, Object> state,
 			BinHeapNode first) {
 		storeState(state);
-		if (child != null)
+		if (child != null) {
 			child.storeTreeState(state);
-		if (right != first)
+		}
+		if (right != first) {
 			right.storeTreeState(state, first);
+		}
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object left = state.get(hash + "left");
-		if (left != null)
+		final Object left = state.get(hash + "left");
+		if (left != null) {
 			this.left = (BinHeapNode) HashtableStoreSupport.restore(left);
-		Object right = state.get(hash + "right");
-		if (right != null)
+		}
+		final Object right = state.get(hash + "right");
+		if (right != null) {
 			this.right = (BinHeapNode) HashtableStoreSupport.restore(right);
-		Object parent = state.get(hash + "parent");
-		if (parent != null)
+		}
+		final Object parent = state.get(hash + "parent");
+		if (parent != null) {
 			this.parent = (BinHeapNode) HashtableStoreSupport.restore(parent);
-		Object child = state.get(hash + "child");
-		if (child != null)
+		}
+		final Object child = state.get(hash + "child");
+		if (child != null) {
 			this.child = (BinHeapNode) HashtableStoreSupport.restore(child);
-		Object leftw = state.get(hash + "leftw");
-		if (leftw != null)
+		}
+		final Object leftw = state.get(hash + "leftw");
+		if (leftw != null) {
 			this.leftw = (Integer) HashtableStoreSupport.restore(leftw);
-		Object height = state.get(hash + "height");
-		if (height != null)
+		}
+		final Object height = state.get(hash + "height");
+		if (height != null) {
 			this.height = (Integer) HashtableStoreSupport.restore(height);
-		Object rank = state.get(hash + "rank");
-		if (rank != null)
+		}
+		final Object rank = state.get(hash + "rank");
+		if (rank != null) {
 			this.rank = (Integer) HashtableStoreSupport.restore(rank);
+		}
 	}
 
 	public void restoreTreeState(Hashtable<?, ?> state) {
@@ -339,10 +352,12 @@ public class BinHeapNode extends Node {
 
 	private void restoreTreeState(Hashtable<?, ?> state, BinHeapNode first) {
 		restoreState(state);
-		if (this.child != null)
+		if (this.child != null) {
 			this.child.restoreTreeState(state);
-		if (this.right != first)
+		}
+		if (this.right != first) {
 			this.right.restoreTreeState(state, first);
+		}
 	}
 
 	// public void debug() {

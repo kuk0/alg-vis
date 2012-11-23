@@ -50,7 +50,7 @@ public class Languages {
 		// locale = all_locales[current_lang];
 		// msg = all_msgs[current_lang];
 		// notify all listeners
-		for (LanguageListener l : listeners) {
+		for (final LanguageListener l : listeners) {
 			l.languageChanged();
 		}
 	}
@@ -68,7 +68,7 @@ public class Languages {
 	public static String getString(String s) {
 		try {
 			return all_msgs[current_lang].getString(s);
-		} catch (MissingResourceException e) {
+		} catch (final MissingResourceException e) {
 			System.err.println(e.getMessage() + ": " + s);
 			return "???";
 		}

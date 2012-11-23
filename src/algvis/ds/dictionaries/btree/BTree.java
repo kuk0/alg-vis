@@ -61,6 +61,7 @@ public class BTree extends Dictionary {
 		setStats();
 	}
 
+	@Override
 	public BNode getRoot() {
 		return (BNode) root;
 	}
@@ -125,10 +126,10 @@ public class BTree extends Dictionary {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object order = state.get(hash + "order");
+		final Object order = state.get(hash + "order");
 		if (order != null) {
 			this.order = (Integer) HashtableStoreSupport.restore(order);
-			BTreeButtons buttons = (BTreeButtons) panel.buttons;
+			final BTreeButtons buttons = (BTreeButtons) panel.buttons;
 			buttons.OS.removeChangeListener(buttons);
 			buttons.OS.setValue(this.order);
 			buttons.OS.addChangeListener(buttons);

@@ -34,7 +34,7 @@ abstract class SplayAlg extends Algorithm {
 
 	SplayNode find(int K) throws InterruptedException {
 		SplayNode w = (SplayNode) T.getRoot();
-		SplayNode s = new SplayNode(T, this.K, ZDepth.ACTIONNODE);
+		final SplayNode s = new SplayNode(T, this.K, ZDepth.ACTIONNODE);
 		s.setColor(NodeColor.FIND);
 		addToScene(s);
 		s.goTo(w);
@@ -71,7 +71,7 @@ abstract class SplayAlg extends Algorithm {
 	void splay(SplayNode w) throws InterruptedException {
 		while (!w.isRoot()) {
 			if (w.getParent().isRoot()) {
-				ShadePair shade = new ShadePair(w, w.getParent());
+				final ShadePair shade = new ShadePair(w, w.getParent());
 				addToScene(shade);
 				addNote("splay-root");
 				w.setArc(w.getParent());
@@ -81,8 +81,8 @@ abstract class SplayAlg extends Algorithm {
 				pause();
 				removeFromScene(shade);
 			} else {
-				ShadeTriple shade = new ShadeTriple(w,
-						w.getParent(), w.getParent().getParent());
+				final ShadeTriple shade = new ShadeTriple(w, w.getParent(), w
+						.getParent().getParent());
 				addToScene(shade);
 				if (w.isLeft() == w.getParent().isLeft()) {
 					if (w.isLeft()) {

@@ -68,18 +68,22 @@ public class SuffixTreeNode extends TrieNode {
 		setPacked(false);
 	}
 
+	@Override
 	public SuffixTreeNode getParent() {
 		return (SuffixTreeNode) super.getParent();
 	}
 
+	@Override
 	public SuffixTreeNode getChild() {
 		return (SuffixTreeNode) super.getChild();
 	}
 
+	@Override
 	public SuffixTreeNode getRight() {
 		return (SuffixTreeNode) super.getRight();
 	}
 
+	@Override
 	public SuffixTreeNode getChildWithCH(char ch) {
 		return (SuffixTreeNode) super.getChildWithCH(ch);
 	}
@@ -109,7 +113,7 @@ public class SuffixTreeNode extends TrieNode {
 
 	SuffixTreeNode addRight(char ch, int x, int y, boolean packed) {
 		if (getLabel() > ch) {
-			SuffixTreeNode u = new SuffixTreeNode(D, ch, packed);
+			final SuffixTreeNode u = new SuffixTreeNode(D, ch, packed);
 			u.setParent(getParent());
 			u.setRight(this);
 			getParent().setChild(u);
@@ -117,15 +121,15 @@ public class SuffixTreeNode extends TrieNode {
 		} else if (getLabel() == ch) {
 			return this;
 		} else {
-			SuffixTreeNode v = (SuffixTreeNode) getRight();
+			final SuffixTreeNode v = getRight();
 			if ((v == null)) {
-				SuffixTreeNode u = new SuffixTreeNode(D, ch, packed);
+				final SuffixTreeNode u = new SuffixTreeNode(D, ch, packed);
 				u.setParent(getParent());
 				setRight(u);
 				return u;
 			} else {
 				if (v.getLabel() > ch) {
-					SuffixTreeNode u = new SuffixTreeNode(D, ch, packed);
+					final SuffixTreeNode u = new SuffixTreeNode(D, ch, packed);
 					u.setRight(getRight());
 					u.setParent(getParent());
 					setRight(u);
@@ -141,9 +145,9 @@ public class SuffixTreeNode extends TrieNode {
 	}
 
 	public TrieNode addChild(char ch, int x, int y, boolean packed) {
-		SuffixTreeNode v = (SuffixTreeNode) getChild();
+		final SuffixTreeNode v = getChild();
 		if (v == null) {
-			SuffixTreeNode u = new SuffixTreeNode(D, ch, x, y, packed);
+			final SuffixTreeNode u = new SuffixTreeNode(D, ch, x, y, packed);
 			setChild(u);
 			u.setParent(this);
 			return u;
@@ -181,10 +185,10 @@ public class SuffixTreeNode extends TrieNode {
 	}
 
 	void drawSuffixLinks(View v) {
-		SuffixTreeNode child = (SuffixTreeNode) getChild();
+		SuffixTreeNode child = getChild();
 		while (child != null) {
 			child.drawSuffixLinks(v);
-			child = (SuffixTreeNode) child.getRight();
+			child = child.getRight();
 		}
 
 		if (getSuffixLink() != null) {
@@ -193,8 +197,8 @@ public class SuffixTreeNode extends TrieNode {
 			} else {
 				v.setColor(new Color(0xcccccc));
 			}
-			SuffixTreeNode w = getSuffixLink();
-			Point2D p = v.cut(x, y, w.x, w.y + 1, 10);
+			final SuffixTreeNode w = getSuffixLink();
+			final Point2D p = v.cut(x, y, w.x, w.y + 1, 10);
 			v.drawArrow(x, y, (int) p.getX(), (int) p.getY());
 			v.setColor(Color.BLACK);
 		}
@@ -211,11 +215,12 @@ public class SuffixTreeNode extends TrieNode {
 		if (implicitNodes) {
 			super.drawLabel(v);
 		} else {
-			if (getParent() == null)
+			if (getParent() == null) {
 				return;
+			}
 			TrieNode u = this;
-			StringBuilder s = new StringBuilder("");
-			Stack<Color> col = new Stack<Color>();
+			final StringBuilder s = new StringBuilder("");
+			final Stack<Color> col = new Stack<Color>();
 			if (getChild() == null || getChild().getRight() != null) {
 				while (u != null && u.getParent() != null
 						&& u.getParent().getChild() == u
@@ -238,9 +243,11 @@ public class SuffixTreeNode extends TrieNode {
 					py += 30;
 				}
 				s.reverse();
-				int fonth = Fonts.TYPEWRITER.fm.getHeight(), len = s.length();
-				int midy = (py + y) / 2, w = 6, h = len * fonth / 2;
-				int xx = x, yy = midy - fonth * len / 2 - 4;
+				final int fonth = Fonts.TYPEWRITER.fm.getHeight(), len = s
+						.length();
+				final int midy = (py + y) / 2, w = 6, h = len * fonth / 2;
+				final int xx = x;
+				int yy = midy - fonth * len / 2 - 4;
 				Color cc = col.pop();
 				v.setColor(cc);
 				if (col.empty()) {
@@ -284,12 +291,14 @@ public class SuffixTreeNode extends TrieNode {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object suffixLink = state.get(hash + "suffixLink");
-		if (suffixLink != null)
+		final Object suffixLink = state.get(hash + "suffixLink");
+		if (suffixLink != null) {
 			this.suffixLink = (SuffixTreeNode) HashtableStoreSupport
 					.restore(suffixLink);
-		Object packed = state.get(hash + "packed");
-		if (packed != null)
+		}
+		final Object packed = state.get(hash + "packed");
+		if (packed != null) {
 			this.packed = (Boolean) HashtableStoreSupport.restore(packed);
+		}
 	}
 }

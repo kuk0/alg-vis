@@ -51,7 +51,7 @@ public class ADTs {
 		String r = "";
 		try {
 			r = (String) (ADT[i].getDeclaredField("adtName").get(null));
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			System.err.println("Unable to get field adtName - name of ADT: "
 					+ ADT[i]);
 		}

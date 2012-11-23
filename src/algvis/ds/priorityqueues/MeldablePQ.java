@@ -43,10 +43,10 @@ abstract public class MeldablePQ extends PriorityQueue implements Highlighting {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object active = state.get(hash + "active");
+		final Object active = state.get(hash + "active");
 		if (active != null) {
 			this.active = (Integer) HashtableStoreSupport.restore(active);
-			MeldablePQButtons buttons = ((MeldablePQButtons) panel.buttons);
+			final MeldablePQButtons buttons = ((MeldablePQButtons) panel.buttons);
 			buttons.activeHeap.removeChangeListener(buttons);
 			buttons.activeHeap.setValue(HashtableStoreSupport.restore(active));
 			buttons.activeHeap.addChangeListener(buttons);

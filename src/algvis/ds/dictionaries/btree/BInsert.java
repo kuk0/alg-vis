@@ -31,7 +31,7 @@ public class BInsert extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		BNode v = new BNode(T, K);
+		final BNode v = new BNode(T, K);
 		v.setColor(NodeColor.INSERT);
 		addToScene(v);
 		setHeader("insert", K);
@@ -58,7 +58,7 @@ public class BInsert extends Algorithm {
 				if (w.isLeaf()) {
 					break;
 				}
-				int p = w.search(K);
+				final int p = w.search(K);
 				if (p == 0) {
 					addStep("bfind0", K, w.keys[0]);
 				} else if (p == w.numKeys) {
@@ -81,7 +81,7 @@ public class BInsert extends Algorithm {
 
 			while (w.numKeys >= T.order) {
 				addStep("bsplit");
-				int o = (w.parent != null) ? w.order() : -1;
+				final int o = (w.parent != null) ? w.order() : -1;
 				w = w.split();
 				if (w.parent == null) {
 					break;

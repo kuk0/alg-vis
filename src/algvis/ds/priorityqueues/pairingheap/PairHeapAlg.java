@@ -35,7 +35,7 @@ public abstract class PairHeapAlg extends Algorithm {
 	void link(int i, int j) {
 
 		if (!H.root[i].prec(H.root[j])) {
-			PairHeapNode w = H.root[i];
+			final PairHeapNode w = H.root[i];
 			H.root[i] = H.root[j];
 			H.root[j] = w;
 		}
@@ -48,7 +48,7 @@ public abstract class PairHeapAlg extends Algorithm {
 		PairHeapNode w = H.root[j].getChild();
 		H.root[j].deleteChild(H.root[j].leftmostChild());
 		if (!H.root[i].prec(w)) {
-			PairHeapNode w1 = H.root[i];
+			final PairHeapNode w1 = H.root[i];
 			H.root[i] = w;
 			w = w1;
 		}
@@ -61,7 +61,7 @@ public abstract class PairHeapAlg extends Algorithm {
 	// problemy s posunutim
 	// zobereme hocake dieta a ostatne k nemu prilinkujeme.
 	void pairNaive(int i) throws InterruptedException {
-		int j = H.root[i].numChildren();
+		final int j = H.root[i].numChildren();
 		if (j > 0) {
 			if (j == 1) {
 				H.root[i] = H.root[i].getChild();
@@ -95,7 +95,7 @@ public abstract class PairHeapAlg extends Algorithm {
 		PairHeapNode w = (PairHeapNode) H.root[j].rightmostChild();
 		H.root[j].deleteChild(H.root[j].rightmostChild());
 		if (!H.root[i].prec(w)) {
-			PairHeapNode w1 = H.root[i];
+			final PairHeapNode w1 = H.root[i];
 			H.root[i] = w;
 			w = w1;
 		}

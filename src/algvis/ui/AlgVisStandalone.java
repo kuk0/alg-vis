@@ -28,7 +28,8 @@ import javax.swing.border.TitledBorder;
 public class AlgVisStandalone {
 	public static void main(String[] args) {
 		try {
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+			for (final LookAndFeelInfo info : UIManager
+					.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
 					UIManager.put("nimbusBase", new Color(0xBB, 0xC3, 0xFF));
 					UIManager.put("TitledBorder.position", TitledBorder.CENTER);
@@ -39,7 +40,7 @@ public class AlgVisStandalone {
 					break;
 				}
 			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			// If Nimbus is not available, you can set the GUI to another look
 			// and feel.
 			e.printStackTrace();
@@ -48,7 +49,7 @@ public class AlgVisStandalone {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				JFrame f = new MainFrame();
+				final JFrame f = new MainFrame();
 				f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 				f.setVisible(true);
 			}
@@ -57,12 +58,16 @@ public class AlgVisStandalone {
 }
 
 class MainFrame extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1045189076645432320L;
 	private static final int WIDTH = 1080;
 	private static final int HEIGHT = 680;
 
 	public MainFrame() {
 		setTitle("Gnarley Trees");
-		AlgVis A = new AlgVis(getRootPane());
+		final AlgVis A = new AlgVis(getRootPane());
 		A.setSize(WIDTH, HEIGHT);
 		add(A);
 		pack();

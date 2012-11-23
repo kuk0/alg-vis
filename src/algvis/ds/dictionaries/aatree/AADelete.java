@@ -38,9 +38,9 @@ public class AADelete extends Algorithm {
 	public void runAlgorithm() throws InterruptedException {
 		setHeader("delete", K);
 		addNote("bstdeletestart");
-		BSTFind find = new BSTFind(T, K, this);
+		final BSTFind find = new BSTFind(T, K, this);
 		find.runAlgorithm();
-		AANode toDelete = (AANode) find.getResult().get("node");
+		final AANode toDelete = (AANode) find.getResult().get("node");
 
 		if (toDelete != null) {
 			setHeader("delete", K);
@@ -64,8 +64,8 @@ public class AADelete extends Algorithm {
 				// 1 syn
 				addStep("bst-delete-case2");
 				pause();
-				AANode s = (toDelete.getLeft() == null) ? toDelete.getRight()
-						: toDelete.getLeft();
+				final AANode s = (toDelete.getLeft() == null) ? toDelete
+						.getRight() : toDelete.getLeft();
 				if (toDelete.isRoot()) {
 					T.setRoot(s);
 				} else {
@@ -77,7 +77,7 @@ public class AADelete extends Algorithm {
 				}
 			} else { // case III - 2 synovia
 				addStep("bst-delete-case3");
-				int lev = toDelete.getLevel();
+				final int lev = toDelete.getLevel();
 				AANode s = toDelete.getRight();
 				BSTNode v = new BSTNode(T, -Node.INF, ZDepth.ACTIONNODE);
 				v.setColor(NodeColor.FIND);
@@ -126,9 +126,10 @@ public class AADelete extends Algorithm {
 
 			// bubleme nahor
 			while (w != null) {
-				int ll = (w.getLeft() == null) ? 0 : w.getLeft().getLevel(), rl = (w
-						.getRight() == null) ? 0 : w.getRight().getLevel(), wl = w
-						.getLevel();
+				final int ll = (w.getLeft() == null) ? 0 : w.getLeft()
+						.getLevel(), rl = (w.getRight() == null) ? 0 : w
+						.getRight().getLevel();
+				int wl = w.getLevel();
 				addStep("aaok");
 				w.mark();
 				if (ll < wl - 1 || rl < wl - 1) {

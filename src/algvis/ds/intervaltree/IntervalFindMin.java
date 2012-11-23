@@ -22,7 +22,7 @@ public class IntervalFindMin extends IntervalAlg {
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		if (i > j) {
-			int tmp = j;
+			final int tmp = j;
 			j = i;
 			i = tmp;
 		}

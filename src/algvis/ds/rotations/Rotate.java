@@ -42,10 +42,11 @@ public class Rotate extends Algorithm {
 			addNote("rotate-root", v.getKey());
 			return;
 		}
-		BSTNode u = v.getParent(), a, b, c;
-		ShadePair shade = new ShadePair(v, u);
+		final BSTNode u = v.getParent();
+		BSTNode a, b, c;
+		final ShadePair shade = new ShadePair(v, u);
 		addToScene(shade);
-		boolean rotR = v.isLeft();
+		final boolean rotR = v.isLeft();
 		if (rotR) {
 			a = v.getLeft();
 			b = v.getRight();

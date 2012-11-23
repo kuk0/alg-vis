@@ -24,13 +24,13 @@ public class BinHeapDelete extends BinHeapAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		int i = H.active;
+		final int i = H.active;
 		if (H.root[i] == null) {
 			// empty - done;
 			return;
 		}
 		BinHeapNode v, w;
-		BinHeapNode d = H.min[i];
+		final BinHeapNode d = H.min[i];
 		if (H.root[i] == d) {
 			if (d.right == d) {
 				H.root[i] = null;
@@ -69,7 +69,7 @@ public class BinHeapDelete extends BinHeapAlg {
 			if (w.prec(H.min[0])) {
 				H.min[0] = w;
 			}
-			BinHeapNode tl = w.left, tr = w.right;
+			final BinHeapNode tl = w.left, tr = w.right;
 			w.left = tr;
 			w.right = tl;
 			w = tr;

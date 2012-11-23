@@ -73,8 +73,9 @@ public class SkewHeap extends MeldablePQ implements ClickListener {
 				v.unmark();
 				chosen = null;
 			} else {
-				if (chosen != null)
+				if (chosen != null) {
 					chosen.unmark();
+				}
 				if (h == active) {
 					v.mark();
 					chosen = v;
@@ -125,7 +126,7 @@ public class SkewHeap extends MeldablePQ implements ClickListener {
 
 	@Override
 	public void meld(int i, int j) {
-		Pair p = chooseHeaps(i, j);
+		final Pair p = chooseHeaps(i, j);
 		i = p.first;
 		j = p.second;
 		((MeldablePQButtonsNoDecr) panel.buttons).activeHeap.setValue(i);
@@ -213,7 +214,7 @@ public class SkewHeap extends MeldablePQ implements ClickListener {
 		if (root != null) {
 			for (int i = 0; i <= numHeaps; ++i) {
 				if (root[i] != null) {
-					Rectangle2D riBB = root[i].getBoundingBox();
+					final Rectangle2D riBB = root[i].getBoundingBox();
 					if (retVal == null) {
 						retVal = riBB;
 					} else if (riBB != null) {
@@ -229,8 +230,9 @@ public class SkewHeap extends MeldablePQ implements ClickListener {
 	protected void endAnimation() {
 		if (root != null) {
 			for (int i = 0; i <= numHeaps; ++i) {
-				if (root[i] != null)
+				if (root[i] != null) {
 					root[i].endAnimation();
+				}
 			}
 		}
 	}
@@ -239,8 +241,9 @@ public class SkewHeap extends MeldablePQ implements ClickListener {
 	protected boolean isAnimationDone() {
 		if (root != null) {
 			for (int i = 0; i <= numHeaps; ++i) {
-				if (root[i] != null && !root[i].isAnimationDone())
+				if (root[i] != null && !root[i].isAnimationDone()) {
 					return false;
+				}
 			}
 		}
 		return true;
@@ -280,20 +283,23 @@ public class SkewHeap extends MeldablePQ implements ClickListener {
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "root", root.clone());
 		for (int i = 0; i <= numHeaps; ++i) {
-			if (root[i] != null)
+			if (root[i] != null) {
 				root[i].storeState(state);
+			}
 		}
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object root = state.get(hash + "root");
-		if (root != null)
+		final Object root = state.get(hash + "root");
+		if (root != null) {
 			this.root = (SkewHeapNode[]) HashtableStoreSupport.restore(root);
+		}
 		for (int i = 0; i <= numHeaps; ++i) {
-			if (this.root[i] != null)
+			if (this.root[i] != null) {
 				this.root[i].restoreState(state);
+			}
 		}
 	}
 }

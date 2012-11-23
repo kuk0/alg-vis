@@ -36,7 +36,7 @@ public class Settings {
 		} else {
 			layout = Layout.SIMPLE;
 		}
-		for (LayoutListener l : listeners) {
+		for (final LayoutListener l : listeners) {
 			l.changeLayout();
 		}
 	}

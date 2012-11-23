@@ -58,8 +58,9 @@ abstract public class Dictionary extends DataStructure {
 
 	@Override
 	public void endAnimation() {
-		if (root != null)
+		if (root != null) {
 			root.endAnimation();
+		}
 	}
 
 	@Override
@@ -71,17 +72,20 @@ abstract public class Dictionary extends DataStructure {
 	public void storeState(Hashtable<Object, Object> state) {
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "root", root);
-		if (root != null)
+		if (root != null) {
 			root.storeState(state);
+		}
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object root = state.get(hash + "root");
-		if (root != null)
+		final Object root = state.get(hash + "root");
+		if (root != null) {
 			this.root = (Node) HashtableStoreSupport.restore(root);
-		if (this.root != null)
+		}
+		if (this.root != null) {
 			this.root.restoreState(state);
+		}
 	}
 }

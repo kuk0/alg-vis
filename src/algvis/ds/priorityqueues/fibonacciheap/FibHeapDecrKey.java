@@ -35,15 +35,17 @@ public class FibHeapDecrKey extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		int i = H.active;
+		final int i = H.active;
 		if (H.minHeap) {
 			v.setKey(v.getKey() - delta);
-			if (v.getKey() < 1)
+			if (v.getKey() < 1) {
 				v.setKey(1);
+			}
 		} else {
 			v.setKey(v.getKey() + delta);
-			if (v.getKey() > InputField.MAX)
+			if (v.getKey() > InputField.MAX) {
 				v.setKey(InputField.MAX);
+			}
 		}
 		BinHeapNode w = v.parent;
 		// if (w == null) return;

@@ -35,8 +35,8 @@ abstract class HeapAlg extends Algorithm {
 		}
 		HeapNode w = v.getParent();
 		while (w != null && v.prec(w)) {
-			HeapNode v1 = new HeapNode(v);
-			HeapNode v2 = new HeapNode(w);
+			final HeapNode v1 = new HeapNode(v);
+			final HeapNode v2 = new HeapNode(w);
 			v1.mark();
 			addToScene(v1);
 			addToScene(v2);

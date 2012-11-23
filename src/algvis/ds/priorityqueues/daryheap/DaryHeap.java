@@ -42,16 +42,18 @@ public class DaryHeap extends PriorityQueue implements ClickListener {
 
 	@Override
 	public void mouseClicked(int x, int y) {
-		if (root == null)
+		if (root == null) {
 			return;
-		DaryHeapNode v = root.find(x, y);
+		}
+		final DaryHeapNode v = root.find(x, y);
 		if (v != null) {
 			if (v.marked) {
 				v.unmark();
 				chosen = null;
 			} else {
-				if (chosen != null)
+				if (chosen != null) {
 					chosen.unmark();
+				}
 				v.mark();
 				chosen = v;
 			}
@@ -163,8 +165,9 @@ public class DaryHeap extends PriorityQueue implements ClickListener {
 	public void storeState(Hashtable<Object, Object> state) {
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "root", root);
-		if (root != null)
+		if (root != null) {
 			root.storeState(state);
+		}
 		HashtableStoreSupport.store(state, hash + "last", last);
 		HashtableStoreSupport.store(state, hash + "order", order);
 	}
@@ -172,18 +175,21 @@ public class DaryHeap extends PriorityQueue implements ClickListener {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object root = state.get(hash + "root");
-		if (root != null)
+		final Object root = state.get(hash + "root");
+		if (root != null) {
 			this.root = (DaryHeapNode) HashtableStoreSupport.restore(root);
-		if (this.root != null)
+		}
+		if (this.root != null) {
 			this.root.restoreState(state);
-		Object last = state.get(hash + "last");
-		if (last != null)
+		}
+		final Object last = state.get(hash + "last");
+		if (last != null) {
 			this.last = (DaryHeapNode) HashtableStoreSupport.restore(last);
-		Object order = state.get(hash + "order");
+		}
+		final Object order = state.get(hash + "order");
 		if (order != null) {
 			this.order = (Integer) HashtableStoreSupport.restore(order);
-			DaryHeapButtons buttons = (DaryHeapButtons) panel.buttons;
+			final DaryHeapButtons buttons = (DaryHeapButtons) panel.buttons;
 			buttons.OS.removeChangeListener(buttons);
 			buttons.OS.setValue(this.order);
 			buttons.OS.addChangeListener(buttons);

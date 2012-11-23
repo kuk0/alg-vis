@@ -22,14 +22,14 @@ public class ShadeSubtree extends VisualElement {
 	protected void draw(View v) throws ConcurrentModificationException {
 		// TODO to sa mozno zbytocne pocita kazdych 50ms, stacilo by to prepocitat len ked sa zmenia premenne, 
 		// od ktorych zavisi polygon. (takisto aj v inych metodach move/draw)
-		Polygon p = new Polygon();
+		final Polygon p = new Polygon();
 		p.addPoint(u.x - 1, u.y - 1);
 		if (u.D.getLayout() == Layout.SIMPLE) {
 			if (u.height == 1) {
 				p.addPoint(u.x - 7, u.y + 10);
 				p.addPoint(u.x + 7, u.y + 10);
 			} else {
-				int x1 = u.x - u.leftw + DataStructure.minsepx / 2, x2 = u.x
+				final int x1 = u.x - u.leftw + DataStructure.minsepx / 2, x2 = u.x
 						+ u.rightw - DataStructure.minsepx / 2, y1 = u.y
 						+ DataStructure.minsepy, y2 = u.y + (u.height - 1)
 						* DataStructure.minsepy;
@@ -40,7 +40,7 @@ public class ShadeSubtree extends VisualElement {
 			}
 		} else {
 			BSTNode u = this.u, w = this.u;
-			Stack<BSTNode> tmp = new Stack<BSTNode>();
+			final Stack<BSTNode> tmp = new Stack<BSTNode>();
 			while (u != null && w != null) {
 				p.addPoint(u.x - 1, u.y);
 				tmp.add(w);

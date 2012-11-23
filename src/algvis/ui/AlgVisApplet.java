@@ -38,7 +38,8 @@ public class AlgVisApplet extends JApplet {
 		MyParserDelegator.workaround();
 		Fonts.init(getGraphics());
 		try {
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+			for (final LookAndFeelInfo info : UIManager
+					.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
 					UIManager.put("nimbusBase", new Color(0xBB, 0xC3, 0xFF));
 					UIManager.put("TitledBorder.position", TitledBorder.CENTER);
@@ -49,7 +50,7 @@ public class AlgVisApplet extends JApplet {
 					break;
 				}
 			}
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			// If Nimbus is not available, you can set the GUI to another look
 			// and feel.
 		}
@@ -60,25 +61,27 @@ public class AlgVisApplet extends JApplet {
 		 * a single data structure, otherwise, include all of them
 		 */
 		int ds = -1;
-		String dsp = getParameter("ds");
+		final String dsp = getParameter("ds");
 		try {
 			ds = Integer.parseInt(dsp);
-			if (ds < 0 || ds >= DataStructures.N)
+			if (ds < 0 || ds >= DataStructures.N) {
 				ds = -1;
-		} catch (NumberFormatException e) {
+			}
+		} catch (final NumberFormatException e) {
 			ds = DataStructures.getIndex(dsp);
 		}
 		if (ds == -1) {
 			// all data structures
-			AlgVis A = new AlgVis(this.getRootPane(), getParameter("lang"));
+			final AlgVis A = new AlgVis(this.getRootPane(),
+					getParameter("lang"));
 			A.setSize(WIDTH, HEIGHT); // same size as defined in the HTML APPLET
 			add(A);
 			A.init();
 		} else {
 			// data structure ds
 			Languages.selectLanguage(getParameter("lang"));
-			Settings S = new Settings();
-			VisPanel P = DataStructures.createPanel(ds, S);
+			final Settings S = new Settings();
+			final VisPanel P = DataStructures.createPanel(ds, S);
 			P.setSize(WIDTH, HEIGHT); // same size as defined in the HTML APPLET
 			add(P);
 			P.setOnAir(true);

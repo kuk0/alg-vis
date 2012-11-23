@@ -131,23 +131,28 @@ public class SplayTree extends BST {
 		HashtableStoreSupport.store(state, hash + "w1", w1);
 		HashtableStoreSupport.store(state, hash + "w2", w2);
 		HashtableStoreSupport.store(state, hash + "root2", root2);
-		if (root2 != null)
+		if (root2 != null) {
 			root2.storeState(state);
+		}
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object w1 = state.get(hash + "w1");
-		if (w1 != null)
+		final Object w1 = state.get(hash + "w1");
+		if (w1 != null) {
 			this.w1 = (SplayNode) HashtableStoreSupport.restore(w1);
-		Object w2 = state.get(hash + "w2");
-		if (w2 != null)
+		}
+		final Object w2 = state.get(hash + "w2");
+		if (w2 != null) {
 			this.w2 = (SplayNode) HashtableStoreSupport.restore(w2);
-		Object root2 = state.get(hash + "root2");
-		if (root2 != null)
+		}
+		final Object root2 = state.get(hash + "root2");
+		if (root2 != null) {
 			this.root2 = (SplayNode) HashtableStoreSupport.restore(root2);
-		if (this.root2 != null)
+		}
+		if (this.root2 != null) {
 			this.root2.restoreState(state);
+		}
 	}
 }

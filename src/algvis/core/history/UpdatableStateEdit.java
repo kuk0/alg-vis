@@ -21,6 +21,10 @@ import javax.swing.undo.StateEdit;
 import javax.swing.undo.StateEditable;
 
 public class UpdatableStateEdit extends StateEdit {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -702806146128844264L;
 	private final long id;
 
 	public UpdatableStateEdit(StateEditable anObject, long id) {

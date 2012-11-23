@@ -55,7 +55,7 @@ public class TrieInsert extends Algorithm {
 		hw.goNextTo(v);
 
 		while (s.compareTo("$") != 0) {
-			char ch = s.charAt(0);
+			final char ch = s.charAt(0);
 			hw.setAndGoNextTo(s, v);
 			TrieNode w = v.getChildWithCH(ch);
 			if (w != null) {
@@ -73,7 +73,7 @@ public class TrieInsert extends Algorithm {
 			s = s.substring(1);
 		}
 		hw.setAndGoNextTo(s, v);
-		TrieNode w = v.getChildWithCH('$');
+		final TrieNode w = v.getChildWithCH('$');
 		if (w == null) {
 			addStep("trieinserteow");
 		} else {

@@ -158,8 +158,9 @@ public class TreeNode extends Node {
 	 * that has been clicked by user.
 	 */
 	public TreeNode find(int x, int y) {
-		if (inside(x, y))
+		if (inside(x, y)) {
 			return this;
+		}
 		TreeNode w = getChild();
 		TreeNode res = null;
 		while ((w != null) && (res == null)) {
@@ -173,18 +174,18 @@ public class TreeNode extends Node {
 	 * Rebox the whole subtree calculating the widths recursively bottom-up.
 	 */
 	public void reboxTree() {
-		int bw = DataStructure.minsepx / 2;
+		final int bw = DataStructure.minsepx / 2;
 		int le = 9999999; // keeps current extreme leftw value
 		int re = -9999999;
 		TreeNode T = getChild();
 		while (T != null) {
 			T.reboxTree();
 
-			int lxe = (T.tox - tox) - T.leftw;
+			final int lxe = (T.tox - tox) - T.leftw;
 			if (lxe < le) {
 				le = lxe;
 			}
-			int rxe = (T.tox - tox) + T.rightw;
+			final int rxe = (T.tox - tox) + T.rightw;
 			if (rxe > re) {
 				re = rxe;
 			}
@@ -320,7 +321,7 @@ public class TreeNode extends Node {
 		/*
 		 * So lets get result from first child
 		 */
-		NodePair<TreeNode> fromLeftSubtree = LeftSubtree.fTRPrePosition();
+		final NodePair<TreeNode> fromLeftSubtree = LeftSubtree.fTRPrePosition();
 		result = fromLeftSubtree;
 
 		/*
@@ -328,7 +329,8 @@ public class TreeNode extends Node {
 		 * for distributing smaller subtrees.
 		 */
 		while (RightSubtree != null) {
-			NodePair<TreeNode> fromRightSubtree = RightSubtree.fTRPrePosition();
+			final NodePair<TreeNode> fromRightSubtree = RightSubtree
+					.fTRPrePosition();
 
 			TreeNode L = LeftSubtree;
 			TreeNode R = RightSubtree;
@@ -336,7 +338,7 @@ public class TreeNode extends Node {
 			int roffset = RightSubtree.offset = LeftSubtree.offset;
 
 			while ((L != null) && (R != null)) {
-				int distance = (loffset + DataStructure.minsepx - roffset);
+				final int distance = (loffset + DataStructure.minsepx - roffset);
 				if (distance > 0) {
 					RightSubtree.offset += distance;
 					roffset += distance;
@@ -348,7 +350,7 @@ public class TreeNode extends Node {
 					while (Elevator.getParent() != LeftSubtree.getParent()) {
 						Elevator = Elevator.getParent();
 					}
-					int theta = RightSubtree.number - Elevator.number;
+					final int theta = RightSubtree.number - Elevator.number;
 					RightSubtree.change -= distance / theta;
 					RightSubtree.shift += distance;
 					Elevator.change += distance / theta;
@@ -419,9 +421,9 @@ public class TreeNode extends Node {
 		int distance = 0;
 		int change = 0;
 		TreeNode w = getChild();
-		Stack<TreeNode> stack = new Stack<TreeNode>();
+		final Stack<TreeNode> stack = new Stack<TreeNode>();
 		while (w != null) {
-			NodePair<TreeNode> N = new NodePair<TreeNode>();
+			final NodePair<TreeNode> N = new NodePair<TreeNode>();
 			N.left = w;
 			stack.push(w);
 			w = w.getRight();
@@ -573,7 +575,7 @@ public class TreeNode extends Node {
 	}
 
 	public Vector<TreeNode> getLeaves() {
-		Vector<TreeNode> result = new Vector<TreeNode>();
+		final Vector<TreeNode> result = new Vector<TreeNode>();
 		if (isLeaf()) {
 			result.add(this);
 			return result;
@@ -589,28 +591,35 @@ public class TreeNode extends Node {
 		HashtableStoreSupport.store(state, hash + "right", right);
 		HashtableStoreSupport.store(state, hash + "parent", parent);
 
-		if (child != null)
+		if (child != null) {
 			child.storeState(state);
-		if (right != null)
+		}
+		if (right != null) {
 			right.storeState(state);
+		}
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object child = state.get(hash + "child");
-		if (child != null)
+		final Object child = state.get(hash + "child");
+		if (child != null) {
 			this.child = (TreeNode) HashtableStoreSupport.restore(child);
-		Object right = state.get(hash + "right");
-		if (right != null)
+		}
+		final Object right = state.get(hash + "right");
+		if (right != null) {
 			this.right = (TreeNode) HashtableStoreSupport.restore(right);
-		Object parent = state.get(hash + "parent");
-		if (parent != null)
+		}
+		final Object parent = state.get(hash + "parent");
+		if (parent != null) {
 			this.parent = (TreeNode) HashtableStoreSupport.restore(parent);
+		}
 
-		if (this.child != null)
+		if (this.child != null) {
 			this.child.restoreState(state);
-		if (this.right != null)
+		}
+		if (this.right != null) {
 			this.right.restoreState(state);
+		}
 	}
 }

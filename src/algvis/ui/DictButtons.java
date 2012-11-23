@@ -62,24 +62,27 @@ public class DictButtons extends Buttons {
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
 		if (evt.getSource() == insertB) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
-			Vector<Integer> args = I.getNonEmptyVI();
-			for (int x : args) {
+			}
+			final Vector<Integer> args = I.getNonEmptyVI();
+			for (final int x : args) {
 				D.insert(x);
 			}
 		} else if (evt.getSource() == findB) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
-			Vector<Integer> args = I.getVI();
-			for (int x : args) {
+			}
+			final Vector<Integer> args = I.getVI();
+			for (final int x : args) {
 				((Dictionary) D).find(x);
 			}
 		} else if (evt.getSource() == deleteB) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
-			Vector<Integer> args = I.getVI();
-			for (int x : args) {
+			}
+			final Vector<Integer> args = I.getVI();
+			for (final int x : args) {
 				((Dictionary) D).delete(x);
 			}
 		}

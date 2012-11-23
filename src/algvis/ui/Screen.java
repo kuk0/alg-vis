@@ -48,6 +48,7 @@ public class Screen extends JPanel {
 		this.panel = panel;
 		V = new View(this);
 		timer = new Timer(50, new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent evt) {
 				repaint();
 			}
@@ -59,7 +60,7 @@ public class Screen extends JPanel {
 	}
 
 	void check_size() {
-		Dimension d = getSize();
+		final Dimension d = getSize();
 		if (I == null || d.width != size.width || d.height != size.height) {
 			I = createImage(d.width, d.height);
 			G = I.getGraphics();
@@ -83,7 +84,7 @@ public class Screen extends JPanel {
 			try {
 				panel.scene.move();
 				panel.scene.draw(V);
-			} catch (ConcurrentModificationException ignored) {
+			} catch (final ConcurrentModificationException ignored) {
 			}
 			V.endDrawing();
 			// V.resetView();

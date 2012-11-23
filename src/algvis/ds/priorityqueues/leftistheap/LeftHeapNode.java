@@ -76,7 +76,7 @@ public class LeftHeapNode extends BSTNode {
 
 	public void linkup(LeftHeapNode v) {
 		if ((this.getParent() != null) && (v != null)) {
-			LeftHeapNode tmp = this.getParent();
+			final LeftHeapNode tmp = this.getParent();
 			v.setRight(this);
 			this.setParent(v);
 			v.setParent(tmp);
@@ -85,7 +85,7 @@ public class LeftHeapNode extends BSTNode {
 	}
 
 	public void swapChildren() {
-		LeftHeapNode tmp = this.getLeft();
+		final LeftHeapNode tmp = this.getLeft();
 		this.setLeft(this.getRight());
 		this.setRight(tmp);
 	}
@@ -115,39 +115,37 @@ public class LeftHeapNode extends BSTNode {
 			x1 = dir.x;
 			y1 = dir.y;
 		}
-		v.drawDoubleArrow(x1 + 2 * LeftHeapNode.RADIUS, y1, x2 - 2
-				* LeftHeapNode.RADIUS, y2);
+		v.drawDoubleArrow(x1 + 2 * Node.RADIUS, y1, x2 - 2 * Node.RADIUS, y2);
 	}
 
 	@Override
 	public void draw(View v) {
 		super.draw(v);
 		drawDoubleArrow(v);
-		String str = "" + rank;
+		final String str = "" + rank;
 		if (rank != -1) {
 			if (this.getParent() != null && this.getParent().getLeft() == this) {
-				v.drawString(str, x - LeftHeapNode.RADIUS, y
-						- LeftHeapNode.RADIUS, Fonts.SMALL);
+				v.drawString(str, x - Node.RADIUS, y - Node.RADIUS, Fonts.SMALL);
 			} else {
-				v.drawString(str, x + LeftHeapNode.RADIUS, y
-						- LeftHeapNode.RADIUS, Fonts.SMALL);
+				v.drawString(str, x + Node.RADIUS, y - Node.RADIUS, Fonts.SMALL);
 			}
 		}
 	}
 
+	@Override
 	public void repos(int px, int py) {
 		this.goTo(px, py);
 
 		if (this.getRight() != null) {
 			this.getRight().repos(px + getRight().leftw,
-					py + (LeftHeap.minsepy));// + 2 * LeftHeapNode.RADIUS));
+					py + (DataStructure.minsepy));// + 2 * LeftHeapNode.RADIUS));
 		}
 		if (this.getLeft() != null) {
-			this.getLeft()
-					.repos(px - getLeft().rightw, py + (LeftHeap.minsepy));// +
-																			// 2
-																			// *
-																			// LeftHeapNode.RADIUS));
+			this.getLeft().repos(px - getLeft().rightw,
+					py + (DataStructure.minsepy));// +
+			// 2
+			// *
+			// LeftHeapNode.RADIUS));
 		}
 	}
 
@@ -255,20 +253,24 @@ public class LeftHeapNode extends BSTNode {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object rank = state.get(hash + "rank");
-		if (rank != null)
+		final Object rank = state.get(hash + "rank");
+		if (rank != null) {
 			this.rank = (Integer) HashtableStoreSupport.restore(rank);
-		Object doubleArrow = state.get(hash + "doubleArrow");
-		if (doubleArrow != null)
+		}
+		final Object doubleArrow = state.get(hash + "doubleArrow");
+		if (doubleArrow != null) {
 			this.doubleArrow = (Boolean) HashtableStoreSupport
 					.restore(doubleArrow);
-		Object dashedRightLine = state.get(hash + "dashedRightLine");
-		if (dashedRightLine != null)
+		}
+		final Object dashedRightLine = state.get(hash + "dashedRightLine");
+		if (dashedRightLine != null) {
 			this.dashedRightLine = (Boolean) HashtableStoreSupport
 					.restore(dashedRightLine);
-		Object dashedLeftLine = state.get(hash + "dashedLeftLine");
-		if (dashedLeftLine != null)
+		}
+		final Object dashedLeftLine = state.get(hash + "dashedLeftLine");
+		if (dashedLeftLine != null) {
 			this.dashedLeftLine = (Boolean) HashtableStoreSupport
 					.restore(dashedLeftLine);
+		}
 	}
 }

@@ -55,8 +55,8 @@ public class UnionFindUnion extends UnionFindFind {
 
 	private void unionSimple(UnionFindNode V, UnionFindNode W)
 			throws InterruptedException {
-		UnionFindNode r1 = find(V);
-		UnionFindNode r2 = find(W);
+		final UnionFindNode r1 = find(V);
+		final UnionFindNode r2 = find(W);
 		if (r1 == r2) {
 			addStep("ufsameset");
 			pause();
@@ -81,8 +81,8 @@ public class UnionFindUnion extends UnionFindFind {
 
 	private void unionByRank(UnionFindNode V, UnionFindNode W)
 			throws InterruptedException {
-		UnionFindNode r1 = find(V);
-		UnionFindNode r2 = find(W);
+		final UnionFindNode r1 = find(V);
+		final UnionFindNode r2 = find(W);
 		if (r1 == r2) {
 			addStep("ufsameset");
 			pause();

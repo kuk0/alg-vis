@@ -65,32 +65,35 @@ public class TrieNode extends TreeNode {
 		ch = '?';
 	}
 
+	@Override
 	public TrieNode getParent() {
 		return (TrieNode) super.getParent();
 	}
 
+	@Override
 	public TrieNode getChild() {
 		return (TrieNode) super.getChild();
 	}
 
+	@Override
 	public TrieNode getRight() {
 		return (TrieNode) super.getRight();
 	}
 
 	void unsetGrey() {
-		TrieNode w = (TrieNode) getChild();
+		TrieNode w = getChild();
 		while (w != null) {
 			w.unsetGrey();
-			w = (TrieNode) w.getRight();
+			w = w.getRight();
 		}
 		greyPair = false;
 	}
 
 	void drawGrey(View v) {
-		TrieNode w = (TrieNode) getChild();
+		TrieNode w = getChild();
 		while (w != null) {
 			w.drawGrey(v);
-			w = (TrieNode) w.getRight();
+			w = w.getRight();
 		}
 		if (greyPair && getParent() != null) {
 			v.drawWideLine(x, y, getParent().x, getParent().y, 10.0f);
@@ -143,7 +146,7 @@ public class TrieNode extends TreeNode {
 	}
 
 	public void drawLabel(View v) {
-		TrieNode u = getParent();
+		final TrieNode u = getParent();
 		if (u != null) {
 			int midx, midy, w, h;
 			if (ch == '$') {
@@ -190,10 +193,10 @@ public class TrieNode extends TreeNode {
 	}
 
 	public void clearExtraColor() {
-		TrieNode w = (TrieNode) getChild();
+		TrieNode w = getChild();
 		while (w != null) {
 			w.clearExtraColor();
-			w = (TrieNode) w.getRight();
+			w = w.getRight();
 		}
 		setColor(NodeColor.NORMAL);
 	}
@@ -203,13 +206,13 @@ public class TrieNode extends TreeNode {
 	}
 
 	public TrieNode getChildWithCH(char ch) {
-		TrieNode v = (TrieNode) this.getChild();
+		TrieNode v = this.getChild();
 		if (v != null) {
 			while (v != null) {
 				if (ch == v.ch) {
 					return v;
 				}
-				v = (TrieNode) v.getRight();
+				v = v.getRight();
 			}
 		}
 		return null;
@@ -229,7 +232,7 @@ public class TrieNode extends TreeNode {
 	 */
 	TrieNode addRight(char ch, int x, int y) {
 		if (getLabel() > ch) {
-			TrieNode u = new TrieNode(D, ch);
+			final TrieNode u = new TrieNode(D, ch);
 			u.setParent(getParent());
 			u.setRight(this);
 			getParent().setChild(u);
@@ -237,15 +240,15 @@ public class TrieNode extends TreeNode {
 		} else if (getLabel() == ch) {
 			return this;
 		} else {
-			TrieNode v = (TrieNode) getRight();
+			final TrieNode v = getRight();
 			if ((v == null)) {
-				TrieNode u = new TrieNode(D, ch);
+				final TrieNode u = new TrieNode(D, ch);
 				u.setParent(getParent());
 				setRight(u);
 				return u;
 			} else {
 				if (v.getLabel() > ch) {
-					TrieNode u = new TrieNode(D, ch);
+					final TrieNode u = new TrieNode(D, ch);
 					u.setRight(getRight());
 					u.setParent(getParent());
 					setRight(u);
@@ -267,9 +270,9 @@ public class TrieNode extends TreeNode {
 	 * @return A node appended
 	 */
 	public TrieNode addChild(char ch, int x, int y) {
-		TrieNode v = (TrieNode) getChild();
+		final TrieNode v = getChild();
 		if (v == null) {
-			TrieNode u = new TrieNode(D, ch, x, y);
+			final TrieNode u = new TrieNode(D, ch, x, y);
 			setChild(u);
 			u.setParent(this);
 			return u;
@@ -292,8 +295,9 @@ public class TrieNode extends TreeNode {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object ch = state.get(hash + "ch");
-		if (ch != null)
+		final Object ch = state.get(hash + "ch");
+		if (ch != null) {
 			this.ch = (Character) HashtableStoreSupport.restore(ch);
+		}
 	}
 }

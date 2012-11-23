@@ -71,7 +71,7 @@ public class Rotations extends DataStructure implements ClickListener {
 
 	@Override
 	public void insert(int x) {
-		BSTNode v = new BSTNode(T, x, ZDepth.NODE);
+		final BSTNode v = new BSTNode(T, x, ZDepth.NODE);
 		BSTNode w = T.getRoot();
 		if (w == null) {
 			T.setRoot(v);
@@ -163,17 +163,19 @@ public class Rotations extends DataStructure implements ClickListener {
 
 	@Override
 	public void mouseClicked(int x, int y) {
-		if (T.getRoot() == null)
+		if (T.getRoot() == null) {
 			return;
-		BSTNode v = T.getRoot().find(x, y);
+		}
+		final BSTNode v = T.getRoot().find(x, y);
 		if (v != null) {
 			if (v.marked) {
 				v.unmark();
 				chosen = null;
 				panel.buttons.I.setText("");
 			} else {
-				if (chosen != null)
+				if (chosen != null) {
 					chosen.unmark();
+				}
 				v.mark();
 				chosen = v;
 				panel.buttons.I.setText("" + chosen.getKey());

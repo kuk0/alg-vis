@@ -112,7 +112,7 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 
 	@Override
 	public void meld(int i, int j) {
-		Pair p = chooseHeaps(i, j);
+		final Pair p = chooseHeaps(i, j);
 		i = p.first;
 		j = p.second;
 		((MeldablePQButtons) panel.buttons).activeHeap.setValue(i);
@@ -134,8 +134,9 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 		int s = 0;
 		BinHeapNode v, w;
 		v = w = root[i];
-		if (w == null)
+		if (w == null) {
 			return 0;
+		}
 		do {
 			s += (1 << w.rank);
 			w = w.right;
@@ -187,7 +188,7 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 		if (root != null) {
 			for (int i = 0; i <= numHeaps; ++i) {
 				if (root[i] != null) {
-					Rectangle2D riBB = root[i].getBoundingBox();
+					final Rectangle2D riBB = root[i].getBoundingBox();
 					if (retVal == null) {
 						retVal = riBB;
 					} else if (riBB != null) {
@@ -211,8 +212,9 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 	@Override
 	protected boolean isAnimationDone() {
 		for (int i = 0; i <= numHeaps; ++i) {
-			if (root[i] != null && !root[i].isAnimationDone())
+			if (root[i] != null && !root[i].isAnimationDone()) {
 				return false;
+			}
 		}
 		return true;
 	}
@@ -243,12 +245,14 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 		panel.screen.V.setBounds(0, 0, maxx, maxy);
 	}
 
+	@Override
 	public void lowlight() {
 		if (root[active] != null) {
 			root[active].lowlightTree();
 		}
 	}
 
+	@Override
 	public void highlight(int i) {
 		active = i;
 		if (root[active] != null) {
@@ -274,8 +278,9 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 				v.unmark();
 				chosen = null;
 			} else {
-				if (chosen != null)
+				if (chosen != null) {
 					chosen.unmark();
+				}
 				if (h == active) {
 					v.mark();
 					chosen = v;
@@ -293,8 +298,9 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "root", root.clone());
 		for (int i = 0; i <= numHeaps; ++i) {
-			if (root[i] != null)
+			if (root[i] != null) {
 				root[i].storeTreeState(state);
+			}
 		}
 		HashtableStoreSupport.store(state, hash + "min", min.clone());
 	}
@@ -302,16 +308,19 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object root = state.get(hash + "root");
-		if (root != null)
+		final Object root = state.get(hash + "root");
+		if (root != null) {
 			this.root = (BinHeapNode[]) HashtableStoreSupport.restore(root);
+		}
 		for (int i = 0; i <= numHeaps; ++i) {
-			if (this.root[i] != null)
+			if (this.root[i] != null) {
 				this.root[i].restoreTreeState(state);
+			}
 		}
 
-		Object min = state.get(hash + "min");
-		if (min != null)
+		final Object min = state.get(hash + "min");
+		if (min != null) {
 			this.min = (BinHeapNode[]) HashtableStoreSupport.restore(min);
+		}
 	}
 }

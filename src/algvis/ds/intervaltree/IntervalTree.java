@@ -64,8 +64,9 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 
 	@Override
 	protected void endAnimation() {
-		if (root != null)
+		if (root != null) {
 			root.endAnimation();
+		}
 	}
 
 	@Override
@@ -76,16 +77,18 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 	@Override
 	public void mouseClicked(int x, int y) {
 		// System.out.println("bolo kliknute");
-		if (root == null)
+		if (root == null) {
 			return;
-		IntervalNode v = root.find(x, y);
+		}
+		final IntervalNode v = root.find(x, y);
 		if (v != null && v.isLeaf()) {
 			if (v.marked) {
 				v.unmark();
 				chosen = null;
 			} else {
-				if (chosen != null)
+				if (chosen != null) {
 					chosen.unmark();
+				}
 				v.mark();
 				chosen = v;
 				// System.out.println(v.key + " tento je vybraty");
@@ -144,10 +147,10 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 	private int numL;
 
 	IntervalNode generateEmpty(int h) {
-		IntervalNode w = new IntervalNode(this, Node.NOKEY, ZDepth.NODE);
+		final IntervalNode w = new IntervalNode(this, Node.NOKEY, ZDepth.NODE);
 		if (h > 0) {
-			IntervalNode tmp1 = generateEmpty(h - 1);
-			IntervalNode tmp2 = generateEmpty(h - 1);
+			final IntervalNode tmp1 = generateEmpty(h - 1);
+			final IntervalNode tmp2 = generateEmpty(h - 1);
 			w.setLeft(tmp1);
 			tmp1.setParent(w);
 			w.setRight(tmp2);
@@ -163,18 +166,18 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 	}
 
 	public void extend() {
-		IntervalNode w = new IntervalNode(this, 0, ZDepth.NODE); // pre suctovy
-																	// strom je
-																	// 0,
+		final IntervalNode w = new IntervalNode(this, 0, ZDepth.NODE); // pre suctovy
+																		// strom je
+																		// 0,
 		// min je +inf, max je -inf
 		w.setKey(Node.NOKEY);
-		IntervalNode w2 = root;
+		final IntervalNode w2 = root;
 		w.setLeft(w2);
 		w2.setParent(w);
 		root = w;
 
 		numL = numLeafs + 1;
-		IntervalNode tmp = generateEmpty(getHeight() - 1);
+		final IntervalNode tmp = generateEmpty(getHeight() - 1);
 		root.setRight(tmp);
 		tmp.setParent(root);
 		// System.out.println(this.getHeight());
@@ -214,21 +217,25 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "root", root);
 		HashtableStoreSupport.store(state, hash + "numLeafs", numLeafs);
-		if (root != null)
+		if (root != null) {
 			root.storeState(state);
+		}
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object root = state.get(hash + "root");
-		if (root != null)
+		final Object root = state.get(hash + "root");
+		if (root != null) {
 			this.root = (IntervalNode) HashtableStoreSupport.restore(root);
-		Object numLeafs = state.get(hash + "numLeafs");
-		if (numLeafs != null)
+		}
+		final Object numLeafs = state.get(hash + "numLeafs");
+		if (numLeafs != null) {
 			this.numLeafs = (Integer) HashtableStoreSupport.restore(numLeafs);
+		}
 
-		if (this.root != null)
+		if (this.root != null) {
 			this.root.restoreState(state);
+		}
 	}
 }

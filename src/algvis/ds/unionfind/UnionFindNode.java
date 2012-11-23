@@ -96,11 +96,13 @@ public class UnionFindNode extends TreeNode {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object rank = state.get(hash + "rank");
-		if (rank != null)
+		final Object rank = state.get(hash + "rank");
+		if (rank != null) {
 			this.rank = (Integer) HashtableStoreSupport.restore(rank);
-		Object grey = state.get(hash + "grey");
-		if (grey != null)
+		}
+		final Object grey = state.get(hash + "grey");
+		if (grey != null) {
 			this.grey = (Boolean) HashtableStoreSupport.restore(grey);
+		}
 	}
 }

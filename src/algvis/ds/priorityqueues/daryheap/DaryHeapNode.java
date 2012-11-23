@@ -54,10 +54,12 @@ public class DaryHeapNode extends HeapNode {
 		this((DaryHeap) v.D, v.getKey(), v.tox, v.toy, ZDepth.ACTIONNODE);
 	}
 
+	@Override
 	public boolean isRoot() {
 		return parent == null;
 	}
 
+	@Override
 	public boolean isLeaf() {
 		return c.isEmpty();
 	}
@@ -69,9 +71,10 @@ public class DaryHeapNode extends HeapNode {
 	 * isolate() { left = right = parent = null; }
 	 */
 
+	@Override
 	public void calcTree() {
 		nnodes = 1;
-		for (DaryHeapNode node : c) {
+		for (final DaryHeapNode node : c) {
 			node.calcTree();
 			nnodes += node.nnodes;
 		}
@@ -102,6 +105,7 @@ public class DaryHeapNode extends HeapNode {
 	 * 2*Node.radius; } }
 	 */
 
+	@Override
 	public void drawTree(View v) {
 		drawTree2(v);
 	}
@@ -113,11 +117,11 @@ public class DaryHeapNode extends HeapNode {
 			 */
 			v.setColor(Color.black);
 			// }
-			for (DaryHeapNode node : c) {
+			for (final DaryHeapNode node : c) {
 				v.drawLine(x, y, node.x, node.y);
 			}
 		}
-		for (DaryHeapNode node : c) {
+		for (final DaryHeapNode node : c) {
 			node.drawTree2(v);
 		}
 		/*
@@ -137,14 +141,15 @@ public class DaryHeapNode extends HeapNode {
 		 */
 	@Override
 	public void moveTree() {
-		for (DaryHeapNode node : c) {
+		for (final DaryHeapNode node : c) {
 			node.moveTree();
 		}
 		move();
 	}
 
+	@Override
 	public void reboxTree() {
-		for (DaryHeapNode node : c) {
+		for (final DaryHeapNode node : c) {
 			node.reboxTree();
 		}
 		rebox();
@@ -231,6 +236,7 @@ public class DaryHeapNode extends HeapNode {
 		repos();
 	}
 
+	@Override
 	public DaryHeapNode getParent() {
 		return parent;
 	}
@@ -335,21 +341,24 @@ public class DaryHeapNode extends HeapNode {
 		((DaryHeap) D).last = v;
 	}
 
+	@Override
 	public DaryHeapNode find(int x, int y) {
-		if (inside(x, y))
+		if (inside(x, y)) {
 			return this;
+		}
 
-		for (DaryHeapNode node : c) {
-			DaryHeapNode tmp = node.find(x, y);
-			if (tmp != null)
+		for (final DaryHeapNode node : c) {
+			final DaryHeapNode tmp = node.find(x, y);
+			if (tmp != null) {
 				return tmp;
+			}
 		}
 		return null;
 	}
 
 	public DaryHeapNode findMaxSon() {
 		DaryHeapNode v = c.firstElement();
-		for (DaryHeapNode node : c) {
+		for (final DaryHeapNode node : c) {
 			if (node.prec(v)) {
 				v = node;
 			}
@@ -363,7 +372,7 @@ public class DaryHeapNode extends HeapNode {
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "parent", parent);
 		HashtableStoreSupport.store(state, hash + "c", c.clone());
-		for (DaryHeapNode node : c) {
+		for (final DaryHeapNode node : c) {
 			node.storeState(state);
 		}
 		HashtableStoreSupport.store(state, hash + "nson", nson);
@@ -372,19 +381,22 @@ public class DaryHeapNode extends HeapNode {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object parent = state.get(hash + "parent");
-		if (parent != null)
+		final Object parent = state.get(hash + "parent");
+		if (parent != null) {
 			this.parent = (DaryHeapNode) HashtableStoreSupport.restore(parent);
+		}
 
-		Object c = state.get(hash + "c");
-		if (c != null)
+		final Object c = state.get(hash + "c");
+		if (c != null) {
 			this.c = (Vector<DaryHeapNode>) HashtableStoreSupport.restore(c);
-		for (DaryHeapNode node : this.c) {
+		}
+		for (final DaryHeapNode node : this.c) {
 			node.restoreState(state);
 		}
 
-		Object nson = state.get(hash + "nson");
-		if (nson != null)
+		final Object nson = state.get(hash + "nson");
+		if (nson != null) {
 			this.nson = (Integer) HashtableStoreSupport.restore(nson);
+		}
 	}
 }

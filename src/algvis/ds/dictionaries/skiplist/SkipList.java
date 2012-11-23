@@ -108,15 +108,17 @@ public class SkipList extends Dictionary implements ClickListener {
 		panel.screen.V.setBounds(x1, y1, x2, y2);
 	}
 
+	@Override
 	public void mouseClicked(int x, int y) {
 		if (getRoot() != null) {
-			Node w = getRoot().find(x, y);
+			final Node w = getRoot().find(x, y);
 			if (w != null) {
 				panel.buttons.I.setText("" + w.getKey());
 			}
 		}
 	}
 
+	@Override
 	public SkipNode getRoot() {
 		return (SkipNode) super.getRoot();
 	}
@@ -137,14 +139,17 @@ public class SkipList extends Dictionary implements ClickListener {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object height = state.get(hash + "height");
-		if (height != null)
+		final Object height = state.get(hash + "height");
+		if (height != null) {
 			this.height = (Integer) HashtableStoreSupport.restore(height);
-		Object n = state.get(hash + "n");
-		if (n != null)
+		}
+		final Object n = state.get(hash + "n");
+		if (n != null) {
 			this.n = (Integer) HashtableStoreSupport.restore(n);
-		Object e = state.get(hash + "e");
-		if (e != null)
+		}
+		final Object e = state.get(hash + "e");
+		if (e != null) {
 			this.e = (Integer) HashtableStoreSupport.restore(e);
+		}
 	}
 }

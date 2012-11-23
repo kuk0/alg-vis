@@ -34,11 +34,11 @@ public class RBInsert extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		BSTInsert insert = new BSTInsert(T,
-				new RBNode(T, K, ZDepth.ACTIONNODE), this);
+		final BSTInsert insert = new BSTInsert(T, new RBNode(T, K,
+				ZDepth.ACTIONNODE), this);
 		insert.runAlgorithm();
-		HashMap<String, Object> insertResult = insert.getResult();
-		boolean inserted = (Boolean) insertResult.get("inserted");
+		final HashMap<String, Object> insertResult = insert.getResult();
+		final boolean inserted = (Boolean) insertResult.get("inserted");
 
 		if (inserted) {
 			// TODO komentar "ideme bublat" (nieco ako pri BSTDelete:
@@ -50,11 +50,12 @@ public class RBInsert extends Algorithm {
 			RBNode pw = w.getParent2();
 			while (!w.isRoot() && pw.isRed()) {
 				w.mark();
-				boolean isleft = pw.isLeft();
-				RBNode ppw = pw.getParent2(), y = (isleft ? ppw.getRight()
-						: ppw.getLeft());
-				if (y == null)
+				final boolean isleft = pw.isLeft();
+				final RBNode ppw = pw.getParent2();
+				RBNode y = (isleft ? ppw.getRight() : ppw.getLeft());
+				if (y == null) {
 					y = T.NULL;
+				}
 				if (y.isRed()) {
 					// case 1
 					addStep("rbinsertcase1");

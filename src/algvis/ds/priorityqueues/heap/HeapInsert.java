@@ -28,7 +28,7 @@ public class HeapInsert extends HeapAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		HeapNode v = new HeapNode(H, K, ZDepth.ACTIONNODE);
+		final HeapNode v = new HeapNode(H, K, ZDepth.ACTIONNODE);
 		addToScene(v);
 		setHeader("insertion");
 		if (H.getN() == 1000) {
@@ -40,7 +40,8 @@ public class HeapInsert extends HeapAlg {
 
 		// link
 		H.setN(H.getN() + 1);
-		int n = H.getN(), k = 1 << 10;
+		final int n = H.getN();
+		int k = 1 << 10;
 		if (n == 1) {
 			H.setRoot(w = v);
 			v.goToRoot();

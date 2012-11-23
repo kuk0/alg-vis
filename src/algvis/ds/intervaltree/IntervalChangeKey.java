@@ -17,10 +17,12 @@ public class IntervalChangeKey extends IntervalAlg {
 		// addStep("changekeyv");
 
 		v.setKey(value);
-		if (v.getKey() < 1)
+		if (v.getKey() < 1) {
 			v.setKey(1);
-		if (v.getKey() > InputField.MAX)
+		}
+		if (v.getKey() > InputField.MAX) {
 			v.setKey(InputField.MAX);
+		}
 
 		// if (H.minHeap) { //<<------
 		addNote("intervalchangev");

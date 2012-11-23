@@ -17,6 +17,7 @@
 package algvis.ds.priorityqueues.leftistheap;
 
 import algvis.core.Algorithm;
+import algvis.core.DataStructure;
 import algvis.core.Node;
 
 abstract class LeftHeapAlg extends Algorithm {
@@ -53,8 +54,8 @@ abstract class LeftHeapAlg extends Algorithm {
 				w.setDoubleArrow(H.root[0]);
 				pause();
 				w.noDoubleArrow();
-				LeftHeapNode tmp1 = w.getParent();
-				LeftHeapNode tmp2 = H.root[0];
+				final LeftHeapNode tmp1 = w.getParent();
+				final LeftHeapNode tmp2 = H.root[0];
 
 				H.root[0] = w;
 				if (w.getParent() != null) {
@@ -72,9 +73,10 @@ abstract class LeftHeapAlg extends Algorithm {
 			if (w.getParent() != null) {
 				w.getParent().dashedRightLine = false;
 			}
-			H.root[0].repos(H.root[0].tox, H.root[0].toy + LeftHeap.minsepy);// +
-																				// 2*
-																				// LeftHeapNode.RADIUS);
+			H.root[0].repos(H.root[0].tox, H.root[0].toy
+					+ DataStructure.minsepy);// +
+												// 2*
+												// LeftHeapNode.RADIUS);
 			H.root[0].unmark();
 			w.unmark();
 

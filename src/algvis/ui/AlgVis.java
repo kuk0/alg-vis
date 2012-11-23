@@ -80,11 +80,11 @@ public class AlgVis extends JPanel implements ActionListener {
 		// Menu
 		JMenuBar menuBar;
 		menuBar = new JMenuBar();
-		IMenu dsMenu = new IMenu("datastructures");
+		final IMenu dsMenu = new IMenu("datastructures");
 		dsMenu.setMnemonic(KeyEvent.VK_D);
-		IMenu langMenu = new IMenu("language");
+		final IMenu langMenu = new IMenu("language");
 		langMenu.setMnemonic(KeyEvent.VK_L);
-		IMenu layoutMenu = new IMenu("layout");
+		final IMenu layoutMenu = new IMenu("layout");
 		layoutMenu.setMnemonic(KeyEvent.VK_Y);
 
 		// Data structures menu
@@ -94,7 +94,7 @@ public class AlgVis extends JPanel implements ActionListener {
 		 * class ADTs.
 		 */
 		for (int i = 0; i < ADTs.N; ++i) {
-			String adtName = ADTs.getName(i);
+			final String adtName = ADTs.getName(i);
 			adtItems.put(adtName, new IMenu(adtName));
 		}
 		/**
@@ -117,8 +117,8 @@ public class AlgVis extends JPanel implements ActionListener {
 		menuBar.add(dsMenu);
 
 		// Language menu
-		JMenuItem enItem = new JMenuItem("English", KeyEvent.VK_B);
-		JMenuItem skItem = new JMenuItem("Slovensky", KeyEvent.VK_B);
+		final JMenuItem enItem = new JMenuItem("English", KeyEvent.VK_B);
+		final JMenuItem skItem = new JMenuItem("Slovensky", KeyEvent.VK_B);
 		enItem.setActionCommand("lang-en");
 		skItem.setActionCommand("lang-sk");
 		enItem.addActionListener(this);
@@ -141,8 +141,9 @@ public class AlgVis extends JPanel implements ActionListener {
 
 		for (int i = 0; i < DataStructures.N; ++i) {
 			panels[i] = DataStructures.createPanel(i, S);
-			if (panels[i] != null)
+			if (panels[i] != null) {
 				cards.add(panels[i], DataStructures.getName(i));
+			}
 		}
 
 		add(menuBar);
@@ -154,7 +155,7 @@ public class AlgVis extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String[] cmd = e.getActionCommand().split("-", 2);
+		final String[] cmd = e.getActionCommand().split("-", 2);
 
 		// set language
 		if ("lang".equals(cmd[0])) {
@@ -178,7 +179,7 @@ public class AlgVis extends JPanel implements ActionListener {
 	}
 
 	private void showCard(int i) {
-		CardLayout cl = (CardLayout) (cards.getLayout());
+		final CardLayout cl = (CardLayout) (cards.getLayout());
 		if (activePanel != -1) {
 			panels[activePanel].setOnAir(false);
 		}

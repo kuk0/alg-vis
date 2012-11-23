@@ -45,7 +45,7 @@ abstract public class Algorithm implements Runnable {
 		this.panel = panel;
 		try {
 			gate.acquire();
-		} catch (InterruptedException e) {
+		} catch (final InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
@@ -64,7 +64,7 @@ abstract public class Algorithm implements Runnable {
 		begin();
 		try {
 			runAlgorithm();
-		} catch (InterruptedException e) {
+		} catch (final InterruptedException e) {
 			this.done = true;
 			panel.history.trimToEnd();
 			EventQueue.invokeLater(new Runnable() {

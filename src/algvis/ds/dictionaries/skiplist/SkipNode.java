@@ -139,8 +139,9 @@ public class SkipNode extends Node {
 	// color all the columns to the right of this one (inclusive)
 	public void colorAfter(NodeColor color) {
 		SkipNode w = this;
-		while (w.getDown() != null)
+		while (w.getDown() != null) {
 			w = w.getDown();
+		}
 		while (w != null) {
 			w.colorColumn(color);
 			w = w.getRight();
@@ -150,8 +151,9 @@ public class SkipNode extends Node {
 	// color all the columns to the left of this one (NON-inclusive)
 	public void colorBefore(NodeColor color) {
 		SkipNode w = this;
-		while (w.getDown() != null)
+		while (w.getDown() != null) {
 			w = w.getDown();
+		}
 		w = w.getLeft();
 		while (w != null) {
 			w.colorColumn(color);
@@ -160,12 +162,14 @@ public class SkipNode extends Node {
 	}
 
 	public SkipNode find(int x, int y) {
-		if (inside(x, y))
+		if (inside(x, y)) {
 			return this;
+		}
 		if (getLeft() == null && getDown() != null) {
-			SkipNode tmp = getDown().find(x, y);
-			if (tmp != null)
+			final SkipNode tmp = getDown().find(x, y);
+			if (tmp != null) {
 				return tmp;
+			}
 		}
 		if (getRight() != null) {
 			return getRight().find(x, y);
@@ -212,31 +216,39 @@ public class SkipNode extends Node {
 		HashtableStoreSupport.store(state, hash + "left", left);
 		HashtableStoreSupport.store(state, hash + "right", right);
 		HashtableStoreSupport.store(state, hash + "up", up);
-		if (right != null)
+		if (right != null) {
 			right.storeState(state);
-		if (down != null)
+		}
+		if (down != null) {
 			down.storeState(state);
+		}
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object down = state.get(hash + "down");
-		if (down != null)
+		final Object down = state.get(hash + "down");
+		if (down != null) {
 			this.down = (SkipNode) HashtableStoreSupport.restore(down);
-		Object left = state.get(hash + "left");
-		if (left != null)
+		}
+		final Object left = state.get(hash + "left");
+		if (left != null) {
 			this.left = (SkipNode) HashtableStoreSupport.restore(left);
-		Object right = state.get(hash + "right");
-		if (right != null)
+		}
+		final Object right = state.get(hash + "right");
+		if (right != null) {
 			this.right = (SkipNode) HashtableStoreSupport.restore(right);
-		Object up = state.get(hash + "up");
-		if (up != null)
+		}
+		final Object up = state.get(hash + "up");
+		if (up != null) {
 			this.up = (SkipNode) HashtableStoreSupport.restore(up);
+		}
 
-		if (this.right != null)
+		if (this.right != null) {
 			this.right.restoreState(state);
-		if (this.down != null)
+		}
+		if (this.down != null) {
 			this.down.restoreState(state);
+		}
 	}
 }

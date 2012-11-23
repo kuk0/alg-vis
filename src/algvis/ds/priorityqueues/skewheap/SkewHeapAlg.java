@@ -17,6 +17,7 @@
 package algvis.ds.priorityqueues.skewheap;
 
 import algvis.core.Algorithm;
+import algvis.core.DataStructure;
 import algvis.core.Node;
 
 abstract class SkewHeapAlg extends Algorithm {
@@ -53,8 +54,8 @@ abstract class SkewHeapAlg extends Algorithm {
 				w.setDoubleArrow(H.root[0]);
 				pause();
 				w.noDoubleArrow();
-				SkewHeapNode tmp1 = w.getParent();
-				SkewHeapNode tmp2 = H.root[0];
+				final SkewHeapNode tmp1 = w.getParent();
+				final SkewHeapNode tmp2 = H.root[0];
 
 				H.root[0] = w;
 				if (w.getParent() != null) {
@@ -73,9 +74,10 @@ abstract class SkewHeapAlg extends Algorithm {
 				w.getParent().dashedRightLine = false;
 			}
 
-			H.root[0].repos(H.root[0].tox, H.root[0].toy + SkewHeap.minsepy);// +
-																				// 2*
-																				// SkewHeapNode.RADIUS);
+			H.root[0].repos(H.root[0].tox, H.root[0].toy
+					+ DataStructure.minsepy);// +
+												// 2*
+												// SkewHeapNode.RADIUS);
 			H.root[0].unmark();
 			w.unmark();
 

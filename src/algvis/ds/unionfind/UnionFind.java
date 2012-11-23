@@ -119,7 +119,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 	@Override
 	public void draw(View V) {
 		if (sets != null) {
-			for (UnionFindNode set : sets) {
+			for (final UnionFindNode set : sets) {
 				set.drawTree(V);
 			}
 		}
@@ -128,7 +128,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 	@Override
 	public void move() {
 		if (sets != null) {
-			for (UnionFindNode set : sets) {
+			for (final UnionFindNode set : sets) {
 				set.moveTree();
 			}
 		}
@@ -138,12 +138,13 @@ public class UnionFind extends DataStructure implements ClickListener {
 	public Rectangle2D getBoundingBox() {
 		Rectangle2D retVal = null;
 		if (sets != null) {
-			for (UnionFindNode set : sets) {
-				Rectangle2D sBB = set.getBoundingBox();
-				if (retVal == null)
+			for (final UnionFindNode set : sets) {
+				final Rectangle2D sBB = set.getBoundingBox();
+				if (retVal == null) {
 					retVal = sBB;
-				else if (sBB != null)
+				} else if (sBB != null) {
 					retVal = retVal.createUnion(sBB);
+				}
 			}
 		}
 		return retVal;
@@ -152,7 +153,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 	@Override
 	protected void endAnimation() {
 		if (sets != null) {
-			for (UnionFindNode set : sets) {
+			for (final UnionFindNode set : sets) {
 				set.endAnimation();
 			}
 		}
@@ -161,9 +162,10 @@ public class UnionFind extends DataStructure implements ClickListener {
 	@Override
 	protected boolean isAnimationDone() {
 		if (sets != null) {
-			for (UnionFindNode set : sets) {
-				if (!set.isAnimationDone())
+			for (final UnionFindNode set : sets) {
+				if (!set.isAnimationDone()) {
 					return false;
+				}
 			}
 		}
 		return true;
@@ -173,7 +175,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 		if (sets != null) {
 			int ey2 = -9999999;
 			int ey1 = 9999999;
-			for (UnionFindNode set : sets) {
+			for (final UnionFindNode set : sets) {
 				y1 = y2 = 0;
 				set.reposition();
 				if (y1 < ey1) {
@@ -189,7 +191,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 			x1 = x2 = 0;
 			int shift = -sets.get(0).leftw;
 			x1 = shift;
-			for (UnionFindNode set : sets) {
+			for (final UnionFindNode set : sets) {
 				shift += set.leftw;
 				set.shift(shift, 0);
 				shift += set.rightw;
@@ -211,7 +213,7 @@ public class UnionFind extends DataStructure implements ClickListener {
 	public void mouseClicked(int x, int y) {
 		UnionFindNode u = null;
 		int i = 0;
-		int j = sets.size();
+		final int j = sets.size();
 		do {
 			u = (UnionFindNode) sets.get(i).find(x, y);
 			i++;
@@ -245,11 +247,11 @@ public class UnionFind extends DataStructure implements ClickListener {
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "count", count);
 		HashtableStoreSupport.store(state, hash + "sets", sets.clone());
-		for (UnionFindNode node : sets) {
+		for (final UnionFindNode node : sets) {
 			node.storeState(state);
 		}
 		HashtableStoreSupport.store(state, hash + "vertices", vertices.clone());
-		for (UnionFindNode node : vertices) {
+		for (final UnionFindNode node : vertices) {
 			node.storeState(state);
 		}
 	}
@@ -257,23 +259,26 @@ public class UnionFind extends DataStructure implements ClickListener {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object count = state.get(hash + "count");
-		if (count != null)
+		final Object count = state.get(hash + "count");
+		if (count != null) {
 			this.count = (Integer) HashtableStoreSupport.restore(count);
+		}
 
-		Object sets = state.get(hash + "sets");
-		if (sets != null)
+		final Object sets = state.get(hash + "sets");
+		if (sets != null) {
 			this.sets = (ArrayList<UnionFindNode>) HashtableStoreSupport
 					.restore(sets);
-		for (UnionFindNode node : this.sets) {
+		}
+		for (final UnionFindNode node : this.sets) {
 			node.restoreState(state);
 		}
 
-		Object vertices = state.get(hash + "vertices");
-		if (vertices != null)
+		final Object vertices = state.get(hash + "vertices");
+		if (vertices != null) {
 			this.vertices = (ArrayList<UnionFindNode>) HashtableStoreSupport
 					.restore(vertices);
-		for (UnionFindNode node : this.vertices) {
+		}
+		for (final UnionFindNode node : this.vertices) {
 			node.restoreState(state);
 		}
 	}

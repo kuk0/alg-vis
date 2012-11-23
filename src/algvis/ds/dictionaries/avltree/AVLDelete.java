@@ -36,9 +36,9 @@ public class AVLDelete extends Algorithm {
 	public void runAlgorithm() throws InterruptedException {
 		setHeader("delete", K);
 		addNote("bstdeletestart");
-		BSTFind find = new BSTFind(T, K, this);
+		final BSTFind find = new BSTFind(T, K, this);
 		find.runAlgorithm();
-		AVLNode d = (AVLNode) find.getResult().get("node");
+		final AVLNode d = (AVLNode) find.getResult().get("node");
 
 		if (d != null) {
 			setHeader("delete", K);
@@ -61,7 +61,8 @@ public class AVLDelete extends Algorithm {
 				// 1 syn
 				addStep("bst-delete-case2");
 				pause();
-				AVLNode s = (d.getLeft() == null) ? d.getRight() : d.getLeft();
+				final AVLNode s = (d.getLeft() == null) ? d.getRight() : d
+						.getLeft();
 				if (d.isRoot()) {
 					T.setRoot(s);
 				} else {

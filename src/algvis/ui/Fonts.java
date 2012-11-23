@@ -38,14 +38,14 @@ public enum Fonts {
 			f = Font.createFont(Font.TRUETYPE_FONT,
 					Fonts.class.getResourceAsStream("FreeMonoBold.ttf"));
 			f = f.deriveFont(10.0f);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 		}
 		return f;
 	}
 
 	public static void init(Graphics g) {
-		for (Fonts f : Fonts.values()) {
+		for (final Fonts f : Fonts.values()) {
 			f.fm = g.getFontMetrics(f.font);
 		}
 	}

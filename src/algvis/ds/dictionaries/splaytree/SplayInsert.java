@@ -26,7 +26,7 @@ public class SplayInsert extends SplayAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		SplayNode v = new SplayNode(T, K, ZDepth.ACTIONNODE);
+		final SplayNode v = new SplayNode(T, K, ZDepth.ACTIONNODE);
 		v.setColor(NodeColor.INSERT);
 		addToScene(v);
 		setHeader("insert", K);
@@ -37,7 +37,7 @@ public class SplayInsert extends SplayAlg {
 			pause();
 		} else {
 			v.goAboveRoot();
-			SplayNode w = find(K);
+			final SplayNode w = find(K);
 			splay(w);
 
 			w.setColor(NodeColor.NORMAL);

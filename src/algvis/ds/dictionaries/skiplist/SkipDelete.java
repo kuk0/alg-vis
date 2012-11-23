@@ -53,7 +53,8 @@ public class SkipDelete extends SkipAlg {
 				break;
 			}
 			L.e--;
-			SkipNode left = w.getLeft(), right = w.getRight(), up = w.getUp();
+			final SkipNode left = w.getLeft(), right = w.getRight(), up = w
+					.getUp();
 			left.linkright(right);
 			if (up != null) {
 				up.setDown(null);

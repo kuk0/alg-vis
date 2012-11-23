@@ -40,7 +40,7 @@ abstract class BinHeapAlg extends Algorithm {
 		while (true) {
 			if (H.root[0] != null && v.rank > H.root[0].rank) {
 				// pripojime vlavo
-				BinHeapNode u = H.root[0];
+				final BinHeapNode u = H.root[0];
 				if (H.root[0].right == H.root[0]) {
 					removeFromScene(H.root[0]);
 					H.root[0] = null;
@@ -56,7 +56,7 @@ abstract class BinHeapAlg extends Algorithm {
 			} else if (H.root[0] != null && v.rank <= H.root[0].rank
 					&& (v.right == H.root[i] || H.root[0].rank < v.right.rank)) {
 				// pripojime vpravo
-				BinHeapNode u = H.root[0];
+				final BinHeapNode u = H.root[0];
 				if (H.root[0].right == H.root[0]) {
 					removeFromScene(H.root[0]);
 					H.root[0] = null;
@@ -69,7 +69,7 @@ abstract class BinHeapAlg extends Algorithm {
 			} else if (v.left.rank == v.rank && v.left != v
 					&& (v.right == H.root[i] || v.rank < v.right.rank)) {
 				// spojime 2 rovnakej velkosti
-				BinHeapNode u = v.left;
+				final BinHeapNode u = v.left;
 				if (u.prec(v)) { // napojime v pod u
 					v.unlink();
 					u.linkChild(v);

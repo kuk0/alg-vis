@@ -50,11 +50,12 @@ public class RBNode extends BSTNode {
 	}
 
 	public RBNode getLeft2() {
-		RBNode r = getLeft();
-		if (r == null)
+		final RBNode r = getLeft();
+		if (r == null) {
 			return ((RB) D).NULL;
-		else
+		} else {
 			return r;
+		}
 	}
 
 	@Override
@@ -63,11 +64,12 @@ public class RBNode extends BSTNode {
 	}
 
 	public RBNode getRight2() {
-		RBNode r = getRight();
-		if (r == null)
+		final RBNode r = getRight();
+		if (r == null) {
 			return ((RB) D).NULL;
-		else
+		} else {
 			return r;
+		}
 	}
 
 	@Override
@@ -76,11 +78,12 @@ public class RBNode extends BSTNode {
 	}
 
 	public RBNode getParent2() {
-		RBNode p = getParent();
-		if (p == null)
+		final RBNode p = getParent();
+		if (p == null) {
 			return ((RB) D).NULL;
-		else
+		} else {
 			return p;
+		}
 	}
 
 	@Override
@@ -126,8 +129,9 @@ public class RBNode extends BSTNode {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object red = state.get(hash + "red");
-		if (red != null)
+		final Object red = state.get(hash + "red");
+		if (red != null) {
 			this.red = (Boolean) HashtableStoreSupport.restore(red);
+		}
 	}
 }

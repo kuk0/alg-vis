@@ -61,8 +61,9 @@ public class GBNode extends BSTNode {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object deleted = state.get(hash + "deleted");
-		if (deleted != null)
+		final Object deleted = state.get(hash + "deleted");
+		if (deleted != null) {
 			this.deleted = (Boolean) HashtableStoreSupport.restore(deleted);
+		}
 	}
 }

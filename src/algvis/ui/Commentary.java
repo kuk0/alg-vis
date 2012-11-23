@@ -66,8 +66,8 @@ public class Commentary extends JEditorPane implements LanguageListener,
 		this.panel = panel;
 		setContentType("text/html; charset=iso-8859-2");
 		setEditable(false);
-		Font font = UIManager.getFont("Label.font");
-		StyleSheet css = ((HTMLDocument) getDocument()).getStyleSheet();
+		final Font font = UIManager.getFont("Label.font");
+		final StyleSheet css = ((HTMLDocument) getDocument()).getStyleSheet();
 		css.addRule("body { font-family: " + font.getFamily() + "; "
 				+ "font-size: 12pt; margin: 10pt; margin-top: 0pt; " + "}");
 		css.addRule(".step { margin-bottom: 5pt; }");
@@ -105,7 +105,7 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	}
 
 	public void refresh() {
-		StringBuilder text = new StringBuilder("");
+		final StringBuilder text = new StringBuilder("");
 		synchronized (this) {
 			for (int i = 0; i < s.size(); ++i) {
 				if (i == currentPosition) {
@@ -115,11 +115,11 @@ public class Commentary extends JEditorPane implements LanguageListener,
 				}
 			}
 		}
-		HTMLDocument html = (HTMLDocument) getDocument();
+		final HTMLDocument html = (HTMLDocument) getDocument();
 		Element body = null;
-		Element[] roots = html.getRootElements();
+		final Element[] roots = html.getRootElements();
 		for (int i = 0; i < roots[0].getElementCount(); i++) {
-			Element element = roots[0].getElement(i);
+			final Element element = roots[0].getElement(i);
 			if (element.getAttributes().getAttribute(
 					StyleConstants.NameAttribute) == HTML.Tag.BODY) {
 				body = element;
@@ -134,9 +134,9 @@ public class Commentary extends JEditorPane implements LanguageListener,
 					html.setInnerHTML(body, text.toString());
 				}
 			}
-		} catch (BadLocationException e) {
+		} catch (final BadLocationException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			e.printStackTrace();
 		}
 		scrollDown();
@@ -156,9 +156,10 @@ public class Commentary extends JEditorPane implements LanguageListener,
 	}
 
 	private String[] int2strArray(int[] a) {
-		String[] r = new String[a.length];
-		for (int i = 0; i < a.length; ++i)
+		final String[] r = new String[a.length];
+		for (int i = 0; i < a.length; ++i) {
 			r[i] = "" + a[i];
+		}
 		return r;
 	}
 
@@ -210,10 +211,10 @@ public class Commentary extends JEditorPane implements LanguageListener,
 			panel.history.goTo(Integer.parseInt(e.getDescription()));
 			panel.refresh();
 		} else {
-			Element element = e.getSourceElement();
-			int start = element.getStartOffset();
-			int length = element.getEndOffset() - start;
-			HTMLDocument html = ((HTMLDocument) getDocument());
+			final Element element = e.getSourceElement();
+			final int start = element.getStartOffset();
+			final int length = element.getEndOffset() - start;
+			final HTMLDocument html = ((HTMLDocument) getDocument());
 
 			if (e.getEventType() == HyperlinkEvent.EventType.ENTERED) {
 				html.setParagraphAttributes(start, length, hoverAttr, false);
@@ -236,21 +237,26 @@ public class Commentary extends JEditorPane implements LanguageListener,
 
 	@Override
 	public synchronized void restoreState(Hashtable<?, ?> state) {
-		Object position = state.get(hash + "currentPosition");
-		if (position != null)
+		final Object position = state.get(hash + "currentPosition");
+		if (position != null) {
 			this.currentPosition = (Integer) HashtableStoreSupport
 					.restore(position);
-		Object s = state.get(hash + "s");
-		if (s != null)
+		}
+		final Object s = state.get(hash + "s");
+		if (s != null) {
 			this.s = (List<String>) HashtableStoreSupport.restore(s);
-		Object pre = state.get(hash + "pre");
-		if (pre != null)
+		}
+		final Object pre = state.get(hash + "pre");
+		if (pre != null) {
 			this.pre = (List<String>) HashtableStoreSupport.restore(pre);
-		Object post = state.get(hash + "post");
-		if (post != null)
+		}
+		final Object post = state.get(hash + "post");
+		if (post != null) {
 			this.post = (List<String>) HashtableStoreSupport.restore(post);
-		Object param = state.get(hash + "param");
-		if (param != null)
+		}
+		final Object param = state.get(hash + "param");
+		if (param != null) {
 			this.param = (List<String[]>) HashtableStoreSupport.restore(param);
+		}
 	}
 }

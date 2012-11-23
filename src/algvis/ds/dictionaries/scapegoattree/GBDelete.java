@@ -101,7 +101,7 @@ public class GBDelete extends GBAlg {
 							if (b == r) {
 								b = r.getRight();
 							}
-							GBNode v = r;
+							final GBNode v = r;
 							addToScene(v);
 							if (r.getParent() == null) {
 								T.setRoot(r = r.getRight());

@@ -75,23 +75,25 @@ public class DataStructures {
 
 	@SuppressWarnings("unchecked")
 	private static Class<? extends DataStructure> DS(int i) {
-		if (!check_range(i))
+		if (!check_range(i)) {
 			return null;
+		}
 		try {
 			return (Class<? extends DataStructure>) (PANEL[i]
 					.getDeclaredField("DS").get(null));
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return null;
 		}
 	}
 
 	public static String getName(int i) {
-		if (!check_range(i))
+		if (!check_range(i)) {
 			return "";
+		}
 		String r = "";
 		try {
 			r = (String) (DS(i).getDeclaredField("dsName").get(null));
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			System.out
 					.println("DataStructures is unable to get field dsName - name of data structure: "
 							+ i);
@@ -100,19 +102,22 @@ public class DataStructures {
 	}
 
 	public static int getIndex(String s) {
-		if (s == null)
+		if (s == null) {
 			return -1;
+		}
 		for (int i = 0; i < N; ++i) {
-			if (s.equals(getName(i)))
+			if (s.equals(getName(i))) {
 				return i;
+			}
 		}
 		return -1;
 	}
 
 	@SuppressWarnings("unchecked")
 	public static String getADT(int i) {
-		if (!check_range(i))
+		if (!check_range(i)) {
 			return "";
+		}
 		try {
 			// find the superclass which has the adtName field set
 			Class<? extends DataStructure> c = DS(i);
@@ -121,12 +126,12 @@ public class DataStructures {
 					// DEBUG: System.out.println(c);
 					c.getDeclaredField("adtName");
 					break;
-				} catch (NoSuchFieldException e) {
+				} catch (final NoSuchFieldException e) {
 					c = (Class<? extends DataStructure>) c.getSuperclass();
 				}
 			}
 			return (String) (c.getDeclaredField("adtName").get(null));
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			System.out
 					.println("DataStructures is unable to get field adtName - abstract data type of data structure: "
 							+ i);
@@ -188,14 +193,15 @@ public class DataStructures {
 		case 23:
 			return new SuffixTreePanel(S);
 		}
-		if (!check_range(i))
+		if (!check_range(i)) {
 			return null;
+		}
 		try {
 			@SuppressWarnings({ "rawtypes", "unchecked" })
-			Constructor ct = DataStructures.PANEL[i]
+			final Constructor ct = DataStructures.PANEL[i]
 					.getConstructor(Settings.class);
 			return (VisPanel) ct.newInstance(S);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			System.out.println("DataStructures is unable to get panel: " + i);
 			e.printStackTrace();
 			// System.out.println(((InvocationTargetException)e).getTargetException().toString());

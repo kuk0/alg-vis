@@ -37,10 +37,10 @@ public class PairHeapButtons extends MeldablePQButtons implements
 
 	@Override
 	public JPanel initThirdRow() {
-		JPanel P = new JPanel();
+		final JPanel P = new JPanel();
 
-		ILabel fhLabel = new ILabel("pairing");
-		String[] pairh = { "pairingnaive", "pairinglrrl" };
+		final ILabel fhLabel = new ILabel("pairing");
+		final String[] pairh = { "pairingnaive", "pairinglrrl" };
 		// , "pairingfb", "pairingbf", "pairingmultipass", "pairinglazymulti" };
 
 		pairVariant = new IComboBox(pairh);
@@ -55,7 +55,7 @@ public class PairHeapButtons extends MeldablePQButtons implements
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
 		if (evt.getSource() == pairVariant) {
-			int i = pairVariant.getSelectedIndex();
+			final int i = pairVariant.getSelectedIndex();
 
 			if ((i >= 0) && (i < 2)) { // (i < 6)){
 				((PairingHeap) D).pairState = PairHeapDelete.Pairing.values()[i];

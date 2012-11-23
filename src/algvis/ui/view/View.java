@@ -122,7 +122,7 @@ public class View implements MouseListener, MouseMotionListener,
 
 	void zoom(int x, int y, double f) {
 		if (at.getScaleX() * f <= MAX_ZOOM) {
-			AffineTransform t = new AffineTransform();
+			final AffineTransform t = new AffineTransform();
 			t.translate(x, y);
 			t.scale(f, f);
 			t.translate(-x, -y);
@@ -147,16 +147,16 @@ public class View implements MouseListener, MouseMotionListener,
 	}
 
 	Point2D v2r(double x, double y) {
-		Point2D p = new Point2D.Double(x, y);
+		final Point2D p = new Point2D.Double(x, y);
 		at.transform(p, p);
 		return p;
 	}
 
 	public Point2D r2v(double x, double y) {
-		Point2D p = new Point2D.Double(x, y);
+		final Point2D p = new Point2D.Double(x, y);
 		try {
 			at.inverseTransform(p, p);
-		} catch (NoninvertibleTransformException exc) {
+		} catch (final NoninvertibleTransformException exc) {
 			exc.printStackTrace();
 		}
 		return p;
@@ -170,7 +170,7 @@ public class View implements MouseListener, MouseMotionListener,
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		int x = e.getX(), y = e.getY();
+		final int x = e.getX(), y = e.getY();
 		at.preConcatenate(AffineTransform.getTranslateInstance(x - mouseX, y
 				- mouseY));
 		mouseX = x;
@@ -195,7 +195,7 @@ public class View implements MouseListener, MouseMotionListener,
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		Point2D p = r2v(e.getX(), e.getY());
+		final Point2D p = r2v(e.getX(), e.getY());
 		if (D != null) {
 			D.mouseClicked((int) p.getX(), (int) p.getY());
 		}
@@ -203,7 +203,7 @@ public class View implements MouseListener, MouseMotionListener,
 
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
-		int notches = e.getWheelRotation();
+		final int notches = e.getWheelRotation();
 		if (notches > 0) {
 			zoomOut(e.getX(), e.getY());
 		} else {
@@ -212,7 +212,7 @@ public class View implements MouseListener, MouseMotionListener,
 	}
 
 	public boolean inside(int x, int y) {
-		Point2D p = v2r(x, y);
+		final Point2D p = v2r(x, y);
 		return (0 <= p.getX()) && (p.getX() <= W) && (0 <= p.getY())
 				&& (p.getY() <= H);
 	}
@@ -231,7 +231,7 @@ public class View implements MouseListener, MouseMotionListener,
 	}
 
 	public Point2D cut(double x, double y, double x2, double y2, double c) {
-		double d = new Point2D.Double(x, y).distance(x2, y2);
+		final double d = new Point2D.Double(x, y).distance(x2, y2);
 		return new Point2D.Double(x + (x2 - x) * (d - c) / d, y + (y2 - y)
 				* (d - c) / d);
 	}
@@ -349,7 +349,7 @@ public class View implements MouseListener, MouseMotionListener,
 	}
 
 	public void drawVerticalString(String str, double x, double y, Fonts f) {
-		int xx = (int) x;
+		final int xx = (int) x;
 		int yy = (int) y - str.length() * f.fm.getHeight() / 2;
 		g.setFont(f.font);
 		for (int i = 0; i < str.length(); ++i) {
@@ -380,7 +380,7 @@ public class View implements MouseListener, MouseMotionListener,
 	}
 
 	private void arrowHead(double x, double y, double xx, double yy) {
-		double alpha = 6.0, beta = 1.5;
+		final double alpha = 6.0, beta = 1.5;
 		double vecX, vecY, normX, normY, d, th, ta, baseX, baseY;
 
 		// build the line vector
@@ -401,7 +401,7 @@ public class View implements MouseListener, MouseMotionListener,
 		baseY = yy - ta * vecY;
 
 		// build the points on the sides of the arrow
-		Path2D p = new Path2D.Double();
+		final Path2D p = new Path2D.Double();
 		p.moveTo(xx + vecX * 2 / d, yy + vecY * 2 / d);
 		p.lineTo(baseX + th * normX, baseY + th * normY);
 		p.lineTo(baseX - th * normX, baseY - th * normY);
@@ -437,7 +437,8 @@ public class View implements MouseListener, MouseMotionListener,
 	// _B--/___\--B
 	//
 	public void drawQuarterArc(double x1, double y1, double x2, double y2) {
-		double w = Math.abs(x1 - x2), h = Math.abs(y1 - y2), a1, a2;
+		final double w = Math.abs(x1 - x2), h = Math.abs(y1 - y2);
+		double a1, a2;
 		if (y2 < y1) {
 			if (x2 < x1) {
 				a1 = 0;
@@ -465,10 +466,10 @@ public class View implements MouseListener, MouseMotionListener,
 	public void drawArcArrow(double x, double y, double w, double h, double a1,
 			double a2) {
 		drawArc(x, y, w, h, a1, a2);
-		double a = a2 * Math.PI / 180;
-		double x2 = x + w / 2.0 * (1 + Math.cos(a)), y2 = y + h / 2.0
+		final double a = a2 * Math.PI / 180;
+		final double x2 = x + w / 2.0 * (1 + Math.cos(a)), y2 = y + h / 2.0
 				* (1 - Math.sin(a));
-		double dx = 128 * Math.sin(a), dy = 128 * Math.cos(a);
+		final double dx = 128 * Math.sin(a), dy = 128 * Math.cos(a);
 		if (a1 <= a2) {
 			x = x2 + dx;
 			y = y2 + dy;

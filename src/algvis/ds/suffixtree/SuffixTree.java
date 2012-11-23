@@ -80,9 +80,10 @@ public class SuffixTree extends DataStructure {
 
 	@Override
 	public void draw(View V) {
-		if (str != null)
+		if (str != null) {
 			str.draw(V);
-		SuffixTreeNode v = getRoot();
+		}
+		final SuffixTreeNode v = getRoot();
 		if (v != null) {
 			v.drawTree(V);
 			V.drawString("\u025B", v.x, v.y - 8, Fonts.NORMAL);
@@ -91,8 +92,9 @@ public class SuffixTree extends DataStructure {
 
 	@Override
 	protected void move() {
-		if (root != null)
+		if (root != null) {
 			root.moveTree();
+		}
 	}
 
 	@Override
@@ -103,8 +105,9 @@ public class SuffixTree extends DataStructure {
 
 	@Override
 	protected void endAnimation() {
-		if (root != null)
+		if (root != null) {
 			root.endAnimation();
+		}
 	}
 
 	@Override
@@ -144,7 +147,7 @@ public class SuffixTree extends DataStructure {
 	}
 
 	public void clearExtraColor() {
-		SuffixTreeNode r = getRoot();
+		final SuffixTreeNode r = getRoot();
 		if (r != null) {
 			getRoot().clearExtraColor();
 		}
@@ -154,30 +157,37 @@ public class SuffixTree extends DataStructure {
 	public void storeState(Hashtable<Object, Object> state) {
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "root", root);
-		if (root != null)
+		if (root != null) {
 			root.storeState(state);
+		}
 		HashtableStoreSupport.store(state, hash + "text", text);
 		HashtableStoreSupport.store(state, hash + "str", str);
-		if (str != null)
+		if (str != null) {
 			str.storeState(state);
+		}
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object root = state.get(hash + "root");
-		if (root != null)
+		final Object root = state.get(hash + "root");
+		if (root != null) {
 			this.root = (SuffixTreeNode) HashtableStoreSupport.restore(root);
-		if (this.root != null)
+		}
+		if (this.root != null) {
 			this.root.restoreState(state);
-		Object text = state.get(hash + "text");
-		if (text != null)
+		}
+		final Object text = state.get(hash + "text");
+		if (text != null) {
 			this.text = (String) HashtableStoreSupport.restore(text);
-		Object str = state.get(hash + "str");
-		if (str != null)
+		}
+		final Object str = state.get(hash + "str");
+		if (str != null) {
 			this.str = (StringElem) HashtableStoreSupport.restore(str);
+		}
 
-		if (this.str != null)
+		if (this.str != null) {
 			this.str.restoreState(state);
+		}
 	}
 }

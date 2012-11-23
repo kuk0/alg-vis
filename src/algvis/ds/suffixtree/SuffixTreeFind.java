@@ -67,9 +67,9 @@ public class SuffixTreeFind extends Algorithm {
 			}
 			wd = v.getChild();
 
-			char ch = s.charAt(i);
+			final char ch = s.charAt(i);
 			hw.setAndGoNextTo(s.substring(i), v);
-			SuffixTreeNode w = v.getChildWithCH(ch);
+			final SuffixTreeNode w = v.getChildWithCH(ch);
 			if (w == null) {
 				while (wd != null) {
 					wd.setColor(NodeColor.NORMAL);
@@ -91,10 +91,10 @@ public class SuffixTreeFind extends Algorithm {
 			++i;
 		}
 		hw.setAndGoNextTo("", v);
-		Vector<TreeNode> leaves = v.getLeaves();
-		Vector<Integer> pos = new Vector<Integer>();
-		for (TreeNode w : leaves) {
-			int p = w.getKey();
+		final Vector<TreeNode> leaves = v.getLeaves();
+		final Vector<Integer> pos = new Vector<Integer>();
+		for (final TreeNode w : leaves) {
+			final int p = w.getKey();
 			w.mark();
 			T.str.mark(p);
 			pos.add(p);
@@ -102,7 +102,7 @@ public class SuffixTreeFind extends Algorithm {
 		addStep("suffixtree-found", s, "" + leaves.size());
 
 		pause();
-		for (TreeNode w : leaves) {
+		for (final TreeNode w : leaves) {
 			w.unmark();
 			T.str.unmark(w.getKey());
 		}

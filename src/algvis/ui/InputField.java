@@ -57,7 +57,7 @@ public class InputField extends JTextField {
 	 */
 	public int getInt(int def, int min, int max) {
 		int n = def;
-		String firstWord = this.getText().split("(\\s|,)")[0];
+		final String firstWord = this.getText().split("(\\s|,)")[0];
 		try {
 			n = Integer.parseInt(firstWord);
 			if (n < min) {
@@ -71,7 +71,7 @@ public class InputField extends JTextField {
 						+ " instead");
 			}
 			sb.setText(" ");
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			sb.setText("couldn't parse an integer; using the default value "
 					+ def);
 		}
@@ -93,10 +93,10 @@ public class InputField extends JTextField {
 	 */
 	public Vector<Integer> getVI(int min, int max) {
 		boolean range = false;
-		Vector<Integer> args = new Vector<Integer>();
-		String[] tokens = this.getText().replaceAll("\\.{2,}", " .. ")
+		final Vector<Integer> args = new Vector<Integer>();
+		final String[] tokens = this.getText().replaceAll("\\.{2,}", " .. ")
 				.split("(\\s|,)+");
-		for (String t : tokens) {
+		for (final String t : tokens) {
 			if ("..".equals(t)) {
 				range = true;
 			} else {
@@ -112,7 +112,7 @@ public class InputField extends JTextField {
 						sb.setText("value too high; using the maximum value instead");
 					}
 					if (range) {
-						int a = args.lastElement();
+						final int a = args.lastElement();
 						for (int i = a + 1; i < x; ++i) {
 							args.add(i);
 						}
@@ -122,7 +122,7 @@ public class InputField extends JTextField {
 						range = false;
 					}
 					args.add(x);
-				} catch (NumberFormatException e) {
+				} catch (final NumberFormatException e) {
 					sb.setText("couldn't parse an integer");
 				}
 			}
@@ -146,7 +146,7 @@ public class InputField extends JTextField {
 	 * given, a vector with 1 random value in the range min..max is returned.
 	 */
 	Vector<Integer> getNonEmptyVI(int min, int max) {
-		Vector<Integer> args = getVI();
+		final Vector<Integer> args = getVI();
 		if (args.size() == 0) {
 			args.add(MyRandom.Int(min, max));
 			sb.setText("no input; using random value");
@@ -159,7 +159,7 @@ public class InputField extends JTextField {
 	 * [a-z] -> [A-Z], All chars except [A-Z] are lost.
 	 */
 	public Vector<String> getVS() {
-		String ss = getText();
+		final String ss = getText();
 		Vector<String> result = new Vector<String>();
 		if (ss.compareTo("") == 0) {
 			result.add(WordGenerator.getWord(s));
@@ -171,7 +171,7 @@ public class InputField extends JTextField {
 	}
 
 	public Vector<String> getVABS() {
-		String ss = getText();
+		final String ss = getText();
 		Vector<String> result = new Vector<String>();
 		if (ss.compareTo("") == 0) {
 			result.add(WordGenerator.getABWord(20));

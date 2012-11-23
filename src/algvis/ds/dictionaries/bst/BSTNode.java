@@ -54,10 +54,11 @@ public class BSTNode extends Node {
 	}
 
 	public BSTNode getLeft() {
-		if (thread)
+		if (thread) {
 			return null;
-		else
+		} else {
 			return left;
+		}
 	}
 
 	public void setLeft(BSTNode left) {
@@ -69,10 +70,11 @@ public class BSTNode extends Node {
 	}
 
 	public BSTNode getRight() {
-		if (thread)
+		if (thread) {
 			return null;
-		else
+		} else {
 			return right;
+		}
 	}
 
 	public BSTNode setRight(BSTNode right) {
@@ -286,20 +288,24 @@ public class BSTNode extends Node {
 	@Override
 	public Rectangle2D getBoundingBox() {
 		Rectangle2D retVal = super.getBoundingBox();
-		if (left != null)
+		if (left != null) {
 			retVal = retVal.createUnion(left.getBoundingBox());
-		if (right != null)
+		}
+		if (right != null) {
 			retVal = retVal.createUnion(right.getBoundingBox());
+		}
 		return retVal;
 	}
 
 	@Override
 	public void endAnimation() {
 		super.endAnimation();
-		if (left != null)
+		if (left != null) {
 			left.endAnimation();
-		if (right != null)
+		}
+		if (right != null) {
 			right.endAnimation();
+		}
 	}
 
 	@Override
@@ -405,10 +411,12 @@ public class BSTNode extends Node {
 			left = null;
 			right = null;
 		}
-		if (getLeft() != null)
+		if (getLeft() != null) {
 			left.RTThreads();
-		if (getRight() != null)
+		}
+		if (getRight() != null) {
 			right.RTThreads();
+		}
 	}
 
 	/**
@@ -416,12 +424,14 @@ public class BSTNode extends Node {
 	 * that has been clicked by user.
 	 */
 	public BSTNode find(int x, int y) {
-		if (inside(x, y))
+		if (inside(x, y)) {
 			return this;
+		}
 		if (getLeft() != null) {
-			BSTNode tmp = getLeft().find(x, y);
-			if (tmp != null)
+			final BSTNode tmp = getLeft().find(x, y);
+			if (tmp != null) {
 				return tmp;
+			}
 		}
 		if (getRight() != null) {
 			return getRight().find(x, y);
@@ -441,15 +451,17 @@ public class BSTNode extends Node {
 	 *         subtree rooted at this node
 	 */
 	private NodePair<BSTNode> RTPreposition() {
-		NodePair<BSTNode> result = new NodePair<BSTNode>();
+		final NodePair<BSTNode> result = new NodePair<BSTNode>();
 		NodePair<BSTNode> fromLeftSubtree = null, fromRightSubtree = null;
 		offset = 0;
 
 		// 1. & 2. work out left & right subtree
-		if (getLeft() != null)
+		if (getLeft() != null) {
 			fromLeftSubtree = getLeft().RTPreposition();
-		if (getRight() != null)
+		}
+		if (getRight() != null) {
 			fromRightSubtree = getRight().RTPreposition();
+		}
 		// 3. examine this node
 		if (isLeaf()) {
 			if (!isRoot()) {
@@ -500,7 +512,7 @@ public class BSTNode extends Node {
 				 * this node. Similarly, right.offset + roffset is the
 				 * horizontal distance from R to this node.
 				 */
-				int distance = (loffset + DataStructure.minsepx - roffset);
+				final int distance = (loffset + DataStructure.minsepx - roffset);
 				if (distance > 0) {
 					getRight().offset += distance;
 					roffset += distance;
@@ -510,7 +522,8 @@ public class BSTNode extends Node {
 				 * offset! So Elevator calculate this new offset. In algorithm
 				 * TR published by Reingold this value is already calculated.
 				 */
-				boolean LwasThread = L.thread, RwasThread = R.thread;
+				boolean LwasThread = L.thread;
+				final boolean RwasThread = R.thread;
 				L = (L.right != null) ? L.right : L.left;
 				if (L != null) {
 					loffset += L.offset;
@@ -620,10 +633,12 @@ public class BSTNode extends Node {
 	 */
 	public void subtreeColor(NodeColor color) {
 		setColor(color);
-		if (getLeft() != null)
+		if (getLeft() != null) {
 			getLeft().subtreeColor(color);
-		if (getRight() != null)
+		}
+		if (getRight() != null) {
 			getRight().subtreeColor(color);
+		}
 	}
 
 	@Override
@@ -636,40 +651,51 @@ public class BSTNode extends Node {
 		HashtableStoreSupport.store(state, hash + "thread", thread);
 		HashtableStoreSupport.store(state, hash + "leftw", leftw);
 		HashtableStoreSupport.store(state, hash + "rightw", rightw);
-		if (left != null)
+		if (left != null) {
 			left.storeState(state);
-		if (right != null)
+		}
+		if (right != null) {
 			right.storeState(state);
+		}
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object left = state.get(hash + "left");
-		if (left != null)
+		final Object left = state.get(hash + "left");
+		if (left != null) {
 			this.left = (BSTNode) HashtableStoreSupport.restore(left);
-		Object right = state.get(hash + "right");
-		if (right != null)
+		}
+		final Object right = state.get(hash + "right");
+		if (right != null) {
 			this.right = (BSTNode) HashtableStoreSupport.restore(right);
-		Object parent = state.get(hash + "parent");
-		if (parent != null)
+		}
+		final Object parent = state.get(hash + "parent");
+		if (parent != null) {
 			this.parent = (BSTNode) HashtableStoreSupport.restore(parent);
-		Object level = state.get(hash + "level");
-		if (level != null)
+		}
+		final Object level = state.get(hash + "level");
+		if (level != null) {
 			this.level = (Integer) HashtableStoreSupport.restore(level);
-		Object thread = state.get(hash + "thread");
-		if (thread != null)
+		}
+		final Object thread = state.get(hash + "thread");
+		if (thread != null) {
 			this.thread = (Boolean) HashtableStoreSupport.restore(thread);
-		Object leftw = state.get(hash + "leftw");
-		if (leftw != null)
+		}
+		final Object leftw = state.get(hash + "leftw");
+		if (leftw != null) {
 			this.leftw = (Integer) HashtableStoreSupport.restore(leftw);
-		Object rightw = state.get(hash + "rightw");
-		if (rightw != null)
+		}
+		final Object rightw = state.get(hash + "rightw");
+		if (rightw != null) {
 			this.rightw = (Integer) HashtableStoreSupport.restore(rightw);
+		}
 
-		if (this.left != null)
+		if (this.left != null) {
 			this.left.restoreState(state);
-		if (this.right != null)
+		}
+		if (this.right != null) {
 			this.right.restoreState(state);
+		}
 	}
 }

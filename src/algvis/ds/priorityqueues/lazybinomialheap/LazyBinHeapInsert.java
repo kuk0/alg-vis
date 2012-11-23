@@ -32,8 +32,8 @@ public class LazyBinHeapInsert extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		int i = H.active;
-		BinHeapNode v = new BinHeapNode(H, x, ZDepth.ACTIONNODE);
+		final int i = H.active;
+		final BinHeapNode v = new BinHeapNode(H, x, ZDepth.ACTIONNODE);
 		if (H.root[i] == null) {
 			H.root[i] = H.min[i] = v;
 		} else {

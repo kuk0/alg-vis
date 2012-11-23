@@ -32,7 +32,7 @@ public class SkipFind extends SkipAlg {
 		addToScene(v);
 		setHeader("search");
 		addStep("skipfindstart");
-		SkipNode w = find();
+		final SkipNode w = find();
 
 		if (w.getKey() == v.getKey()) {
 			addNote("found");

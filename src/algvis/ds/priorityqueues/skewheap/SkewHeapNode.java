@@ -65,7 +65,7 @@ public class SkewHeapNode extends BSTNode {
 
 	public void linkup(SkewHeapNode v) {
 		if ((this.getParent() != null) && (v != null)) {
-			SkewHeapNode tmp = this.getParent();
+			final SkewHeapNode tmp = this.getParent();
 			v.setRight(this);
 			this.setParent(v);
 			v.setParent(tmp);
@@ -74,7 +74,7 @@ public class SkewHeapNode extends BSTNode {
 	}
 
 	public void swapChildren() {
-		SkewHeapNode tmp = this.getLeft();
+		final SkewHeapNode tmp = this.getLeft();
 		this.setLeft(this.getRight());
 		this.setRight(tmp);
 	}
@@ -104,8 +104,7 @@ public class SkewHeapNode extends BSTNode {
 			x1 = dir.x;
 			y1 = dir.y;
 		}
-		v.drawDoubleArrow(x1 + 2 * SkewHeapNode.RADIUS, y1, x2 - 2
-				* SkewHeapNode.RADIUS, y2);
+		v.drawDoubleArrow(x1 + 2 * Node.RADIUS, y1, x2 - 2 * Node.RADIUS, y2);
 	}
 
 	@Override
@@ -114,19 +113,20 @@ public class SkewHeapNode extends BSTNode {
 		drawDoubleArrow(v);
 	}
 
+	@Override
 	public void repos(int px, int py) {
 		this.goTo(px, py);
 
 		if (this.getRight() != null) {
 			this.getRight().repos(px + getRight().leftw,
-					py + (SkewHeap.minsepy));// + 2 * SkewHeapNode.RADIUS));
+					py + (DataStructure.minsepy));// + 2 * SkewHeapNode.RADIUS));
 		}
 		if (this.getLeft() != null) {
-			this.getLeft()
-					.repos(px - getLeft().rightw, py + (SkewHeap.minsepy));// +
-																			// 2
-																			// *
-																			// SkewHeapNode.RADIUS));
+			this.getLeft().repos(px - getLeft().rightw,
+					py + (DataStructure.minsepy));// +
+			// 2
+			// *
+			// SkewHeapNode.RADIUS));
 		}
 	}
 
@@ -231,17 +231,20 @@ public class SkewHeapNode extends BSTNode {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object doubleArrow = state.get(hash + "doubleArrow");
-		if (doubleArrow != null)
+		final Object doubleArrow = state.get(hash + "doubleArrow");
+		if (doubleArrow != null) {
 			this.doubleArrow = (Boolean) HashtableStoreSupport
 					.restore(doubleArrow);
-		Object dashedRightLine = state.get(hash + "dashedRightLine");
-		if (dashedRightLine != null)
+		}
+		final Object dashedRightLine = state.get(hash + "dashedRightLine");
+		if (dashedRightLine != null) {
 			this.dashedRightLine = (Boolean) HashtableStoreSupport
 					.restore(dashedRightLine);
-		Object dashedLeftLine = state.get(hash + "dashedLeftLine");
-		if (dashedLeftLine != null)
+		}
+		final Object dashedLeftLine = state.get(hash + "dashedLeftLine");
+		if (dashedLeftLine != null) {
 			this.dashedLeftLine = (Boolean) HashtableStoreSupport
 					.restore(dashedLeftLine);
+		}
 	}
 }

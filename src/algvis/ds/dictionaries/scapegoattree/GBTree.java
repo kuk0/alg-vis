@@ -120,8 +120,9 @@ public class GBTree extends BST {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object del = state.get(hash + "del");
-		if (del != null)
+		final Object del = state.get(hash + "del");
+		if (del != null) {
 			this.del = (Integer) HashtableStoreSupport.restore(del);
+		}
 	}
 }

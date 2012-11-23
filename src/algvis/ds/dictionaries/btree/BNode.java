@@ -21,7 +21,6 @@ import java.util.Hashtable;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
-import algvis.core.NodeColor;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.Fonts;
 import algvis.ui.view.View;
@@ -107,7 +106,7 @@ public class BNode extends Node {
 		keys[numKeys++] = x;
 		for (int i = numKeys - 1; i > 0; --i) {
 			if (keys[i] < keys[i - 1]) {
-				int tmp = keys[i];
+				final int tmp = keys[i];
 				keys[i] = keys[i - 1];
 				keys[i - 1] = tmp;
 			}
@@ -173,9 +172,9 @@ public class BNode extends Node {
 	}
 
 	public BNode split() {
-		int k = numKeys, ku = numKeys / 2; // , kw = numKeys - ku - 1;
-		BNode u = new BNode(D, keys[0], tox, toy), v = new BNode(D, keys[ku],
-				tox, toy), w = new BNode(D, keys[k - 1], tox, toy);
+		final int k = numKeys, ku = numKeys / 2; // , kw = numKeys - ku - 1;
+		final BNode u = new BNode(D, keys[0], tox, toy), v = new BNode(D,
+				keys[ku], tox, toy), w = new BNode(D, keys[k - 1], tox, toy);
 		for (int i = 1; i < ku; ++i) {
 			u.addLeaf(keys[i]);
 		}
@@ -212,7 +211,7 @@ public class BNode extends Node {
 		int i = -1;
 		while (keys[++i] != k) {
 		}
-		int p = i;
+		final int p = i;
 		for (--numKeys; i < numKeys; i++) {
 			keys[i] = keys[i + 1];
 		}
@@ -221,7 +220,7 @@ public class BNode extends Node {
 	}
 
 	public BNode delMin() {
-		int r = keys[0];
+		final int r = keys[0];
 		--numKeys;
 		System.arraycopy(keys, 1, keys, 0, numKeys);
 		width = _width();
@@ -229,7 +228,7 @@ public class BNode extends Node {
 	}
 
 	public BNode delMinCh() {
-		BNode r = c[0];
+		final BNode r = c[0];
 		--numChildren;
 		System.arraycopy(c, 1, c, 0, numChildren);
 		width = _width();
@@ -237,14 +236,14 @@ public class BNode extends Node {
 	}
 
 	public BNode delMax() {
-		BNode r = new BNode(D, keys[--numKeys], tox + (numKeys - 1)
+		final BNode r = new BNode(D, keys[--numKeys], tox + (numKeys - 1)
 				* Node.RADIUS, toy);
 		width = _width();
 		return r;
 	}
 
 	public BNode delMaxCh() {
-		BNode r = c[--numChildren];
+		final BNode r = c[--numChildren];
 		width = _width();
 		return r;
 	}
@@ -323,7 +322,8 @@ public class BNode extends Node {
 		if (numKeys <= 1) {
 			return tox;
 		}
-		String s = toString(i), t;
+		final String s = toString(i);
+		String t;
 		if (i == 0) {
 			t = "" + keys[0];
 		} else {
@@ -410,8 +410,8 @@ public class BNode extends Node {
 		if (this.toy > D.y2) {
 			D.y2 = this.toy;
 		}
-		int x = this.tox, x2 = this.tox, y = this.toy + 2 * Node.RADIUS
-				+ ((BTree) D).yspan;
+		int x = this.tox, x2 = this.tox;
+		final int y = this.toy + 2 * Node.RADIUS + ((BTree) D).yspan;
 		if (numChildren == 0) {
 			return;
 		}
@@ -430,7 +430,7 @@ public class BNode extends Node {
 				c[i].repos();
 			}
 		} else {
-			int k = numChildren / 2;
+			final int k = numChildren / 2;
 			c[k].goTo(x, y);
 			c[k].repos();
 			for (int i = 1; i <= k; ++i) {
@@ -448,7 +448,8 @@ public class BNode extends Node {
 	}
 
 	int _goToX(BNode v) {
-		int x = keys[0], p = v.numKeys;
+		final int x = keys[0];
+		int p = v.numKeys;
 		for (int i = 0; i < p; ++i) {
 			if (x <= v.keys[i]) {
 				p = i;
@@ -483,9 +484,10 @@ public class BNode extends Node {
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "parent", parent);
 		HashtableStoreSupport.store(state, hash + "c", c.clone());
-		for (BNode node : c) {
-			if (node != null)
+		for (final BNode node : c) {
+			if (node != null) {
 				node.storeState(state);
+			}
 		}
 		HashtableStoreSupport.store(state, hash + "numKeys", numKeys);
 		HashtableStoreSupport.store(state, hash + "numChildren", numChildren);
@@ -501,45 +503,57 @@ public class BNode extends Node {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object parent = state.get(hash + "parent");
-		if (parent != null)
+		final Object parent = state.get(hash + "parent");
+		if (parent != null) {
 			this.parent = (BNode) HashtableStoreSupport.restore(parent);
-
-		Object c = state.get(hash + "c");
-		if (c != null)
-			this.c = (BNode[]) HashtableStoreSupport.restore(c);
-		for (BNode node : this.c) {
-			if (node != null)
-				node.restoreState(state);
 		}
 
-		Object numKeys = state.get(hash + "numKeys");
-		if (numKeys != null)
+		final Object c = state.get(hash + "c");
+		if (c != null) {
+			this.c = (BNode[]) HashtableStoreSupport.restore(c);
+		}
+		for (final BNode node : this.c) {
+			if (node != null) {
+				node.restoreState(state);
+			}
+		}
+
+		final Object numKeys = state.get(hash + "numKeys");
+		if (numKeys != null) {
 			this.numKeys = (Integer) HashtableStoreSupport.restore(numKeys);
-		Object numChildren = state.get(hash + "numChildren");
-		if (numChildren != null)
+		}
+		final Object numChildren = state.get(hash + "numChildren");
+		if (numChildren != null) {
 			this.numChildren = (Integer) HashtableStoreSupport
 					.restore(numChildren);
-		Object keys = state.get(hash + "keys");
-		if (keys != null)
+		}
+		final Object keys = state.get(hash + "keys");
+		if (keys != null) {
 			this.keys = (int[]) HashtableStoreSupport.restore(keys);
-		Object leftw = state.get(hash + "leftw");
-		if (leftw != null)
+		}
+		final Object leftw = state.get(hash + "leftw");
+		if (leftw != null) {
 			this.leftw = (Integer) HashtableStoreSupport.restore(leftw);
-		Object rightw = state.get(hash + "rightw");
-		if (rightw != null)
+		}
+		final Object rightw = state.get(hash + "rightw");
+		if (rightw != null) {
 			this.rightw = (Integer) HashtableStoreSupport.restore(rightw);
-		Object width = state.get(hash + "width");
-		if (width != null)
+		}
+		final Object width = state.get(hash + "width");
+		if (width != null) {
 			this.width = (Integer) HashtableStoreSupport.restore(width);
-		Object nkeys = state.get(hash + "nkeys");
-		if (nkeys != null)
+		}
+		final Object nkeys = state.get(hash + "nkeys");
+		if (nkeys != null) {
 			this.nkeys = (Integer) HashtableStoreSupport.restore(nkeys);
-		Object height = state.get(hash + "height");
-		if (height != null)
+		}
+		final Object height = state.get(hash + "height");
+		if (height != null) {
 			this.height = (Integer) HashtableStoreSupport.restore(height);
-		Object nnodes = state.get(hash + "nnodes");
-		if (nnodes != null)
+		}
+		final Object nnodes = state.get(hash + "nnodes");
+		if (nnodes != null) {
 			this.nnodes = (Integer) HashtableStoreSupport.restore(nnodes);
+		}
 	}
 }

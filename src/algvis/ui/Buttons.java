@@ -74,24 +74,25 @@ abstract public class Buttons extends JPanel implements ActionListener,
 		D = panel.D;
 		assert D != null : "data structure not initialized yet";
 
-		JPanel first = initFirstRow();
-		JPanel second = initSecondRow();
-		JPanel third = initThirdRow();
-		JPanel statsPanel = initStats();
+		final JPanel first = initFirstRow();
+		final JPanel second = initSecondRow();
+		final JPanel third = initThirdRow();
+		final JPanel statsPanel = initStats();
 
 		// put everything together
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		add(first);
 		add(second);
-		if (third != null)
+		if (third != null) {
 			add(third);
+		}
 		add(statsPanel);
 		setBorder(BorderFactory.createTitledBorder(""));
 	}
 
 	// input field, actions (insert, find, delete,...), previous, next
 	JPanel initFirstRow() {
-		JPanel first = new JPanel();
+		final JPanel first = new JPanel();
 		first.setLayout(new FlowLayout());
 
 		I = new InputField(5, panel.statusBar, panel.S);
@@ -107,7 +108,7 @@ abstract public class Buttons extends JPanel implements ActionListener,
 
 	// [x] pause, clear, random, zoom in/out
 	JPanel initSecondRow() {
-		JPanel second = new JPanel();
+		final JPanel second = new JPanel();
 		initPause();
 		initClear();
 		initRandom();
@@ -116,8 +117,9 @@ abstract public class Buttons extends JPanel implements ActionListener,
 		second.setLayout(new FlowLayout());
 		second.add(pause);
 		second.add(clear);
-		if (random != null)
+		if (random != null) {
 			second.add(random);
+		}
 		// second.add(save);
 		// second.add(zoomLabel);
 		// second.add(zoomIn);
@@ -133,7 +135,7 @@ abstract public class Buttons extends JPanel implements ActionListener,
 
 	// statistics
 	JPanel initStats() {
-		JPanel statsPanel = new JPanel();
+		final JPanel statsPanel = new JPanel();
 		statsPanel.setLayout(new FlowLayout());
 		stats = new ChLabel(D.stats());
 		statsText = stats.getText();
@@ -182,7 +184,7 @@ abstract public class Buttons extends JPanel implements ActionListener,
 	// }
 
 	private JButton createButton(String alt, String path) {
-		java.net.URL imgURL = getClass().getResource(path);
+		final java.net.URL imgURL = getClass().getResource(path);
 		if (imgURL != null) {
 			return new JButton(new ImageIcon(imgURL));
 		} else {
@@ -215,7 +217,7 @@ abstract public class Buttons extends JPanel implements ActionListener,
 				panel.refresh();
 			}
 		} else if (evt.getSource() == next) {
-			Algorithm a = panel.D.getA();
+			final Algorithm a = panel.D.getA();
 			if (a != null && !a.isDone() && !panel.history.canRedo()) {
 				a.resume();
 			} else if (panel.history.canRedo()) {
@@ -227,8 +229,9 @@ abstract public class Buttons extends JPanel implements ActionListener,
 				panel.refresh();
 			}
 		} else if (evt.getSource() == clear) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
+			}
 			D.start(new AlgorithmAdapter(panel) {
 				@Override
 				public void runAlgorithm() throws InterruptedException {
@@ -236,8 +239,9 @@ abstract public class Buttons extends JPanel implements ActionListener,
 				}
 			});
 		} else if (evt.getSource() == random) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
+			}
 			D.random(I.getInt(10));
 		} else if (evt.getSource() == pause) {
 			panel.pauses = pause.isSelected();
@@ -302,8 +306,9 @@ abstract public class Buttons extends JPanel implements ActionListener,
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
-		Object statsText = state.get(hash + "statsText");
-		if (statsText != null)
+		final Object statsText = state.get(hash + "statsText");
+		if (statsText != null) {
 			this.statsText = (String) HashtableStoreSupport.restore(statsText);
+		}
 	}
 }

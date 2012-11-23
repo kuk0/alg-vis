@@ -28,7 +28,7 @@ public class LeftHeapInsert extends LeftHeapAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		int i = H.active;
+		final int i = H.active;
 		H.root[0] = new LeftHeapNode(H, x, ZDepth.ACTIONNODE);
 		setHeader("insertion");
 

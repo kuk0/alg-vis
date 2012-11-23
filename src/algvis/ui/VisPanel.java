@@ -67,40 +67,40 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
 
 	private void init() {
 		this.setLayout(new GridBagLayout());
-		JPanel screenP = initScreen();
-		JScrollPane commentary = initCommentary();
+		final JPanel screenP = initScreen();
+		final JScrollPane commentary = initCommentary();
 		statusBar = new ILabel("EMPTYSTR");
 		initDS();
 
-		GridBagConstraints cs = new GridBagConstraints();
+		final GridBagConstraints cs = new GridBagConstraints();
 		cs.gridx = 0;
 		cs.gridy = 0;
 		cs.fill = GridBagConstraints.BOTH;
 		add(screenP, cs);
 
-		GridBagConstraints cc = new GridBagConstraints();
+		final GridBagConstraints cc = new GridBagConstraints();
 		cc.gridx = 1;
 		cc.gridy = 0;
 		cc.gridheight = 2;
 		cc.fill = GridBagConstraints.VERTICAL;
 		add(commentary, cc);
 
-		GridBagConstraints cb = new GridBagConstraints();
+		final GridBagConstraints cb = new GridBagConstraints();
 		cb.gridx = 0;
 		cb.gridy = 1;
 		cb.fill = GridBagConstraints.HORIZONTAL;
 		add(buttons, cb);
 
-		GridBagConstraints csb = new GridBagConstraints();
+		final GridBagConstraints csb = new GridBagConstraints();
 		csb.gridx = 0;
 		csb.gridy = 2;
 		csb.fill = GridBagConstraints.HORIZONTAL;
 		add(statusBar, csb);
-		
+
 		screen.setDS(D);
 		languageChanged();
 	}
-	
+
 	public void start() {
 		started = true;
 		screen.start();
@@ -108,7 +108,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
 	}
 
 	private JPanel initScreen() {
-		JPanel screenP = new JPanel();
+		final JPanel screenP = new JPanel();
 		screenP.setLayout(new BorderLayout());
 		screen = new Screen(this) {
 			private static final long serialVersionUID = 2196788670749006364L;
@@ -142,7 +142,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
 
 	private JScrollPane initCommentary() {
 		// Commentary
-		JScrollPane SP = new JScrollPane() {
+		final JScrollPane SP = new JScrollPane() {
 			private static final long serialVersionUID = -8618469733328277117L;
 
 			@Override
@@ -184,7 +184,9 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
 		if (!onAir) {
 			screen.suspend();
 		} else {
-			if (!started) start();
+			if (!started) {
+				start();
+			}
 			screen.resume();
 		}
 	}

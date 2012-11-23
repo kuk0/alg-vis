@@ -7,6 +7,7 @@ public class IString implements Stringable {
 		this.s = s;
 	}
 
+	@Override
 	public String getString() {
 		return Languages.getString(s);
 	}

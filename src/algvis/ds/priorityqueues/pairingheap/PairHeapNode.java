@@ -125,7 +125,7 @@ public class PairHeapNode extends TreeNode {
 		if (getChild() == null) {
 			addChild(w);
 		} else {
-			PairHeapNode tmp = this.getChild();
+			final PairHeapNode tmp = this.getChild();
 			tmp.setParent(null);
 			setChild(null);
 			addChild(w);
@@ -150,8 +150,9 @@ public class PairHeapNode extends TreeNode {
 				if ((state != INVISIBLE) && (getChild().state != INVISIBLE)) {
 					v.drawLine(x, y, getChild().x, getChild().y);
 				}
-			} else
+			} else {
 				System.out.println("child: " + getChild());
+			}
 			v.setColor(Color.black);
 		} else {
 			TreeNode w = getChild();

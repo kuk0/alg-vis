@@ -26,8 +26,8 @@ public class PairHeapDelete extends PairHeapAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		Pairing pairState = this.H.pairState;
-		int i = H.active;
+		final Pairing pairState = this.H.pairState;
+		final int i = H.active;
 		setHeader("deletion");
 
 		if (H.root[i] == null) {
@@ -40,7 +40,7 @@ public class PairHeapDelete extends PairHeapAlg {
 			addStep("minimum", H.root[i].getKey());
 		}
 
-		PairHeapNode v = new PairHeapNode(H.root[i]);
+		final PairHeapNode v = new PairHeapNode(H.root[i]);
 		v.mark();
 		addToScene(v);
 
@@ -53,7 +53,7 @@ public class PairHeapDelete extends PairHeapAlg {
 		removeFromScene(v);
 
 		H.root[i].state = -1; // <<----- potom odkomentovat
-		H.root[i].shift(0, -PairingHeap.minsepy);
+		H.root[i].shift(0, -DataStructure.minsepy);
 
 		switch (pairState) {
 		case NAIVE:

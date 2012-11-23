@@ -16,6 +16,8 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.leftistheap;
 
+import algvis.core.DataStructure;
+
 public class LeftHeapDelete extends LeftHeapAlg {
 
 	public LeftHeapDelete(LeftHeap H) {
@@ -24,7 +26,7 @@ public class LeftHeapDelete extends LeftHeapAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		int i = H.active;
+		final int i = H.active;
 		setHeader("deletion");
 
 		if (H.root[i] == null) {
@@ -49,10 +51,11 @@ public class LeftHeapDelete extends LeftHeapAlg {
 			H.root[0] = null;
 			if (H.root[i] != null) {
 				H.root[i].highlightTree();
-				H.root[i].repos(H.root[i].x, H.root[i].y - (LeftHeap.minsepy));// +
-																				// 2
-																				// *
-																				// LeftHeapNode.RADIUS));
+				H.root[i].repos(H.root[i].x, H.root[i].y
+						- (DataStructure.minsepy));// +
+				// 2
+				// *
+				// LeftHeapNode.RADIUS));
 			}
 			// heap #1 is empty; done;
 			return;
@@ -60,19 +63,19 @@ public class LeftHeapDelete extends LeftHeapAlg {
 		H.root[i].setParent(null);
 
 		if (H.root[0] == null) {
-			H.root[i].repos(H.root[i].x, H.root[i].y - (LeftHeap.minsepy));// +
-																			// 2
-																			// *
-																			// LeftHeapNode.RADIUS));
+			H.root[i].repos(H.root[i].x, H.root[i].y - (DataStructure.minsepy));// +
+			// 2
+			// *
+			// LeftHeapNode.RADIUS));
 			// heap #2 is empty; done;
 			return;
 		}
 		H.root[0].setParent(null);
 
-		H.root[i].repos(H.root[i].x, H.root[i].y - (LeftHeap.minsepy));// + 2 *
-																		// LeftHeapNode.RADIUS));
-		H.root[0].repos(H.root[0].x, H.root[0].y - (LeftHeap.minsepy));// + 2 *
-																		// H.RADIUS));
+		H.root[i].repos(H.root[i].x, H.root[i].y - (DataStructure.minsepy));// + 2 *
+		// LeftHeapNode.RADIUS));
+		H.root[0].repos(H.root[0].x, H.root[0].y - (DataStructure.minsepy));// + 2 *
+		// H.RADIUS));
 
 		pause();
 		meld(i);

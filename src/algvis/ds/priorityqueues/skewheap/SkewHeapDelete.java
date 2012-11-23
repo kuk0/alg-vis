@@ -16,6 +16,8 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.skewheap;
 
+import algvis.core.DataStructure;
+
 public class SkewHeapDelete extends SkewHeapAlg {
 
 	public SkewHeapDelete(SkewHeap H) {
@@ -24,7 +26,7 @@ public class SkewHeapDelete extends SkewHeapAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		int i = H.active;
+		final int i = H.active;
 		setHeader("deletion");
 
 		if (H.root[i] == null) {
@@ -49,10 +51,11 @@ public class SkewHeapDelete extends SkewHeapAlg {
 			H.root[0] = null;
 			if (H.root[i] != null) {
 				H.root[i].highlightTree();
-				H.root[i].repos(H.root[i].x, H.root[i].y - (SkewHeap.minsepy));// +
-																				// 2
-																				// *
-																				// SkewHeapNode.RADIUS));
+				H.root[i].repos(H.root[i].x, H.root[i].y
+						- (DataStructure.minsepy));// +
+				// 2
+				// *
+				// SkewHeapNode.RADIUS));
 			}
 			// heap #1 is empty; done;
 			return;
@@ -60,19 +63,19 @@ public class SkewHeapDelete extends SkewHeapAlg {
 		H.root[i].setParent(null);
 
 		if (H.root[0] == null) {
-			H.root[i].repos(H.root[i].x, H.root[i].y - (SkewHeap.minsepy));// +
-																			// 2
-																			// *
-																			// SkewHeapNode.RADIUS));
+			H.root[i].repos(H.root[i].x, H.root[i].y - (DataStructure.minsepy));// +
+			// 2
+			// *
+			// SkewHeapNode.RADIUS));
 			// heap #2 is empty; done;
 			return;
 		}
 		H.root[0].setParent(null);
 
-		H.root[i].repos(H.root[i].x, H.root[i].y - (SkewHeap.minsepy));// + 2 *
-																		// SkewHeapNode.RADIUS));
-		H.root[0].repos(H.root[0].x, H.root[0].y - (SkewHeap.minsepy));// + 2 *
-																		// SkewHeapNode.RADIUS));
+		H.root[i].repos(H.root[i].x, H.root[i].y - (DataStructure.minsepy));// + 2 *
+		// SkewHeapNode.RADIUS));
+		H.root[0].repos(H.root[0].x, H.root[0].y - (DataStructure.minsepy));// + 2 *
+		// SkewHeapNode.RADIUS));
 
 		pause();
 		meld(i);

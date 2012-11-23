@@ -137,12 +137,13 @@ public class IntervalNode extends BSTNode {
 		case TOUT:
 		case TWAIT:
 			v.setColor(this.getFgColor());
-			int c = (e - b + 1);
-			int d = (int) (Math.log10(c) / Math.log10(2));
+			final int c = (e - b + 1);
+			final int d = (int) (Math.log10(c) / Math.log10(2));
 			// System.out.println(d + " =vyska-1, minsepy= "
 			// + IntervalTree.minsepy);
-			int width = (c) * IntervalTree.minsepx;
-			int height = (d) * IntervalTree.minsepy + 4 + 2 * Node.RADIUS;
+			final int width = (c) * IntervalTree.minsepx;
+			final int height = (d) * DataStructure.minsepy + 4 + 2
+					* Node.RADIUS;
 			v.drawRoundRectangle(x, y + height / 2 - Node.RADIUS - 3,
 					width / 2, height / 2, 8, 8);
 			v.setColor(this.getBgColor());
@@ -183,6 +184,7 @@ public class IntervalNode extends BSTNode {
 		draw(v);
 	}
 
+	@Override
 	public void rebox() {
 		/*
 		 * if there is a left child, leftw = width of the box enclosing the
@@ -255,13 +257,16 @@ public class IntervalNode extends BSTNode {
 		markedColor = false;
 	}
 
+	@Override
 	public IntervalNode find(int x, int y) {
-		if (inside(x, y))
+		if (inside(x, y)) {
 			return this;
+		}
 		if (getLeft() != null) {
-			IntervalNode tmp = getLeft().find(x, y);
-			if (tmp != null)
+			final IntervalNode tmp = getLeft().find(x, y);
+			if (tmp != null) {
 				return tmp;
+			}
 		}
 		if (getRight() != null) {
 			return getRight().find(x, y);
@@ -281,18 +286,22 @@ public class IntervalNode extends BSTNode {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object b = state.get(hash + "b");
-		if (b != null)
+		final Object b = state.get(hash + "b");
+		if (b != null) {
 			this.b = (Integer) HashtableStoreSupport.restore(b);
-		Object e = state.get(hash + "e");
-		if (e != null)
+		}
+		final Object e = state.get(hash + "e");
+		if (e != null) {
 			this.e = (Integer) HashtableStoreSupport.restore(e);
-		Object focused = state.get(hash + "focused");
-		if (focused != null)
+		}
+		final Object focused = state.get(hash + "focused");
+		if (focused != null) {
 			this.focused = (focusType) HashtableStoreSupport.restore(focused);
-		Object markedColor = state.get(hash + "markedColor");
-		if (markedColor != null)
+		}
+		final Object markedColor = state.get(hash + "markedColor");
+		if (markedColor != null) {
 			this.markedColor = (Boolean) HashtableStoreSupport
 					.restore(markedColor);
+		}
 	}
 }

@@ -70,7 +70,7 @@ public class Trie extends DataStructure {
 
 	@Override
 	public void draw(View V) {
-		TrieNode v = getRoot();
+		final TrieNode v = getRoot();
 		if (v != null) {
 			v.drawTree(V);
 			V.drawString("\u025B", v.x, v.y - 8, Fonts.NORMAL);
@@ -79,8 +79,9 @@ public class Trie extends DataStructure {
 
 	@Override
 	protected void move() {
-		if (root != null)
+		if (root != null) {
 			root.moveTree();
+		}
 	}
 
 	@Override
@@ -90,8 +91,9 @@ public class Trie extends DataStructure {
 
 	@Override
 	protected void endAnimation() {
-		if (root != null)
+		if (root != null) {
 			root.endAnimation();
+		}
 	}
 
 	@Override
@@ -135,7 +137,7 @@ public class Trie extends DataStructure {
 	}
 
 	public void clearExtraColor() {
-		TrieNode r = getRoot();
+		final TrieNode r = getRoot();
 		if (r != null) {
 			getRoot().clearExtraColor();
 		}
@@ -145,17 +147,20 @@ public class Trie extends DataStructure {
 	public void storeState(Hashtable<Object, Object> state) {
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "root", root);
-		if (root != null)
+		if (root != null) {
 			root.storeState(state);
+		}
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object root = state.get(hash + "root");
-		if (root != null)
+		final Object root = state.get(hash + "root");
+		if (root != null) {
 			this.root = (TrieNode) HashtableStoreSupport.restore(root);
-		if (this.root != null)
+		}
+		if (this.root != null) {
 			this.root.restoreState(state);
+		}
 	}
 }

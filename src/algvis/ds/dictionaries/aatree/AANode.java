@@ -56,7 +56,7 @@ public class AANode extends BSTNode {
 		drawKey(v);
 		drawArrow(v);
 		drawArc(v);
-		String str = "" + getLevel();
+		final String str = "" + getLevel();
 		v.drawString(str, x + Node.RADIUS, y - Node.RADIUS, Fonts.SMALL);
 	}
 
@@ -75,8 +75,9 @@ public class AANode extends BSTNode {
 	}
 
 	public void drawTree2(View v) {
-		if (((AA) D).mode23)
+		if (((AA) D).mode23) {
 			drawBigNodes(v);
+		}
 		drawTree(v);
 	}
 }

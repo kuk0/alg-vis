@@ -59,24 +59,26 @@ public class SuffixTreeInsert extends Algorithm {
 		int startingJ = 0;
 
 		SuffixTreeNode setUpSuffixLinkOnThis = T.getRoot();
-		int length = T.text.length();
+		final int length = T.text.length();
 		for (int i = 0; i < length; i++) {
 			addStep("sxbphase", i + 1);
 			T.str.setColor(NodeColor.NORMAL.bgColor, i, i + 1);
 			T.reposition();
 			pause();
-			char ch = T.text.charAt(i);
-			if (ch != '$')
+			final char ch = T.text.charAt(i);
+			if (ch != '$') {
 				addStep("sxbfirstrule", "" + ch);
-			else
+			} else {
 				addStep("sxbfirstrule", "\\$");
+			}
 			T.reposition();
 			pause();
 			// in real implementation this is done in O(1) both time & space
-			Vector<SuffixTreeNode> newRuleOneBuffer = new Vector<SuffixTreeNode>();
-			for (SuffixTreeNode u : ruleOneBuffer) {
+			final Vector<SuffixTreeNode> newRuleOneBuffer = new Vector<SuffixTreeNode>();
+			for (final SuffixTreeNode u : ruleOneBuffer) {
 				u.setColor(NodeColor.NORMAL);
-				SuffixTreeNode w = new SuffixTreeNode(T, ch, u.x, u.y, true);
+				final SuffixTreeNode w = new SuffixTreeNode(T, ch, u.x, u.y,
+						true);
 				u.addChild(w);
 				w.setColor(NodeColor.CACHED);
 				newRuleOneBuffer.add(w);
@@ -85,13 +87,14 @@ public class SuffixTreeInsert extends Algorithm {
 			}
 			ruleOneBuffer = newRuleOneBuffer;
 			starting.setColor(NodeColor.FOUND);
-			if (ch != '$')
+			if (ch != '$') {
 				addStep("sxbcontinue", "" + ch);
-			else
+			} else {
 				addStep("sxbcontinue", "\\$");
+			}
 			T.reposition();
 			pause();
-			Vector<SuffixTreeNode> upWalk = new Vector<SuffixTreeNode>();
+			final Vector<SuffixTreeNode> upWalk = new Vector<SuffixTreeNode>();
 			String cachedUpWalk = "";
 			setUpSuffixLinkOnThis = T.getRoot();
 			SuffixTreeNode current = starting;
@@ -101,19 +104,20 @@ public class SuffixTreeInsert extends Algorithm {
 				T.reposition();
 				pause();
 				SuffixTreeNode caching = current;
-				if ((caching == starting) && (current != T.getRoot()))
-					caching = (SuffixTreeNode) caching.getParent();
+				if ((caching == starting) && (current != T.getRoot())) {
+					caching = caching.getParent();
+				}
 				while (caching.isPacked()) {
 					upWalk.add(caching);
 					cachedUpWalk = caching.ch + cachedUpWalk;
-					caching = (SuffixTreeNode) caching.getParent();
+					caching = caching.getParent();
 				}
 				current.unmark();
 				starting.setColor(NodeColor.FOUND);
 				current = caching;
 				current.mark();
 				// if upWalk != null
-				for (SuffixTreeNode u : upWalk) {
+				for (final SuffixTreeNode u : upWalk) {
 					u.setColor(NodeColor.INSERT);
 				}
 				current.unmark();
@@ -130,21 +134,22 @@ public class SuffixTreeInsert extends Algorithm {
 					pause();
 				}
 				current.mark();
-				for (SuffixTreeNode u : upWalk) {
+				for (final SuffixTreeNode u : upWalk) {
 					u.setColor(NodeColor.NORMAL);
 				}
 				starting.setColor(NodeColor.FOUND);
-				if (ch != '$')
+				if (ch != '$') {
 					addStep("sxbdownwalk", "" + ch);
-				else
+				} else {
 					addStep("sxbdownwalk", "\\$");
+				}
 				hw = new TrieWordNode(T, cachedUpWalk, current.x, current.y,
 						NodeColor.INSERT);
 				addToScene(hw);
 				hw.goNextTo(current);
 				T.reposition();
 				pause();
-				Vector<SuffixTreeNode> downWalk = new Vector<SuffixTreeNode>();
+				final Vector<SuffixTreeNode> downWalk = new Vector<SuffixTreeNode>();
 				caching = current;
 				while (!cachedUpWalk.equals("")) {
 					if (!caching.isPacked()) {
@@ -152,7 +157,7 @@ public class SuffixTreeInsert extends Algorithm {
 						current = caching;
 						current.mark();
 					}
-					for (SuffixTreeNode u : downWalk) {
+					for (final SuffixTreeNode u : downWalk) {
 						u.setColor(NodeColor.INSERT);
 					}
 					hw.setAndGoNextTo(cachedUpWalk, current);
@@ -160,16 +165,16 @@ public class SuffixTreeInsert extends Algorithm {
 					// T.reposition();
 					// pause();
 					// in real implementation this is O(1) both time and space
-					SuffixTreeNode u = null;
+					final SuffixTreeNode u = null;
 					do {
-						caching = (SuffixTreeNode) caching
+						caching = caching
 								.getChildWithCH(cachedUpWalk.charAt(0));
 						cachedUpWalk = cachedUpWalk.substring(1);
 						downWalk.add(caching);
 					} while ((!cachedUpWalk.equals("")) && (u != null)
 							&& (caching.isPacked()));
 				}
-				for (SuffixTreeNode u : downWalk) {
+				for (final SuffixTreeNode u : downWalk) {
 					u.setColor(NodeColor.NORMAL);
 				}
 				upWalk.clear();
@@ -192,10 +197,11 @@ public class SuffixTreeInsert extends Algorithm {
 					if (setUpSuffixLinkOnThis != T.getRoot()) {
 						setUpSuffixLinkOnThis.setSuffixLink(current);
 					}
-					if (ch != '$')
+					if (ch != '$') {
 						addStep("sxbsecondrule", "" + ch);
-					else
+					} else {
 						addStep("sxbsecondrule", "\\$");
+					}
 					T.reposition();
 					pause();
 					if (current != T.getRoot()) {
@@ -204,8 +210,8 @@ public class SuffixTreeInsert extends Algorithm {
 						pathEnded = true;
 					}
 					current.setPacked(false);
-					SuffixTreeNode u = new SuffixTreeNode(T, ch, current.x,
-							current.y, true);
+					final SuffixTreeNode u = new SuffixTreeNode(T, ch,
+							current.x, current.y, true);
 					current.addChild(u);
 					u.setParent(current);
 					ruleOneBuffer.add(u);
@@ -222,7 +228,7 @@ public class SuffixTreeInsert extends Algorithm {
 							&& (!current.isRoot())) {
 						upWalk.add(current);
 						cachedUpWalk = current.ch + cachedUpWalk;
-						current = (SuffixTreeNode) current.getParent();
+						current = current.getParent();
 					}
 				}
 				removeFromScene(hw);
@@ -237,7 +243,7 @@ public class SuffixTreeInsert extends Algorithm {
 		addStep("sxbexplicit");
 		T.reposition();
 		pause();
-		for (SuffixTreeNode u : ruleOneBuffer) {
+		for (final SuffixTreeNode u : ruleOneBuffer) {
 			u.setPacked(false);
 			u.setColor(NodeColor.NORMAL);
 		}

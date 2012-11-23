@@ -37,17 +37,19 @@ public class BinHeapDecrKey extends Algorithm {
 	public void runAlgorithm() throws InterruptedException {
 		if (H.minHeap) {
 			v.setKey(v.getKey() - delta);
-			if (v.getKey() < 1)
+			if (v.getKey() < 1) {
 				v.setKey(1);
+			}
 		} else {
 			v.setKey(v.getKey() + delta);
-			if (v.getKey() > InputField.MAX)
+			if (v.getKey() > InputField.MAX) {
 				v.setKey(InputField.MAX);
+			}
 		}
 		BinHeapNode w = v.parent;
 		while (w != null && v.prec(w)) {
-			BinHeapNode v1 = new BinHeapNode(v);
-			BinHeapNode v2 = new BinHeapNode(w);
+			final BinHeapNode v1 = new BinHeapNode(v);
+			final BinHeapNode v2 = new BinHeapNode(w);
 			addToScene(v1);
 			addToScene(v2);
 			v1.setKey(Node.NOKEY);

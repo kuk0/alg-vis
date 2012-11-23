@@ -26,6 +26,10 @@ import javax.swing.undo.UndoableEdit;
 import algvis.ui.VisPanel;
 
 public class HistoryManager extends UndoManager {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -842354204488084104L;
 	private final Map<UndoableEdit, Boolean> algorithmEnds = new WeakHashMap<UndoableEdit, Boolean>();
 	private long id = -1; // ak sa v paneli vykona viac ako 2^63 krokov, tak
 							// mame problem
@@ -51,7 +55,7 @@ public class HistoryManager extends UndoManager {
 	}
 
 	public synchronized void putAlgorithmEnd() {
-		UndoableEdit edit = editToBeUndone();
+		final UndoableEdit edit = editToBeUndone();
 		if (edit != null) {
 			algorithmEnds.put(edit, true);
 		}
@@ -71,19 +75,21 @@ public class HistoryManager extends UndoManager {
 
 	public synchronized void goTo(long id) {
 		if (id <= editToBeUndone().getId()) {
-			while (canUndo() && editToBeUndone().getId() >= id)
+			while (canUndo() && editToBeUndone().getId() >= id) {
 				undo();
+			}
 			panel.scene.endAnimation();
 			redo();
 		} else {
-			while (editToBeRedone().getId() < id)
+			while (editToBeRedone().getId() < id) {
 				redo();
+			}
 			redo();
 		}
 	}
 
 	public synchronized boolean isBetweenAlgorithms() {
-		UndoableEdit e = editToBeUndone();
+		final UndoableEdit e = editToBeUndone();
 		return e == null || algorithmEnds.containsKey(e);
 	}
 
@@ -98,9 +104,9 @@ public class HistoryManager extends UndoManager {
 	}
 
 	public void trimToEnd() {
-		AbstractUndoableEdit fakeEdit = new AbstractUndoableEdit();
+		final AbstractUndoableEdit fakeEdit = new AbstractUndoableEdit();
 		if (super.addEdit(fakeEdit)) {
-			int lastEditIndex = edits.size() - 1;
+			final int lastEditIndex = edits.size() - 1;
 			trimEdits(lastEditIndex, lastEditIndex);
 		}
 	}

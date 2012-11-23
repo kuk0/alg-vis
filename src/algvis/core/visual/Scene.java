@@ -44,7 +44,7 @@ public class Scene extends VisualElement {
 	public synchronized void add(VisualElement element) {
 		this.add(element, element.getZDepth());
 	}
-	
+
 	public synchronized void add(VisualElement element, int zDepth) {
 		removeManager.add(element, zDepth);
 	}
@@ -79,10 +79,11 @@ public class Scene extends VisualElement {
 	// }
 	// }
 
+	@Override
 	public void draw(View V) {
 		for (int i = MAXZ - 1; i >= 0; --i) {
 			synchronized (this) {
-				for (VisualElement e : elements.get(i)) {
+				for (final VisualElement e : elements.get(i)) {
 					e.draw(V);
 					// Rectangle2D r = e.getBoundingBox();
 					// if (r != null) {
@@ -94,19 +95,21 @@ public class Scene extends VisualElement {
 		}
 	}
 
+	@Override
 	public synchronized void move() {
-		for (Set<VisualElement> set : elements) {
-			for (VisualElement e : set) {
+		for (final Set<VisualElement> set : elements) {
+			for (final VisualElement e : set) {
 				e.move();
 			}
 		}
 	}
 
+	@Override
 	public synchronized Rectangle2D getBoundingBox() {
 		Rectangle2D retVal = null;
-		for (Set<VisualElement> set : elements) {
-			for (VisualElement e : set) {
-				Rectangle2D eBB = e.getBoundingBox();
+		for (final Set<VisualElement> set : elements) {
+			for (final VisualElement e : set) {
+				final Rectangle2D eBB = e.getBoundingBox();
 				if (retVal == null) {
 					retVal = eBB;
 				} else if (eBB != null) {
@@ -119,8 +122,8 @@ public class Scene extends VisualElement {
 
 	@Override
 	public synchronized void endAnimation() {
-		for (Set<VisualElement> set : elements) {
-			for (VisualElement e : set) {
+		for (final Set<VisualElement> set : elements) {
+			for (final VisualElement e : set) {
 				e.endAnimation();
 			}
 		}
@@ -129,8 +132,8 @@ public class Scene extends VisualElement {
 	@Override
 	public synchronized boolean isAnimationDone() {
 		boolean retVal = true;
-		for (Set<VisualElement> set : elements) {
-			for (VisualElement e : set) {
+		for (final Set<VisualElement> set : elements) {
+			for (final VisualElement e : set) {
 				retVal &= e.isAnimationDone();
 			}
 		}
@@ -139,11 +142,11 @@ public class Scene extends VisualElement {
 
 	@Override
 	public synchronized void storeState(Hashtable<Object, Object> state) {
-		List<Set<VisualElement>> elementsClone = new ArrayList<Set<VisualElement>>();
-		for (HashSet<VisualElement> set : elements) {
+		final List<Set<VisualElement>> elementsClone = new ArrayList<Set<VisualElement>>();
+		for (final HashSet<VisualElement> set : elements) {
 			elementsClone.add((Set<VisualElement>) set.clone());
 		}
-		for (VisualElement element : removeManager.toRemove) {
+		for (final VisualElement element : removeManager.toRemove) {
 			elementsClone.get(element.getZDepth()).remove(element);
 		}
 		for (int i = 0; i < MAXZ; ++i) {
@@ -151,8 +154,8 @@ public class Scene extends VisualElement {
 					elementsClone.get(i));
 		}
 
-		for (Set<VisualElement> set : elements) {
-			for (VisualElement e : set) {
+		for (final Set<VisualElement> set : elements) {
+			for (final VisualElement e : set) {
 				e.storeState(state);
 			}
 		}
@@ -161,10 +164,10 @@ public class Scene extends VisualElement {
 	@Override
 	public synchronized void restoreState(Hashtable<?, ?> state) {
 		for (int i = 0; i < MAXZ; ++i) {
-			Set<VisualElement> setI = (Set<VisualElement>) state.get(hash
+			final Set<VisualElement> setI = (Set<VisualElement>) state.get(hash
 					+ "elements" + i);
 			if (setI != null) {
-				for (VisualElement e : elements.get(i)) {
+				for (final VisualElement e : elements.get(i)) {
 					if (setI.contains(e) && removeManager.toRemove.contains(e)) {
 						removeManager.toRemove.remove(e);
 					} else if (!setI.contains(e)
@@ -173,7 +176,7 @@ public class Scene extends VisualElement {
 					}
 				}
 
-				for (VisualElement e : setI) {
+				for (final VisualElement e : setI) {
 					if (!elements.get(i).contains(e)) {
 						add(e, e.getZDepth());
 						// if (e instanceof Node) {
@@ -185,18 +188,18 @@ public class Scene extends VisualElement {
 			}
 		}
 
-		for (Set<VisualElement> set : elements) {
-			for (VisualElement e : set) {
+		for (final Set<VisualElement> set : elements) {
+			for (final VisualElement e : set) {
 				e.restoreState(state);
 			}
 		}
 	}
 
 	public synchronized void clear() {
-		for (VisualElement e : removeManager.toRemove) {
+		for (final VisualElement e : removeManager.toRemove) {
 			removeManager.toRemove.remove(e);
 		}
-		for (Set<VisualElement> set : elements) {
+		for (final Set<VisualElement> set : elements) {
 			set.clear();
 		}
 	}
@@ -219,10 +222,10 @@ public class Scene extends VisualElement {
 							// System.out.println("elemSIZE: " + poc);
 							// System.out.println("elemSIZE2: " +
 							// elements.get(5).size());
-							Iterator<VisualElement> iterator = toRemove
+							final Iterator<VisualElement> iterator = toRemove
 									.iterator();
 							while (iterator.hasNext()) {
-								VisualElement element = iterator.next();
+								final VisualElement element = iterator.next();
 								if (element.isAnimationDone()) {
 									iterator.remove();
 									if (element instanceof Node) {
@@ -233,7 +236,7 @@ public class Scene extends VisualElement {
 										// System.out.println("removed: " +
 										// ((Node) element).state);
 									}
-									Set<VisualElement> set = elements
+									final Set<VisualElement> set = elements
 											.get(element.getZDepth());
 									set.remove(element);
 								}
@@ -242,7 +245,7 @@ public class Scene extends VisualElement {
 						synchronized (this) {
 							try {
 								wait(500);
-							} catch (InterruptedException e) {
+							} catch (final InterruptedException e) {
 								e.printStackTrace();
 							}
 						}
@@ -255,11 +258,13 @@ public class Scene extends VisualElement {
 			if (toRemove.contains(element)) {
 				toRemove.remove(element);
 			}
-			if (zDepth < 0)
+			if (zDepth < 0) {
 				zDepth = 0;
-			if (zDepth >= MAXZ)
+			}
+			if (zDepth >= MAXZ) {
 				zDepth = MAXZ - 1;
-			Set<VisualElement> set = elements.get(zDepth);
+			}
+			final Set<VisualElement> set = elements.get(zDepth);
 			set.add(element);
 		}
 

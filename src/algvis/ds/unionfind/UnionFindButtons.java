@@ -74,10 +74,10 @@ public class UnionFindButtons extends Buttons {
 
 	@Override
 	public JPanel initThirdRow() {
-		JPanel P = new JPanel();
-		ILabel uhLabel = new ILabel("uf-union-heuristic"), fhLabel = new ILabel(
+		final JPanel P = new JPanel();
+		final ILabel uhLabel = new ILabel("uf-union-heuristic"), fhLabel = new ILabel(
 				"uf-find-heuristic");
-		String[] uh = { "uf-none", "uf-byrank" }, fh = { "uf-none",
+		final String[] uh = { "uf-none", "uf-byrank" }, fh = { "uf-none",
 				"uf-compresion", "uf-halving", "uf-splitting" };
 		unionHeuristicCB = new IComboBox(uh);
 		findHeuristicCB = new IComboBox(fh);
@@ -95,8 +95,9 @@ public class UnionFindButtons extends Buttons {
 		super.actionPerformed(evt);
 		final UnionFind D = (UnionFind) this.D;
 		if (evt.getSource() == makesetB) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
+			}
 			D.start(new AlgorithmAdapter(panel) {
 				@Override
 				public void runAlgorithm() throws InterruptedException {
@@ -104,9 +105,10 @@ public class UnionFindButtons extends Buttons {
 				}
 			});
 		} else if (evt.getSource() == findB) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
-			int count = D.count;
+			}
+			final int count = D.count;
 			final Vector<Integer> args = I.getVI(1, count);
 			if (D.firstSelected != null) {
 				args.insertElementAt(D.firstSelected.getKey(), 0);
@@ -122,9 +124,10 @@ public class UnionFindButtons extends Buttons {
 			}
 			D.find(D.at(args.elementAt(0)));
 		} else if (evt.getSource() == unionB) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
-			int count = D.count;
+			}
+			final int count = D.count;
 			final Vector<Integer> args = I.getVI(1, count);
 			if (D.firstSelected != null) {
 				args.insertElementAt(D.firstSelected.getKey(), 0);
@@ -141,7 +144,7 @@ public class UnionFindButtons extends Buttons {
 				args.add(MyRandom.Int(count));
 			case 1:
 				int i;
-				int ii = args.elementAt(0);
+				final int ii = args.elementAt(0);
 				do {
 					i = MyRandom.Int(count);
 				} while (i == ii);
@@ -149,13 +152,15 @@ public class UnionFindButtons extends Buttons {
 			}
 			D.union(D.at(args.elementAt(0)), D.at(args.elementAt(1)));
 		} else if (evt.getSource() == unionHeuristicCB) {
-			int i = unionHeuristicCB.getSelectedIndex();
-			if (i == 0 || i == 1)
+			final int i = unionHeuristicCB.getSelectedIndex();
+			if (i == 0 || i == 1) {
 				D.unionState = UnionFindUnion.UnionHeuristic.values()[i];
+			}
 		} else if (evt.getSource() == findHeuristicCB) {
-			int i = findHeuristicCB.getSelectedIndex();
-			if (0 <= i && i < 4)
+			final int i = findHeuristicCB.getSelectedIndex();
+			if (0 <= i && i < 4) {
 				D.pathCompression = UnionFindFind.FindHeuristic.values()[i];
+			}
 		}
 	}
 

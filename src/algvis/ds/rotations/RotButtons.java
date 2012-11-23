@@ -63,10 +63,11 @@ public class RotButtons extends Buttons {
 		super.actionPerformed(evt);
 		final Rotations R = (Rotations) D;
 		if (evt.getSource() == rotB) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
-			Vector<Integer> args = I.getNonEmptyVI();
-			for (int x : args) {
+			}
+			final Vector<Integer> args = I.getNonEmptyVI();
+			for (final int x : args) {
 				R.rotate(x);
 			}
 		} else if (evt.getSource() == order) {

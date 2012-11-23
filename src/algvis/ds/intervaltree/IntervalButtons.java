@@ -88,16 +88,18 @@ public class IntervalButtons extends Buttons {
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
 		if (evt.getSource() == insertB) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
-			Vector<Integer> args = I.getNonEmptyVI();
-			for (int x : args) {
+			}
+			final Vector<Integer> args = I.getNonEmptyVI();
+			for (final int x : args) {
 				D.insert(x);
 			}
 		} else if (evt.getSource() == findsumB) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
-			Vector<Integer> args = I.getVI();
+			}
+			final Vector<Integer> args = I.getVI();
 			if (args.size() > 1) {
 				((IntervalTrees) D).ofinterval(args.elementAt(0),
 						args.elementAt(1));
@@ -105,15 +107,17 @@ public class IntervalButtons extends Buttons {
 				((IntervalTrees) D).ofinterval(1, ((IntervalTree) D).numLeafs);
 			}
 		} else if (evt.getSource() == changeKeyB) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
-			int delta = Math.abs(I.getInt(1));
-			BSTNode w = ((BSTNode) ((IntervalTrees) D).chosen);
+			}
+			final int delta = Math.abs(I.getInt(1));
+			final BSTNode w = ((BSTNode) ((IntervalTrees) D).chosen);
 			((IntervalTrees) D).changeKey(w, delta);
 		} else if (evt.getSource() == minB
 				&& ((IntervalTrees) D).minTree != mimasuType.MIN) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
+			}
 			D.start(new AlgorithmAdapter(panel) {
 				@Override
 				public void runAlgorithm() throws InterruptedException {
@@ -123,8 +127,9 @@ public class IntervalButtons extends Buttons {
 			});
 		} else if (evt.getSource() == maxB
 				&& ((IntervalTrees) D).minTree != mimasuType.MAX) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
+			}
 			D.start(new AlgorithmAdapter(panel) {
 				@Override
 				public void runAlgorithm() throws InterruptedException {
@@ -134,8 +139,9 @@ public class IntervalButtons extends Buttons {
 			});
 		} else if (evt.getSource() == sumB
 				&& ((IntervalTrees) D).minTree != mimasuType.SUM) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
+			}
 			D.start(new AlgorithmAdapter(panel) {
 				@Override
 				public void runAlgorithm() throws InterruptedException {

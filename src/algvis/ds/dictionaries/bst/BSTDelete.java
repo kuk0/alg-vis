@@ -42,9 +42,9 @@ public class BSTDelete extends Algorithm {
 	public void runAlgorithm() throws InterruptedException {
 		setHeader("delete", K);
 		addNote("bstdeletestart");
-		BSTFind find = new BSTFind(T, K, this);
+		final BSTFind find = new BSTFind(T, K, this);
 		find.runAlgorithm();
-		BSTNode toDelete = (BSTNode) find.getResult().get("node");
+		final BSTNode toDelete = (BSTNode) find.getResult().get("node");
 
 		if (toDelete != null) {
 			setHeader("delete", K);
@@ -121,7 +121,7 @@ public class BSTDelete extends Algorithm {
 					v.goAbove(son);
 				}
 				v.goTo(son);
-				BSTNode p = son.getParent(), r = son.getRight();
+				final BSTNode p = son.getParent(), r = son.getRight();
 				v.setColor(NodeColor.FOUND);
 				addNote("bst-delete-succ", K, son.getKey());
 				if (r == null) {

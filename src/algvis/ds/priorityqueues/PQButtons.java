@@ -92,29 +92,33 @@ public class PQButtons extends Buttons {
 	public void actionPerformed(ActionEvent evt) {
 		super.actionPerformed(evt);
 		if (evt.getSource() == insertB) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
-			Vector<Integer> args = I.getNonEmptyVI();
-			for (int x : args) {
+			}
+			final Vector<Integer> args = I.getNonEmptyVI();
+			for (final int x : args) {
 				D.insert(x);
 			}
 		} else if (evt.getSource() == deleteB) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
+			}
 			((PriorityQueue) D).delete();
 		} else if (evt.getSource() == decrKeyB) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
-			int delta = Math.abs(I.getInt(1));
-			Node w = ((PriorityQueue) D).chosen;
+			}
+			final int delta = Math.abs(I.getInt(1));
+			final Node w = ((PriorityQueue) D).chosen;
 			if (w != null) {
 				// TODO vypisat, ze ziadny vrchol nie je vybraty
 				// nesedi hlaska "using the default value 1"
 				((PriorityQueue) D).decreaseKey(w, delta);
 			}
 		} else if (evt.getSource() == minB && !((PriorityQueue) D).minHeap) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
+			}
 			D.start(new AlgorithmAdapter(panel) {
 				@Override
 				public void runAlgorithm() throws InterruptedException {
@@ -123,8 +127,9 @@ public class PQButtons extends Buttons {
 				}
 			});
 		} else if (evt.getSource() == maxB && ((PriorityQueue) D).minHeap) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
+			}
 			D.start(new AlgorithmAdapter(panel) {
 				@Override
 				public void runAlgorithm() throws InterruptedException {

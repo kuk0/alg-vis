@@ -31,7 +31,7 @@ public class BFind extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		BNode v = new BNode(T, K);
+		final BNode v = new BNode(T, K);
 		v.setColor(NodeColor.FIND);
 		addToScene(v);
 		setHeader("search");

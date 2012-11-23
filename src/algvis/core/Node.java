@@ -263,7 +263,7 @@ public class Node extends VisualElement {
 				// vypindaj
 				return;
 			}
-			double d = Math.sqrt(dx * dx + dy * dy);
+			final double d = Math.sqrt(dx * dx + dy * dy);
 			dx /= d;
 			dy /= d;
 		} else {
@@ -289,7 +289,7 @@ public class Node extends VisualElement {
 		if (!arc || dir == null) {
 			return;
 		}
-		int x = dir.x, y = this.y - DataStructure.minsepy + Node.RADIUS, a = Math
+		final int x = dir.x, y = this.y - DataStructure.minsepy + Node.RADIUS, a = Math
 				.abs(this.x - dir.x), b = Math.abs(this.y - dir.y);
 		v.setColor(Color.BLACK);
 		if (this.x > dir.x) {
@@ -299,6 +299,7 @@ public class Node extends VisualElement {
 		}
 	}
 
+	@Override
 	public void draw(View v) {
 		if (state == Node.INVISIBLE || getKey() == NULL) {
 			return;
@@ -363,7 +364,7 @@ public class Node extends VisualElement {
 	 * Go above the root position.
 	 */
 	public void goAboveRoot() {
-		int toy = DataStructure.rooty - DataStructure.minsepy;
+		final int toy = DataStructure.rooty - DataStructure.minsepy;
 		goTo(DataStructure.rootx, toy);
 	}
 
@@ -392,6 +393,7 @@ public class Node extends VisualElement {
 	 * Make one step towards the destination (tox, toy). In the special states
 	 * DOWN, LEFT, or RIGHT, go downwards off the screen.
 	 */
+	@Override
 	public void move() {
 		switch (state) {
 		case Node.ALIVE:
@@ -406,10 +408,11 @@ public class Node extends VisualElement {
 		case Node.LEFT:
 		case Node.RIGHT:
 			y += 20;
-			if (state == Node.LEFT)
+			if (state == Node.LEFT) {
 				x -= 20;
-			else if (state == Node.RIGHT)
+			} else if (state == Node.RIGHT) {
 				x += 20;
+			}
 			// robi problem, ked rychlo dozadu a potom rychlo dopredu
 			if (!D.panel.screen.V.inside(x, y - Node.RADIUS)) {
 				state = OUT;
@@ -420,7 +423,7 @@ public class Node extends VisualElement {
 
 	@Override
 	public Rectangle2D getBoundingBox() {
-		int r = RADIUS + 1;
+		final int r = RADIUS + 1;
 		return new Rectangle2D.Double(x - r, y - r, 2 * r, 2 * r);
 	}
 
@@ -433,10 +436,11 @@ public class Node extends VisualElement {
 		} else if (state == DOWN || state == LEFT || state == RIGHT) {
 			while (D.panel.screen.V.inside(x, y - Node.RADIUS)) {
 				y += 20;
-				if (state == Node.LEFT)
+				if (state == Node.LEFT) {
 					x -= 20;
-				else if (state == Node.RIGHT)
+				} else if (state == Node.RIGHT) {
 					x += 20;
+				}
 			}
 			state = OUT;
 		}
@@ -472,9 +476,10 @@ public class Node extends VisualElement {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object key = state.get(hash + "key");
-		if (key != null)
+		final Object key = state.get(hash + "key");
+		if (key != null) {
 			this.key = (Integer) HashtableStoreSupport.restore(key);
+		}
 
 		Object stat = state.get(hash + "state");
 		if (stat != null) {
@@ -490,31 +495,39 @@ public class Node extends VisualElement {
 		boolean isMoved = false;
 		Object tox = state.get(hash + "tox");
 		Object toy = state.get(hash + "toy");
-		if (tox != null)
+		if (tox != null) {
 			isMoved = true;
-		else
+		} else {
 			tox = this.tox;
-		if (toy != null)
+		}
+		if (toy != null) {
 			isMoved = true;
-		else
+		} else {
 			toy = this.toy;
-		if (isMoved)
+		}
+		if (isMoved) {
 			goTo((Integer) tox, (Integer) toy);
+		}
 
-		Object color = state.get(hash + "color");
-		if (color != null)
+		final Object color = state.get(hash + "color");
+		if (color != null) {
 			this.color = (NodeColor) HashtableStoreSupport.restore(color);
-		Object marked = state.get(hash + "marked");
-		if (marked != null)
+		}
+		final Object marked = state.get(hash + "marked");
+		if (marked != null) {
 			this.marked = (Boolean) HashtableStoreSupport.restore(marked);
-		Object dir = state.get(hash + "dir");
-		if (dir != null)
+		}
+		final Object dir = state.get(hash + "dir");
+		if (dir != null) {
 			this.dir = (Node) HashtableStoreSupport.restore(dir);
-		Object arrow = state.get(hash + "arrow");
-		if (arrow != null)
+		}
+		final Object arrow = state.get(hash + "arrow");
+		if (arrow != null) {
 			this.arrow = (Integer) HashtableStoreSupport.restore(arrow);
-		Object arc = state.get(hash + "arc");
-		if (arc != null)
+		}
+		final Object arc = state.get(hash + "arc");
+		if (arc != null) {
 			this.arc = (Boolean) HashtableStoreSupport.restore(arc);
+		}
 	}
 }

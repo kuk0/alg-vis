@@ -33,7 +33,7 @@ public class DaryHeapDelete extends DaryHeapAlg {
 		}
 
 		if (H.root.c.size() == 0) {
-			DaryHeapNode v = H.root;
+			final DaryHeapNode v = H.root;
 			if (H.minHeap) {
 				addStep("minimum", H.root.getKey());
 			} else {
@@ -62,7 +62,7 @@ public class DaryHeapDelete extends DaryHeapAlg {
 		H.root.unmark();
 
 		DaryHeapNode v = new DaryHeapNode(H.last);
-		DaryHeapNode v2 = new DaryHeapNode(H.root);
+		final DaryHeapNode v2 = new DaryHeapNode(H.root);
 		addToScene(v);
 		addToScene(v2);
 		H.last.setKey(Node.NOKEY);

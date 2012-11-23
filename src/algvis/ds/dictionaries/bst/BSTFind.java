@@ -40,7 +40,7 @@ public class BSTFind extends Algorithm {
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		result.put("node", null);
-		BSTNode v = new BSTNode(T, K, ZDepth.ACTIONNODE);
+		final BSTNode v = new BSTNode(T, K, ZDepth.ACTIONNODE);
 		v.setColor(NodeColor.FIND);
 		addToScene(v);
 		setHeader("find", K);
@@ -73,8 +73,9 @@ public class BSTFind extends Algorithm {
 					pause();
 					v.noArrow();
 					w.setColor(NodeColor.DARKER);
-					if (w.getLeft() != null)
+					if (w.getLeft() != null) {
 						w.getLeft().subtreeColor(NodeColor.DARKER);
+					}
 					w = w.getRight();
 					if (w != null) {
 						v.goAbove(w);
@@ -94,8 +95,9 @@ public class BSTFind extends Algorithm {
 					pause();
 					v.noArrow();
 					w.setColor(NodeColor.DARKER);
-					if (w.getRight() != null)
+					if (w.getRight() != null) {
 						w.getRight().subtreeColor(NodeColor.DARKER);
+					}
 					w = w.getLeft();
 					if (w != null) {
 						v.goAbove(w);
@@ -109,16 +111,19 @@ public class BSTFind extends Algorithm {
 				pause();
 			}
 		}
-		if (result.get("node") == null)
+		if (result.get("node") == null) {
 			removeFromScene(v);
+		}
 		pause();
 		if (T.getRoot() != null) {
 			T.getRoot().subtreeColor(NodeColor.NORMAL);
 		}
-		if (result.get("node") != null)
+		if (result.get("node") != null) {
 			removeFromScene(v);
+		}
 	}
 
+	@Override
 	public HashMap<String, Object> getResult() {
 		return result;
 	}

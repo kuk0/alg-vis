@@ -108,7 +108,7 @@ public class GBInsert extends GBAlg {
 							if (b == r) {
 								b = r.getRight();
 							}
-							GBNode v = r;
+							final GBNode v = r;
 							addToScene(v);
 							if (r.getParent() == null) {
 								r = (GBNode) T.setRoot(r.getRight());

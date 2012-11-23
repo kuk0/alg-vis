@@ -37,12 +37,15 @@ public class StringElem implements StateEditable {
 	}
 
 	public void setColor(Color c, int a, int b) {
-		if (a < 0)
+		if (a < 0) {
 			a = 0;
-		if (b > len)
+		}
+		if (b > len) {
 			len = b;
-		for (int i = a; i < b; ++i)
+		}
+		for (int i = a; i < b; ++i) {
 			col.set(i, c);
+		}
 	}
 
 	public void mark(int i) {
@@ -90,15 +93,18 @@ public class StringElem implements StateEditable {
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
-		Object len = state.get(hash + "len");
-		if (len != null)
+		final Object len = state.get(hash + "len");
+		if (len != null) {
 			this.len = (Integer) HashtableStoreSupport.restore(len);
-		Object col = state.get(hash + "col");
-		if (col != null)
+		}
+		final Object col = state.get(hash + "col");
+		if (col != null) {
 			this.col = (ArrayList<Color>) HashtableStoreSupport.restore(col);
-		Object marked = state.get(hash + "marked");
-		if (marked != null)
+		}
+		final Object marked = state.get(hash + "marked");
+		if (marked != null) {
 			this.marked = (ArrayList<Boolean>) HashtableStoreSupport
 					.restore(marked);
+		}
 	}
 }

@@ -31,7 +31,7 @@ public class IComboBox extends JComboBox implements LanguageListener {
 
 	public IComboBox(String[] choices) {
 		super();
-		Stringable[] ch = new Stringable[choices.length];
+		final Stringable[] ch = new Stringable[choices.length];
 		for (int i = 0; i < choices.length; ++i) {
 			ch[i] = new IString(choices[i]);
 		}
@@ -48,7 +48,7 @@ public class IComboBox extends JComboBox implements LanguageListener {
 	@Override
 	public void languageChanged() {
 		removeAllItems();
-		for (Stringable choice : choices) {
+		for (final Stringable choice : choices) {
 			this.addItem(choice.getString());
 		}
 	}

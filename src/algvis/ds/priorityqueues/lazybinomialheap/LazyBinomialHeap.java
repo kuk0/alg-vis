@@ -55,7 +55,7 @@ public class LazyBinomialHeap extends BinomialHeap {
 
 	@Override
 	public void meld(int i, int j) {
-		Pair p = chooseHeaps(i, j);
+		final Pair p = chooseHeaps(i, j);
 		i = p.first;
 		j = p.second;
 		((MeldablePQButtons) panel.buttons).activeHeap.setValue(i);
@@ -66,7 +66,8 @@ public class LazyBinomialHeap extends BinomialHeap {
 	public void draw(View V) {
 		super.draw(V);
 		if (cleanup != null && root[active] != null) {
-			int x = root[active].x, y = -arrayheight;
+			int x = root[active].x;
+			final int y = -arrayheight;
 			for (int i = 0; i < cleanup.length; ++i) {
 				V.drawSquare(x, y, Node.RADIUS);
 				V.drawStringTop("" + i, x, y - Node.RADIUS + 1, Fonts.NORMAL);
@@ -96,8 +97,9 @@ public class LazyBinomialHeap extends BinomialHeap {
 					cleanup.clone());
 			// TODO mozno netreba ukladat (ak su vrcholy niekde inde ulozene)
 			for (int i = 0; i < cleanup.length; ++i) {
-				if (cleanup[i] != null)
+				if (cleanup[i] != null) {
 					cleanup[i].storeTreeState(state);
+				}
 			}
 		} else {
 			HashtableStoreSupport.store(state, hash + "cleanup", null);
@@ -107,14 +109,16 @@ public class LazyBinomialHeap extends BinomialHeap {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object cleanup = state.get(hash + "cleanup");
-		if (cleanup != null)
+		final Object cleanup = state.get(hash + "cleanup");
+		if (cleanup != null) {
 			this.cleanup = (BinHeapNode[]) HashtableStoreSupport
 					.restore(cleanup);
+		}
 		if (this.cleanup != null) {
 			for (int i = 0; i < this.cleanup.length; ++i) {
-				if (this.cleanup[i] != null)
+				if (this.cleanup[i] != null) {
 					this.cleanup[i].restoreTreeState(state);
+				}
 			}
 		}
 	}

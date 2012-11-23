@@ -30,10 +30,10 @@ abstract class DaryHeapAlg extends Algorithm {
 	void bubbleup(DaryHeapNode v) throws InterruptedException {
 		DaryHeapNode w = v.getParent();
 		while (w != null && v.prec(w)) {
-			DaryHeapNode v1 = new DaryHeapNode(v);
+			final DaryHeapNode v1 = new DaryHeapNode(v);
 			v1.mark();
 			addToScene(v1);
-			DaryHeapNode v2 = new DaryHeapNode(w);
+			final DaryHeapNode v2 = new DaryHeapNode(w);
 			addToScene(v2);
 			v.setKey(Node.NOKEY);
 			w.setKey(Node.NOKEY);
@@ -66,10 +66,10 @@ abstract class DaryHeapAlg extends Algorithm {
 			if (v.prec(w)) {
 				break;
 			}
-			DaryHeapNode v1 = new DaryHeapNode(v);
+			final DaryHeapNode v1 = new DaryHeapNode(v);
 			v1.mark();
 			addToScene(v1);
-			DaryHeapNode v2 = new DaryHeapNode(w);
+			final DaryHeapNode v2 = new DaryHeapNode(w);
 			addToScene(v2);
 			v.setKey(Node.NOKEY);
 			w.setKey(Node.NOKEY);

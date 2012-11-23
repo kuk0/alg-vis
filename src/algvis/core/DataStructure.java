@@ -51,6 +51,7 @@ abstract public class DataStructure extends VisualElement {
 
 	abstract public void clear();
 
+	@Override
 	abstract public void draw(View v);
 
 	public void start(Runnable runnable) {
@@ -60,14 +61,14 @@ abstract public class DataStructure extends VisualElement {
 		// mozno to trochu spomali vkladanie vrcholov, ale bez tohto by sa nedal
 		// najst bug v algoritmoch (nevypisal
 		// by sa ziadny exception)
-		Thread t = new Thread(new Runnable() {
+		final Thread t = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				try {
 					result.get();
-				} catch (InterruptedException e) {
+				} catch (final InterruptedException e) {
 					e.printStackTrace();
-				} catch (ExecutionException e) {
+				} catch (final ExecutionException e) {
 					e.printStackTrace();
 				}
 			}

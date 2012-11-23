@@ -50,7 +50,7 @@ public class AVLNode extends BSTNode {
 	}
 
 	public int balance() {
-		int l = (getLeft() == null) ? 0 : getLeft().height, r = (getRight() == null) ? 0
+		final int l = (getLeft() == null) ? 0 : getLeft().height, r = (getRight() == null) ? 0
 				: getRight().height;
 		setBalance(r - l);
 		return bal;
@@ -75,7 +75,7 @@ public class AVLNode extends BSTNode {
 		drawArrow(V);
 		drawArc(V);
 
-		int xx = x - Node.RADIUS, yy = y - Node.RADIUS, dx = 2 * Node.RADIUS, dy = 2 * Node.RADIUS;
+		final int xx = x - Node.RADIUS, yy = y - Node.RADIUS, dx = 2 * Node.RADIUS, dy = 2 * Node.RADIUS;
 		String b = "";
 		if (getBgColor() == NodeColor.NORMAL.bgColor) {
 			V.setColor(Color.ORANGE);
@@ -125,8 +125,9 @@ public class AVLNode extends BSTNode {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object bal = state.get(hash + "bal");
-		if (bal != null)
+		final Object bal = state.get(hash + "bal");
+		if (bal != null) {
 			this.bal = (Integer) HashtableStoreSupport.restore(bal);
+		}
 	}
 }

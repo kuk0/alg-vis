@@ -53,7 +53,7 @@ public class BDelete extends Algorithm {
 				if (d.isIn(K)) {
 					break;
 				}
-				int p = d.search(K);
+				final int p = d.search(K);
 				if (p == 0) {
 					addStep("bfind0", K, d.keys[0]);
 				} else if (p == d.numKeys) {
@@ -122,7 +122,8 @@ public class BDelete extends Algorithm {
 
 			while (!d.isRoot() && d.numKeys < (T.order - 1) / 2) {
 				d.setColor(NodeColor.NOTFOUND);
-				BNode s, s1 = null, s2 = null, p = d.parent;
+				BNode s, s1 = null, s2 = null;
+				final BNode p = d.parent;
 				boolean lefts = true;
 				int k = d.order(), n1 = 0, n2 = 0;
 				if (k > 0) {
@@ -154,7 +155,7 @@ public class BDelete extends Algorithm {
 					addToScene(v);
 					v.goTo(p);
 					pause();
-					int pkey = p.keys[k];
+					final int pkey = p.keys[k];
 					p.keys[k] = v.keys[0];
 					removeFromScene(v);
 					v = new BNode(T, pkey, p.tox, p.toy);

@@ -33,7 +33,7 @@ public class LazyBinHeapDelete extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		int i = H.active;
+		final int i = H.active;
 		H.cleanup = new BinHeapNode[lg(H.size(i) + 1) + 1]; // TODO: change to
 															// rank
 		if (H.root[i] == null) {
@@ -44,7 +44,7 @@ public class LazyBinHeapDelete extends Algorithm {
 		pause();
 		// delete min
 		BinHeapNode v, w, next;
-		BinHeapNode d = H.min[i];
+		final BinHeapNode d = H.min[i];
 		H.min[i] = null;
 		if (H.root[i] == d) {
 			if (d.right == d) {
@@ -64,7 +64,7 @@ public class LazyBinHeapDelete extends Algorithm {
 			// reverse
 			do {
 				w.parent = null;
-				BinHeapNode tl = w.left, tr = w.right;
+				final BinHeapNode tl = w.left, tr = w.right;
 				w.left = tr;
 				w.right = tl;
 				w = tr;

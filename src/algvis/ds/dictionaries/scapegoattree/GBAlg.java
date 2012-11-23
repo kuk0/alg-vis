@@ -30,7 +30,8 @@ abstract class GBAlg extends Algorithm {
 	}
 
 	GBNode compr(GBNode r, int c) throws InterruptedException {
-		GBNode w = r, x = (c > 0) ? r.getRight() : r;
+		GBNode w = r;
+		final GBNode x = (c > 0) ? r.getRight() : r;
 		w.mark();
 		pause();
 		for (int i = 0; i < c; ++i) {

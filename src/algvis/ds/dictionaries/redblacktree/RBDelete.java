@@ -37,9 +37,9 @@ public class RBDelete extends Algorithm {
 	public void runAlgorithm() throws InterruptedException {
 		setHeader("delete", K);
 		addNote("bstdeletestart");
-		BSTFind find = new BSTFind(T, K, this);
+		final BSTFind find = new BSTFind(T, K, this);
 		find.runAlgorithm();
-		RBNode d = (RBNode) find.getResult().get("node");
+		final RBNode d = (RBNode) find.getResult().get("node");
 
 		if (d != null) {
 			setHeader("delete", K);
@@ -67,7 +67,8 @@ public class RBDelete extends Algorithm {
 				// case IIa - 1 syn
 				addStep("bst-delete-case2");
 				pause();
-				BSTNode s = (d.getLeft() == null) ? d.getRight() : d.getLeft();
+				final BSTNode s = (d.getLeft() == null) ? d.getRight() : d
+						.getLeft();
 				if (d.isRoot()) {
 					T.setRoot(s);
 					s.setParent(null);
@@ -130,7 +131,7 @@ public class RBDelete extends Algorithm {
 				while (w.getParent2() != T.NULL && !w.isRed()) {
 					T.NULL.setRed(false);
 					if (w.getParent2().getLeft2() == w) {
-						RBNode s = w.getParent2().getRight2();
+						final RBNode s = w.getParent2().getRight2();
 						if (s.isRed()) {
 							addStep("rbdelete1");
 							pause();
@@ -159,7 +160,7 @@ public class RBDelete extends Algorithm {
 							w = (RBNode) T.getRoot();
 						}
 					} else {
-						RBNode s = w.getParent2().getLeft2();
+						final RBNode s = w.getParent2().getLeft2();
 						if (s.isRed()) {
 							addStep("rbdelete1");
 							pause();

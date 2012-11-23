@@ -40,6 +40,7 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 		M.screen.V.setDS(this);
 	}
 
+	@Override
 	public BSTNode getRoot() {
 		return (BSTNode) super.getRoot();
 	}
@@ -120,12 +121,13 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 
 	@Override
 	public void move() {
-		if (getRoot() != null)
+		if (getRoot() != null) {
 			getRoot().moveTree();
+		}
 	}
 
 	protected void leftrot(BSTNode v) {
-		BSTNode u = v.getParent();
+		final BSTNode u = v.getParent();
 		if (v.getLeft() == null) {
 			u.unlinkRight();
 		} else {
@@ -144,7 +146,7 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 	}
 
 	protected void rightrot(BSTNode v) {
-		BSTNode u = v.getParent();
+		final BSTNode u = v.getParent();
 		if (v.getRight() == null) {
 			u.unlinkLeft();
 		} else {
@@ -199,9 +201,10 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 		reposition();
 	}
 
+	@Override
 	public void mouseClicked(int x, int y) {
 		if (getRoot() != null) {
-			BSTNode w = getRoot().find(x, y);
+			final BSTNode w = getRoot().find(x, y);
 			if (w != null) {
 				// w.markSubtree = true;
 				panel.buttons.I.setText("" + w.getKey());

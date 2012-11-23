@@ -45,7 +45,7 @@ public class UnionFindFind extends Algorithm {
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		setHeader("uffind");
-		UnionFindNode v = find(u);
+		final UnionFindNode v = find(u);
 		v.setColor(NodeColor.NORMAL);
 		addNote("done");
 	}
@@ -66,7 +66,7 @@ public class UnionFindFind extends Algorithm {
 	}
 
 	UnionFindNode findSimple(UnionFindNode u) throws InterruptedException {
-		Stack<UnionFindNode> S = new Stack<UnionFindNode>();
+		final Stack<UnionFindNode> S = new Stack<UnionFindNode>();
 		UnionFindNode result = null;
 		UnionFindNode v = null;
 
@@ -115,7 +115,7 @@ public class UnionFindFind extends Algorithm {
 
 	UnionFindNode findWithCompression(UnionFindNode u)
 			throws InterruptedException {
-		Stack<UnionFindNode> S = new Stack<UnionFindNode>();
+		final Stack<UnionFindNode> S = new Stack<UnionFindNode>();
 		UnionFindNode result = null;
 		UnionFindNode v = null;
 
@@ -228,7 +228,7 @@ public class UnionFindFind extends Algorithm {
 		}
 
 		boolean odd = true;
-		if (v.getParent() != null)
+		if (v.getParent() != null) {
 			do {
 				addStep("ufup");
 				pause();
@@ -252,12 +252,15 @@ public class UnionFindFind extends Algorithm {
 				grandchild = child;
 				child = v;
 			} while (v.getParent() != null);
+		}
 
 		// root found
-		if (grandchild != null)
+		if (grandchild != null) {
 			grandchild.setColor(NodeColor.NORMAL);
-		if (child != null)
+		}
+		if (child != null) {
 			child.setColor(NodeColor.NORMAL);
+		}
 		v.setColor(NodeColor.FOUND);
 		result = v;
 		addStep("ufrootfound", result.getKey());
@@ -313,7 +316,7 @@ public class UnionFindFind extends Algorithm {
 			v.setColor(NodeColor.INSERT);
 		}
 
-		if (v.getParent() != null)
+		if (v.getParent() != null) {
 			do {
 				addStep("ufup");
 				pause();
@@ -331,12 +334,15 @@ public class UnionFindFind extends Algorithm {
 				grandchild = child;
 				child = v;
 			} while (v.getParent() != null);
+		}
 
 		// root found
-		if (grandchild != null)
+		if (grandchild != null) {
 			grandchild.setColor(NodeColor.NORMAL);
-		if (child != null)
+		}
+		if (child != null) {
 			child.setColor(NodeColor.NORMAL);
+		}
 		v.setColor(NodeColor.FOUND);
 		result = v;
 		addStep("ufrootfound", result.getKey());

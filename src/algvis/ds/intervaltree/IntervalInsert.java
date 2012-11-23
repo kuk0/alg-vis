@@ -57,7 +57,8 @@ public class IntervalInsert extends IntervalAlg {
 
 		IntervalNode w;
 		// T.numLeafs++;
-		int n = T.numLeafs, k = 1 << 10;
+		final int n = T.numLeafs;
+		int k = 1 << 10;
 		if (n == 0) {
 			T.root = w = v;
 			v.goToRoot();

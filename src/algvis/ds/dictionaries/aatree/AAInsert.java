@@ -34,11 +34,11 @@ public class AAInsert extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		BSTInsert insert = new BSTInsert(T,
-				new AANode(T, K, ZDepth.ACTIONNODE), this);
+		final BSTInsert insert = new BSTInsert(T, new AANode(T, K,
+				ZDepth.ACTIONNODE), this);
 		insert.runAlgorithm();
-		HashMap<String, Object> insertResult = insert.getResult();
-		boolean inserted = (Boolean) insertResult.get("inserted");
+		final HashMap<String, Object> insertResult = insert.getResult();
+		final boolean inserted = (Boolean) insertResult.get("inserted");
 		AANode w = (AANode) insertResult.get("w");
 
 		if (inserted && w != null) {
@@ -63,7 +63,7 @@ public class AAInsert extends Algorithm {
 					T.reposition();
 				}
 				// split
-				AANode r = w.getRight();
+				final AANode r = w.getRight();
 				if (r != null && r.getRight() != null
 						&& r.getRight().getLevel() == w.getLevel()) {
 					addStep("aasplit");

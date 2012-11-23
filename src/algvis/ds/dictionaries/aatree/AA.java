@@ -66,7 +66,7 @@ public class AA extends BST {
 	}
 
 	public BSTNode split(BSTNode w) {
-		BSTNode r = w.getRight();
+		final BSTNode r = w.getRight();
 		if (r != null && r.getRight() != null
 				&& r.getRight().getLevel() == w.getLevel()) {
 			w = r;

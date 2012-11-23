@@ -49,8 +49,9 @@ public class DaryHeapButtons extends PQButtons implements ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent evt) {
 		if (evt.getSource() == OS) {
-			if (panel.history.canRedo())
+			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
+			}
 			((DaryHeap) D).setOrder((Integer) OS.getValue());
 		}
 	}

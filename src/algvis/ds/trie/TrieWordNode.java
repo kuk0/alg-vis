@@ -72,7 +72,7 @@ public class TrieWordNode extends Node {
 	}
 
 	public String cutOneAndGoNextTo(Node v) {
-		String result = cut(1);
+		final String result = cut(1);
 		goNextTo(v);
 		return result;
 	}
@@ -82,9 +82,9 @@ public class TrieWordNode extends Node {
 		if (s.compareTo("") == 0) {
 			return;
 		}
-		FontMetrics fm = v.getGraphics().getFontMetrics();
-		int width = (fm.stringWidth(s) + 4) / 2;
-		int height = (fm.getHeight() + 4) / 2;
+		final FontMetrics fm = v.getGraphics().getFontMetrics();
+		final int width = (fm.stringWidth(s) + 4) / 2;
+		final int height = (fm.getHeight() + 4) / 2;
 		v.setColor(getColor().bgColor);
 		v.fillRoundRectangle(x + width, y - height / 2, width, height, 3, 3);
 		v.setColor(Color.BLACK);
@@ -102,8 +102,9 @@ public class TrieWordNode extends Node {
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object s = state.get(hash + "s");
-		if (s != null)
+		final Object s = state.get(hash + "s");
+		if (s != null) {
 			this.s = (String) HashtableStoreSupport.restore(s);
+		}
 	}
 }

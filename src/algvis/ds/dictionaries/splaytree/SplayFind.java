@@ -27,7 +27,7 @@ public class SplayFind extends SplayAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		SplayNode v = new SplayNode(T, K, ZDepth.ACTIONNODE);
+		final SplayNode v = new SplayNode(T, K, ZDepth.ACTIONNODE);
 		v.setColor(NodeColor.FIND);
 		addToScene(v);
 		setHeader("find", K);
@@ -40,7 +40,7 @@ public class SplayFind extends SplayAlg {
 			addStep("bstfindnotfound");
 		} else {
 			v.goAboveRoot();
-			SplayNode w = find(K);
+			final SplayNode w = find(K);
 			splay(w);
 
 			addStep("splayinroot");

@@ -31,7 +31,7 @@ public class HeapDelete extends HeapAlg {
 			return;
 		}
 		if (H.getN() == 1) {
-			HeapNode v = H.getRoot();
+			final HeapNode v = H.getRoot();
 			addToScene(v);
 			H.setRoot(null);
 			H.setN(H.getN() - 1);
@@ -41,7 +41,8 @@ public class HeapDelete extends HeapAlg {
 		}
 		HeapNode v, w;
 
-		int n = H.getN(), k = 1 << 10;
+		final int n = H.getN();
+		int k = 1 << 10;
 		while ((k & n) == 0) {
 			k >>= 1;
 		}
@@ -85,8 +86,8 @@ public class HeapDelete extends HeapAlg {
 			if (w == null || v.prec(w)) {
 				break;
 			}
-			HeapNode v1 = new HeapNode(v);
-			HeapNode v2 = new HeapNode(w);
+			final HeapNode v1 = new HeapNode(v);
+			final HeapNode v2 = new HeapNode(w);
 			addToScene(v1);
 			addToScene(v2);
 			v.setKey(Node.NOKEY);

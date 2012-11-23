@@ -55,20 +55,20 @@ public class TrieDelete extends Algorithm {
 		hw.goNextTo(v);
 
 		while (s.compareTo("$") != 0) {
-			TrieNode vd = (TrieNode) v.getChild();
+			TrieNode vd = v.getChild();
 			while (vd != null) {
 				vd.setColor(NodeColor.FIND);
-				vd = (TrieNode) vd.getRight();
+				vd = vd.getRight();
 			}
-			vd = (TrieNode) v.getChild();
+			vd = v.getChild();
 
-			char ch = s.charAt(0);
+			final char ch = s.charAt(0);
 			hw.setAndGoNextTo(s, v);
-			TrieNode ww = v.getChildWithCH(ch);
+			final TrieNode ww = v.getChildWithCH(ch);
 			if (ww == null) {
 				while (vd != null) {
 					vd.setColor(NodeColor.NORMAL);
-					vd = (TrieNode) vd.getRight();
+					vd = vd.getRight();
 				}
 				addStep("triefindending1", "" + ch);
 				pause();
@@ -81,7 +81,7 @@ public class TrieDelete extends Algorithm {
 			pause();
 			while (vd != null) {
 				vd.setColor(NodeColor.NORMAL);
-				vd = (TrieNode) vd.getRight();
+				vd = vd.getRight();
 			}
 			v.setColor(NodeColor.NORMAL);
 			v = ww;
@@ -119,10 +119,10 @@ public class TrieDelete extends Algorithm {
 			w.setColor(NodeColor.DELETE);
 			w = w.getParent();
 			countOfSons = 0;
-			TrieNode ww = (TrieNode) w.getChild();
+			TrieNode ww = w.getChild();
 			while (ww != null) {
 				countOfSons++;
-				ww = (TrieNode) ww.getRight();
+				ww = ww.getRight();
 			}
 		} while ((w.getParent() != null) && (countOfSons == 1));
 		pause();

@@ -57,8 +57,9 @@ public class Heap extends PriorityQueue implements ClickListener {
 	public void decreaseKey(Node v, int delta) {
 		if (v == null) {
 			// TODO: vypindat
-		} else
+		} else {
 			start(new HeapDecrKey(this, (HeapNode) v, delta));
+		}
 	}
 
 	@Override
@@ -124,16 +125,18 @@ public class Heap extends PriorityQueue implements ClickListener {
 
 	@Override
 	public void mouseClicked(int x, int y) {
-		if (getRoot() == null)
+		if (getRoot() == null) {
 			return;
-		BSTNode v = getRoot().find(x, y);
+		}
+		final BSTNode v = getRoot().find(x, y);
 		if (v != null) {
 			if (v.marked) {
 				v.unmark();
 				chosen = null;
 			} else {
-				if (chosen != null)
+				if (chosen != null) {
 					chosen.unmark();
+				}
 				v.mark();
 				chosen = v;
 			}
@@ -161,20 +164,24 @@ public class Heap extends PriorityQueue implements ClickListener {
 		super.storeState(state);
 		HashtableStoreSupport.store(state, hash + "n", n);
 		HashtableStoreSupport.store(state, hash + "root", root);
-		if (root != null)
+		if (root != null) {
 			root.storeState(state);
+		}
 	}
 
 	@Override
 	public void restoreState(Hashtable<?, ?> state) {
 		super.restoreState(state);
-		Object n = state.get(hash + "n");
-		if (n != null)
+		final Object n = state.get(hash + "n");
+		if (n != null) {
 			this.n = (Integer) HashtableStoreSupport.restore(n);
-		Object root = state.get(hash + "root");
-		if (root != null)
+		}
+		final Object root = state.get(hash + "root");
+		if (root != null) {
 			this.root = (HeapNode) HashtableStoreSupport.restore(root);
-		if (this.root != null)
+		}
+		if (this.root != null) {
 			this.root.restoreState(state);
+		}
 	}
 }
