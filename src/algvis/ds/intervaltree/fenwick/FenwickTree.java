@@ -61,10 +61,10 @@ public class FenwickTree extends DataStructure {
 		FenwickNode r = FenwickNode.createNode(this, 1, root.idx * 2);
 		r.linkLeft(root);
 		r.updateStoredValue(root.getStoredValue());
-		
+
 		FenwickNode s = createEmptySubtree(root.idx + 1, root.idx * 2, true);
 		r.linkRight(s);
-		
+
 		root = r;
 		reposition();
 	}
@@ -73,7 +73,7 @@ public class FenwickTree extends DataStructure {
 		if (idxlo == idxhi) {
 			return FenwickNode.createEmptyLeaf(this, idxlo);
 		}
-		
+
 		FenwickNode n;
 		if (fake) {
 			n = FenwickNode.createFakeNode(this, idxlo, idxhi);
@@ -90,7 +90,9 @@ public class FenwickTree extends DataStructure {
 
 	@Override
 	public void clear() {
-		root = null;
+		// Start with a minimal tree (2 values with one parent)
+		root = createEmptySubtree(1, 2, false);
+		reposition();
 	}
 
 	@Override
