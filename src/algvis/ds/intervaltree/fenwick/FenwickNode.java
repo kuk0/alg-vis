@@ -106,20 +106,27 @@ public class FenwickNode extends BSTNode {
 		v.setColor(getFgColor());
 		// TODO isnode/isleaf/...
 		if (type == FenwickNodeType.Node || type == FenwickNodeType.FakeNode) {
-			v.drawString(getRangeLabel(), x, y, Fonts.NORMAL);
-		} else {
-			// idx
-			v.drawString(Integer.toString(idx), x, y, Fonts.NORMAL);
+			// stored value inside the node
+			if (type == FenwickNodeType.Node) {
+				v.drawString(Integer.toString(getStoredValue()), x, y,
+						Fonts.NORMAL);
+			}
 
-			// stored value
-			v.drawString(Integer.toString(getStoredValue()), x, y + 2 * rh,
-					Fonts.NORMAL);
+			// TODO better positioning
+			// range labels
+			v.drawStringLeft(Integer.toString(rangeMin), x - Node.RADIUS, y
+					- Node.RADIUS - Fonts.SMALL.fm.getHeight() / 2, Fonts.SMALL);
+			v.drawStringRight(Integer.toString(rangeMax), x + Node.RADIUS, y
+					- Node.RADIUS - Fonts.SMALL.fm.getHeight() / 2, Fonts.SMALL);
+		} else {
 
 			// real value
 			if (type == FenwickNodeType.Leaf) {
-				v.drawString(Integer.toString(realValue), x, y + 4 * rh,
-						Fonts.NORMAL);
+				v.drawString(Integer.toString(realValue), x, y, Fonts.NORMAL);
 			}
+
+			// idx
+			v.drawString(Integer.toString(idx), x, y + 2 * rh, Fonts.SMALL);
 
 			if (idx == 1) {
 				drawLabels(v);
@@ -133,11 +140,10 @@ public class FenwickNode extends BSTNode {
 	private void drawLabels(View v) {
 		v.setColor(getFgColor());
 		double rx = x - labelPadding - rw;
-		
+
 		// TODO not aligned properly, bug in drawString?
-		v.drawStringLeft("idx:", rx, y, Fonts.NORMAL);
-		v.drawStringLeft("Stored value:", rx, y + 2 * rh, Fonts.NORMAL);
-		v.drawStringLeft("Real value:", rx, y + 4 * rh, Fonts.NORMAL);
+		v.drawStringLeft("Real value:", rx, y, Fonts.NORMAL);
+		v.drawStringLeft("idx:", rx, y + 2 * rh, Fonts.SMALL);
 	}
 
 	// TODO move to FenwickTree ?
@@ -151,7 +157,7 @@ public class FenwickNode extends BSTNode {
 				v.setColor(getBgColor());
 			} else {
 				// TODO configurable somewhere
-				v.setColor(Color.WHITE);
+				v.setColor(Color.LIGHT_GRAY);
 			}
 			v.fillRoundRectangle(x, y, getRangeWidth(), Node.RADIUS,
 					Node.RADIUS * 2, Node.RADIUS * 2);
@@ -159,17 +165,18 @@ public class FenwickNode extends BSTNode {
 			v.drawRoundRectangle(x, y, getRangeWidth(), Node.RADIUS,
 					Node.RADIUS * 2, Node.RADIUS * 2);
 		} else {
-			// 3 boxes - idx, stored value, real value
-			for (int i = 0; i < 3; i++) {
-				double rx = x;
-				double ry = y + i * 2 * rh;
 
+			if (idx % 2 == 0) {
+				// Even leaves never have stored value
+				v.setColor(Color.LIGHT_GRAY);
+			} else {
 				v.setColor(getBgColor());
-				v.fillRect(rx, ry, rw, rh);
-				v.setColor(getFgColor());
-				v.drawRectangle(new Rectangle2D.Double(rx - rw, ry - rh,
-						rw * 2, rh * 2));
 			}
+
+			v.fillRect(x, y, rw, rh);
+			v.setColor(getFgColor());
+			v.drawRectangle(new Rectangle2D.Double(x - rw, y - rh, rw * 2,
+					rh * 2));
 		}
 	}
 
