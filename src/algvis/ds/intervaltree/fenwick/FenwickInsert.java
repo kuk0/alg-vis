@@ -15,15 +15,27 @@ public class FenwickInsert extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("insert", X);
+		
 		if (T.root == null) {
+			// TODO remove, never happens
 			T.root = FenwickNode.createEmptyLeaf(T, 1);
+			addStep("newroot");
 		}
 
 		if (T.root.isFull()) {
 			T.extend();
+			//addStep("fenwickextend");
+			pause();
 		}
 
+		// TODO mark the new node
+		// TODO split into insertion and value propagation
 		T.root.insert(X);
+		//addNote("fenwickinsert");
+		pause();
+		
+		addNote("done");
 	}
 
 }
