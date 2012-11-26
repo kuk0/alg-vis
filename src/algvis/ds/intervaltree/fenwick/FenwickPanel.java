@@ -24,7 +24,7 @@ public class FenwickPanel extends VisPanel {
 	@Override
 	public void start() {
 		super.start();
-		D.random(14);
+		D.random(6);
 	}
 
 }
