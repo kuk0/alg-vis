@@ -39,5 +39,11 @@ public class FenwickButtons extends Buttons {
 			}
 		}
 	}
+	
+	@Override
+	public void setOtherEnabled(boolean enabled) {
+		super.setOtherEnabled(enabled);
+		insertB.setEnabled(enabled);
+	}
 
 }
