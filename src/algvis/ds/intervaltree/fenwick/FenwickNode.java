@@ -180,6 +180,11 @@ public class FenwickNode extends BSTNode {
 			v.setColor(getFgColor());
 			v.drawRoundRectangle(x, y, getRangeWidth(), Node.RADIUS,
 					Node.RADIUS * 2, Node.RADIUS * 2);
+			if (marked) {
+				// TODO better marking
+				v.drawRoundRectangle(x, y, getRangeWidth(), Node.RADIUS,
+						Node.RADIUS * 2 + 4, Node.RADIUS * 2 + 4);
+			}
 		} else {
 
 			if (idx % 2 == 0) {
@@ -268,4 +273,53 @@ public class FenwickNode extends BSTNode {
 	public FenwickNode getParent() {
 		return (FenwickNode) super.getParent();
 	}
+	
+	public int countLeaves() {
+		if (type == FenwickNodeType.Leaf) {
+			return 1;
+		}
+		
+		if (type == FenwickNodeType.EmptyLeaf) {
+			return 0;
+		}
+		
+		int sum = 0;
+		if (getLeft() != null) sum += getLeft().countLeaves();
+		if (getRight() != null) sum += getRight().countLeaves();
+		
+		return sum;	
+	}
+	
+	public FenwickNode findByIdx(int idx) {
+		if (type == FenwickNodeType.EmptyLeaf || type == FenwickNodeType.Leaf) {
+			if (this.idx == idx) {
+				return this;
+			}
+			
+			return null;
+		}
+		
+		// Try left/right children
+		FenwickNode left = getLeft() != null ? getLeft().findByIdx(idx) : null;
+		if (left != null) {
+			return left;
+		}
+		return getRight() != null ? getRight().findByIdx(idx) : null;
+	}
+	
+	/**
+	 * Returns true for even-idx leaves and fake nodes,
+	 * these don't have real value stored in them
+	 * @return
+	 */
+	public boolean isEvenOrFake() {
+		if (type == FenwickNodeType.FakeNode) {
+			return true;
+		}
+		if (type == FenwickNodeType.Node) {
+			return false;
+		}
+		return (idx % 2 == 0);
+	}
+	
 }

@@ -14,7 +14,7 @@ public class FenwickTree extends DataStructure {
 
 	// TODO private + getter/setter ?
 	public FenwickNode root = null;
-
+	
 	protected FenwickTree(VisPanel M) {
 		super(M);
 		// M.screen.V.setDS(this);
@@ -46,6 +46,11 @@ public class FenwickTree extends DataStructure {
 		}
 
 		root.insert(x);*/
+	}
+	
+	public void prefixSum(int idxmax) {
+		// TODO range check
+		start(new FenwickPrefixSum(this, idxmax));
 	}
 
 	private void reposition() {
