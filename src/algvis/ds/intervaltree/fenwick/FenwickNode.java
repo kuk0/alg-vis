@@ -111,9 +111,12 @@ public class FenwickNode extends BSTNode {
 			return storedValue;
 		}
 
-		// TODO check for null? should never happen
-		return getParent().getStoredValue();
-		// return storedValue;
+		// For fake nodes return sum of children
+		int sum = 0;
+		if (getLeft() != null) sum += getLeft().getStoredValue();
+		if (getRight() != null) sum += getRight().getStoredValue();
+		
+		return sum;		
 	}
 
 	@Override
@@ -121,11 +124,9 @@ public class FenwickNode extends BSTNode {
 		v.setColor(getFgColor());
 		// TODO isnode/isleaf/...
 		if (type == FenwickNodeType.Node || type == FenwickNodeType.FakeNode) {
-			// stored value inside the node
-			if (type == FenwickNodeType.Node) {
-				v.drawString(Integer.toString(getStoredValue()), x, y,
-						Fonts.NORMAL);
-			}
+			// stored value inside the node,
+			// sum of stored values for fake node
+			v.drawString(Integer.toString(getStoredValue()), x, y, Fonts.NORMAL);
 
 			// TODO better positioning
 			// range labels
