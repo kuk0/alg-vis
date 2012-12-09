@@ -23,17 +23,24 @@ public class FenwickInsert extends Algorithm {
 			addStep("newroot");
 		}
 
+		// If the tree is full we have to extend it first
 		if (T.root.isFull()) {
 			T.extend();
-			//addStep("fenwickextend");
+			addStep("intervalextend");
 			pause();
 		}
 
-		// TODO mark the new node
-		// TODO split into insertion and value propagation
-		T.root.insert(X);
-		//addNote("fenwickinsert");
+		// Insert value into tree, mark the node
+		FenwickNode node = T.root.insertOnly(X);
+		node.mark();
+		addStep("intervalinsert"); // TODO proper message
 		pause();
+		node.unmark();
+		
+		// Update values up to root
+		node.updateStoredValue(X);
+		addStep("intervalinsert");
+		pause();		
 		
 		addNote("done");
 	}

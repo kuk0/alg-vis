@@ -55,29 +55,44 @@ public class FenwickNode extends BSTNode {
 				rangeMax, 0);
 	}
 
-	public void insert(int x) {
+	/**
+	 * Insert new value into tree but don't update values
+	 * 
+	 * @param x
+	 *            Value to store
+	 * @return Inserted node
+	 */
+	public FenwickNode insertOnly(int x) {
 		if (type == FenwickNodeType.Leaf) {
-			return; // TODO error message / exception
+			return null; // TODO error message / exception
 		}
 
 		if (type == FenwickNodeType.EmptyLeaf) {
 			this.realValue = x;
 			type = FenwickNodeType.Leaf;
 
-			updateStoredValue(x);
-			return;
+			return this;
 		}
 
 		// Put in the left-most empty node (leaf)
 		if (!getLeft().isFull()) {
-			getLeft().insert(x);
+			return getLeft().insertOnly(x);
 		} else {
-			getRight().insert(x);
+			return getRight().insertOnly(x);
 		}
 	}
 
-	public void updateStoredValue(int dx) {
+	public void insert(int x) {
+		FenwickNode node = insertOnly(x);
+		node.updateStoredValue(x);
+	}
+
+	public void updateStoredValueStep(int dx) {
 		storedValue += dx;
+	}
+
+	public void updateStoredValue(int dx) {
+		updateStoredValueStep(dx);
 		if (getParent() != null) {
 			getParent().updateStoredValue(dx);
 		}
@@ -177,6 +192,11 @@ public class FenwickNode extends BSTNode {
 			v.setColor(getFgColor());
 			v.drawRectangle(new Rectangle2D.Double(x - rw, y - rh, rw * 2,
 					rh * 2));
+			if (marked) {
+				// TODO better marking
+				v.drawRectangle(new Rectangle2D.Double(x - rw + 2, y - rh + 2,
+						rw * 2 - 4, rh * 2 - 4));
+			}
 		}
 	}
 
