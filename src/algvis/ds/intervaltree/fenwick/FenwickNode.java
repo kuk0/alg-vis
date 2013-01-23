@@ -183,9 +183,9 @@ public class FenwickNode extends BSTNode {
 			v.drawRoundRectangle(x, y, getRangeWidth(), Node.RADIUS,
 					Node.RADIUS * 2, Node.RADIUS * 2);
 			if (marked) {
-				// TODO better marking
-				v.drawRoundRectangle(x, y, getRangeWidth(), Node.RADIUS,
-						Node.RADIUS * 2 + 4, Node.RADIUS * 2 + 4);
+				// TODO maybe use different color?
+				v.drawRoundRectangle(x, y, getRangeWidth() + 2, Node.RADIUS + 2,
+						Node.RADIUS * 2 + 2, Node.RADIUS * 2 + 2);
 			}
 		} else {
 
