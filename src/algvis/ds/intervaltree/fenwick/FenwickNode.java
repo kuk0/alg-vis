@@ -2,9 +2,11 @@ package algvis.ds.intervaltree.fenwick;
 
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.Fonts;
@@ -320,6 +322,52 @@ public class FenwickNode extends BSTNode {
 			return false;
 		}
 		return (idx % 2 == 0);
+	}
+
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "type", type);
+		HashtableStoreSupport.store(state, hash + "idx", idx);
+		HashtableStoreSupport.store(state, hash + "rangeMin", rangeMin);
+		HashtableStoreSupport.store(state, hash + "rangeMax", rangeMax);
+		HashtableStoreSupport.store(state, hash + "realValue", realValue);
+		HashtableStoreSupport.store(state, hash + "storedValue", storedValue);
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		
+		// TODO ugly, make helper method to get&set each field
+		
+		Object type = state.get(hash + "type");
+		if (type != null) {
+			this.type = (FenwickNodeType) HashtableStoreSupport.restore(type);
+		}
+		
+		Object idx = state.get(hash + "idx");
+		if (idx != null) {
+			this.idx = (Integer) HashtableStoreSupport.restore(idx);
+		}
+		
+		Object rangeMin = state.get(hash + "rangeMin");
+		if (rangeMin != null) {
+			this.idx = (Integer) HashtableStoreSupport.restore(rangeMin);
+		}
+		Object rangeMax = state.get(hash + "rangeMax");
+		if (rangeMax != null) {
+			this.rangeMax = (Integer) HashtableStoreSupport.restore(rangeMax);
+		}
+		
+		Object realValue = state.get(hash + "realValue");
+		if (realValue != null) {
+			this.realValue = (Integer) HashtableStoreSupport.restore(realValue);
+		}
+		Object storedValue = state.get(hash + "storedValue");
+		if (storedValue != null) {
+			this.storedValue = (Integer) HashtableStoreSupport.restore(storedValue);
+		}
 	}
 	
 }

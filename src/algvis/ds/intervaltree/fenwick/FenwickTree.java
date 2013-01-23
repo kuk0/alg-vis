@@ -2,9 +2,11 @@ package algvis.ds.intervaltree.fenwick;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ConcurrentModificationException;
+import java.util.Hashtable;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.VisPanel;
 import algvis.ui.view.View;
 
@@ -14,7 +16,7 @@ public class FenwickTree extends DataStructure {
 
 	// TODO private + getter/setter ?
 	public FenwickNode root = null;
-	
+
 	protected FenwickTree(VisPanel M) {
 		super(M);
 		// M.screen.V.setDS(this);
@@ -47,7 +49,7 @@ public class FenwickTree extends DataStructure {
 
 		root.insert(x);*/
 	}
-	
+
 	public void prefixSum(int idxmax) {
 		// TODO range check
 		start(new FenwickPrefixSum(this, idxmax));
@@ -119,6 +121,28 @@ public class FenwickTree extends DataStructure {
 	@Override
 	protected Rectangle2D getBoundingBox() {
 		return root == null ? null : root.getBoundingBox();
+	}
+
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "root", root);
+		if (root != null) {
+			root.storeState(state);
+		}
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		Object root = state.get(hash + "root");
+		if (root != null) {
+			this.root = (FenwickNode) HashtableStoreSupport.restore(root);
+		}
+		
+		if (this.root != null) {
+			this.root.restoreState(state);
+		}
 	}
 
 }
