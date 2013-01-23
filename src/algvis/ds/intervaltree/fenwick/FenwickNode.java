@@ -70,7 +70,7 @@ public class FenwickNode extends BSTNode {
 		}
 
 		if (type == FenwickNodeType.EmptyLeaf) {
-			this.realValue = x;
+			this.realValue = this.storedValue = x;
 			type = FenwickNodeType.Leaf;
 
 			return this;
@@ -101,9 +101,8 @@ public class FenwickNode extends BSTNode {
 	}
 
 	public int getStoredValue() {
-		if ((type == FenwickNodeType.Leaf || type == FenwickNodeType.EmptyLeaf)
-				&& idx % 2 == 1) {
-			// Odd leaves store just their value
+		if (type == FenwickNodeType.Leaf || type == FenwickNodeType.EmptyLeaf) {
+			// Leaves store just their value
 			return storedValue;
 		}
 

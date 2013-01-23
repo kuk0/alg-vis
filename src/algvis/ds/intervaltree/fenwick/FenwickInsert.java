@@ -7,6 +7,7 @@ public class FenwickInsert extends Algorithm {
 
 	private FenwickTree T;
 	private int X;
+
 	protected FenwickInsert(FenwickTree t, int x) {
 		super(t.panel);
 		this.T = t;
@@ -16,7 +17,7 @@ public class FenwickInsert extends Algorithm {
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		setHeader("insert", X);
-		
+
 		if (T.root == null) {
 			// TODO remove, never happens
 			T.root = FenwickNode.createEmptyLeaf(T, 1);
@@ -38,10 +39,26 @@ public class FenwickInsert extends Algorithm {
 		node.unmark();
 		
 		// Update values up to root
-		node.updateStoredValue(X);
-		addStep("intervalinsert");
-		pause();		
-		
+		while (node != null) {
+			
+			// Move up to next real node, skipping through fake nodes
+			while (node != null) {
+				node = node.getParent();
+				if (node != null && !node.isEvenOrFake()) {
+					break;
+				}
+			}
+			
+			// If we found a real node update it's stored value
+			if (node != null) {
+				node.mark();
+				node.updateStoredValueStep(X);
+				addStep("intervalinsert");
+				pause();
+				node.unmark();
+			}
+		}
+
 		addNote("done");
 	}
 
