@@ -131,9 +131,9 @@ public class FenwickNode extends BSTNode {
 
 			// TODO better positioning
 			// range labels
-			v.drawStringLeft(Integer.toString(rangeMin), x - Node.RADIUS, y
+			v.drawStringRight(Integer.toString(rangeMin), x - Node.RADIUS, y
 					- Node.RADIUS - Fonts.SMALL.fm.getHeight() / 2, Fonts.SMALL);
-			v.drawStringRight(Integer.toString(rangeMax), x + Node.RADIUS, y
+			v.drawStringLeft(Integer.toString(rangeMax), x + Node.RADIUS, y
 					- Node.RADIUS - Fonts.SMALL.fm.getHeight() / 2, Fonts.SMALL);
 		} else {
 
