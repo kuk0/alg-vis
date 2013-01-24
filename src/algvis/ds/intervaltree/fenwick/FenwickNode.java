@@ -208,12 +208,13 @@ public class FenwickNode extends BSTNode {
 	}
 
 	private int getRangeWidth() {
-		return Math.max(Node.RADIUS,
-				Fonts.NORMAL.fm.stringWidth(getRangeLabel()));
-	}
-
-	private String getRangeLabel() {
-		return rangeMin + "-" + rangeMax;
+		int width = Node.RADIUS; // At least a circle
+		// Wide enough to store the value inside
+		width = Math.max(width, Fonts.NORMAL.fm.stringWidth(""+getStoredValue()));
+		// Wire enough for range labels
+		width = Math.max(width, Fonts.SMALL.fm.stringWidth(""+rangeMax)*2);
+		
+		return width;
 	}
 
 	private void alignSubtreeRight() {
