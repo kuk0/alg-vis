@@ -34,9 +34,11 @@ public class FenwickInsert extends Algorithm {
 		// Insert value into tree, mark the node
 		FenwickNode node = T.root.insertOnly(X);
 		node.mark();
-		addStep("intervalinsert"); // TODO proper message
+		addStep("fenwickinsert"); // TODO proper message
 		pause();
 		node.unmark();
+		
+		addNote("fenwickinsertnote");
 		
 		// Update values up to root
 		while (node != null) {
@@ -53,7 +55,7 @@ public class FenwickInsert extends Algorithm {
 			if (node != null) {
 				node.mark();
 				node.updateStoredValueStep(X);
-				addStep("intervalinsert");
+				addStep("fenwickinsertup", node.rangeMin, node.rangeMax);
 				pause();
 				node.unmark();
 			}
