@@ -14,12 +14,10 @@ public class FenwickTree extends DataStructure {
 	public static String adtName = "intervaltrees";
 	public static String dsName = "fenwicktree";
 
-	// TODO private + getter/setter ?
 	public FenwickNode root = null;
 
 	protected FenwickTree(VisPanel M) {
 		super(M);
-		// M.screen.V.setDS(this);
 	}
 
 	@Override
@@ -39,19 +37,11 @@ public class FenwickTree extends DataStructure {
 	@Override
 	public void insert(int x) {
 		start(new FenwickInsert(this, x));
-		/*if (root == null) {
-			root = FenwickNode.createEmptyLeaf(this, 1);
-		}
-
-		if (root.isFull()) {
-			extend();
-		}
-
-		root.insert(x);*/
 	}
 
 	public void prefixSum(int idxmax) {
-		// TODO range check
+		// Range check
+		idxmax = Math.max(1, Math.min(idxmax, root.rangeMax));
 		start(new FenwickPrefixSum(this, idxmax));
 	}
 
@@ -65,7 +55,6 @@ public class FenwickTree extends DataStructure {
 		}
 	}
 
-	// TODO move to static method in fenwicknode / fenwickalgo
 	public void extend() {
 		FenwickNode r = FenwickNode.createNode(this, 1, root.idx * 2);
 		r.linkLeft(root);

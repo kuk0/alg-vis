@@ -18,8 +18,7 @@ public class FenwickButtons extends Buttons {
 	private IButton sumB;
 
 	protected FenwickButtons(VisPanel panel) {
-		super(panel);
-		// TODO Auto-generated constructor stub
+		super(panel); 
 	}
 
 	@Override

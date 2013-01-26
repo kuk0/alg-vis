@@ -11,7 +11,6 @@ public class FenwickPanel extends VisPanel {
 
 	public FenwickPanel(Settings S) {
 		super(S);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

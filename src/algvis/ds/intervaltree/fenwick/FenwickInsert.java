@@ -19,7 +19,6 @@ public class FenwickInsert extends Algorithm {
 		setHeader("insert", X);
 
 		if (T.root == null) {
-			// TODO remove, never happens
 			T.root = FenwickNode.createEmptyLeaf(T, 1);
 			addStep("newroot");
 		}
@@ -34,7 +33,7 @@ public class FenwickInsert extends Algorithm {
 		// Insert value into tree, mark the node
 		FenwickNode node = T.root.insertOnly(X);
 		node.mark();
-		addStep("fenwickinsert"); // TODO proper message
+		addStep("fenwickinsert");
 		pause();
 		node.unmark();
 		
@@ -50,7 +49,6 @@ public class FenwickInsert extends Algorithm {
 					break;
 				}
 			}
-			// TODO show idx calculation step, more complicated than prefix sum
 			
 			// If we found a real node update it's stored value
 			if (node != null) {
