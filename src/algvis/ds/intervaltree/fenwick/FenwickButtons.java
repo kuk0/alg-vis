@@ -18,7 +18,7 @@ public class FenwickButtons extends Buttons {
 	private IButton sumB;
 
 	protected FenwickButtons(VisPanel panel) {
-		super(panel); 
+		super(panel);
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class FenwickButtons extends Buttons {
 		insertB = new IButton("button-insert");
 		insertB.setMnemonic(KeyEvent.VK_I);
 		insertB.addActionListener(this);
-		
+
 		sumB = new IButton("button-sum");
 		sumB.setMnemonic(KeyEvent.VK_S);
 		sumB.addActionListener(this);
@@ -46,14 +46,15 @@ public class FenwickButtons extends Buttons {
 		} else if (evt.getSource() == sumB) {
 			Vector<Integer> args = I.getVI();
 			if (args.size() > 0) {
-				((FenwickTree)D).prefixSum(args.elementAt(0));
+				((FenwickTree) D).prefixSum(args.elementAt(0));
 			} else {
 				// Sum entire tree by default
-				((FenwickTree)D).prefixSum(((FenwickTree)D).root.countLeaves());
+				((FenwickTree) D).prefixSum(((FenwickTree) D).root
+						.countLeaves());
 			}
 		}
 	}
-	
+
 	@Override
 	public void setOtherEnabled(boolean enabled) {
 		super.setOtherEnabled(enabled);

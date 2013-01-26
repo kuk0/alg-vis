@@ -1,7 +1,6 @@
 package algvis.ds.intervaltree.fenwick;
 
 import algvis.core.Algorithm;
-import algvis.ui.VisPanel;
 
 public class FenwickInsert extends Algorithm {
 
@@ -36,12 +35,13 @@ public class FenwickInsert extends Algorithm {
 		addStep("fenwickinsert");
 		pause();
 		node.unmark();
-		
+
+		// Explain the next steps
 		addNote("fenwickinsertnote");
-		
+
 		// Update values up to root
 		while (node != null) {
-			
+
 			// Move up to next real node, skipping through fake nodes
 			while (node != null) {
 				node = node.getParent();
@@ -49,7 +49,7 @@ public class FenwickInsert extends Algorithm {
 					break;
 				}
 			}
-			
+
 			// If we found a real node update it's stored value
 			if (node != null) {
 				node.mark();

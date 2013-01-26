@@ -128,7 +128,7 @@ public class FenwickTree extends DataStructure {
 		if (root != null) {
 			this.root = (FenwickNode) HashtableStoreSupport.restore(root);
 		}
-		
+
 		if (this.root != null) {
 			this.root.restoreState(state);
 		}
