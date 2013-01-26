@@ -50,6 +50,7 @@ public class FenwickInsert extends Algorithm {
 					break;
 				}
 			}
+			// TODO show idx calculation step, more complicated than prefix sum
 			
 			// If we found a real node update it's stored value
 			if (node != null) {
