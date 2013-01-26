@@ -21,6 +21,7 @@ public class FenwickPrefixSum extends Algorithm {
 		
 		int sum = 0;
 		int idx = idxmax;
+		int idxmin = idxmax;
 		while(idx > 0) {
 			// Find node by idx and move up until we find a real one
 			FenwickNode node = T.root.findByIdx(idx);
@@ -28,10 +29,12 @@ public class FenwickPrefixSum extends Algorithm {
 				node = node.getParent();
 			}
 			
-			// Add to sum
-			sum += node.getStoredValue();
-			// TODO show the current sum and it's interval
+			// Step explanation
 			addStep("fenwicksumstep", idx, node.getStoredValue());
+			// Show the current sum and it's interval
+			sum += node.getStoredValue();
+			idxmin = node.rangeMin;
+			addNote("fenwicksumstepnote", idxmin, idxmax, sum);
 			node.mark();
 			pause();
 			node.unmark();
