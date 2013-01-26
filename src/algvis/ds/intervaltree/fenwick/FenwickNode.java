@@ -131,9 +131,9 @@ public class FenwickNode extends BSTNode {
 
 			// TODO better positioning
 			// range labels
-			v.drawStringRight(Integer.toString(rangeMin), x - Node.RADIUS, y
+			v.drawStringLeft(Integer.toString(rangeMin), x - getRangeSpace(), y
 					- Node.RADIUS - Fonts.SMALL.fm.getHeight() / 2, Fonts.SMALL);
-			v.drawStringLeft(Integer.toString(rangeMax), x + Node.RADIUS, y
+			v.drawStringRight(Integer.toString(rangeMax), x + getRangeSpace(), y
 					- Node.RADIUS - Fonts.SMALL.fm.getHeight() / 2, Fonts.SMALL);
 		} else {
 
@@ -176,14 +176,14 @@ public class FenwickNode extends BSTNode {
 				// TODO configurable somewhere
 				v.setColor(Color.LIGHT_GRAY);
 			}
-			v.fillRoundRectangle(x, y, getRangeWidth(), Node.RADIUS,
+			v.fillRoundRectangle(x, y, getNodeWidth(), Node.RADIUS,
 					Node.RADIUS * 2, Node.RADIUS * 2);
 			v.setColor(getFgColor());
-			v.drawRoundRectangle(x, y, getRangeWidth(), Node.RADIUS,
+			v.drawRoundRectangle(x, y, getNodeWidth(), Node.RADIUS,
 					Node.RADIUS * 2, Node.RADIUS * 2);
 			if (marked) {
 				// TODO maybe use different color?
-				v.drawRoundRectangle(x, y, getRangeWidth() + 2, Node.RADIUS + 2,
+				v.drawRoundRectangle(x, y, getNodeWidth() + 2, Node.RADIUS + 2,
 						Node.RADIUS * 2 + 2, Node.RADIUS * 2 + 2);
 			}
 		} else {
@@ -207,7 +207,7 @@ public class FenwickNode extends BSTNode {
 		}
 	}
 
-	private int getRangeWidth() {
+	private int getNodeWidth() {
 		int width = Node.RADIUS; // At least a circle
 		// Wide enough to store the value inside
 		width = Math.max(width, Fonts.NORMAL.fm.stringWidth(""+getStoredValue()));
@@ -215,6 +215,10 @@ public class FenwickNode extends BSTNode {
 		width = Math.max(width, Fonts.SMALL.fm.stringWidth(""+rangeMax)*2);
 		
 		return width;
+	}
+	
+	private int getRangeSpace() {
+		return Math.max(getNodeWidth()/2, Node.RADIUS/2);
 	}
 
 	private void alignSubtreeRight() {
