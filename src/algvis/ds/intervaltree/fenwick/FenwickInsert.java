@@ -42,6 +42,10 @@ public class FenwickInsert extends Algorithm {
 		// Update values up to root
 		while (node != null) {
 
+			// Show the next idx calculation
+			addNote("fenwickinsertnextidx",
+					FenwickIdx.formatNextInsertIdx(node.idx, T.root.idx));
+
 			// Move up to next real node, skipping through fake nodes
 			while (node != null) {
 				node = node.getParent();
