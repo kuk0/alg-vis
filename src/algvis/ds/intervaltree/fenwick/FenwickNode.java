@@ -377,29 +377,35 @@ public class FenwickNode extends BSTNode {
 			this.type = (FenwickNodeType) HashtableStoreSupport.restore(type);
 		}
 
-		Object idx = state.get(hash + "idx");
-		if (idx != null) {
-			this.idx = (Integer) HashtableStoreSupport.restore(idx);
-		}
+		Integer i;
 
-		Object rangeMin = state.get(hash + "rangeMin");
-		if (rangeMin != null) {
-			this.idx = (Integer) HashtableStoreSupport.restore(rangeMin);
-		}
-		Object rangeMax = state.get(hash + "rangeMax");
-		if (rangeMax != null) {
-			this.rangeMax = (Integer) HashtableStoreSupport.restore(rangeMax);
-		}
+		i = restoreIntKey(state, "idx");
+		if (i != null)
+			this.idx = i;
 
-		Object realValue = state.get(hash + "realValue");
-		if (realValue != null) {
-			this.realValue = (Integer) HashtableStoreSupport.restore(realValue);
+		i = restoreIntKey(state, "rangeMin");
+		if (i != null)
+			this.rangeMin = i;
+
+		i = restoreIntKey(state, "rangeMax");
+		if (i != null)
+			this.rangeMax = i;
+
+		i = restoreIntKey(state, "realValue");
+		if (i != null)
+			this.realValue = i;
+
+		i = restoreIntKey(state, "storedValue");
+		if (i != null)
+			this.storedValue = i;
+	}
+
+	private Integer restoreIntKey(Hashtable<?, ?> state, String key) {
+		Object o = state.get(hash + key);
+		if (o != null) {
+			return (Integer) HashtableStoreSupport.restore(o);
 		}
-		Object storedValue = state.get(hash + "storedValue");
-		if (storedValue != null) {
-			this.storedValue = (Integer) HashtableStoreSupport
-					.restore(storedValue);
-		}
+		return null;
 	}
 
 }
