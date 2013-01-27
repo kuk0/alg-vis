@@ -47,6 +47,7 @@ public class AlgVis extends JPanel implements ActionListener {
 	 * ("binheap") 18 - Lazy Binomial heap ("lazybinheap") 19 - Fibonacci heap
 	 * ("fibheap") 20 - Union-find ("ufi") 21 - Interval tree ("intervaltree")
 	 * 22 - Trie ("trie") 23 - Suffix Tree ("suffixtree")
+	 * 24 - Fenwick Tree ("fenwicktree")
 	 */
 	private final static int DEFAULT_DS = 0;
 

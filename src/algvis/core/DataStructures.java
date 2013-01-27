@@ -30,6 +30,8 @@ import algvis.ds.dictionaries.skiplist.SkipListPanel;
 import algvis.ds.dictionaries.splaytree.SplayPanel;
 import algvis.ds.dictionaries.treap.TreapPanel;
 import algvis.ds.intervaltree.IntervalPanel;
+import algvis.ds.intervaltree.fenwick.FenwickPanel;
+import algvis.ds.intervaltree.fenwick.FenwickTree;
 import algvis.ds.priorityqueues.binomialheap.BinHeapPanel;
 import algvis.ds.priorityqueues.daryheap.DaryHeapPanel;
 import algvis.ds.priorityqueues.fibonacciheap.FibHeapPanel;
@@ -61,7 +63,7 @@ public class DataStructures {
 			HeapPanel.class, DaryHeapPanel.class, LeftHeapPanel.class,
 			SkewHeapPanel.class, PairHeapPanel.class, BinHeapPanel.class,
 			LazyBinHeapPanel.class, FibHeapPanel.class, UnionFindPanel.class,
-			IntervalPanel.class, TriePanel.class, SuffixTreePanel.class };
+			IntervalPanel.class, TriePanel.class, SuffixTreePanel.class, FenwickPanel.class };
 
 	public static final int N = PANEL.length;
 
@@ -192,6 +194,8 @@ public class DataStructures {
 			return new TriePanel(S);
 		case 23:
 			return new SuffixTreePanel(S);
+		case 24:
+			return new FenwickPanel(S);
 		}
 		if (!check_range(i)) {
 			return null;
