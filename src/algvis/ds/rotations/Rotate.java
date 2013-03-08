@@ -75,20 +75,32 @@ public class Rotate extends Algorithm {
 			}
 		}
 
-		if (u == T.getRoot() && b != null) {
-			addNote("rotate-newroot", v.getKey(), b.getKey(), u.getKey());
+		if (u == T.getRoot()) {
+			if (b != null) {
+				addStep("rotate-newroot", v.getKey(), b.getKey(), u.getKey());
+			} else {
+				addStep("rotate-newroot-bnull", v.getKey(), u.getKey());
+			}
 		} else {
 			if (b != null) {
-				addNote("rotate-changes", v.getKey(), b.getKey(), u.getKey(), u
+				addStep("rotate-changes", v.getKey(), b.getKey(), u.getKey(), u
 						.getParent().getKey());
 			} else {
-				// TODO co ak b je null?
+				addStep("rotate-changes-bnull", v.getKey(), u.getKey(),
+						u.getParent().getKey());
 			}
+		}
+		if (R.T.order) {
+			addNote("rotate-preserves-order");
+		}
+		if (R.subtrees) {
+			addNote("rotate-heights");
 		}
 		pause();
 
 		T.rotate(v);
 		R.reposition();
+
 		pause();
 
 		v.subtreeColor(NodeColor.NORMAL);

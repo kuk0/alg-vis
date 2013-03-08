@@ -47,15 +47,19 @@ public class RotButtons extends Buttons {
 
 	@Override
 	public void otherButtons(JPanel P) {
-		order = new ICheckBox("show-order", false);
+		order = new ICheckBox("show-order", true);
 		order.setMnemonic(KeyEvent.VK_O);
 		order.addActionListener(this);
 		P.add(order);
 
-		subtrees = new ICheckBox("show-subtrees", false);
+		subtrees = new ICheckBox("show-subtrees", true);
 		subtrees.setMnemonic(KeyEvent.VK_S);
 		subtrees.addActionListener(this);
 		P.add(subtrees);
+		
+		final Rotations R = (Rotations) D;
+		R.T.order = order.isSelected();
+		R.subtrees = subtrees.isSelected();
 	}
 
 	@Override
