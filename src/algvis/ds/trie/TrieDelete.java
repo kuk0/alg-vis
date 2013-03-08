@@ -33,7 +33,7 @@ public class TrieDelete extends Algorithm {
 	void beforeReturn() {
 		removeFromScene(hw);
 		T.clearExtraColor();
-		addStep("done");
+		addNote("done");
 	}
 
 	@Override
@@ -136,6 +136,6 @@ public class TrieDelete extends Algorithm {
 			v = w;
 		} while ((v.getParent() != null) && (v.getChild() == null));
 		addStep("triedeletedbend");
-		addStep("done");
+		addNote("done");
 	}
 }

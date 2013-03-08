@@ -56,6 +56,6 @@ abstract class HeapAlg extends Algorithm {
 			w = w.getParent();
 		}
 		v.unmark();
-		addStep("done");
+		addNote("done");
 	}
 }

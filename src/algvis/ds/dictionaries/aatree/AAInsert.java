@@ -82,7 +82,7 @@ public class AAInsert extends Algorithm {
 				w = w.getParent();
 			}
 			T.reposition();
-			addStep("done");
+			addNote("done");
 		}
 	}
 }

@@ -181,7 +181,7 @@ public class AVLDelete extends Algorithm {
 			}
 
 			T.reposition();
-			addStep("done");
+			addNote("done");
 		}
 	}
 }

@@ -38,7 +38,7 @@ public class SkipFind extends SkipAlg {
 			addNote("found");
 			v.setColor(NodeColor.FOUND);
 			pause();
-			addStep("done");
+			addNote("done");
 		} else {
 			addNote("notfound");
 			v.setColor(NodeColor.NOTFOUND);

@@ -33,7 +33,7 @@ public class TrieFind extends Algorithm {
 	void beforeReturn() {
 		removeFromScene(hw);
 		T.clearExtraColor();
-		addStep("done");
+		addNote("done");
 	}
 
 	@Override

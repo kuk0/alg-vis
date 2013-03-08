@@ -39,6 +39,7 @@ public class BinHeapMeld extends BinHeapAlg {
 				H.root[i].highlightTree();
 			}
 			H.reposition();
+			
 			// heap #1 is empty; done;
 			return;
 		}

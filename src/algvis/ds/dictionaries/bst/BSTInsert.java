@@ -103,7 +103,7 @@ public class BSTInsert extends Algorithm {
 		result.put("v", v);
 		T.reposition();
 		pause();
-		addStep("done");
+		addNote("done");
 		v.setColor(NodeColor.NORMAL);
 		removeFromScene(v);
 		// v.setZDepth(ZDepth.DS);

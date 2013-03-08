@@ -156,6 +156,6 @@ public class GBInsert extends GBAlg {
 			}
 		}
 		T.reposition();
-		addStep("done");
+		addNote("done");
 	}
 }

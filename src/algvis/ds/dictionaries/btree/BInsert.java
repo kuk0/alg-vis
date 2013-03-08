@@ -103,6 +103,6 @@ public class BInsert extends Algorithm {
 			}
 			T.reposition();
 		}
-		addStep("done");
+		addNote("done");
 	}
 }

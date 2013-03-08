@@ -195,7 +195,7 @@ public class RBDelete extends Algorithm {
 			}
 
 			T.reposition();
-			addStep("done");
+			addNote("done");
 		}
 	}
 }

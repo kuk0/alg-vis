@@ -96,7 +96,7 @@ public class RBInsert extends Algorithm {
 			w.unmark();
 			((RBNode) T.getRoot()).setRed(false);
 			T.reposition();
-			addStep("done");
+			addNote("done");
 		}
 	}
 }

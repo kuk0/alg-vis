@@ -51,7 +51,7 @@ public class TreapInsert extends Algorithm {
 				pause();
 			}
 			v.unmark();
-			addStep("done");
+			addNote("done");
 		}
 	}
 }

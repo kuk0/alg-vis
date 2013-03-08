@@ -54,7 +54,7 @@ public class GBFind extends GBAlg {
 						addStep("found");
 						v.setColor(NodeColor.FOUND);
 						pause();
-						addStep("done");
+						addNote("done");
 					}
 					break;
 				} else if (w.getKey() < K) {

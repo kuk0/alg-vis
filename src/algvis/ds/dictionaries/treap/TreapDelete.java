@@ -71,7 +71,7 @@ public class TreapDelete extends Algorithm {
 			removeFromScene(d);
 
 			T.reposition();
-			addStep("done");
+			addNote("done");
 		}
 	}
 }

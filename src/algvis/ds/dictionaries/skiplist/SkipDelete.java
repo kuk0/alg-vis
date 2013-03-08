@@ -77,7 +77,7 @@ public class SkipDelete extends SkipAlg {
 			}
 		}
 
-		addStep("done");
+		addNote("done");
 		L.reposition();
 	}
 }

@@ -218,7 +218,7 @@ public class AADelete extends Algorithm {
 			}
 
 			T.reposition();
-			addStep("done");
+			addNote("done");
 		}
 	}
 }

@@ -104,6 +104,6 @@ public class HeapDelete extends HeapAlg {
 			v = w;
 		}
 
-		addStep("done");
+		addNote("done");
 	}
 }

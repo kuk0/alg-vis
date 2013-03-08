@@ -133,6 +133,6 @@ public class SplayDelete extends SplayAlg {
 			pause();
 		}
 
-		addStep("done");
+		addNote("done");
 	}
 }

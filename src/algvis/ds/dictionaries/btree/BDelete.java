@@ -214,6 +214,6 @@ public class BDelete extends Algorithm {
 			T.reposition();
 		}
 		removeFromScene(v);
-		addStep("done");
+		addNote("done");
 	}
 }

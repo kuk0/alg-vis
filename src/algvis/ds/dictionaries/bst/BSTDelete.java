@@ -170,7 +170,7 @@ public class BSTDelete extends Algorithm {
 			toDelete.goDown();
 			removeFromScene(toDelete);
 			T.reposition();
-			addStep("done");
+			addNote("done");
 		} else {
 			result.put("deleted", false);
 		}

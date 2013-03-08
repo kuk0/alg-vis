@@ -107,6 +107,6 @@ public class AVLInsert extends Algorithm {
 			}
 		}
 		T.reposition();
-		addStep("done");
+		addNote("done");
 	}
 }
