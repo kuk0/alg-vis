@@ -29,7 +29,7 @@ public class GBDelete extends GBAlg {
 		v = new GBNode(T, K, ZDepth.ACTIONNODE);
 		v.setColor(NodeColor.DELETE);
 		addToScene(v);
-		setHeader("deletion");
+		setHeader("delete", K);
 		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");

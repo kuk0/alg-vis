@@ -28,6 +28,7 @@ public class BinHeapMeld extends BinHeapAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("meld", i, j);
 		if (i == j) {
 			return;
 		}
@@ -39,12 +40,13 @@ public class BinHeapMeld extends BinHeapAlg {
 				H.root[i].highlightTree();
 			}
 			H.reposition();
-			
-			// heap #1 is empty; done;
+			addStep("binheap-top-empty");
+			addNote("done");
 			return;
 		}
 		if (H.root[j] == null) {
-			// heap #2 is empty; done;
+			addStep("binheap-bottom-empty");
+			addNote("done");
 			return;
 		}
 		H.root[0] = H.root[j];

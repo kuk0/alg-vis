@@ -30,7 +30,7 @@ public class HeapInsert extends HeapAlg {
 	public void runAlgorithm() throws InterruptedException {
 		final HeapNode v = new HeapNode(H, K, ZDepth.ACTIONNODE);
 		addToScene(v);
-		setHeader("insertion");
+		setHeader("insert", K);
 		if (H.getN() == 1000) {
 			addStep("heapfull");
 			removeFromScene(v);

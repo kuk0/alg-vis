@@ -35,7 +35,7 @@ public class BDelete extends Algorithm {
 		BNode v = new BNode(T, K);
 		v.setColor(NodeColor.DELETE);
 		addToScene(v);
-		setHeader("deletion");
+		setHeader("delete", K);
 		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");

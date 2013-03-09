@@ -28,6 +28,8 @@ public class BinHeapInsert extends BinHeapAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("insert", x);
+		addNote("binheap-insert");
 		final int i = H.active;
 		H.root[0] = H.min[0] = new BinHeapNode(H, x, ZDepth.ACTIONNODE);
 		addToScene(H.root[0]); // TODO hm, naco je aj v datovej strukture

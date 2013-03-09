@@ -25,8 +25,11 @@ public class BinHeapDelete extends BinHeapAlg {
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		final int i = H.active;
+		setHeader(H.minHeap ? "delete-min" : "delete-max");
 		if (H.root[i] == null) {
 			// empty - done;
+			addStep("heapempty");
+			addNote("done");
 			return;
 		}
 		BinHeapNode v, w;
@@ -53,16 +56,21 @@ public class BinHeapDelete extends BinHeapAlg {
 				w = w.right;
 			} while (w != v);
 		}
-
+		addStep(H.minHeap ? "binheap-findmin" : "binheap-findmax");
 		H.root[0] = v = w = d.child;
 		d.child = null;
+		pause();
+
 		H.reposition();
 		if (w == null) {
-			pause();
 			// no children - done;
+			addStep("binheap-nochildren");
+			addNote("done");
+			pause();
 			return;
 		}
 		// reverse & find min
+		addNote("binheap-meldchildren");
 		H.min[0] = w;
 		do {
 			w.parent = null;
@@ -79,12 +87,14 @@ public class BinHeapDelete extends BinHeapAlg {
 		pause();
 
 		if (H.root[i] == null) {
+			// heap #1 is empty; done;
 			H.root[i] = H.root[0];
 			H.min[i] = H.min[0];
 			H.root[0] = null;
 			H.min[0] = null;
 			H.reposition();
-			// heap #1 is empty; done;
+			addStep("binheap-top-empty");
+			addNote("done");
 			return;
 		}
 

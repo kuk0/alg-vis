@@ -34,7 +34,7 @@ public class StringUtils {
 		for (int i = 0; i < param.length; ++i) {
 			s = s.replaceAll("#" + Integer.toString(i + 1), param[i]);
 		}
-		return s;
+		return s.replaceAll("##", "#");
 	}
 
 	private static final String ZEROES = "000000000000";

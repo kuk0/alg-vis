@@ -28,7 +28,7 @@ public class PairHeapDelete extends PairHeapAlg {
 	public void runAlgorithm() throws InterruptedException {
 		final Pairing pairState = this.H.pairState;
 		final int i = H.active;
-		setHeader("deletion");
+		setHeader(H.minHeap ? "delete-min" : "delete-max");
 
 		if (H.root[i] == null) {
 			return;

@@ -27,7 +27,7 @@ public class SkewHeapDelete extends SkewHeapAlg {
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		final int i = H.active;
-		setHeader("deletion");
+		setHeader(H.minHeap ? "delete-min" : "delete-max");
 
 		if (H.root[i] == null) {
 			return;

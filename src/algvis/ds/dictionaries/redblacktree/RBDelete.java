@@ -41,14 +41,17 @@ public class RBDelete extends Algorithm {
 		find.runAlgorithm();
 		final RBNode d = (RBNode) find.getResult().get("node");
 
-		if (d != null) {
+		if (d == null) { // notfound
+			addNote("notfound");
+			addNote("done");
+			return;
+		} else {
 			setHeader("delete", K);
 			addToScene(d);
 			// d.setColor(NodeColor.DELETE);
-			d.setColor(NodeColor.FOUND); // TODO aj tak je to jedno, lebo metoda
-											// draw zmeni kazdy RBNode na
-											// cerveny
-			// alebo cierny
+			d.setColor(NodeColor.FOUND); // TODO aj tak je to jedno, lebo
+			                             // metoda draw zmeni kazdy RBNode
+			                             // na cerveny alebo cierny
 
 			RBNode u = d, w = (u.getLeft() != null) ? u.getLeft() : u
 					.getRight2();
@@ -83,7 +86,7 @@ public class RBDelete extends Algorithm {
 			} else { // case III - 2 synovia
 				addStep("bst-delete-case3");
 				RBNode s = d.getRight();
-				BSTNode v = new BSTNode(T, -Node.INF, ZDepth.ACTIONNODE);
+				RBNode v = new RBNode(T, -Node.INF, ZDepth.ACTIONNODE);
 				v.setColor(NodeColor.FIND);
 				addToScene(v);
 				v.goTo(s);
@@ -95,11 +98,11 @@ public class RBDelete extends Algorithm {
 				}
 				u = s;
 				w = u.getRight2();
-				T.NULL.setParent(u.getParent2());
-				removeFromScene(v);
-				v = s;
-				addToScene(v);
-				((RBNode) v).setRed(d.isRed());
+				T.NULL.setParent(u.getParent() == d ? v : u.getParent());
+				//removeFromScene(v);
+				v.setKey(s.getKey());
+				v.setRed(d.isRed());
+				//addToScene(v);
 				if (s.isLeft()) {
 					s.getParent().linkLeft(u.getRight());
 				} else {
@@ -126,6 +129,8 @@ public class RBDelete extends Algorithm {
 			d.goDown();
 			removeFromScene(d);
 
+			T.NULL.setLeft(T.NULL);
+			T.NULL.setRight(T.NULL);
 			if (!u.isRed()) {
 				// bubleme nahor
 				while (w.getParent2() != T.NULL && !w.isRed()) {

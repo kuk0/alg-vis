@@ -25,12 +25,15 @@ public class HeapDelete extends HeapAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		setHeader("deletion");
+		setHeader(H.minHeap ? "delete-min" : "delete-max");
 		if (H.getN() == 0) {
 			addStep("heapempty");
+			addNote("done");
 			return;
 		}
 		if (H.getN() == 1) {
+			addStep("heap-last");
+			addNote("done");
 			final HeapNode v = H.getRoot();
 			addToScene(v);
 			H.setRoot(null);

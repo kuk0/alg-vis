@@ -31,15 +31,16 @@ abstract class BinHeapAlg extends Algorithm {
 		v.mark();
 		if ((H.min[0]).prec(H.min[i])) {
 			H.min[i] = H.min[0];
-			// text: nove minimum
+			addStep(H.minHeap ? "binheap-newmin" : "binheap-newmax", H.min[i].getKey());
 		} else {
-			// stare min.
+			addStep(H.minHeap ? "binheap-oldmin" : "binheap-oldmax", H.min[i].getKey());
 		}
+		addNote("binheap-meld-idea");
 		H.min[0] = null;
 		pause();
 		while (true) {
 			if (H.root[0] != null && v.rank > H.root[0].rank) {
-				// pripojime vlavo
+				addStep("binheap-add-tree");
 				final BinHeapNode u = H.root[0];
 				if (H.root[0].right == H.root[0]) {
 					removeFromScene(H.root[0]);
@@ -56,6 +57,7 @@ abstract class BinHeapAlg extends Algorithm {
 			} else if (H.root[0] != null && v.rank <= H.root[0].rank
 					&& (v.right == H.root[i] || H.root[0].rank < v.right.rank)) {
 				// pripojime vpravo
+				addStep("binheap-add-tree");
 				final BinHeapNode u = H.root[0];
 				if (H.root[0].right == H.root[0]) {
 					removeFromScene(H.root[0]);
@@ -68,15 +70,18 @@ abstract class BinHeapAlg extends Algorithm {
 				v.linkRight(u);
 			} else if (v.left.rank == v.rank && v.left != v
 					&& (v.right == H.root[i] || v.rank < v.right.rank)) {
-				// spojime 2 rovnakej velkosti
 				final BinHeapNode u = v.left;
 				if (u.prec(v)) { // napojime v pod u
+					addStep("binheap-link", v.getKey(), u.getKey());
+					pause();
 					v.unlink();
 					u.linkChild(v);
 					v.unmark();
 					v = u;
 					v.mark();
 				} else { // napojime u pod v
+					addStep("binheap-link", u.getKey(), v.getKey());
+					pause();
 					if (H.root[i] == u) {
 						H.root[i] = v;
 					}
@@ -85,6 +90,7 @@ abstract class BinHeapAlg extends Algorithm {
 				}
 			} else if (v.right != H.root[i]) {
 				// posunieme sa
+				addStep("binheap-next");
 				v.unmark();
 				v = v.right;
 				v.mark();
@@ -96,5 +102,6 @@ abstract class BinHeapAlg extends Algorithm {
 			H.reposition();
 			pause();
 		}
+		addNote("done");
 	}
 }
