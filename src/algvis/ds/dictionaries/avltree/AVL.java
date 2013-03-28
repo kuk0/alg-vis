@@ -50,6 +50,6 @@ public class AVL extends BST {
 
 	@Override
 	public Layout getLayout() {
-		return Layout.COMPACT;
+		return Layout.SIMPLE;
 	}
 }

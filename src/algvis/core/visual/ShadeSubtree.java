@@ -12,17 +12,19 @@ import algvis.ui.view.View;
 
 public class ShadeSubtree extends VisualElement {
 	BSTNode u;
+	int x, y;
+	Polygon p;
 
 	public ShadeSubtree(BSTNode u) {
 		super(Scene.MAXZ - 1);
 		this.u = u;
+		recompute();
 	}
 
-	@Override
-	protected void draw(View v) throws ConcurrentModificationException {
-		// TODO to sa mozno zbytocne pocita kazdych 50ms, stacilo by to prepocitat len ked sa zmenia premenne, 
-		// od ktorych zavisi polygon. (takisto aj v inych metodach move/draw)
-		final Polygon p = new Polygon();
+	private void recompute() {
+		x = u.x;
+		y = u.y;
+		p = new Polygon();
 		p.addPoint(u.x - 1, u.y - 1);
 		if (u.D.getLayout() == Layout.SIMPLE) {
 			if (u.height == 1) {
@@ -39,12 +41,13 @@ public class ShadeSubtree extends VisualElement {
 				p.addPoint(x2, y1);
 			}
 		} else {
-			BSTNode u = this.u, w = this.u;
+			// TODO: BST needs to expose threads
+			BSTNode w = u;
 			final Stack<BSTNode> tmp = new Stack<BSTNode>();
 			while (u != null && w != null) {
 				p.addPoint(u.x - 1, u.y);
 				tmp.add(w);
-				u = (u.getLeft() != null) ? u.getLeft() : u.getRight();
+				u = (u.getLeft() != null) ? u.getLeft() : u.getRight(); // TODO
 				w = (w.getRight() != null) ? w.getRight() : w.getLeft();
 			}
 			while (!tmp.isEmpty()) {
@@ -53,6 +56,13 @@ public class ShadeSubtree extends VisualElement {
 			}
 		}
 		p.addPoint(u.x + 1, u.y - 1);
+	}
+
+	@Override
+	protected void draw(View v) throws ConcurrentModificationException {
+		if (u.x != x || u.y != y) {
+			recompute();
+		}
 		v.fillPolygon(p);
 	}
 
