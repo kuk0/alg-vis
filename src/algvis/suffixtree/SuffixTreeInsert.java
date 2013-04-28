@@ -80,21 +80,21 @@ public class SuffixTreeInsert extends Algorithm {
 			}
 			ruleOneBuffer = newRuleOneBuffer;
 			starting.setColor(NodeColor.FOUND);
-			if (ch != '$')
-				addStep("sxbcontinue", "" + ch);
-			else
-				addStep("sxbcontinue", "\\$");
-			T.reposition();
-			mysuspend();
+//			if (ch != '$')
+//				addStep("sxbcontinue", "" + ch);
+//			else
+//				addStep("sxbcontinue", "\\$");
+//			T.reposition();
+//			mysuspend();
 			Vector<SuffixTreeNode> upWalk = new Vector<SuffixTreeNode>();
 			String cachedUpWalk = new String();
 			setUpSuffixLinkOnThis = T.getRoot();
 			SuffixTreeNode current = starting;
 			boolean pathEnded = false;
 			while (!pathEnded) {
-				addStep("sxbupwalk");
-				T.reposition();
-				mysuspend();
+//				addStep("sxbupwalk");
+//				T.reposition();
+//				mysuspend();
 				SuffixTreeNode caching = current;
 				if ((caching == starting) && (current != T.getRoot()))
 					caching = (SuffixTreeNode) caching.getParent();
@@ -113,31 +113,31 @@ public class SuffixTreeInsert extends Algorithm {
 				}
 				current.unmark();
 				if (!current.isRoot()) {
-					addStep("sxbslink");
-					T.reposition();
-					mysuspend();
+//					addStep("sxbslink");
+//					T.reposition();
+//					mysuspend();
 					current = current.getSuffixLink();
 				}
 				if (current.isRoot()) {
 					cachedUpWalk = T.text.substring(startingJ, i);
-					addStep("sxbfind", cachedUpWalk);
-					T.reposition();
-					mysuspend();
+//					addStep("sxbfind", cachedUpWalk);
+//					T.reposition();
+//					mysuspend();
 				}
 				current.mark();
 				for (SuffixTreeNode u : upWalk) {
 					u.setColor(NodeColor.NORMAL);
 				}
 				starting.setColor(NodeColor.FOUND);
-				if (ch != '$')
-					addStep("sxbdownwalk", "" + ch);
-				else
-					addStep("sxbdownwalk", "\\$");
+//				if (ch != '$')
+//					addStep("sxbdownwalk", "" + ch);
+//				else
+//					addStep("sxbdownwalk", "\\$");
 				T.hw = new TrieWordNode(T, cachedUpWalk, current.x, current.y,
 						NodeColor.INSERT);
 				T.hw.goNextTo(current);
-				T.reposition();
-				mysuspend();
+//				T.reposition();
+//				mysuspend();
 				Vector<SuffixTreeNode> downWalk = new Vector<SuffixTreeNode>();
 				caching = current;
 				while (!cachedUpWalk.equals("")) {
@@ -208,9 +208,9 @@ public class SuffixTreeInsert extends Algorithm {
 					starting = u;
 					startingJ++;
 					starting.setColor(NodeColor.FOUND);
-					addStep("sxbaftersecondrule", "" + ch);
+//					addStep("sxbaftersecondrule", "" + ch);
 					T.reposition();
-					mysuspend();
+//					mysuspend();
 					current.unmark();
 					if ((current.getSuffixLink() == null)
 							&& (!current.isRoot())) {
@@ -228,9 +228,9 @@ public class SuffixTreeInsert extends Algorithm {
 		 * After Ukkonen's algorithm we need to mark leaves.
 		 */
 
-		addStep("sxbexplicit");
+//		addStep("sxbexplicit");
 		T.reposition();
-		mysuspend();
+//		mysuspend();
 		for (SuffixTreeNode u : ruleOneBuffer) {
 			u.setPacked(false);
 			u.setColor(NodeColor.NORMAL);
