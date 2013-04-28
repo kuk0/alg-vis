@@ -17,51 +17,54 @@
 package algvis.core;
 
 import java.awt.Color;
+import java.util.Hashtable;
 import java.util.Stack;
+import java.util.Vector;
 
-import org.jdom.Element;
-
-import algvis.gui.view.View;
-import algvis.scenario.Command;
+import algvis.core.history.HashtableStoreSupport;
+import algvis.core.visual.ZDepth;
+import algvis.ui.view.View;
 
 public class TreeNode extends Node {
 	private TreeNode child = null, right = null, parent = null;
 
 	// variables for the Reingold-Tilford-Walker layout
-	int offset = 0; // offset from base line, base line has x-coord
-					// equaled to x-coord of leftmost child
-	int level; // distance from the root
+	private int offset = 0; // offset from base line, base line has x-coord
+	// equaled to x-coord of leftmost child
+	private int level; // distance from the root
 	protected boolean thread = false; // is this node threaded?
 
-	int toExtremeSon = 0; // offset from the leftmost son
-	int toBaseline = 0; // distance to child's baseline
-	int modifier = 0;
-	int tmpx = 0, tmpy = 0; // temporary coordinates of the node
-	int number = 1;
+	private int toExtremeSon = 0; // offset from the leftmost son
+	private int toBaseline = 0; // distance to child's baseline
+	private int tmpx = 0;
+	private int tmpy = 0; // temporary coordinates of the node
+	private int number = 1;
 
-	int change = 0, shift = 0; // for evenly spaced smaller subtrees
+	private int change = 0;
+	private int shift = 0; // for evenly spaced smaller subtrees
 	// TreeNode ancestor = this; // unused variable for now
 
 	// statistics
-	public int size = 1, height = 1;
+	private int size = 1;
+	private int height = 1;
 	public int nos = 0; // number of sons, probably useless
 
 	// from binary node
 	public int leftw, rightw;
 
-	public TreeNode(DataStructure D, int key, int x, int y) {
+	protected TreeNode(DataStructure D, int key, int x, int y) {
 		super(D, key, x, y);
 	}
 
-	public TreeNode(DataStructure D, int key) {
-		super(D, key);
+	protected TreeNode(DataStructure D, int key, int zDepth) {
+		super(D, key, zDepth);
 	}
 
 	public boolean isRoot() {
 		return getParent() == null;
 	}
 
-	public boolean isLeaf() {
+	protected boolean isLeaf() {
 		return getChild() == null;
 	}
 
@@ -70,7 +73,7 @@ public class TreeNode extends Node {
 	 * Calculate height and size of "this" node assuming these were calculated
 	 * (properly) in its children.
 	 */
-	public void calc() {
+	void calc() {
 		size = 1;
 		height = 1;
 		if (!isLeaf()) {
@@ -88,7 +91,7 @@ public class TreeNode extends Node {
 	/**
 	 * Calculate height and size of subtree rooted by "this" node bottom-up
 	 */
-	public void calcTree() {
+	void calcTree() {
 		if (!isLeaf()) {
 			TreeNode w = getChild();
 			while (w != null) {
@@ -106,7 +109,7 @@ public class TreeNode extends Node {
 	public void drawEdges(View v) {
 		if (state != INVISIBLE) {
 			if (thread) {
-				v.setColor(Color.red); // TODO
+				v.setColor(Color.red);
 				if (getChild() != null) {
 					v.drawLine(x, y, getChild().x, getChild().y);
 				}
@@ -114,8 +117,7 @@ public class TreeNode extends Node {
 			} else {
 				TreeNode w = getChild();
 				while (w != null) {
-					v.setColor(Color.black); // TODO maybe these lines would
-												// make problems
+					v.setColor(Color.black);
 					v.drawLine(x, y, w.x, w.y);
 					w.drawEdges(v);
 					w = w.getRight();
@@ -137,7 +139,7 @@ public class TreeNode extends Node {
 	 * Draw edges, then the node itself. Don't draw invisible nodes and edges
 	 * from and to them
 	 */
-	public void drawTree(View v) {
+	protected void drawTree(View v) {
 		drawEdges(v);
 		drawVertices(v);
 	}
@@ -156,8 +158,9 @@ public class TreeNode extends Node {
 	 * that has been clicked by user.
 	 */
 	public TreeNode find(int x, int y) {
-		if (inside(x, y))
+		if (inside(x, y)) {
 			return this;
+		}
 		TreeNode w = getChild();
 		TreeNode res = null;
 		while ((w != null) && (res == null)) {
@@ -167,25 +170,22 @@ public class TreeNode extends Node {
 		return res;
 	}
 
-	public void rebox() {
-	}
-
 	/**
 	 * Rebox the whole subtree calculating the widths recursively bottom-up.
 	 */
 	public void reboxTree() {
-		int bw = DataStructure.minsepx / 2;
+		final int bw = DataStructure.minsepx / 2;
 		int le = 9999999; // keeps current extreme leftw value
 		int re = -9999999;
 		TreeNode T = getChild();
 		while (T != null) {
 			T.reboxTree();
 
-			int lxe = (T.tox - tox) - T.leftw;
+			final int lxe = (T.tox - tox) - T.leftw;
 			if (lxe < le) {
 				le = lxe;
 			}
-			int rxe = (T.tox - tox) + T.rightw;
+			final int rxe = (T.tox - tox) + T.rightw;
 			if (rxe > re) {
 				re = rxe;
 			}
@@ -201,7 +201,7 @@ public class TreeNode extends Node {
 		rightw = re;
 	}
 
-	public void addRight(TreeNode w) {
+	void addRight(TreeNode w) {
 		if (getRight() == null) {
 			setRight(w);
 			w.setParent(parent);
@@ -250,9 +250,9 @@ public class TreeNode extends Node {
 		return w;
 	}
 
-	public void append(int x, int j) {
+	void append(int x, int j) {
 		if (getKey() == x) {
-			addChild(new TreeNode(D, j));
+			addChild(new TreeNode(D, j, ZDepth.NODE));
 		} else {
 			TreeNode w = getChild();
 			while (w != null) {
@@ -269,10 +269,10 @@ public class TreeNode extends Node {
 		fTRPetrification(0);
 		fTRBounding(-tmpx);
 		reboxTree();
-		/*D.x1 -= D.minsepx;
-		D.x2 += D.xspan + D.radius;
-		D.y1 -= D.yspan + D.radius;
-		D.y2 += D.yspan + D.radius;*/
+		/*
+		 * D.x1 -= D.minsepx; D.x2 += D.xspan + D.radius; D.y1 -= D.yspan +
+		 * D.radius; D.y2 += D.yspan + D.radius;
+		 */
 	}
 
 	/**
@@ -284,7 +284,7 @@ public class TreeNode extends Node {
 	 */
 	private void fTRInitialization(int level) {
 		this.level = level;
-		offset = modifier = shift = change = 0;
+		offset = shift = change = 0;
 		toExtremeSon = 0;
 		toBaseline = 0;
 		leftw = rightw = 0;
@@ -321,7 +321,7 @@ public class TreeNode extends Node {
 		/*
 		 * So lets get result from first child
 		 */
-		NodePair<TreeNode> fromLeftSubtree = LeftSubtree.fTRPrePosition();
+		final NodePair<TreeNode> fromLeftSubtree = LeftSubtree.fTRPrePosition();
 		result = fromLeftSubtree;
 
 		/*
@@ -329,7 +329,8 @@ public class TreeNode extends Node {
 		 * for distributing smaller subtrees.
 		 */
 		while (RightSubtree != null) {
-			NodePair<TreeNode> fromRightSubtree = RightSubtree.fTRPrePosition();
+			final NodePair<TreeNode> fromRightSubtree = RightSubtree
+					.fTRPrePosition();
 
 			TreeNode L = LeftSubtree;
 			TreeNode R = RightSubtree;
@@ -337,7 +338,7 @@ public class TreeNode extends Node {
 			int roffset = RightSubtree.offset = LeftSubtree.offset;
 
 			while ((L != null) && (R != null)) {
-				int distance = (loffset + DataStructure.minsepx - roffset);
+				final int distance = (loffset + DataStructure.minsepx - roffset);
 				if (distance > 0) {
 					RightSubtree.offset += distance;
 					roffset += distance;
@@ -349,7 +350,7 @@ public class TreeNode extends Node {
 					while (Elevator.getParent() != LeftSubtree.getParent()) {
 						Elevator = Elevator.getParent();
 					}
-					int theta = RightSubtree.number - Elevator.number;
+					final int theta = RightSubtree.number - Elevator.number;
 					RightSubtree.change -= distance / theta;
 					RightSubtree.shift += distance;
 					Elevator.change += distance / theta;
@@ -398,21 +399,18 @@ public class TreeNode extends Node {
 			 */
 			// both left subforest and right subtree have the same height
 			if ((L == null) && (R == null)) {
-				fromLeftSubtree.left = fromLeftSubtree.left;
 				fromLeftSubtree.right = fromRightSubtree.right;
-				// left subforest is more shallow
 			} else if ((L == null) && (R != null)) {
+				// left subforest is more shallow
 				fromLeftSubtree.left.thread = true;
 				fromLeftSubtree.left.setChild(R);
-
 				fromLeftSubtree.left = fromRightSubtree.left;
 				fromLeftSubtree.right = fromRightSubtree.right;
-				// right subtree is more shallow
 			} else if ((L != null) && (R == null)) {
+				// right subtree is more shallow
 				fromRightSubtree.right.thread = true;
 				fromRightSubtree.right.setChild(L);
 			}
-
 			LeftSubtree = LeftSubtree.getRight();
 			RightSubtree = RightSubtree.getRight();
 		}
@@ -423,9 +421,9 @@ public class TreeNode extends Node {
 		int distance = 0;
 		int change = 0;
 		TreeNode w = getChild();
-		Stack<TreeNode> stack = new Stack<TreeNode>();
+		final Stack<TreeNode> stack = new Stack<TreeNode>();
 		while (w != null) {
-			NodePair<TreeNode> N = new NodePair<TreeNode>();
+			final NodePair<TreeNode> N = new NodePair<TreeNode>();
 			N.left = w;
 			stack.push(w);
 			w = w.getRight();
@@ -451,7 +449,7 @@ public class TreeNode extends Node {
 	/**
 	 * Disposes threads. Useful as stand-alone only for testing.
 	 */
-	public void fTRDisposeThreads() {
+	void fTRDisposeThreads() {
 		if (thread) {
 			thread = false;
 			setChild(null);
@@ -535,12 +533,7 @@ public class TreeNode extends Node {
 	}
 
 	public void setChild(TreeNode child) {
-		if (this.child != child) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetChildCommand(child));
-			}
-			this.child = child;
-		}
+		this.child = child;
 	}
 
 	public TreeNode getRight() {
@@ -548,25 +541,15 @@ public class TreeNode extends Node {
 	}
 
 	public void setRight(TreeNode right) {
-		if (this.right != right) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetRightCommand(right));
-			}
-			this.right = right;
-		}
+		this.right = right;
 	}
 
-	public TreeNode getParent() {
+	protected TreeNode getParent() {
 		return parent;
 	}
 
 	public void setParent(TreeNode parent) {
-		if (this.parent != parent) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetParentCommand(parent));
-			}
-			this.parent = parent;
-		}
+		this.parent = parent;
 	}
 
 	// private void fTRGetInfo(int phase, int variable) {
@@ -578,112 +561,65 @@ public class TreeNode extends Node {
 	// + phase + ")");
 	// }
 
-	private class SetRightCommand implements Command {
-		private final TreeNode oldRight, newRight;
-
-		public SetRightCommand(TreeNode newRight) {
-			oldRight = getRight();
-			this.newRight = newRight;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setRight");
-			e.setAttribute("key", Integer.toString(getKey()));
-			if (newRight != null) {
-				e.setAttribute("newRight", Integer.toString(newRight.getKey()));
-			} else {
-				e.setAttribute("newRight", "null");
+	private Vector<TreeNode> _getLeaves(Vector<TreeNode> result) {
+		if (isLeaf()) {
+			result.add(this);
+			return result;
+		} else {
+			result = child._getLeaves(result);
+			if (right != null) {
+				result = right._getLeaves(result);
 			}
-			if (oldRight != null) {
-				e.setAttribute("oldRight", Integer.toString(oldRight.getKey()));
-			} else {
-				e.setAttribute("oldRight", "null");
-			}
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setRight(newRight);
-		}
-
-		@Override
-		public void unexecute() {
-			setRight(oldRight);
+			return result;
 		}
 	}
 
-	private class SetParentCommand implements Command {
-		private final TreeNode oldParent, newParent;
-
-		public SetParentCommand(TreeNode newParent) {
-			oldParent = getParent();
-			this.newParent = newParent;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setParent");
-			e.setAttribute("key", Integer.toString(getKey()));
-			if (newParent != null) {
-				e.setAttribute("newParent", Integer.toString(newParent.getKey()));
-			} else {
-				e.setAttribute("newParent", "null");
-			}
-			if (oldParent != null) {
-				e.setAttribute("oldParent", Integer.toString(oldParent.getKey()));
-			} else {
-				e.setAttribute("oldParent", "null");
-			}
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setParent(newParent);
-		}
-
-		@Override
-		public void unexecute() {
-			setParent(oldParent);
+	public Vector<TreeNode> getLeaves() {
+		final Vector<TreeNode> result = new Vector<TreeNode>();
+		if (isLeaf()) {
+			result.add(this);
+			return result;
+		} else {
+			return child._getLeaves(result);
 		}
 	}
 
-	private class SetChildCommand implements Command {
-		private final TreeNode oldChild, newChild;
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "child", child);
+		HashtableStoreSupport.store(state, hash + "right", right);
+		HashtableStoreSupport.store(state, hash + "parent", parent);
 
-		public SetChildCommand(TreeNode newChild) {
-			oldChild = getChild();
-			this.newChild = newChild;
+		if (child != null) {
+			child.storeState(state);
 		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("setChild");
-			e.setAttribute("key", Integer.toString(getKey()));
-			if (newChild != null) {
-				e.setAttribute("newChild", Integer.toString(newChild.getKey()));
-			} else {
-				e.setAttribute("newChild", "null");
-			}
-			if (oldChild != null) {
-				e.setAttribute("oldChild", Integer.toString(oldChild.getKey()));
-			} else {
-				e.setAttribute("oldChild", "null");
-			}
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			setChild(newChild);
-		}
-
-		@Override
-		public void unexecute() {
-			setChild(oldChild);
+		if (right != null) {
+			right.storeState(state);
 		}
 	}
 
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		final Object child = state.get(hash + "child");
+		if (child != null) {
+			this.child = (TreeNode) HashtableStoreSupport.restore(child);
+		}
+		final Object right = state.get(hash + "right");
+		if (right != null) {
+			this.right = (TreeNode) HashtableStoreSupport.restore(right);
+		}
+		final Object parent = state.get(hash + "parent");
+		if (parent != null) {
+			this.parent = (TreeNode) HashtableStoreSupport.restore(parent);
+		}
+
+		if (this.child != null) {
+			this.child.restoreState(state);
+		}
+		if (this.right != null) {
+			this.right.restoreState(state);
+		}
+	}
 }

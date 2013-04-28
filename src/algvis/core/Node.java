@@ -17,13 +17,14 @@
 package algvis.core;
 
 import java.awt.Color;
-import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
 
-import org.jdom.Element;
-
-import algvis.gui.Fonts;
-import algvis.gui.view.View;
-import algvis.scenario.Command;
+import algvis.core.history.HashtableStoreSupport;
+import algvis.core.visual.VisualElement;
+import algvis.core.visual.ZDepth;
+import algvis.ui.Fonts;
+import algvis.ui.view.View;
 
 /**
  * The Class Node. This is a basic element of the visualization. Nodes can be
@@ -31,25 +32,29 @@ import algvis.scenario.Command;
  * direction. Nodes are by default drawn as circles with their key in the
  * middle.
  */
-public class Node {
+public class Node extends VisualElement {
 	public DataStructure D;
-	private int key;
+	protected int key;
 	/**
 	 * x, y - node position tox, toy - the position, where the node is heading
 	 * steps - the number of steps to reach the destination
 	 */
-	public int x, y, tox, toy, steps;
+	public volatile int x;
+	public volatile int y;
+	public int tox;
+	public int toy;
+	protected int steps;
 	/** the state of a node - either ALIVE, DOWN, LEFT, or RIGHT. */
 	public int state = ALIVE;
 	private NodeColor color = NodeColor.NORMAL;
 	public boolean marked = false;
-	public Node dir = null;
-	public int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S,
+	protected Node dir = null;
+	private int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S,
 										// 135=SW, 180=W)
-	boolean arc = false;
+	private boolean arc = false;
 
-	public static int STEPS = 10;
-	public static int radius = 10;
+	public static final int STEPS = 10;
+	public static final int RADIUS = 10;
 
 	/**
 	 * the key values are generally integers from 1 to 999 (inclusive) special
@@ -64,15 +69,23 @@ public class Node {
 	 * down, or diagonally left or right until it gets out of the screen, and
 	 * then turns INVISIBLE)
 	 */
-	public static final int INVISIBLE = -1, ALIVE = 0, DOWN = 2, LEFT = 3,
-			RIGHT = 4;
-	public static final int NOARROW = -10000, DIRARROW = -10001,
-			TOARROW = -10002;
+	public static final int INVISIBLE = -1;
+	public static final int ALIVE = 0;
+	public static final int DOWN = 2;
+	public static final int LEFT = 3;
+	public static final int RIGHT = 4;
+	public static final int OUT = 5;
+	public static final int NOARROW = -10000;
+	public static final int DIRARROW = -10001;
+	public static final int TOARROW = -10002;
+	public static final int UPY = -7 * Node.RADIUS;
 
-	public Node() {
+	protected Node(DataStructure D, int key, int x, int y) {
+		this(D, key, x, y, ZDepth.NODE);
 	}
 
-	public Node(DataStructure D, int key, int x, int y) {
+	protected Node(DataStructure D, int key, int x, int y, int zDepth) {
+		super(zDepth);
 		this.D = D;
 		this.setKey(key);
 		this.x = tox = x;
@@ -80,52 +93,20 @@ public class Node {
 		steps = 0;
 	}
 
-	public Node(DataStructure D, int key) {
-		this(D, key, 0, 0);
-		getReady();
+	protected Node(DataStructure D, int key, int zDepth) {
+		this(D, key, 0, UPY, zDepth);
 	}
 
 	public Node(Node v) {
 		this(v.D, v.getKey(), v.x, v.y);
 	}
 
-	/**
-	 * position the node above top of the screen and set its state to ALIVE, so
-	 * the node is ready to come to screen now
-	 */
-	protected void getReady() {
-		if (D.M.screen.V.at != null) {
-			Point2D p = D.M.screen.V.r2v(0, 0);
-			toy = y = (int) p.getY() - 5 * Node.radius;
-		} else {
-			/*
-			 * TODO because of rotations and skiplist constructor inserts (at
-			 * that time "AffineTransform at" not exists)
-			 */
-			tox = x = 0;
-			toy = y = -5 * Node.radius;
-		}
+	public Node(DataStructure D) {
+		super(ZDepth.DS);
 	}
 
 	public void setState(int s) {
-		if (state != s && D.scenario.isAddingEnabled()) {
-			D.scenario.add(new SetStateCommand(s));
-		}
 		state = s;
-		if ((s == Node.LEFT || s == Node.RIGHT || s == Node.DOWN)
-				&& D.scenario.traverser.isInterrupted()) {
-			int k = 0;
-			if (s == Node.LEFT) {
-				k = -1;
-			} else if (s == Node.RIGHT) {
-				k = 1;
-			}
-			while (D.M.screen.V.inside(x, y - Node.radius)) {
-				toy = y += 20;
-				tox = x += k * 20;
-			}
-			state = INVISIBLE;
-		}
 	}
 
 	public NodeColor getColor() {
@@ -138,25 +119,19 @@ public class Node {
 		this.color = color;
 	}
 
-	public void fgColor(Color fg) {
+	protected void fgColor(Color fg) {
 		if (fg != color.fgColor) {
-			if (D != null && D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetFgColorCommand(fg));
-			}
 			color = new NodeColor(fg, color.bgColor);
 		}
 	}
 
-	public void bgColor(Color bg) {
+	protected void bgColor(Color bg) {
 		if (bg != color.bgColor) {
-			if (D != null && D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetBgColorCommand(bg));
-			}
 			color = new NodeColor(color.fgColor, bg);
 		}
 	}
 
-	public Color getFgColor() {
+	protected Color getFgColor() {
 		return color.fgColor;
 	}
 
@@ -168,26 +143,16 @@ public class Node {
 	 * Set background color depending on the key (the higher the key, the darker
 	 * the color).
 	 */
-	public void bgKeyColor() {
+	protected void bgKeyColor() {
 		bgColor(new Color(255, 255 - getKey() / 20, 0));
 	}
 
 	public void mark() {
-		if (!marked) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new MarkCommand(true));
-			}
-			marked = true;
-		}
+		marked = true;
 	}
 
 	public void unmark() {
-		if (marked) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new MarkCommand(false));
-			}
-			marked = false;
-		}
+		marked = false;
 	}
 
 	/**
@@ -196,13 +161,8 @@ public class Node {
 	 * @param w
 	 */
 	public void pointAbove(Node w) {
-		if (dir != w || arrow != Node.DIRARROW) {
-			dir = w;
-			arrow = Node.DIRARROW;
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new ArrowCommand(true));
-			}
-		}
+		dir = w;
+		arrow = Node.DIRARROW;
 	}
 
 	/**
@@ -211,13 +171,8 @@ public class Node {
 	 * @param w
 	 */
 	public void pointTo(Node w) {
-		if (dir != w || arrow != Node.TOARROW) {
-			dir = w;
-			arrow = Node.TOARROW;
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new ArrowCommand(true));
-			}
-		}
+		dir = w;
+		arrow = Node.TOARROW;
 	}
 
 	/**
@@ -227,26 +182,16 @@ public class Node {
 	 * @param angle
 	 */
 	public void pointInDir(int angle) {
-		if (dir != null || arrow != angle) {
-			dir = null;
-			arrow = angle;
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new ArrowCommand(true));
-			}
-		}
+		dir = null;
+		arrow = angle;
 	}
 
 	/**
 	 * Stop drawing an arrow.
 	 */
 	public void noArrow() {
-		if (dir != null || arrow != Node.NOARROW) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new ArrowCommand(false));
-			}
-			dir = null;
-			arrow = Node.NOARROW;
-		}
+		dir = null;
+		arrow = Node.NOARROW;
 	}
 
 	/**
@@ -255,42 +200,30 @@ public class Node {
 	 * @param w
 	 */
 	public void setArc(Node w) {
-		if (dir != w || arc == false) {
-			dir = w;
-			arc = true;
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new ArcCommand(dir, true));
-			}
-		}
+		dir = w;
+		arc = true;
 	}
 
 	/**
 	 * Stop drawing an arc.
 	 */
 	public void noArc() {
-		if (arc == true) {
-			arc = false;
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new ArcCommand(dir, false));
-			}
-		}
+		arc = false;
 	}
 
 	/**
 	 * Draw bg.
 	 * 
-	 * @param g
-	 *            where to draw
 	 * @param v
 	 *            view
 	 */
 	protected void drawBg(View v) {
 		v.setColor(getBgColor());
-		v.fillCircle(x, y, Node.radius);
+		v.fillCircle(x, y, Node.RADIUS);
 		v.setColor(Color.BLACK); // fgcolor);
-		v.drawCircle(x, y, Node.radius);
+		v.drawCircle(x, y, Node.RADIUS);
 		if (marked) {
-			v.drawCircle(x, y, Node.radius + 2);
+			v.drawCircle(x, y, Node.RADIUS + 2);
 		}
 	}
 
@@ -308,14 +241,14 @@ public class Node {
 		}
 	}
 
-	public void drawKey(View v) {
+	protected void drawKey(View v) {
 		v.setColor(getFgColor());
 		if (getKey() != NOKEY) {
 			v.drawString(toString(), x, y, Fonts.NORMAL);
 		}
 	}
 
-	public void drawArrow(View v) {
+	protected void drawArrow(View v) {
 		if (arrow == Node.NOARROW || (arrow < 0 && dir == null)) {
 			return;
 		}
@@ -330,7 +263,7 @@ public class Node {
 				// vypindaj
 				return;
 			}
-			double d = Math.sqrt(dx * dx + dy * dy);
+			final double d = Math.sqrt(dx * dx + dy * dy);
 			dx /= d;
 			dy /= d;
 		} else {
@@ -338,25 +271,25 @@ public class Node {
 			dy = Math.sin(arrow * Math.PI / 180);
 		}
 		double x1, y1, x2, y2;
-		x1 = x + 1.5 * Node.radius * dx;
-		y1 = y + 1.5 * Node.radius * dy;
+		x1 = x + 1.5 * Node.RADIUS * dx;
+		y1 = y + 1.5 * Node.RADIUS * dy;
 		if (arrow == TOARROW) {
-			x2 = dir.x - 1.5 * Node.radius * dx;
-			y2 = dir.y - 1.5 * Node.radius * dy;
+			x2 = dir.x - 1.5 * Node.RADIUS * dx;
+			y2 = dir.y - 1.5 * Node.RADIUS * dy;
 		} else {
-			x2 = x1 + 2 * Node.radius * dx;
-			y2 = y1 + 2 * Node.radius * dy;
+			x2 = x1 + 2 * Node.RADIUS * dx;
+			y2 = y1 + 2 * Node.RADIUS * dy;
 		}
 		v.setColor(Color.BLACK);
 		v.drawArrow((int) x1, (int) y1, (int) x2, (int) y2);
 	}
 
 	// Assumption: dir (the node we are pointing to) is above this node
-	public void drawArc(View v) {
+	protected void drawArc(View v) {
 		if (!arc || dir == null) {
 			return;
 		}
-		int x = dir.x, y = this.y - DataStructure.minsepy + Node.radius, a = Math
+		final int x = dir.x, y = this.y - DataStructure.minsepy + Node.RADIUS, a = Math
 				.abs(this.x - dir.x), b = Math.abs(this.y - dir.y);
 		v.setColor(Color.BLACK);
 		if (this.x > dir.x) {
@@ -366,6 +299,7 @@ public class Node {
 		}
 	}
 
+	@Override
 	public void draw(View v) {
 		if (state == Node.INVISIBLE || getKey() == NULL) {
 			return;
@@ -380,29 +314,18 @@ public class Node {
 	 * Is the given point inside the node? (Used mainly to decide whether a user
 	 * clicked at the node.)
 	 */
-	public boolean inside(int x, int y) {
-		return (this.x - x) * (this.x - x) + (this.y - y) * (this.y - y) <= Node.radius
-				* Node.radius;
+	protected boolean inside(int x, int y) {
+		return (this.x - x) * (this.x - x) + (this.y - y) * (this.y - y) <= Node.RADIUS
+				* Node.RADIUS;
 	}
 
 	/**
 	 * Set new coordinates, where the node should go.
 	 */
 	public void goTo(int tox, int toy) {
-		if (this.tox != tox || this.toy != toy) {
-			if (D.scenario.isAddingEnabled()) {
-				D.scenario.add(new MoveCommand(tox, toy));
-			}
-			if (D.scenario.traverser.isInterrupted()) {
-				steps = 0;
-				x = this.tox = tox;
-				y = this.toy = toy;
-			} else {
-				this.tox = tox;
-				this.toy = toy;
-				this.steps = STEPS;
-			}
-		}
+		this.tox = tox;
+		this.toy = toy;
+		this.steps = STEPS;
 	}
 
 	/**
@@ -412,7 +335,7 @@ public class Node {
 		goTo(v.tox, v.toy);
 	}
 
-	// public void goAbove (int tox, int toy) { goTo (tox, toy - 2*D.radius -
+	// public void goAbove (int tox, int toy) { goTo (tox, toy - 2*D.RADIUS -
 	// D.yspan); }
 	/**
 	 * Go above node v (or more precisely: above the position where v is going).
@@ -421,7 +344,7 @@ public class Node {
 		goTo(v.tox, v.toy - DataStructure.minsepy);
 	}
 
-	// public void goNextTo (int tox, int toy) { goTo (tox + 2*D.radius +
+	// public void goNextTo (int tox, int toy) { goTo (tox + 2*D.RADIUS +
 	// D.xspan, toy); }
 	/**
 	 * Go next to node v (precisely to the right of where v is going).
@@ -441,7 +364,7 @@ public class Node {
 	 * Go above the root position.
 	 */
 	public void goAboveRoot() {
-		int toy = DataStructure.rooty - DataStructure.minsepy;
+		final int toy = DataStructure.rooty - DataStructure.minsepy;
 		goTo(DataStructure.rootx, toy);
 	}
 
@@ -470,6 +393,7 @@ public class Node {
 	 * Make one step towards the destination (tox, toy). In the special states
 	 * DOWN, LEFT, or RIGHT, go downwards off the screen.
 	 */
+	@Override
 	public void move() {
 		switch (state) {
 		case Node.ALIVE:
@@ -483,17 +407,48 @@ public class Node {
 		case Node.DOWN:
 		case Node.LEFT:
 		case Node.RIGHT:
-			toy = y += 20;
+			y += 20;
 			if (state == Node.LEFT) {
-				tox = x -= 20;
+				x -= 20;
 			} else if (state == Node.RIGHT) {
-				tox = x += 20;
+				x += 20;
 			}
-			if (!D.M.screen.V.inside(x, y - Node.radius)) {
-				state = Node.INVISIBLE;
+			// robi problem, ked rychlo dozadu a potom rychlo dopredu
+			if (!D.panel.screen.V.inside(x, y - Node.RADIUS)) {
+				state = OUT;
 			}
 			break;
 		}
+	}
+
+	@Override
+	public Rectangle2D getBoundingBox() {
+		final int r = RADIUS + 1;
+		return new Rectangle2D.Double(x - r, y - r, 2 * r, 2 * r);
+	}
+
+	@Override
+	public void endAnimation() {
+		if (state == ALIVE || state == INVISIBLE) {
+			steps = 0;
+			x = tox;
+			y = toy;
+		} else if (state == DOWN || state == LEFT || state == RIGHT) {
+			while (D.panel.screen.V.inside(x, y - Node.RADIUS)) {
+				y += 20;
+				if (state == Node.LEFT) {
+					x -= 20;
+				} else if (state == Node.RIGHT) {
+					x += 20;
+				}
+			}
+			state = OUT;
+		}
+	}
+
+	@Override
+	public boolean isAnimationDone() {
+		return ((steps == 0 && state == ALIVE) || state == INVISIBLE || state == OUT);
 	}
 
 	public int getKey() {
@@ -501,314 +456,78 @@ public class Node {
 	}
 
 	public void setKey(int key) {
-		if (this.key != key) {
-			if (D != null && D.scenario.isAddingEnabled()) {
-				D.scenario.add(new SetKeyCommand(key));
-			}
-			this.key = key;
-		}
+		this.key = key;
 	}
 
-	private class ArcCommand implements Command {
-		private final Node toNode;
-		private final boolean setted;
-
-		public ArcCommand(Node toNode, boolean setted) {
-			this.toNode = toNode;
-			this.setted = setted;
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("Arc");
-			e.setAttribute("fromNode", Integer.toString(getKey()));
-			e.setAttribute("toNode", Integer.toString(toNode.getKey()));
-			e.setAttribute("setted", Boolean.toString(setted));
-			return e;
-		}
-
-		@Override
-		public void execute() {
-			if (setted) {
-				setArc(toNode);
-			} else {
-				noArc();
-			}
-		}
-
-		@Override
-		public void unexecute() {
-			if (setted) {
-				noArc();
-			} else {
-				setArc(toNode);
-			}
-		}
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "key", key);
+		HashtableStoreSupport.store(state, hash + "state", this.state);
+		HashtableStoreSupport.store(state, hash + "tox", tox);
+		HashtableStoreSupport.store(state, hash + "toy", toy);
+		HashtableStoreSupport.store(state, hash + "color", color);
+		HashtableStoreSupport.store(state, hash + "marked", marked);
+		HashtableStoreSupport.store(state, hash + "dir", dir);
+		HashtableStoreSupport.store(state, hash + "arrow", arrow);
+		HashtableStoreSupport.store(state, hash + "arc", arc);
 	}
 
-	private class ArrowCommand implements Command {
-		private final Node dir;
-		private final int arrow;
-		private final boolean drawArrow;
-		private final String name;
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		final Object key = state.get(hash + "key");
+		if (key != null) {
+			this.key = (Integer) HashtableStoreSupport.restore(key);
+		}
 
-		public ArrowCommand(boolean drawArrow) {
-			dir = Node.this.dir;
-			arrow = Node.this.arrow;
-			this.drawArrow = drawArrow;
-			if (drawArrow) {
-				name = "arrow";
-			} else {
-				name = "noArrow";
+		Object stat = state.get(hash + "state");
+		if (stat != null) {
+			stat = HashtableStoreSupport.restore(stat);
+			// tu nechcem mat invisible (inak spravit)
+			if ((this.state == OUT || this.state == DOWN || this.state == LEFT || this.state == RIGHT)
+					&& stat.equals(ALIVE)) {
+				goTo(tox, toy);
 			}
+			this.state = (Integer) stat;
 		}
 
-		@Override
-		public void execute() {
-			if (drawArrow) {
-				Node.this.dir = dir;
-				Node.this.arrow = arrow;
-			} else {
-				noArrow();
-			}
+		boolean isMoved = false;
+		Object tox = state.get(hash + "tox");
+		Object toy = state.get(hash + "toy");
+		if (tox != null) {
+			isMoved = true;
+		} else {
+			tox = this.tox;
+		}
+		if (toy != null) {
+			isMoved = true;
+		} else {
+			toy = this.toy;
+		}
+		if (isMoved) {
+			goTo((Integer) tox, (Integer) toy);
 		}
 
-		@Override
-		public void unexecute() {
-			if (drawArrow) {
-				noArrow();
-			} else {
-				Node.this.arrow = arrow;
-				Node.this.dir = dir;
-			}
+		final Object color = state.get(hash + "color");
+		if (color != null) {
+			this.color = (NodeColor) HashtableStoreSupport.restore(color);
 		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("node");
-			e.setAttribute("action", name);
-			e.setAttribute("key", Integer.toString(getKey()));
-			if (dir != null) {
-				e.setAttribute("toNode", Integer.toString(dir.getKey()));
-			} else {
-				e.setAttribute("angle", Integer.toString(arrow));
-			}
-			return e;
+		final Object marked = state.get(hash + "marked");
+		if (marked != null) {
+			this.marked = (Boolean) HashtableStoreSupport.restore(marked);
 		}
-	}
-
-	private class MarkCommand implements Command {
-		private final boolean marked;
-
-		public MarkCommand(boolean marked) {
-			this.marked = marked;
+		final Object dir = state.get(hash + "dir");
+		if (dir != null) {
+			this.dir = (Node) HashtableStoreSupport.restore(dir);
 		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("mark");
-			e.setAttribute("key", Integer.toString(getKey()));
-			e.setAttribute("marked", Boolean.toString(marked));
-			return e;
+		final Object arrow = state.get(hash + "arrow");
+		if (arrow != null) {
+			this.arrow = (Integer) HashtableStoreSupport.restore(arrow);
 		}
-
-		@Override
-		public void execute() {
-			if (marked) {
-				mark();
-			} else {
-				unmark();
-			}
-		}
-
-		@Override
-		public void unexecute() {
-			if (marked) {
-				unmark();
-			} else {
-				mark();
-			}
-		}
-	}
-
-	private class MoveCommand implements Command {
-		private final int fromX, fromY, toX, toY;
-
-		public MoveCommand(int toX, int toY) {
-			fromX = tox;
-			fromY = toy;
-			this.toX = toX;
-			this.toY = toY;
-		}
-
-		@Override
-		public void execute() {
-			goTo(toX, toY);
-		}
-
-		@Override
-		public void unexecute() {
-			goTo(fromX, fromY);
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("node");
-			e.setAttribute("action", "move");
-			e.setAttribute("key", Integer.toString(getKey()));
-			e.setAttribute("posX", Integer.toString(toX));
-			e.setAttribute("posY", Integer.toString(toY));
-			e.setAttribute("fromPosX", Integer.toString(fromX));
-			e.setAttribute("fromPosY", Integer.toString(fromY));
-			return e;
-		}
-	}
-
-	private class SetBgColorCommand implements Command {
-		private final Color oldBgColor, newBgColor;
-
-		public SetBgColorCommand(Color newBgColor) {
-			oldBgColor = getBgColor();
-			this.newBgColor = newBgColor;
-		}
-
-		@Override
-		public void execute() {
-			bgColor(newBgColor);
-		}
-
-		@Override
-		public void unexecute() {
-			bgColor(oldBgColor);
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("node");
-			e.setAttribute("action", "changeColor");
-			e.setAttribute("key", Integer.toString(getKey()));
-			e.setAttribute("bgColor", newBgColor.toString());
-			return e;
-		}
-	}
-
-	private class SetFgColorCommand implements Command {
-		private final Color oldFgColor, newFgColor;
-
-		public SetFgColorCommand(Color newfgColor) {
-			oldFgColor = getFgColor();
-			this.newFgColor = newfgColor;
-		}
-
-		@Override
-		public void execute() {
-			fgColor(newFgColor);
-		}
-
-		@Override
-		public void unexecute() {
-			fgColor(oldFgColor);
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("node");
-			e.setAttribute("action", "changeColor");
-			e.setAttribute("key", Integer.toString(getKey()));
-			e.setAttribute("fgColor", newFgColor.toString());
-			return e;
-		}
-	}
-
-	private class SetStateCommand implements Command {
-		private final int fromState, toState;
-		private final int fromX, fromY;
-
-		public SetStateCommand(int toState) {
-			this.toState = toState;
-			fromState = state;
-			fromX = tox;
-			fromY = toy;
-		}
-
-		@Override
-		public void execute() {
-			setState(toState);
-		}
-
-		@Override
-		public void unexecute() {
-			if (toState == Node.LEFT || toState == Node.DOWN
-					|| toState == Node.RIGHT) {
-				goTo(fromX, fromY);
-			}
-			setState(fromState);
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("node");
-			e.setAttribute("action", "changeState");
-			e.setAttribute("key", Integer.toString(getKey()));
-			e.setAttribute("toState", Integer.toString(toState));
-			e.setAttribute("fromState", Integer.toString(fromState));
-			return e;
-		}
-	}
-
-	private class SetKeyCommand implements Command {
-		private final int fromKey, toKey;
-
-		public SetKeyCommand(int toKey) {
-			this.toKey = toKey;
-			fromKey = key;
-		}
-
-		@Override
-		public void execute() {
-			setKey(toKey);
-		}
-
-		@Override
-		public void unexecute() {
-			setKey(fromKey);
-		}
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("node");
-			e.setAttribute("action", "changeKey");
-			e.setAttribute("fromKey", Integer.toString(fromKey));
-			e.setAttribute("toKey", Integer.toString(toKey));
-			return e;
-		}
-	}
-
-	public class WaitBackwardsCommand implements Command {
-
-		@Override
-		public Element getXML() {
-			Element e = new Element("waitBackwards");
-			e.setAttribute("nodeKey", Integer.toString(getKey()));
-			return e;
-		}
-
-		@Override
-		public void execute() {
-		}
-
-		@Override
-		public void unexecute() {
-			while (x != tox || y != toy) {
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					Thread.currentThread().interrupt();
-					x = tox;
-					y = toy;
-					break;
-				}
-			}
+		final Object arc = state.get(hash + "arc");
+		if (arc != null) {
+			this.arc = (Boolean) HashtableStoreSupport.restore(arc);
 		}
 	}
 }

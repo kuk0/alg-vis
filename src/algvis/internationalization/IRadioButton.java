@@ -20,18 +20,20 @@ import javax.swing.JRadioButton;
 
 public class IRadioButton extends JRadioButton implements LanguageListener {
 	private static final long serialVersionUID = -8675513915804080311L;
-	Languages L;
-	String t;
+	private final Stringable t;
 
-	public IRadioButton(Languages L, String text) {
-		super(L.getString(text));
-		this.L = L;
+	public IRadioButton(Stringable text) {
+		super(text.getString());
 		this.t = text;
-		L.addListener(this);
+		Languages.addListener(this);
+	}
+
+	public IRadioButton(String text) {
+		this(new IString(text));
 	}
 
 	@Override
 	public void languageChanged() {
-		setText(L.getString(t));
+		setText(t.getString());
 	}
 }

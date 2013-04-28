@@ -31,12 +31,8 @@ public class NodePair<T extends Node> {
 	@Override
 	public boolean equals(Object other) {
 		if (other instanceof NodePair<?>) {
-			NodePair<?> that = (NodePair<?>) other;
-			if ((left.equals(that.left)) && (right.equals(that.right))) {
-				return true;
-			} else {
-				return false;
-			}
+			final NodePair<?> that = (NodePair<?>) other;
+			return (left.equals(that.left)) && (right.equals(that.right));
 		} else {
 			return false;
 		}

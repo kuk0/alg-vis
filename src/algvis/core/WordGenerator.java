@@ -19,18 +19,17 @@ package algvis.core;
 import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.Locale;
-import java.util.Random;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
+import algvis.internationalization.Languages;
+
 public class WordGenerator {
-	private volatile static WordGenerator INSTANCE = new WordGenerator();
+	private final static WordGenerator INSTANCE = new WordGenerator();
 	private Vector<String> enWords;
 	private Vector<String> skWords;
-	private Random generator;
 
 	private WordGenerator() {
-		generator = new Random(System.currentTimeMillis());
 		initRandomEnText();
 		initRandomSkText();
 	}
@@ -40,10 +39,9 @@ public class WordGenerator {
 	}
 
 	private WordGenerator changeGenerator() {
-		generator = new Random(System.currentTimeMillis());
 		return this;
 	}
-	
+
 	private Vector<String> getEnWords() {
 		return enWords;
 	}
@@ -52,35 +50,31 @@ public class WordGenerator {
 		return skWords;
 	}
 
-	private Random getGenerator() {
-		return generator;
-	}
-
-	public static String getEnWord() {
-		WordGenerator wg = WordGenerator.getInstance();
-		return wg.getEnWords().get(
-				wg.getGenerator().nextInt(wg.getEnWords().size()));
+	private static String getEnWord() {
+		final WordGenerator wg = WordGenerator.getInstance();
+		return wg.getEnWords().get(MyRandom.Int(wg.getEnWords().size()));
 	}
 
 	public static String getSkWord() {
-		WordGenerator wg = WordGenerator.getInstance();
-		return wg.getSkWords().get(
-				wg.getGenerator().nextInt(wg.getSkWords().size()));
+		final WordGenerator wg = WordGenerator.getInstance();
+		return wg.getSkWords().get(MyRandom.Int(wg.getSkWords().size()));
 	}
-	
+
 	public static String getABWord(int n) {
-		Random r = WordGenerator.getInstance().getGenerator();
-		StringBuffer s = new StringBuffer("");
-		for (int i=0; i<n; ++i) {
-			if (r.nextBoolean()) s.append("A");
-			else s.append("B");
+		final StringBuilder s = new StringBuilder("");
+		for (int i = 0; i < n; ++i) {
+			if (MyRandom.heads()) {
+				s.append("A");
+			} else {
+				s.append("B");
+			}
 		}
 		s.append("$");
 		return s.toString();
 	}
-	
+
 	public static String getWord(Settings s) {
-		int current_language = s.L.getCurrentLanguage();
+		final int current_language = Languages.getCurrentLanguage();
 		switch (current_language) {
 		case 0:
 			return getEnWord();
@@ -91,10 +85,10 @@ public class WordGenerator {
 	}
 
 	public static Vector<String> parseString(String ss) {
-		Vector<String> ll = new Vector<String>(Arrays.asList(ss
+		final Vector<String> ll = new Vector<String>(Arrays.asList(ss
 				.replaceAll("'", " ").split("(\\s|,)+")));
-		Vector<String> result = new Vector<String>();
-		Pattern p = Pattern
+		final Vector<String> result = new Vector<String>();
+		final Pattern p = Pattern
 				.compile("[\\p{InCombiningDiacriticalMarks}\\p{IsLm}\\p{IsSk}]+");
 		for (String s : ll) {
 			s = Normalizer.normalize(s, Normalizer.Form.NFD);
@@ -314,7 +308,7 @@ public class WordGenerator {
 	}
 
 	private void initRandomEnText() {
-		String enText = "To be, or not to be: that is the question: "
+		final String enText = "To be, or not to be: that is the question: "
 				+ "Whether 'tis nobler in the mind to suffer "
 				+ "The slings and arrows of outrageous fortune, "
 				+ "Or to take arms against a sea of troubles, "

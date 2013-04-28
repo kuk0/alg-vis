@@ -16,15 +16,19 @@
  ******************************************************************************/
 package algvis.core;
 
-import algvis.gui.VisPanel;
-import algvis.gui.view.Layout;
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
+
+import algvis.core.history.HashtableStoreSupport;
+import algvis.ui.VisPanel;
+import algvis.ui.view.Layout;
 
 abstract public class Dictionary extends DataStructure {
 	public static String adtName = "dictionary";
+	protected Node root;
 
-	public Dictionary(VisPanel M) {
+	protected Dictionary(VisPanel M) {
 		super(M);
-		addNodes(2); // root (0), v (1)
 	}
 
 	@Override
@@ -34,20 +38,17 @@ abstract public class Dictionary extends DataStructure {
 
 	abstract public void delete(int x);
 
-	public Node getRoot() {
-		return getNode(0);
+	protected Node getRoot() {
+		return root;
 	}
 
 	public void setRoot(Node root) {
-		setNode(0, root, false);
+		this.root = root;
 	}
 
-	public Node getV() {
-		return getNode(1);
-	}
-
-	public void setV(Node v) {
-		setNode(1, v, true);
+	@Override
+	public Rectangle2D getBoundingBox() {
+		return root == null ? null : root.getBoundingBox();
 	}
 
 	@Override
@@ -55,4 +56,36 @@ abstract public class Dictionary extends DataStructure {
 		return Layout.COMPACT;
 	}
 
+	@Override
+	public void endAnimation() {
+		if (root != null) {
+			root.endAnimation();
+		}
+	}
+
+	@Override
+	public boolean isAnimationDone() {
+		return root == null || root.isAnimationDone();
+	}
+
+	@Override
+	public void storeState(Hashtable<Object, Object> state) {
+		super.storeState(state);
+		HashtableStoreSupport.store(state, hash + "root", root);
+		if (root != null) {
+			root.storeState(state);
+		}
+	}
+
+	@Override
+	public void restoreState(Hashtable<?, ?> state) {
+		super.restoreState(state);
+		final Object root = state.get(hash + "root");
+		if (root != null) {
+			this.root = (Node) HashtableStoreSupport.restore(root);
+		}
+		if (this.root != null) {
+			this.root.restoreState(state);
+		}
+	}
 }
