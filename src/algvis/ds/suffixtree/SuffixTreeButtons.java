@@ -16,6 +16,7 @@
  ******************************************************************************/
 package algvis.ds.suffixtree;
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
@@ -35,6 +36,12 @@ public class SuffixTreeButtons extends Buttons {
 
 	public SuffixTreeButtons(VisPanel M) {
 		super(M);
+	}
+
+	// no random
+	@Override
+	protected void initRandom() {
+		random = null;
 	}
 
 	@Override
@@ -74,7 +81,7 @@ public class SuffixTreeButtons extends Buttons {
 			if (panel.history.canRedo()) {
 				panel.newAlgorithmPool();
 			}
-			final Vector<String> args = I.getVS();
+			final Vector<String> args = I.getVABS(3);
 			if (args.size() > 0) {
 				for (final String s : args) {
 					((SuffixTree) D).find(s);

@@ -259,7 +259,9 @@ abstract public class Buttons extends JPanel implements ActionListener,
 
 	public void setOtherEnabled(boolean enabled) {
 		clear.setEnabled(enabled);
-		random.setEnabled(enabled);
+		if (random != null) {
+			random.setEnabled(enabled);
+		}
 	}
 
 	public void refresh() {

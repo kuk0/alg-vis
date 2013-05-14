@@ -41,7 +41,7 @@ public class StringElem implements StateEditable {
 			a = 0;
 		}
 		if (b > len) {
-			len = b;
+			b = len;
 		}
 		for (int i = a; i < b; ++i) {
 			col.set(i, c);

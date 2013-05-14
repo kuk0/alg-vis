@@ -97,6 +97,7 @@ public class SuffixTreeFind extends Algorithm {
 			final int p = w.getKey();
 			w.mark();
 			T.str.mark(p);
+			T.str.setColor(NodeColor.FOUND.bgColor, p - 1, p - 1 + s.length());
 			pos.add(p);
 		}
 		addStep("suffixtree-found", s, "" + leaves.size());
@@ -106,6 +107,7 @@ public class SuffixTreeFind extends Algorithm {
 			w.unmark();
 			T.str.unmark(w.getKey());
 		}
+		T.str.setColor(NodeColor.NORMAL.bgColor, 0, 99999);
 		beforeReturn();
 	}
 }

@@ -21,7 +21,6 @@ import java.util.Hashtable;
 
 import algvis.core.DataStructure;
 import algvis.core.StringElem;
-import algvis.core.WordGenerator;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.Fonts;
 import algvis.ui.VisPanel;
@@ -113,25 +112,6 @@ public class SuffixTree extends DataStructure {
 	@Override
 	protected boolean isAnimationDone() {
 		return root == null || root.isAnimationDone();
-	}
-
-	@Override
-	public void random(int n) {
-		final boolean p = panel.pauses;
-		panel.pauses = false;
-		for (int i = 0; i < n; i++) {
-			if (panel.S == null) {
-				insert(WordGenerator.getSkWord());
-			} else {
-				insert(WordGenerator.getWord(panel.S));
-			}
-		}
-		start(new Runnable() {
-			@Override
-			public void run() {
-				panel.pauses = p;
-			}
-		});
 	}
 
 	public void insert(String s) {

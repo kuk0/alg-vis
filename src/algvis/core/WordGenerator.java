@@ -60,6 +60,10 @@ public class WordGenerator {
 		return wg.getSkWords().get(MyRandom.Int(wg.getSkWords().size()));
 	}
 
+	public static String getABWord() {
+		return getABWord(10);
+	}
+	
 	public static String getABWord(int n) {
 		final StringBuilder s = new StringBuilder("");
 		for (int i = 0; i < n; ++i) {

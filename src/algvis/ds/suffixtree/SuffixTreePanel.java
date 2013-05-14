@@ -18,6 +18,7 @@ package algvis.ds.suffixtree;
 
 import algvis.core.DataStructure;
 import algvis.core.Settings;
+import algvis.core.WordGenerator;
 import algvis.ui.VisPanel;
 
 public class SuffixTreePanel extends VisPanel {
@@ -40,7 +41,7 @@ public class SuffixTreePanel extends VisPanel {
 		super.start();
 		final boolean p = pauses;
 		pauses = false;
-		((SuffixTree) D).insert("BANANA$");
+		((SuffixTree) D).insert(WordGenerator.getABWord());
 		D.start(new Runnable() {
 			@Override
 			public void run() {

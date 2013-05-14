@@ -171,10 +171,14 @@ public class InputField extends JTextField {
 	}
 
 	public Vector<String> getVABS() {
+		return getVABS(10);
+	}
+	
+	public Vector<String> getVABS(int n) {
 		final String ss = getText();
 		Vector<String> result = new Vector<String>();
 		if (ss.compareTo("") == 0) {
-			result.add(WordGenerator.getABWord(20));
+			result.add(WordGenerator.getABWord(n));
 		} else {
 			result = WordGenerator.parseString(ss);
 		}
