@@ -29,12 +29,7 @@ public class SkewHeapDecrKey extends SkewHeapAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		if (H.minHeap) {
-			setHeader("decreasekey");
-		} else {
-			setHeader("increasekey");
-		}
-
+		setHeader(H.minHeap ? "decreasekey" : "increasekey");
 		if (H.minHeap) {
 			v.setKey(v.getKey() - delta);
 			if (v.getKey() < 1) {

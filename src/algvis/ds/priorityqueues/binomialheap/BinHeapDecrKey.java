@@ -30,11 +30,12 @@ public class BinHeapDecrKey extends Algorithm {
 		this.H = H;
 		this.v = v;
 		this.delta = delta;
-		// setHeader("insertion");
 	}
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		//TODO: buggy
+		setHeader(H.minHeap ? "decreasekey" : "increasekey");
 		if (H.minHeap) {
 			v.setKey(v.getKey() - delta);
 			if (v.getKey() < 1) {

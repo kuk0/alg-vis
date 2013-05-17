@@ -39,11 +39,11 @@ public class BSTFind extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("find", K);
 		result.put("node", null);
 		final BSTNode v = new BSTNode(T, K, ZDepth.ACTIONNODE);
 		v.setColor(NodeColor.FIND);
 		addToScene(v);
-		setHeader("find", K);
 		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");

@@ -29,11 +29,11 @@ public class SkipInsert extends SkipAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("insert", K);
 		p = new SkipNode[L.height];
 		v = new SkipNode(L, K, ZDepth.ACTIONNODE);
 		v.setColor(NodeColor.INSERT);
 		addToScene(v);
-		setHeader("insert", K);
 		addStep("skipinsertstart");
 		SkipNode w = find();
 

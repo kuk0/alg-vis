@@ -26,10 +26,10 @@ public class GBDelete extends GBAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("delete", K);
 		v = new GBNode(T, K, ZDepth.ACTIONNODE);
 		v.setColor(NodeColor.DELETE);
 		addToScene(v);
-		setHeader("delete", K);
 		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");

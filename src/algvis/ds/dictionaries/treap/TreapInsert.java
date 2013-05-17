@@ -34,6 +34,7 @@ public class TreapInsert extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("insert", K);
 		final BSTInsert insert = new BSTInsert(T, new TreapNode(T, K,
 				ZDepth.ACTIONNODE), this);
 		insert.runAlgorithm();

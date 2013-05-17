@@ -27,10 +27,10 @@ public class GBFind extends GBAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("find", K);
 		v = new GBNode(T, K, ZDepth.ACTIONNODE);
 		v.setColor(NodeColor.FIND);
 		addToScene(v);
-		setHeader("search");
 		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("empty");

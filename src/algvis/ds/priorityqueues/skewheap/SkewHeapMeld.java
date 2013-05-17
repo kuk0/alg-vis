@@ -28,7 +28,7 @@ public class SkewHeapMeld extends SkewHeapAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		setHeader("melding");
+		setHeader("meld", i, j);
 
 		if (i == j) {
 			return;

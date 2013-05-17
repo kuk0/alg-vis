@@ -47,7 +47,6 @@ public class BSTDelete extends Algorithm {
 		final BSTNode toDelete = (BSTNode) find.getResult().get("node");
 
 		if (toDelete != null) {
-			setHeader("delete", K);
 			result.put("deleted", true);
 			addToScene(toDelete);
 			toDelete.setColor(NodeColor.DELETE);

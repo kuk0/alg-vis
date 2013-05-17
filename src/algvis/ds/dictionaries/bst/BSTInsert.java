@@ -43,8 +43,8 @@ public class BSTInsert extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		addToScene(v);
 		setHeader("insert", K);
+		addToScene(v);
 		if (T.getRoot() == null) {
 			T.setRoot(v);
 			v.goToRoot();

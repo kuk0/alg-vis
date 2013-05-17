@@ -30,7 +30,7 @@ public class DaryHeapInsert extends DaryHeapAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		setHeader("insertion");
+		setHeader("insert", v.getKey());
 		addToScene(v);
 		v.mark();
 		if ((H.root != null) && (H.root.nnodes == 1000)) {

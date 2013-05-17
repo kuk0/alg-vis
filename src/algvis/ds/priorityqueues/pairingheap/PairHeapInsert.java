@@ -28,9 +28,9 @@ public class PairHeapInsert extends PairHeapAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("insert", x);
 		final int i = H.active;
 		H.root[0] = new PairHeapNode(H, x, ZDepth.ACTIONNODE);
-		setHeader("insertion");
 		H.reposition();
 
 		if (H.root[i] == null) {

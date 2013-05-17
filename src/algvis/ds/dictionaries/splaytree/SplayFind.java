@@ -27,10 +27,10 @@ public class SplayFind extends SplayAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("find", K);
 		final SplayNode v = new SplayNode(T, K, ZDepth.ACTIONNODE);
 		v.setColor(NodeColor.FIND);
 		addToScene(v);
-		setHeader("find", K);
 		if (T.getRoot() == null) {
 			v.goToRoot();
 			addStep("bstfindempty");

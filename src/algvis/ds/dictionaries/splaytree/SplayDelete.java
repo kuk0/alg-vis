@@ -30,10 +30,10 @@ public class SplayDelete extends SplayAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("delete", K);
 		SplayNode s = new SplayNode(T, K, ZDepth.ACTIONNODE);
 		s.setColor(NodeColor.DELETE);
 		addToScene(s);
-		setHeader("delete", K);
 		if (T.getRoot() == null) {
 			s.goToRoot();
 			addStep("empty");

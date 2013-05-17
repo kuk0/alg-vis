@@ -47,6 +47,8 @@ abstract public class Algorithm implements Runnable {
 
 	protected Algorithm(VisPanel panel) {
 		this.panel = panel;
+		wrapperAlg = null;
+		wrapped = false;
 		try {
 			gate.acquire();
 		} catch (final InterruptedException e) {
@@ -56,10 +58,8 @@ abstract public class Algorithm implements Runnable {
 
 	protected Algorithm(VisPanel panel, Algorithm a) {
 		this(panel);
-		if (a != null) {
-			wrapped = true;
-			wrapperAlg = a;
-		}
+		wrapperAlg = a;
+		wrapped = (a != null);
 	}
 
 	@Override
@@ -113,15 +113,21 @@ abstract public class Algorithm implements Runnable {
 	}
 
 	protected void setHeader(String s) {
-		panel.commentary.setHeader(s);
+		if (!wrapped) {
+			panel.commentary.setHeader(s);
+		}
 	}
 
 	protected void setHeader(String s, String... par) {
-		panel.commentary.setHeader(s, par);
+		if (!wrapped) {
+			panel.commentary.setHeader(s, par);
+		}
 	}
 
 	protected void setHeader(String s, int... par) {
-		panel.commentary.setHeader(s, par);
+		if (!wrapped) {
+			panel.commentary.setHeader(s, par);
+		}
 	}
 
 	protected void addNote(String s) {
@@ -152,10 +158,10 @@ abstract public class Algorithm implements Runnable {
 		if (wrapped) {
 			wrapperAlg.addToScene(element);
 		} else {
-			if (!panel.pauses && (element instanceof ShadeSubtree
-					|| element instanceof ShadePair 
-					|| element instanceof ShadeTriple
-					|| element instanceof DoubleArrow))
+			if (!panel.pauses
+					&& (element instanceof ShadeSubtree
+							|| element instanceof ShadePair
+							|| element instanceof ShadeTriple || element instanceof DoubleArrow))
 				return;
 			panel.scene.add(element);
 			panelState.addToPreState(element);
@@ -163,10 +169,10 @@ abstract public class Algorithm implements Runnable {
 	}
 
 	protected void removeFromScene(VisualElement element) {
-		if (!panel.pauses && (element instanceof ShadeSubtree
-				|| element instanceof ShadePair
-				|| element instanceof ShadeTriple
-				|| element instanceof DoubleArrow))
+		if (!panel.pauses
+				&& (element instanceof ShadeSubtree
+						|| element instanceof ShadePair
+						|| element instanceof ShadeTriple || element instanceof DoubleArrow))
 			return;
 		// if (panel.pauses) {
 		panel.scene.remove(element);

@@ -27,11 +27,11 @@ public class SkipDelete extends SkipAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("delete", K);
 		v = new SkipNode(L, K, ZDepth.ACTIONNODE);
 		v.setColor(NodeColor.DELETE);
 		addToScene(v);
 		p = new SkipNode[L.height];
-		setHeader("insertion");
 		addStep("bstdeletestart");
 		SkipNode w = find();
 

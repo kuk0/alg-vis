@@ -31,10 +31,10 @@ public class BInsert extends Algorithm {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("insert", K);
 		final BNode v = new BNode(T, K);
 		v.setColor(NodeColor.INSERT);
 		addToScene(v);
-		setHeader("insert", K);
 		if (T.getRoot() == null) {
 			T.setRoot(v);
 			v.goAboveRoot();

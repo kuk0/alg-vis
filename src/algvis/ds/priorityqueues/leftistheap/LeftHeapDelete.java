@@ -26,8 +26,8 @@ public class LeftHeapDelete extends LeftHeapAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		final int i = H.active;
 		setHeader(H.minHeap ? "delete-min" : "delete-max");
+		final int i = H.active;
 
 		if (H.root[i] == null) {
 			return;

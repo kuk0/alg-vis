@@ -28,9 +28,9 @@ public class HeapInsert extends HeapAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("insert", K);
 		final HeapNode v = new HeapNode(H, K, ZDepth.ACTIONNODE);
 		addToScene(v);
-		setHeader("insert", K);
 		if (H.getN() == 1000) {
 			addStep("heapfull");
 			removeFromScene(v);

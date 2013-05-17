@@ -28,7 +28,7 @@ public class LeftHeapMeld extends LeftHeapAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
-		setHeader("melding");
+		setHeader("meld", i, j);
 
 		if (i == j) {
 			return;

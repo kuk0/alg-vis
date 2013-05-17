@@ -26,11 +26,11 @@ public class SkipFind extends SkipAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("find", K);
 		p = new SkipNode[L.height];
 		v = new SkipNode(L, K, ZDepth.ACTIONNODE);
 		v.setColor(NodeColor.FIND);
 		addToScene(v);
-		setHeader("search");
 		addStep("skipfindstart");
 		final SkipNode w = find();
 

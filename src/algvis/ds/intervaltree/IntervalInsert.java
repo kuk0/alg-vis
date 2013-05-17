@@ -16,10 +16,10 @@ public class IntervalInsert extends IntervalAlg {
 
 	@Override
 	public void runAlgorithm() throws InterruptedException {
+		setHeader("insert", K);
 		v = new IntervalNode(T, K, ZDepth.ACTIONNODE);
 		v.setInterval(T.numLeafs + 1, T.numLeafs + 1);
 		// v.setColor(NodeColor.INSERT);
-		setHeader("insert", K);
 
 		T.reposition();
 
