@@ -34,7 +34,7 @@ public class StringUtils {
 		for (int i = 0; i < param.length; ++i) {
 			s = s.replaceAll("#" + Integer.toString(i + 1), param[i]);
 		}
-		return s;
+		return s.replaceAll("##", "#");
 	}
 
 	private static final String ZEROES = "000000000000";
@@ -47,8 +47,8 @@ public class StringUtils {
 		}
 		val += incr;
 		String s = Double.toString(val);
-		int n1 = s.indexOf('.');
-		int n2 = s.length() - n1 - 1;
+		final int n1 = s.indexOf('.');
+		final int n2 = s.length() - n1 - 1;
 		if (n > n2) {
 			s = s + ZEROES.substring(0, n - n2);
 		} else if (n2 > n) {

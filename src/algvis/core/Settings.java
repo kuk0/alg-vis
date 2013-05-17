@@ -19,8 +19,8 @@ package algvis.core;
 import java.util.LinkedList;
 import java.util.List;
 
-import algvis.gui.view.Layout;
-import algvis.gui.view.LayoutListener;
+import algvis.ui.view.Layout;
+import algvis.ui.view.LayoutListener;
 
 public class Settings {
 	public Layout layout;
@@ -36,7 +36,7 @@ public class Settings {
 		} else {
 			layout = Layout.SIMPLE;
 		}
-		for (LayoutListener l : listeners) {
+		for (final LayoutListener l : listeners) {
 			l.changeLayout();
 		}
 	}

@@ -51,17 +51,21 @@ public class WordGenerator {
 	}
 
 	private static String getEnWord() {
-		WordGenerator wg = WordGenerator.getInstance();
+		final WordGenerator wg = WordGenerator.getInstance();
 		return wg.getEnWords().get(MyRandom.Int(wg.getEnWords().size()));
 	}
 
 	public static String getSkWord() {
-		WordGenerator wg = WordGenerator.getInstance();
+		final WordGenerator wg = WordGenerator.getInstance();
 		return wg.getSkWords().get(MyRandom.Int(wg.getSkWords().size()));
 	}
 
+	public static String getABWord() {
+		return getABWord(10);
+	}
+	
 	public static String getABWord(int n) {
-		StringBuilder s = new StringBuilder("");
+		final StringBuilder s = new StringBuilder("");
 		for (int i = 0; i < n; ++i) {
 			if (MyRandom.heads()) {
 				s.append("A");
@@ -74,7 +78,7 @@ public class WordGenerator {
 	}
 
 	public static String getWord(Settings s) {
-		int current_language = Languages.getCurrentLanguage();
+		final int current_language = Languages.getCurrentLanguage();
 		switch (current_language) {
 		case 0:
 			return getEnWord();
@@ -85,10 +89,10 @@ public class WordGenerator {
 	}
 
 	public static Vector<String> parseString(String ss) {
-		Vector<String> ll = new Vector<String>(Arrays.asList(ss.replaceAll("'",
-				" ").split("(\\s|,)+")));
-		Vector<String> result = new Vector<String>();
-		Pattern p = Pattern
+		final Vector<String> ll = new Vector<String>(Arrays.asList(ss
+				.replaceAll("'", " ").split("(\\s|,)+")));
+		final Vector<String> result = new Vector<String>();
+		final Pattern p = Pattern
 				.compile("[\\p{InCombiningDiacriticalMarks}\\p{IsLm}\\p{IsSk}]+");
 		for (String s : ll) {
 			s = Normalizer.normalize(s, Normalizer.Form.NFD);
@@ -308,7 +312,7 @@ public class WordGenerator {
 	}
 
 	private void initRandomEnText() {
-		String enText = "To be, or not to be: that is the question: "
+		final String enText = "To be, or not to be: that is the question: "
 				+ "Whether 'tis nobler in the mind to suffer "
 				+ "The slings and arrows of outrageous fortune, "
 				+ "Or to take arms against a sea of troubles, "

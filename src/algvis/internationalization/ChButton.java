@@ -30,10 +30,10 @@ public class ChButton extends JButton {
 	}
 
 	void refresh() {
-		FontMetrics metrics = getFontMetrics(getFont());
-		int width = metrics.stringWidth(getText());
-		int height = metrics.getHeight();
-		Dimension newDimension = new Dimension(width + 40, height + 10);
+		final FontMetrics metrics = getFontMetrics(getFont());
+		final int width = metrics.stringWidth(getText());
+		final int height = metrics.getHeight();
+		final Dimension newDimension = new Dimension(width + 40, height + 10);
 		setPreferredSize(newDimension);
 		setBounds(new Rectangle(getLocation(), getPreferredSize()));
 	}

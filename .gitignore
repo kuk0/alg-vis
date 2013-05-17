@@ -1,5 +1,6 @@
 .*
 !.gitignore
+!.gitattributes
 .class
 *~
 bin/
@@ -7,5 +8,6 @@ bin/
 *.png
 *.pyc
 *.xml
-!format.xml
+!algvis-format.xml
+!algvis-profile.xml
 *.iml

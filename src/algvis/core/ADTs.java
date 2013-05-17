@@ -16,9 +16,11 @@
  ******************************************************************************/
 package algvis.core;
 
-import algvis.intervaltree.IntervalTrees;
-import algvis.trie.Trie;
-import algvis.unionfind.UnionFind;
+import algvis.ds.intervaltree.IntervalTrees;
+import algvis.ds.priorityqueues.MeldablePQ;
+import algvis.ds.priorityqueues.PriorityQueue;
+import algvis.ds.trie.Trie;
+import algvis.ds.unionfind.UnionFind;
 
 /**
  * The Class ADTs. This class contains the list of all abstract data types
@@ -30,12 +32,14 @@ public class ADTs {
 	 * The list of all abstract data types.
 	 */
 	@SuppressWarnings("rawtypes")
-    private static final Class[] ADT = { Dictionary.class, // insert, find, delete
+	private static final Class[] ADT = { Dictionary.class, // insert, find,
+															// delete
 			PriorityQueue.class, // insert, decrease-key, delete-min
 			MeldablePQ.class, // insert, decrease-key, delete-min, meld
 			UnionFind.class, // make-set, union, find
 			Trie.class, // insert, find, delete
-			IntervalTrees.class //insert, find sum/min/max of interval, decrease-key
+			IntervalTrees.class // insert, find sum/min/max of interval,
+								// decrease-key
 	};
 	public static final int N = ADT.length;
 
@@ -47,7 +51,7 @@ public class ADTs {
 		String r = "";
 		try {
 			r = (String) (ADT[i].getDeclaredField("adtName").get(null));
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			System.err.println("Unable to get field adtName - name of ADT: "
 					+ ADT[i]);
 		}
