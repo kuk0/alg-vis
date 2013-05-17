@@ -21,6 +21,10 @@ import java.util.HashMap;
 import java.util.concurrent.Semaphore;
 
 import algvis.core.history.UpdatableStateEdit;
+import algvis.core.visual.DoubleArrow;
+import algvis.core.visual.ShadePair;
+import algvis.core.visual.ShadeSubtree;
+import algvis.core.visual.ShadeTriple;
 import algvis.core.visual.VisualElement;
 import algvis.ui.VisPanel;
 
@@ -148,12 +152,22 @@ abstract public class Algorithm implements Runnable {
 		if (wrapped) {
 			wrapperAlg.addToScene(element);
 		} else {
+			if (!panel.pauses && (element instanceof ShadeSubtree
+					|| element instanceof ShadePair 
+					|| element instanceof ShadeTriple
+					|| element instanceof DoubleArrow))
+				return;
 			panel.scene.add(element);
 			panelState.addToPreState(element);
 		}
 	}
 
 	protected void removeFromScene(VisualElement element) {
+		if (!panel.pauses && (element instanceof ShadeSubtree
+				|| element instanceof ShadePair
+				|| element instanceof ShadeTriple
+				|| element instanceof DoubleArrow))
+			return;
 		// if (panel.pauses) {
 		panel.scene.remove(element);
 		// } else {
