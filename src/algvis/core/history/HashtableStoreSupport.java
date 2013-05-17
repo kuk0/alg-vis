@@ -23,8 +23,8 @@ public class HashtableStoreSupport {
 	private static final Object nullObject = new Object();
 
 	/**
-	 * Use if want to store null to HashTable. Vlaue is stored only if state
-	 * does not contain key.
+	 * Stores the (key, value) pair in the state.
+	 * Value may be null and it is stored only if state contains the key.
 	 * 
 	 * @param state
 	 * @param key
@@ -74,11 +74,10 @@ public class HashtableStoreSupport {
 	// }
 
 	/**
-	 * Use if obj was stored in HashTable by calling
-	 * HashtableStoreSupport.store().
+	 * Converts the nullObject into null.
 	 * 
 	 * @param obj
-	 * @return
+	 * @return obj or null
 	 */
 	public static Object restore(Object obj) {
 		return nullObject.equals(obj) ? null : obj;
