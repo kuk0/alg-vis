@@ -65,15 +65,18 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
 
 	protected void init() {
 		setLayout(new BorderLayout(0, 0));
-		initScreen();
+		final JPanel screenP = initScreen();
 		final JScrollPane commentary = initCommentary();
 		statusBar = new ILabel("EMPTYSTR");
 		initDS();
 
-		add(screen, BorderLayout.CENTER);
+		add(screenP, BorderLayout.CENTER);
 		add(commentary, BorderLayout.LINE_END);
-		add(buttons, BorderLayout.PAGE_END);
-		//add(statusBar, BorderLayout.PAGE_END);
+
+		JPanel buttonsAndStatusBar = new JPanel(new BorderLayout());
+		buttonsAndStatusBar.add(buttons, BorderLayout.CENTER);
+		buttonsAndStatusBar.add(statusBar, BorderLayout.PAGE_END);
+		add(buttonsAndStatusBar, BorderLayout.PAGE_END);
 
 		screen.setDS(D);
 		languageChanged();
@@ -85,16 +88,18 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
 		buttons.I.requestFocusInWindow();
 	}
 
-	protected void initScreen() {
+	protected JPanel initScreen() {
 		screen = new Screen(this);
-		screen.setMinimumSize(new Dimension(800, 600));
+		final JPanel screenP = new JPanel(new BorderLayout());
+		screenP.add(screen, BorderLayout.CENTER);
 
 		border = BorderFactory.createTitledBorder("");
 		border.setTitleJustification(TitledBorder.CENTER);
 		border.setTitleFont(new Font("Sans-serif", Font.ITALIC, 12));
 		Languages.addListener(this);
-		screen.setBorder(BorderFactory.createCompoundBorder(border,
+		screenP.setBorder(BorderFactory.createCompoundBorder(border,
 				BorderFactory.createEmptyBorder(0, 5, 5, 5)));
+		return screenP;
 	}
 
 	private JScrollPane initCommentary() {
@@ -115,7 +120,6 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
 			@Override
 			public Dimension getMinimumSize() {
 				return new Dimension(250, 600);
-				// return new Dimension(200, 530);
 			}
 		};
 		commentary = new Commentary(this, SP);

@@ -62,11 +62,8 @@ public class Screen extends JPanel {
 	void check_size() {
 		final Dimension d = getSize();
 		if (I == null || d.width != size.width || d.height != size.height) {
-			System.out.println("d: "+d.height+" "+d.width);
-			System.out.println("size: "+size.height+" "+size.width);
 			I = createImage(d.width, d.height);
 			G = I.getGraphics();
-			// V.setWH(d.width, d.height);
 			V.setGraphics((Graphics2D) G, d.width, d.height);
 			size = d;
 		}

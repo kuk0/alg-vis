@@ -18,8 +18,6 @@ package algvis.ui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -64,8 +62,8 @@ class MainFrame extends JFrame {
 	 *
 	 */
 	private static final long serialVersionUID = -1045189076645432320L;
-	private static final int WIDTH = 1080;
-	private static final int HEIGHT = 680;
+	private static final int WIDTH = 900;
+	private static final int HEIGHT = 650;
 
 	public MainFrame() {
 		setTitle("Gnarley Trees");
@@ -73,24 +71,6 @@ class MainFrame extends JFrame {
 		add(A);
 		pack();
 		A.init();
-		//A.setSize(WIDTH, HEIGHT);
 		setSize(WIDTH, HEIGHT + 20); // add 20 for the frame title
-		this.addComponentListener(new ComponentListener() {
-			    @Override
-				public void componentHidden(ComponentEvent e) {}
-			    @Override
-				public void componentMoved(ComponentEvent e) {}
-			    @Override
-				public void componentResized(ComponentEvent e) {
-			    	System.out.println("frame: "+getSize());
-			    	System.out.println("cards: "+A.cards.getSize());
-			    	System.out.println("panels: "+A.getSize());
-			    	System.out.println("panel0: "+A.panels[0].getSize());
-			    	A.cards.revalidate();
-			    	A.cards.repaint();
-			    }
-			    @Override
-				public void componentShown(ComponentEvent e) {}
-		});
 	}
 }

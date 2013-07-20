@@ -291,16 +291,6 @@ abstract public class Buttons extends JPanel implements ActionListener,
 		return new Dimension(Integer.MAX_VALUE, 150);
 	}
 
-	/*@Override
-	public Dimension getPreferredSize() {
-		return new Dimension(700, 150);
-	}*/
-
-	@Override
-	public Dimension getMinimumSize() {
-		return new Dimension(300, 150);
-	}
-
 	@Override
 	public void storeState(Hashtable<Object, Object> state) {
 		HashtableStoreSupport.store(state, hash + "statsText", statsText);

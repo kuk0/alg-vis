@@ -57,23 +57,21 @@ public class AlgVis extends JPanel implements ActionListener {
 	private final CardLayout cardlayout;
 	public final VisPanel[] panels; //TODO: private
 	private int activePanel = -1;
-	private final Container rootPane;
+	private final Container container;
 	private final Settings S;
 
 	private final Map<String, IMenu> adtItems = new HashMap<String, IMenu>();
 	private IMenuItem[] dsItems;
 
-	public AlgVis(Container P) {
-		this(P, "en");
+	public AlgVis(Container c) {
+		this(c, "en");
 	}
 
-	public AlgVis(Container P, String s) {
-		this.rootPane = P;
+	public AlgVis(Container c, String s) {
+		this.container = c;
 		Languages.selectLanguage(s);
 		S = new Settings();
-		cards = new JPanel();
-		cardlayout = new CardLayout();
-		cards.setLayout(cardlayout);
+		cards = new JPanel(cardlayout = new CardLayout());
 		panels = new VisPanel[DataStructures.N];
 	}
 
@@ -149,10 +147,8 @@ public class AlgVis extends JPanel implements ActionListener {
 			}
 		}
 
-		//add(menuBar);
 		getRootPane().setJMenuBar(menuBar);
-		rootPane.add(cards);
-
+		container.add(cards);
 		showCard(DEFAULT_DS);
 	}
 
@@ -182,7 +178,6 @@ public class AlgVis extends JPanel implements ActionListener {
 	}
 
 	private void showCard(int i) {
-		//final CardLayout cl = (CardLayout) (cards.getLayout());
 		if (activePanel != -1) {
 			panels[activePanel].setOnAir(false);
 		}
