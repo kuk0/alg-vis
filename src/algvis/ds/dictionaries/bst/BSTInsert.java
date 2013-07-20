@@ -26,10 +26,7 @@ public class BSTInsert extends Algorithm {
 	private final BST T;
 	private final int K;
 	private final BSTNode v;
-	private final HashMap<String, Object> result = new HashMap<String, Object>(); // "inserted",
-
-	// "w",
-	// "v"
+	private final HashMap<String, Object> result = new HashMap<String, Object>(); // "inserted", "w", "v"
 
 	public BSTInsert(BST T, BSTNode v) {
 		this(T, v, null);
@@ -51,20 +48,21 @@ public class BSTInsert extends Algorithm {
 		if (T.getRoot() == null) {
 			T.setRoot(v);
 			v.goToRoot();
-			addStep(0, 0, 200, CornerEnum.BOTTOM, "newroot");
+			addStep(v, CornerEnum.BOTTOM, "newroot");
 		} else {
 			BSTNode w = T.getRoot();
 			v.goAboveRoot();
-			addStep(0, 0, 200, CornerEnum.BOTTOM, "bst-insert-start");
+			addStep(w, CornerEnum.BOTTOM, "bst-insert-start");
 			pause();
 
 			while (true) {
 				if (w.getKey() == K) {
-					addStep(v.tox, v.toy, 200, CornerEnum.TOP, "alreadythere");
+					addStep(w, CornerEnum.BOTTOM, "alreadythere");
 					v.setColor(NodeColor.NOTFOUND);
 					v.goDown();
 					removeFromScene(v);
 					result.put("inserted", false);
+					pause();
 					return;
 				} else if (w.getKey() < K) {
 					if (w.getRight() == null) {
@@ -72,7 +70,8 @@ public class BSTInsert extends Algorithm {
 					} else {
 						v.pointAbove(w.getRight());
 					}
-					addStep(v.tox, v.toy, 200, CornerEnum.LEFT, "bst-insert-right", K, w.getKey());
+					addStep(v, CornerEnum.LEFT, "bst-insert-right", K,
+							w.getKey());
 					pause();
 					v.noArrow();
 					if (w.getRight() != null) {
@@ -87,7 +86,8 @@ public class BSTInsert extends Algorithm {
 					} else {
 						v.pointAbove(w.getLeft());
 					}
-					addStep(v.tox, v.toy, 200, CornerEnum.RIGHT, "bst-insert-left", K, w.getKey());
+					addStep(v, CornerEnum.RIGHT, "bst-insert-left", K,
+							w.getKey());
 					pause();
 					v.noArrow();
 					if (w.getLeft() != null) {

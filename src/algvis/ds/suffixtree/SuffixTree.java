@@ -1,23 +1,20 @@
 /*******************************************************************************
  * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 package algvis.ds.suffixtree;
-
-import java.awt.geom.Rectangle2D;
-import java.util.Hashtable;
 
 import algvis.core.DataStructure;
 import algvis.core.StringElem;
@@ -25,6 +22,9 @@ import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.Fonts;
 import algvis.ui.VisPanel;
 import algvis.ui.view.View;
+
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
 
 public class SuffixTree extends DataStructure {
 	public static final int textpos = -40;
@@ -45,7 +45,7 @@ public class SuffixTree extends DataStructure {
 		super(M);
 		clear();
 		this.text = text;
-		this.str = new StringElem(this, text, 0, textpos);
+		this.str = new StringElem(text, 0, textpos);
 	}
 
 	@Override

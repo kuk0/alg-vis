@@ -1,27 +1,27 @@
 /*******************************************************************************
  * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 package algvis.ds.suffixtree;
 
-import java.util.Vector;
-
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.core.StringElem;
 import algvis.ds.trie.TrieWordNode;
+
+import java.util.Vector;
 
 public class SuffixTreeInsert extends Algorithm {
 	private final SuffixTree T;
@@ -44,7 +44,7 @@ public class SuffixTreeInsert extends Algorithm {
 	@Override
 	public void runAlgorithm() throws InterruptedException {
 		T.text = s;
-		T.str = new StringElem(T, T.text, 0, SuffixTree.textpos);
+		T.str = new StringElem(T.text, 0, SuffixTree.textpos);
 
 		setHeader("trieinsert", s.substring(0, s.length() - 1));
 		if (s.compareTo("$") == 0) {
@@ -165,14 +165,12 @@ public class SuffixTreeInsert extends Algorithm {
 					// T.reposition();
 					// pause();
 					// in real implementation this is O(1) both time and space
-					final SuffixTreeNode u = null;
 					do {
 						caching = caching
 								.getChildWithCH(cachedUpWalk.charAt(0));
 						cachedUpWalk = cachedUpWalk.substring(1);
 						downWalk.add(caching);
-					} while ((!cachedUpWalk.equals("")) && (u != null)
-							&& (caching.isPacked()));
+					} while (!cachedUpWalk.equals("") && caching.isPacked());
 				}
 				for (final SuffixTreeNode u : downWalk) {
 					u.setColor(NodeColor.NORMAL);

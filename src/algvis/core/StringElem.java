@@ -1,18 +1,17 @@
 package algvis.core;
 
+import algvis.core.history.HashtableStoreSupport;
+import algvis.ui.Fonts;
+import algvis.ui.view.View;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 import javax.swing.undo.StateEditable;
 
-import algvis.core.history.HashtableStoreSupport;
-import algvis.ui.Fonts;
-import algvis.ui.view.View;
-
 public class StringElem implements StateEditable {
 	private static final int span = 12;
-	// private final DataStructure D;
 	private final int x;
 	private final int y;
 	private int len;
@@ -21,8 +20,7 @@ public class StringElem implements StateEditable {
 	private ArrayList<Boolean> marked;
 	protected final String hash = Integer.toString(hashCode());
 
-	public StringElem(DataStructure D, String s, int x, int y) {
-		// this.D = D;
+	public StringElem(String s, int x, int y) {
 		this.s = s;
 		this.x = x;
 		this.y = y;
@@ -30,7 +28,6 @@ public class StringElem implements StateEditable {
 		col = new ArrayList<Color>();
 		marked = new ArrayList<Boolean>();
 		for (int i = 0; i < len; ++i) {
-			// if (i % 2 == 1) col.add(NodeColor.NORMAL.bgColor); else
 			col.add(NodeColor.DARKER.bgColor);
 			marked.add(false);
 		}

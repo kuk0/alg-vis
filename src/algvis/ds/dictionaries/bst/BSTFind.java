@@ -1,26 +1,27 @@
 /*******************************************************************************
  * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 package algvis.ds.dictionaries.bst;
 
-import java.util.HashMap;
-
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
+import algvis.ui.view.CornerEnum;
+
+import java.util.HashMap;
 
 public class BSTFind extends Algorithm {
 	private final BST T;
@@ -46,20 +47,20 @@ public class BSTFind extends Algorithm {
 		addToScene(v);
 		if (T.getRoot() == null) {
 			v.goToRoot();
-			addStep("empty");
+			addStep(v, CornerEnum.BOTTOM, "empty");
 			pause();
+			addStep(v, CornerEnum.BOTTOM, "notfound");
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
-			addStep("notfound");
 		} else {
 			BSTNode w = T.getRoot();
 			v.goAbove(w);
-			addStep("bstfindstart");
+			addStep(w, CornerEnum.BOTTOM, "bstfindstart");
 			pause();
 			while (true) {
 				if (w.getKey() == K) {
 					v.goTo(w);
-					addStep("found");
+					addStep(w, CornerEnum.BOTTOM, "found");
 					v.setColor(NodeColor.FOUND);
 					result.put("node", w);
 					break;
@@ -69,18 +70,18 @@ public class BSTFind extends Algorithm {
 					} else {
 						v.pointAbove(w.getRight());
 					}
-					addStep("bstfindright", K, w.getKey());
+					addStep(v, CornerEnum.LEFT, "bstfindright", K, w.getKey());
 					pause();
 					v.noArrow();
 					w.setColor(NodeColor.DARKER);
 					if (w.getLeft() != null) {
 						w.getLeft().subtreeColor(NodeColor.DARKER);
 					}
-					w = w.getRight();
-					if (w != null) {
+					if (w.getRight() != null) {
+						w = w.getRight();
 						v.goAbove(w);
 					} else { // not found
-						addStep("notfound");
+						addStep(w, CornerEnum.BOTTOMLEFT, "notfound");
 						v.setColor(NodeColor.NOTFOUND);
 						v.goRight();
 						break;
@@ -91,18 +92,18 @@ public class BSTFind extends Algorithm {
 					} else {
 						v.pointAbove(w.getLeft());
 					}
-					addStep("bstfindleft", K, w.getKey());
+					addStep(v, CornerEnum.RIGHT, "bstfindleft", K, w.getKey());
 					pause();
 					v.noArrow();
 					w.setColor(NodeColor.DARKER);
 					if (w.getRight() != null) {
 						w.getRight().subtreeColor(NodeColor.DARKER);
 					}
-					w = w.getLeft();
-					if (w != null) {
+					if (w.getLeft() != null) {
+						w = w.getLeft();
 						v.goAbove(w);
 					} else { // notfound
-						addStep("notfound");
+						addStep(w, CornerEnum.BOTTOMLEFT, "notfound");
 						v.setColor(NodeColor.NOTFOUND);
 						v.goLeft();
 						break;

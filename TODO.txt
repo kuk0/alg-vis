@@ -3,11 +3,6 @@
 * focus na inpute; este lepsie placeholder "input data"
 * vypindat, kde treba...
 
-* drawable objects a scena
-* aj text (a mozno vsetko drawable) moze mat "steps"
-  a napr. po 50 tikoch zmiznut...
-
-* komentar k rotate
 * opravit binomial heaps; +komentare
 * delegovat prikazy ako M.V.a....
 * v.rotate by bolo lepsie ako T.rotate(v); co s korenom?

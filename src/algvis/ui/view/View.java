@@ -278,8 +278,8 @@ public class View implements MouseListener, MouseMotionListener,
 		g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
 	}
 
-	void drawWideLine(double x1, double y1, double x2, double y2, float width,
-			Color col) {
+	public void drawLine(double x1, double y1, double x2, double y2,
+			float width, Color col) {
 		final Stroke old = g.getStroke(), wide = new BasicStroke(width,
 				BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 		final Color c = g.getColor();
@@ -292,21 +292,29 @@ public class View implements MouseListener, MouseMotionListener,
 
 	public void drawWideLine(double x1, double y1, double x2, double y2,
 			float width) {
-		drawWideLine(x1, y1, x2, y2, width, new Color(230, 230, 230));
+		drawLine(x1, y1, x2, y2, width, new Color(230, 230, 230));
 	}
 
 	public void drawWideLine(double x1, double y1, double x2, double y2) {
-		drawWideLine(x1, y1, x2, y2, 27.0f, new Color(230, 230, 230));
+		drawLine(x1, y1, x2, y2, 27.0f, new Color(230, 230, 230));
 	}
 
-	public void drawDashedLine(double x1, double y1, double x2, double y2) {
+	public void drawDashedLine(double x1, double y1, double x2, double y2,
+			float width, Color col) {
 		final float dash1[] = { 2.0f, 5.0f };
-		final Stroke old = g.getStroke(), dashed = new BasicStroke(1.0f,
+		final Stroke old = g.getStroke(), dashed = new BasicStroke(width,
 				BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1,
 				0.0f);
+		final Color c = g.getColor();
+		g.setColor(col);
 		g.setStroke(dashed);
 		g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
 		g.setStroke(old);
+		g.setColor(c);
+	}
+
+	public void drawDashedLine(double x1, double y1, double x2, double y2) {
+		drawDashedLine(x1, y1, x2, y2, 1.0f, Color.BLACK);
 	}
 
 	// square; x, y is the center
@@ -387,11 +395,11 @@ public class View implements MouseListener, MouseMotionListener,
 
 	public void drawTextBubble(String s, int x, int y, int w, int alpha,
 			CornerEnum pos) {
-		drawTextBubble(s, x, y, w, alpha, pos, 2 * Node.RADIUS);
+		drawTextBubble(s, x, y, w, alpha, pos, 2 * Node.RADIUS, 2 * Node.RADIUS);
 	}
 
 	public void drawTextBubble(String s, int x, int y, int w, int alpha,
-			CornerEnum pos, int gap) {
+			CornerEnum pos, int gapx, int gapy) {
 		FontRenderContext frc = g.getFontRenderContext();
 		LineBreakMeasurer measurer = new LineBreakMeasurer(
 				new AttributedString(s).getIterator(), frc);
@@ -402,27 +410,30 @@ public class View implements MouseListener, MouseMotionListener,
 			L.add(l);
 			h += l.getAscent() + l.getDescent() + l.getLeading();
 		}
+		if (L.size() == 1) {
+			w = (int)L.get(0).getBounds().getWidth();
+		}
 		g.setColor(new Color(((alpha << 24) | 0xfffeed), true));
 
 		if (pos == CornerEnum.TOPLEFT || pos == CornerEnum.LEFT
 				|| pos == CornerEnum.BOTTOMLEFT) {
-			x -= w + gap;
+			x -= w + gapx;
 		} else if (pos == CornerEnum.TOP || pos == CornerEnum.CENTER
 				|| pos == CornerEnum.BOTTOM) {
 			x -= w / 2;
 		} else if (pos == CornerEnum.TOPRIGHT || pos == CornerEnum.RIGHT
 				|| pos == CornerEnum.BOTTOMRIGHT) {
-			x += gap;
+			x += gapx;
 		}
 		if (pos == CornerEnum.TOPLEFT || pos == CornerEnum.TOP
 				|| pos == CornerEnum.TOPRIGHT) {
-			y -= h + gap;
+			y -= h + gapy;
 		} else if (pos == CornerEnum.LEFT || pos == CornerEnum.CENTER
 				|| pos == CornerEnum.RIGHT) {
 			y -= h / 2;
 		} else if (pos == CornerEnum.BOTTOMLEFT || pos == CornerEnum.BOTTOM
 				|| pos == CornerEnum.BOTTOMRIGHT) {
-			y += gap;
+			y += gapy;
 		}
 
 		g.fill(new RoundRectangle2D.Double(x - 5, y - 5, w + 10, h + 10, 10, 10));
@@ -435,7 +446,8 @@ public class View implements MouseListener, MouseMotionListener,
 		}
 	}
 
-	private void arrowHead(double x, double y, double xx, double yy) {
+	private void arrowHead(double x, double y, double xx, double yy,
+			double scale) {
 		final double alpha = 6.0, beta = 1.5;
 		double vecX, vecY, normX, normY, d, th, ta, baseX, baseY;
 
@@ -449,8 +461,8 @@ public class View implements MouseListener, MouseMotionListener,
 
 		// setup length parameters
 		d = Math.sqrt(vecX * vecX + vecY * vecY);
-		th = alpha / (2.0 * d);
-		ta = alpha / (beta * d);
+		th = scale * alpha / (2.0 * d);
+		ta = scale * alpha / (beta * d);
 
 		// find the base of the arrow
 		baseX = xx - ta * vecX;
@@ -467,13 +479,22 @@ public class View implements MouseListener, MouseMotionListener,
 
 	public void drawArrow(double x1, double y1, double x2, double y2) {
 		g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
-		arrowHead((int) x1, (int) y1, (int) x2, (int) y2);
+		arrowHead((int) x1, (int) y1, (int) x2, (int) y2, 1);
+	}
+
+	public void drawArrow(double x1, double y1, double x2, double y2,
+			float width, Color col) {
+		drawLine(x1, y1, x2, y2, width, col);
+		final Color c = g.getColor();
+		g.setColor(col);
+		arrowHead((int) x1, (int) y1, (int) x2, (int) y2, width);
+		g.setColor(c);
 	}
 
 	public void drawDoubleArrow(double x1, double y1, double x2, double y2) {
 		g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
-		arrowHead((int) x1, (int) y1, (int) x2, (int) y2);
-		arrowHead((int) x2, (int) y2, (int) x1, (int) y1);
+		arrowHead((int) x1, (int) y1, (int) x2, (int) y2, 1);
+		arrowHead((int) x2, (int) y2, (int) x1, (int) y1, 1);
 	}
 
 	// elliptical arc
@@ -533,12 +554,37 @@ public class View implements MouseListener, MouseMotionListener,
 			x = x2 - dx;
 			y = y2 - dy;
 		}
-		arrowHead(x, y, x2, y2);
+		arrowHead(x, y, x2, y2, 1);
 	}
 
 	public void drawCurve(double x1, double y1, double cx1, double cy1,
 			double cx2, double cy2, double x2, double y2) {
 		g.draw(new CubicCurve2D.Double(x1, y1, cx1, cy1, cx2, cy2, x2, y2));
+	}
+
+	public void drawCurve(double x1, double y1, double cx1, double cy1,
+			double cx2, double cy2, double x2, double y2, float width, Color col) {
+		final Color c = g.getColor();
+		final Stroke old = g.getStroke(), wide = new BasicStroke(width,
+				BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+		g.setStroke(wide);
+		g.setColor(col);
+		g.draw(new CubicCurve2D.Double(x1, y1, cx1, cy1, cx2, cy2, x2, y2));
+		g.setColor(c);
+		g.setStroke(old);
+	}
+
+	public void drawCurveArrow(double x1, double y1, double cx1, double cy1,
+			double cx2, double cy2, double x2, double y2, float width, Color col) {
+		final Color c = g.getColor();
+		final Stroke old = g.getStroke(), wide = new BasicStroke(width,
+				BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+		g.setStroke(wide);
+		g.setColor(col);
+		g.draw(new CubicCurve2D.Double(x1, y1, cx1, cy1, cx2, cy2, x2, y2));
+		arrowHead(cx2, cy2, x2, y2, width);
+		g.setColor(c);
+		g.setStroke(old);
 	}
 
 	public void fillPolygon(Polygon p) {

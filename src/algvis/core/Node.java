@@ -1,30 +1,30 @@
 /*******************************************************************************
  * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 package algvis.core;
-
-import java.awt.Color;
-import java.awt.geom.Rectangle2D;
-import java.util.Hashtable;
 
 import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.VisualElement;
 import algvis.core.visual.ZDepth;
 import algvis.ui.Fonts;
 import algvis.ui.view.View;
+
+import java.awt.Color;
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
 
 /**
  * The Class Node. This is a basic element of the visualization. Nodes can be
@@ -101,10 +101,6 @@ public class Node extends VisualElement {
 		this(v.D, v.getKey(), v.x, v.y);
 	}
 
-	public Node(DataStructure D) {
-		super(ZDepth.DS);
-	}
-
 	public void setState(int s) {
 		state = s;
 	}
@@ -157,7 +153,7 @@ public class Node extends VisualElement {
 
 	/**
 	 * Draw an arrow pointing above the node w.
-	 * 
+	 *
 	 * @param w
 	 */
 	public void pointAbove(Node w) {
@@ -167,7 +163,7 @@ public class Node extends VisualElement {
 
 	/**
 	 * Draw an arrow pointing to the node w.
-	 * 
+	 *
 	 * @param w
 	 */
 	public void pointTo(Node w) {
@@ -178,7 +174,7 @@ public class Node extends VisualElement {
 	/**
 	 * Point in direction angle. The angle in degrees should be a nonnegative
 	 * integer 0 = RIGHT, then clockwise: 90 = DOWN, 180 = LEFT
-	 * 
+	 *
 	 * @param angle
 	 */
 	public void pointInDir(int angle) {
@@ -196,7 +192,7 @@ public class Node extends VisualElement {
 
 	/**
 	 * Draw an arc pointing to node w. Assumption: w is above this node.
-	 * 
+	 *
 	 * @param w
 	 */
 	public void setArc(Node w) {
@@ -213,7 +209,7 @@ public class Node extends VisualElement {
 
 	/**
 	 * Draw bg.
-	 * 
+	 *
 	 * @param v
 	 *            view
 	 */

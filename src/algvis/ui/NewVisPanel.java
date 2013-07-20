@@ -23,6 +23,7 @@ import algvis.internationalization.LanguageListener;
 import java.awt.BorderLayout;
 import java.util.Hashtable;
 
+import javax.swing.JPanel;
 import javax.swing.undo.StateEditable;
 
 public abstract class NewVisPanel extends VisPanel implements LanguageListener,
@@ -37,13 +38,15 @@ public abstract class NewVisPanel extends VisPanel implements LanguageListener,
 	@Override
 	protected void init() {
 		setLayout(new BorderLayout(0, 0));
-		initScreen();
+		final JPanel screenP = initScreen();
 		statusBar = new ILabel("EMPTYSTR");
 		initDS();
 
-		add(screen, BorderLayout.CENTER);
-		add(buttons, BorderLayout.PAGE_END);
-		//add(statusBar, BorderLayout.PAGE_END);
+		add(screenP, BorderLayout.CENTER);
+		JPanel buttonsAndStatusBar = new JPanel(new BorderLayout());
+		buttonsAndStatusBar.add(buttons, BorderLayout.CENTER);
+		buttonsAndStatusBar.add(statusBar, BorderLayout.PAGE_END);
+		add(buttonsAndStatusBar, BorderLayout.PAGE_END);
 
 		screen.setDS(D);
 		languageChanged();

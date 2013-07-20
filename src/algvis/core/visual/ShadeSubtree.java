@@ -1,14 +1,14 @@
 package algvis.core.visual;
 
-import java.awt.Polygon;
-import java.awt.geom.Rectangle2D;
-import java.util.ConcurrentModificationException;
-import java.util.Stack;
-
 import algvis.core.DataStructure;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.view.Layout;
 import algvis.ui.view.View;
+
+import java.awt.Polygon;
+import java.awt.geom.Rectangle2D;
+import java.util.ConcurrentModificationException;
+import java.util.Stack;
 
 public class ShadeSubtree extends VisualElement {
 	BSTNode u;
@@ -73,5 +73,15 @@ public class ShadeSubtree extends VisualElement {
 	@Override
 	protected Rectangle2D getBoundingBox() {
 		return null;
+	}
+
+	public int getLeft() {
+		return p.xpoints[1];
+	}
+	public int getRight() {
+		return p.xpoints[p.npoints-2];
+	}
+	public int getBottom() {
+		return p.ypoints[p.npoints/2];
 	}
 }

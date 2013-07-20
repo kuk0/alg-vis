@@ -1,24 +1,20 @@
 /*******************************************************************************
  * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 package algvis.ds.trie;
-
-import java.awt.Color;
-import java.awt.FontMetrics;
-import java.util.Hashtable;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -27,14 +23,16 @@ import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.Fonts;
 import algvis.ui.view.View;
 
+import java.awt.Color;
+import java.awt.FontMetrics;
+import java.util.Hashtable;
+
 public class TrieWordNode extends Node {
 	private String s = "";
 
 	public TrieWordNode(DataStructure D, String s, int x, int y, NodeColor c) {
-		super(D);
+		super(D, 0, x, y);
 		setS(s);
-		this.x = x;
-		this.y = y;
 		setColor(c);
 		this.D = D;
 	}
@@ -52,7 +50,7 @@ public class TrieWordNode extends Node {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param x
 	 *            how many chars will be cut from the beginning of the string
 	 */
