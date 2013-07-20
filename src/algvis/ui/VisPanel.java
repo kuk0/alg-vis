@@ -1,26 +1,32 @@
 /*******************************************************************************
  * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 package algvis.ui;
 
+import algvis.core.DataStructure;
+import algvis.core.Settings;
+import algvis.core.history.HistoryManager;
+import algvis.core.visual.Scene;
+import algvis.internationalization.ILabel;
+import algvis.internationalization.LanguageListener;
+import algvis.internationalization.Languages;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.util.Hashtable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,14 +36,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 import javax.swing.undo.StateEditable;
-
-import algvis.core.DataStructure;
-import algvis.core.Settings;
-import algvis.core.history.HistoryManager;
-import algvis.core.visual.Scene;
-import algvis.internationalization.ILabel;
-import algvis.internationalization.LanguageListener;
-import algvis.internationalization.Languages;
 
 public abstract class VisPanel extends JPanel implements LanguageListener,
 		StateEditable {
@@ -57,7 +55,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
 	public volatile boolean pauses = true;
 	public boolean small = false;
 	public ExecutorService algorithmPool = Executors.newSingleThreadExecutor();
-	public final HistoryManager history = new HistoryManager(this);
+	public final HistoryManager history = new HistoryManager(scene);
 	private boolean started = false;
 
 	protected VisPanel(Settings S) {
@@ -65,37 +63,17 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
 		init();
 	}
 
-	private void init() {
-		this.setLayout(new GridBagLayout());
-		final JPanel screenP = initScreen();
+	protected void init() {
+		setLayout(new BorderLayout(0, 0));
+		initScreen();
 		final JScrollPane commentary = initCommentary();
 		statusBar = new ILabel("EMPTYSTR");
 		initDS();
 
-		final GridBagConstraints cs = new GridBagConstraints();
-		cs.gridx = 0;
-		cs.gridy = 0;
-		cs.fill = GridBagConstraints.BOTH;
-		add(screenP, cs);
-
-		final GridBagConstraints cc = new GridBagConstraints();
-		cc.gridx = 1;
-		cc.gridy = 0;
-		cc.gridheight = 2;
-		cc.fill = GridBagConstraints.VERTICAL;
-		add(commentary, cc);
-
-		final GridBagConstraints cb = new GridBagConstraints();
-		cb.gridx = 0;
-		cb.gridy = 1;
-		cb.fill = GridBagConstraints.HORIZONTAL;
-		add(buttons, cb);
-
-		final GridBagConstraints csb = new GridBagConstraints();
-		csb.gridx = 0;
-		csb.gridy = 2;
-		csb.fill = GridBagConstraints.HORIZONTAL;
-		add(statusBar, csb);
+		add(screen, BorderLayout.CENTER);
+		add(commentary, BorderLayout.LINE_END);
+		add(buttons, BorderLayout.PAGE_END);
+		//add(statusBar, BorderLayout.PAGE_END);
 
 		screen.setDS(D);
 		languageChanged();
@@ -107,37 +85,16 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
 		buttons.I.requestFocusInWindow();
 	}
 
-	private JPanel initScreen() {
-		final JPanel screenP = new JPanel();
-		screenP.setLayout(new BorderLayout());
-		screen = new Screen(this) {
-			private static final long serialVersionUID = 2196788670749006364L;
-
-			@Override
-			public Dimension getMaximumSize() {
-				return new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
-			}
-
-			@Override
-			public Dimension getPreferredSize() {
-				return new Dimension(550, 400);
-			}
-
-			@Override
-			public Dimension getMinimumSize() {
-				return new Dimension(550, 400);
-				// return new Dimension(300, 100);
-			}
-		};
-		screenP.add(screen, BorderLayout.CENTER);
+	protected void initScreen() {
+		screen = new Screen(this);
+		screen.setMinimumSize(new Dimension(800, 600));
 
 		border = BorderFactory.createTitledBorder("");
 		border.setTitleJustification(TitledBorder.CENTER);
 		border.setTitleFont(new Font("Sans-serif", Font.ITALIC, 12));
 		Languages.addListener(this);
-		screenP.setBorder(BorderFactory.createCompoundBorder(border,
+		screen.setBorder(BorderFactory.createCompoundBorder(border,
 				BorderFactory.createEmptyBorder(0, 5, 5, 5)));
-		return screenP;
 	}
 
 	private JScrollPane initCommentary() {

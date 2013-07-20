@@ -1,20 +1,23 @@
 /*******************************************************************************
  * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 package algvis.ui;
+
+import algvis.core.DataStructure;
+import algvis.ui.view.View;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,9 +31,6 @@ import java.util.ConcurrentModificationException;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import algvis.core.DataStructure;
-import algvis.ui.view.View;
-
 public class Screen extends JPanel {
 	private static final long serialVersionUID = -8279768206774288161L;
 	// obrazovka (ak nie je suspendnuta) neustale vykresluje poziciu
@@ -40,7 +40,7 @@ public class Screen extends JPanel {
 
 	private Image I;
 	private Graphics G;
-	private Dimension size;
+	private Dimension size = new Dimension(0,0);
 
 	public final View V;
 
@@ -62,6 +62,8 @@ public class Screen extends JPanel {
 	void check_size() {
 		final Dimension d = getSize();
 		if (I == null || d.width != size.width || d.height != size.height) {
+			System.out.println("d: "+d.height+" "+d.width);
+			System.out.println("size: "+size.height+" "+size.width);
 			I = createImage(d.width, d.height);
 			G = I.getGraphics();
 			// V.setWH(d.width, d.height);

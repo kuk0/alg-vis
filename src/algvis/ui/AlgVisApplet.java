@@ -1,20 +1,25 @@
 /*******************************************************************************
  * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 package algvis.ui;
+
+import algvis.core.DataStructures;
+import algvis.core.MyParserDelegator;
+import algvis.core.Settings;
+import algvis.internationalization.Languages;
 
 import java.awt.Color;
 
@@ -22,11 +27,6 @@ import javax.swing.JApplet;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.TitledBorder;
-
-import algvis.core.DataStructures;
-import algvis.core.MyParserDelegator;
-import algvis.core.Settings;
-import algvis.internationalization.Languages;
 
 public class AlgVisApplet extends JApplet {
 	private static final long serialVersionUID = -76009301274562874L;
@@ -70,6 +70,7 @@ public class AlgVisApplet extends JApplet {
 		} catch (final NumberFormatException e) {
 			ds = DataStructures.getIndex(dsp);
 		}
+		ds = 0; // TODO: testing
 		if (ds == -1) {
 			// all data structures
 			final AlgVis A = new AlgVis(this.getRootPane(),

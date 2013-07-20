@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -18,6 +18,8 @@ package algvis.ui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -59,7 +61,7 @@ public class AlgVisStandalone {
 
 class MainFrame extends JFrame {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -1045189076645432320L;
 	private static final int WIDTH = 1080;
@@ -67,11 +69,28 @@ class MainFrame extends JFrame {
 
 	public MainFrame() {
 		setTitle("Gnarley Trees");
-		final AlgVis A = new AlgVis(getRootPane());
-		A.setSize(WIDTH, HEIGHT);
+		final AlgVis A = new AlgVis(getContentPane());
 		add(A);
 		pack();
 		A.init();
+		//A.setSize(WIDTH, HEIGHT);
 		setSize(WIDTH, HEIGHT + 20); // add 20 for the frame title
+		this.addComponentListener(new ComponentListener() {
+			    @Override
+				public void componentHidden(ComponentEvent e) {}
+			    @Override
+				public void componentMoved(ComponentEvent e) {}
+			    @Override
+				public void componentResized(ComponentEvent e) {
+			    	System.out.println("frame: "+getSize());
+			    	System.out.println("cards: "+A.cards.getSize());
+			    	System.out.println("panels: "+A.getSize());
+			    	System.out.println("panel0: "+A.panels[0].getSize());
+			    	A.cards.revalidate();
+			    	A.cards.repaint();
+			    }
+			    @Override
+				public void componentShown(ComponentEvent e) {}
+		});
 	}
 }

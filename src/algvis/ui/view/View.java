@@ -1,20 +1,23 @@
 /*******************************************************************************
  * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 package algvis.ui.view;
+
+import algvis.core.Node;
+import algvis.ui.Fonts;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -28,6 +31,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineBreakMeasurer;
+import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.NoninvertibleTransformException;
@@ -35,10 +41,10 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+import java.text.AttributedString;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
-
-import algvis.ui.Fonts;
 
 public class View implements MouseListener, MouseMotionListener,
 		MouseWheelListener {
@@ -377,6 +383,56 @@ public class View implements MouseListener, MouseMotionListener,
 			double arcw, double arch) {
 		g.fill(new RoundRectangle2D.Double(x - w, y - h, 2 * w, 2 * h, arcw,
 				arch));
+	}
+
+	public void drawTextBubble(String s, int x, int y, int w, int alpha,
+			CornerEnum pos) {
+		drawTextBubble(s, x, y, w, alpha, pos, 2 * Node.RADIUS);
+	}
+
+	public void drawTextBubble(String s, int x, int y, int w, int alpha,
+			CornerEnum pos, int gap) {
+		FontRenderContext frc = g.getFontRenderContext();
+		LineBreakMeasurer measurer = new LineBreakMeasurer(
+				new AttributedString(s).getIterator(), frc);
+		ArrayList<TextLayout> L = new ArrayList<TextLayout>();
+		int h = 0;
+		while (measurer.getPosition() < s.length()) {
+			TextLayout l = measurer.nextLayout(w);
+			L.add(l);
+			h += l.getAscent() + l.getDescent() + l.getLeading();
+		}
+		g.setColor(new Color(((alpha << 24) | 0xfffeed), true));
+
+		if (pos == CornerEnum.TOPLEFT || pos == CornerEnum.LEFT
+				|| pos == CornerEnum.BOTTOMLEFT) {
+			x -= w + gap;
+		} else if (pos == CornerEnum.TOP || pos == CornerEnum.CENTER
+				|| pos == CornerEnum.BOTTOM) {
+			x -= w / 2;
+		} else if (pos == CornerEnum.TOPRIGHT || pos == CornerEnum.RIGHT
+				|| pos == CornerEnum.BOTTOMRIGHT) {
+			x += gap;
+		}
+		if (pos == CornerEnum.TOPLEFT || pos == CornerEnum.TOP
+				|| pos == CornerEnum.TOPRIGHT) {
+			y -= h + gap;
+		} else if (pos == CornerEnum.LEFT || pos == CornerEnum.CENTER
+				|| pos == CornerEnum.RIGHT) {
+			y -= h / 2;
+		} else if (pos == CornerEnum.BOTTOMLEFT || pos == CornerEnum.BOTTOM
+				|| pos == CornerEnum.BOTTOMRIGHT) {
+			y += gap;
+		}
+
+		g.fill(new RoundRectangle2D.Double(x - 5, y - 5, w + 10, h + 10, 10, 10));
+		g.setColor(new Color((alpha << 24), true));
+		g.draw(new RoundRectangle2D.Double(x - 5, y - 5, w + 10, h + 10, 15, 15));
+		for (TextLayout l : L) {
+			y += l.getAscent();
+			l.draw(g, x, y);
+			y += l.getDescent() + l.getLeading();
+		}
 	}
 
 	private void arrowHead(double x, double y, double xx, double yy) {

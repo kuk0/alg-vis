@@ -1,22 +1,30 @@
 /*******************************************************************************
  * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 package algvis.ui;
 
+import algvis.core.ADTs;
+import algvis.core.DataStructures;
+import algvis.core.Settings;
+import algvis.internationalization.IMenu;
+import algvis.internationalization.IMenuItem;
+import algvis.internationalization.Languages;
+
 import java.awt.CardLayout;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -26,14 +34,6 @@ import java.util.Map;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
-
-import algvis.core.ADTs;
-import algvis.core.DataStructures;
-import algvis.core.Settings;
-import algvis.internationalization.IMenu;
-import algvis.internationalization.IMenuItem;
-import algvis.internationalization.Languages;
 
 public class AlgVis extends JPanel implements ActionListener {
 	/*
@@ -53,24 +53,27 @@ public class AlgVis extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -5202486006824196688L;
 
 	/** Cards with data structures */
-	private final JPanel cards;
-	private final VisPanel[] panels;
+	public final JPanel cards;
+	private final CardLayout cardlayout;
+	public final VisPanel[] panels; //TODO: private
 	private int activePanel = -1;
-	private final JRootPane rootPane;
+	private final Container rootPane;
 	private final Settings S;
 
 	private final Map<String, IMenu> adtItems = new HashMap<String, IMenu>();
 	private IMenuItem[] dsItems;
 
-	public AlgVis(JRootPane P) {
+	public AlgVis(Container P) {
 		this(P, "en");
 	}
 
-	public AlgVis(JRootPane P, String s) {
+	public AlgVis(Container P, String s) {
 		this.rootPane = P;
 		Languages.selectLanguage(s);
 		S = new Settings();
-		cards = new JPanel(new CardLayout());
+		cards = new JPanel();
+		cardlayout = new CardLayout();
+		cards.setLayout(cardlayout);
 		panels = new VisPanel[DataStructures.N];
 	}
 
@@ -134,7 +137,7 @@ public class AlgVis extends JPanel implements ActionListener {
 		 * KeyEvent.VK_C); sItem.setActionCommand("layout-simple");
 		 * cItem.setActionCommand("layout-compact");
 		 * sItem.addActionListener(this); cItem.addActionListener(this);
-		 * 
+		 *
 		 * layoutMenu.add(sItem); layoutMenu.add(cItem);
 		 * menuBar.add(layoutMenu);
 		 */
@@ -146,9 +149,9 @@ public class AlgVis extends JPanel implements ActionListener {
 			}
 		}
 
-		add(menuBar);
-		rootPane.setJMenuBar(menuBar);
-		add(cards);
+		//add(menuBar);
+		getRootPane().setJMenuBar(menuBar);
+		rootPane.add(cards);
 
 		showCard(DEFAULT_DS);
 	}
@@ -179,12 +182,12 @@ public class AlgVis extends JPanel implements ActionListener {
 	}
 
 	private void showCard(int i) {
-		final CardLayout cl = (CardLayout) (cards.getLayout());
+		//final CardLayout cl = (CardLayout) (cards.getLayout());
 		if (activePanel != -1) {
 			panels[activePanel].setOnAir(false);
 		}
 		activePanel = i;
 		panels[i].setOnAir(true);
-		cl.show(cards, DataStructures.getName(i));
+		cardlayout.show(cards, DataStructures.getName(i));
 	}
 }

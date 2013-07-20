@@ -16,17 +16,23 @@
  ******************************************************************************/
 package algvis.core;
 
-import java.awt.EventQueue;
-import java.util.HashMap;
-import java.util.concurrent.Semaphore;
-
 import algvis.core.history.UpdatableStateEdit;
 import algvis.core.visual.DoubleArrow;
 import algvis.core.visual.ShadePair;
 import algvis.core.visual.ShadeSubtree;
 import algvis.core.visual.ShadeTriple;
+import algvis.core.visual.TextBubble;
 import algvis.core.visual.VisualElement;
+import algvis.internationalization.IIntParamString;
+import algvis.internationalization.IParamString;
+import algvis.internationalization.IString;
+import algvis.ui.NewVisPanel;
 import algvis.ui.VisPanel;
+import algvis.ui.view.CornerEnum;
+
+import java.awt.EventQueue;
+import java.util.HashMap;
+import java.util.concurrent.Semaphore;
 
 /**
  * The Class Algorithm. Each visualized data structure consists of data and
@@ -109,49 +115,74 @@ abstract public class Algorithm implements Runnable {
 			wrapperAlg.resume();
 		} else {
 			gate.release();
+			panel.scene.next();
 		}
 	}
 
 	protected void setHeader(String s) {
-		if (!wrapped) {
+		if (!wrapped && !(panel instanceof NewVisPanel)) { // TODO: just until we get rid of the old VisPanel
 			panel.commentary.setHeader(s);
 		}
 	}
 
 	protected void setHeader(String s, String... par) {
-		if (!wrapped) {
+		if (!wrapped && !(panel instanceof NewVisPanel)) {
 			panel.commentary.setHeader(s, par);
 		}
 	}
 
 	protected void setHeader(String s, int... par) {
-		if (!wrapped) {
+		if (!wrapped && !(panel instanceof NewVisPanel)) {
 			panel.commentary.setHeader(s, par);
 		}
 	}
 
 	protected void addNote(String s) {
-		panel.commentary.addNote(s);
+		if (!(panel instanceof NewVisPanel)) {
+			panel.commentary.addNote(s);
+		}
 	}
 
 	public void addNote(String s, String[] par) {
-		panel.commentary.addNote(s, par);
+		if (!(panel instanceof NewVisPanel)) {
+			panel.commentary.addNote(s, par);
+		}
 	}
 
 	protected void addNote(String s, int... par) {
-		panel.commentary.addNote(s, par);
+		if (!(panel instanceof NewVisPanel)) {
+			panel.commentary.addNote(s, par);
+		}
+	}
+
+	protected void addStep(int x, int y, int w, CornerEnum pos, String s) {
+		addToSceneUntilNext(new TextBubble(new IString(s), x, y, w, pos));
+	}
+
+	protected void addStep(int x, int y, int w, CornerEnum pos, String s, String... par) {
+		addToSceneUntilNext(new TextBubble(new IParamString(s, par), x, y, w, pos));
+	}
+
+	protected void addStep(int x, int y, int w, CornerEnum pos, String s, int... par) {
+		addToSceneUntilNext(new TextBubble(new IIntParamString(s, par), x, y, w, pos));
 	}
 
 	protected void addStep(String s) {
-		panel.commentary.addStep(s);
+		if (!(panel instanceof NewVisPanel)) {
+			panel.commentary.addStep(s);
+		}
 	}
 
 	protected void addStep(String s, String... par) {
-		panel.commentary.addStep(s, par);
+		if (!(panel instanceof NewVisPanel)) {
+			panel.commentary.addStep(s, par);
+		}
 	}
 
 	protected void addStep(String s, int... par) {
-		panel.commentary.addStep(s, par);
+		if (!(panel instanceof NewVisPanel)) {
+			panel.commentary.addStep(s, par);
+		}
 	}
 
 	protected void addToScene(VisualElement element) {
@@ -161,18 +192,36 @@ abstract public class Algorithm implements Runnable {
 			if (!panel.pauses
 					&& (element instanceof ShadeSubtree
 							|| element instanceof ShadePair
-							|| element instanceof ShadeTriple || element instanceof DoubleArrow))
+							|| element instanceof ShadeTriple
+							|| element instanceof DoubleArrow || element instanceof TextBubble))
 				return;
 			panel.scene.add(element);
 			panelState.addToPreState(element);
 		}
 	}
 
+	protected void addToSceneUntilNext(VisualElement element) {
+		if (wrapped) {
+			wrapperAlg.addToScene(element);
+		} else {
+			if (!panel.pauses
+					&& (element instanceof ShadeSubtree
+							|| element instanceof ShadePair
+							|| element instanceof ShadeTriple
+							|| element instanceof DoubleArrow || element instanceof TextBubble))
+				return;
+			panel.scene.addUntilNext(element);
+			panelState.addToPreState(element);
+		}
+	}
+
+
 	protected void removeFromScene(VisualElement element) {
 		if (!panel.pauses
 				&& (element instanceof ShadeSubtree
 						|| element instanceof ShadePair
-						|| element instanceof ShadeTriple || element instanceof DoubleArrow))
+						|| element instanceof ShadeTriple
+						|| element instanceof DoubleArrow || element instanceof TextBubble))
 			return;
 		// if (panel.pauses) {
 		panel.scene.remove(element);
@@ -184,7 +233,9 @@ abstract public class Algorithm implements Runnable {
 	void begin() {
 		panel.history.addEdit(panelState = new UpdatableStateEdit(panel,
 				panel.history.getNextId()));
-		panel.commentary.clear();
+		if (!(panel instanceof NewVisPanel)) {
+			panel.commentary.clear();
+		}
 
 		EventQueue.invokeLater(new Runnable() {
 			@Override

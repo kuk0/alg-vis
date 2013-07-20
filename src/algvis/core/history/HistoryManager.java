@@ -16,6 +16,8 @@
  ******************************************************************************/
 package algvis.core.history;
 
+import algvis.core.visual.Scene;
+
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -23,21 +25,16 @@ import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
 
-import algvis.ui.VisPanel;
-
 public class HistoryManager extends UndoManager {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -842354204488084104L;
 	private final Map<UndoableEdit, Boolean> algorithmEnds = new WeakHashMap<UndoableEdit, Boolean>();
 	private long id = -1; // ak sa v paneli vykona viac ako 2^63 krokov, tak
 							// mame problem
-	private final VisPanel panel;
+	private final Scene scene;
 
-	public HistoryManager(VisPanel panel) {
+	public HistoryManager(Scene scene) {
 		super();
-		this.panel = panel;
+		this.scene = scene;
 		setLimit(500);
 	}
 
@@ -78,7 +75,7 @@ public class HistoryManager extends UndoManager {
 			while (canUndo() && editToBeUndone().getId() >= id) {
 				undo();
 			}
-			panel.scene.endAnimation();
+			scene.endAnimation();
 			redo();
 		} else {
 			while (editToBeRedone().getId() < id) {
