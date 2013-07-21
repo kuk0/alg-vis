@@ -1,22 +1,23 @@
 /*******************************************************************************
  * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 package algvis.ds.unionfind;
 
 import algvis.core.NodeColor;
+import algvis.ui.view.REL;
 
 public class UnionFindUnion extends UnionFindFind {
 	public enum UnionHeuristic {
@@ -58,10 +59,10 @@ public class UnionFindUnion extends UnionFindFind {
 		final UnionFindNode r1 = find(V);
 		final UnionFindNode r2 = find(W);
 		if (r1 == r2) {
-			addStep("ufsameset");
+			addStep(r1, REL.TOP, "uf-same-set");
 			pause();
 		} else {
-			addStep("ufunionsimple");
+			addStep(r1, REL.TOP, "ufunionsimple");
 			pause();
 			UF.removeFromSets(r2);
 			r1.addChild(r2);
@@ -84,22 +85,22 @@ public class UnionFindUnion extends UnionFindFind {
 		final UnionFindNode r1 = find(V);
 		final UnionFindNode r2 = find(W);
 		if (r1 == r2) {
-			addStep("ufsameset");
+			addStep(r1, REL.TOP, "uf-same-set");
 			pause();
 		} else {
 			addStep("ufunionbyrank", r1.getRank(), r2.getRank());
 			if (r1.getRank() > r2.getRank()) {
-				addStep("ufunionfirstsecond");
+				addStep(r1, REL.TOP, "ufunionfirstsecond");
 				pause();
 				UF.removeFromSets(r2);
 				r1.addChild(r2);
 			} else if (r1.getRank() < r2.getRank()) {
-				addStep("ufunionsecondfirst");
+				addStep(r1, REL.TOP, "ufunionsecondfirst");
 				pause();
 				UF.removeFromSets(r1);
 				r2.addChild(r1);
 			} else {
-				addStep("ufunionsamerank");
+				addStep(r1, REL.TOP, "ufunionsamerank");
 				pause();
 				UF.removeFromSets(r2);
 				r1.addChild(r2);

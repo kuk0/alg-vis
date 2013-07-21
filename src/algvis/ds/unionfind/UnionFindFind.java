@@ -1,25 +1,27 @@
 /*******************************************************************************
  * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 package algvis.ds.unionfind;
 
-import java.util.Stack;
-
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
+import algvis.core.visual.Edge;
+import algvis.ui.view.REL;
+
+import java.util.Stack;
 
 public class UnionFindFind extends Algorithm {
 	public enum FindHeuristic {
@@ -57,112 +59,69 @@ public class UnionFindFind extends Algorithm {
 		case COMPRESSION:
 			return findWithCompression(u);
 		case HALVING:
-			return findHalving(u);
+			return findHalvingOrSplitting(u, true);
 		case SPLITTING:
-			return findSplitting(u);
+			return findHalvingOrSplitting(u, false);
 		default:
 			return null;
 		}
 	}
 
-	UnionFindNode findSimple(UnionFindNode u) throws InterruptedException {
+	private Stack<UnionFindNode> findRoot(UnionFindNode u)
+			throws InterruptedException {
 		final Stack<UnionFindNode> S = new Stack<UnionFindNode>();
-		UnionFindNode result = null;
 		UnionFindNode v = null;
 
 		u.setColor(NodeColor.FIND);
 		u.mark();
-		addStep("uffindstart", u.getKey());
+		addStep(u, REL.BOTTOM, "uf-find-start", u.getKey());
 		pause();
 
-		// u is a representative
-		if (u.getParent() == null) {
-			u.setColor(NodeColor.FOUND);
-			addStep("ufalreadyroot");
-			pause();
-			u.unmark();
-			return u;
-		}
-
-		v = u;
-
 		// looking for root
-		while (v.getParent() != null) {
+		v = u;
+		while (!v.isRoot()) {
 			S.add(v);
 			v.setColor(NodeColor.FIND);
-			addStep("ufup");
+			v.setGrey(true);
+			addStep(v, REL.RIGHT, "uf-go-up");
 			pause();
 			v = v.getParent();
 		}
 
 		// root found
-		result = v;
+		S.add(v);
 		v.setColor(NodeColor.FOUND);
-		addStep("ufrootfound", result.getKey());
+		addStep(v, REL.TOP, "uf-found-root", u.getKey());
 		pause();
+		return S;
+	}
 
-		// traveling back
+	UnionFindNode findSimple(UnionFindNode u) throws InterruptedException {
+		Stack<UnionFindNode> S = findRoot(u);
+		final UnionFindNode result = S.pop();
+		// traveling back; set color back to normal
 		while (!S.empty()) {
-			v = S.pop();
-			v.setColor(NodeColor.NORMAL);
+			S.pop().setColor(NodeColor.NORMAL);
 		}
-
-		// u.bgcolor = Colors.NORMAL;
 		u.unmark();
-
+		result.setGrey(false);
 		return result;
 	}
 
 	UnionFindNode findWithCompression(UnionFindNode u)
 			throws InterruptedException {
-		final Stack<UnionFindNode> S = new Stack<UnionFindNode>();
-		UnionFindNode result = null;
-		UnionFindNode v = null;
+		Stack<UnionFindNode> S = findRoot(u);
+		final UnionFindNode result = S.pop();
 
-		u.setColor(NodeColor.FIND);
-		u.mark();
-		addStep("uffindstart", u.getKey());
-		pause();
-
-		// u is a representative
-		if (u.getParent() == null) {
-			u.setColor(NodeColor.FOUND);
-			addStep("ufalreadyroot");
-			pause();
-			u.unmark();
-			return u;
-		}
-
-		v = u;
-
-		// looking for root
-		while (v.getParent() != null) {
-			S.add(v);
-			// v.setColor(NodeColor.FIND);
-			v.setGrey(true);
-			addStep("ufup");
-			pause();
-			v = v.getParent();
-		}
-
-		// root found
-		result = v;
-		v.setColor(NodeColor.FOUND);
-		addStep("ufrootfound", result.getKey());
-		addStep("ufdownstart");
-		pause();
-
-		// don't compress a path of a son of a root
+		// the son of root doesn't move
 		if (!S.empty()) {
-			addStep("ufdownson");
-			pause();
-			v = S.pop();
-			v.setColor(NodeColor.NORMAL);
+			S.pop().setColor(NodeColor.NORMAL);
 		}
 
+		//TODO: on the way down, we link nodes directly to the root
 		while (!S.empty()) {
-			addStep("ufdown");
-			v = S.pop();
+			UnionFindNode v = S.pop();
+			addStep(v, REL.BOTTOM, "uf-link", v.getKey(), result.getKey());
 			// v.pointTo(result);
 			pause();
 			// v.noArrow();
@@ -175,18 +134,16 @@ public class UnionFindFind extends Algorithm {
 			// pause();
 		}
 
-		// u.bgcolor = Colors.NORMAL;
 		pause();
 		u.unmark();
 		result.setGrey(false);
 		return result;
 	}
 
-	UnionFindNode findHalving(UnionFindNode u) throws InterruptedException {
-		UnionFindNode result = null;
-		UnionFindNode v = null;
-
+	private void greyPathToRoot(UnionFindNode u) throws InterruptedException {
 		u.setColor(NodeColor.FIND);
+		u.mark();
+		addStep("uf-find-start", u.getKey());
 
 		// grey path
 		UnionFindNode t = u;
@@ -194,162 +151,51 @@ public class UnionFindFind extends Algorithm {
 			t.setGrey(true);
 			t = t.getParent();
 		}
-
-		u.mark();
-		addStep("uffindstart", u.getKey());
 		pause();
+	}
 
-		// u is a representative
-		if (u.getParent() == null) {
-			u.setColor(NodeColor.FOUND);
-			addStep("ufalreadyroot");
-			pause();
-			u.unmark();
-			return u;
-		}
+	UnionFindNode findHalvingOrSplitting(UnionFindNode u, boolean halving)
+			throws InterruptedException {
+		greyPathToRoot(u);
+		UnionFindNode v = u, p, pp;
 
-		v = u;
-		UnionFindNode grandchild = null;
-		UnionFindNode child = null;
-
+		v.mark();
 		// looking for a root
-		if (v.getParent() != null) {
-			grandchild = v;
-			v.setColor(NodeColor.INSERT);
-		}
-
-		if (v.getParent() != null) {
-			addStep("ufup");
+		while (!v.isRoot() && !v.getParent().isRoot()) {
+			p = v.getParent();
+			pp = p.getParent();
+			addToSceneUntilNext(new Edge(v, pp));
+			addStep(v, REL.BOTTOM, "uf-link", v.getKey(), pp.getKey());
 			pause();
-			v.setColor(NodeColor.FIND);
+			p.deleteChild(v);
+			pp.addChild(v);
+			UF.reposition();
+			pause();
+			if (halving) {
+				addStep(v, REL.RIGHT, "uf-go-up");
+			} else {
+				addStep(v, REL.BOTTOM, "uf-go-old-parent");
+			}
+			pause();
+			v.unmark();
+			v = halving ? pp : p;
+			v.mark();
+		}
+		if (!v.isRoot()) {
+			addStep(v, REL.RIGHT, "uf-go-up");
+			pause();
+			v.unmark();
 			v = v.getParent();
-			child = v;
-			v.setColor(NodeColor.INSERT);
 		}
-
-		boolean odd = true;
-		if (v.getParent() != null) {
-			do {
-				addStep("ufup");
-				pause();
-				v.setColor(NodeColor.FIND);
-				v.setGrey(true);
-				v = v.getParent();
-				v.setColor(NodeColor.INSERT);
-				if (odd) {
-					odd = false;
-					grandchild.setColor(NodeColor.CACHED);
-					addStep("ufupspecial");
-					pause();
-					grandchild.setColor(NodeColor.NORMAL);
-					grandchild.getParent().deleteChild(grandchild);
-					v.addChild(grandchild);
-					UF.reposition();
-				} else {
-					odd = true;
-				}
-				grandchild.setColor(NodeColor.NORMAL);
-				grandchild = child;
-				child = v;
-			} while (v.getParent() != null);
-		}
-
-		// root found
-		if (grandchild != null) {
-			grandchild.setColor(NodeColor.NORMAL);
-		}
-		if (child != null) {
-			child.setColor(NodeColor.NORMAL);
-		}
+		v.unmark();
 		v.setColor(NodeColor.FOUND);
-		result = v;
-		addStep("ufrootfound", result.getKey());
+		addStep(v, REL.TOP, "uf-found-root", u.getKey());
+		pause();
+		addStep(v, REL.TOP, halving ? "uf-path-halved" : "uf-path-split", u.getKey());
 		pause();
 
 		u.unmark();
-		result.setGrey(false);
-		return result;
-	}
-
-	UnionFindNode findSplitting(UnionFindNode u) throws InterruptedException {
-		UnionFindNode result = null;
-		UnionFindNode v = null;
-
-		u.setColor(NodeColor.FIND);
-		u.mark();
-		addStep("uffindstart", u.getKey());
-
-		// grey path
-		UnionFindNode t = u;
-		while (t.getParent() != null) {
-			t.setGrey(true);
-			t = t.getParent();
-		}
-
-		pause();
-
-		// u is a representative
-		if (u.getParent() == null) {
-			u.setColor(NodeColor.FOUND);
-			addStep("ufalreadyroot");
-			pause();
-			u.unmark();
-			return u;
-		}
-
-		v = u;
-		UnionFindNode grandchild = null;
-		UnionFindNode child = null;
-
-		// looking for root
-		if (v.getParent() != null) {
-			grandchild = v;
-			v.setColor(NodeColor.INSERT);
-		}
-
-		if (v.getParent() != null) {
-			addStep("ufup");
-			pause();
-			v.setColor(NodeColor.FIND);
-			v = v.getParent();
-			child = v;
-			v.setColor(NodeColor.INSERT);
-		}
-
-		if (v.getParent() != null) {
-			do {
-				addStep("ufup");
-				pause();
-				v.setColor(NodeColor.FIND);
-				v = v.getParent();
-				v.setColor(NodeColor.INSERT);
-				grandchild.setColor(NodeColor.CACHED);
-				addStep("ufupspecial");
-				pause();
-				grandchild.setColor(NodeColor.NORMAL);
-				grandchild.getParent().deleteChild(grandchild);
-				v.addChild(grandchild);
-				UF.reposition();
-				grandchild.setColor(NodeColor.NORMAL);
-				grandchild = child;
-				child = v;
-			} while (v.getParent() != null);
-		}
-
-		// root found
-		if (grandchild != null) {
-			grandchild.setColor(NodeColor.NORMAL);
-		}
-		if (child != null) {
-			child.setColor(NodeColor.NORMAL);
-		}
-		v.setColor(NodeColor.FOUND);
-		result = v;
-		addStep("ufrootfound", result.getKey());
-		pause();
-
-		u.unmark();
-		result.setGrey(false);
-		return result;
+		v.setGrey(false);
+		return v;
 	}
 }

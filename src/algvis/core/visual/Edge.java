@@ -35,6 +35,7 @@ public class Edge extends VisualElement {
 
 	public Edge(int x1, int y1, int mx, int my, int x2, int y2) {
 		super(Scene.MIDZ - 1);
+		set(x1, y1, mx, my, x2, y2);
 	}
 
 	private void set(int x1, int y1, int mx, int my, int x2, int y2) {
@@ -74,7 +75,6 @@ public class Edge extends VisualElement {
 			v.drawArrow(x1, y1, x2, y2, 2.0f, Color.RED);
 		} else {
 			v.drawCurveArrow(x1, y1, mx, my, mx, my, x2, y2, 2.0f, Color.RED);
-			//v.drawCircle(mx, my, 3);
 		}
 	}
 
