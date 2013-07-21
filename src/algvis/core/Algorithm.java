@@ -29,7 +29,7 @@ import algvis.internationalization.IParamString;
 import algvis.internationalization.IString;
 import algvis.ui.NewVisPanel;
 import algvis.ui.VisPanel;
-import algvis.ui.view.CornerEnum;
+import algvis.ui.view.REL;
 
 import java.awt.EventQueue;
 import java.util.HashMap;
@@ -156,33 +156,33 @@ abstract public class Algorithm implements Runnable {
 		}
 	}
 
-	protected void addStep(int x, int y, int w, CornerEnum pos, String s) {
+	protected void addStep(int x, int y, int w, REL pos, String s) {
 		addToSceneUntilNext(new TextBubble(new IString(s), x, y, w, pos));
 	}
 
-	protected void addStep(int x, int y, int w, CornerEnum pos, String s,
+	protected void addStep(int x, int y, int w, REL pos, String s,
 			String... par) {
 		addToSceneUntilNext(new TextBubble(new IParamString(s, par), x, y, w,
 				pos));
 	}
 
-	protected void addStep(int x, int y, int w, CornerEnum pos, String s,
+	protected void addStep(int x, int y, int w, REL pos, String s,
 			int... par) {
 		addToSceneUntilNext(new TextBubble(new IIntParamString(s, par), x, y,
 				w, pos));
 	}
 
-	protected void addStep(Node v, CornerEnum pos, String s) {
+	protected void addStep(Node v, REL pos, String s) {
 		addToSceneUntilNext(new TextBubble(new IString(s), v.tox, v.toy, 200,
 				pos));
 	}
 
-	protected void addStep(Node v, CornerEnum pos, String s, String... par) {
+	protected void addStep(Node v, REL pos, String s, String... par) {
 		addToSceneUntilNext(new TextBubble(new IParamString(s, par), v.tox,
 				v.toy, 200, pos));
 	}
 
-	protected void addStep(Node v, CornerEnum pos, String s, int... par) {
+	protected void addStep(Node v, REL pos, String s, int... par) {
 		addToSceneUntilNext(new TextBubble(new IIntParamString(s, par), v.tox,
 				v.toy, 200, pos));
 	}
@@ -223,7 +223,7 @@ abstract public class Algorithm implements Runnable {
 
 	protected void addToSceneUntilNext(VisualElement element) {
 		if (wrapped) {
-			wrapperAlg.addToScene(element);
+			wrapperAlg.addToSceneUntilNext(element);
 		} else {
 			if (!panel.pauses
 					&& (element instanceof ShadeSubtree

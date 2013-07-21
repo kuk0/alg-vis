@@ -394,45 +394,45 @@ public class View implements MouseListener, MouseMotionListener,
 	}
 
 	public void drawTextBubble(String s, int x, int y, int w, int alpha,
-			CornerEnum pos) {
+			REL pos) {
 		drawTextBubble(s, x, y, w, alpha, pos, 2 * Node.RADIUS, 2 * Node.RADIUS);
 	}
 
 	public void drawTextBubble(String s, int x, int y, int w, int alpha,
-			CornerEnum pos, int gapx, int gapy) {
+			REL pos, int gapx, int gapy) {
 		FontRenderContext frc = g.getFontRenderContext();
 		LineBreakMeasurer measurer = new LineBreakMeasurer(
 				new AttributedString(s).getIterator(), frc);
 		ArrayList<TextLayout> L = new ArrayList<TextLayout>();
-		int h = 0;
+		double h = 0;
 		while (measurer.getPosition() < s.length()) {
 			TextLayout l = measurer.nextLayout(w);
 			L.add(l);
-			h += l.getAscent() + l.getDescent() + l.getLeading();
+			h += l.getAscent() + l.getDescent(); // + l.getLeading() usually = 0
 		}
 		if (L.size() == 1) {
 			w = (int)L.get(0).getBounds().getWidth();
 		}
 		g.setColor(new Color(((alpha << 24) | 0xfffeed), true));
 
-		if (pos == CornerEnum.TOPLEFT || pos == CornerEnum.LEFT
-				|| pos == CornerEnum.BOTTOMLEFT) {
+		if (pos == REL.TOPLEFT || pos == REL.LEFT
+				|| pos == REL.BOTTOMLEFT) {
 			x -= w + gapx;
-		} else if (pos == CornerEnum.TOP || pos == CornerEnum.CENTER
-				|| pos == CornerEnum.BOTTOM) {
+		} else if (pos == REL.TOP || pos == REL.CENTER
+				|| pos == REL.BOTTOM) {
 			x -= w / 2;
-		} else if (pos == CornerEnum.TOPRIGHT || pos == CornerEnum.RIGHT
-				|| pos == CornerEnum.BOTTOMRIGHT) {
+		} else if (pos == REL.TOPRIGHT || pos == REL.RIGHT
+				|| pos == REL.BOTTOMRIGHT) {
 			x += gapx;
 		}
-		if (pos == CornerEnum.TOPLEFT || pos == CornerEnum.TOP
-				|| pos == CornerEnum.TOPRIGHT) {
+		if (pos == REL.TOPLEFT || pos == REL.TOP
+				|| pos == REL.TOPRIGHT) {
 			y -= h + gapy;
-		} else if (pos == CornerEnum.LEFT || pos == CornerEnum.CENTER
-				|| pos == CornerEnum.RIGHT) {
+		} else if (pos == REL.LEFT || pos == REL.CENTER
+				|| pos == REL.RIGHT) {
 			y -= h / 2;
-		} else if (pos == CornerEnum.BOTTOMLEFT || pos == CornerEnum.BOTTOM
-				|| pos == CornerEnum.BOTTOMRIGHT) {
+		} else if (pos == REL.BOTTOMLEFT || pos == REL.BOTTOM
+				|| pos == REL.BOTTOMRIGHT) {
 			y += gapy;
 		}
 

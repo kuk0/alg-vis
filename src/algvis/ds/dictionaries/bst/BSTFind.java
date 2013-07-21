@@ -19,7 +19,7 @@ package algvis.ds.dictionaries.bst;
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
-import algvis.ui.view.CornerEnum;
+import algvis.ui.view.REL;
 
 import java.util.HashMap;
 
@@ -47,20 +47,20 @@ public class BSTFind extends Algorithm {
 		addToScene(v);
 		if (T.getRoot() == null) {
 			v.goToRoot();
-			addStep(v, CornerEnum.BOTTOM, "empty");
+			addStep(v, REL.BOTTOM, "empty");
 			pause();
-			addStep(v, CornerEnum.BOTTOM, "notfound");
+			addStep(v, REL.BOTTOM, "notfound");
 			v.goDown();
 			v.setColor(NodeColor.NOTFOUND);
 		} else {
 			BSTNode w = T.getRoot();
 			v.goAbove(w);
-			addStep(w, CornerEnum.BOTTOM, "bstfindstart");
+			addStep(w, REL.BOTTOM, "bstfindstart");
 			pause();
 			while (true) {
 				if (w.getKey() == K) {
 					v.goTo(w);
-					addStep(w, CornerEnum.BOTTOM, "found");
+					addStep(w, REL.BOTTOM, "found");
 					v.setColor(NodeColor.FOUND);
 					result.put("node", w);
 					break;
@@ -70,7 +70,7 @@ public class BSTFind extends Algorithm {
 					} else {
 						v.pointAbove(w.getRight());
 					}
-					addStep(v, CornerEnum.LEFT, "bstfindright", K, w.getKey());
+					addStep(v, REL.LEFT, "bstfindright", K, w.getKey());
 					pause();
 					v.noArrow();
 					w.setColor(NodeColor.DARKER);
@@ -81,7 +81,7 @@ public class BSTFind extends Algorithm {
 						w = w.getRight();
 						v.goAbove(w);
 					} else { // not found
-						addStep(w, CornerEnum.BOTTOMLEFT, "notfound");
+						addStep(w, REL.BOTTOMLEFT, "notfound");
 						v.setColor(NodeColor.NOTFOUND);
 						v.goRight();
 						break;
@@ -92,7 +92,7 @@ public class BSTFind extends Algorithm {
 					} else {
 						v.pointAbove(w.getLeft());
 					}
-					addStep(v, CornerEnum.RIGHT, "bstfindleft", K, w.getKey());
+					addStep(v, REL.RIGHT, "bstfindleft", K, w.getKey());
 					pause();
 					v.noArrow();
 					w.setColor(NodeColor.DARKER);
@@ -103,7 +103,7 @@ public class BSTFind extends Algorithm {
 						w = w.getLeft();
 						v.goAbove(w);
 					} else { // notfound
-						addStep(w, CornerEnum.BOTTOMLEFT, "notfound");
+						addStep(w, REL.BOTTOMLEFT, "notfound");
 						v.setColor(NodeColor.NOTFOUND);
 						v.goLeft();
 						break;

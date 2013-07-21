@@ -2,7 +2,7 @@ package algvis.core.visual;
 
 import algvis.core.StringUtils;
 import algvis.internationalization.Stringable;
-import algvis.ui.view.CornerEnum;
+import algvis.ui.view.REL;
 import algvis.ui.view.View;
 
 import java.awt.geom.Rectangle2D;
@@ -11,9 +11,9 @@ public class TextBubble extends VisualElement {
 	Stringable s;
 	int x, y, w, alpha;
 	int state; // 0 = fade-in; 1 = normal; 2 = fade-out;
-	CornerEnum pos;
+	REL pos;
 
-	public TextBubble(Stringable s, int x, int y, int w, CornerEnum pos) {
+	public TextBubble(Stringable s, int x, int y, int w, REL pos) {
 		super(0);
 		this.s = s;
 		this.x = x;

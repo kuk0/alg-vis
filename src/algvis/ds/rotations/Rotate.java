@@ -25,7 +25,7 @@ import algvis.core.visual.ShadePair;
 import algvis.core.visual.ShadeSubtree;
 import algvis.ds.dictionaries.bst.BST;
 import algvis.ds.dictionaries.bst.BSTNode;
-import algvis.ui.view.CornerEnum;
+import algvis.ui.view.REL;
 
 public class Rotate extends Algorithm {
 	private final Rotations R;
@@ -43,7 +43,7 @@ public class Rotate extends Algorithm {
 	public void runAlgorithm() throws InterruptedException {
 		setHeader("rotate-header", v.getKey());
 		if (v == T.getRoot()) {
-			addStep(v, CornerEnum.BOTTOM, "rotate-root", v.getKey());
+			addStep(v, REL.BOTTOM, "rotate-root", v.getKey());
 			return;
 		}
 		final BSTNode u = v.getParent();
@@ -67,8 +67,7 @@ public class Rotate extends Algorithm {
 				shadeA = new ShadeSubtree(a);
 				addToScene(shadeA);
 				addStep(shadeA.getRight(), shadeA.getBottom(), 100,
-						CornerEnum.BOTTOMLEFT, rotR ? "rotate-rise"
-								: "rotate-fall");
+						REL.BOTTOMLEFT, rotR ? "rotate-rise" : "rotate-fall");
 			}
 			if (b != null) {
 				b.subtreeColor(NodeColor.GREEN);
@@ -80,40 +79,38 @@ public class Rotate extends Algorithm {
 				shadeC = new ShadeSubtree(c);
 				addToScene(shadeC);
 				addStep(shadeC.getLeft(), shadeC.getBottom(), 100,
-						CornerEnum.BOTTOMRIGHT, rotR ? "rotate-fall"
-								: "rotate-rise");
+						REL.BOTTOMRIGHT, rotR ? "rotate-fall" : "rotate-rise");
 			}
 		}
 		pause();
+		addStep(u.x, (u.y + v.y) / 2, 200, v.isLeft() ? REL.RIGHT : REL.LEFT,
+				"rotate-change", u.getKey(), v.getKey());
 		addToSceneUntilNext(new Edge(v, u));
+		pause();
 		if (p != null) {
 			if (u.isLeft() == v.isLeft()) {
 				addToSceneUntilNext(new Edge(p, u, v));
 			} else {
 				addToSceneUntilNext(new Edge(p, v));
 			}
-			addStep(p, CornerEnum.TOP, "rotate-change-parent", u.getKey(),
-					v.getKey(), p.getKey());
+			addStep(p, REL.TOP, "rotate-change-parent", p.getKey(), v.getKey());
 		} else {
 			addToSceneUntilNext(new Edge(u.x, u.y - DataStructure.minsepy, v.x,
 					v.y));
-			addStep(v.x, (u.y + v.y) / 2, 200, v.isLeft() ? CornerEnum.LEFT
-					: CornerEnum.RIGHT, "rotate-newroot", u.getKey(),
-					v.getKey());
+			addStep(v.x, (u.y + v.y) / 2, 200, v.isLeft() ? REL.LEFT
+					: REL.RIGHT, "rotate-newroot", v.getKey());
 		}
-		addStep(u.x, (u.y + v.y) / 2, 200, v.isLeft() ? CornerEnum.RIGHT
-				: CornerEnum.LEFT, "rotate-change", u.getKey(), v.getKey());
+		pause();
 		if (b != null) {
 			addToSceneUntilNext(new Edge(u, b));
-			addStep(b, CornerEnum.BOTTOM, "rotate-change-b", b.getKey(),
-					u.getKey());
+			addStep(b, REL.BOTTOM, "rotate-change-b", b.getKey(), u.getKey());
 		} else {
 			addToSceneUntilNext(new Edge(u.x, u.y, v.x + (rotR ? +1 : -1)
 					* Node.RADIUS, v.y + DataStructure.minsepy));
-			addStep(v, v.isLeft() ? CornerEnum.BOTTOMRIGHT
-					: CornerEnum.BOTTOMLEFT, "rotate-change-nullb", v.getKey(),
-					u.getKey());
+			addStep(v, v.isLeft() ? REL.BOTTOMRIGHT : REL.BOTTOMLEFT,
+					"rotate-change-nullb", v.getKey(), u.getKey());
 		}
+		pause();
 
 		if (u == T.getRoot()) {
 			if (b != null) {

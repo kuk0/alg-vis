@@ -18,7 +18,7 @@ package algvis.ds.dictionaries.bst;
 
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
-import algvis.ui.view.CornerEnum;
+import algvis.ui.view.REL;
 
 import java.util.HashMap;
 
@@ -48,16 +48,16 @@ public class BSTInsert extends Algorithm {
 		if (T.getRoot() == null) {
 			T.setRoot(v);
 			v.goToRoot();
-			addStep(v, CornerEnum.BOTTOM, "newroot");
+			addStep(v, REL.BOTTOM, "newroot");
 		} else {
 			BSTNode w = T.getRoot();
 			v.goAboveRoot();
-			addStep(w, CornerEnum.BOTTOM, "bst-insert-start");
+			addStep(w, REL.BOTTOM, "bst-insert-start");
 			pause();
 
 			while (true) {
 				if (w.getKey() == K) {
-					addStep(w, CornerEnum.BOTTOM, "alreadythere");
+					addStep(w, REL.BOTTOM, "alreadythere");
 					v.setColor(NodeColor.NOTFOUND);
 					v.goDown();
 					removeFromScene(v);
@@ -70,7 +70,7 @@ public class BSTInsert extends Algorithm {
 					} else {
 						v.pointAbove(w.getRight());
 					}
-					addStep(v, CornerEnum.LEFT, "bst-insert-right", K,
+					addStep(v, REL.LEFT, "bst-insert-right", K,
 							w.getKey());
 					pause();
 					v.noArrow();
@@ -86,7 +86,7 @@ public class BSTInsert extends Algorithm {
 					} else {
 						v.pointAbove(w.getLeft());
 					}
-					addStep(v, CornerEnum.RIGHT, "bst-insert-left", K,
+					addStep(v, REL.RIGHT, "bst-insert-left", K,
 							w.getKey());
 					pause();
 					v.noArrow();
