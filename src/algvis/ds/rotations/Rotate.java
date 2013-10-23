@@ -140,15 +140,9 @@ public class Rotate extends Algorithm {
 
 		v.subtreeColor(NodeColor.NORMAL);
 		removeFromScene(shade);
-		if (shadeA != null) {
-			removeFromScene(shadeA);
-		}
-		if (shadeB != null) {
-			removeFromScene(shadeB);
-		}
-		if (shadeC != null) {
-			removeFromScene(shadeC);
-		}
+		removeFromScene(shadeA);
+		removeFromScene(shadeB);
+		removeFromScene(shadeC);
 
 		T.getRoot().calcTree();
 	}

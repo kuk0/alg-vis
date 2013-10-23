@@ -41,8 +41,14 @@ public class StringUtils {
 	public static String unHtml(String s) {
 		return s.replaceAll("&lt;", "<").replaceAll("&gt;", ">")
 				.replaceAll("&le;", "\u2264").replaceAll("&ge;", "\u2265")
+                .replaceAll("&ndash;", "-")
 				.replaceAll("&lang;", "<").replaceAll("&rang;", ">");
 	}
+
+    public static String signedInt(int n) {
+        return n > 0 ? ("+" + n) : ("" + n);
+
+    }
 
 	private static final String ZEROES = "000000000000";
 	private static final String BLANKS = "            ";

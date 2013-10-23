@@ -240,6 +240,7 @@ abstract public class Algorithm implements Runnable {
 	}
 
 	protected void removeFromScene(VisualElement element) {
+        if (element == null) return;
 		if (!panel.pauses
 				&& (element instanceof ShadeSubtree
 						|| element instanceof ShadePair

@@ -21,6 +21,7 @@ import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.visual.Edge;
 import algvis.core.visual.ZDepth;
+import algvis.ds.dictionaries.avltree.AVLNode;
 import algvis.ui.view.REL;
 
 import java.util.HashMap;
@@ -47,6 +48,7 @@ public class BSTDelete extends Algorithm {
 		final BSTFind find = new BSTFind(T, K, this);
 		find.runAlgorithm();
 		final BSTNode toDelete = (BSTNode) find.getResult().get("node");
+        BSTNode parent = toDelete.getParent();
 
 		if (toDelete != null) {
 			result.put("deleted", true);
@@ -105,7 +107,6 @@ public class BSTDelete extends Algorithm {
 				}
 			} else { // case III - 2 children
 				addStep(toDelete, REL.TOP, "bst-delete-case3", K);
-				// pause();
 				BSTNode son = toDelete.getRight();
 				toDelete.setColor(NodeColor.DELETE);
 				BSTNode v = new BSTNode(T, -Node.INF, ZDepth.ACTIONNODE);
@@ -123,7 +124,12 @@ public class BSTDelete extends Algorithm {
 					v.goAbove(son);
 				}
 				v.goTo(son);
-				final BSTNode p = son.getParent(), r = son.getRight();
+                parent = son.getParent();
+                if (parent == toDelete) {
+                    parent = son;
+                }
+
+                final BSTNode p = son.getParent(), r = son.getRight();
 				v.setColor(NodeColor.FOUND);
 				addStep(v, REL.RIGHT, "bst-delete-succ", K, son.getKey());
 				pause();
@@ -173,7 +179,8 @@ public class BSTDelete extends Algorithm {
 		} else {
 			result.put("deleted", false);
 		}
-	}
+        result.put("parent", parent);
+    }
 
 	@Override
 	public HashMap<String, Object> getResult() {

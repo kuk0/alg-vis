@@ -20,10 +20,12 @@ import java.util.HashMap;
 
 import algvis.core.Algorithm;
 import algvis.core.DataStructure;
+import algvis.core.StringUtils;
 import algvis.core.visual.DoubleArrow;
 import algvis.core.visual.ShadeSubtree;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTInsert;
+import algvis.ui.view.REL;
 
 public class AVLInsert extends Algorithm {
 	private final AVL T;
@@ -45,18 +47,18 @@ public class AVLInsert extends Algorithm {
 		final boolean inserted = (Boolean) insertResult.get("inserted");
 
 		if (inserted) {
-			AVLNode w = (AVLNode) insertResult.get("w");
-			addNote("avlinsertbal");
+			AVLNode w = (AVLNode) insertResult.get("v");
+			addStep(w, REL.TOP, "avlinsertbal");
 			pause();
 
-			// bubleme nahor
+			// update balance on the path up
 			while (w != null) {
 				w.mark();
 				w.calc();
-				addStep("avlupdatebal");
+                addStep(w, REL.TOP, "avlupdatebal", StringUtils.signedInt(w.balance()));
 				ShadeSubtree ul = null, um = null, ur = null;
 				if (w.getLeft() != null) {
-					addToScene(ul = new ShadeSubtree(w.getLeft()));
+				  	addToScene(ul = new ShadeSubtree(w.getLeft()));
 				}
 				if (w.getRight() != null) {
 					addToScene(ur = new ShadeSubtree(w.getRight()));
@@ -70,7 +72,7 @@ public class AVLInsert extends Algorithm {
 				pause();
 				if (w.balance() == -2) {
 					if (w.getLeft().balance() != +1) { // R-rot
-						addStep("avlr");
+                        addStep(w, REL.TOP, "avlr");
 						w.unmark();
 						w = w.getLeft();
 						w.mark();
@@ -84,8 +86,8 @@ public class AVLInsert extends Algorithm {
 						if (w.getLeft().getLeft() != null) {
 							addToScene(ul = new ShadeSubtree(w.getLeft().getLeft()));
 						}
-						addToScene(um = new ShadeSubtree(w.getLeft().getRight()));						
-						addStep("avllr");
+						addToScene(um = new ShadeSubtree(w.getLeft().getRight()));
+                        addStep(w, REL.TOP, "avllr");
 						w.unmark();
 						w = w.getLeft().getRight();
 						w.mark();
@@ -102,7 +104,7 @@ public class AVLInsert extends Algorithm {
 					pause();
 				} else if (w.balance() == +2) {
 					if (w.getRight().balance() != -1) { // L-rot
-						addStep("avll");
+                        addStep(w, REL.TOP, "avll");
 						w.unmark();
 						w = w.getRight();
 						w.mark();
@@ -117,7 +119,7 @@ public class AVLInsert extends Algorithm {
 							addToScene(ur = new ShadeSubtree(w.getRight().getRight()));
 						}
 						addToScene(um = new ShadeSubtree(w.getRight().getLeft()));
-						addStep("avlrl");
+                        addStep(w, REL.TOP, "avlrl");
 						w.unmark();
 						w = w.getRight().getLeft();
 						w.mark();
@@ -137,15 +139,9 @@ public class AVLInsert extends Algorithm {
 				}
 				w.unmark();
 				w = w.getParent();
-				if (ul != null) {
-					removeFromScene(ul);
-				}
-				if (um != null) {
-					removeFromScene(um);
-				}
-				if (ur != null) {
-					removeFromScene(ur);
-				}
+				removeFromScene(ul);
+				removeFromScene(um);
+				removeFromScene(ur);
 			}
 		}
 		T.reposition();
