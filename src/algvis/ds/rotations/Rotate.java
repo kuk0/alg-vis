@@ -44,6 +44,7 @@ public class Rotate extends Algorithm {
 		setHeader("rotate-header", v.getKey());
 		if (v == T.getRoot()) {
 			addStep(v, REL.BOTTOM, "rotate-root", v.getKey());
+            pause();
 			return;
 		}
 		final BSTNode u = v.getParent();

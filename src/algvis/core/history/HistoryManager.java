@@ -28,8 +28,7 @@ import javax.swing.undo.UndoableEdit;
 public class HistoryManager extends UndoManager {
 	private static final long serialVersionUID = -842354204488084104L;
 	private final Map<UndoableEdit, Boolean> algorithmEnds = new WeakHashMap<UndoableEdit, Boolean>();
-	private long id = -1; // ak sa v paneli vykona viac ako 2^63 krokov, tak
-							// mame problem
+	private long id = -1;
 	private final Scene scene;
 
 	public HistoryManager(Scene scene) {

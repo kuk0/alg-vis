@@ -16,61 +16,53 @@
  ******************************************************************************/
 package algvis.ui;
 
-import java.awt.Color;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
+import java.awt.*;
 
 public class AlgVisStandalone {
-	public static void main(String[] args) {
-		try {
-			for (final LookAndFeelInfo info : UIManager
-					.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					UIManager.put("nimbusBase", new Color(0xBB, 0xC3, 0xFF));
-					UIManager.put("TitledBorder.position", TitledBorder.CENTER);
-					UIManager
-							.put("nimbusBlueGrey", new Color(0xD1, 0xD1, 0xD1));
-					UIManager.put("control", new Color(0xFA, 0xFA, 0xFA));
-					UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (final Exception e) {
-			// If Nimbus is not available, you can set the GUI to another look
-			// and feel.
-			e.printStackTrace();
-		}
+    public static void main(String[] args) {
+        try {
+            for (final LookAndFeelInfo info : UIManager
+                    .getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.put("nimbusBase", new Color(0xBB, 0xC3, 0xFF));
+                    UIManager.put("TitledBorder.position", TitledBorder.CENTER);
+                    UIManager.put("nimbusBlueGrey", new Color(0xD1, 0xD1, 0xD1));
+                    UIManager.put("control", new Color(0xFA, 0xFA, 0xFA));
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (final Exception e) {
+            // If Nimbus is not available, you can set the GUI to another look
+            // and feel.
+            e.printStackTrace();
+        }
 
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				final JFrame f = new MainFrame();
-				f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-				f.setVisible(true);
-			}
-		});
-	}
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                final JFrame f = new MainFrame();
+                f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                f.setVisible(true);
+            }
+        });
+    }
 }
 
 class MainFrame extends JFrame {
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = -1045189076645432320L;
-	private static final int WIDTH = 900;
-	private static final int HEIGHT = 650;
+    private static final long serialVersionUID = -1045189076645432320L;
+    private static final int WIDTH = 900;
+    private static final int HEIGHT = 650;
 
-	public MainFrame() {
-		setTitle("Gnarley Trees");
-		final AlgVis A = new AlgVis(getContentPane());
-		add(A);
-		pack();
-		A.init();
-		setSize(WIDTH, HEIGHT + 20); // add 20 for the frame title
-	}
+    public MainFrame() {
+        setTitle("Gnarley Trees");
+        final AlgVis A = new AlgVis(getContentPane());
+        add(A);
+        pack();
+        A.init();
+        setSize(WIDTH, HEIGHT + 20); // add 20 for the frame title
+    }
 }

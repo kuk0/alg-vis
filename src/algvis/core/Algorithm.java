@@ -96,6 +96,7 @@ abstract public class Algorithm implements Runnable {
 		if (wrapped) {
 			wrapperAlg.pause();
 		} else {
+            //System.out.println("panel state end");
 			panelState.end();
 			if (panel.pauses) {
 				EventQueue.invokeLater(new Runnable() {
@@ -106,8 +107,10 @@ abstract public class Algorithm implements Runnable {
 				});
 				gate.acquire();
 			}
-			panel.history.addEdit(panelState = new UpdatableStateEdit(panel,
-					panel.history.getNextId()));
+            //System.out.println("new panel state");
+            panelState = new UpdatableStateEdit(panel, panel.history.getNextId());
+			panel.history.addEdit(panelState);
+            panel.scene.next();
 		}
 	}
 
@@ -116,7 +119,6 @@ abstract public class Algorithm implements Runnable {
 			wrapperAlg.resume();
 		} else {
 			gate.release();
-			panel.scene.next();
 		}
 	}
 
@@ -253,8 +255,8 @@ abstract public class Algorithm implements Runnable {
 	}
 
 	void begin() {
-		panel.history.addEdit(panelState = new UpdatableStateEdit(panel,
-				panel.history.getNextId()));
+        panelState = new UpdatableStateEdit(panel, panel.history.getNextId());
+		panel.history.addEdit(panelState);
 		if (!(panel instanceof NewVisPanel)) {
 			panel.commentary.clear();
 		}
