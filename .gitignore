@@ -4,6 +4,7 @@
 .class
 *~
 bin/
+src/out
 *.pdf
 *.png
 *.pyc
