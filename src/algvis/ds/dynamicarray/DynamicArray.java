@@ -43,7 +43,7 @@ public class DynamicArray extends DataStructure implements ClickListener {
 
   @Override
   public void insert(int x) {
-    start(new DynamicArrayInsert(this, new ArrayNode(new String(new Integer(x).toString()), 1)));
+    start(new DynamicArrayInsert(this, new ArrayNode(this, x, 1)));
   }
 
   public void pop() {
