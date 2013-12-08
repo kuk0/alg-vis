@@ -96,7 +96,7 @@ public class Array<E extends ArrayNode> extends VisualElement implements StateEd
     HashtableStoreSupport.store(state, hash + "steps", steps);
     HashtableStoreSupport.store(state, hash + "size", array.size());
     for(int i = 0; i < array.size(); i++) {
-      HashtableStoreSupport.store(state, hash + "elem" +new Integer(i).toString(), array.get(i));
+      HashtableStoreSupport.store(state, hash + "elem" + i, array.get(i));
     }
 
     for(int i = 0; i < array.size(); i++) {
@@ -136,7 +136,7 @@ public class Array<E extends ArrayNode> extends VisualElement implements StateEd
     final Object size = state.get(hash + "size");
     if (size != null) {
       int sz = (int) HashtableStoreSupport.restore(size);
-      Object elem = state.get(hash  + "elem" + new Integer(sz-1).toString());
+      Object elem = state.get(hash  + "elem" + (sz-1) );
       if(elem != null) {
         array.add((E) elem);
         ((ArrayNode) elem).restoreState(state);

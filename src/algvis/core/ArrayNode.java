@@ -45,7 +45,7 @@ public class ArrayNode extends Node {
 
   @Override
   public Rectangle2D getBoundingBox() {
-    return new Rectangle2D.Double(x, y, Node.RADIUS, ArrayNode.RADIUS);
+    return new Rectangle2D.Double(x, y, Node.RADIUS, Node.RADIUS);
   }
 
 }

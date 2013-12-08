@@ -1,19 +1,22 @@
 package algvis.ds.dynamicarray;
 
 import algvis.core.Algorithm;
+import algvis.core.Array;
 import algvis.core.ArrayNode;
+import algvis.core.Node;
 
-public class DynamicArrayInsert extends Algorithm {
-  DynamicArray D;
-  ArrayNode x;
+public class DynamicArrayInsert extends DynamicArrayAlg {
+  int x;
 
-  DynamicArrayInsert(DynamicArray D, ArrayNode x) {
-    super(D.panel, null);
-    this.D = D;
+  DynamicArrayInsert(DynamicArray D, int x) {
+    super(D);
     this.x = x;
   }
   @Override
   public void runAlgorithm() throws InterruptedException {
-    D.array.add(x);
+    if(D.size + 1 > D.capacity) createNewArray(D.capacity * 2);
+
+    D.array.get(D.size).setKey(x);
+    D.size++;
   }
 }

@@ -9,6 +9,7 @@ import algvis.ui.view.ClickListener;
 import algvis.ui.view.View;
 
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Hashtable;
 
@@ -16,14 +17,21 @@ public class DynamicArray extends DataStructure implements ClickListener {
   public static final String dsName = "dynamicarray";
   public static final String adtName = "dynamicarray";
 
-  Array<ArrayNode> array;
+  Array<ArrayNode> array, newarray;
+  ArrayList<DynamicArrayCoin> coins;
+  int size = 0;
+  int capacity = 2;
 
   DynamicArray(VisPanel visPanel) {
     super(visPanel);
 
     panel.screen.V.setDS(this);
 
-    array = new Array<>(0,150,150);
+    array = new Array<>(0,-200,0);
+    array.add(new ArrayNode(this, 0));
+    array.add(new ArrayNode(this, 0));
+
+    coins = new ArrayList<>();
   }
 
   @Override
@@ -43,7 +51,7 @@ public class DynamicArray extends DataStructure implements ClickListener {
 
   @Override
   public void insert(int x) {
-    start(new DynamicArrayInsert(this, new ArrayNode(this, x, 1)));
+    start(new DynamicArrayInsert(this, x));
   }
 
   public void pop() {
@@ -58,11 +66,14 @@ public class DynamicArray extends DataStructure implements ClickListener {
   @Override
   public void draw(View v) {
     array.draw(v);
+    if(newarray != null) newarray.draw(v);
+    for(DynamicArrayCoin coin: coins) coin.draw(v);
   }
 
   @Override
-  protected void move() throws ConcurrentModificationException {
-    //To change body of implemented methods use File | Settings | File Templates.
+  public void move() {
+    array.move();
+    for(DynamicArrayCoin coin: coins) coin.move();
   }
 
   @Override
