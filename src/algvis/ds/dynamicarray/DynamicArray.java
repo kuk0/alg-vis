@@ -21,6 +21,7 @@ public class DynamicArray extends DataStructure implements ClickListener {
   ArrayList<DynamicArrayCoin> coins;
   int size = 0;
   int capacity = 2;
+  DynamicArrayDelimiter delimiter2, delimiter4, newdelimiter2, newdelimiter4;
 
   DynamicArray(VisPanel visPanel) {
     super(visPanel);
@@ -68,12 +69,22 @@ public class DynamicArray extends DataStructure implements ClickListener {
     array.draw(v);
     if(newarray != null) newarray.draw(v);
     for(DynamicArrayCoin coin: coins) coin.draw(v);
+
+    if(delimiter2 != null) delimiter2.draw(v);
+    if(delimiter4 != null) delimiter4.draw(v);
+    if(newdelimiter2 != null) newdelimiter2.draw(v);
+    if(newdelimiter4 != null) newdelimiter4.draw(v);
   }
 
   @Override
   public void move() {
     array.move();
     for(DynamicArrayCoin coin: coins) coin.move();
+
+    if(delimiter2 != null)delimiter2.move();
+    if(delimiter4 != null)delimiter4.move();
+    if(newdelimiter2 != null)newdelimiter2.move();
+    if(newdelimiter4 != null)newdelimiter2.move();
   }
 
   @Override

@@ -41,13 +41,18 @@ public class Array<E extends ArrayNode> extends VisualElement implements StateEd
 
   public void set(int pos, E N) {
     array.add(pos, N);
+    N.x = this.x + array.size() * E.RADIUS*2;
+    N.y = this.y;
   }
 
   public void add(E N) {
     array.add(N);
+    N.x = this.x + array.size() * E.RADIUS*2;
+    N.y = this.y;
   }
 
   public void pop() {
+    array.get(array.size() - 1).goDown();
     array.remove(array.size() - 1);
   }
 
@@ -55,15 +60,19 @@ public class Array<E extends ArrayNode> extends VisualElement implements StateEd
   public void draw(View v) throws ConcurrentModificationException {
     int lastx = x;
     for(ArrayNode N : array) {
-      N.x = lastx + Node.RADIUS;
-      N.y = y;
+      N.tox = lastx + Node.RADIUS;
+      N.toy = y;
+      N.steps = Node.STEPS;
       N.draw(v);
-      lastx = (int) N.getBoundingBox().getMaxX();
+      lastx = lastx + 2 * Node.RADIUS;
     }
   }
 
   @Override
   public void move() throws ConcurrentModificationException {
+    for(ArrayNode N : array) {
+      N.move();
+    }
     if (steps > 0) {
       x += (tox - x) / steps;
       y += (toy - y) / steps;
