@@ -39,6 +39,12 @@ public class ArrayNode extends Node {
     }
   }
 
+  @Override
+  public Color getBgColor() {
+    if(key != NOKEY) return super.getBgColor();
+    return Color.lightGray;
+  }
+
   protected boolean inside(int x, int y) {
     return this.x <= x && this.y <= y && this.x + Node.RADIUS >= x && this.y + Node.RADIUS >= x;
   }

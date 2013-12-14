@@ -4,41 +4,31 @@ import algvis.core.visual.ZDepth;
 import algvis.ui.view.View;
 
 public class RelativeNode extends Node {
-  Node relative;
+  private Node relative;
 
   public int sepx=0, sepy = 30;
   public int sepTox=0, sepToy = 30;
 
-  protected RelativeNode(Node relative, DataStructure D, int key, int x, int y) {
-    super(D, key, x, y);
-    this.relative = relative;
-    moveToRelative();
-  }
-
-  protected RelativeNode(Node relative, DataStructure D, int key, int x, int y, int zDepth) {
-    super(D, key, x, y, zDepth);
-    this.relative = relative;
-    moveToRelative();
+  protected RelativeNode(Node relative, DataStructure D, int key) {
+    super(D, key, relative.x, relative.y);
+    changeRelative(relative);
   }
 
   protected RelativeNode(Node relative, DataStructure D, int key, int zDepth) {
-    super(D, key, zDepth);
-    this.relative = relative;
-    moveToRelative();
+    super(D, key, relative.x, relative.y, zDepth);
+    changeRelative(relative);
   }
 
   public RelativeNode(Node relative, Node v) {
     super(v);
-    this.relative = relative;
-    this.x = relative.x;
-    this.y = relative.y;
+    changeRelative(relative);
+    moveToRelative();
   }
 
   @Override
   public void move() {
-    tox = relative.x + sepx;
-    toy = relative.y + sepy;
-    System.out.println("Suniem sa");
+    tox = relative.tox + sepx;
+    toy = relative.toy + sepy;
     if(steps == 0 && ( tox != x || toy != y )) steps = 10;
     if(steps > 0) {
       sepx += (sepTox - sepx) / steps;
@@ -56,6 +46,7 @@ public class RelativeNode extends Node {
   public void goTo(int tox, int toy) {
     this.sepTox = tox;
     this.sepToy = toy;
+    this.steps = 10;
   }
 
   public void draw(View v) {
@@ -65,5 +56,9 @@ public class RelativeNode extends Node {
   private void updatePosition() {
     this.x = relative.x + sepx;
     this.y = relative.y + sepy;
+  }
+
+  public void changeRelative(Node v) {
+    relative = v;
   }
 }

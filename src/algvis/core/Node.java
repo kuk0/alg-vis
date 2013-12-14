@@ -391,7 +391,6 @@ public class Node extends VisualElement {
 	 */
 	@Override
 	public void move() {
-    System.out.println("Ja sa nemam");
 		switch (state) {
 		case Node.ALIVE:
 		case Node.INVISIBLE:
