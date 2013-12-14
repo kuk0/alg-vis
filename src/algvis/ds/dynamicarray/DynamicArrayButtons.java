@@ -42,4 +42,12 @@ public class DynamicArrayButtons extends Buttons {
       ((DynamicArray)D).pop();
     }
   }
+
+  @Override
+  public void setOtherEnabled(boolean enabled) {
+    super.setOtherEnabled(enabled);
+    insertB.setEnabled(enabled);
+    popB.setEnabled(enabled);
+  }
+
 }
