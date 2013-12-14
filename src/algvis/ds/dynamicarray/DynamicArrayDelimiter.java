@@ -12,7 +12,6 @@ public class DynamicArrayDelimiter extends RelativeNode {
   public DynamicArrayDelimiter(Node relative, DataStructure D, Color C) {
     super(relative, D, Node.NOKEY, -Node.RADIUS, 0);
     this.C = C;
-    System.out.println(relative.x + " "  + relative.y);
   }
 
   @Override

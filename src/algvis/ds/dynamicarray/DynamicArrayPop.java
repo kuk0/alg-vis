@@ -16,11 +16,11 @@ public class DynamicArrayPop extends DynamicArrayAlg {
   public void runAlgorithm() throws InterruptedException {
     setHeader("pop");
     if(D.size == 0) {
-      addStep((Node)D.array.get(0), REL.BOTTOM, "dynamicarray-empty");
+      addStep((Node)D.array.get(0), REL.TOP, "dynamicarray-empty");
     }
     else {
-      D.array.get(D.size).setKey(Node.NOKEY);
       D.size--;
+      D.array.get(D.size).setKey(Node.NOKEY);
       if(D.size != 0 && D.size * 4 <= D.capacity){
         for(int i= D.capacity/2; i < D.capacity; i++) {
           D.array.get(i).setColor(NodeColor.RED);
