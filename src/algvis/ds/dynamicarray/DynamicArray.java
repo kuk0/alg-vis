@@ -23,6 +23,7 @@ public class DynamicArray extends DataStructure implements ClickListener {
   int capacity = 2;
   DynamicArrayDelimiter delimiter2, delimiter4, newdelimiter2, newdelimiter4;
 
+
   DynamicArray(VisPanel visPanel) {
     super(visPanel);
 
@@ -37,17 +38,16 @@ public class DynamicArray extends DataStructure implements ClickListener {
 
   @Override
   public void mouseClicked(int x, int y) {
-    //To change body of implemented methods use File | Settings | File Templates.
   }
 
   @Override
   public String getName() {
-    return dsName;  //To change body of implemented methods use File | Settings | File Templates.
+    return dsName;
   }
 
   @Override
   public String stats() {
-    return "";  //To change body of implemented methods use File | Settings | File Templates.
+    return "";
   }
 
   @Override
@@ -81,10 +81,10 @@ public class DynamicArray extends DataStructure implements ClickListener {
     array.move();
     for(DynamicArrayCoin coin: coins) coin.move();
 
-    if(delimiter2 != null)delimiter2.move();
-    if(delimiter4 != null)delimiter4.move();
-    if(newdelimiter2 != null)newdelimiter2.move();
-    if(newdelimiter4 != null)newdelimiter2.move();
+    if(delimiter2 != null) delimiter2.move();
+    if(delimiter4 != null) delimiter4.move();
+    if(newdelimiter2 != null) newdelimiter2.move();
+    if(newdelimiter4 != null) newdelimiter2.move();
   }
 
   @Override

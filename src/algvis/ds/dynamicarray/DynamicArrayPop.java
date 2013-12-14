@@ -3,6 +3,7 @@ package algvis.ds.dynamicarray;
 import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.ui.view.REL;
+import algvis.core.NodeColor;
 
 public class DynamicArrayPop extends DynamicArrayAlg {
   DynamicArray D;
@@ -18,10 +19,14 @@ public class DynamicArrayPop extends DynamicArrayAlg {
       addStep((Node)D.array.get(0), REL.BOTTOM, "dynamicarray-empty");
     }
     else {
-      D.array.get(D.size-1).setKey(Node.NOKEY);
+      D.array.get(D.size).setKey(Node.NOKEY);
       D.size--;
-      if(D.size != 0 && D.size * 4 <= D.capacity)
-       createNewArray(D.capacity / 2);
+      if(D.size != 0 && D.size * 4 <= D.capacity){
+        for(int i= D.capacity/2; i < D.capacity; i++) {
+          D.array.get(i).setColor(NodeColor.RED);
+        }
+        createNewArray(D.capacity / 2);
+      }
     }
   }
 }

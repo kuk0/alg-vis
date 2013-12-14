@@ -41,13 +41,13 @@ public class Array<E extends ArrayNode> extends VisualElement implements StateEd
 
   public void set(int pos, E N) {
     array.add(pos, N);
-    N.x = this.x + array.size() * E.RADIUS*2;
-    N.y = this.y;
+    N.x = N.tox = this.x + array.size() * E.RADIUS*2;
+    N.y = N.toy = this.y;
   }
 
   public void add(E N) {
     array.add(N);
-    N.x = this.x + array.size() * E.RADIUS*2;
+    N.x = this.x + array.size() * Node.RADIUS*2;
     N.y = this.y;
   }
 
