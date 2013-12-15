@@ -11,50 +11,84 @@ public class RelativeNode extends Node {
 
   protected RelativeNode(Node relative, DataStructure D, int key, int sepx, int sepy) {
     super(D, key, relative.x + sepx, relative.y + sepy);
-    changeRelative(relative);
+    this.relative = relative;
     this.sepx = this.sepTox = sepx;
     this.sepy = this.sepToy = sepy;
   }
 
   protected RelativeNode(Node relative, DataStructure D, int key, int zDepth) {
     super(D, key, relative.x, relative.y, zDepth);
-    changeRelative(relative);
+    this.relative = relative;
   }
 
   public RelativeNode(Node relative, Node v) {
     super(v);
-    changeRelative(relative);
+    this.relative = relative;
     moveToRelative();
   }
 
   @Override
   public void move() {
-    x = relative.x + sepx;
-    y = relative.y + sepy;
-    if(steps > 0) {
-      sepx += (sepTox - sepx) / steps;
-      sepy += (sepToy - sepy) / steps;
+    switch (state) {
+      case Node.ALIVE:
+      case Node.INVISIBLE:
+        tox = relative.x + sepx;
+        toy = relative.y + sepy;
+        if(steps > 0) {
+          sepx += (sepTox - sepx) / steps;
+          sepy += (sepToy - sepy) / steps;
+          x += (tox - x)/steps;
+          y += (toy - y)/steps;
+          steps--;
+        }
+        if(steps == 0 && (tox != x || toy != y)) {
+          x = tox;
+          y = toy;
+        }
+        break;
+      case Node.DOWN:
+      case Node.LEFT:
+      case Node.RIGHT:
+      case Node.UP:
+        if(state == Node.DOWN) y += 20;
+        if(state == Node.UP) y -= 20;
+        if (state == Node.LEFT) {
+          x -= 20;
+        } else if (state == Node.RIGHT) {
+          x += 20;
+        }
+        // robi problem, ked rychlo dozadu a potom rychlo dopredu
+        if (!D.panel.screen.V.inside(x, y - Node.RADIUS)) {
+          state = OUT;
+        }
+        break;
     }
   }
 
   public void moveToRelative() {
-    this.x = relative.x + sepx;
-    this.y = relative.y + sepy;
+    this.x = this.tox = relative.x + sepx;
+    this.y = this.toy = relative.y + sepy;
   }
 
   @Override
-  public void goTo(int tox, int toy) {
-    this.sepTox = tox;
-    this.sepToy = toy;
+  public void goTo(int septox, int septoy) {
+    this.sepTox = septox;
+    this.sepToy = septoy;
     this.steps = 10;
   }
 
+  public void moveTo(int sepx, int sepy) {
+    this.sepx = this.sepTox = sepx;
+    this.sepy = this.sepToy = sepy;
+  }
+
   private void updatePosition() {
-    this.x = relative.x + sepx;
-    this.y = relative.y + sepy;
+    this.x = this.tox = relative.x + sepx;
+    this.y = this.toy = relative.y + sepy;
   }
 
   public void changeRelative(Node v) {
     relative = v;
+    this.steps = 20;
   }
 }

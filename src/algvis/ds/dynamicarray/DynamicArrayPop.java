@@ -21,7 +21,11 @@ public class DynamicArrayPop extends DynamicArrayAlg {
     else {
       D.size--;
       D.array.get(D.size).setKey(Node.NOKEY);
+      D.coinsForCopy.get(D.size).setState(Node.INVISIBLE);
+      D.coinsForArray.get(D.size).setState(Node.INVISIBLE);
       if(D.size != 0 && D.size * 4 <= D.capacity){
+        addStep(D.delimiter4, REL.TOP, "dynamicarray-small");
+        pause();
         for(int i= D.capacity/2; i < D.capacity; i++) {
           D.array.get(i).setColor(NodeColor.RED);
         }

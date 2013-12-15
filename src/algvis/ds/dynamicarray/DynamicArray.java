@@ -1,8 +1,6 @@
 package algvis.ds.dynamicarray;
 
-import algvis.core.Array;
-import algvis.core.ArrayNode;
-import algvis.core.DataStructure;
+import algvis.core.*;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.VisPanel;
 import algvis.ui.view.ClickListener;
@@ -18,9 +16,12 @@ public class DynamicArray extends DataStructure implements ClickListener {
   public static final String adtName = "dynamicarray";
 
   Array<ArrayNode> array, newarray;
-  ArrayList<DynamicArrayCoin> coins;
+  ArrayList<DynamicArrayCoin> coinsForCopy, coinsForArray, newCoins;
+  Node invisible;
+
   int size = 0;
   int capacity = 2;
+  int coinsDist = 60;
   DynamicArrayDelimiter delimiter2, delimiter4, newdelimiter2, newdelimiter4;
 
 
@@ -29,11 +30,27 @@ public class DynamicArray extends DataStructure implements ClickListener {
 
     panel.screen.V.setDS(this);
 
-    array = new Array<>(0,-200,0);
+    array = new Array<>(0,-200,100);
     array.add(new ArrayNode(this, 0));
     array.add(new ArrayNode(this, 0));
 
-    coins = new ArrayList<>();
+    coinsForCopy = new ArrayList<>();
+    coinsForArray = new ArrayList<>();
+    newCoins = new ArrayList<>();
+
+    for(int i=0; i < capacity; i++) {
+      coinsForArray.add(new DynamicArrayCoin(array.get(i), this, -20, 0));
+      coinsForArray.get(i).setState(Node.INVISIBLE);
+      coinsForArray.get(i).setColor(NodeColor.GREEN);
+      coinsForCopy.add(new DynamicArrayCoin(array.get(i), this, 20, 0));
+      coinsForCopy.get(i).setState(Node.INVISIBLE);
+      coinsForArray.get(i).setColor(NodeColor.GREEN);
+    }
+
+    invisible = new ArrayNode(this, 0);
+    invisible.x = invisible.tox = -180;
+    invisible.y = invisible.toy = 0 ;
+    invisible.setState(Node.INVISIBLE);
   }
 
   @Override
@@ -68,7 +85,10 @@ public class DynamicArray extends DataStructure implements ClickListener {
   public void draw(View v) {
     array.draw(v);
     if(newarray != null) newarray.draw(v);
-    for(DynamicArrayCoin coin: coins) coin.draw(v);
+    for(DynamicArrayCoin coin: coinsForCopy) coin.draw(v);
+    for(DynamicArrayCoin coin: coinsForArray) coin.draw(v);
+    for(DynamicArrayCoin coin: newCoins) coin.draw(v);
+
 
     if(delimiter2 != null) delimiter2.draw(v);
     if(delimiter4 != null) delimiter4.draw(v);
@@ -79,7 +99,9 @@ public class DynamicArray extends DataStructure implements ClickListener {
   @Override
   public void move() {
     array.move();
-    for(DynamicArrayCoin coin: coins) coin.move();
+    for(DynamicArrayCoin coin: coinsForCopy) coin.move();
+    for(DynamicArrayCoin coin: coinsForArray) coin.move();
+    for(DynamicArrayCoin coin: newCoins) coin.move();
 
     if(delimiter2 != null) delimiter2.move();
     if(delimiter4 != null) delimiter4.move();
