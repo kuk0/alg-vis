@@ -18,7 +18,7 @@ abstract class DynamicArrayAlg extends Algorithm {
     addStep((Node)D.coinsForArray.get(D.coinsForArray.size()/2), REL.TOP, "dynamicarray-use-coins");
     pause();
     for(DynamicArrayCoin coin : D.coinsForArray) coin.setState(Node.UP);
-    D.newarray = new Array<>(0,D.array.x, D.array.y + 150);
+    D.newarray = new Array<>(0,D.array.tox, D.array.toy + 150);
     D.capacity = capacity;
     for(int i=0; i < D.capacity; i++) {
       D.newarray.add(new ArrayNode(D, 0));
@@ -40,17 +40,8 @@ abstract class DynamicArrayAlg extends Algorithm {
       pause();
       D.coinsForCopy.get(i).setState(Node.UP);
     }
-
-    D.coinsForArray.clear();
-    D.coinsForCopy.clear();
-    for(int i=0; i < capacity; i++) {
-      D.coinsForArray.add(new DynamicArrayCoin(D.newarray.get(i), D, 0, -D.coinsDist));
-      D.coinsForArray.get(i).setState(Node.INVISIBLE);
-      D.coinsForArray.get(i).setColor(NodeColor.GREEN);
-      D.coinsForCopy.add(new DynamicArrayCoin(D.newarray.get(i), D, 0, D.coinsDist));
-      D.coinsForCopy.get(i).setState(Node.INVISIBLE);
-      D.coinsForArray.get(i).setColor(NodeColor.GREEN);
-    }
+    addStep(D.array.get(0), REL.TOPRIGHT, "dynamicarray-erase");
+    pause();
 
     D.array = null;
     D.newarray.moveTo(D.newarray.x, D.newarray.y - 150);
@@ -60,6 +51,15 @@ abstract class DynamicArrayAlg extends Algorithm {
     D.newdelimiter4 = null;
     D.delimiter2 = D.newdelimiter2;
     D.newdelimiter2 = null;
+
+    D.coinsForArray.clear();
+    D.coinsForCopy.clear();
+    for(int i=0; i < capacity; i++) {
+      D.coinsForArray.add(new DynamicArrayCoin(D.invisible, D, 0, 0));
+      D.coinsForArray.get(i).setState(Node.INVISIBLE);
+      D.coinsForCopy.add(new DynamicArrayCoin(D.invisible, D, 0, 0));
+      D.coinsForCopy.get(i).setState(Node.INVISIBLE);
+    }
     return;
   }
 }

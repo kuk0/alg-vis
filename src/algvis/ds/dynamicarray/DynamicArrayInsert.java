@@ -12,6 +12,7 @@ public class DynamicArrayInsert extends DynamicArrayAlg {
   }
   @Override
   public void runAlgorithm() throws InterruptedException {
+    D.newCoins.clear();
     setHeader("insert");
     for(int i=0; i < 5; i++) {
       D.newCoins.add(new DynamicArrayCoin(D.invisible, D, (int) (i * Node.RADIUS * 2.25), 0));
@@ -30,24 +31,26 @@ public class DynamicArrayInsert extends DynamicArrayAlg {
     D.size++;
     pause();
     addStep((Node) D.newCoins.get(2), REL.TOP, "dynamicarray-insert-coin");
-    D.newCoins.get(3).setColor(NodeColor.RED);
-    D.newCoins.get(2).setColor(NodeColor.RED);
     pause();
-    D.coinsForCopy.set(D.size - 1, D.newCoins.get(3));
-    D.coinsForArray.set(D.size - 1, D.newCoins.get(2));
 
-    D.newCoins.get(3).setColor(NodeColor.GREEN);
-    D.newCoins.get(2).setColor(NodeColor.GREEN);
-
-    D.newCoins.get(3).changeRelative(D.array.get(D.size-1)); D.newCoins.get(3).moveTo(0, D.coinsDist);
-    D.newCoins.get(2).changeRelative(D.array.get(D.size-1)); D.newCoins.get(2).moveTo(0, -D.coinsDist);
-
-    addStep((Node) D.newCoins.get(0), REL.TOP, "dynamicarray-insert-coin");
-    D.newCoins.get(1).setColor(NodeColor.RED);
-    D.newCoins.get(0).setColor(NodeColor.RED);
-
-    pause();
     if(D.size > D.capacity/2) {
+      D.newCoins.get(3).setColor(NodeColor.RED);
+      D.newCoins.get(2).setColor(NodeColor.RED);
+      pause();
+      D.coinsForCopy.set(D.size - 1, D.newCoins.get(3));
+      D.coinsForArray.set(D.size - 1, D.newCoins.get(2));
+
+      D.newCoins.get(3).setColor(NodeColor.GREEN);
+      D.newCoins.get(2).setColor(NodeColor.GREEN);
+
+      D.newCoins.get(3).changeRelative(D.array.get(D.size-1)); D.newCoins.get(3).moveTo(0, D.coinsDist);
+      D.newCoins.get(2).changeRelative(D.array.get(D.size-1)); D.newCoins.get(2).moveTo(0, -D.coinsDist);
+
+      //addStep((Node) D.newCoins.get(0), REL.TOP, "dynamicarray-insert-coin");
+      D.newCoins.get(1).setColor(NodeColor.RED);
+      D.newCoins.get(0).setColor(NodeColor.RED);
+      pause();
+
       int tween = D.capacity / 2 - (D.size - D.capacity / 2);
       boolean stop0 = false, stop1 = false;
       if(D.coinsForCopy.get(tween).state == Node.INVISIBLE) {
@@ -75,10 +78,10 @@ public class DynamicArrayInsert extends DynamicArrayAlg {
       if(stop1) D.newCoins.get(1).setState(Node.UP);
     }
     else {
-      addStep((Node) D.newCoins.get(0), REL.TOP, "dynamicarray-insert-needless");
-      D.newCoins.get(1).setState(Node.UP);
-      D.newCoins.get(0).setState(Node.UP);
+      for(DynamicArrayCoin coin: D.newCoins) coin.setColor(NodeColor.RED);
+      addStep((Node) D.newCoins.get(0), REL.TOP, "dynamicarray-needless");
+      pause();
+      for(DynamicArrayCoin coin: D.newCoins) coin.setState(Node.UP);
     }
-    D.newCoins.clear();
   }
 }

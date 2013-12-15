@@ -14,15 +14,26 @@ public class DynamicArrayPop extends DynamicArrayAlg {
   }
   @Override
   public void runAlgorithm() throws InterruptedException {
+    D.newCoins.clear();
     setHeader("pop");
+    for(int i=0; i < 3; i++) {
+      D.newCoins.add(new DynamicArrayCoin(D.invisible, D, (int) (i * Node.RADIUS * 2.25), 0));
+    }
+
     if(D.size == 0) {
       addStep((Node)D.array.get(0), REL.TOP, "dynamicarray-empty");
     }
     else {
+      D.newCoins.get(2).setColor(NodeColor.RED);
+      addStep((Node) D.array.get(D.size - 1), REL.TOP, "dynamicarray-pop");
+      pause();
+
+      D.newCoins.get(2).setState(Node.UP);
       D.size--;
       D.array.get(D.size).setKey(Node.NOKEY);
-      D.coinsForCopy.get(D.size).setState(Node.INVISIBLE);
-      D.coinsForArray.get(D.size).setState(Node.INVISIBLE);
+      if(D.coinsForCopy.get(D.size).state != Node.INVISIBLE) D.coinsForCopy.get(D.size).setState(Node.DOWN);
+      if(D.coinsForArray.get(D.size).state != Node.INVISIBLE) D.coinsForArray.get(D.size).setState(Node.UP);
+      
       if(D.size != 0 && D.size * 4 <= D.capacity){
         addStep(D.delimiter4, REL.TOP, "dynamicarray-small");
         pause();
@@ -30,6 +41,32 @@ public class DynamicArrayPop extends DynamicArrayAlg {
           D.array.get(i).setColor(NodeColor.RED);
         }
         createNewArray(D.capacity / 2);
+      }
+      else {
+        boolean needless = false;
+        if(D.size >= D.capacity/4 && D.size < D.capacity/2) {
+           if(D.coinsForArray.get(D.size - D.capacity/4).state == Node.INVISIBLE) {
+             D.newCoins.get(1).setColor(NodeColor.GREEN);
+             D.newCoins.get(0).setColor(NodeColor.GREEN);
+             D.newCoins.get(1).changeRelative(D.array.get(D.size - D.capacity/4)); D.newCoins.get(0).moveTo(0, -D.coinsDist);
+             D.newCoins.get(0).changeRelative(D.array.get(D.size - D.capacity/4)); D.newCoins.get(1).moveTo(0, D.coinsDist);
+             D.coinsForArray.set(D.size - D.capacity/4, D.newCoins.get(0));
+             D.coinsForCopy.set(D.size - D.capacity/4, D.newCoins.get(1));
+           }
+           else {
+             needless = true;
+           }
+        }
+        else needless = true;
+
+        if(needless) {
+          addStep((Node) D.newCoins.get(0), REL.TOP, "dynamicarray-needless");
+          D.newCoins.get(1).setColor(NodeColor.RED);
+          D.newCoins.get(0).setColor(NodeColor.RED);
+          pause();
+          D.newCoins.get(0).setState(Node.UP);
+          D.newCoins.get(1).setState(Node.UP);
+        }
       }
     }
   }

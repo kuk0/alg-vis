@@ -6,6 +6,7 @@ import algvis.ui.VisPanel;
 import algvis.ui.view.ClickListener;
 import algvis.ui.view.View;
 
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
@@ -30,25 +31,10 @@ public class DynamicArray extends DataStructure implements ClickListener {
 
     panel.screen.V.setDS(this);
 
-    array = new Array<>(0,-200,100);
-    array.add(new ArrayNode(this, 0));
-    array.add(new ArrayNode(this, 0));
-
-    coinsForCopy = new ArrayList<>();
-    coinsForArray = new ArrayList<>();
-    newCoins = new ArrayList<>();
-
-    for(int i=0; i < capacity; i++) {
-      coinsForArray.add(new DynamicArrayCoin(array.get(i), this, -20, 0));
-      coinsForArray.get(i).setState(Node.INVISIBLE);
-      coinsForArray.get(i).setColor(NodeColor.GREEN);
-      coinsForCopy.add(new DynamicArrayCoin(array.get(i), this, 20, 0));
-      coinsForCopy.get(i).setState(Node.INVISIBLE);
-      coinsForArray.get(i).setColor(NodeColor.GREEN);
-    }
+    clear();
 
     invisible = new ArrayNode(this, 0);
-    invisible.x = invisible.tox = -180;
+    invisible.x = invisible.tox = -230;
     invisible.y = invisible.toy = 0 ;
     invisible.setState(Node.INVISIBLE);
   }
@@ -78,7 +64,28 @@ public class DynamicArray extends DataStructure implements ClickListener {
 
   @Override
   public void clear() {
+    size = 0;
+    capacity = 2;
 
+    array = new Array<>(0,-250,100);
+    array.add(new ArrayNode(this, 0));
+    array.add(new ArrayNode(this, 0));
+
+    delimiter2 = new DynamicArrayDelimiter(array.get(1), this, Color.GREEN);
+    delimiter4 = null;
+
+    coinsForCopy = new ArrayList<>();
+    coinsForArray = new ArrayList<>();
+    newCoins = new ArrayList<>();
+
+    for(int i=0; i < capacity; i++) {
+      coinsForArray.add(new DynamicArrayCoin(array.get(i), this, -20, 0));
+      coinsForArray.get(i).setState(Node.INVISIBLE);
+      coinsForArray.get(i).setColor(NodeColor.GREEN);
+      coinsForCopy.add(new DynamicArrayCoin(array.get(i), this, 20, 0));
+      coinsForCopy.get(i).setState(Node.INVISIBLE);
+      coinsForArray.get(i).setColor(NodeColor.GREEN);
+    }
   }
 
   @Override
