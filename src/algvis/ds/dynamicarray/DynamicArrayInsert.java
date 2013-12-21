@@ -15,7 +15,7 @@ public class DynamicArrayInsert extends DynamicArrayAlg {
     D.newCoins.clear();
     setHeader("insert");
     for(int i=0; i < 5; i++) {
-      D.newCoins.add(new DynamicArrayCoin(D.invisible, D, (int) (i * Node.RADIUS * 2.25), 0));
+      D.newCoins.add(new DynamicArrayCoin(D, D.invisible, (int) (i * Node.RADIUS * 2.25), 0));
     } 
     if(D.size + 1 > D.capacity) {
       addStep((Node)D.array.get(D.capacity-1), REL.TOPRIGHT, "dynamicarray-full");

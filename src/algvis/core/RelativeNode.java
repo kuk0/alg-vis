@@ -9,17 +9,17 @@ import java.util.Hashtable;
 public class RelativeNode extends Node {
   private Node relative;
 
-  public int sepx=0, sepy = 30;
-  public int sepTox=0, sepToy = 30;
+  public int sepx = 0, sepy = 30;
+  public int sepTox = 0, sepToy = 30;
 
-  protected RelativeNode(Node relative, DataStructure D, int key, int sepx, int sepy) {
+  protected RelativeNode(DataStructure D, Node relative, int key, int sepx, int sepy) {
     super(D, key, relative.x + sepx, relative.y + sepy);
     this.relative = relative;
     this.sepx = this.sepTox = sepx;
     this.sepy = this.sepToy = sepy;
   }
 
-  protected RelativeNode(Node relative, DataStructure D, int key, int zDepth) {
+  protected RelativeNode(DataStructure D, Node relative, int key, int zDepth) {
     super(D, key, relative.x, relative.y, zDepth);
     this.relative = relative;
   }

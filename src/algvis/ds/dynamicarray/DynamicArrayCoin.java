@@ -9,8 +9,8 @@ import algvis.ui.view.View;
 import java.awt.*;
 
 public class DynamicArrayCoin extends RelativeNode {
-  public DynamicArrayCoin(Node relative, DataStructure D, int sepx, int sepy) {
-    super(relative, D, 47, sepx, sepy);
+  public DynamicArrayCoin(DataStructure D, Node relative, int sepx, int sepy) {
+    super(D, relative, 47, sepx, sepy);
   }
 
   @Override

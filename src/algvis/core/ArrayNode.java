@@ -46,7 +46,7 @@ public class ArrayNode extends Node {
   }
 
   protected boolean inside(int x, int y) {
-    return this.x <= x && this.y <= y && this.x + Node.RADIUS >= x && this.y + Node.RADIUS >= x;
+    return this.x - Node.RADIUS <= x && this.y - Node.RADIUS <= y && this.x + Node.RADIUS >= x && this.y + Node.RADIUS >= x;
   }
 
   @Override

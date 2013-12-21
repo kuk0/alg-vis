@@ -27,8 +27,8 @@ abstract class DynamicArrayAlg extends Algorithm {
     addStep((Node)D.newarray.get(0), REL.TOPRIGHT, "dynamicarray-new");
 
     if(capacity >= 4) {
-      D.newdelimiter4 = new DynamicArrayDelimiter(D.newarray.get(capacity/4), D, Color.GREEN );
-      D.newdelimiter2 = new DynamicArrayDelimiter(D.newarray.get(capacity/2), D, Color.RED );
+      D.newdelimiter4 = new DynamicArrayDelimiter(D, D.newarray.get(capacity/4), Color.GREEN );
+      D.newdelimiter2 = new DynamicArrayDelimiter(D, D.newarray.get(capacity/2), Color.RED );
     }
     pause();
     if(D.size > 0) {
@@ -52,9 +52,9 @@ abstract class DynamicArrayAlg extends Algorithm {
     D.coinsForArray.clear();
     D.coinsForCopy.clear();
     for(int i=0; i < capacity; i++) {
-      D.coinsForArray.add(new DynamicArrayCoin(D.invisible, D, 0, 0));
+      D.coinsForArray.add(new DynamicArrayCoin(D, D.invisible, 0, 0));
       D.coinsForArray.get(i).setState(Node.INVISIBLE);
-      D.coinsForCopy.add(new DynamicArrayCoin(D.invisible, D, 0, 0));
+      D.coinsForCopy.add(new DynamicArrayCoin(D, D.invisible, 0, 0));
       D.coinsForCopy.get(i).setState(Node.INVISIBLE);
     }
     return;

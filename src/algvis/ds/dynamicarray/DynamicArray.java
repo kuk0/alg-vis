@@ -2,6 +2,7 @@ package algvis.ds.dynamicarray;
 
 import algvis.core.*;
 import algvis.core.history.HashtableStoreSupport;
+import algvis.internationalization.Languages;
 import algvis.ui.VisPanel;
 import algvis.ui.view.ClickListener;
 import algvis.ui.view.View;
@@ -50,7 +51,8 @@ public class DynamicArray extends DataStructure implements ClickListener {
 
   @Override
   public String stats() {
-    return "";
+    return Languages.getString("size") + ": " + size + ", " +
+        Languages.getString("capacity") + ": " + capacity;
   }
 
   @Override
@@ -71,8 +73,8 @@ public class DynamicArray extends DataStructure implements ClickListener {
     array.add(new ArrayNode(this, 0));
     array.add(new ArrayNode(this, 0));
 
-    newdelimiter2 = delimiter2 = new DynamicArrayDelimiter(array.get(1), this, Color.GREEN);
-    newdelimiter4 = delimiter4 = new DynamicArrayDelimiter(array.get(1), this, Color.GREEN);
+    newdelimiter2 = delimiter2 = new DynamicArrayDelimiter(this, array.get(1), Color.GREEN);
+    newdelimiter4 = delimiter4 = new DynamicArrayDelimiter(this, array.get(1), Color.GREEN);
     delimiter4.setState(Node.INVISIBLE);
 
     coinsForCopy = new ArrayList<>();
@@ -80,10 +82,10 @@ public class DynamicArray extends DataStructure implements ClickListener {
     newCoins = new ArrayList<>();
 
     for(int i=0; i < capacity; i++) {
-      coinsForArray.add(new DynamicArrayCoin(array.get(i), this, -20, 0));
+      coinsForArray.add(new DynamicArrayCoin(this, array.get(i), -20, 0));
       coinsForArray.get(i).setState(Node.INVISIBLE);
       coinsForArray.get(i).setColor(NodeColor.GREEN);
-      coinsForCopy.add(new DynamicArrayCoin(array.get(i), this, 20, 0));
+      coinsForCopy.add(new DynamicArrayCoin(this, array.get(i), 20, 0));
       coinsForCopy.get(i).setState(Node.INVISIBLE);
       coinsForArray.get(i).setColor(NodeColor.GREEN);
     }
