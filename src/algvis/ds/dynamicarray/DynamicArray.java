@@ -34,7 +34,7 @@ public class DynamicArray extends DataStructure implements ClickListener {
     clear();
 
     invisible = new ArrayNode(this, 0);
-    invisible.x = invisible.tox = -230;
+    invisible.x = invisible.tox = -200;
     invisible.y = invisible.toy = 0 ;
     invisible.setState(Node.INVISIBLE);
   }

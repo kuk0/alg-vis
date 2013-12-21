@@ -79,7 +79,7 @@ public class DynamicArrayInsert extends DynamicArrayAlg {
     }
     else {
       for(DynamicArrayCoin coin: D.newCoins) coin.setColor(NodeColor.RED);
-      addStep((Node) D.newCoins.get(0), REL.TOP, "dynamicarray-needless");
+      addStep((Node) D.newCoins.get(0), REL.TOP, "dynamicarray-needless-first");
       pause();
       for(DynamicArrayCoin coin: D.newCoins) coin.setState(Node.UP);
     }

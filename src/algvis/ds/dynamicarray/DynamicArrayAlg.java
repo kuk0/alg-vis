@@ -15,7 +15,7 @@ abstract class DynamicArrayAlg extends Algorithm {
 
   public void createNewArray(int capacity) throws InterruptedException {
     for(DynamicArrayCoin coin : D.coinsForArray) coin.setColor(NodeColor.RED);
-    addStep((Node)D.coinsForArray.get(D.coinsForArray.size()/2), REL.TOP, "dynamicarray-use-coins");
+    addStep((Node)D.coinsForArray.get(D.coinsForArray.size()/2), REL.TOP, "dynamicarray-use-coin");
     pause();
     for(DynamicArrayCoin coin : D.coinsForArray) coin.setState(Node.UP);
     D.newarray = new Array<>(0,D.array.tox, D.array.toy + 150);
