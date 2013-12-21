@@ -3,9 +3,11 @@ package algvis.ds.dynamicarray;
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.RelativeNode;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.view.View;
 
 import java.awt.*;
+import java.util.Hashtable;
 
 public class DynamicArrayDelimiter extends RelativeNode {
   Color C;

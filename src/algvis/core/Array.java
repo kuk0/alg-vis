@@ -103,14 +103,8 @@ public class Array<E extends ArrayNode> extends VisualElement implements StateEd
     HashtableStoreSupport.store(state, hash + "tox", tox);
     HashtableStoreSupport.store(state, hash + "toy", toy);
     HashtableStoreSupport.store(state, hash + "steps", steps);
-    HashtableStoreSupport.store(state, hash + "size", array.size());
-    for(int i = 0; i < array.size(); i++) {
-      HashtableStoreSupport.store(state, hash + "elem" + i, array.get(i));
-    }
-
-    for(int i = 0; i < array.size(); i++) {
-      array.get(i).storeState(state);
-    }
+    HashtableStoreSupport.store(state, hash + "array", array.clone());
+    for(E node: array) node.storeState(state);
   }
 
   @Override
@@ -119,38 +113,33 @@ public class Array<E extends ArrayNode> extends VisualElement implements StateEd
 
     final Object x = state.get(hash + "x");
     if (x != null) {
-      this.x = (int) HashtableStoreSupport.restore(x);
+      this.x = (Integer) HashtableStoreSupport.restore(x);
     }
 
     final Object y = state.get(hash + "y");
     if (y != null) {
-      this.y = (int) HashtableStoreSupport.restore(y);
+      this.y = (Integer) HashtableStoreSupport.restore(y);
     }
 
     final Object tox = state.get(hash + "tox");
     if (tox != null) {
-      this.tox = (int) HashtableStoreSupport.restore(tox);
+      this.tox = (Integer) HashtableStoreSupport.restore(tox);
     }
 
     final Object toy = state.get(hash + "toy");
     if (toy != null) {
-      this.toy = (int) HashtableStoreSupport.restore(toy);
+      this.toy = (Integer) HashtableStoreSupport.restore(toy);
     }
 
     final Object steps = state.get(hash + "steps");
     if (steps != null) {
-      this.steps = (int) HashtableStoreSupport.restore(steps);
+      this.steps = (Integer) HashtableStoreSupport.restore(steps);
     }
 
-    final Object size = state.get(hash + "size");
-    if (size != null) {
-      int sz = (int) HashtableStoreSupport.restore(size);
-      Object elem = state.get(hash  + "elem" + (sz-1) );
-      if(elem != null) {
-        array.add((E) elem);
-        ((ArrayNode) elem).restoreState(state);
-      }
-      while(sz < array.size()) array.remove(array.size()-1);
+    final Object array = state.get(hash + "array");
+    if (array != null) {
+      this.array = (ArrayList<E>) array;
     }
+    for(E node: this.array) node.restoreState(state);
   }
 }

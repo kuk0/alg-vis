@@ -1,7 +1,10 @@
 package algvis.core;
 
+import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
 import algvis.ui.view.View;
+
+import java.util.Hashtable;
 
 public class RelativeNode extends Node {
   private Node relative;
@@ -70,8 +73,7 @@ public class RelativeNode extends Node {
     this.y = this.toy = relative.y + sepy;
   }
 
-  @Override
-  public void goTo(int septox, int septoy) {
+  public void goToRelative(int septox, int septoy) {
     this.sepTox = septox;
     this.sepToy = septoy;
     this.steps = 10;
@@ -90,5 +92,46 @@ public class RelativeNode extends Node {
   public void changeRelative(Node v) {
     relative = v;
     this.steps = 20;
+  }
+
+  @Override
+  public void storeState(Hashtable<Object, Object> state) {
+    super.storeState(state);
+    HashtableStoreSupport.store(state, hash + "sepx", sepx);
+    HashtableStoreSupport.store(state, hash + "sepy", sepy);
+    HashtableStoreSupport.store(state, hash + "sepTox", sepTox);
+    HashtableStoreSupport.store(state, hash + "sepToy", sepToy);
+    HashtableStoreSupport.store(state, hash + "relative", relative);
+    relative.storeState(state);
+  }
+
+  @Override
+  public void restoreState(Hashtable<?, ?> state) {
+    super.restoreState(state);
+    final Object sepx = state.get(hash + "sepx");
+    if(sepx != null) {
+      this.sepx = (int) sepx;
+    }
+
+    final Object sepy = state.get(hash + "sepy");
+    if(sepy != null) {
+      this.sepy = (int) sepy;
+    }
+
+    final Object sepTox = state.get(hash + "sepTox");
+    if(sepTox != null) {
+      this.sepTox = (int) sepTox;
+    }
+
+    final Object sepToy = state.get(hash + "sepToy");
+    if(sepToy != null) {
+      this.sepToy = (int) sepToy;
+    }
+
+    final Object relative = state.get(hash + "relative");
+    if(relative != null) {
+      this.relative = (Node) relative;
+    }
+    this.relative.restoreState(state);
   }
 }

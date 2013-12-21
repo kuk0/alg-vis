@@ -484,7 +484,7 @@ public class Node extends VisualElement {
 		if (stat != null) {
 			stat = HashtableStoreSupport.restore(stat);
 			// tu nechcem mat invisible (inak spravit)
-			if ((this.state == OUT || this.state == DOWN || this.state == LEFT || this.state == RIGHT)
+			if ((this.state == OUT || this.state == DOWN || this.state == LEFT || this.state == RIGHT || this.state == UP)
 					&& stat.equals(ALIVE)) {
 				goTo(tox, toy);
 			}
