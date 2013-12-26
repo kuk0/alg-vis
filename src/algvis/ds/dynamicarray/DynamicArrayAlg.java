@@ -19,7 +19,7 @@ abstract class DynamicArrayAlg extends Algorithm {
     pause();
 
     for(DynamicArrayCoin coin : D.coinsForArray) coin.setState(Node.UP);
-    D.newarray = new Array<>(0,D.array.tox, D.array.toy + 150);
+    D.newarray = new Array<>(0, D.array.tox, D.array.toy + 150);
     D.capacity = capacity;
     for(int i=0; i < D.capacity; i++) {
       D.newarray.add(new ArrayNode(D, 0));
@@ -34,7 +34,7 @@ abstract class DynamicArrayAlg extends Algorithm {
     if(D.size > 0) {
       addStep((Node) D.newarray.get(0), REL.TOPRIGHT, "dynamicarray-copy");
     }
-    for(int i=0;i < D.size; i++) {
+    for(int i = 0; i < D.size; i++) {
       D.coinsForCopy.get(i).setColor(NodeColor.RED);
       D.newarray.get(i).setKey(D.array.get(i).getKey());
       D.array.get(i).setKey(Node.NOKEY);

@@ -18,12 +18,6 @@ public class Array<E extends ArrayNode> extends VisualElement implements StateEd
   public int tox,toy;
 
   protected int steps;
-  /** the state of a node - either ALIVE, DOWN, LEFT, or RIGHT. */
-  public int state = Node.ALIVE;
-  private NodeColor color = NodeColor.NORMAL;
-
-  public static final int STEPS = 10;
-  public static final int RADIUS = 10;
 
   public Array(int zDepth, int x, int y) {
     super(zDepth);
@@ -60,9 +54,8 @@ public class Array<E extends ArrayNode> extends VisualElement implements StateEd
   public void draw(View v) throws ConcurrentModificationException {
     int lastx = x;
     for(ArrayNode N : array) {
-      N.tox = lastx + Node.RADIUS;
-      N.toy = y;
-      N.steps = Node.STEPS;
+      N.x = lastx + Node.RADIUS;
+      N.y = y;
       N.draw(v);
       lastx = lastx + 2 * Node.RADIUS;
     }
@@ -80,10 +73,10 @@ public class Array<E extends ArrayNode> extends VisualElement implements StateEd
     }
   }
 
-  public void moveTo(int x,int y) {
+  public void moveTo(int x, int y) {
     this.tox = x;
     this.toy = y;
-    this.steps = STEPS;
+    this.steps = Node.STEPS;
   }
 
   @Override

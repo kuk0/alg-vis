@@ -20,19 +20,10 @@ public class ArrayNode extends Node {
     super(D, Node.NOKEY, zDepth);
   }
 
-  @Override
-  public void draw(View v) throws ConcurrentModificationException {
-    if (state == Node.INVISIBLE || getKey() == NULL) {
-      return;
-    }
-    drawBg(v);
-    drawKey(v);
-  }
-
   protected void drawBg(View v) {
     v.setColor(getBgColor());
     v.fillSqr(x, y, Node.RADIUS);
-    v.setColor(Color.BLACK); // fgcolor);
+    v.setColor(Color.BLACK);
     v.drawSqr(x, y, Node.RADIUS);
     if (marked) {
       v.drawSqr(x, y, Node.RADIUS + 2);
@@ -51,7 +42,7 @@ public class ArrayNode extends Node {
 
   @Override
   public Rectangle2D getBoundingBox() {
-    return new Rectangle2D.Double(x, y, Node.RADIUS, Node.RADIUS);
+    return new Rectangle2D.Double(x - Node.RADIUS, y - Node.RADIUS, 2 * Node.RADIUS, 2 * Node.RADIUS);
   }
 
 }

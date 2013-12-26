@@ -46,7 +46,7 @@ public class DynamicArrayInsert extends DynamicArrayAlg {
       D.newCoins.get(3).changeRelative(D.array.get(D.size-1)); D.newCoins.get(3).moveTo(0, D.coinsDist);
       D.newCoins.get(2).changeRelative(D.array.get(D.size-1)); D.newCoins.get(2).moveTo(0, -D.coinsDist);
 
-      //addStep((Node) D.newCoins.get(0), REL.TOP, "dynamicarray-insert-coin");
+      addStep((Node) D.newCoins.get(0), REL.TOP, "dynamicarray-insert-coin");
       D.newCoins.get(1).setColor(NodeColor.RED);
       D.newCoins.get(0).setColor(NodeColor.RED);
       pause();
@@ -64,7 +64,6 @@ public class DynamicArrayInsert extends DynamicArrayAlg {
       }
 
       if(D.coinsForArray.get(tween).state == Node.INVISIBLE) {
-        System.out.println(D.coinsForArray.get(tween).state);
         D.newCoins.get(0).changeRelative(D.array.get(tween)); D.newCoins.get(0).moveTo(0, -D.coinsDist);
         D.newCoins.get(0).setColor(NodeColor.GREEN);
         D.coinsForArray.set(tween, D.newCoins.get(0));

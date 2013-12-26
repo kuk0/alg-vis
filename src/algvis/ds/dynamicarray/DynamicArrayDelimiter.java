@@ -12,7 +12,7 @@ import java.util.Hashtable;
 public class DynamicArrayDelimiter extends RelativeNode {
   Color C;
   public DynamicArrayDelimiter(DataStructure D, Node relative, Color C) {
-    super(D, relative, Node.NOKEY, -Node.RADIUS, 0);
+    super(D, relative, Node.NOKEY, -Node.RADIUS, 0, 0);
     this.C = C;
   }
 

@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class DynamicArrayCoin extends RelativeNode {
   public DynamicArrayCoin(DataStructure D, Node relative, int sepx, int sepy) {
-    super(D, relative, 47, sepx, sepy);
+    super(D, relative, 47, sepx, sepy, 0);
   }
 
   @Override

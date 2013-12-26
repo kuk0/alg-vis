@@ -12,22 +12,19 @@ public class RelativeNode extends Node {
   public int sepx = 0, sepy = 30;
   public int sepTox = 0, sepToy = 30;
 
-  protected RelativeNode(DataStructure D, Node relative, int key, int sepx, int sepy) {
-    super(D, key, relative.x + sepx, relative.y + sepy);
+  protected RelativeNode(DataStructure D, Node relative, int key, int sepx, int sepy, int zDepth) {
+    super(D, key, relative.x + sepx, relative.y + sepy, zDepth);
     this.relative = relative;
-    this.sepx = this.sepTox = sepx;
-    this.sepy = this.sepToy = sepy;
+    moveTo(sepx, sepy);
   }
 
   protected RelativeNode(DataStructure D, Node relative, int key, int zDepth) {
-    super(D, key, relative.x, relative.y, zDepth);
-    this.relative = relative;
+    this(D, relative, key, 0, 30, zDepth);
   }
 
   public RelativeNode(Node relative, Node v) {
     super(v);
-    this.relative = relative;
-    moveToRelative();
+    changeRelative(relative);
   }
 
   @Override
@@ -91,7 +88,7 @@ public class RelativeNode extends Node {
 
   public void changeRelative(Node v) {
     relative = v;
-    this.steps = 20;
+    this.steps = 10;
   }
 
   @Override
