@@ -2,9 +2,12 @@ package algvis.ds.dynamicarray;
 
 import algvis.core.*;
 import algvis.core.history.HashtableStoreSupport;
+import algvis.core.visual.TextBubble;
+import algvis.internationalization.IString;
 import algvis.internationalization.Languages;
 import algvis.ui.VisPanel;
 import algvis.ui.view.ClickListener;
+import algvis.ui.view.REL;
 import algvis.ui.view.View;
 
 import java.awt.*;
@@ -23,8 +26,9 @@ public class DynamicArray extends DataStructure implements ClickListener {
 
   int size = 0;
   int capacity = 2;
-  final int coinsDist = 60;
+  final int coinsDist = 40;
   DynamicArrayDelimiter delimiter2, delimiter4, newdelimiter2, newdelimiter4;
+
 
 
   DynamicArray(VisPanel visPanel) {
@@ -99,11 +103,14 @@ public class DynamicArray extends DataStructure implements ClickListener {
     for(DynamicArrayCoin coin: coinsForArray) coin.draw(v);
     for(DynamicArrayCoin coin: newCoins) coin.draw(v);
 
-
     if(delimiter2 != null) delimiter2.draw(v);
     if(delimiter4 != null) delimiter4.draw(v);
     if(newdelimiter2 != null && newdelimiter2 != delimiter2) newdelimiter2.draw(v);
     if(newdelimiter4 != null && newdelimiter4 != delimiter4) newdelimiter4.draw(v);
+
+
+    v.drawTextBubble(new IString("dynamicarray-copyText").getString(), -250, 140, 75, 255, REL.LEFT);
+    v.drawTextBubble(new IString("dynamicarray-allocateText").getString(), -250, 60, 75, 255, REL.LEFT);
   }
 
   @Override
