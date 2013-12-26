@@ -110,27 +110,27 @@ public class RelativeNode extends Node {
     super.restoreState(state);
     final Object sepx = state.get(hash + "sepx");
     if(sepx != null) {
-      this.sepx = (int) sepx;
+      this.sepx = (int) HashtableStoreSupport.restore(sepx);
     }
 
     final Object sepy = state.get(hash + "sepy");
     if(sepy != null) {
-      this.sepy = (int) sepy;
+      this.sepy = (int) HashtableStoreSupport.restore(sepy);
     }
 
     final Object sepTox = state.get(hash + "sepTox");
     if(sepTox != null) {
-      this.sepTox = (int) sepTox;
+      this.sepTox = (int) HashtableStoreSupport.restore(sepTox);
     }
 
     final Object sepToy = state.get(hash + "sepToy");
     if(sepToy != null) {
-      this.sepToy = (int) sepToy;
+      this.sepToy = (int) HashtableStoreSupport.restore(sepToy);
     }
 
     final Object relative = state.get(hash + "relative");
     if(relative != null) {
-      this.relative = (Node) relative;
+      this.relative = (Node) HashtableStoreSupport.restore(relative);
     }
     this.relative.restoreState(state);
   }

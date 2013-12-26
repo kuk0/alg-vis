@@ -99,7 +99,7 @@ public class Array<E extends ArrayNode> extends VisualElement implements StateEd
   public void storeState(Hashtable<Object, Object> state) {
     super.storeState(state);
     HashtableStoreSupport.store(state, hash + "x", x);
-    HashtableStoreSupport.store(state, hash + "y", x);
+    HashtableStoreSupport.store(state, hash + "y", y);
     HashtableStoreSupport.store(state, hash + "tox", tox);
     HashtableStoreSupport.store(state, hash + "toy", toy);
     HashtableStoreSupport.store(state, hash + "steps", steps);
@@ -138,7 +138,7 @@ public class Array<E extends ArrayNode> extends VisualElement implements StateEd
 
     final Object array = state.get(hash + "array");
     if (array != null) {
-      this.array = (ArrayList<E>) array;
+      this.array = (ArrayList<E>) HashtableStoreSupport.restore(array);
     }
     for(E node: this.array) node.restoreState(state);
   }

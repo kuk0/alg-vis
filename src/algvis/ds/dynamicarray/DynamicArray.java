@@ -174,57 +174,57 @@ public class DynamicArray extends DataStructure implements ClickListener {
 
     final Object size = state.get(hash + "size");
     if(size != null) {
-        this.size = (Integer) size;
+        this.size = (Integer) HashtableStoreSupport.restore(size);
     }
     final Object capacity = state.get(hash + "capacity");
     if(capacity != null) {
-        this.capacity = (Integer) capacity;
+        this.capacity = (Integer) HashtableStoreSupport.restore(capacity);
     }
     final Object coinsForCopy = state.get(hash + "coinsForCopy");
     if(coinsForCopy != null) {
-        this.coinsForCopy = (ArrayList<DynamicArrayCoin>) coinsForCopy;
+        this.coinsForCopy = (ArrayList<DynamicArrayCoin>) HashtableStoreSupport.restore(coinsForCopy);
     }
     for(DynamicArrayCoin coin: this.coinsForCopy) coin.restoreState(state);
 
     final Object coinsForArray = state.get(hash + "coinsForArray");
     if(coinsForArray != null) {
-        this.coinsForArray = (ArrayList<DynamicArrayCoin>) coinsForArray;
+        this.coinsForArray = (ArrayList<DynamicArrayCoin>) HashtableStoreSupport.restore(coinsForArray);
     }
     for(DynamicArrayCoin coin: this.coinsForArray) coin.restoreState(state);
 
     final Object newCoins = state.get(hash + "newCoins");
     if(newCoins != null) {
-        this.newCoins = (ArrayList<DynamicArrayCoin>) newCoins;
+        this.newCoins = (ArrayList<DynamicArrayCoin>) HashtableStoreSupport.restore(newCoins);
     }
     for(DynamicArrayCoin coin: this.newCoins) coin.restoreState(state);
 
     final Object delimiter2 = state.get(hash + "delimiter2");
     if(delimiter2 != null) {
-        this.delimiter2 = (DynamicArrayDelimiter) delimiter2;
+        this.delimiter2 = (DynamicArrayDelimiter) HashtableStoreSupport.restore(delimiter2);
     }
     if(this.delimiter2 != null)this.delimiter2.restoreState(state);
 
     final Object delimiter4 = state.get(hash + "delimiter4");
     if(delimiter4 != null) {
-        this.delimiter4 = (DynamicArrayDelimiter) delimiter4;
+        this.delimiter4 = (DynamicArrayDelimiter) HashtableStoreSupport.restore(delimiter4);
     }
     if(this.delimiter4 != null) this.delimiter4.restoreState(state);
 
     final Object newdelimiter2 = state.get(hash + "newdelimiter2");
     if(newdelimiter2 != null) {
-        this.newdelimiter2 = (DynamicArrayDelimiter) newdelimiter2;
+        this.newdelimiter2 = (DynamicArrayDelimiter) HashtableStoreSupport.restore(newdelimiter2);
     }
     if(this.newdelimiter2 != null) this.newdelimiter2.restoreState(state);
 
     final Object newdelimiter4 = state.get(hash + "newdelimiter4");
     if(newdelimiter4 != null) {
-        this.newdelimiter4 = (DynamicArrayDelimiter) newdelimiter4;
+        this.newdelimiter4 = (DynamicArrayDelimiter) HashtableStoreSupport.restore(newdelimiter4);
     }
     if(this.newdelimiter4 != null) this.newdelimiter4.restoreState(state);
 
     final Object invisible = state.get(hash + "invisible");
     if(invisible != null) {
-      this.invisible = (Node) invisible;
+      this.invisible = (Node) HashtableStoreSupport.restore(invisible);
     }
     if(this.invisible != null) this.invisible.restoreState(state);
   }
