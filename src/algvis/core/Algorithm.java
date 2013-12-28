@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * Copyright (c) 2012-present Jakub Kováč, Jozef Brandýs, Katarína Kotrlová,
+ * Pavol Lukča, Ladislav Pápay, Viktor Tomkovič, Tatiana Tóthová
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -106,7 +107,7 @@ abstract public class Algorithm implements Runnable {
 				gate.acquire();
 			}
 			panel.history.addEdit(panelState = new UpdatableStateEdit(panel,
-					panel.history.getNextId()));
+				panel.history.getNextId()));
 		}
 	}
 
