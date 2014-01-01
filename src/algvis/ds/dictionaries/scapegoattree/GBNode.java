@@ -24,47 +24,47 @@ import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.dictionaries.bst.BSTNode;
 
 public class GBNode extends BSTNode {
-	private boolean deleted = false;
+    private boolean deleted = false;
 
-	public GBNode(DataStructure D, int key, int zDepth) {
-		super(D, key, zDepth);
-	}
+    public GBNode(DataStructure D, int key, int zDepth) {
+        super(D, key, zDepth);
+    }
 
-	public boolean isDeleted() {
-		return deleted;
-	}
+    public boolean isDeleted() {
+        return deleted;
+    }
 
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 
-	@Override
-	public GBNode getLeft() {
-		return (GBNode) super.getLeft();
-	}
+    @Override
+    public GBNode getLeft() {
+        return (GBNode) super.getLeft();
+    }
 
-	@Override
-	public GBNode getRight() {
-		return (GBNode) super.getRight();
-	}
+    @Override
+    public GBNode getRight() {
+        return (GBNode) super.getRight();
+    }
 
-	@Override
-	public GBNode getParent() {
-		return (GBNode) super.getParent();
-	}
+    @Override
+    public GBNode getParent() {
+        return (GBNode) super.getParent();
+    }
 
-	@Override
-	public void storeState(Hashtable<Object, Object> state) {
-		super.storeState(state);
-		HashtableStoreSupport.store(state, hash + "deleted", deleted);
-	}
+    @Override
+    public void storeState(Hashtable<Object, Object> state) {
+        super.storeState(state);
+        HashtableStoreSupport.store(state, hash + "deleted", deleted);
+    }
 
-	@Override
-	public void restoreState(Hashtable<?, ?> state) {
-		super.restoreState(state);
-		final Object deleted = state.get(hash + "deleted");
-		if (deleted != null) {
-			this.deleted = (Boolean) HashtableStoreSupport.restore(deleted);
-		}
-	}
+    @Override
+    public void restoreState(Hashtable<?, ?> state) {
+        super.restoreState(state);
+        final Object deleted = state.get(hash + "deleted");
+        if (deleted != null) {
+            this.deleted = (Boolean) HashtableStoreSupport.restore(deleted);
+        }
+    }
 }

@@ -21,7 +21,7 @@ package algvis.core;
 import algvis.ui.VisPanel;
 
 public abstract class AlgorithmAdapter extends Algorithm {
-	protected AlgorithmAdapter(VisPanel panel) {
-		super(panel);
-	}
+    protected AlgorithmAdapter(VisPanel panel) {
+        super(panel);
+    }
 }

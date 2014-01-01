@@ -20,36 +20,36 @@ package algvis.ds.priorityqueues.binomialheap;
 import algvis.core.visual.ZDepth;
 
 public class BinHeapInsert extends BinHeapAlg {
-	private final int x;
+    private final int x;
 
-	public BinHeapInsert(BinomialHeap H, int x) {
-		super(H);
-		this.x = x;
-	}
+    public BinHeapInsert(BinomialHeap H, int x) {
+        super(H);
+        this.x = x;
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("insert", x);
-		addNote("binheap-insert");
-		final int i = H.active;
-		H.root[0] = H.min[0] = new BinHeapNode(H, x, ZDepth.ACTIONNODE);
-		addToScene(H.root[0]); // TODO hm, naco je aj v datovej strukture
-		if (H.root[i] != null) {
-			// H.root[0].x = H.root[i].x;
-			H.root[0].goTo(H.root[i].tox, H.root[0].toy);
-		}
-		H.reposition();
-		pause();
-		// meld
-		if (H.root[i] == null) {
-			H.root[i] = H.min[i] = H.root[0];
-			removeFromScene(H.root[0]);
-			H.root[0] = null;
-			H.reposition();
-			pause();
-			return;
-		}
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("insert", x);
+        addNote("binheap-insert");
+        final int i = H.active;
+        H.root[0] = H.min[0] = new BinHeapNode(H, x, ZDepth.ACTIONNODE);
+        addToScene(H.root[0]); // TODO hm, naco je aj v datovej strukture
+        if (H.root[i] != null) {
+            // H.root[0].x = H.root[i].x;
+            H.root[0].goTo(H.root[i].tox, H.root[0].toy);
+        }
+        H.reposition();
+        pause();
+        // meld
+        if (H.root[i] == null) {
+            H.root[i] = H.min[i] = H.root[0];
+            removeFromScene(H.root[0]);
+            H.root[0] = null;
+            H.reposition();
+            pause();
+            return;
+        }
 
-		meld(i);
-	}
+        meld(i);
+    }
 }

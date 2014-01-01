@@ -20,94 +20,94 @@ package algvis.ds.priorityqueues.heap;
 import algvis.core.Node;
 
 public class HeapDelete extends HeapAlg {
-	public HeapDelete(Heap H) {
-		super(H);
-	}
+    public HeapDelete(Heap H) {
+        super(H);
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader(H.minHeap ? "delete-min" : "delete-max");
-		if (H.getN() == 0) {
-			addStep("heapempty");
-			addNote("done");
-			return;
-		}
-		if (H.getN() == 1) {
-			addStep("heap-last");
-			addNote("done");
-			final HeapNode v = H.getRoot();
-			addToScene(v);
-			H.setRoot(null);
-			H.setN(H.getN() - 1);
-			v.goDown();
-			removeFromScene(v);
-			return;
-		}
-		HeapNode v, w;
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader(H.minHeap ? "delete-min" : "delete-max");
+        if (H.getN() == 0) {
+            addStep("heapempty");
+            addNote("done");
+            return;
+        }
+        if (H.getN() == 1) {
+            addStep("heap-last");
+            addNote("done");
+            final HeapNode v = H.getRoot();
+            addToScene(v);
+            H.setRoot(null);
+            H.setN(H.getN() - 1);
+            v.goDown();
+            removeFromScene(v);
+            return;
+        }
+        HeapNode v, w;
 
-		final int n = H.getN();
-		int k = 1 << 10;
-		while ((k & n) == 0) {
-			k >>= 1;
-		}
-		k >>= 1;
-		w = H.getRoot();
-		while (k > 0) {
-			w = ((n & k) == 0) ? w.getLeft() : w.getRight();
-			k >>= 1;
-		}
-		v = w;
-		addToScene(v);
-		H.setN(H.getN() - 1);
-		if ((n & 1) == 0) {
-			w.getParent().setLeft(null);
-		} else {
-			w.getParent().setRight(null);
-		}
-		v.goToRoot();
-		H.reposition();
-		pause();
+        final int n = H.getN();
+        int k = 1 << 10;
+        while ((k & n) == 0) {
+            k >>= 1;
+        }
+        k >>= 1;
+        w = H.getRoot();
+        while (k > 0) {
+            w = ((n & k) == 0) ? w.getLeft() : w.getRight();
+            k >>= 1;
+        }
+        v = w;
+        addToScene(v);
+        H.setN(H.getN() - 1);
+        if ((n & 1) == 0) {
+            w.getParent().setLeft(null);
+        } else {
+            w.getParent().setRight(null);
+        }
+        v.goToRoot();
+        H.reposition();
+        pause();
 
-		// TODO Takto asi nie (a mozno hej)
-		H.getRoot().setKey(v.getKey());
-		removeFromScene(v);
-		if (H.minHeap) {
-			addStep("minheapbubbledown");
-		} else {
-			addStep("maxheapbubbledown");
-		}
-		// pause();
+        // TODO Takto asi nie (a mozno hej)
+        H.getRoot().setKey(v.getKey());
+        removeFromScene(v);
+        if (H.minHeap) {
+            addStep("minheapbubbledown");
+        } else {
+            addStep("maxheapbubbledown");
+        }
+        // pause();
 
-		v = H.getRoot();
-		while (true) {
-			w = null;
-			if (v.getLeft() != null) {
-				w = v.getLeft();
-			}
-			if (v.getRight() != null && v.getRight().prec(w)) {
-				w = v.getRight();
-			}
-			if (w == null || v.prec(w)) {
-				break;
-			}
-			final HeapNode v1 = new HeapNode(v);
-			final HeapNode v2 = new HeapNode(w);
-			addToScene(v1);
-			addToScene(v2);
-			v.setKey(Node.NOKEY);
-			w.setKey(Node.NOKEY);
-			v1.goTo(w);
-			v2.goTo(v);
-			pause();
-			v.setKey(v2.getKey());
-			w.setKey(v1.getKey());
-			v.setColor(v2.getColor());
-			w.setColor(v1.getColor());
-			removeFromScene(v1);
-			removeFromScene(v2);
-			v = w;
-		}
+        v = H.getRoot();
+        while (true) {
+            w = null;
+            if (v.getLeft() != null) {
+                w = v.getLeft();
+            }
+            if (v.getRight() != null && v.getRight().prec(w)) {
+                w = v.getRight();
+            }
+            if (w == null || v.prec(w)) {
+                break;
+            }
+            final HeapNode v1 = new HeapNode(v);
+            final HeapNode v2 = new HeapNode(w);
+            addToScene(v1);
+            addToScene(v2);
+            v.setKey(Node.NOKEY);
+            w.setKey(Node.NOKEY);
+            v1.goTo(w);
+            v2.goTo(v);
+            pause();
+            v.setKey(v2.getKey());
+            w.setKey(v1.getKey());
+            v.setColor(v2.getColor());
+            w.setColor(v1.getColor());
+            removeFromScene(v1);
+            removeFromScene(v2);
+            v = w;
+        }
 
-		addNote("done");
-	}
+        addNote("done");
+    }
 }

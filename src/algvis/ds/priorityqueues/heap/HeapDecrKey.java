@@ -20,29 +20,29 @@ package algvis.ds.priorityqueues.heap;
 import algvis.ui.InputField;
 
 public class HeapDecrKey extends HeapAlg {
-	private final int delta;
-	private final HeapNode v;
+    private final int delta;
+    private final HeapNode v;
 
-	public HeapDecrKey(Heap H, HeapNode v, int delta) {
-		super(H);
-		this.v = v;
-		this.delta = delta;
-	}
+    public HeapDecrKey(Heap H, HeapNode v, int delta) {
+        super(H);
+        this.v = v;
+        this.delta = delta;
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader(H.minHeap ? "decreasekey" : "increasekey");
-		if (H.minHeap) {
-			v.setKey(v.getKey() - delta);
-			if (v.getKey() < 1) {
-				v.setKey(1);
-			}
-		} else {
-			v.setKey(v.getKey() + delta);
-			if (v.getKey() > InputField.MAX) {
-				v.setKey(InputField.MAX);
-			}
-		}
-		bubbleup(v);
-	}
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader(H.minHeap ? "decreasekey" : "increasekey");
+        if (H.minHeap) {
+            v.setKey(v.getKey() - delta);
+            if (v.getKey() < 1) {
+                v.setKey(1);
+            }
+        } else {
+            v.setKey(v.getKey() + delta);
+            if (v.getKey() > InputField.MAX) {
+                v.setKey(InputField.MAX);
+            }
+        }
+        bubbleup(v);
+    }
 }

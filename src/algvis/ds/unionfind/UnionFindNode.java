@@ -25,85 +25,85 @@ import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.view.View;
 
 public class UnionFindNode extends TreeNode {
-	private int rank = 0;
-	private boolean grey = false;
+    private int rank = 0;
+    private boolean grey = false;
 
-	public UnionFindNode(DataStructure D, int key, int zDepth) {
-		super(D, key, zDepth);
-	}
+    public UnionFindNode(DataStructure D, int key, int zDepth) {
+        super(D, key, zDepth);
+    }
 
-	public int getRank() {
-		return rank;
-	}
+    public int getRank() {
+        return rank;
+    }
 
-	public void setRank(int rank) {
-		this.rank = rank;
-	}
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
 
-	@Override
-	public UnionFindNode getChild() {
-		return (UnionFindNode) super.getChild();
-	}
+    @Override
+    public UnionFindNode getChild() {
+        return (UnionFindNode) super.getChild();
+    }
 
-	@Override
-	public UnionFindNode getRight() {
-		return (UnionFindNode) super.getRight();
-	}
+    @Override
+    public UnionFindNode getRight() {
+        return (UnionFindNode) super.getRight();
+    }
 
-	@Override
-	public UnionFindNode getParent() {
-		return (UnionFindNode) super.getParent();
-	}
+    @Override
+    public UnionFindNode getParent() {
+        return (UnionFindNode) super.getParent();
+    }
 
-	boolean isGrey() {
-		return grey;
-	}
+    boolean isGrey() {
+        return grey;
+    }
 
-	public void setGrey(boolean grey) {
-		if (!grey) {
-			UnionFindNode w = getChild();
-			while (w != null) {
-				w.setGrey(false);
-				w = w.getRight();
-			}
-		}
-		this.grey = grey;
-	}
+    public void setGrey(boolean grey) {
+        if (!grey) {
+            UnionFindNode w = getChild();
+            while (w != null) {
+                w.setGrey(false);
+                w = w.getRight();
+            }
+        }
+        this.grey = grey;
+    }
 
-	void drawGrey(View v) {
-		TreeNode w = getChild();
-		while (w != null) {
-			((UnionFindNode) w).drawGrey(v);
-			w = w.getRight();
-		}
-		if (isGrey() && getParent() != null) {
-			v.drawWideLine(x, y, getParent().x, getParent().y, 10.0f);
-		}
-	}
+    void drawGrey(View v) {
+        TreeNode w = getChild();
+        while (w != null) {
+            ((UnionFindNode) w).drawGrey(v);
+            w = w.getRight();
+        }
+        if (isGrey() && getParent() != null) {
+            v.drawWideLine(x, y, getParent().x, getParent().y, 10.0f);
+        }
+    }
 
-	@Override
-	public void drawTree(View v) {
-		drawGrey(v);
-		super.drawTree(v);
-	}
+    @Override
+    public void drawTree(View v) {
+        drawGrey(v);
+        super.drawTree(v);
+    }
 
-	@Override
-	public void storeState(Hashtable<Object, Object> state) {
-		super.storeState(state);
-		HashtableStoreSupport.store(state, hash + "rank", rank);
-		HashtableStoreSupport.store(state, hash + "grey", grey);
-	}
+    @Override
+    public void storeState(Hashtable<Object, Object> state) {
+        super.storeState(state);
+        HashtableStoreSupport.store(state, hash + "rank", rank);
+        HashtableStoreSupport.store(state, hash + "grey", grey);
+    }
 
-	@Override
-	public void restoreState(Hashtable<?, ?> state) {
-		super.restoreState(state);
-		final Object rank = state.get(hash + "rank");
-		if (rank != null) {
-			this.rank = (Integer) HashtableStoreSupport.restore(rank);
-		}
-		final Object grey = state.get(hash + "grey");
-		if (grey != null) {
-			this.grey = (Boolean) HashtableStoreSupport.restore(grey);
-		}
-	}
+    @Override
+    public void restoreState(Hashtable<?, ?> state) {
+        super.restoreState(state);
+        final Object rank = state.get(hash + "rank");
+        if (rank != null) {
+            this.rank = (Integer) HashtableStoreSupport.restore(rank);
+        }
+        final Object grey = state.get(hash + "grey");
+        if (grey != null) {
+            this.grey = (Boolean) HashtableStoreSupport.restore(grey);
+        }
+    }
 }

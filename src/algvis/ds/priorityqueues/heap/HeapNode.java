@@ -24,61 +24,61 @@ import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ds.priorityqueues.PriorityQueue;
 
 public class HeapNode extends BSTNode {
-	// TODO not needed?
-	// HeapNode left, right, parent;
-	// Color color = Color.yellow;
-	// int height = 1;
+    // TODO not needed?
+    // HeapNode left, right, parent;
+    // Color color = Color.yellow;
+    // int height = 1;
 
-	protected HeapNode(DataStructure D, int key, int x, int y, int zDepth) {
-		super(D, key, x, y, zDepth);
-		bgKeyColor();
-	}
+    protected HeapNode(DataStructure D, int key, int x, int y, int zDepth) {
+        super(D, key, x, y, zDepth);
+        bgKeyColor();
+    }
 
-	public HeapNode(DataStructure D, int key, int zDepth) {
-		super(D, key, zDepth);
-		bgKeyColor();
-	}
+    public HeapNode(DataStructure D, int key, int zDepth) {
+        super(D, key, zDepth);
+        bgKeyColor();
+    }
 
-	public HeapNode(HeapNode v) {
-		this(v.D, v.getKey(), v.tox, v.toy, ZDepth.ACTIONNODE);
-	}
+    public HeapNode(HeapNode v) {
+        this(v.D, v.getKey(), v.tox, v.toy, ZDepth.ACTIONNODE);
+    }
 
-	@Override
-	public HeapNode getLeft() {
-		return (HeapNode) super.getLeft();
-	}
+    @Override
+    public HeapNode getLeft() {
+        return (HeapNode) super.getLeft();
+    }
 
-	@Override
-	public HeapNode getRight() {
-		return (HeapNode) super.getRight();
-	}
+    @Override
+    public HeapNode getRight() {
+        return (HeapNode) super.getRight();
+    }
 
-	@Override
-	public HeapNode getParent() {
-		return (HeapNode) super.getParent();
-	}
+    @Override
+    public HeapNode getParent() {
+        return (HeapNode) super.getParent();
+    }
 
-	/**
-	 * v.prec(w) iff v precedes w in the heap order, i.e., should be higher in
-	 * the heap v precedes w if v.key < w.key when we have a min heap, but v
-	 * precedes w if v.key > w.key when we have a max heap
-	 */
-	public boolean prec(Node v) {
-		if (((PriorityQueue) D).minHeap) {
-			return this.getKey() < v.getKey();
-		} else {
-			return this.getKey() > v.getKey();
-		}
-	}
+    /**
+     * v.prec(w) iff v precedes w in the heap order, i.e., should be higher in
+     * the heap v precedes w if v.key < w.key when we have a min heap, but v
+     * precedes w if v.key > w.key when we have a max heap
+     */
+    public boolean prec(Node v) {
+        if (((PriorityQueue) D).minHeap) {
+            return this.getKey() < v.getKey();
+        } else {
+            return this.getKey() > v.getKey();
+        }
+    }
 
-	/**
-	 * Precedes or equals (see prec).
-	 */
-	public boolean preceq(Node v) {
-		if (((PriorityQueue) D).minHeap) {
-			return this.getKey() <= v.getKey();
-		} else {
-			return this.getKey() >= v.getKey();
-		}
-	}
+    /**
+     * Precedes or equals (see prec).
+     */
+    public boolean preceq(Node v) {
+        if (((PriorityQueue) D).minHeap) {
+            return this.getKey() <= v.getKey();
+        } else {
+            return this.getKey() >= v.getKey();
+        }
+    }
 }

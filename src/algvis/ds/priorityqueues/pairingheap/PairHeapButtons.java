@@ -28,39 +28,41 @@ import algvis.internationalization.ILabel;
 import algvis.ui.VisPanel;
 
 public class PairHeapButtons extends MeldablePQButtons implements
-		ChangeListener {
-	private static final long serialVersionUID = -5692673269308125662L;
-	public IComboBox pairVariant;
+    ChangeListener {
+    private static final long serialVersionUID = -5692673269308125662L;
+    public IComboBox pairVariant;
 
-	public PairHeapButtons(VisPanel M) {
-		super(M);
-	}
+    public PairHeapButtons(VisPanel M) {
+        super(M);
+    }
 
-	@Override
-	public JPanel initThirdRow() {
-		final JPanel P = new JPanel();
+    @Override
+    public JPanel initThirdRow() {
+        final JPanel P = new JPanel();
 
-		final ILabel fhLabel = new ILabel("pairing");
-		final String[] pairh = { "pairingnaive", "pairinglrrl" };
-		// , "pairingfb", "pairingbf", "pairingmultipass", "pairinglazymulti" };
+        final ILabel fhLabel = new ILabel("pairing");
+        final String[] pairh = {
+            "pairingnaive", "pairinglrrl"
+        };
+        // , "pairingfb", "pairingbf", "pairingmultipass", "pairinglazymulti" };
 
-		pairVariant = new IComboBox(pairh);
-		pairVariant.addActionListener(this);
+        pairVariant = new IComboBox(pairh);
+        pairVariant.addActionListener(this);
 
-		P.add(fhLabel);
-		P.add(pairVariant);
-		return P;
-	}
+        P.add(fhLabel);
+        P.add(pairVariant);
+        return P;
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		super.actionPerformed(evt);
-		if (evt.getSource() == pairVariant) {
-			final int i = pairVariant.getSelectedIndex();
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        super.actionPerformed(evt);
+        if (evt.getSource() == pairVariant) {
+            final int i = pairVariant.getSelectedIndex();
 
-			if ((i >= 0) && (i < 2)) { // (i < 6)){
-				((PairingHeap) D).pairState = PairHeapDelete.Pairing.values()[i];
-			}
-		}
-	}
+            if ((i >= 0) && (i < 2)) { // (i < 6)){
+                ((PairingHeap) D).pairState = PairHeapDelete.Pairing.values()[i];
+            }
+        }
+    }
 }

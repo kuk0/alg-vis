@@ -20,41 +20,41 @@ package algvis.ds.priorityqueues.daryheap;
 import algvis.ui.InputField;
 
 public class DaryHeapDecrKey extends DaryHeapAlg {
-	private final int delta;
-	private final DaryHeapNode v;
+    private final int delta;
+    private final DaryHeapNode v;
 
-	public DaryHeapDecrKey(DaryHeap H, DaryHeapNode v, int delta) {
-		super(H);
-		this.v = v;
-		this.delta = delta;
-	}
+    public DaryHeapDecrKey(DaryHeap H, DaryHeapNode v, int delta) {
+        super(H);
+        this.v = v;
+        this.delta = delta;
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		if (H.minHeap) {
-			setHeader("decreasekey");
-			addStep("decrkeymin");
-		} else {
-			setHeader("increasekey");
-			addStep("incrkeymax");
-		}
-		if (H.minHeap) {
-			v.setKey(v.getKey() - delta);
-			if (v.getKey() < 1) {
-				v.setKey(1);
-			}
-		} else {
-			v.setKey(v.getKey() + delta);
-			if (v.getKey() > InputField.MAX) {
-				v.setKey(InputField.MAX);
-			}
-		}
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        if (H.minHeap) {
+            setHeader("decreasekey");
+            addStep("decrkeymin");
+        } else {
+            setHeader("increasekey");
+            addStep("incrkeymax");
+        }
+        if (H.minHeap) {
+            v.setKey(v.getKey() - delta);
+            if (v.getKey() < 1) {
+                v.setKey(1);
+            }
+        } else {
+            v.setKey(v.getKey() + delta);
+            if (v.getKey() > InputField.MAX) {
+                v.setKey(InputField.MAX);
+            }
+        }
 
-		if (H.minHeap) {
-			addStep("minheapbubbleup");
-		} else {
-			addStep("maxheapbubbleup");
-		}
-		bubbleup(v);
-	}
+        if (H.minHeap) {
+            addStep("minheapbubbleup");
+        } else {
+            addStep("maxheapbubbleup");
+        }
+        bubbleup(v);
+    }
 }

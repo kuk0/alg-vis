@@ -23,16 +23,16 @@ import javax.swing.event.ChangeListener;
 import algvis.ui.VisPanel;
 
 public class MeldablePQButtonsNoDecr extends MeldablePQButtons implements
-		ChangeListener {
-	private static final long serialVersionUID = 1242711038059609653L;
+    ChangeListener {
+    private static final long serialVersionUID = 1242711038059609653L;
 
-	public MeldablePQButtonsNoDecr(VisPanel M) {
-		super(M);
-	}
+    public MeldablePQButtonsNoDecr(VisPanel M) {
+        super(M);
+    }
 
-	@Override
-	public void actionButtons(JPanel P) {
-		super.actionButtons(P);
-		P.remove(decrKeyB);
-	}
+    @Override
+    public void actionButtons(JPanel P) {
+        super.actionButtons(P);
+        P.remove(decrKeyB);
+    }
 }

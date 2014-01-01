@@ -21,163 +21,163 @@ import algvis.core.Algorithm;
 import algvis.core.DataStructure;
 
 public abstract class PairHeapAlg extends Algorithm {
-	public enum Pairing {
-		NAIVE, LRRL // , FB, BF, MULTI, LAZYM
-	}
+    public enum Pairing {
+        NAIVE, LRRL // , FB, BF, MULTI, LAZYM
+    }
 
-	final PairingHeap H;
-	PairHeapNode v;
+    final PairingHeap H;
+    PairHeapNode v;
 
-	PairHeapAlg(DataStructure D) {
-		super(D.panel, null);
-		this.H = (PairingHeap) D;
-	}
+    PairHeapAlg(DataStructure D) {
+        super(D.panel, null);
+        this.H = (PairingHeap) D;
+    }
 
-	void link(int i, int j) {
+    void link(int i, int j) {
 
-		if (!H.root[i].prec(H.root[j])) {
-			final PairHeapNode w = H.root[i];
-			H.root[i] = H.root[j];
-			H.root[j] = w;
-		}
-		H.root[i].addChildLeft(H.root[j]);
-		H.reposition();
-	}
+        if (!H.root[i].prec(H.root[j])) {
+            final PairHeapNode w = H.root[i];
+            H.root[i] = H.root[j];
+            H.root[j] = w;
+        }
+        H.root[i].addChildLeft(H.root[j]);
+        H.reposition();
+    }
 
-	void linkchlr(int i, int j) {
-		// if (H.root[j].state == -1){
-		PairHeapNode w = H.root[j].getChild();
-		H.root[j].deleteChild(H.root[j].leftmostChild());
-		if (!H.root[i].prec(w)) {
-			final PairHeapNode w1 = H.root[i];
-			H.root[i] = w;
-			w = w1;
-		}
-		H.root[i].addChildLeft(w);
-		H.reposition();
-		// }
-	}
+    void linkchlr(int i, int j) {
+        // if (H.root[j].state == -1){
+        PairHeapNode w = H.root[j].getChild();
+        H.root[j].deleteChild(H.root[j].leftmostChild());
+        if (!H.root[i].prec(w)) {
+            final PairHeapNode w1 = H.root[i];
+            H.root[i] = w;
+            w = w1;
+        }
+        H.root[i].addChildLeft(w);
+        H.reposition();
+        // }
+    }
 
-	// H.root[i].shift(0, - PairingHeap.minsepy);
-	// problemy s posunutim
-	// zobereme hocake dieta a ostatne k nemu prilinkujeme.
-	void pairNaive(int i) throws InterruptedException {
-		final int j = H.root[i].numChildren();
-		if (j > 0) {
-			if (j == 1) {
-				H.root[i] = H.root[i].getChild();
-				H.root[i].setState(0);
-				return;
-			}
-			addStep("pairnaive"); // pri naive sa vyberie hocktory a prilinkuju
-									// sa k nemu ostatne
-			pause();
+    // H.root[i].shift(0, - PairingHeap.minsepy);
+    // problemy s posunutim
+    // zobereme hocake dieta a ostatne k nemu prilinkujeme.
+    void pairNaive(int i) throws InterruptedException {
+        final int j = H.root[i].numChildren();
+        if (j > 0) {
+            if (j == 1) {
+                H.root[i] = H.root[i].getChild();
+                H.root[i].setState(0);
+                return;
+            }
+            addStep("pairnaive"); // pri naive sa vyberie hocktory a prilinkuju
+                                  // sa k nemu ostatne
+            pause();
 
-			H.root[0] = H.root[i];
-			H.root[i] = H.root[i].getChild();
-			H.root[i].setParent(null);
-			H.root[i].setState(0);
-			H.root[0].deleteChild(H.root[0].leftmostChild());// getChild().setParent(null);
+            H.root[0] = H.root[i];
+            H.root[i] = H.root[i].getChild();
+            H.root[i].setParent(null);
+            H.root[i].setState(0);
+            H.root[0].deleteChild(H.root[0].leftmostChild());// getChild().setParent(null);
 
-			H.reposition();
-			pause();
-			for (int k = 1; k < j; k++) {
-				linkchlr(i, 0);
-				pause();
-			}
-		} else {
-			// vymazat neviditelneho roota
-			H.root[i] = null;
-		}
-	}
+            H.reposition();
+            pause();
+            for (int k = 1; k < j; k++) {
+                linkchlr(i, 0);
+                pause();
+            }
+        } else {
+            // vymazat neviditelneho roota
+            H.root[i] = null;
+        }
+    }
 
-	void linkchrl(int i, int j) {
-		// if (H.root[j].state == -1){
-		PairHeapNode w = (PairHeapNode) H.root[j].rightmostChild();
-		H.root[j].deleteChild(H.root[j].rightmostChild());
-		if (!H.root[i].prec(w)) {
-			final PairHeapNode w1 = H.root[i];
-			H.root[i] = w;
-			w = w1;
-		}
-		H.root[i].addChildLeft(w);
-		H.reposition();
-		// }
-	}
+    void linkchrl(int i, int j) {
+        // if (H.root[j].state == -1){
+        PairHeapNode w = (PairHeapNode) H.root[j].rightmostChild();
+        H.root[j].deleteChild(H.root[j].rightmostChild());
+        if (!H.root[i].prec(w)) {
+            final PairHeapNode w1 = H.root[i];
+            H.root[i] = w;
+            w = w1;
+        }
+        H.root[i].addChildLeft(w);
+        H.reposition();
+        // }
+    }
 
-	void pairLRRL(int i) throws InterruptedException {
-		int j = H.root[i].numChildren();
-		if (j > 0) {
-			if (j == 1) {
-				H.root[i] = H.root[i].getChild();
-				H.root[i].setState(0);
-				return;
-			}
+    void pairLRRL(int i) throws InterruptedException {
+        int j = H.root[i].numChildren();
+        if (j > 0) {
+            if (j == 1) {
+                H.root[i] = H.root[i].getChild();
+                H.root[i].setState(0);
+                return;
+            }
 
-			// najprv pri parovani sa pracuje len s root[i]
+            // najprv pri parovani sa pracuje len s root[i]
 
-			/*
-			 * H.root[0] = H.root[i]; H.root[i] = H.root[i].getChild();
-			 * H.root[i].setParent(null); H.root[i].setState(0);
-			 * H.root[0].deleteChild
-			 * (H.root[0].leftmostChild());//getChild().setParent(null);
-			 */
+            /*
+             * H.root[0] = H.root[i]; H.root[i] = H.root[i].getChild();
+             * H.root[i].setParent(null); H.root[i].setState(0);
+             * H.root[0].deleteChild
+             * (H.root[0].leftmostChild());//getChild().setParent(null);
+             */
 
-			H.reposition();
-			addStep("pairlrrl1");
-			pause();
-			PairHeapNode w = H.root[i].getChild();
-			PairHeapNode wr = H.root[i].getChild().getRight();
+            H.reposition();
+            addStep("pairlrrl1");
+            pause();
+            PairHeapNode w = H.root[i].getChild();
+            PairHeapNode wr = H.root[i].getChild().getRight();
 
-			for (int k = 1; k <= j / 2; k++) {
-				if (w.prec(wr)) {
-					w.setRight(w.getRight().getRight());
-					w.addChildLeft(wr);
-					// w.getRight().setRight(null);
-					w = w.getRight();
-				} else {
-					wr.addChildLeft(w);
-					w = wr.getRight();
-				}
-				if (w != null) {
-					wr = w.getRight();
-				}
-			}
+            for (int k = 1; k <= j / 2; k++) {
+                if (w.prec(wr)) {
+                    w.setRight(w.getRight().getRight());
+                    w.addChildLeft(wr);
+                    // w.getRight().setRight(null);
+                    w = w.getRight();
+                } else {
+                    wr.addChildLeft(w);
+                    w = wr.getRight();
+                }
+                if (w != null) {
+                    wr = w.getRight();
+                }
+            }
 
-			H.reposition();
-			addStep("pairlrrl2"); // a teraz sa vyberie jeden vrchol a polinkuju
-									// sa sprava dolava
-			pause();
+            H.reposition();
+            addStep("pairlrrl2"); // a teraz sa vyberie jeden vrchol a polinkuju
+                                  // sa sprava dolava
+            pause();
 
-			j = H.root[i].numChildren();
-			if (j > 0) {
-				if (j == 1) {
-					H.root[i] = H.root[i].getChild();
-					H.root[i].setState(0);
-					return;
-				}
+            j = H.root[i].numChildren();
+            if (j > 0) {
+                if (j == 1) {
+                    H.root[i] = H.root[i].getChild();
+                    H.root[i].setState(0);
+                    return;
+                }
 
-				H.root[0] = H.root[i];
-				H.root[i] = (PairHeapNode) H.root[i].rightmostChild();
-				H.root[i].setParent(null);
-				H.root[i].setState(0);
-				H.root[0].deleteChild(H.root[0].rightmostChild());// getChild().setParent(null);
+                H.root[0] = H.root[i];
+                H.root[i] = (PairHeapNode) H.root[i].rightmostChild();
+                H.root[i].setParent(null);
+                H.root[i].setState(0);
+                H.root[0].deleteChild(H.root[0].rightmostChild());// getChild().setParent(null);
 
-				H.reposition();
-				// addStep(); //pri naive sa vyberie hocktory a prilinkuju sa k
-				// nemu ostatne
-				pause();
-				for (int k = 1; k < j; k++) {
-					linkchrl(i, 0);
-					pause();
-				}
-			} else {
-				// vymazat neviditelneho roota
-				H.root[i] = null;
-			}
-		} else {
-			// vymazat neviditelneho roota
-			H.root[i] = null;
-		}
-	}
+                H.reposition();
+                // addStep(); //pri naive sa vyberie hocktory a prilinkuju sa k
+                // nemu ostatne
+                pause();
+                for (int k = 1; k < j; k++) {
+                    linkchrl(i, 0);
+                    pause();
+                }
+            } else {
+                // vymazat neviditelneho roota
+                H.root[i] = null;
+            }
+        } else {
+            // vymazat neviditelneho roota
+            H.root[i] = null;
+        }
+    }
 }

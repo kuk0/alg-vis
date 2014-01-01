@@ -18,5 +18,5 @@
 package algvis.ui.view;
 
 public interface LayoutListener {
-	public void changeLayout();
+    public void changeLayout();
 }

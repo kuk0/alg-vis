@@ -27,43 +27,43 @@ import java.util.Hashtable;
 import javax.swing.undo.StateEditable;
 
 public abstract class NewVisPanel extends VisPanel implements LanguageListener,
-		StateEditable {
-	private static final long serialVersionUID = -5866649744399813386L;
+    StateEditable {
+    private static final long serialVersionUID = -5866649744399813386L;
 
-	protected NewVisPanel(Settings S) {
-		super(S);
-		//init();
-	}
+    protected NewVisPanel(Settings S) {
+        super(S);
+        //init();
+    }
 
-	@Override
-	protected void init() {
-		setLayout(new BorderLayout(0, 0));
-		initScreen();
-		statusBar = new ILabel("EMPTYSTR");
-		initDS();
+    @Override
+    protected void init() {
+        setLayout(new BorderLayout(0, 0));
+        initScreen();
+        statusBar = new ILabel("EMPTYSTR");
+        initDS();
 
-		add(screen, BorderLayout.CENTER);
-		add(buttons, BorderLayout.PAGE_END);
-		//add(statusBar, BorderLayout.PAGE_END);
+        add(screen, BorderLayout.CENTER);
+        add(buttons, BorderLayout.PAGE_END);
+        //add(statusBar, BorderLayout.PAGE_END);
 
-		screen.setDS(D);
-		languageChanged();
-	}
+        screen.setDS(D);
+        languageChanged();
+    }
 
-	@Override
-	public void refresh() {
-		buttons.refresh();
-	}
+    @Override
+    public void refresh() {
+        buttons.refresh();
+    }
 
-	@Override
-	public void storeState(Hashtable<Object, Object> state) {
-		buttons.storeState(state);
-		scene.storeState(state);
-	}
+    @Override
+    public void storeState(Hashtable<Object, Object> state) {
+        buttons.storeState(state);
+        scene.storeState(state);
+    }
 
-	@Override
-	public void restoreState(Hashtable<?, ?> state) {
-		buttons.restoreState(state);
-		scene.restoreState(state);
-	}
+    @Override
+    public void restoreState(Hashtable<?, ?> state) {
+        buttons.restoreState(state);
+        scene.restoreState(state);
+    }
 }

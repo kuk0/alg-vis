@@ -22,57 +22,57 @@ import algvis.core.NodeColor;
 import algvis.ds.dictionaries.bst.BSTFind;
 
 public class TreapDelete extends Algorithm {
-	private final Treap T;
-	private final int K;
+    private final Treap T;
+    private final int K;
 
-	public TreapDelete(Treap T, int x) {
-		super(T.panel);
-		this.T = T;
-		K = x;
-	}
+    public TreapDelete(Treap T, int x) {
+        super(T.panel);
+        this.T = T;
+        K = x;
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("delete", K);
-		addNote("bstdeletestart");
-		final BSTFind find = new BSTFind(T, K, this);
-		find.runAlgorithm();
-		final TreapNode d = (TreapNode) find.getResult().get("node");
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("delete", K);
+        addNote("bstdeletestart");
+        final BSTFind find = new BSTFind(T, K, this);
+        find.runAlgorithm();
+        final TreapNode d = (TreapNode) find.getResult().get("node");
 
-		if (d != null) {
-			setHeader("delete", K);
-			d.setColor(NodeColor.DELETE);
+        if (d != null) {
+            setHeader("delete", K);
+            d.setColor(NodeColor.DELETE);
 
-			addStep("treapbubbledown");
-			pause();
-			// prebubleme k listu
-			while (!d.isLeaf()) {
-				if (d.getLeft() == null) {
-					T.rotate(d.getRight());
-				} else if (d.getRight() == null) {
-					T.rotate(d.getLeft());
-				} else if (d.getRight().p > d.getLeft().p) {
-					T.rotate(d.getRight());
-				} else {
-					T.rotate(d.getLeft());
-				}
-				pause();
-			}
-			addStep("treapdeletecase1");
-			pause();
-			addToScene(d);
-			if (d.isRoot()) {
-				T.setRoot(null);
-			} else if (d.isLeft()) {
-				d.getParent().setLeft(null);
-			} else {
-				d.getParent().setRight(null);
-			}
-			d.goDown();
-			removeFromScene(d);
+            addStep("treapbubbledown");
+            pause();
+            // prebubleme k listu
+            while (!d.isLeaf()) {
+                if (d.getLeft() == null) {
+                    T.rotate(d.getRight());
+                } else if (d.getRight() == null) {
+                    T.rotate(d.getLeft());
+                } else if (d.getRight().p > d.getLeft().p) {
+                    T.rotate(d.getRight());
+                } else {
+                    T.rotate(d.getLeft());
+                }
+                pause();
+            }
+            addStep("treapdeletecase1");
+            pause();
+            addToScene(d);
+            if (d.isRoot()) {
+                T.setRoot(null);
+            } else if (d.isLeft()) {
+                d.getParent().setLeft(null);
+            } else {
+                d.getParent().setRight(null);
+            }
+            d.goDown();
+            removeFromScene(d);
 
-			T.reposition();
-			addNote("done");
-		}
-	}
+            T.reposition();
+            addNote("done");
+        }
+    }
 }

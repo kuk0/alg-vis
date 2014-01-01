@@ -24,36 +24,36 @@ import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTInsert;
 
 public class TreapInsert extends Algorithm {
-	private final Treap T;
-	private final int K;
+    private final Treap T;
+    private final int K;
 
-	public TreapInsert(Treap T, int x) {
-		super(T.panel);
-		this.T = T;
-		K = x;
-	}
+    public TreapInsert(Treap T, int x) {
+        super(T.panel);
+        this.T = T;
+        K = x;
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("insert", K);
-		final BSTInsert insert = new BSTInsert(T, new TreapNode(T, K,
-				ZDepth.ACTIONNODE), this);
-		insert.runAlgorithm();
-		final HashMap<String, Object> insertResult = insert.getResult();
-		final boolean inserted = (Boolean) insertResult.get("inserted");
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("insert", K);
+        final BSTInsert insert = new BSTInsert(T, new TreapNode(T, K,
+            ZDepth.ACTIONNODE), this);
+        insert.runAlgorithm();
+        final HashMap<String, Object> insertResult = insert.getResult();
+        final boolean inserted = (Boolean) insertResult.get("inserted");
 
-		if (inserted) {
-			pause();
-			// bubleme nahor
-			addStep("treapbubbleup");
-			final TreapNode v = (TreapNode) insertResult.get("v");
-			v.mark();
-			while (!v.isRoot() && v.getParent().p < v.p) {
-				T.rotate(v);
-				pause();
-			}
-			v.unmark();
-			addNote("done");
-		}
-	}
+        if (inserted) {
+            pause();
+            // bubleme nahor
+            addStep("treapbubbleup");
+            final TreapNode v = (TreapNode) insertResult.get("v");
+            v.mark();
+            while (!v.isRoot() && v.getParent().p < v.p) {
+                T.rotate(v);
+                pause();
+            }
+            v.unmark();
+            addNote("done");
+        }
+    }
 }

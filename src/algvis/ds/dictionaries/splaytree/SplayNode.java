@@ -21,48 +21,48 @@ import algvis.core.DataStructure;
 import algvis.ds.dictionaries.bst.BSTNode;
 
 public class SplayNode extends BSTNode {
-	private int pot = 0;
+    private int pot = 0;
 
-	public SplayNode(DataStructure D, int key, int zDepth) {
-		super(D, key, zDepth);
-	}
+    public SplayNode(DataStructure D, int key, int zDepth) {
+        super(D, key, zDepth);
+    }
 
-	@Override
-	public SplayNode getLeft() {
-		return (SplayNode) super.getLeft();
-	}
+    @Override
+    public SplayNode getLeft() {
+        return (SplayNode) super.getLeft();
+    }
 
-	@Override
-	public SplayNode getRight() {
-		return (SplayNode) super.getRight();
-	}
+    @Override
+    public SplayNode getRight() {
+        return (SplayNode) super.getRight();
+    }
 
-	@Override
-	public SplayNode getParent() {
-		return (SplayNode) super.getParent();
-	}
+    @Override
+    public SplayNode getParent() {
+        return (SplayNode) super.getParent();
+    }
 
-	@Override
-	public void calc() {
-		super.calc();
-		int lp = 0, rp = 0;
-		if (getLeft() != null) {
-			lp = getLeft().pot;
-		}
-		if (getRight() != null) {
-			rp = getRight().pot;
-		}
-		pot = (int) Math.floor(D.lg(size)) + lp + rp;
-	}
+    @Override
+    public void calc() {
+        super.calc();
+        int lp = 0, rp = 0;
+        if (getLeft() != null) {
+            lp = getLeft().pot;
+        }
+        if (getRight() != null) {
+            rp = getRight().pot;
+        }
+        pot = (int) Math.floor(D.lg(size)) + lp + rp;
+    }
 
-	@Override
-	public void calcTree() {
-		if (getLeft() != null) {
-			getLeft().calcTree();
-		}
-		if (getRight() != null) {
-			getRight().calcTree();
-		}
-		calc();
-	}
+    @Override
+    public void calcTree() {
+        if (getLeft() != null) {
+            getLeft().calcTree();
+        }
+        if (getRight() != null) {
+            getRight().calcTree();
+        }
+        calc();
+    }
 }

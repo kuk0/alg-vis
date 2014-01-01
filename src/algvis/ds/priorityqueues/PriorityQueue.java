@@ -25,32 +25,32 @@ import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.VisPanel;
 
 abstract public class PriorityQueue extends DataStructure {
-	public static String adtName = "pq";
-	public boolean minHeap = false;
+    public static String adtName = "pq";
+    public boolean minHeap = false;
 
-	protected PriorityQueue(VisPanel M) {
-		super(M);
-	}
+    protected PriorityQueue(VisPanel M) {
+        super(M);
+    }
 
-	@Override
-	abstract public void insert(int x);
+    @Override
+    abstract public void insert(int x);
 
-	abstract public void delete();
+    abstract public void delete();
 
-	abstract public void decreaseKey(Node v, int delta);
+    abstract public void decreaseKey(Node v, int delta);
 
-	@Override
-	public void storeState(Hashtable<Object, Object> state) {
-		super.storeState(state);
-		HashtableStoreSupport.store(state, hash + "minHeap", minHeap);
-	}
+    @Override
+    public void storeState(Hashtable<Object, Object> state) {
+        super.storeState(state);
+        HashtableStoreSupport.store(state, hash + "minHeap", minHeap);
+    }
 
-	@Override
-	public void restoreState(Hashtable<?, ?> state) {
-		super.restoreState(state);
-		final Object minHeap = state.get(hash + "minHeap");
-		if (minHeap != null) {
-			this.minHeap = (Boolean) HashtableStoreSupport.restore(minHeap);
-		}
-	}
+    @Override
+    public void restoreState(Hashtable<?, ?> state) {
+        super.restoreState(state);
+        final Object minHeap = state.get(hash + "minHeap");
+        if (minHeap != null) {
+            this.minHeap = (Boolean) HashtableStoreSupport.restore(minHeap);
+        }
+    }
 }

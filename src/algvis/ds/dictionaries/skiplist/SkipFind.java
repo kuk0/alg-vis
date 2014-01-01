@@ -21,30 +21,30 @@ import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 
 public class SkipFind extends SkipAlg {
-	public SkipFind(SkipList L, int x) {
-		super(L, x);
-	}
+    public SkipFind(SkipList L, int x) {
+        super(L, x);
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("find", K);
-		p = new SkipNode[L.height];
-		v = new SkipNode(L, K, ZDepth.ACTIONNODE);
-		v.setColor(NodeColor.FIND);
-		addToScene(v);
-		addStep("skipfindstart");
-		final SkipNode w = find();
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("find", K);
+        p = new SkipNode[L.height];
+        v = new SkipNode(L, K, ZDepth.ACTIONNODE);
+        v.setColor(NodeColor.FIND);
+        addToScene(v);
+        addStep("skipfindstart");
+        final SkipNode w = find();
 
-		if (w.getKey() == v.getKey()) {
-			addNote("found");
-			v.setColor(NodeColor.FOUND);
-			pause();
-			addNote("done");
-		} else {
-			addNote("notfound");
-			v.setColor(NodeColor.NOTFOUND);
-			v.goDown();
-		}
-		removeFromScene(v);
-	}
+        if (w.getKey() == v.getKey()) {
+            addNote("found");
+            v.setColor(NodeColor.FOUND);
+            pause();
+            addNote("done");
+        } else {
+            addNote("notfound");
+            v.setColor(NodeColor.NOTFOUND);
+            v.goDown();
+        }
+        removeFromScene(v);
+    }
 }

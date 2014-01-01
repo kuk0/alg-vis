@@ -28,29 +28,29 @@ import algvis.ui.DictButtons;
 import algvis.ui.VisPanel;
 
 public class RBButtons extends DictButtons implements ActionListener {
-	private static final long serialVersionUID = 5601437441473816995L;
-	private ICheckBox B24;
+    private static final long serialVersionUID = 5601437441473816995L;
+    private ICheckBox B24;
 
-	public RBButtons(VisPanel M) {
-		super(M);
-	}
+    public RBButtons(VisPanel M) {
+        super(M);
+    }
 
-	@Override
-	public void otherButtons(JPanel P) {
-		B24 = new ICheckBox("mode234", false);
-		B24.setMnemonic(KeyEvent.VK_2);
-		B24.addActionListener(this);
-		P.add(B24);
-	}
+    @Override
+    public void otherButtons(JPanel P) {
+        B24 = new ICheckBox("mode234", false);
+        B24.setMnemonic(KeyEvent.VK_2);
+        B24.addActionListener(this);
+        P.add(B24);
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		super.actionPerformed(evt);
-		if (evt.getSource() == B24) {
-			((RB) panel.D).mode24 = B24.isSelected();
-			// TODO reposition mimo algoritmu kazi historiu a asi ani nie je
-			// potrebny
-			// ((RB) panel.D).reposition();
-		}
-	}
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        super.actionPerformed(evt);
+        if (evt.getSource() == B24) {
+            ((RB) panel.D).mode24 = B24.isSelected();
+            // TODO reposition mimo algoritmu kazi historiu a asi ani nie je
+            // potrebny
+            // ((RB) panel.D).reposition();
+        }
+    }
 }

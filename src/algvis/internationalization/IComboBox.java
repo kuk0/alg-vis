@@ -22,35 +22,35 @@ import java.awt.Color;
 import javax.swing.JComboBox;
 
 public class IComboBox extends JComboBox<String> implements LanguageListener {
-	private static final long serialVersionUID = 8795452558528688577L;
-	private Stringable[] choices;
+    private static final long serialVersionUID = 8795452558528688577L;
+    private Stringable[] choices;
 
-	public IComboBox(Stringable[] choices) {
-		super();
-		setChoices(choices);
-	}
+    public IComboBox(Stringable[] choices) {
+        super();
+        setChoices(choices);
+    }
 
-	public IComboBox(String[] choices) {
-		super();
-		final Stringable[] ch = new Stringable[choices.length];
-		for (int i = 0; i < choices.length; ++i) {
-			ch[i] = new IString(choices[i]);
-		}
-		setChoices(ch);
-	}
+    public IComboBox(String[] choices) {
+        super();
+        final Stringable[] ch = new Stringable[choices.length];
+        for (int i = 0; i < choices.length; ++i) {
+            ch[i] = new IString(choices[i]);
+        }
+        setChoices(ch);
+    }
 
-	public void setChoices(Stringable[] choices) {
-		this.choices = choices;
-		languageChanged();
-		Languages.addListener(this);
-		setBackground(Color.WHITE);
-	}
+    public void setChoices(Stringable[] choices) {
+        this.choices = choices;
+        languageChanged();
+        Languages.addListener(this);
+        setBackground(Color.WHITE);
+    }
 
-	@Override
-	public void languageChanged() {
-		removeAllItems();
-		for (final Stringable choice : choices) {
-			this.addItem(choice.getString());
-		}
-	}
+    @Override
+    public void languageChanged() {
+        removeAllItems();
+        for (final Stringable choice : choices) {
+            this.addItem(choice.getString());
+        }
+    }
 }

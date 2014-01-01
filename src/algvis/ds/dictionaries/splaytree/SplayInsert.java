@@ -21,54 +21,54 @@ import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 
 public class SplayInsert extends SplayAlg {
-	public SplayInsert(SplayTree T, int x) {
-		super(T, x);
-	}
+    public SplayInsert(SplayTree T, int x) {
+        super(T, x);
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("insert", K);
-		final SplayNode v = new SplayNode(T, K, ZDepth.ACTIONNODE);
-		v.setColor(NodeColor.INSERT);
-		addToScene(v);
-		if (T.getRoot() == null) {
-			T.setRoot(v);
-			v.goToRoot();
-			addStep("newroot");
-			pause();
-		} else {
-			v.goAboveRoot();
-			final SplayNode w = find(K);
-			splay(w);
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("insert", K);
+        final SplayNode v = new SplayNode(T, K, ZDepth.ACTIONNODE);
+        v.setColor(NodeColor.INSERT);
+        addToScene(v);
+        if (T.getRoot() == null) {
+            T.setRoot(v);
+            v.goToRoot();
+            addStep("newroot");
+            pause();
+        } else {
+            v.goAboveRoot();
+            final SplayNode w = find(K);
+            splay(w);
 
-			w.setColor(NodeColor.NORMAL);
-			if (w.getKey() == K) {
-				addStep("alreadythere");
-				v.goDown();
-				v.setColor(NodeColor.NOTFOUND);
-				removeFromScene(v);
-				return;
-			} else if (w.getKey() < K) {
-				addNote("splay-insert-left", K);
-				addStep("splay-insert-left2", K);
-				pause();
-				v.linkLeft(w);
-				v.linkRight(w.getRight());
-				w.setRight(null);
-			} else {
-				addNote("splay-insert-right", K);
-				addStep("splay-insert-right2", K);
-				pause();
-				v.linkRight(w);
-				v.linkLeft(w.getLeft());
-				w.setLeft(null);
-			}
-			T.setRoot(v);
-			T.reposition();
-			pause();
-		}
-		addNote("done");
-		v.setColor(NodeColor.NORMAL);
-		removeFromScene(v);
-	}
+            w.setColor(NodeColor.NORMAL);
+            if (w.getKey() == K) {
+                addStep("alreadythere");
+                v.goDown();
+                v.setColor(NodeColor.NOTFOUND);
+                removeFromScene(v);
+                return;
+            } else if (w.getKey() < K) {
+                addNote("splay-insert-left", K);
+                addStep("splay-insert-left2", K);
+                pause();
+                v.linkLeft(w);
+                v.linkRight(w.getRight());
+                w.setRight(null);
+            } else {
+                addNote("splay-insert-right", K);
+                addStep("splay-insert-right2", K);
+                pause();
+                v.linkRight(w);
+                v.linkLeft(w.getLeft());
+                w.setLeft(null);
+            }
+            T.setRoot(v);
+            T.reposition();
+            pause();
+        }
+        addNote("done");
+        v.setColor(NodeColor.NORMAL);
+        removeFromScene(v);
+    }
 }

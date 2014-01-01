@@ -31,260 +31,260 @@ import java.util.List;
 import java.util.Set;
 
 public class Scene extends VisualElement {
-	public static final int MAXZ = 10, MIDZ = 5;
-	private final List<HashSet<VisualElement>> elements = new ArrayList<HashSet<VisualElement>>();
-	private final RemoveManager removeManager = new RemoveManager();
-	private final List<VisualElement> temporary = new ArrayList<VisualElement>();
+    public static final int MAXZ = 10, MIDZ = 5;
+    private final List<HashSet<VisualElement>> elements = new ArrayList<HashSet<VisualElement>>();
+    private final RemoveManager removeManager = new RemoveManager();
+    private final List<VisualElement> temporary = new ArrayList<VisualElement>();
 
-	public Scene() {
-		super(0);
-		for (int i = 0; i < MAXZ; ++i) {
-			elements.add(new HashSet<VisualElement>());
-		}
-	}
+    public Scene() {
+        super(0);
+        for (int i = 0; i < MAXZ; ++i) {
+            elements.add(new HashSet<VisualElement>());
+        }
+    }
 
-	public synchronized void add(VisualElement element) {
-		this.add(element, element.getZDepth());
-	}
+    public synchronized void add(VisualElement element) {
+        this.add(element, element.getZDepth());
+    }
 
-	public synchronized void add(VisualElement element, int zDepth) {
-		removeManager.add(element, zDepth);
-	}
+    public synchronized void add(VisualElement element, int zDepth) {
+        removeManager.add(element, zDepth);
+    }
 
-	public synchronized void addUntilNext(VisualElement element) {
-		this.add(element, element.getZDepth());
-		temporary.add(element);
-	}
+    public synchronized void addUntilNext(VisualElement element) {
+        this.add(element, element.getZDepth());
+        temporary.add(element);
+    }
 
-	public synchronized void next() {
-		for (VisualElement e : temporary) {
-			e.endAnimation();
-			removeManager.remove(e);
-		}
-		temporary.clear();
-	}
+    public synchronized void next() {
+        for (VisualElement e : temporary) {
+            e.endAnimation();
+            removeManager.remove(e);
+        }
+        temporary.clear();
+    }
 
-	/**
-	 * Element is removed after it ends its animation.
-	 *
-	 * @param element
-	 */
-	public synchronized void remove(VisualElement element) {
-		removeManager.remove(element);
-	}
+    /**
+     * Element is removed after it ends its animation.
+     * 
+     * @param element
+     */
+    public synchronized void remove(VisualElement element) {
+        removeManager.remove(element);
+    }
 
-	/**
-	 * Removes element immediately. Don't wait until element ends its animation.
-	 *
-	 * @param element
-	 */
-	public synchronized void removeNow(VisualElement element) {
-		elements.get(element.getZDepth()).remove(element);
-		if (removeManager.toRemove.contains(element)) {
-			removeManager.toRemove.remove(element);
-		}
-	}
+    /**
+     * Removes element immediately. Don't wait until element ends its animation.
+     * 
+     * @param element
+     */
+    public synchronized void removeNow(VisualElement element) {
+        elements.get(element.getZDepth()).remove(element);
+        if (removeManager.toRemove.contains(element)) {
+            removeManager.toRemove.remove(element);
+        }
+    }
 
-	// public synchronized void changeZDepth(VisualElement element, int from,
-	// int to) {
-	// Set<VisualElement> set = elements.get(from);
-	// if (set.contains(element)) {
-	// set.remove(element);
-	// elements.get(to).add(element);
-	// }
-	// }
+    // public synchronized void changeZDepth(VisualElement element, int from,
+    // int to) {
+    // Set<VisualElement> set = elements.get(from);
+    // if (set.contains(element)) {
+    // set.remove(element);
+    // elements.get(to).add(element);
+    // }
+    // }
 
-	@Override
-	public void draw(View V) {
-		for (int i = MAXZ - 1; i >= 0; --i) {
-			synchronized (this) {
-				for (final VisualElement e : elements.get(i)) {
-					e.draw(V);
-					// Rectangle2D r = e.getBoundingBox();
-					// if (r != null) {
-					// V.setColor(Color.RED);
-					// V.drawRectangle(r);
-					// }
-				}
-			}
-		}
-	}
+    @Override
+    public void draw(View V) {
+        for (int i = MAXZ - 1; i >= 0; --i) {
+            synchronized (this) {
+                for (final VisualElement e : elements.get(i)) {
+                    e.draw(V);
+                    // Rectangle2D r = e.getBoundingBox();
+                    // if (r != null) {
+                    // V.setColor(Color.RED);
+                    // V.drawRectangle(r);
+                    // }
+                }
+            }
+        }
+    }
 
-	@Override
-	public synchronized void move() {
-		for (final Set<VisualElement> set : elements) {
-			for (final VisualElement e : set) {
-				e.move();
-			}
-		}
-	}
+    @Override
+    public synchronized void move() {
+        for (final Set<VisualElement> set : elements) {
+            for (final VisualElement e : set) {
+                e.move();
+            }
+        }
+    }
 
-	@Override
-	public synchronized Rectangle2D getBoundingBox() {
-		Rectangle2D retVal = null;
-		for (final Set<VisualElement> set : elements) {
-			for (final VisualElement e : set) {
-				final Rectangle2D eBB = e.getBoundingBox();
-				if (retVal == null) {
-					retVal = eBB;
-				} else if (eBB != null) {
-					retVal = retVal.createUnion(eBB);
-				}
-			}
-		}
-		return retVal;
-	}
+    @Override
+    public synchronized Rectangle2D getBoundingBox() {
+        Rectangle2D retVal = null;
+        for (final Set<VisualElement> set : elements) {
+            for (final VisualElement e : set) {
+                final Rectangle2D eBB = e.getBoundingBox();
+                if (retVal == null) {
+                    retVal = eBB;
+                } else if (eBB != null) {
+                    retVal = retVal.createUnion(eBB);
+                }
+            }
+        }
+        return retVal;
+    }
 
-	@Override
-	public synchronized void endAnimation() {
-		for (final Set<VisualElement> set : elements) {
-			for (final VisualElement e : set) {
-				e.endAnimation();
-			}
-		}
-	}
+    @Override
+    public synchronized void endAnimation() {
+        for (final Set<VisualElement> set : elements) {
+            for (final VisualElement e : set) {
+                e.endAnimation();
+            }
+        }
+    }
 
-	@Override
-	public synchronized boolean isAnimationDone() {
-		boolean retVal = true;
-		for (final Set<VisualElement> set : elements) {
-			for (final VisualElement e : set) {
-				retVal &= e.isAnimationDone();
-			}
-		}
-		return retVal;
-	}
+    @Override
+    public synchronized boolean isAnimationDone() {
+        boolean retVal = true;
+        for (final Set<VisualElement> set : elements) {
+            for (final VisualElement e : set) {
+                retVal &= e.isAnimationDone();
+            }
+        }
+        return retVal;
+    }
 
-	@Override
-	public synchronized void storeState(Hashtable<Object, Object> state) {
-		final List<Set<VisualElement>> elementsClone = new ArrayList<Set<VisualElement>>();
-		for (final HashSet<VisualElement> set : elements) {
-			elementsClone.add((Set<VisualElement>) set.clone());
-		}
-		for (final VisualElement element : removeManager.toRemove) {
-			elementsClone.get(element.getZDepth()).remove(element);
-		}
-		for (int i = 0; i < MAXZ; ++i) {
-			HashtableStoreSupport.store(state, hash + "elements" + i,
-					elementsClone.get(i));
-		}
+    @Override
+    public synchronized void storeState(Hashtable<Object, Object> state) {
+        final List<Set<VisualElement>> elementsClone = new ArrayList<Set<VisualElement>>();
+        for (final HashSet<VisualElement> set : elements) {
+            elementsClone.add((Set<VisualElement>) set.clone());
+        }
+        for (final VisualElement element : removeManager.toRemove) {
+            elementsClone.get(element.getZDepth()).remove(element);
+        }
+        for (int i = 0; i < MAXZ; ++i) {
+            HashtableStoreSupport.store(state, hash + "elements" + i,
+                elementsClone.get(i));
+        }
 
-		for (final Set<VisualElement> set : elements) {
-			for (final VisualElement e : set) {
-				e.storeState(state);
-			}
-		}
-	}
+        for (final Set<VisualElement> set : elements) {
+            for (final VisualElement e : set) {
+                e.storeState(state);
+            }
+        }
+    }
 
-	@Override
-	public synchronized void restoreState(Hashtable<?, ?> state) {
-		for (int i = 0; i < MAXZ; ++i) {
-			final Set<VisualElement> setI = (Set<VisualElement>) state.get(hash
-					+ "elements" + i);
-			if (setI != null) {
-				for (final VisualElement e : elements.get(i)) {
-					if (setI.contains(e) && removeManager.toRemove.contains(e)) {
-						removeManager.toRemove.remove(e);
-					} else if (!setI.contains(e)
-							&& !removeManager.toRemove.contains(e)) {
-						remove(e);
-					}
-				}
+    @Override
+    public synchronized void restoreState(Hashtable<?, ?> state) {
+        for (int i = 0; i < MAXZ; ++i) {
+            final Set<VisualElement> setI = (Set<VisualElement>) state.get(hash
+                + "elements" + i);
+            if (setI != null) {
+                for (final VisualElement e : elements.get(i)) {
+                    if (setI.contains(e) && removeManager.toRemove.contains(e)) {
+                        removeManager.toRemove.remove(e);
+                    } else if (!setI.contains(e)
+                        && !removeManager.toRemove.contains(e)) {
+                        remove(e);
+                    }
+                }
 
-				for (final VisualElement e : setI) {
-					if (!elements.get(i).contains(e)) {
-						add(e, e.getZDepth());
-						// if (e instanceof Node) {
-						// System.out.println(((Node) e).getKey());
-						// System.out.println(((Node) e).getZDepth());
-						// }
-					}
-				}
-			}
-		}
+                for (final VisualElement e : setI) {
+                    if (!elements.get(i).contains(e)) {
+                        add(e, e.getZDepth());
+                        // if (e instanceof Node) {
+                        // System.out.println(((Node) e).getKey());
+                        // System.out.println(((Node) e).getZDepth());
+                        // }
+                    }
+                }
+            }
+        }
 
-		for (final Set<VisualElement> set : elements) {
-			for (final VisualElement e : set) {
-				e.restoreState(state);
-			}
-		}
-	}
+        for (final Set<VisualElement> set : elements) {
+            for (final VisualElement e : set) {
+                e.restoreState(state);
+            }
+        }
+    }
 
-	public synchronized void clear() {
-		for (final VisualElement e : removeManager.toRemove) {
-			removeManager.toRemove.remove(e);
-		}
-		for (final Set<VisualElement> set : elements) {
-			set.clear();
-		}
-	}
+    public synchronized void clear() {
+        for (final VisualElement e : removeManager.toRemove) {
+            removeManager.toRemove.remove(e);
+        }
+        for (final Set<VisualElement> set : elements) {
+            set.clear();
+        }
+    }
 
-	private class RemoveManager {
-		public final Set<VisualElement> toRemove = new HashSet<VisualElement>();
+    private class RemoveManager {
+        public final Set<VisualElement> toRemove = new HashSet<VisualElement>();
 
-		private RemoveManager() {
-			// this thread wait until element ends its animation and then
-			// removes it from scene
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					while (true) {
-						synchronized (Scene.this) {
-							// int poc = 0;
-							// for(Set<VisualElement> set : elements) poc +=
-							// set.size();
-							// System.out.println(toRemove.size());
-							// System.out.println("elemSIZE: " + poc);
-							// System.out.println("elemSIZE2: " +
-							// elements.get(5).size());
-							final Iterator<VisualElement> iterator = toRemove
-									.iterator();
-							while (iterator.hasNext()) {
-								final VisualElement element = iterator.next();
-								if (element.isAnimationDone()) {
-									iterator.remove();
-									if (element instanceof Node) {
-										// System.out.println("removed: " +
-										// ((Node) element).getKey());
-										// System.out.println("removed: " +
-										// element.getZDepth());
-										// System.out.println("removed: " +
-										// ((Node) element).state);
-									}
-									final Set<VisualElement> set = elements
-											.get(element.getZDepth());
-									set.remove(element);
-								}
-							}
-						}
-						synchronized (this) {
-							try {
-								wait(500);
-							} catch (final InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
-					}
-				}
-			}).start();
-		}
+        private RemoveManager() {
+            // this thread wait until element ends its animation and then
+            // removes it from scene
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        synchronized (Scene.this) {
+                            // int poc = 0;
+                            // for(Set<VisualElement> set : elements) poc +=
+                            // set.size();
+                            // System.out.println(toRemove.size());
+                            // System.out.println("elemSIZE: " + poc);
+                            // System.out.println("elemSIZE2: " +
+                            // elements.get(5).size());
+                            final Iterator<VisualElement> iterator = toRemove
+                                .iterator();
+                            while (iterator.hasNext()) {
+                                final VisualElement element = iterator.next();
+                                if (element.isAnimationDone()) {
+                                    iterator.remove();
+                                    if (element instanceof Node) {
+                                        // System.out.println("removed: " +
+                                        // ((Node) element).getKey());
+                                        // System.out.println("removed: " +
+                                        // element.getZDepth());
+                                        // System.out.println("removed: " +
+                                        // ((Node) element).state);
+                                    }
+                                    final Set<VisualElement> set = elements
+                                        .get(element.getZDepth());
+                                    set.remove(element);
+                                }
+                            }
+                        }
+                        synchronized (this) {
+                            try {
+                                wait(500);
+                            } catch (final InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }).start();
+        }
 
-		public void add(VisualElement element, int zDepth) {
-			if (toRemove.contains(element)) {
-				toRemove.remove(element);
-			}
-			if (zDepth < 0) {
-				zDepth = 0;
-			}
-			if (zDepth >= MAXZ) {
-				zDepth = MAXZ - 1;
-			}
-			final Set<VisualElement> set = elements.get(zDepth);
-			set.add(element);
-		}
+        public void add(VisualElement element, int zDepth) {
+            if (toRemove.contains(element)) {
+                toRemove.remove(element);
+            }
+            if (zDepth < 0) {
+                zDepth = 0;
+            }
+            if (zDepth >= MAXZ) {
+                zDepth = MAXZ - 1;
+            }
+            final Set<VisualElement> set = elements.get(zDepth);
+            set.add(element);
+        }
 
-		public void remove(VisualElement element) {
-			toRemove.add(element);
-		}
-	}
+        public void remove(VisualElement element) {
+            toRemove.add(element);
+        }
+    }
 }

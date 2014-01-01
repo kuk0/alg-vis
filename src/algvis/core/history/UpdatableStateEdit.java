@@ -22,22 +22,22 @@ import javax.swing.undo.StateEdit;
 import javax.swing.undo.StateEditable;
 
 public class UpdatableStateEdit extends StateEdit {
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -702806146128844264L;
-	private final long id;
+    private static final long serialVersionUID = -702806146128844264L;
+    private final long id;
 
-	public UpdatableStateEdit(StateEditable anObject, long id) {
-		super(anObject);
-		this.id = id;
-	}
+    public UpdatableStateEdit(StateEditable anObject, long id) {
+        super(anObject);
+        this.id = id;
+    }
 
-	public void addToPreState(StateEditable element) {
-		element.storeState(preState);
-	}
+    public void addToPreState(StateEditable element) {
+        element.storeState(preState);
+    }
 
-	public long getId() {
-		return id;
-	}
+    public long getId() {
+        return id;
+    }
 }

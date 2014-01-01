@@ -22,32 +22,32 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 
 public enum Fonts {
-	NORMAL(new Font(Font.SANS_SERIF, Font.PLAIN, 9)), SMALL(new Font(
-			Font.SANS_SERIF, Font.PLAIN, 7)), TYPEWRITER(initTT());
-	// new Font("FreeMono", Font.BOLD, 10));
+    NORMAL(new Font(Font.SANS_SERIF, Font.PLAIN, 9)), SMALL(new Font(
+        Font.SANS_SERIF, Font.PLAIN, 7)), TYPEWRITER(initTT());
+    // new Font("FreeMono", Font.BOLD, 10));
 
-	public final Font font;
-	public FontMetrics fm;
+    public final Font font;
+    public FontMetrics fm;
 
-	private Fonts(Font f) {
-		font = f;
-	}
+    private Fonts(Font f) {
+        font = f;
+    }
 
-	private static Font initTT() {
-		Font f = null;
-		try {
-			f = Font.createFont(Font.TRUETYPE_FONT,
-					Fonts.class.getResourceAsStream("FreeMonoBold.ttf"));
-			f = f.deriveFont(10.0f);
-		} catch (final Exception e) {
-			e.printStackTrace();
-		}
-		return f;
-	}
+    private static Font initTT() {
+        Font f = null;
+        try {
+            f = Font.createFont(Font.TRUETYPE_FONT,
+                Fonts.class.getResourceAsStream("FreeMonoBold.ttf"));
+            f = f.deriveFont(10.0f);
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
+        return f;
+    }
 
-	public static void init(Graphics g) {
-		for (final Fonts f : Fonts.values()) {
-			f.fm = g.getFontMetrics(f.font);
-		}
-	}
+    public static void init(Graphics g) {
+        for (final Fonts f : Fonts.values()) {
+            f.fm = g.getFontMetrics(f.font);
+        }
+    }
 }

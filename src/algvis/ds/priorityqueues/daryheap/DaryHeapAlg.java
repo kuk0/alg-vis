@@ -21,72 +21,72 @@ import algvis.core.Algorithm;
 import algvis.core.Node;
 
 abstract class DaryHeapAlg extends Algorithm {
-	final DaryHeap H;
+    final DaryHeap H;
 
-	DaryHeapAlg(DaryHeap H) {
-		super(H.panel);
-		this.H = H;
-	}
+    DaryHeapAlg(DaryHeap H) {
+        super(H.panel);
+        this.H = H;
+    }
 
-	void bubbleup(DaryHeapNode v) throws InterruptedException {
-		DaryHeapNode w = v.getParent();
-		while (w != null && v.prec(w)) {
-			final DaryHeapNode v1 = new DaryHeapNode(v);
-			v1.mark();
-			addToScene(v1);
-			final DaryHeapNode v2 = new DaryHeapNode(w);
-			addToScene(v2);
-			v.setKey(Node.NOKEY);
-			w.setKey(Node.NOKEY);
-			v1.goTo(w);
-			v2.goTo(v);
-			pause();
-			v.setKey(v2.getKey());
-			w.setKey(v1.getKey());
-			v.setColor(v2.getColor());
-			w.setColor(v1.getColor());
-			v1.unmark();
-			removeFromScene(v1);
-			removeFromScene(v2);
-			v = w;
-			w = w.getParent();
-		}
+    void bubbleup(DaryHeapNode v) throws InterruptedException {
+        DaryHeapNode w = v.getParent();
+        while (w != null && v.prec(w)) {
+            final DaryHeapNode v1 = new DaryHeapNode(v);
+            v1.mark();
+            addToScene(v1);
+            final DaryHeapNode v2 = new DaryHeapNode(w);
+            addToScene(v2);
+            v.setKey(Node.NOKEY);
+            w.setKey(Node.NOKEY);
+            v1.goTo(w);
+            v2.goTo(v);
+            pause();
+            v.setKey(v2.getKey());
+            w.setKey(v1.getKey());
+            v.setColor(v2.getColor());
+            w.setColor(v1.getColor());
+            v1.unmark();
+            removeFromScene(v1);
+            removeFromScene(v2);
+            v = w;
+            w = w.getParent();
+        }
 
-		addNote("done");
-	}
+        addNote("done");
+    }
 
-	void bubbledown(DaryHeapNode v) throws InterruptedException {
-		DaryHeapNode w;
+    void bubbledown(DaryHeapNode v) throws InterruptedException {
+        DaryHeapNode w;
 
-		while (true) {
-			if (v.isLeaf()) {
-				break;
-			}
+        while (true) {
+            if (v.isLeaf()) {
+                break;
+            }
 
-			w = v.findMaxSon();
-			if (v.prec(w)) {
-				break;
-			}
-			final DaryHeapNode v1 = new DaryHeapNode(v);
-			v1.mark();
-			addToScene(v1);
-			final DaryHeapNode v2 = new DaryHeapNode(w);
-			addToScene(v2);
-			v.setKey(Node.NOKEY);
-			w.setKey(Node.NOKEY);
-			v1.goTo(w);
-			v2.goTo(v);
-			pause();
-			v.setKey(v2.getKey());
-			w.setKey(v1.getKey());
-			v.setColor(v2.getColor());
-			w.setColor(v1.getColor());
-			v1.unmark();
-			removeFromScene(v1);
-			removeFromScene(v2);
-			v = w;
-		}
+            w = v.findMaxSon();
+            if (v.prec(w)) {
+                break;
+            }
+            final DaryHeapNode v1 = new DaryHeapNode(v);
+            v1.mark();
+            addToScene(v1);
+            final DaryHeapNode v2 = new DaryHeapNode(w);
+            addToScene(v2);
+            v.setKey(Node.NOKEY);
+            w.setKey(Node.NOKEY);
+            v1.goTo(w);
+            v2.goTo(v);
+            pause();
+            v.setKey(v2.getKey());
+            w.setKey(v1.getKey());
+            v.setColor(v2.getColor());
+            w.setColor(v1.getColor());
+            v1.unmark();
+            removeFromScene(v1);
+            removeFromScene(v2);
+            v = w;
+        }
 
-		addNote("done");
-	}
+        addNote("done");
+    }
 }

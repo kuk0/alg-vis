@@ -22,63 +22,63 @@ import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 
 public class SkipDelete extends SkipAlg {
-	public SkipDelete(SkipList L, int x) {
-		super(L, x);
-	}
+    public SkipDelete(SkipList L, int x) {
+        super(L, x);
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("delete", K);
-		v = new SkipNode(L, K, ZDepth.ACTIONNODE);
-		v.setColor(NodeColor.DELETE);
-		addToScene(v);
-		p = new SkipNode[L.height];
-		addStep("bstdeletestart");
-		SkipNode w = find();
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("delete", K);
+        v = new SkipNode(L, K, ZDepth.ACTIONNODE);
+        v.setColor(NodeColor.DELETE);
+        addToScene(v);
+        p = new SkipNode[L.height];
+        addStep("bstdeletestart");
+        SkipNode w = find();
 
-		if (w.getKey() != K) {
-			addStep("notfound");
-			v.setColor(NodeColor.NOTFOUND);
-			v.goDown();
-			removeFromScene(v);
-			return;
-		}
-		removeFromScene(v);
+        if (w.getKey() != K) {
+            addStep("notfound");
+            v.setColor(NodeColor.NOTFOUND);
+            v.goDown();
+            removeFromScene(v);
+            return;
+        }
+        removeFromScene(v);
 
-		addNote("skiplist-delete-found");
-		L.n--;
-		L.e++;
-		addStep("skipdelete");
-		for (int i = 0; i < L.height; ++i) {
-			if (w == null || w.getKey() != K) {
-				break;
-			}
-			L.e--;
-			final SkipNode left = w.getLeft(), right = w.getRight(), up = w
-					.getUp();
-			left.linkright(right);
-			if (up != null) {
-				up.setDown(null);
-			}
-			w.setColor(NodeColor.DELETE);
-			addToScene(w);
-			w.isolate();
-			w.goDown();
-			pause();
-			removeFromScene(w);
-			w = up;
-			if (i > 0 && left.getKey() == -Node.INF
-					&& right.getKey() == Node.INF) {
-				L.setRoot(left.getDown());
-				L.sent = right.getDown();
-				L.getRoot().setUp(null);
-				L.sent.setUp(null);
-				L.height = i;
-				break;
-			}
-		}
+        addNote("skiplist-delete-found");
+        L.n--;
+        L.e++;
+        addStep("skipdelete");
+        for (int i = 0; i < L.height; ++i) {
+            if (w == null || w.getKey() != K) {
+                break;
+            }
+            L.e--;
+            final SkipNode left = w.getLeft(), right = w.getRight(), up = w
+                .getUp();
+            left.linkright(right);
+            if (up != null) {
+                up.setDown(null);
+            }
+            w.setColor(NodeColor.DELETE);
+            addToScene(w);
+            w.isolate();
+            w.goDown();
+            pause();
+            removeFromScene(w);
+            w = up;
+            if (i > 0 && left.getKey() == -Node.INF
+                && right.getKey() == Node.INF) {
+                L.setRoot(left.getDown());
+                L.sent = right.getDown();
+                L.getRoot().setUp(null);
+                L.sent.setUp(null);
+                L.height = i;
+                break;
+            }
+        }
 
-		addNote("done");
-		L.reposition();
-	}
+        addNote("done");
+        L.reposition();
+    }
 }

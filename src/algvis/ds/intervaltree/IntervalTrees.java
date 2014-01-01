@@ -23,23 +23,23 @@ import algvis.core.Node;
 import algvis.ui.VisPanel;
 
 public abstract class IntervalTrees extends DataStructure {
-	public static String adtName = "intervaltrees";
+    public static String adtName = "intervaltrees";
 
-	public enum mimasuType {
-		MIN, MAX, SUM
-	}
+    public enum mimasuType {
+        MIN, MAX, SUM
+    }
 
-	public mimasuType minTree = mimasuType.MAX;
+    public mimasuType minTree = mimasuType.MAX;
 
-	IntervalTrees(VisPanel M) {
-		super(M);
-	}
+    IntervalTrees(VisPanel M) {
+        super(M);
+    }
 
-	@Override
-	abstract public void insert(int x);
+    @Override
+    abstract public void insert(int x);
 
-	abstract public void changeKey(Node v, int value);
+    abstract public void changeKey(Node v, int value);
 
-	abstract public void ofinterval(int b, int e);
+    abstract public void ofinterval(int b, int e);
 
 }

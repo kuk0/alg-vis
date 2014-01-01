@@ -21,43 +21,43 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 abstract class SkipAlg extends Algorithm {
-	final SkipList L;
-	SkipNode v;
-	SkipNode p[];
-	final int K;
+    final SkipList L;
+    SkipNode v;
+    SkipNode p[];
+    final int K;
 
-	SkipAlg(SkipList L, int x) {
-		super(L.panel);
-		this.L = L;
-		K = x;
-	}
+    SkipAlg(SkipList L, int x) {
+        super(L.panel);
+        this.L = L;
+        K = x;
+    }
 
-	SkipNode find() throws InterruptedException {
-		SkipNode w = L.getRoot();
-		v.goToRoot();
-		pause();
+    SkipNode find() throws InterruptedException {
+        SkipNode w = L.getRoot();
+        v.goToRoot();
+        pause();
 
-		for (int i = L.height - 1;; --i) {
-			while (w.getRight().getKey() <= K) {
-				addStep("skiplist-next", K);
-				w = w.getRight();
-				w.colorBefore(NodeColor.DARKER);
-				v.goTo(w);
-				pause();
-			}
-			if (w.getRight().getKey() > K) {
-				w.getRight().colorAfter(NodeColor.DARKER);
-			}
-			p[i] = w;
-			if (w.getDown() == null) {
-				break;
-			}
-			addStep("skiplist-down", K);
-			w = w.getDown();
-			v.goTo(w);
-			pause();
-		}
-		L.getRoot().colorAfter(NodeColor.NORMAL);
-		return w;
-	}
+        for (int i = L.height - 1;; --i) {
+            while (w.getRight().getKey() <= K) {
+                addStep("skiplist-next", K);
+                w = w.getRight();
+                w.colorBefore(NodeColor.DARKER);
+                v.goTo(w);
+                pause();
+            }
+            if (w.getRight().getKey() > K) {
+                w.getRight().colorAfter(NodeColor.DARKER);
+            }
+            p[i] = w;
+            if (w.getDown() == null) {
+                break;
+            }
+            addStep("skiplist-down", K);
+            w = w.getDown();
+            v.goTo(w);
+            pause();
+        }
+        L.getRoot().colorAfter(NodeColor.NORMAL);
+        return w;
+    }
 }

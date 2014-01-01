@@ -20,56 +20,56 @@ package algvis.ds.priorityqueues.heap;
 import algvis.core.visual.ZDepth;
 
 public class HeapInsert extends HeapAlg {
-	private final int K;
+    private final int K;
 
-	public HeapInsert(Heap H, int x) {
-		super(H);
-		K = x;
-	}
+    public HeapInsert(Heap H, int x) {
+        super(H);
+        K = x;
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("insert", K);
-		final HeapNode v = new HeapNode(H, K, ZDepth.ACTIONNODE);
-		addToScene(v);
-		if (H.getN() == 1000) {
-			addStep("heapfull");
-			removeFromScene(v);
-			return;
-		}
-		HeapNode w;
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("insert", K);
+        final HeapNode v = new HeapNode(H, K, ZDepth.ACTIONNODE);
+        addToScene(v);
+        if (H.getN() == 1000) {
+            addStep("heapfull");
+            removeFromScene(v);
+            return;
+        }
+        HeapNode w;
 
-		// link
-		H.setN(H.getN() + 1);
-		final int n = H.getN();
-		int k = 1 << 10;
-		if (n == 1) {
-			H.setRoot(w = v);
-			v.goToRoot();
-			pause();
-		} else {
-			while ((k & n) == 0) {
-				k >>= 1;
-			}
-			k >>= 1;
-			w = H.getRoot();
-			while (k > 1) {
-				w = ((n & k) == 0) ? w.getLeft() : w.getRight();
-				k >>= 1;
-			}
-			if ((k & n) == 0) {
-				w.linkLeft(v);
-			} else {
-				w.linkRight(v);
-			}
-			v.mark();
-			H.reposition();
-			pause();
-		}
-		removeFromScene(v);
-		v.unmark();
+        // link
+        H.setN(H.getN() + 1);
+        final int n = H.getN();
+        int k = 1 << 10;
+        if (n == 1) {
+            H.setRoot(w = v);
+            v.goToRoot();
+            pause();
+        } else {
+            while ((k & n) == 0) {
+                k >>= 1;
+            }
+            k >>= 1;
+            w = H.getRoot();
+            while (k > 1) {
+                w = ((n & k) == 0) ? w.getLeft() : w.getRight();
+                k >>= 1;
+            }
+            if ((k & n) == 0) {
+                w.linkLeft(v);
+            } else {
+                w.linkRight(v);
+            }
+            v.mark();
+            H.reposition();
+            pause();
+        }
+        removeFromScene(v);
+        v.unmark();
 
-		// pause();
-		bubbleup(v);
-	}
+        // pause();
+        bubbleup(v);
+    }
 }

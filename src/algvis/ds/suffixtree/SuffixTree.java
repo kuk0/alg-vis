@@ -28,147 +28,147 @@ import algvis.ui.VisPanel;
 import algvis.ui.view.View;
 
 public class SuffixTree extends DataStructure {
-	public static final int textpos = -40;
-	public static String adtName = "stringology";
-	public static String dsName = "suffixtree";
+    public static final int textpos = -40;
+    public static String adtName = "stringology";
+    public static String dsName = "suffixtree";
 
-	private SuffixTreeNode root = null;
+    private SuffixTreeNode root = null;
 
-	public String text;
-	StringElem str;
+    public String text;
+    StringElem str;
 
-	public SuffixTree(VisPanel M) {
-		super(M);
-		clear();
-	}
+    public SuffixTree(VisPanel M) {
+        super(M);
+        clear();
+    }
 
-	public SuffixTree(VisPanel M, String text) {
-		super(M);
-		clear();
-		this.text = text;
-		this.str = new StringElem(this, text, 0, textpos);
-	}
+    public SuffixTree(VisPanel M, String text) {
+        super(M);
+        clear();
+        this.text = text;
+        this.str = new StringElem(this, text, 0, textpos);
+    }
 
-	@Override
-	public String getName() {
-		return "suffixtree";
-	}
+    @Override
+    public String getName() {
+        return "suffixtree";
+    }
 
-	@Override
-	public String stats() {
-		return "";
-	}
+    @Override
+    public String stats() {
+        return "";
+    }
 
-	@Override
-	public void insert(int x) {
-	}
+    @Override
+    public void insert(int x) {
+    }
 
-	@Override
-	public void clear() {
-		root = new SuffixTreeNode(this);
-		root.reposition();
-		str = null;
-	}
+    @Override
+    public void clear() {
+        root = new SuffixTreeNode(this);
+        root.reposition();
+        str = null;
+    }
 
-	public SuffixTreeNode getRoot() {
-		return root;
-	}
+    public SuffixTreeNode getRoot() {
+        return root;
+    }
 
-	public void setRoot(SuffixTreeNode root) {
-		this.root = root;
-	}
+    public void setRoot(SuffixTreeNode root) {
+        this.root = root;
+    }
 
-	@Override
-	public void draw(View V) {
-		if (str != null) {
-			str.draw(V);
-		}
-		final SuffixTreeNode v = getRoot();
-		if (v != null) {
-			v.drawTree(V);
-			V.drawString("\u025B", v.x, v.y - 8, Fonts.NORMAL);
-		}
-	}
+    @Override
+    public void draw(View V) {
+        if (str != null) {
+            str.draw(V);
+        }
+        final SuffixTreeNode v = getRoot();
+        if (v != null) {
+            v.drawTree(V);
+            V.drawString("\u025B", v.x, v.y - 8, Fonts.NORMAL);
+        }
+    }
 
-	@Override
-	protected void move() {
-		if (root != null) {
-			root.moveTree();
-		}
-	}
+    @Override
+    protected void move() {
+        if (root != null) {
+            root.moveTree();
+        }
+    }
 
-	@Override
-	protected Rectangle2D getBoundingBox() {
-		return root == null ? null : new Rectangle2D.Double(-20, -100, 20, 20);
-		// root.getBoundingBox();
-	}
+    @Override
+    protected Rectangle2D getBoundingBox() {
+        return root == null ? null : new Rectangle2D.Double(-20, -100, 20, 20);
+        // root.getBoundingBox();
+    }
 
-	@Override
-	protected void endAnimation() {
-		if (root != null) {
-			root.endAnimation();
-		}
-	}
+    @Override
+    protected void endAnimation() {
+        if (root != null) {
+            root.endAnimation();
+        }
+    }
 
-	@Override
-	protected boolean isAnimationDone() {
-		return root == null || root.isAnimationDone();
-	}
+    @Override
+    protected boolean isAnimationDone() {
+        return root == null || root.isAnimationDone();
+    }
 
-	public void insert(String s) {
-		start(new SuffixTreeInsert(this, s));
-	}
+    public void insert(String s) {
+        start(new SuffixTreeInsert(this, s));
+    }
 
-	public void find(String s) {
-		start(new SuffixTreeFind(this, s));
-	}
+    public void find(String s) {
+        start(new SuffixTreeFind(this, s));
+    }
 
-	public void reposition() {
-		getRoot().reposition();
-	}
+    public void reposition() {
+        getRoot().reposition();
+    }
 
-	public void clearExtraColor() {
-		final SuffixTreeNode r = getRoot();
-		if (r != null) {
-			getRoot().clearExtraColor();
-		}
-	}
+    public void clearExtraColor() {
+        final SuffixTreeNode r = getRoot();
+        if (r != null) {
+            getRoot().clearExtraColor();
+        }
+    }
 
-	@Override
-	public void storeState(Hashtable<Object, Object> state) {
-		super.storeState(state);
-		HashtableStoreSupport.store(state, hash + "root", root);
-		if (root != null) {
-			root.storeState(state);
-		}
-		HashtableStoreSupport.store(state, hash + "text", text);
-		HashtableStoreSupport.store(state, hash + "str", str);
-		if (str != null) {
-			str.storeState(state);
-		}
-	}
+    @Override
+    public void storeState(Hashtable<Object, Object> state) {
+        super.storeState(state);
+        HashtableStoreSupport.store(state, hash + "root", root);
+        if (root != null) {
+            root.storeState(state);
+        }
+        HashtableStoreSupport.store(state, hash + "text", text);
+        HashtableStoreSupport.store(state, hash + "str", str);
+        if (str != null) {
+            str.storeState(state);
+        }
+    }
 
-	@Override
-	public void restoreState(Hashtable<?, ?> state) {
-		super.restoreState(state);
-		final Object root = state.get(hash + "root");
-		if (root != null) {
-			this.root = (SuffixTreeNode) HashtableStoreSupport.restore(root);
-		}
-		if (this.root != null) {
-			this.root.restoreState(state);
-		}
-		final Object text = state.get(hash + "text");
-		if (text != null) {
-			this.text = (String) HashtableStoreSupport.restore(text);
-		}
-		final Object str = state.get(hash + "str");
-		if (str != null) {
-			this.str = (StringElem) HashtableStoreSupport.restore(str);
-		}
+    @Override
+    public void restoreState(Hashtable<?, ?> state) {
+        super.restoreState(state);
+        final Object root = state.get(hash + "root");
+        if (root != null) {
+            this.root = (SuffixTreeNode) HashtableStoreSupport.restore(root);
+        }
+        if (this.root != null) {
+            this.root.restoreState(state);
+        }
+        final Object text = state.get(hash + "text");
+        if (text != null) {
+            this.text = (String) HashtableStoreSupport.restore(text);
+        }
+        final Object str = state.get(hash + "str");
+        if (str != null) {
+            this.str = (StringElem) HashtableStoreSupport.restore(str);
+        }
 
-		if (this.str != null) {
-			this.str.restoreState(state);
-		}
-	}
+        if (this.str != null) {
+            this.str.restoreState(state);
+        }
+    }
 }

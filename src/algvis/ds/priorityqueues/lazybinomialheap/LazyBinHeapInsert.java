@@ -22,28 +22,28 @@ import algvis.core.visual.ZDepth;
 import algvis.ds.priorityqueues.binomialheap.BinHeapNode;
 
 public class LazyBinHeapInsert extends Algorithm {
-	private final LazyBinomialHeap H;
-	private final int x;
+    private final LazyBinomialHeap H;
+    private final int x;
 
-	public LazyBinHeapInsert(LazyBinomialHeap H, int x) {
-		super(H.panel);
-		this.H = H;
-		this.x = x;
-	}
+    public LazyBinHeapInsert(LazyBinomialHeap H, int x) {
+        super(H.panel);
+        this.H = H;
+        this.x = x;
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("insert", x);
-		final int i = H.active;
-		final BinHeapNode v = new BinHeapNode(H, x, ZDepth.ACTIONNODE);
-		if (H.root[i] == null) {
-			H.root[i] = H.min[i] = v;
-		} else {
-			H.root[i].linkLeft(v);
-			if (v.prec(H.min[i])) {
-				H.min[i] = v;
-			}
-		}
-		H.reposition();
-	}
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("insert", x);
+        final int i = H.active;
+        final BinHeapNode v = new BinHeapNode(H, x, ZDepth.ACTIONNODE);
+        if (H.root[i] == null) {
+            H.root[i] = H.min[i] = v;
+        } else {
+            H.root[i].linkLeft(v);
+            if (v.prec(H.min[i])) {
+                H.min[i] = v;
+            }
+        }
+        H.reposition();
+    }
 }

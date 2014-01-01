@@ -22,23 +22,23 @@ import algvis.core.Settings;
 import algvis.ui.VisPanel;
 
 public class RBPanel extends VisPanel {
-	private static final long serialVersionUID = 8641701120532396725L;
-	public static Class<? extends DataStructure> DS = RB.class;
+    private static final long serialVersionUID = 8641701120532396725L;
+    public static Class<? extends DataStructure> DS = RB.class;
 
-	public RBPanel(Settings S) {
-		super(S);
-	}
+    public RBPanel(Settings S) {
+        super(S);
+    }
 
-	@Override
-	public void initDS() {
-		D = new RB(this);
-		scene.add(D);
-		buttons = new RBButtons(this);
-	}
+    @Override
+    public void initDS() {
+        D = new RB(this);
+        scene.add(D);
+        buttons = new RBButtons(this);
+    }
 
-	@Override
-	public void start() {
-		super.start();
-		D.random(30);
-	}
+    @Override
+    public void start() {
+        super.start();
+        D.random(30);
+    }
 }

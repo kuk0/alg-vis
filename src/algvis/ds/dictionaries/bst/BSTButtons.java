@@ -27,26 +27,26 @@ import algvis.ui.DictButtons;
 import algvis.ui.VisPanel;
 
 public class BSTButtons extends DictButtons {
-	private static final long serialVersionUID = -6884955717665753504L;
-	private ICheckBox order;
+    private static final long serialVersionUID = -6884955717665753504L;
+    private ICheckBox order;
 
-	public BSTButtons(VisPanel M) {
-		super(M);
-	}
+    public BSTButtons(VisPanel M) {
+        super(M);
+    }
 
-	@Override
-	public void otherButtons(JPanel P) {
-		order = new ICheckBox("show-order", false);
-		order.setMnemonic(KeyEvent.VK_2);
-		order.addActionListener(this);
-		P.add(order);
-	}
+    @Override
+    public void otherButtons(JPanel P) {
+        order = new ICheckBox("show-order", false);
+        order.setMnemonic(KeyEvent.VK_2);
+        order.addActionListener(this);
+        P.add(order);
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		super.actionPerformed(evt);
-		if (evt.getSource() == order) {
-			((BST) panel.D).order = order.isSelected();
-		}
-	}
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        super.actionPerformed(evt);
+        if (evt.getSource() == order) {
+            ((BST) panel.D).order = order.isSelected();
+        }
+    }
 }

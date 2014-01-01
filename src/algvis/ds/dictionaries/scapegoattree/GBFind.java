@@ -22,68 +22,68 @@ import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTNode;
 
 public class GBFind extends GBAlg {
-	public GBFind(GBTree T, int x) {
-		super(T, x);
-	}
+    public GBFind(GBTree T, int x) {
+        super(T, x);
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("find", K);
-		v = new GBNode(T, K, ZDepth.ACTIONNODE);
-		v.setColor(NodeColor.FIND);
-		addToScene(v);
-		if (T.getRoot() == null) {
-			v.goToRoot();
-			addStep("empty");
-			pause();
-			v.goDown();
-			v.setColor(NodeColor.NOTFOUND);
-			addStep("notfound");
-			removeFromScene(v);
-		} else {
-			BSTNode w = T.getRoot();
-			v.goTo(w);
-			addStep("bstfindstart");
-			pause();
-			while (true) {
-				if (w.getKey() == K) {
-					if (((GBNode) w).isDeleted()) {
-						addStep("gbfinddeleted");
-						v.setColor(NodeColor.NOTFOUND);
-						v.goDown();
-					} else {
-						addStep("found");
-						v.setColor(NodeColor.FOUND);
-						pause();
-						addNote("done");
-					}
-					break;
-				} else if (w.getKey() < K) {
-					addStep("bstfindright", K, w.getKey());
-					w = w.getRight();
-					if (w != null) {
-						v.goTo(w);
-					} else { // notfound
-						addStep("notfound");
-						v.setColor(NodeColor.NOTFOUND);
-						v.goRight();
-						break;
-					}
-				} else {
-					addStep("bstfindleft", K, w.getKey());
-					w = w.getLeft();
-					if (w != null) {
-						v.goTo(w);
-					} else { // notfound
-						addStep("notfound");
-						v.setColor(NodeColor.NOTFOUND);
-						v.goLeft();
-						break;
-					}
-				}
-				pause();
-			}
-			removeFromScene(v);
-		}
-	}
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("find", K);
+        v = new GBNode(T, K, ZDepth.ACTIONNODE);
+        v.setColor(NodeColor.FIND);
+        addToScene(v);
+        if (T.getRoot() == null) {
+            v.goToRoot();
+            addStep("empty");
+            pause();
+            v.goDown();
+            v.setColor(NodeColor.NOTFOUND);
+            addStep("notfound");
+            removeFromScene(v);
+        } else {
+            BSTNode w = T.getRoot();
+            v.goTo(w);
+            addStep("bstfindstart");
+            pause();
+            while (true) {
+                if (w.getKey() == K) {
+                    if (((GBNode) w).isDeleted()) {
+                        addStep("gbfinddeleted");
+                        v.setColor(NodeColor.NOTFOUND);
+                        v.goDown();
+                    } else {
+                        addStep("found");
+                        v.setColor(NodeColor.FOUND);
+                        pause();
+                        addNote("done");
+                    }
+                    break;
+                } else if (w.getKey() < K) {
+                    addStep("bstfindright", K, w.getKey());
+                    w = w.getRight();
+                    if (w != null) {
+                        v.goTo(w);
+                    } else { // notfound
+                        addStep("notfound");
+                        v.setColor(NodeColor.NOTFOUND);
+                        v.goRight();
+                        break;
+                    }
+                } else {
+                    addStep("bstfindleft", K, w.getKey());
+                    w = w.getLeft();
+                    if (w != null) {
+                        v.goTo(w);
+                    } else { // notfound
+                        addStep("notfound");
+                        v.setColor(NodeColor.NOTFOUND);
+                        v.goLeft();
+                        break;
+                    }
+                }
+                pause();
+            }
+            removeFromScene(v);
+        }
+    }
 }

@@ -23,34 +23,34 @@ import algvis.ui.VisPanel;
 import algvis.ui.view.Layout;
 
 public class AVL extends BST {
-	public static String dsName = "avltree";
+    public static String dsName = "avltree";
 
-	@Override
-	public String getName() {
-		return "avltree";
-	}
+    @Override
+    public String getName() {
+        return "avltree";
+    }
 
-	public AVL(VisPanel M) {
-		super(M);
-	}
+    public AVL(VisPanel M) {
+        super(M);
+    }
 
-	@Override
-	public void insert(int x) {
-		start(new AVLInsert(this, x));
-	}
+    @Override
+    public void insert(int x) {
+        start(new AVLInsert(this, x));
+    }
 
-	@Override
-	public void find(int x) {
-		start(new BSTFind(this, x));
-	}
+    @Override
+    public void find(int x) {
+        start(new BSTFind(this, x));
+    }
 
-	@Override
-	public void delete(int x) {
-		start(new AVLDelete(this, x));
-	}
+    @Override
+    public void delete(int x) {
+        start(new AVLDelete(this, x));
+    }
 
-	@Override
-	public Layout getLayout() {
-		return Layout.SIMPLE;
-	}
+    @Override
+    public Layout getLayout() {
+        return Layout.SIMPLE;
+    }
 }

@@ -22,23 +22,23 @@ import algvis.core.Settings;
 import algvis.ui.VisPanel;
 
 public class UnionFindPanel extends VisPanel {
-	private static final long serialVersionUID = 7399194338521664213L;
-	public static Class<? extends DataStructure> DS = UnionFind.class;
+    private static final long serialVersionUID = 7399194338521664213L;
+    public static Class<? extends DataStructure> DS = UnionFind.class;
 
-	public UnionFindPanel(Settings S) {
-		super(S);
-	}
+    public UnionFindPanel(Settings S) {
+        super(S);
+    }
 
-	@Override
-	public void initDS() {
-		D = new UnionFind(this);
-		scene.add(D);
-		buttons = new UnionFindButtons(this);
-	}
+    @Override
+    public void initDS() {
+        D = new UnionFind(this);
+        scene.add(D);
+        buttons = new UnionFindButtons(this);
+    }
 
-	@Override
-	public void start() {
-		super.start();
-		((UnionFind) D).makeSet(15);
-	}
+    @Override
+    public void start() {
+        super.start();
+        ((UnionFind) D).makeSet(15);
+    }
 }

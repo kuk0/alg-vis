@@ -19,8 +19,8 @@ package algvis.ui.view;
 
 public interface Highlighting {
 
-	public void highlight(int i);
+    public void highlight(int i);
 
-	public void lowlight();
+    public void lowlight();
 
 }

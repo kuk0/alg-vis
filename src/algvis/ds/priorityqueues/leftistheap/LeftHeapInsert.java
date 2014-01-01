@@ -20,43 +20,43 @@ package algvis.ds.priorityqueues.leftistheap;
 import algvis.core.visual.ZDepth;
 
 public class LeftHeapInsert extends LeftHeapAlg {
-	private final int x;
+    private final int x;
 
-	public LeftHeapInsert(LeftHeap H, int x) {
-		super(H);
-		this.x = x;
-	}
+    public LeftHeapInsert(LeftHeap H, int x) {
+        super(H);
+        this.x = x;
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("insert", x);
-		final int i = H.active;
-		H.root[0] = new LeftHeapNode(H, x, ZDepth.ACTIONNODE);
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("insert", x);
+        final int i = H.active;
+        H.root[0] = new LeftHeapNode(H, x, ZDepth.ACTIONNODE);
 
-		H.reposition();
+        H.reposition();
 
-		if (H.root[i] == null) {
-			H.root[i] = H.root[0];
-			H.root[0] = null;
-			if (H.root[i] != null) {
-				addStep("newroot");
-				H.root[i].highlightTree();
-			}
-			H.reposition();
-			// heap #1 is empty; done;
-			return;
-		}
+        if (H.root[i] == null) {
+            H.root[i] = H.root[0];
+            H.root[0] = null;
+            if (H.root[i] != null) {
+                addStep("newroot");
+                H.root[i].highlightTree();
+            }
+            H.reposition();
+            // heap #1 is empty; done;
+            return;
+        }
 
-		if (H.root[0] == null) {
-			// heap #2 is empty; done;
-			return;
-		}
+        if (H.root[0] == null) {
+            // heap #2 is empty; done;
+            return;
+        }
 
-		H.active = i;
-		H.root[0].highlightTree();
-		H.reposition();
+        H.active = i;
+        H.root[0].highlightTree();
+        H.reposition();
 
-		pause();
-		meld(i);
-	}
+        pause();
+        meld(i);
+    }
 }

@@ -23,23 +23,23 @@ import algvis.ds.priorityqueues.PQButtons;
 import algvis.ui.VisPanel;
 
 public class HeapPanel extends VisPanel {
-	private static final long serialVersionUID = -2488725769022251713L;
-	public static Class<? extends DataStructure> DS = Heap.class;
+    private static final long serialVersionUID = -2488725769022251713L;
+    public static Class<? extends DataStructure> DS = Heap.class;
 
-	public HeapPanel(Settings S) {
-		super(S);
-	}
+    public HeapPanel(Settings S) {
+        super(S);
+    }
 
-	@Override
-	public void initDS() {
-		D = new Heap(this);
-		scene.add(D);
-		buttons = new PQButtons(this);
-	}
+    @Override
+    public void initDS() {
+        D = new Heap(this);
+        scene.add(D);
+        buttons = new PQButtons(this);
+    }
 
-	@Override
-	public void start() {
-		super.start();
-		D.random(20);
-	}
+    @Override
+    public void start() {
+        super.start();
+        D.random(20);
+    }
 }

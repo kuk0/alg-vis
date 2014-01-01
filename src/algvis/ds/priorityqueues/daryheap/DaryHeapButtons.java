@@ -28,38 +28,38 @@ import algvis.internationalization.ILabel;
 import algvis.ui.VisPanel;
 
 public class DaryHeapButtons extends PQButtons implements ChangeListener {
-	private static final long serialVersionUID = -2783154701649865993L;
-	JSpinner OS;
-	private ILabel orderLabel;
+    private static final long serialVersionUID = -2783154701649865993L;
+    JSpinner OS;
+    private ILabel orderLabel;
 
-	public DaryHeapButtons(VisPanel M) {
-		super(M);
-	}
+    public DaryHeapButtons(VisPanel M) {
+        super(M);
+    }
 
-	@Override
-	public void otherButtons(JPanel P) {
-		OS = new JSpinner(new SpinnerNumberModel(5, 2, 20, 1));
-		OS.addChangeListener(this);
-		orderLabel = new ILabel("daryheaporder");
-		P.add(orderLabel);
-		P.add(OS);
+    @Override
+    public void otherButtons(JPanel P) {
+        OS = new JSpinner(new SpinnerNumberModel(5, 2, 20, 1));
+        OS.addChangeListener(this);
+        orderLabel = new ILabel("daryheaporder");
+        P.add(orderLabel);
+        P.add(OS);
 
-		super.otherButtons(P);
-	}
+        super.otherButtons(P);
+    }
 
-	@Override
-	public void stateChanged(ChangeEvent evt) {
-		if (evt.getSource() == OS) {
-			if (panel.history.canRedo()) {
-				panel.newAlgorithmPool();
-			}
-			((DaryHeap) D).setOrder((Integer) OS.getValue());
-		}
-	}
+    @Override
+    public void stateChanged(ChangeEvent evt) {
+        if (evt.getSource() == OS) {
+            if (panel.history.canRedo()) {
+                panel.newAlgorithmPool();
+            }
+            ((DaryHeap) D).setOrder((Integer) OS.getValue());
+        }
+    }
 
-	@Override
-	public void setOtherEnabled(boolean enabled) {
-		super.setOtherEnabled(enabled);
-		OS.setEnabled(enabled);
-	}
+    @Override
+    public void setOtherEnabled(boolean enabled) {
+        super.setOtherEnabled(enabled);
+        OS.setEnabled(enabled);
+    }
 }

@@ -28,26 +28,26 @@ import algvis.ui.DictButtons;
 import algvis.ui.VisPanel;
 
 public class AAButtons extends DictButtons implements ActionListener {
-	private static final long serialVersionUID = 5326663225787843118L;
-	private ICheckBox B23;
+    private static final long serialVersionUID = 5326663225787843118L;
+    private ICheckBox B23;
 
-	public AAButtons(VisPanel M) {
-		super(M);
-	}
+    public AAButtons(VisPanel M) {
+        super(M);
+    }
 
-	@Override
-	public void otherButtons(JPanel P) {
-		B23 = new ICheckBox("mode23", false);
-		B23.setMnemonic(KeyEvent.VK_2);
-		B23.addActionListener(this);
-		P.add(B23);
-	}
+    @Override
+    public void otherButtons(JPanel P) {
+        B23 = new ICheckBox("mode23", false);
+        B23.setMnemonic(KeyEvent.VK_2);
+        B23.addActionListener(this);
+        P.add(B23);
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		super.actionPerformed(evt);
-		if (evt.getSource() == B23) {
-			((AA) panel.D).setMode23(B23.isSelected());
-		}
-	}
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        super.actionPerformed(evt);
+        if (evt.getSource() == B23) {
+            ((AA) panel.D).setMode23(B23.isSelected());
+        }
+    }
 }

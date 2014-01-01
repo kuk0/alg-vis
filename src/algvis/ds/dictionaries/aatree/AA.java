@@ -25,68 +25,68 @@ import algvis.ui.view.Layout;
 import algvis.ui.view.View;
 
 public class AA extends BST {
-	public static String dsName = "aatree";
-	public boolean mode23 = false;
+    public static String dsName = "aatree";
+    public boolean mode23 = false;
 
-	@Override
-	public String getName() {
-		return "aatree";
-	}
+    @Override
+    public String getName() {
+        return "aatree";
+    }
 
-	public AA(VisPanel M) {
-		super(M);
-	}
+    public AA(VisPanel M) {
+        super(M);
+    }
 
-	@Override
-	public void insert(int x) {
-		start(new AAInsert(this, x));
-	}
+    @Override
+    public void insert(int x) {
+        start(new AAInsert(this, x));
+    }
 
-	@Override
-	public void find(int x) {
-		start(new BSTFind(this, x));
-	}
+    @Override
+    public void find(int x) {
+        start(new BSTFind(this, x));
+    }
 
-	@Override
-	public void delete(int x) {
-		start(new AADelete(this, x));
-	}
+    @Override
+    public void delete(int x) {
+        start(new AADelete(this, x));
+    }
 
-	public void setMode23(boolean set) {
-		mode23 = set;
-		// TODO reposition pokazi historiu (je to vobec potrebne?)
-		// reposition();
-	}
+    public void setMode23(boolean set) {
+        mode23 = set;
+        // TODO reposition pokazi historiu (je to vobec potrebne?)
+        // reposition();
+    }
 
-	public void skew(BSTNode w) {
-		if (w.getLeft() != null && w.getLeft().getLevel() == w.getLevel()) {
-			w = w.getLeft();
-			rotate(w);
-			reposition();
-		}
-	}
+    public void skew(BSTNode w) {
+        if (w.getLeft() != null && w.getLeft().getLevel() == w.getLevel()) {
+            w = w.getLeft();
+            rotate(w);
+            reposition();
+        }
+    }
 
-	public BSTNode split(BSTNode w) {
-		final BSTNode r = w.getRight();
-		if (r != null && r.getRight() != null
-				&& r.getRight().getLevel() == w.getLevel()) {
-			w = r;
-			rotate(w);
-			w.setLevel(w.getLevel() + 1);
-			reposition();
-		}
-		return w;
-	}
+    public BSTNode split(BSTNode w) {
+        final BSTNode r = w.getRight();
+        if (r != null && r.getRight() != null
+            && r.getRight().getLevel() == w.getLevel()) {
+            w = r;
+            rotate(w);
+            w.setLevel(w.getLevel() + 1);
+            reposition();
+        }
+        return w;
+    }
 
-	@Override
-	public void draw(View V) {
-		if (getRoot() != null) {
-			((AANode) getRoot()).drawTree2(V);
-		}
-	}
+    @Override
+    public void draw(View V) {
+        if (getRoot() != null) {
+            ((AANode) getRoot()).drawTree2(V);
+        }
+    }
 
-	@Override
-	public Layout getLayout() {
-		return Layout.COMPACT;
-	}
+    @Override
+    public Layout getLayout() {
+        return Layout.COMPACT;
+    }
 }

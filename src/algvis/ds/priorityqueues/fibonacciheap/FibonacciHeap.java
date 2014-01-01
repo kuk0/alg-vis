@@ -23,19 +23,19 @@ import algvis.ds.priorityqueues.lazybinomialheap.LazyBinomialHeap;
 import algvis.ui.VisPanel;
 
 public class FibonacciHeap extends LazyBinomialHeap {
-	public static String dsName = "fibheap";
+    public static String dsName = "fibheap";
 
-	@Override
-	public String getName() {
-		return "fibheap";
-	}
+    @Override
+    public String getName() {
+        return "fibheap";
+    }
 
-	public FibonacciHeap(VisPanel M) {
-		super(M);
-	}
+    public FibonacciHeap(VisPanel M) {
+        super(M);
+    }
 
-	@Override
-	public void decreaseKey(Node v, int delta) {
-		start(new FibHeapDecrKey(this, (BinHeapNode) v, delta));
-	}
+    @Override
+    public void decreaseKey(Node v, int delta) {
+        start(new FibHeapDecrKey(this, (BinHeapNode) v, delta));
+    }
 }

@@ -24,81 +24,81 @@ import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTInsert;
 
 public class RBInsert extends Algorithm {
-	private final RB T;
-	private final int K;
+    private final RB T;
+    private final int K;
 
-	public RBInsert(RB T, int x) {
-		super(T.panel);
-		this.T = T;
-		K = x;
-	}
+    public RBInsert(RB T, int x) {
+        super(T.panel);
+        this.T = T;
+        K = x;
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("insert", K);
-		final BSTInsert insert = new BSTInsert(T, new RBNode(T, K,
-				ZDepth.ACTIONNODE), this);
-		insert.runAlgorithm();
-		final HashMap<String, Object> insertResult = insert.getResult();
-		final boolean inserted = (Boolean) insertResult.get("inserted");
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("insert", K);
+        final BSTInsert insert = new BSTInsert(T, new RBNode(T, K,
+            ZDepth.ACTIONNODE), this);
+        insert.runAlgorithm();
+        final HashMap<String, Object> insertResult = insert.getResult();
+        final boolean inserted = (Boolean) insertResult.get("inserted");
 
-		if (inserted) {
-			// TODO komentar "ideme bublat" (nieco ako pri BSTDelete:
-			// "first we have to find a node")
-			pause();
+        if (inserted) {
+            // TODO komentar "ideme bublat" (nieco ako pri BSTDelete:
+            // "first we have to find a node")
+            pause();
 
-			// bubleme nahor
-			RBNode w = (RBNode) insertResult.get("v");
-			RBNode pw = w.getParent2();
-			while (!w.isRoot() && pw.isRed()) {
-				w.mark();
-				final boolean isleft = pw.isLeft();
-				final RBNode ppw = pw.getParent2();
-				RBNode y = (isleft ? ppw.getRight() : ppw.getLeft());
-				if (y == null) {
-					y = T.NULL;
-				}
-				if (y.isRed()) {
-					// case 1
-					addStep("rbinsertcase1");
-					pause();
-					pw.setRed(false);
-					y.setRed(false);
-					ppw.setRed(true);
-					w.unmark();
-					w = ppw;
-					w.mark();
-					pw = w.getParent2();
-					pause();
-				} else {
-					// case 2
-					if (isleft != w.isLeft()) {
-						addStep("rbinsertcase2");
-						pause();
-						T.rotate(w);
-						pause();
-					} else {
-						w.unmark();
-						w = w.getParent2();
-						w.mark();
-					}
-					pw = w.getParent2();
-					// case 3
-					addStep("rbinsertcase3");
-					pause();
-					w.setRed(false);
-					pw.setRed(true);
-					T.rotate(w);
-					pause();
-					w.unmark();
-					break;
-				}
-			}
+            // bubleme nahor
+            RBNode w = (RBNode) insertResult.get("v");
+            RBNode pw = w.getParent2();
+            while (!w.isRoot() && pw.isRed()) {
+                w.mark();
+                final boolean isleft = pw.isLeft();
+                final RBNode ppw = pw.getParent2();
+                RBNode y = (isleft ? ppw.getRight() : ppw.getLeft());
+                if (y == null) {
+                    y = T.NULL;
+                }
+                if (y.isRed()) {
+                    // case 1
+                    addStep("rbinsertcase1");
+                    pause();
+                    pw.setRed(false);
+                    y.setRed(false);
+                    ppw.setRed(true);
+                    w.unmark();
+                    w = ppw;
+                    w.mark();
+                    pw = w.getParent2();
+                    pause();
+                } else {
+                    // case 2
+                    if (isleft != w.isLeft()) {
+                        addStep("rbinsertcase2");
+                        pause();
+                        T.rotate(w);
+                        pause();
+                    } else {
+                        w.unmark();
+                        w = w.getParent2();
+                        w.mark();
+                    }
+                    pw = w.getParent2();
+                    // case 3
+                    addStep("rbinsertcase3");
+                    pause();
+                    w.setRed(false);
+                    pw.setRed(true);
+                    T.rotate(w);
+                    pause();
+                    w.unmark();
+                    break;
+                }
+            }
 
-			w.unmark();
-			((RBNode) T.getRoot()).setRed(false);
-			T.reposition();
-			addNote("done");
-		}
-	}
+            w.unmark();
+            ((RBNode) T.getRoot()).setRed(false);
+            T.reposition();
+            addNote("done");
+        }
+    }
 }
