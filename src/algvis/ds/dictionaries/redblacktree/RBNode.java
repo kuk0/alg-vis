@@ -26,112 +26,112 @@ import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.view.View;
 
 public class RBNode extends BSTNode {
-	private boolean red = true;
+    private boolean red = true;
 
-	public RBNode(DataStructure D, int key, int x, int y) {
-		super(D, key, x, y);
-	}
+    public RBNode(DataStructure D, int key, int x, int y) {
+        super(D, key, x, y);
+    }
 
-	public RBNode(DataStructure D, int key, int zDepth) {
-		super(D, key, zDepth);
-	}
+    public RBNode(DataStructure D, int key, int zDepth) {
+        super(D, key, zDepth);
+    }
 
-	public boolean isRed() {
-		return red;
-	}
+    public boolean isRed() {
+        return red;
+    }
 
-	public void setRed(boolean red) {
-		this.red = red;
-	}
+    public void setRed(boolean red) {
+        this.red = red;
+    }
 
-	@Override
-	public RBNode getLeft() {
-		return (RBNode) super.getLeft();
-	}
+    @Override
+    public RBNode getLeft() {
+        return (RBNode) super.getLeft();
+    }
 
-	public RBNode getLeft2() {
-		final RBNode r = getLeft();
-		if (r == null) {
-			return ((RB) D).NULL;
-		} else {
-			return r;
-		}
-	}
+    public RBNode getLeft2() {
+        final RBNode r = getLeft();
+        if (r == null) {
+            return ((RB) D).NULL;
+        } else {
+            return r;
+        }
+    }
 
-	@Override
-	public RBNode getRight() {
-		return (RBNode) super.getRight();
-	}
+    @Override
+    public RBNode getRight() {
+        return (RBNode) super.getRight();
+    }
 
-	public RBNode getRight2() {
-		final RBNode r = getRight();
-		if (r == null) {
-			return ((RB) D).NULL;
-		} else {
-			return r;
-		}
-	}
+    public RBNode getRight2() {
+        final RBNode r = getRight();
+        if (r == null) {
+            return ((RB) D).NULL;
+        } else {
+            return r;
+        }
+    }
 
-	@Override
-	public RBNode getParent() {
-		return (RBNode) super.getParent();
-	}
+    @Override
+    public RBNode getParent() {
+        return (RBNode) super.getParent();
+    }
 
-	public RBNode getParent2() {
-		final RBNode p = getParent();
-		if (p == null) {
-			return ((RB) D).NULL;
-		} else {
-			return p;
-		}
-	}
+    public RBNode getParent2() {
+        final RBNode p = getParent();
+        if (p == null) {
+            return ((RB) D).NULL;
+        } else {
+            return p;
+        }
+    }
 
-	@Override
-	public void draw(View v) {
-		if (state == Node.INVISIBLE || getKey() == NULL) {
-			return;
-		}
-		// TODO check
-		setColor(isRed() ? NodeColor.RED : NodeColor.BLACK);
-		super.draw(v);
-	}
+    @Override
+    public void draw(View v) {
+        if (state == Node.INVISIBLE || getKey() == NULL) {
+            return;
+        }
+        // TODO check
+        setColor(isRed() ? NodeColor.RED : NodeColor.BLACK);
+        super.draw(v);
+    }
 
-	void drawBigNodes(View v) {
-		if (getKey() == NULL) {
-			return;
-		}
-		if (getLeft() != null) {
-			getLeft().drawBigNodes(v);
-		}
-		if (getRight() != null) {
-			getRight().drawBigNodes(v);
-		}
-		if (isRed() && getParent() != null) {
-			v.drawWideLine(x, y, getParent().x, getParent().y);
-		} else {
-			v.drawWideLine(x - 1, y, x + 1, y);
-		}
-	}
+    void drawBigNodes(View v) {
+        if (getKey() == NULL) {
+            return;
+        }
+        if (getLeft() != null) {
+            getLeft().drawBigNodes(v);
+        }
+        if (getRight() != null) {
+            getRight().drawBigNodes(v);
+        }
+        if (isRed() && getParent() != null) {
+            v.drawWideLine(x, y, getParent().x, getParent().y);
+        } else {
+            v.drawWideLine(x - 1, y, x + 1, y);
+        }
+    }
 
-	public void drawRBTree(View v) {
-		if (((RB) D).mode24) {
-			drawBigNodes(v);
-		}
-		drawTree(v);
-	}
+    public void drawRBTree(View v) {
+        if (((RB) D).mode24) {
+            drawBigNodes(v);
+        }
+        drawTree(v);
+    }
 
-	@Override
-	public void storeState(Hashtable<Object, Object> state) {
-		super.storeState(state);
-		HashtableStoreSupport.store(state, hash + "red", red);
-	}
+    @Override
+    public void storeState(Hashtable<Object, Object> state) {
+        super.storeState(state);
+        HashtableStoreSupport.store(state, hash + "red", red);
+    }
 
-	@Override
-	public void restoreState(Hashtable<?, ?> state) {
-		super.restoreState(state);
-		final Object red = state.get(hash + "red");
-		if (red != null) {
-			this.red = (Boolean) HashtableStoreSupport.restore(red);
-		}
-	}
+    @Override
+    public void restoreState(Hashtable<?, ?> state) {
+        super.restoreState(state);
+        final Object red = state.get(hash + "red");
+        if (red != null) {
+            this.red = (Boolean) HashtableStoreSupport.restore(red);
+        }
+    }
 }

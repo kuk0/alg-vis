@@ -21,43 +21,43 @@ import algvis.core.visual.ZDepth;
 
 public class SplayFind extends SplayAlg {
 
-	public SplayFind(SplayTree T, int x) {
-		super(T, x);
-	}
+    public SplayFind(SplayTree T, int x) {
+        super(T, x);
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("find", K);
-		final SplayNode v = new SplayNode(T, K, ZDepth.ACTIONNODE);
-		v.setColor(NodeColor.FIND);
-		addToScene(v);
-		if (T.getRoot() == null) {
-			v.goToRoot();
-			addStep("bstfindempty");
-			pause();
-			v.goDown();
-			v.setColor(NodeColor.NOTFOUND);
-			addStep("bstfindnotfound");
-		} else {
-			v.goAboveRoot();
-			final SplayNode w = find(K);
-			splay(w);
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("find", K);
+        final SplayNode v = new SplayNode(T, K, ZDepth.ACTIONNODE);
+        v.setColor(NodeColor.FIND);
+        addToScene(v);
+        if (T.getRoot() == null) {
+            v.goToRoot();
+            addStep("bstfindempty");
+            pause();
+            v.goDown();
+            v.setColor(NodeColor.NOTFOUND);
+            addStep("bstfindnotfound");
+        } else {
+            v.goAboveRoot();
+            final SplayNode w = find(K);
+            splay(w);
 
-			addStep("splayinroot");
-			pause();
+            addStep("splayinroot");
+            pause();
 
-			w.setColor(NodeColor.NORMAL);
-			v.goToRoot();
-			if (w.getKey() == v.getKey()) {
-				addStep("found");
-				v.setColor(NodeColor.FOUND);
-			} else {
-				addStep("notfound");
-				v.setColor(NodeColor.NOTFOUND);
-				v.goDown();
-			}
-			pause();
-		}
-		removeFromScene(v);
-	}
+            w.setColor(NodeColor.NORMAL);
+            v.goToRoot();
+            if (w.getKey() == v.getKey()) {
+                addStep("found");
+                v.setColor(NodeColor.FOUND);
+            } else {
+                addStep("notfound");
+                v.setColor(NodeColor.NOTFOUND);
+                v.goDown();
+            }
+            pause();
+        }
+        removeFromScene(v);
+    }
 }

@@ -17,5 +17,5 @@
 package algvis.internationalization;
 
 public interface LanguageListener {
-	public void languageChanged();
+    public void languageChanged();
 }

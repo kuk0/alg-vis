@@ -22,23 +22,23 @@ import algvis.ui.DictButtons;
 import algvis.ui.VisPanel;
 
 public class TreapPanel extends VisPanel {
-	private static final long serialVersionUID = -6193823024855399059L;
-	public static Class<? extends DataStructure> DS = Treap.class;
+    private static final long serialVersionUID = -6193823024855399059L;
+    public static Class<? extends DataStructure> DS = Treap.class;
 
-	public TreapPanel(Settings S) {
-		super(S);
-	}
+    public TreapPanel(Settings S) {
+        super(S);
+    }
 
-	@Override
-	public void initDS() {
-		D = new Treap(this);
-		scene.add(D);
-		buttons = new DictButtons(this);
-	}
+    @Override
+    public void initDS() {
+        D = new Treap(this);
+        scene.add(D);
+        buttons = new DictButtons(this);
+    }
 
-	@Override
-	public void start() {
-		super.start();
-		D.random(20);
-	}
+    @Override
+    public void start() {
+        super.start();
+        D.random(20);
+    }
 }

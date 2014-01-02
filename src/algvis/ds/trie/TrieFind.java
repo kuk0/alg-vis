@@ -20,79 +20,79 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class TrieFind extends Algorithm {
-	private final Trie T;
-	private String s;
-	private TrieWordNode hw;
+    private final Trie T;
+    private String s;
+    private TrieWordNode hw;
 
-	public TrieFind(Trie T, String s) {
-		super(T.panel);
-		this.T = T;
-		this.s = s;
-	}
+    public TrieFind(Trie T, String s) {
+        super(T.panel);
+        this.T = T;
+        this.s = s;
+    }
 
-	void beforeReturn() {
-		removeFromScene(hw);
-		T.clearExtraColor();
-		addNote("done");
-	}
+    void beforeReturn() {
+        removeFromScene(hw);
+        T.clearExtraColor();
+        addNote("done");
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("triefind", s.substring(0, s.length() - 1));
-		if (s.compareTo("$") == 0) {
-			addNote("badword");
-		}
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("triefind", s.substring(0, s.length() - 1));
+        if (s.compareTo("$") == 0) {
+            addNote("badword");
+        }
 
-		TrieNode v = T.getRoot();
-		addNote("triefindnote");
-		addStep("trierootstart");
-		v.mark();
-		pause();
-		v.unmark();
-		hw = new TrieWordNode(T, s);
-		addToScene(hw);
-		hw.setColor(NodeColor.CACHED);
-		hw.goNextTo(v);
+        TrieNode v = T.getRoot();
+        addNote("triefindnote");
+        addStep("trierootstart");
+        v.mark();
+        pause();
+        v.unmark();
+        hw = new TrieWordNode(T, s);
+        addToScene(hw);
+        hw.setColor(NodeColor.CACHED);
+        hw.goNextTo(v);
 
-		while (s.compareTo("$") != 0) {
-			TrieNode wd = v.getChild();
-			while (wd != null) {
-				wd.setColor(NodeColor.FIND);
-				wd = wd.getRight();
-			}
-			wd = v.getChild();
+        while (s.compareTo("$") != 0) {
+            TrieNode wd = v.getChild();
+            while (wd != null) {
+                wd.setColor(NodeColor.FIND);
+                wd = wd.getRight();
+            }
+            wd = v.getChild();
 
-			final char ch = s.charAt(0);
-			hw.setAndGoNextTo(s, v);
-			final TrieNode w = v.getChildWithCH(ch);
-			if (w == null) {
-				while (wd != null) {
-					wd.setColor(NodeColor.NORMAL);
-					wd = wd.getRight();
-				}
-				addStep("triefindending1", "" + ch);
-				pause();
-				beforeReturn();
-				return;
-			}
-			addStep("triefindmovedown", "" + ch);
-			pause();
-			while (wd != null) {
-				wd.setColor(NodeColor.NORMAL);
-				wd = wd.getRight();
-			}
-			v = w;
-			v.setColor(NodeColor.CACHED);
-			s = s.substring(1);
-		}
-		hw.setAndGoNextTo(s, v);
-		final TrieNode w = v.getChildWithCH('$');
-		if (w == null) {
-			addStep("triefindending2");
-		} else {
-			addStep("triefindsucc");
-		}
-		pause();
-		beforeReturn();
-	}
+            final char ch = s.charAt(0);
+            hw.setAndGoNextTo(s, v);
+            final TrieNode w = v.getChildWithCH(ch);
+            if (w == null) {
+                while (wd != null) {
+                    wd.setColor(NodeColor.NORMAL);
+                    wd = wd.getRight();
+                }
+                addStep("triefindending1", "" + ch);
+                pause();
+                beforeReturn();
+                return;
+            }
+            addStep("triefindmovedown", "" + ch);
+            pause();
+            while (wd != null) {
+                wd.setColor(NodeColor.NORMAL);
+                wd = wd.getRight();
+            }
+            v = w;
+            v.setColor(NodeColor.CACHED);
+            s = s.substring(1);
+        }
+        hw.setAndGoNextTo(s, v);
+        final TrieNode w = v.getChildWithCH('$');
+        if (w == null) {
+            addStep("triefindending2");
+        } else {
+            addStep("triefindsucc");
+        }
+        pause();
+        beforeReturn();
+    }
 }

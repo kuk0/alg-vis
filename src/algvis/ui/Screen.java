@@ -32,76 +32,76 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Screen extends JPanel {
-	private static final long serialVersionUID = -8279768206774288161L;
-	// obrazovka (ak nie je suspendnuta) neustale vykresluje poziciu
-	private final Timer timer;
-	private DataStructure D = null;
-	private final VisPanel panel;
+    private static final long serialVersionUID = -8279768206774288161L;
+    // obrazovka (ak nie je suspendnuta) neustale vykresluje poziciu
+    private final Timer timer;
+    private DataStructure D = null;
+    private final VisPanel panel;
 
-	private Image I;
-	private Graphics G;
-	private Dimension size = new Dimension(0,0);
+    private Image I;
+    private Graphics G;
+    private Dimension size = new Dimension(0, 0);
 
-	public final View V;
+    public final View V;
 
-	public Screen(VisPanel panel) {
-		this.panel = panel;
-		V = new View(this);
-		timer = new Timer(50, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent evt) {
-				repaint();
-			}
-		});
-	}
+    public Screen(VisPanel panel) {
+        this.panel = panel;
+        V = new View(this);
+        timer = new Timer(50, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                repaint();
+            }
+        });
+    }
 
-	public void setDS(DataStructure D) {
-		this.D = D;
-	}
+    public void setDS(DataStructure D) {
+        this.D = D;
+    }
 
-	void check_size() {
-		final Dimension d = getSize();
-		if (I == null || d.width != size.width || d.height != size.height) {
-			I = createImage(d.width, d.height);
-			G = I.getGraphics();
-			V.setGraphics((Graphics2D) G, d.width, d.height);
-			size = d;
-		}
-	}
+    void check_size() {
+        final Dimension d = getSize();
+        if (I == null || d.width != size.width || d.height != size.height) {
+            I = createImage(d.width, d.height);
+            G = I.getGraphics();
+            V.setGraphics((Graphics2D) G, d.width, d.height);
+            size = d;
+        }
+    }
 
-	void clear() {
-		G.setColor(Color.white);
-		G.fillRect(0, 0, size.width, size.height);
-	}
+    void clear() {
+        G.setColor(Color.white);
+        G.fillRect(0, 0, size.width, size.height);
+    }
 
-	@Override
-	public void paintComponent(Graphics g) {
-		check_size();
-		clear();
-		if (D != null) {
-			V.startDrawing();
-			try {
-				panel.scene.move();
-				panel.scene.draw(V);
-			} catch (final ConcurrentModificationException ignored) {
-			}
-			V.endDrawing();
-			// V.resetView();
-		} else {
-			System.err.println("[DS null !]");
-		}
-		g.drawImage(I, 0, 0, null);
-	}
+    @Override
+    public void paintComponent(Graphics g) {
+        check_size();
+        clear();
+        if (D != null) {
+            V.startDrawing();
+            try {
+                panel.scene.move();
+                panel.scene.draw(V);
+            } catch (final ConcurrentModificationException ignored) {
+            }
+            V.endDrawing();
+            // V.resetView();
+        } else {
+            System.err.println("[DS null !]");
+        }
+        g.drawImage(I, 0, 0, null);
+    }
 
-	public void suspend() {
-		timer.stop();
-	}
+    public void suspend() {
+        timer.stop();
+    }
 
-	public void resume() {
-		timer.start();
-	}
+    public void resume() {
+        timer.start();
+    }
 
-	public void start() {
-		timer.start();
-	}
+    public void start() {
+        timer.start();
+    }
 }

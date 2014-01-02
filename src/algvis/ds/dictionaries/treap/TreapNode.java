@@ -24,44 +24,44 @@ import algvis.core.NodeColor;
 import algvis.ds.dictionaries.bst.BSTNode;
 
 public class TreapNode extends BSTNode {
-	final double p;
+    final double p;
 
-	private TreapNode(DataStructure D, int key, int x, int y, int zDepth) {
-		super(D, key, x, y, zDepth);
-		p = Math.random();
-		bgPColor();
-	}
+    private TreapNode(DataStructure D, int key, int x, int y, int zDepth) {
+        super(D, key, x, y, zDepth);
+        p = Math.random();
+        bgPColor();
+    }
 
-	public TreapNode(DataStructure D, int key, int zDepth) {
-		this(D, key, 0, Node.UPY, zDepth);
-	}
+    public TreapNode(DataStructure D, int key, int zDepth) {
+        this(D, key, 0, Node.UPY, zDepth);
+    }
 
-	@Override
-	public TreapNode getLeft() {
-		return (TreapNode) super.getLeft();
-	}
+    @Override
+    public TreapNode getLeft() {
+        return (TreapNode) super.getLeft();
+    }
 
-	@Override
-	public TreapNode getRight() {
-		return (TreapNode) super.getRight();
-	}
+    @Override
+    public TreapNode getRight() {
+        return (TreapNode) super.getRight();
+    }
 
-	@Override
-	public TreapNode getParent() {
-		return (TreapNode) super.getParent();
-	}
+    @Override
+    public TreapNode getParent() {
+        return (TreapNode) super.getParent();
+    }
 
-	void bgPColor() {
-		bgColor(new Color(255, 255 - (int) Math.round(100 * p), 0));
-	}
+    void bgPColor() {
+        bgColor(new Color(255, 255 - (int) Math.round(100 * p), 0));
+    }
 
-	@Override
-	public void setColor(NodeColor color) {
-		if (color == NodeColor.NORMAL) {
-			bgPColor();
-			fgColor(color.fgColor);
-		} else {
-			super.setColor(color);
-		}
-	}
+    @Override
+    public void setColor(NodeColor color) {
+        if (color == NodeColor.NORMAL) {
+            bgPColor();
+            fgColor(color.fgColor);
+        } else {
+            super.setColor(color);
+        }
+    }
 }

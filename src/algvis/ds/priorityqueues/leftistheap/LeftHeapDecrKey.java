@@ -19,29 +19,29 @@ package algvis.ds.priorityqueues.leftistheap;
 import algvis.ui.InputField;
 
 public class LeftHeapDecrKey extends LeftHeapAlg {
-	private final int delta;
+    private final int delta;
 
-	public LeftHeapDecrKey(LeftHeap H, LeftHeapNode v, int delta) {
-		super(H);
-		this.v = v;
-		this.delta = delta;
-	}
+    public LeftHeapDecrKey(LeftHeap H, LeftHeapNode v, int delta) {
+        super(H);
+        this.v = v;
+        this.delta = delta;
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader(H.minHeap ? "decreasekey" : "increasekey");
-		if (H.minHeap) {
-			v.setKey(v.getKey() - delta);
-			if (v.getKey() < 1) {
-				v.setKey(1);
-			}
-		} else {
-			v.setKey(v.getKey() + delta);
-			if (v.getKey() > InputField.MAX) {
-				v.setKey(InputField.MAX);
-			}
-		}
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader(H.minHeap ? "decreasekey" : "increasekey");
+        if (H.minHeap) {
+            v.setKey(v.getKey() - delta);
+            if (v.getKey() < 1) {
+                v.setKey(1);
+            }
+        } else {
+            v.setKey(v.getKey() + delta);
+            if (v.getKey() > InputField.MAX) {
+                v.setKey(InputField.MAX);
+            }
+        }
 
-		bubbleup(v);
-	}
+        bubbleup(v);
+    }
 }

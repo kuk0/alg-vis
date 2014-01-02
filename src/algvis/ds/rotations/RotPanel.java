@@ -21,23 +21,23 @@ import algvis.core.Settings;
 import algvis.ui.NewVisPanel;
 
 public class RotPanel extends NewVisPanel {
-	private static final long serialVersionUID = -5154501209600594791L;
-	public static Class<? extends DataStructure> DS = Rotations.class;
+    private static final long serialVersionUID = -5154501209600594791L;
+    public static Class<? extends DataStructure> DS = Rotations.class;
 
-	public RotPanel(Settings S) {
-		super(S);
-	}
+    public RotPanel(Settings S) {
+        super(S);
+    }
 
-	@Override
-	public void initDS() {
-		D = new Rotations(this);
-		scene.add(D);
-		buttons = new RotButtons(this);
-	}
+    @Override
+    public void initDS() {
+        D = new Rotations(this);
+        scene.add(D);
+        buttons = new RotButtons(this);
+    }
 
-	@Override
-	public void start() {
-		super.start();
-		D.random(20);
-	}
+    @Override
+    public void start() {
+        super.start();
+        D.random(20);
+    }
 }

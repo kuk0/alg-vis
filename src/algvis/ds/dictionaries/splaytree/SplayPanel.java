@@ -22,23 +22,23 @@ import algvis.ui.DictButtons;
 import algvis.ui.VisPanel;
 
 public class SplayPanel extends VisPanel {
-	private static final long serialVersionUID = 7896254510404637883L;
-	public static Class<? extends DataStructure> DS = SplayTree.class;
+    private static final long serialVersionUID = 7896254510404637883L;
+    public static Class<? extends DataStructure> DS = SplayTree.class;
 
-	public SplayPanel(Settings S) {
-		super(S);
-	}
+    public SplayPanel(Settings S) {
+        super(S);
+    }
 
-	@Override
-	public void initDS() {
-		D = new SplayTree(this);
-		scene.add(D);
-		buttons = new DictButtons(this);
-	}
+    @Override
+    public void initDS() {
+        D = new SplayTree(this);
+        scene.add(D);
+        buttons = new DictButtons(this);
+    }
 
-	@Override
-	public void start() {
-		super.start();
-		D.random(20);
-	}
+    @Override
+    public void start() {
+        super.start();
+        D.random(20);
+    }
 }

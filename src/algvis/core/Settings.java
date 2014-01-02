@@ -23,25 +23,25 @@ import algvis.ui.view.Layout;
 import algvis.ui.view.LayoutListener;
 
 public class Settings {
-	public Layout layout;
-	private final List<LayoutListener> listeners = new LinkedList<LayoutListener>();
+    public Layout layout;
+    private final List<LayoutListener> listeners = new LinkedList<LayoutListener>();
 
-	public Settings() {
-		layout = Layout.SIMPLE;
-	}
+    public Settings() {
+        layout = Layout.SIMPLE;
+    }
 
-	public void setLayout(String s) {
-		if ("compact".equals(s)) {
-			layout = Layout.COMPACT;
-		} else {
-			layout = Layout.SIMPLE;
-		}
-		for (final LayoutListener l : listeners) {
-			l.changeLayout();
-		}
-	}
+    public void setLayout(String s) {
+        if ("compact".equals(s)) {
+            layout = Layout.COMPACT;
+        } else {
+            layout = Layout.SIMPLE;
+        }
+        for (final LayoutListener l : listeners) {
+            l.changeLayout();
+        }
+    }
 
-	public void addLayoutListener(LayoutListener l) {
-		listeners.add(l);
-	}
+    public void addLayoutListener(LayoutListener l) {
+        listeners.add(l);
+    }
 }

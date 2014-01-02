@@ -19,26 +19,26 @@ package algvis.internationalization;
 import javax.swing.JMenu;
 
 public class IMenu extends JMenu implements LanguageListener {
-	private static final long serialVersionUID = -6631532284442911505L;
-	private Stringable t;
+    private static final long serialVersionUID = -6631532284442911505L;
+    private Stringable t;
 
-	public IMenu(Stringable text) {
-		super(text.getString());
-		this.t = text;
-		Languages.addListener(this);
-	}
+    public IMenu(Stringable text) {
+        super(text.getString());
+        this.t = text;
+        Languages.addListener(this);
+    }
 
-	public IMenu(String text) {
-		this(new IString(text));
-	}
+    public IMenu(String text) {
+        this(new IString(text));
+    }
 
-	public void setT(Stringable text) {
-		t = text;
-		setText(t.getString());
-	}
+    public void setT(Stringable text) {
+        t = text;
+        setText(t.getString());
+    }
 
-	@Override
-	public void languageChanged() {
-		setText(t.getString());
-	}
+    @Override
+    public void languageChanged() {
+        setText(t.getString());
+    }
 }

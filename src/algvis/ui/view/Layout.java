@@ -17,5 +17,5 @@
 package algvis.ui.view;
 
 public enum Layout {
-	SIMPLE, COMPACT
+    SIMPLE, COMPACT
 }

@@ -19,50 +19,50 @@ package algvis.ds.priorityqueues.pairingheap;
 import algvis.ui.InputField;
 
 public class PairHeapDecrKey extends PairHeapAlg {
-	private final int delta;
+    private final int delta;
 
-	public PairHeapDecrKey(PairingHeap D, PairHeapNode v, int delta) {
-		super(D);
-		this.v = v;
-		this.delta = delta;
-	}
+    public PairHeapDecrKey(PairingHeap D, PairHeapNode v, int delta) {
+        super(D);
+        this.v = v;
+        this.delta = delta;
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader(H.minHeap ? "decreasekey" : "increasekey");
-		if (H.minHeap) {
-			v.setKey(v.getKey() - delta);
-			if (v.getKey() < 1) {
-				v.setKey(1);
-			}
-		} else {
-			v.setKey(v.getKey() + delta);
-			if (v.getKey() > InputField.MAX) {
-				v.setKey(InputField.MAX);
-			}
-		}
-		if (!v.isRoot()) {
-			if (H.minHeap) {
-				addStep("pairdecr"); // zvysili sme hodnotu, dieta odtrhneme a
-				// prilinkujeme
-			} else {
-				addStep("pairincr");
-			}
-			H.root[0] = v;
-			H.root[0].mark();
-			pause();
-			v.getParent().deleteChild(v);
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader(H.minHeap ? "decreasekey" : "increasekey");
+        if (H.minHeap) {
+            v.setKey(v.getKey() - delta);
+            if (v.getKey() < 1) {
+                v.setKey(1);
+            }
+        } else {
+            v.setKey(v.getKey() + delta);
+            if (v.getKey() > InputField.MAX) {
+                v.setKey(InputField.MAX);
+            }
+        }
+        if (!v.isRoot()) {
+            if (H.minHeap) {
+                addStep("pairdecr"); // zvysili sme hodnotu, dieta odtrhneme a
+                // prilinkujeme
+            } else {
+                addStep("pairincr");
+            }
+            H.root[0] = v;
+            H.root[0].mark();
+            pause();
+            v.getParent().deleteChild(v);
 
-			H.root[H.active].mark();
-			H.reposition();
-			pause();
-			H.root[0].unmark();
-			H.root[H.active].unmark();
-			link(H.active, 0);
-			H.root[0] = null;
-			H.reposition();
-		}
+            H.root[H.active].mark();
+            H.reposition();
+            pause();
+            H.root[0].unmark();
+            H.root[H.active].unmark();
+            link(H.active, 0);
+            H.root[0] = null;
+            H.reposition();
+        }
 
-		addNote("done");
-	}
+        addNote("done");
+    }
 }

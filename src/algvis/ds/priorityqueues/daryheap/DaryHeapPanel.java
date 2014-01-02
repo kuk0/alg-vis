@@ -21,23 +21,23 @@ import algvis.core.Settings;
 import algvis.ui.VisPanel;
 
 public class DaryHeapPanel extends VisPanel {
-	private static final long serialVersionUID = 5387116424458217311L;
-	public static Class<? extends DataStructure> DS = DaryHeap.class;
+    private static final long serialVersionUID = 5387116424458217311L;
+    public static Class<? extends DataStructure> DS = DaryHeap.class;
 
-	public DaryHeapPanel(Settings S) {
-		super(S);
-	}
+    public DaryHeapPanel(Settings S) {
+        super(S);
+    }
 
-	@Override
-	public void initDS() {
-		D = new DaryHeap(this);
-		scene.add(D);
-		buttons = new DaryHeapButtons(this);
-	}
+    @Override
+    public void initDS() {
+        D = new DaryHeap(this);
+        scene.add(D);
+        buttons = new DaryHeapButtons(this);
+    }
 
-	@Override
-	public void start() {
-		super.start();
-		D.random(14);
-	}
+    @Override
+    public void start() {
+        super.start();
+        D.random(14);
+    }
 }

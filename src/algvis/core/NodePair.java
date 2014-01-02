@@ -17,24 +17,24 @@
 package algvis.core;
 
 public class NodePair<T extends Node> {
-	public T left = null;
-	public T right = null;
+    public T left = null;
+    public T right = null;
 
-	public NodePair() {
-	}
+    public NodePair() {
+    }
 
-	public NodePair(T left, T right) {
-		this.left = left;
-		this.right = right;
-	}
+    public NodePair(T left, T right) {
+        this.left = left;
+        this.right = right;
+    }
 
-	@Override
-	public boolean equals(Object other) {
-		if (other instanceof NodePair<?>) {
-			final NodePair<?> that = (NodePair<?>) other;
-			return (left.equals(that.left)) && (right.equals(that.right));
-		} else {
-			return false;
-		}
-	}
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof NodePair<?>) {
+            final NodePair<?> that = (NodePair<?>) other;
+            return (left.equals(that.left)) && (right.equals(that.right));
+        } else {
+            return false;
+        }
+    }
 }

@@ -23,75 +23,75 @@ import algvis.core.visual.ZDepth;
 
 public class SkipInsert extends SkipAlg {
 
-	public SkipInsert(SkipList L, int x) {
-		super(L, x);
-	}
+    public SkipInsert(SkipList L, int x) {
+        super(L, x);
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("insert", K);
-		p = new SkipNode[L.height];
-		v = new SkipNode(L, K, ZDepth.ACTIONNODE);
-		v.setColor(NodeColor.INSERT);
-		addToScene(v);
-		addStep("skipinsertstart");
-		SkipNode w = find();
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("insert", K);
+        p = new SkipNode[L.height];
+        v = new SkipNode(L, K, ZDepth.ACTIONNODE);
+        v.setColor(NodeColor.INSERT);
+        addToScene(v);
+        addStep("skipinsertstart");
+        SkipNode w = find();
 
-		if (w.getKey() == v.getKey()) {
-			addStep("alreadythere");
-			v.setColor(NodeColor.NOTFOUND);
-			v.goDown();
-			removeFromScene(v);
-			pause();
-			addNote("done");
-			return;
-		}
-		final SkipNode inserted = v;
+        if (w.getKey() == v.getKey()) {
+            addStep("alreadythere");
+            v.setColor(NodeColor.NOTFOUND);
+            v.goDown();
+            removeFromScene(v);
+            pause();
+            addNote("done");
+            return;
+        }
+        final SkipNode inserted = v;
 
-		L.n++;
-		addStep("skipinsertafter");
-		pause();
-		SkipNode z, oldv = null;
-		addNote("skiplist-tossing");
-		int i = 0;
-		do {
-			if (i > 0) {
-				addStep("skiplist-head", i);
-				L.e++;
-			}
-			addToScene(v);
-			if (i < L.height) {
-				w = p[i++];
-				z = w.getRight();
-				w.linkright(v);
-				z.linkleft(v);
-				if (oldv != null) {
-					v.linkdown(oldv);
-				}
-				L.reposition();
-				oldv = v;
-				v = new SkipNode(L, v.getKey(), v.tox, -10);
-			} else {
-				v.linkdown(oldv);
-				final SkipNode oldr = L.getRoot(), olds = L.sent;
-				v.linkleft(L.setRoot(new SkipNode(L, -Node.INF, L.getZDepth())));
-				v.linkright(L.sent = new SkipNode(L, Node.INF, L.getZDepth()));
-				L.getRoot().linkdown(oldr);
-				L.sent.linkdown(olds);
-				L.reposition();
-				oldv = v;
-				v = new SkipNode(L, v.getKey(), v.tox, -10);
-				++i;
-				++L.height;
-			}
-			removeFromScene(oldv);
-			pause();
-		} while (MyRandom.heads());
+        L.n++;
+        addStep("skipinsertafter");
+        pause();
+        SkipNode z, oldv = null;
+        addNote("skiplist-tossing");
+        int i = 0;
+        do {
+            if (i > 0) {
+                addStep("skiplist-head", i);
+                L.e++;
+            }
+            addToScene(v);
+            if (i < L.height) {
+                w = p[i++];
+                z = w.getRight();
+                w.linkright(v);
+                z.linkleft(v);
+                if (oldv != null) {
+                    v.linkdown(oldv);
+                }
+                L.reposition();
+                oldv = v;
+                v = new SkipNode(L, v.getKey(), v.tox, -10);
+            } else {
+                v.linkdown(oldv);
+                final SkipNode oldr = L.getRoot(), olds = L.sent;
+                v.linkleft(L.setRoot(new SkipNode(L, -Node.INF, L.getZDepth())));
+                v.linkright(L.sent = new SkipNode(L, Node.INF, L.getZDepth()));
+                L.getRoot().linkdown(oldr);
+                L.sent.linkdown(olds);
+                L.reposition();
+                oldv = v;
+                v = new SkipNode(L, v.getKey(), v.tox, -10);
+                ++i;
+                ++L.height;
+            }
+            removeFromScene(oldv);
+            pause();
+        } while (MyRandom.heads());
 
-		addStep("skiplist-tail", i);
-		pause();
-		addNote("done");
+        addStep("skiplist-tail", i);
+        pause();
+        addNote("done");
 
-		inserted.setColor(NodeColor.NORMAL);
-	}
+        inserted.setColor(NodeColor.NORMAL);
+    }
 }

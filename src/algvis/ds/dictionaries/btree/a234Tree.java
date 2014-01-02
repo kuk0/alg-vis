@@ -19,15 +19,15 @@ package algvis.ds.dictionaries.btree;
 import algvis.ui.VisPanel;
 
 public class a234Tree extends BTree {
-	public static String dsName = "234tree";
+    public static String dsName = "234tree";
 
-	@Override
-	public String getName() {
-		return "234tree";
-	}
+    @Override
+    public String getName() {
+        return "234tree";
+    }
 
-	public a234Tree(VisPanel M) {
-		super(M);
-		order = 4;
-	}
+    public a234Tree(VisPanel M) {
+        super(M);
+        order = 4;
+    }
 }

@@ -22,8 +22,7 @@ public class TextBubble extends VisualElement {
         this.y = y;
         this.w = w;
         this.alpha = 0;
-        this.toalpha = (256 / DA) * DA;
-        ;
+        this.toalpha = (256 / DA) * DA;;
         this.pos = pos;
     }
 
@@ -53,7 +52,7 @@ public class TextBubble extends VisualElement {
 
     @Override
     protected boolean isAnimationDone() {
-        return toalpha == 0 && alpha == 0;  //state == 1 && alpha <= 0;
+        return toalpha == 0 && alpha == 0; //state == 1 && alpha <= 0;
     }
 
     boolean init_hack = true;

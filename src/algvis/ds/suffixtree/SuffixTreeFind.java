@@ -24,90 +24,90 @@ import algvis.core.TreeNode;
 import algvis.ds.trie.TrieWordNode;
 
 public class SuffixTreeFind extends Algorithm {
-	private final SuffixTree T;
-	private final String s;
-	private TrieWordNode hw;
+    private final SuffixTree T;
+    private final String s;
+    private TrieWordNode hw;
 
-	public SuffixTreeFind(SuffixTree T, String s) {
-		super(T.panel);
-		this.T = T;
-		this.s = s.substring(0, s.length() - 1);
-	}
+    public SuffixTreeFind(SuffixTree T, String s) {
+        super(T.panel);
+        this.T = T;
+        this.s = s.substring(0, s.length() - 1);
+    }
 
-	void beforeReturn() {
-		removeFromScene(hw);
-		T.clearExtraColor();
-		addNote("done");
-	}
+    void beforeReturn() {
+        removeFromScene(hw);
+        T.clearExtraColor();
+        addNote("done");
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("triefind", s);
-		if (s.length() == 0) {
-			// addNote("badword");
-		}
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("triefind", s);
+        if (s.length() == 0) {
+            // addNote("badword");
+        }
 
-		SuffixTreeNode v = T.getRoot();
-		// addNote("triefindnote");
-		addStep("trierootstart");
-		v.mark();
-		pause();
-		v.unmark();
-		hw = new TrieWordNode(T, s);
-		addToScene(hw);
-		hw.setColor(NodeColor.CACHED);
-		hw.goNextTo(v);
+        SuffixTreeNode v = T.getRoot();
+        // addNote("triefindnote");
+        addStep("trierootstart");
+        v.mark();
+        pause();
+        v.unmark();
+        hw = new TrieWordNode(T, s);
+        addToScene(hw);
+        hw.setColor(NodeColor.CACHED);
+        hw.goNextTo(v);
 
-		int i = 0;
-		while (i < s.length()) {
-			SuffixTreeNode wd = v.getChild();
-			while (wd != null) {
-				wd.setColor(NodeColor.FIND);
-				wd = wd.getRight();
-			}
-			wd = v.getChild();
+        int i = 0;
+        while (i < s.length()) {
+            SuffixTreeNode wd = v.getChild();
+            while (wd != null) {
+                wd.setColor(NodeColor.FIND);
+                wd = wd.getRight();
+            }
+            wd = v.getChild();
 
-			final char ch = s.charAt(i);
-			hw.setAndGoNextTo(s.substring(i), v);
-			final SuffixTreeNode w = v.getChildWithCH(ch);
-			if (w == null) {
-				while (wd != null) {
-					wd.setColor(NodeColor.NORMAL);
-					wd = wd.getRight();
-				}
-				addStep("triefindending1", "" + ch);
-				pause();
-				beforeReturn();
-				return;
-			}
-			addStep("triefindmovedown", "" + ch);
-			pause();
-			v = w;
-			while (wd != null) {
-				wd.setColor(NodeColor.NORMAL);
-				wd = wd.getRight();
-			}
-			v.setColor(NodeColor.CACHED);
-			++i;
-		}
-		hw.setAndGoNextTo("", v);
-		final Vector<TreeNode> leaves = v.getLeaves();
-		final Vector<Integer> pos = new Vector<Integer>();
-		for (final TreeNode w : leaves) {
-			final int p = w.getKey();
-			w.mark();
-			T.str.mark(p);
-			T.str.setColor(NodeColor.FOUND.bgColor, p - 1, p - 1 + s.length());
-			pos.add(p);
-		}
-		addStep("suffixtree-found", s, "" + leaves.size());
+            final char ch = s.charAt(i);
+            hw.setAndGoNextTo(s.substring(i), v);
+            final SuffixTreeNode w = v.getChildWithCH(ch);
+            if (w == null) {
+                while (wd != null) {
+                    wd.setColor(NodeColor.NORMAL);
+                    wd = wd.getRight();
+                }
+                addStep("triefindending1", "" + ch);
+                pause();
+                beforeReturn();
+                return;
+            }
+            addStep("triefindmovedown", "" + ch);
+            pause();
+            v = w;
+            while (wd != null) {
+                wd.setColor(NodeColor.NORMAL);
+                wd = wd.getRight();
+            }
+            v.setColor(NodeColor.CACHED);
+            ++i;
+        }
+        hw.setAndGoNextTo("", v);
+        final Vector<TreeNode> leaves = v.getLeaves();
+        final Vector<Integer> pos = new Vector<Integer>();
+        for (final TreeNode w : leaves) {
+            final int p = w.getKey();
+            w.mark();
+            T.str.mark(p);
+            T.str.setColor(NodeColor.FOUND.bgColor, p - 1, p - 1 + s.length());
+            pos.add(p);
+        }
+        addStep("suffixtree-found", s, "" + leaves.size());
 
-		pause();
-		for (final TreeNode w : leaves) {
-			w.unmark();
-			T.str.unmark(w.getKey());
-		}
-		T.str.setColor(NodeColor.NORMAL.bgColor, 0, 99999);
-		beforeReturn();
-	}
+        pause();
+        for (final TreeNode w : leaves) {
+            w.unmark();
+            T.str.unmark(w.getKey());
+        }
+        T.str.setColor(NodeColor.NORMAL.bgColor, 0, 99999);
+        beforeReturn();
+    }
 }

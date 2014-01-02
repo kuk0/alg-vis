@@ -19,21 +19,21 @@ package algvis.internationalization;
 import javax.swing.JRadioButton;
 
 public class IRadioButton extends JRadioButton implements LanguageListener {
-	private static final long serialVersionUID = -8675513915804080311L;
-	private final Stringable t;
+    private static final long serialVersionUID = -8675513915804080311L;
+    private final Stringable t;
 
-	public IRadioButton(Stringable text) {
-		super(text.getString());
-		this.t = text;
-		Languages.addListener(this);
-	}
+    public IRadioButton(Stringable text) {
+        super(text.getString());
+        this.t = text;
+        Languages.addListener(this);
+    }
 
-	public IRadioButton(String text) {
-		this(new IString(text));
-	}
+    public IRadioButton(String text) {
+        this(new IString(text));
+    }
 
-	@Override
-	public void languageChanged() {
-		setText(t.getString());
-	}
+    @Override
+    public void languageChanged() {
+        setText(t.getString());
+    }
 }

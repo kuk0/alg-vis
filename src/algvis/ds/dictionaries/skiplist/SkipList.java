@@ -28,128 +28,128 @@ import algvis.ui.view.ClickListener;
 import algvis.ui.view.View;
 
 public class SkipList extends Dictionary implements ClickListener {
-	public static String dsName = "skiplist";
-	SkipNode sent;
-	int height = 1, n = 0, e = 0;
+    public static String dsName = "skiplist";
+    SkipNode sent;
+    int height = 1, n = 0, e = 0;
 
-	@Override
-	public String getName() {
-		return "skiplist";
-	}
+    @Override
+    public String getName() {
+        return "skiplist";
+    }
 
-	public SkipList(VisPanel M) {
-		super(M);
-		M.screen.V.setDS(this);
-		M.screen.V.align = Alignment.LEFT;
-		root = new SkipNode(this, -Node.INF, zDepth);
-		getRoot().linkright(sent = new SkipNode(this, Node.INF, zDepth));
-		reposition();
-	}
+    public SkipList(VisPanel M) {
+        super(M);
+        M.screen.V.setDS(this);
+        M.screen.V.align = Alignment.LEFT;
+        root = new SkipNode(this, -Node.INF, zDepth);
+        getRoot().linkright(sent = new SkipNode(this, Node.INF, zDepth));
+        reposition();
+    }
 
-	@Override
-	public void insert(int x) {
-		start(new SkipInsert(this, x));
-	}
+    @Override
+    public void insert(int x) {
+        start(new SkipInsert(this, x));
+    }
 
-	@Override
-	public void find(int x) {
-		start(new SkipFind(this, x));
-	}
+    @Override
+    public void find(int x) {
+        start(new SkipFind(this, x));
+    }
 
-	@Override
-	public void delete(int x) {
-		start(new SkipDelete(this, x));
-	}
+    @Override
+    public void delete(int x) {
+        start(new SkipDelete(this, x));
+    }
 
-	@Override
-	public void clear() {
-		if (n != 0) {
-			height = 1;
-			n = e = 0;
-			root = new SkipNode(this, -Node.INF, zDepth);
-			getRoot().linkright(sent = new SkipNode(this, Node.INF, zDepth));
-			setStats();
-			reposition();
-			// panel.screen.V.resetView(); TODO toto bolo v BST.clear()
-		}
-	}
+    @Override
+    public void clear() {
+        if (n != 0) {
+            height = 1;
+            n = e = 0;
+            root = new SkipNode(this, -Node.INF, zDepth);
+            getRoot().linkright(sent = new SkipNode(this, Node.INF, zDepth));
+            setStats();
+            reposition();
+            // panel.screen.V.resetView(); TODO toto bolo v BST.clear()
+        }
+    }
 
-	@Override
-	public String stats() {
-		if (getRoot() == null) {
-			return Languages.getString("size") + ": 0;   "
-					+ Languages.getString("height") + ": 0;   #"
-					+ Languages.getString("excess") + ": 0";
-		} else {
-			return Languages.getString("size") + ": " + n + ";   "
-					+ Languages.getString("height") + ": " + height + ";   #"
-					+ Languages.getString("excess") + ": " + e;
-		}
-	}
+    @Override
+    public String stats() {
+        if (getRoot() == null) {
+            return Languages.getString("size") + ": 0;   "
+                + Languages.getString("height") + ": 0;   #"
+                + Languages.getString("excess") + ": 0";
+        } else {
+            return Languages.getString("size") + ": " + n + ";   "
+                + Languages.getString("height") + ": " + height + ";   #"
+                + Languages.getString("excess") + ": " + e;
+        }
+    }
 
-	@Override
-	public void draw(View V) {
-		if (getRoot() != null) {
-			getRoot().drawSkipList(V);
-		}
-	}
+    @Override
+    public void draw(View V) {
+        if (getRoot() != null) {
+            getRoot().drawSkipList(V);
+        }
+    }
 
-	@Override
-	protected void move() {
-		if (getRoot() != null) {
-			getRoot().moveSkipList();
-		}
-	}
+    @Override
+    protected void move() {
+        if (getRoot() != null) {
+            getRoot().moveSkipList();
+        }
+    }
 
-	public void reposition() {
-		x1 = 0;
-		y1 = 0;
-		getRoot()._reposition();
-		panel.screen.V.setBounds(x1, y1, x2, y2);
-	}
+    public void reposition() {
+        x1 = 0;
+        y1 = 0;
+        getRoot()._reposition();
+        panel.screen.V.setBounds(x1, y1, x2, y2);
+    }
 
-	@Override
-	public void mouseClicked(int x, int y) {
-		if (getRoot() != null) {
-			final Node w = getRoot().find(x, y);
-			if (w != null) {
-				panel.buttons.I.setText("" + w.getKey());
-			}
-		}
-	}
+    @Override
+    public void mouseClicked(int x, int y) {
+        if (getRoot() != null) {
+            final Node w = getRoot().find(x, y);
+            if (w != null) {
+                panel.buttons.I.setText("" + w.getKey());
+            }
+        }
+    }
 
-	@Override
-	public SkipNode getRoot() {
-		return (SkipNode) super.getRoot();
-	}
+    @Override
+    public SkipNode getRoot() {
+        return (SkipNode) super.getRoot();
+    }
 
-	public SkipNode setRoot(SkipNode root) {
-		super.setRoot(root);
-		return root;
-	}
+    public SkipNode setRoot(SkipNode root) {
+        super.setRoot(root);
+        return root;
+    }
 
-	@Override
-	public void storeState(Hashtable<Object, Object> state) {
-		super.storeState(state);
-		HashtableStoreSupport.store(state, hash + "height", height);
-		HashtableStoreSupport.store(state, hash + "n", n);
-		HashtableStoreSupport.store(state, hash + "e", e);
-	}
+    @Override
+    public void storeState(Hashtable<Object, Object> state) {
+        super.storeState(state);
+        HashtableStoreSupport.store(state, hash + "height", height);
+        HashtableStoreSupport.store(state, hash + "n", n);
+        HashtableStoreSupport.store(state, hash + "e", e);
+    }
 
-	@Override
-	public void restoreState(Hashtable<?, ?> state) {
-		super.restoreState(state);
-		final Object height = state.get(hash + "height");
-		if (height != null) {
-			this.height = (Integer) HashtableStoreSupport.restore(height);
-		}
-		final Object n = state.get(hash + "n");
-		if (n != null) {
-			this.n = (Integer) HashtableStoreSupport.restore(n);
-		}
-		final Object e = state.get(hash + "e");
-		if (e != null) {
-			this.e = (Integer) HashtableStoreSupport.restore(e);
-		}
-	}
+    @Override
+    public void restoreState(Hashtable<?, ?> state) {
+        super.restoreState(state);
+        final Object height = state.get(hash + "height");
+        if (height != null) {
+            this.height = (Integer) HashtableStoreSupport.restore(height);
+        }
+        final Object n = state.get(hash + "n");
+        if (n != null) {
+            this.n = (Integer) HashtableStoreSupport.restore(n);
+        }
+        final Object e = state.get(hash + "e");
+        if (e != null) {
+            this.e = (Integer) HashtableStoreSupport.restore(e);
+        }
+    }
 }

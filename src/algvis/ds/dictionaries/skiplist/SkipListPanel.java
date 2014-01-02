@@ -22,23 +22,23 @@ import algvis.ui.DictButtons;
 import algvis.ui.VisPanel;
 
 public class SkipListPanel extends VisPanel {
-	private static final long serialVersionUID = -283805545295164774L;
-	public static Class<? extends DataStructure> DS = SkipList.class;
+    private static final long serialVersionUID = -283805545295164774L;
+    public static Class<? extends DataStructure> DS = SkipList.class;
 
-	public SkipListPanel(Settings S) {
-		super(S);
-	}
+    public SkipListPanel(Settings S) {
+        super(S);
+    }
 
-	@Override
-	public void initDS() {
-		D = new SkipList(this);
-		scene.add(D);
-		buttons = new DictButtons(this);
-	}
+    @Override
+    public void initDS() {
+        D = new SkipList(this);
+        scene.add(D);
+        buttons = new DictButtons(this);
+    }
 
-	@Override
-	public void start() {
-		super.start();
-		D.random(10);
-	}
+    @Override
+    public void start() {
+        super.start();
+        D.random(10);
+    }
 }

@@ -23,18 +23,18 @@ import java.awt.Rectangle;
 import javax.swing.JLabel;
 
 public class ChLabel extends JLabel {
-	private static final long serialVersionUID = 8534784764906070592L;
+    private static final long serialVersionUID = 8534784764906070592L;
 
-	public ChLabel(String text) {
-		super(text);
-	}
+    public ChLabel(String text) {
+        super(text);
+    }
 
-	public void refresh() {
-		final FontMetrics metrics = getFontMetrics(getFont());
-		final int width = metrics.stringWidth(getText());
-		final int height = metrics.getHeight();
-		final Dimension newDimension = new Dimension(width, height + 10);
-		setPreferredSize(newDimension);
-		setBounds(new Rectangle(getLocation(), getPreferredSize()));
-	}
+    public void refresh() {
+        final FontMetrics metrics = getFontMetrics(getFont());
+        final int width = metrics.stringWidth(getText());
+        final int height = metrics.getHeight();
+        final Dimension newDimension = new Dimension(width, height + 10);
+        setPreferredSize(newDimension);
+        setBounds(new Rectangle(getLocation(), getPreferredSize()));
+    }
 }

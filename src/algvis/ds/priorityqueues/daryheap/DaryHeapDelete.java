@@ -19,83 +19,83 @@ package algvis.ds.priorityqueues.daryheap;
 import algvis.core.Node;
 
 public class DaryHeapDelete extends DaryHeapAlg {
-	public DaryHeapDelete(DaryHeap H) {
-		super(H);
-	}
+    public DaryHeapDelete(DaryHeap H) {
+        super(H);
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader(H.minHeap ? "delete-min" : "delete-max");
-		if (H.root == null) {
-			addStep("heapempty");
-			H.last = null;
-			return;
-		}
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader(H.minHeap ? "delete-min" : "delete-max");
+        if (H.root == null) {
+            addStep("heapempty");
+            H.last = null;
+            return;
+        }
 
-		if (H.root.c.size() == 0) {
-			final DaryHeapNode v = H.root;
-			if (H.minHeap) {
-				addStep("minimum", H.root.getKey());
-			} else {
-				addStep("maximum", H.root.getKey());
-			}
-			H.root = null;
-			addToScene(v);
-			v.mark();
-			// --H.n;
-			pause();
-			v.unmark();
-			v.goDown();
-			removeFromScene(v);
-			return;
-		}
-		if (H.minHeap) {
-			addStep("minimum", H.root.getKey());
-		} else {
-			addStep("maximum", H.root.getKey());
-		}
-		H.root.mark();
-		pause();
-		// H.root.unmark();
-		addStep("heapchange");
-		pause();
-		H.root.unmark();
+        if (H.root.c.size() == 0) {
+            final DaryHeapNode v = H.root;
+            if (H.minHeap) {
+                addStep("minimum", H.root.getKey());
+            } else {
+                addStep("maximum", H.root.getKey());
+            }
+            H.root = null;
+            addToScene(v);
+            v.mark();
+            // --H.n;
+            pause();
+            v.unmark();
+            v.goDown();
+            removeFromScene(v);
+            return;
+        }
+        if (H.minHeap) {
+            addStep("minimum", H.root.getKey());
+        } else {
+            addStep("maximum", H.root.getKey());
+        }
+        H.root.mark();
+        pause();
+        // H.root.unmark();
+        addStep("heapchange");
+        pause();
+        H.root.unmark();
 
-		DaryHeapNode v = new DaryHeapNode(H.last);
-		final DaryHeapNode v2 = new DaryHeapNode(H.root);
-		addToScene(v);
-		addToScene(v2);
-		H.last.setKey(Node.NOKEY);
-		H.root.setKey(Node.NOKEY);
-		v.goToRoot();
-		v2.goTo(H.last);
-		v2.mark();
-		pause();
-		H.last.setKey(v2.getKey());
-		H.root.setKey(v.getKey());
-		H.last.setColor(v2.getColor());
-		H.root.setColor(v.getColor());
-		removeFromScene(v);
-		removeFromScene(v2);
+        DaryHeapNode v = new DaryHeapNode(H.last);
+        final DaryHeapNode v2 = new DaryHeapNode(H.root);
+        addToScene(v);
+        addToScene(v2);
+        H.last.setKey(Node.NOKEY);
+        H.root.setKey(Node.NOKEY);
+        v.goToRoot();
+        v2.goTo(H.last);
+        v2.mark();
+        pause();
+        H.last.setKey(v2.getKey());
+        H.root.setKey(v.getKey());
+        H.last.setColor(v2.getColor());
+        H.root.setColor(v.getColor());
+        removeFromScene(v);
+        removeFromScene(v2);
 
-		v = H.last;
-		addToScene(v);
-		H.last = H.last.prevneighbour();
-		v.goDown();
-		removeFromScene(v);
-		v.getParent().c.set(v.nson - 1, null);
-		v.getParent().c.setSize(v.getParent().c.size() - 1);
-		H.root.mark();
-		H.reposition();
+        v = H.last;
+        addToScene(v);
+        H.last = H.last.prevneighbour();
+        v.goDown();
+        removeFromScene(v);
+        v.getParent().c.set(v.nson - 1, null);
+        v.getParent().c.setSize(v.getParent().c.size() - 1);
+        H.root.mark();
+        H.reposition();
 
-		if (H.minHeap) {
-			addStep("mindheapbubbledown");
-		} else {
-			addStep("maxdheapbubbledown");
-		}
-		pause();
+        if (H.minHeap) {
+            addStep("mindheapbubbledown");
+        } else {
+            addStep("maxdheapbubbledown");
+        }
+        pause();
 
-		H.root.unmark();
-		bubbledown(H.root);
-	}
+        H.root.unmark();
+        bubbledown(H.root);
+    }
 }

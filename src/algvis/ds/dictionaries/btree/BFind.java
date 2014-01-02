@@ -20,53 +20,53 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class BFind extends Algorithm {
-	private final BTree T;
-	private final int K;
+    private final BTree T;
+    private final int K;
 
-	public BFind(BTree T, int x) {
-		super(T.panel);
-		this.T = T;
-		K = x;
-	}
+    public BFind(BTree T, int x) {
+        super(T.panel);
+        this.T = T;
+        K = x;
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		final BNode v = new BNode(T, K);
-		v.setColor(NodeColor.FIND);
-		addToScene(v);
-		setHeader("search");
-		if (T.getRoot() == null) {
-			v.goToRoot();
-			addStep("empty");
-			pause();
-			v.goDown();
-			v.setColor(NodeColor.NOTFOUND);
-			removeFromScene(v);
-			addStep("notfound");
-		} else {
-			BNode w = T.getRoot();
-			v.goTo(w);
-			addStep("bstfindstart");
-			pause();
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        final BNode v = new BNode(T, K);
+        v.setColor(NodeColor.FIND);
+        addToScene(v);
+        setHeader("search");
+        if (T.getRoot() == null) {
+            v.goToRoot();
+            addStep("empty");
+            pause();
+            v.goDown();
+            v.setColor(NodeColor.NOTFOUND);
+            removeFromScene(v);
+            addStep("notfound");
+        } else {
+            BNode w = T.getRoot();
+            v.goTo(w);
+            addStep("bstfindstart");
+            pause();
 
-			while (true) {
-				if (w.isIn(v.keys[0])) {
-					addStep("found");
-					v.goDown();
-					v.setColor(NodeColor.FOUND);
-					break;
-				}
-				if (w.isLeaf()) {
-					addStep("notfound");
-					v.setColor(NodeColor.NOTFOUND);
-					v.goDown();
-					break;
-				}
-				w = w.way(v.keys[0]);
-				v.goTo(w);
-				pause();
-			}
-		}
-		removeFromScene(v);
-	}
+            while (true) {
+                if (w.isIn(v.keys[0])) {
+                    addStep("found");
+                    v.goDown();
+                    v.setColor(NodeColor.FOUND);
+                    break;
+                }
+                if (w.isLeaf()) {
+                    addStep("notfound");
+                    v.setColor(NodeColor.NOTFOUND);
+                    v.goDown();
+                    break;
+                }
+                w = w.way(v.keys[0]);
+                v.goTo(w);
+                pause();
+            }
+        }
+        removeFromScene(v);
+    }
 }

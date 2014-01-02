@@ -28,62 +28,62 @@ import algvis.ui.Buttons;
 import algvis.ui.VisPanel;
 
 public class RotButtons extends Buttons {
-	private static final long serialVersionUID = 3851020370059429766L;
-	private IButton rotB;
-	private ICheckBox order;
-	private ICheckBox subtrees;
+    private static final long serialVersionUID = 3851020370059429766L;
+    private IButton rotB;
+    private ICheckBox order;
+    private ICheckBox subtrees;
 
-	public RotButtons(VisPanel M) {
-		super(M);
-	}
+    public RotButtons(VisPanel M) {
+        super(M);
+    }
 
-	@Override
-	public void actionButtons(JPanel P) {
-		rotB = new IButton("button-rotate");
-		rotB.setMnemonic(KeyEvent.VK_T);
-		rotB.addActionListener(this);
-		P.add(rotB);
-	}
+    @Override
+    public void actionButtons(JPanel P) {
+        rotB = new IButton("button-rotate");
+        rotB.setMnemonic(KeyEvent.VK_T);
+        rotB.addActionListener(this);
+        P.add(rotB);
+    }
 
-	@Override
-	public void otherButtons(JPanel P) {
-		order = new ICheckBox("show-order", true);
-		order.setMnemonic(KeyEvent.VK_O);
-		order.addActionListener(this);
-		P.add(order);
+    @Override
+    public void otherButtons(JPanel P) {
+        order = new ICheckBox("show-order", true);
+        order.setMnemonic(KeyEvent.VK_O);
+        order.addActionListener(this);
+        P.add(order);
 
-		subtrees = new ICheckBox("show-subtrees", true);
-		subtrees.setMnemonic(KeyEvent.VK_S);
-		subtrees.addActionListener(this);
-		P.add(subtrees);
-		
-		final Rotations R = (Rotations) D;
-		R.T.order = order.isSelected();
-		R.subtrees = subtrees.isSelected();
-	}
+        subtrees = new ICheckBox("show-subtrees", true);
+        subtrees.setMnemonic(KeyEvent.VK_S);
+        subtrees.addActionListener(this);
+        P.add(subtrees);
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		super.actionPerformed(evt);
-		final Rotations R = (Rotations) D;
-		if (evt.getSource() == rotB) {
-			if (panel.history.canRedo()) {
-				panel.newAlgorithmPool();
-			}
-			final Vector<Integer> args = I.getNonEmptyVI();
-			for (final int x : args) {
-				R.rotate(x);
-			}
-		} else if (evt.getSource() == order) {
-			R.T.order = order.isSelected();
-		} else if (evt.getSource() == subtrees) {
-			R.subtrees = subtrees.isSelected();
-		}
-	}
+        final Rotations R = (Rotations) D;
+        R.T.order = order.isSelected();
+        R.subtrees = subtrees.isSelected();
+    }
 
-	@Override
-	public void setOtherEnabled(boolean enabled) {
-		super.setOtherEnabled(enabled);
-		rotB.setEnabled(enabled);
-	}
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        super.actionPerformed(evt);
+        final Rotations R = (Rotations) D;
+        if (evt.getSource() == rotB) {
+            if (panel.history.canRedo()) {
+                panel.newAlgorithmPool();
+            }
+            final Vector<Integer> args = I.getNonEmptyVI();
+            for (final int x : args) {
+                R.rotate(x);
+            }
+        } else if (evt.getSource() == order) {
+            R.T.order = order.isSelected();
+        } else if (evt.getSource() == subtrees) {
+            R.subtrees = subtrees.isSelected();
+        }
+    }
+
+    @Override
+    public void setOtherEnabled(boolean enabled) {
+        super.setOtherEnabled(enabled);
+        rotB.setEnabled(enabled);
+    }
 }

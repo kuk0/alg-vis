@@ -22,36 +22,36 @@ import algvis.ui.VisPanel;
 import algvis.ui.view.Layout;
 
 public class Treap extends BST {
-	public static String dsName = "treap";
+    public static String dsName = "treap";
 
-	// TreapNode root = null, v = null;
+    // TreapNode root = null, v = null;
 
-	@Override
-	public String getName() {
-		return "treap";
-	}
+    @Override
+    public String getName() {
+        return "treap";
+    }
 
-	public Treap(VisPanel M) {
-		super(M);
-	}
+    public Treap(VisPanel M) {
+        super(M);
+    }
 
-	@Override
-	public void insert(int x) {
-		start(new TreapInsert(this, x));
-	}
+    @Override
+    public void insert(int x) {
+        start(new TreapInsert(this, x));
+    }
 
-	@Override
-	public void find(int x) {
-		start(new BSTFind(this, x));
-	}
+    @Override
+    public void find(int x) {
+        start(new BSTFind(this, x));
+    }
 
-	@Override
-	public void delete(int x) {
-		start(new TreapDelete(this, x));
-	}
+    @Override
+    public void delete(int x) {
+        start(new TreapDelete(this, x));
+    }
 
-	@Override
-	public Layout getLayout() {
-		return Layout.COMPACT;
-	}
+    @Override
+    public Layout getLayout() {
+        return Layout.COMPACT;
+    }
 }

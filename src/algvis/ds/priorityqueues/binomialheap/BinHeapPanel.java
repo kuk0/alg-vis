@@ -23,51 +23,51 @@ import algvis.ds.priorityqueues.MeldablePQButtons;
 import algvis.ui.VisPanel;
 
 public class BinHeapPanel extends VisPanel {
-	private static final long serialVersionUID = 2070258718656241421L;
-	public static Class<? extends DataStructure> DS = BinomialHeap.class;
+    private static final long serialVersionUID = 2070258718656241421L;
+    public static Class<? extends DataStructure> DS = BinomialHeap.class;
 
-	public BinHeapPanel(Settings S) {
-		super(S);
-	}
+    public BinHeapPanel(Settings S) {
+        super(S);
+    }
 
-	@Override
-	public void initDS() {
-		D = new BinomialHeap(this);
-		scene.add(D);
-		buttons = new MeldablePQButtons(this);
-		pauses = false;
-	}
+    @Override
+    public void initDS() {
+        D = new BinomialHeap(this);
+        scene.add(D);
+        buttons = new MeldablePQButtons(this);
+        pauses = false;
+    }
 
-	@Override
-	public void start() {
-		super.start();
-		D.random(13);
-		D.start(new AlgorithmAdapter(this) {
-			@Override
-			public void runAlgorithm() throws InterruptedException {
-				((MeldablePQButtons) buttons).activeHeap.setValue(2);
-			}
-		});
-		D.random(10);
-		D.start(new AlgorithmAdapter(this) {
-			@Override
-			public void runAlgorithm() throws InterruptedException {
-				((MeldablePQButtons) buttons).activeHeap.setValue(3);
-			}
-		});
-		D.random(7);
-		D.start(new AlgorithmAdapter(this) {
-			@Override
-			public void runAlgorithm() throws InterruptedException {
-				((MeldablePQButtons) buttons).activeHeap.setValue(1);
-			}
-		});
-		D.start(new Runnable() {
-			@Override
-			public void run() {
-				pauses = true;
-			}
-		});
-		screen.V.resetView();
-	}
+    @Override
+    public void start() {
+        super.start();
+        D.random(13);
+        D.start(new AlgorithmAdapter(this) {
+            @Override
+            public void runAlgorithm() throws InterruptedException {
+                ((MeldablePQButtons) buttons).activeHeap.setValue(2);
+            }
+        });
+        D.random(10);
+        D.start(new AlgorithmAdapter(this) {
+            @Override
+            public void runAlgorithm() throws InterruptedException {
+                ((MeldablePQButtons) buttons).activeHeap.setValue(3);
+            }
+        });
+        D.random(7);
+        D.start(new AlgorithmAdapter(this) {
+            @Override
+            public void runAlgorithm() throws InterruptedException {
+                ((MeldablePQButtons) buttons).activeHeap.setValue(1);
+            }
+        });
+        D.start(new Runnable() {
+            @Override
+            public void run() {
+                pauses = true;
+            }
+        });
+        screen.V.resetView();
+    }
 }

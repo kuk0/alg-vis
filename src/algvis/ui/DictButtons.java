@@ -30,69 +30,69 @@ import algvis.internationalization.IButton;
  * "Find", and "Delete".
  */
 public class DictButtons extends Buttons {
-	private static final long serialVersionUID = 8331529914377645715L;
-	private IButton insertB;
-	private IButton findB;
-	private IButton deleteB;
+    private static final long serialVersionUID = 8331529914377645715L;
+    private IButton insertB;
+    private IButton findB;
+    private IButton deleteB;
 
-	public DictButtons(VisPanel M) {
-		super(M);
-	}
+    public DictButtons(VisPanel M) {
+        super(M);
+    }
 
-	@Override
-	public void actionButtons(JPanel P) {
-		insertB = new IButton("button-insert");
-		insertB.setMnemonic(KeyEvent.VK_I);
-		insertB.addActionListener(this);
+    @Override
+    public void actionButtons(JPanel P) {
+        insertB = new IButton("button-insert");
+        insertB.setMnemonic(KeyEvent.VK_I);
+        insertB.addActionListener(this);
 
-		findB = new IButton("button-find");
-		findB.setMnemonic(KeyEvent.VK_F);
-		findB.addActionListener(this);
+        findB = new IButton("button-find");
+        findB.setMnemonic(KeyEvent.VK_F);
+        findB.addActionListener(this);
 
-		deleteB = new IButton("button-delete");
-		deleteB.setMnemonic(KeyEvent.VK_D);
-		deleteB.addActionListener(this);
+        deleteB = new IButton("button-delete");
+        deleteB.setMnemonic(KeyEvent.VK_D);
+        deleteB.addActionListener(this);
 
-		P.add(insertB);
-		P.add(findB);
-		P.add(deleteB);
-	}
+        P.add(insertB);
+        P.add(findB);
+        P.add(deleteB);
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		super.actionPerformed(evt);
-		if (evt.getSource() == insertB) {
-			if (panel.history.canRedo()) {
-				panel.newAlgorithmPool();
-			}
-			final Vector<Integer> args = I.getNonEmptyVI();
-			for (final int x : args) {
-				D.insert(x);
-			}
-		} else if (evt.getSource() == findB) {
-			if (panel.history.canRedo()) {
-				panel.newAlgorithmPool();
-			}
-			final Vector<Integer> args = I.getVI();
-			for (final int x : args) {
-				((Dictionary) D).find(x);
-			}
-		} else if (evt.getSource() == deleteB) {
-			if (panel.history.canRedo()) {
-				panel.newAlgorithmPool();
-			}
-			final Vector<Integer> args = I.getVI();
-			for (final int x : args) {
-				((Dictionary) D).delete(x);
-			}
-		}
-	}
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        super.actionPerformed(evt);
+        if (evt.getSource() == insertB) {
+            if (panel.history.canRedo()) {
+                panel.newAlgorithmPool();
+            }
+            final Vector<Integer> args = I.getNonEmptyVI();
+            for (final int x : args) {
+                D.insert(x);
+            }
+        } else if (evt.getSource() == findB) {
+            if (panel.history.canRedo()) {
+                panel.newAlgorithmPool();
+            }
+            final Vector<Integer> args = I.getVI();
+            for (final int x : args) {
+                ((Dictionary) D).find(x);
+            }
+        } else if (evt.getSource() == deleteB) {
+            if (panel.history.canRedo()) {
+                panel.newAlgorithmPool();
+            }
+            final Vector<Integer> args = I.getVI();
+            for (final int x : args) {
+                ((Dictionary) D).delete(x);
+            }
+        }
+    }
 
-	@Override
-	public void setOtherEnabled(boolean enabled) {
-		super.setOtherEnabled(enabled);
-		insertB.setEnabled(enabled);
-		findB.setEnabled(enabled);
-		deleteB.setEnabled(enabled);
-	}
+    @Override
+    public void setOtherEnabled(boolean enabled) {
+        super.setOtherEnabled(enabled);
+        insertB.setEnabled(enabled);
+        findB.setEnabled(enabled);
+        deleteB.setEnabled(enabled);
+    }
 }

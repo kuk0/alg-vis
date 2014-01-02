@@ -17,47 +17,47 @@
 package algvis.ds.priorityqueues.leftistheap;
 
 public class LeftHeapMeld extends LeftHeapAlg {
-	private final int i;
-	private final int j;
+    private final int i;
+    private final int j;
 
-	public LeftHeapMeld(LeftHeap H, int i, int j) {
-		super(H);
-		this.i = i;
-		this.j = j;
-	}
+    public LeftHeapMeld(LeftHeap H, int i, int j) {
+        super(H);
+        this.i = i;
+        this.j = j;
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("meld", i, j);
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("meld", i, j);
 
-		if (i == j) {
-			return;
-		}
-		if (H.root[i] == null) {
-			H.root[i] = H.root[j];
-			H.root[j] = null;
-			if (H.root[i] != null) {
-				H.root[i].highlightTree();
-			}
-			H.reposition();
-			// heap #1 is empty; done;
-			return;
-		}
+        if (i == j) {
+            return;
+        }
+        if (H.root[i] == null) {
+            H.root[i] = H.root[j];
+            H.root[j] = null;
+            if (H.root[i] != null) {
+                H.root[i].highlightTree();
+            }
+            H.reposition();
+            // heap #1 is empty; done;
+            return;
+        }
 
-		if (H.root[j] == null) {
-			// heap #2 is empty; done;
-			return;
-		}
+        if (H.root[j] == null) {
+            // heap #2 is empty; done;
+            return;
+        }
 
-		H.root[0] = H.root[j];
-		if (j != 0) {
-			H.root[j] = null;
-		}
-		H.active = i;
-		H.root[0].highlightTree();
-		H.reposition();
+        H.root[0] = H.root[j];
+        if (j != 0) {
+            H.root[j] = null;
+        }
+        H.active = i;
+        H.root[0].highlightTree();
+        H.reposition();
 
-		pause();
-		meld(i);
-	}
+        pause();
+        meld(i);
+    }
 }

@@ -21,24 +21,24 @@ import algvis.core.Settings;
 import algvis.ui.VisPanel;
 
 public class PairHeapPanel extends VisPanel {
-	private static final long serialVersionUID = 7766114341156126683L;
-	public static Class<? extends DataStructure> DS = PairingHeap.class;
+    private static final long serialVersionUID = 7766114341156126683L;
+    public static Class<? extends DataStructure> DS = PairingHeap.class;
 
-	public PairHeapPanel(Settings S) {
-		super(S);
-	}
+    public PairHeapPanel(Settings S) {
+        super(S);
+    }
 
-	@Override
-	public void initDS() {
-		D = new PairingHeap(this);
-		scene.add(D);
-		buttons = new PairHeapButtons(this);
-		((PairHeapButtons) buttons).pairVariant.setSelectedIndex(1);
-	}
+    @Override
+    public void initDS() {
+        D = new PairingHeap(this);
+        scene.add(D);
+        buttons = new PairHeapButtons(this);
+        ((PairHeapButtons) buttons).pairVariant.setSelectedIndex(1);
+    }
 
-	@Override
-	public void start() {
-		super.start();
-		D.random(15);
-	}
+    @Override
+    public void start() {
+        super.start();
+        D.random(15);
+    }
 }

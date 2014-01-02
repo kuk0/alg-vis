@@ -28,33 +28,35 @@ import algvis.ds.unionfind.UnionFind;
  * should have field adtName with its name (key to resource bundle).
  */
 public class ADTs {
-	/**
-	 * The list of all abstract data types.
-	 */
-	@SuppressWarnings("rawtypes")
-	private static final Class[] ADT = { Dictionary.class, // insert, find,
-															// delete
-			PriorityQueue.class, // insert, decrease-key, delete-min
-			MeldablePQ.class, // insert, decrease-key, delete-min, meld
-			UnionFind.class, // make-set, union, find
-			Trie.class, // insert, find, delete
-			IntervalTrees.class // insert, find sum/min/max of interval,
-								// decrease-key
-	};
-	public static final int N = ADT.length;
+    /**
+     * The list of all abstract data types.
+     */
+    @SuppressWarnings("rawtypes")
+    private static final Class[] ADT = {
+        Dictionary.class, // insert, find,
+                          // delete
+        PriorityQueue.class, // insert, decrease-key, delete-min
+        MeldablePQ.class, // insert, decrease-key, delete-min, meld
+        UnionFind.class, // make-set, union, find
+        Trie.class, // insert, find, delete
+        IntervalTrees.class
+    // insert, find sum/min/max of interval,
+    // decrease-key
+    };
+    public static final int N = ADT.length;
 
-	public static String getName(int i) {
-		if (i < 0 || i >= ADT.length) {
-			System.err.println("ADTs.getName - index out of range.");
-			return "";
-		}
-		String r = "";
-		try {
-			r = (String) (ADT[i].getDeclaredField("adtName").get(null));
-		} catch (final Exception e) {
-			System.err.println("Unable to get field adtName - name of ADT: "
-					+ ADT[i]);
-		}
-		return r;
-	}
+    public static String getName(int i) {
+        if (i < 0 || i >= ADT.length) {
+            System.err.println("ADTs.getName - index out of range.");
+            return "";
+        }
+        String r = "";
+        try {
+            r = (String) (ADT[i].getDeclaredField("adtName").get(null));
+        } catch (final Exception e) {
+            System.err.println("Unable to get field adtName - name of ADT: "
+                + ADT[i]);
+        }
+        return r;
+    }
 }

@@ -27,73 +27,73 @@ import algvis.ui.Buttons;
 import algvis.ui.VisPanel;
 
 public class TrieButtons extends Buttons {
-	private static final long serialVersionUID = -368670840648549217L;
-	private IButton insertB;
-	private IButton findB;
-	private IButton deleteB;
+    private static final long serialVersionUID = -368670840648549217L;
+    private IButton insertB;
+    private IButton findB;
+    private IButton deleteB;
 
-	public TrieButtons(VisPanel M) {
-		super(M);
-	}
+    public TrieButtons(VisPanel M) {
+        super(M);
+    }
 
-	@Override
-	public void actionButtons(JPanel P) {
-		insertB = new IButton("button-insert");
-		insertB.setMnemonic(KeyEvent.VK_I);
-		insertB.addActionListener(this);
+    @Override
+    public void actionButtons(JPanel P) {
+        insertB = new IButton("button-insert");
+        insertB.setMnemonic(KeyEvent.VK_I);
+        insertB.addActionListener(this);
 
-		findB = new IButton("button-find");
-		findB.setMnemonic(KeyEvent.VK_F);
-		findB.addActionListener(this);
+        findB = new IButton("button-find");
+        findB.setMnemonic(KeyEvent.VK_F);
+        findB.addActionListener(this);
 
-		deleteB = new IButton("button-delete");
-		deleteB.setMnemonic(KeyEvent.VK_D);
-		deleteB.addActionListener(this);
+        deleteB = new IButton("button-delete");
+        deleteB.setMnemonic(KeyEvent.VK_D);
+        deleteB.addActionListener(this);
 
-		P.add(insertB);
-		P.add(findB);
-		P.add(deleteB);
-	}
+        P.add(insertB);
+        P.add(findB);
+        P.add(deleteB);
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		super.actionPerformed(evt);
-		if (evt.getSource() == insertB) {
-			if (panel.history.canRedo()) {
-				panel.newAlgorithmPool();
-			}
-			final Vector<String> args = I.getVS();
-			for (final String s : args) {
-				((Trie) D).insert(s);
-			}
-		} else if (evt.getSource() == findB) {
-			if (panel.history.canRedo()) {
-				panel.newAlgorithmPool();
-			}
-			final Vector<String> args = I.getVS();
-			if (args.size() > 0) {
-				for (final String s : args) {
-					((Trie) D).find(s);
-				}
-			}
-		} else if (evt.getSource() == deleteB) {
-			if (panel.history.canRedo()) {
-				panel.newAlgorithmPool();
-			}
-			final Vector<String> args = I.getVS();
-			if (args.size() > 0) {
-				for (final String s : args) {
-					((Trie) D).delete(s);
-				}
-			}
-		}
-	}
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        super.actionPerformed(evt);
+        if (evt.getSource() == insertB) {
+            if (panel.history.canRedo()) {
+                panel.newAlgorithmPool();
+            }
+            final Vector<String> args = I.getVS();
+            for (final String s : args) {
+                ((Trie) D).insert(s);
+            }
+        } else if (evt.getSource() == findB) {
+            if (panel.history.canRedo()) {
+                panel.newAlgorithmPool();
+            }
+            final Vector<String> args = I.getVS();
+            if (args.size() > 0) {
+                for (final String s : args) {
+                    ((Trie) D).find(s);
+                }
+            }
+        } else if (evt.getSource() == deleteB) {
+            if (panel.history.canRedo()) {
+                panel.newAlgorithmPool();
+            }
+            final Vector<String> args = I.getVS();
+            if (args.size() > 0) {
+                for (final String s : args) {
+                    ((Trie) D).delete(s);
+                }
+            }
+        }
+    }
 
-	@Override
-	public void setOtherEnabled(boolean enabled) {
-		super.setOtherEnabled(enabled);
-		insertB.setEnabled(enabled);
-		findB.setEnabled(enabled);
-		deleteB.setEnabled(enabled);
-	}
+    @Override
+    public void setOtherEnabled(boolean enabled) {
+        super.setOtherEnabled(enabled);
+        insertB.setEnabled(enabled);
+        findB.setEnabled(enabled);
+        deleteB.setEnabled(enabled);
+    }
 }

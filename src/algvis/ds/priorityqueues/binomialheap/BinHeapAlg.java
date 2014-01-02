@@ -19,89 +19,91 @@ package algvis.ds.priorityqueues.binomialheap;
 import algvis.core.Algorithm;
 
 abstract class BinHeapAlg extends Algorithm {
-	final BinomialHeap H;
+    final BinomialHeap H;
 
-	BinHeapAlg(BinomialHeap H) {
-		super(H.panel, null);
-		this.H = H;
-	}
+    BinHeapAlg(BinomialHeap H) {
+        super(H.panel, null);
+        this.H = H;
+    }
 
-	void meld(int i) throws InterruptedException {
-		BinHeapNode v = H.root[i];
-		v.mark();
-		if ((H.min[0]).prec(H.min[i])) {
-			H.min[i] = H.min[0];
-			addStep(H.minHeap ? "binheap-newmin" : "binheap-newmax", H.min[i].getKey());
-		} else {
-			addStep(H.minHeap ? "binheap-oldmin" : "binheap-oldmax", H.min[i].getKey());
-		}
-		addNote("binheap-meld-idea");
-		H.min[0] = null;
-		pause();
-		while (true) {
-			if (H.root[0] != null && v.rank > H.root[0].rank) {
-				addStep("binheap-add-tree");
-				final BinHeapNode u = H.root[0];
-				if (H.root[0].right == H.root[0]) {
-					removeFromScene(H.root[0]);
-					H.root[0] = null;
-				} else {
-					H.root[0] = H.root[0].right;
-				}
-				u.unlink();
-				u.highlightTree(u);
-				v.linkLeft(u);
-				v.unmark();
-				v = H.root[i] = u;
-				v.mark();
-			} else if (H.root[0] != null && v.rank <= H.root[0].rank
-					&& (v.right == H.root[i] || H.root[0].rank < v.right.rank)) {
-				// pripojime vpravo
-				addStep("binheap-add-tree");
-				final BinHeapNode u = H.root[0];
-				if (H.root[0].right == H.root[0]) {
-					removeFromScene(H.root[0]);
-					H.root[0] = null;
-				} else {
-					H.root[0] = H.root[0].right;
-				}
-				u.unlink();
-				u.highlightTree(u);
-				v.linkRight(u);
-			} else if (v.left.rank == v.rank && v.left != v
-					&& (v.right == H.root[i] || v.rank < v.right.rank)) {
-				final BinHeapNode u = v.left;
-				if (u.prec(v)) { // napojime v pod u
-					addStep("binheap-link", v.getKey(), u.getKey());
-					pause();
-					v.unlink();
-					u.linkChild(v);
-					v.unmark();
-					v = u;
-					v.mark();
-				} else { // napojime u pod v
-					addStep("binheap-link", u.getKey(), v.getKey());
-					pause();
-					if (H.root[i] == u) {
-						H.root[i] = v;
-					}
-					u.unlink();
-					v.linkChild(u);
-				}
-			} else if (v.right != H.root[i]) {
-				// posunieme sa
-				addStep("binheap-next");
-				v.unmark();
-				v = v.right;
-				v.mark();
-			} else {
-				// koncime
-				v.unmark();
-				break;
-			}
-			H.reposition();
-			pause();
-		}
-		addNote("done");
-	}
+    void meld(int i) throws InterruptedException {
+        BinHeapNode v = H.root[i];
+        v.mark();
+        if ((H.min[0]).prec(H.min[i])) {
+            H.min[i] = H.min[0];
+            addStep(H.minHeap ? "binheap-newmin" : "binheap-newmax",
+                H.min[i].getKey());
+        } else {
+            addStep(H.minHeap ? "binheap-oldmin" : "binheap-oldmax",
+                H.min[i].getKey());
+        }
+        addNote("binheap-meld-idea");
+        H.min[0] = null;
+        pause();
+        while (true) {
+            if (H.root[0] != null && v.rank > H.root[0].rank) {
+                addStep("binheap-add-tree");
+                final BinHeapNode u = H.root[0];
+                if (H.root[0].right == H.root[0]) {
+                    removeFromScene(H.root[0]);
+                    H.root[0] = null;
+                } else {
+                    H.root[0] = H.root[0].right;
+                }
+                u.unlink();
+                u.highlightTree(u);
+                v.linkLeft(u);
+                v.unmark();
+                v = H.root[i] = u;
+                v.mark();
+            } else if (H.root[0] != null && v.rank <= H.root[0].rank
+                && (v.right == H.root[i] || H.root[0].rank < v.right.rank)) {
+                // pripojime vpravo
+                addStep("binheap-add-tree");
+                final BinHeapNode u = H.root[0];
+                if (H.root[0].right == H.root[0]) {
+                    removeFromScene(H.root[0]);
+                    H.root[0] = null;
+                } else {
+                    H.root[0] = H.root[0].right;
+                }
+                u.unlink();
+                u.highlightTree(u);
+                v.linkRight(u);
+            } else if (v.left.rank == v.rank && v.left != v
+                && (v.right == H.root[i] || v.rank < v.right.rank)) {
+                final BinHeapNode u = v.left;
+                if (u.prec(v)) { // napojime v pod u
+                    addStep("binheap-link", v.getKey(), u.getKey());
+                    pause();
+                    v.unlink();
+                    u.linkChild(v);
+                    v.unmark();
+                    v = u;
+                    v.mark();
+                } else { // napojime u pod v
+                    addStep("binheap-link", u.getKey(), v.getKey());
+                    pause();
+                    if (H.root[i] == u) {
+                        H.root[i] = v;
+                    }
+                    u.unlink();
+                    v.linkChild(u);
+                }
+            } else if (v.right != H.root[i]) {
+                // posunieme sa
+                addStep("binheap-next");
+                v.unmark();
+                v = v.right;
+                v.mark();
+            } else {
+                // koncime
+                v.unmark();
+                break;
+            }
+            H.reposition();
+            pause();
+        }
+        addNote("done");
+    }
 }

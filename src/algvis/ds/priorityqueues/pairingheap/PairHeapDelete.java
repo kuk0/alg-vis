@@ -20,53 +20,53 @@ import algvis.core.DataStructure;
 
 public class PairHeapDelete extends PairHeapAlg {
 
-	public PairHeapDelete(DataStructure H) {
-		super(H);
-	}
+    public PairHeapDelete(DataStructure H) {
+        super(H);
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader(H.minHeap ? "delete-min" : "delete-max");
-		final Pairing pairState = this.H.pairState;
-		final int i = H.active;
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader(H.minHeap ? "delete-min" : "delete-max");
+        final Pairing pairState = this.H.pairState;
+        final int i = H.active;
 
-		if (H.root[i] == null) {
-			return;
-		}
+        if (H.root[i] == null) {
+            return;
+        }
 
-		if (!H.minHeap) {
-			addStep("maximum", H.root[i].getKey());
-		} else {
-			addStep("minimum", H.root[i].getKey());
-		}
+        if (!H.minHeap) {
+            addStep("maximum", H.root[i].getKey());
+        } else {
+            addStep("minimum", H.root[i].getKey());
+        }
 
-		final PairHeapNode v = new PairHeapNode(H.root[i]);
-		v.mark();
-		addToScene(v);
+        final PairHeapNode v = new PairHeapNode(H.root[i]);
+        v.mark();
+        addToScene(v);
 
-		pause();
+        pause();
 
-		// spravime neviditelneho roota (vymazane minimum) a posunieme to o
-		// minsepy hore.
+        // spravime neviditelneho roota (vymazane minimum) a posunieme to o
+        // minsepy hore.
 
-		v.goDown();
-		removeFromScene(v);
+        v.goDown();
+        removeFromScene(v);
 
-		H.root[i].state = -1; // <<----- potom odkomentovat
-		H.root[i].shift(0, -DataStructure.minsepy);
+        H.root[i].state = -1; // <<----- potom odkomentovat
+        H.root[i].shift(0, -DataStructure.minsepy);
 
-		switch (pairState) {
-		case NAIVE:
-			pairNaive(i);
-			break;
-		case LRRL:
-			pairLRRL(i);
-			break;
-		/*
-		 * case FB: break; case BF: break; case MULTI: break; case LAZYM: break;
-		 */
-		default:
-			break;
-		}
-	}
+        switch (pairState) {
+        case NAIVE:
+            pairNaive(i);
+            break;
+        case LRRL:
+            pairLRRL(i);
+            break;
+        /*
+         * case FB: break; case BF: break; case MULTI: break; case LAZYM: break;
+         */
+        default:
+            break;
+        }
+    }
 }

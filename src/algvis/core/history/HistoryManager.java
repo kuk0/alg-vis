@@ -26,84 +26,84 @@ import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
 
 public class HistoryManager extends UndoManager {
-	private static final long serialVersionUID = -842354204488084104L;
-	private final Map<UndoableEdit, Boolean> algorithmEnds = new WeakHashMap<UndoableEdit, Boolean>();
-	private long id = -1;
-	private final Scene scene;
+    private static final long serialVersionUID = -842354204488084104L;
+    private final Map<UndoableEdit, Boolean> algorithmEnds = new WeakHashMap<UndoableEdit, Boolean>();
+    private long id = -1;
+    private final Scene scene;
 
-	public HistoryManager(Scene scene) {
-		super();
-		this.scene = scene;
-		setLimit(500);
-	}
+    public HistoryManager(Scene scene) {
+        super();
+        this.scene = scene;
+        setLimit(500);
+    }
 
-	@Override
-	public synchronized boolean addEdit(UndoableEdit anEdit) {
-		return anEdit instanceof UpdatableStateEdit && super.addEdit(anEdit);
-	}
+    @Override
+    public synchronized boolean addEdit(UndoableEdit anEdit) {
+        return anEdit instanceof UpdatableStateEdit && super.addEdit(anEdit);
+    }
 
-	public long getNextId() {
-		return ++id;
-	}
+    public long getNextId() {
+        return ++id;
+    }
 
-	public long getLastEditId() {
-		return id;
-	}
+    public long getLastEditId() {
+        return id;
+    }
 
-	public synchronized void putAlgorithmEnd() {
-		final UndoableEdit edit = editToBeUndone();
-		if (edit != null) {
-			algorithmEnds.put(edit, true);
-		}
-	}
+    public synchronized void putAlgorithmEnd() {
+        final UndoableEdit edit = editToBeUndone();
+        if (edit != null) {
+            algorithmEnds.put(edit, true);
+        }
+    }
 
-	public synchronized void undoAlgorithm() {
-		do {
-			undo();
-		} while (canUndo() && !algorithmEnds.containsKey(editToBeUndone()));
-	}
+    public synchronized void undoAlgorithm() {
+        do {
+            undo();
+        } while (canUndo() && !algorithmEnds.containsKey(editToBeUndone()));
+    }
 
-	public synchronized void redoAlgorithm() {
-		do {
-			redo();
-		} while (!algorithmEnds.containsKey(editToBeUndone()) && canRedo());
-	}
+    public synchronized void redoAlgorithm() {
+        do {
+            redo();
+        } while (!algorithmEnds.containsKey(editToBeUndone()) && canRedo());
+    }
 
-	public synchronized void goTo(long id) {
-		if (id <= editToBeUndone().getId()) {
-			while (canUndo() && editToBeUndone().getId() >= id) {
-				undo();
-			}
-			scene.endAnimation();
-			redo();
-		} else {
-			while (editToBeRedone().getId() < id) {
-				redo();
-			}
-			redo();
-		}
-	}
+    public synchronized void goTo(long id) {
+        if (id <= editToBeUndone().getId()) {
+            while (canUndo() && editToBeUndone().getId() >= id) {
+                undo();
+            }
+            scene.endAnimation();
+            redo();
+        } else {
+            while (editToBeRedone().getId() < id) {
+                redo();
+            }
+            redo();
+        }
+    }
 
-	public synchronized boolean isBetweenAlgorithms() {
-		final UndoableEdit e = editToBeUndone();
-		return e == null || algorithmEnds.containsKey(e);
-	}
+    public synchronized boolean isBetweenAlgorithms() {
+        final UndoableEdit e = editToBeUndone();
+        return e == null || algorithmEnds.containsKey(e);
+    }
 
-	@Override
-	protected UpdatableStateEdit editToBeUndone() {
-		return (UpdatableStateEdit) super.editToBeUndone();
-	}
+    @Override
+    protected UpdatableStateEdit editToBeUndone() {
+        return (UpdatableStateEdit) super.editToBeUndone();
+    }
 
-	@Override
-	protected UpdatableStateEdit editToBeRedone() {
-		return (UpdatableStateEdit) super.editToBeRedone();
-	}
+    @Override
+    protected UpdatableStateEdit editToBeRedone() {
+        return (UpdatableStateEdit) super.editToBeRedone();
+    }
 
-	public void trimToEnd() {
-		final AbstractUndoableEdit fakeEdit = new AbstractUndoableEdit();
-		if (super.addEdit(fakeEdit)) {
-			final int lastEditIndex = edits.size() - 1;
-			trimEdits(lastEditIndex, lastEditIndex);
-		}
-	}
+    public void trimToEnd() {
+        final AbstractUndoableEdit fakeEdit = new AbstractUndoableEdit();
+        if (super.addEdit(fakeEdit)) {
+            final int lastEditIndex = edits.size() - 1;
+            trimEdits(lastEditIndex, lastEditIndex);
+        }
+    }
 }

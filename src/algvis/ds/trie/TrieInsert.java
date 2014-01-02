@@ -20,70 +20,70 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class TrieInsert extends Algorithm {
-	private final Trie T;
-	private String s;
-	private TrieWordNode hw;
+    private final Trie T;
+    private String s;
+    private TrieWordNode hw;
 
-	public TrieInsert(Trie T, String s) {
-		super(T.panel);
-		this.T = T;
-		this.s = s;
-	}
+    public TrieInsert(Trie T, String s) {
+        super(T.panel);
+        this.T = T;
+        this.s = s;
+    }
 
-	void beforeReturn() {
-		removeFromScene(hw);
-		T.clearExtraColor();
-		addNote("done");
-	}
+    void beforeReturn() {
+        removeFromScene(hw);
+        T.clearExtraColor();
+        addNote("done");
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("trieinsert", s.substring(0, s.length() - 1));
-		if (s.compareTo("$") == 0) {
-			addNote("badword");
-		}
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("trieinsert", s.substring(0, s.length() - 1));
+        if (s.compareTo("$") == 0) {
+            addNote("badword");
+        }
 
-		TrieNode v = T.getRoot();
-		v.mark();
-		addNote("trieinsertnote");
-		addStep("trierootstart");
-		pause();
-		v.unmark();
-		hw = new TrieWordNode(T, s);
-		hw.setColor(NodeColor.INSERT);
-		addToScene(hw);
-		hw.goNextTo(v);
+        TrieNode v = T.getRoot();
+        v.mark();
+        addNote("trieinsertnote");
+        addStep("trierootstart");
+        pause();
+        v.unmark();
+        hw = new TrieWordNode(T, s);
+        hw.setColor(NodeColor.INSERT);
+        addToScene(hw);
+        hw.goNextTo(v);
 
-		while (s.compareTo("$") != 0) {
-			final char ch = s.charAt(0);
-			hw.setAndGoNextTo(s, v);
-			TrieNode w = v.getChildWithCH(ch);
-			if (w != null) {
-				addStep("trieinsertwch", "" + ch);
-			} else {
-				addStep("trieinsertwoch", "" + ch);
-				w = v.addChild(ch, hw.x, hw.y);
-			}
-			w.setColor(NodeColor.CACHED);
-			T.reposition();
-			pause();
-			v = w;
-			v.setColor(NodeColor.INSERT);
-			T.reposition();
-			s = s.substring(1);
-		}
-		hw.setAndGoNextTo(s, v);
-		final TrieNode w = v.getChildWithCH('$');
-		if (w == null) {
-			addStep("trieinserteow");
-		} else {
-			addStep("trieinsertneow");
-		}
-		pause();
-		v.setColor(NodeColor.NORMAL);
-		v = v.addChild('$', hw.x, hw.y);
-		T.reposition();
-		hw.setAndGoNextTo(s, v);
-		beforeReturn();
-	}
+        while (s.compareTo("$") != 0) {
+            final char ch = s.charAt(0);
+            hw.setAndGoNextTo(s, v);
+            TrieNode w = v.getChildWithCH(ch);
+            if (w != null) {
+                addStep("trieinsertwch", "" + ch);
+            } else {
+                addStep("trieinsertwoch", "" + ch);
+                w = v.addChild(ch, hw.x, hw.y);
+            }
+            w.setColor(NodeColor.CACHED);
+            T.reposition();
+            pause();
+            v = w;
+            v.setColor(NodeColor.INSERT);
+            T.reposition();
+            s = s.substring(1);
+        }
+        hw.setAndGoNextTo(s, v);
+        final TrieNode w = v.getChildWithCH('$');
+        if (w == null) {
+            addStep("trieinserteow");
+        } else {
+            addStep("trieinsertneow");
+        }
+        pause();
+        v.setColor(NodeColor.NORMAL);
+        v = v.addChild('$', hw.x, hw.y);
+        T.reposition();
+        hw.setAndGoNextTo(s, v);
+        beforeReturn();
+    }
 }

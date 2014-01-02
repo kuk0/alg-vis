@@ -59,7 +59,8 @@ public class AVLDelete extends Algorithm {
             while (w != null) {
                 w.mark();
                 w.calc();
-                addStep(w, REL.TOP, "avlupdatebal", StringUtils.signedInt(w.balance()));
+                addStep(w, REL.TOP, "avlupdatebal",
+                    StringUtils.signedInt(w.balance()));
                 pause();
                 if (w.balance() == -2) {
                     if (w.getLeft().balance() != +1) { // R-rot

@@ -21,54 +21,54 @@ import algvis.core.Node;
 import algvis.ui.InputField;
 
 public class BinHeapDecrKey extends Algorithm {
-	private final int delta;
-	private final BinomialHeap H;
-	private BinHeapNode v;
+    private final int delta;
+    private final BinomialHeap H;
+    private BinHeapNode v;
 
-	public BinHeapDecrKey(BinomialHeap H, BinHeapNode v, int delta) {
-		super(H.panel, null);
-		this.H = H;
-		this.v = v;
-		this.delta = delta;
-	}
+    public BinHeapDecrKey(BinomialHeap H, BinHeapNode v, int delta) {
+        super(H.panel, null);
+        this.H = H;
+        this.v = v;
+        this.delta = delta;
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		//TODO: buggy
-		setHeader(H.minHeap ? "decreasekey" : "increasekey");
-		if (H.minHeap) {
-			v.setKey(v.getKey() - delta);
-			if (v.getKey() < 1) {
-				v.setKey(1);
-			}
-		} else {
-			v.setKey(v.getKey() + delta);
-			if (v.getKey() > InputField.MAX) {
-				v.setKey(InputField.MAX);
-			}
-		}
-		BinHeapNode w = v.parent;
-		while (w != null && v.prec(w)) {
-			final BinHeapNode v1 = new BinHeapNode(v);
-			final BinHeapNode v2 = new BinHeapNode(w);
-			addToScene(v1);
-			addToScene(v2);
-			v1.setKey(Node.NOKEY);
-			w.setKey(Node.NOKEY);
-			v1.goTo(w);
-			v2.goTo(v);
-			pause();
-			v.setKey(v2.getKey());
-			w.setKey(v1.getKey());
-			v.setColor(v2.getColor());
-			w.setColor(v1.getColor());
-			removeFromScene(v1);
-			removeFromScene(v2);
-			v = w;
-			w = w.parent;
-		}
-		if (v.prec(H.min[H.active])) {
-			H.min[H.active] = v;
-		}
-	}
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        //TODO: buggy
+        setHeader(H.minHeap ? "decreasekey" : "increasekey");
+        if (H.minHeap) {
+            v.setKey(v.getKey() - delta);
+            if (v.getKey() < 1) {
+                v.setKey(1);
+            }
+        } else {
+            v.setKey(v.getKey() + delta);
+            if (v.getKey() > InputField.MAX) {
+                v.setKey(InputField.MAX);
+            }
+        }
+        BinHeapNode w = v.parent;
+        while (w != null && v.prec(w)) {
+            final BinHeapNode v1 = new BinHeapNode(v);
+            final BinHeapNode v2 = new BinHeapNode(w);
+            addToScene(v1);
+            addToScene(v2);
+            v1.setKey(Node.NOKEY);
+            w.setKey(Node.NOKEY);
+            v1.goTo(w);
+            v2.goTo(v);
+            pause();
+            v.setKey(v2.getKey());
+            w.setKey(v1.getKey());
+            v.setColor(v2.getColor());
+            w.setColor(v1.getColor());
+            removeFromScene(v1);
+            removeFromScene(v2);
+            v = w;
+            w = w.parent;
+        }
+        if (v.prec(H.min[H.active])) {
+            H.min[H.active] = v;
+        }
+    }
 }

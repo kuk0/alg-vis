@@ -17,5 +17,5 @@
 package algvis.ui.view;
 
 public interface ClickListener {
-	void mouseClicked(int x, int y);
+    void mouseClicked(int x, int y);
 }

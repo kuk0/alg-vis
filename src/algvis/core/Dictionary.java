@@ -24,68 +24,68 @@ import algvis.ui.VisPanel;
 import algvis.ui.view.Layout;
 
 abstract public class Dictionary extends DataStructure {
-	public static String adtName = "dictionary";
-	protected Node root;
+    public static String adtName = "dictionary";
+    protected Node root;
 
-	protected Dictionary(VisPanel M) {
-		super(M);
-	}
+    protected Dictionary(VisPanel M) {
+        super(M);
+    }
 
-	@Override
-	abstract public void insert(int x);
+    @Override
+    abstract public void insert(int x);
 
-	abstract public void find(int x);
+    abstract public void find(int x);
 
-	abstract public void delete(int x);
+    abstract public void delete(int x);
 
-	protected Node getRoot() {
-		return root;
-	}
+    protected Node getRoot() {
+        return root;
+    }
 
-	public void setRoot(Node root) {
-		this.root = root;
-	}
+    public void setRoot(Node root) {
+        this.root = root;
+    }
 
-	@Override
-	public Rectangle2D getBoundingBox() {
-		return root == null ? null : root.getBoundingBox();
-	}
+    @Override
+    public Rectangle2D getBoundingBox() {
+        return root == null ? null : root.getBoundingBox();
+    }
 
-	@Override
-	public Layout getLayout() {
-		return Layout.COMPACT;
-	}
+    @Override
+    public Layout getLayout() {
+        return Layout.COMPACT;
+    }
 
-	@Override
-	public void endAnimation() {
-		if (root != null) {
-			root.endAnimation();
-		}
-	}
+    @Override
+    public void endAnimation() {
+        if (root != null) {
+            root.endAnimation();
+        }
+    }
 
-	@Override
-	public boolean isAnimationDone() {
-		return root == null || root.isAnimationDone();
-	}
+    @Override
+    public boolean isAnimationDone() {
+        return root == null || root.isAnimationDone();
+    }
 
-	@Override
-	public void storeState(Hashtable<Object, Object> state) {
-		super.storeState(state);
-		HashtableStoreSupport.store(state, hash + "root", root);
-		if (root != null) {
-			root.storeState(state);
-		}
-	}
+    @Override
+    public void storeState(Hashtable<Object, Object> state) {
+        super.storeState(state);
+        HashtableStoreSupport.store(state, hash + "root", root);
+        if (root != null) {
+            root.storeState(state);
+        }
+    }
 
-	@Override
-	public void restoreState(Hashtable<?, ?> state) {
-		super.restoreState(state);
-		final Object root = state.get(hash + "root");
-		if (root != null) {
-			this.root = (Node) HashtableStoreSupport.restore(root);
-		}
-		if (this.root != null) {
-			this.root.restoreState(state);
-		}
-	}
+    @Override
+    public void restoreState(Hashtable<?, ?> state) {
+        super.restoreState(state);
+        final Object root = state.get(hash + "root");
+        if (root != null) {
+            this.root = (Node) HashtableStoreSupport.restore(root);
+        }
+        if (this.root != null) {
+            this.root.restoreState(state);
+        }
+    }
 }

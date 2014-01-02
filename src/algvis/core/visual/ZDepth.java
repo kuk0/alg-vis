@@ -18,7 +18,7 @@
 package algvis.core.visual;
 
 public class ZDepth {
-	public static final int DS = 5;
-	public static final int NODE = 4;
-	public static final int ACTIONNODE = 1;
+    public static final int DS = 5;
+    public static final int NODE = 4;
+    public static final int ACTIONNODE = 1;
 }

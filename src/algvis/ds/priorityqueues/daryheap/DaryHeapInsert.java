@@ -19,51 +19,51 @@ package algvis.ds.priorityqueues.daryheap;
 import algvis.core.visual.ZDepth;
 
 public class DaryHeapInsert extends DaryHeapAlg {
-	private final DaryHeap H; // prepisat na H
-	private final DaryHeapNode v;
+    private final DaryHeap H; // prepisat na H
+    private final DaryHeapNode v;
 
-	public DaryHeapInsert(DaryHeap H, int x) {
-		super(H);
-		v = new DaryHeapNode(H, x, ZDepth.ACTIONNODE);
-		this.H = H;
-	}
+    public DaryHeapInsert(DaryHeap H, int x) {
+        super(H);
+        v = new DaryHeapNode(H, x, ZDepth.ACTIONNODE);
+        this.H = H;
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("insert", v.getKey());
-		addToScene(v);
-		v.mark();
-		if ((H.root != null) && (H.root.nnodes == 1000)) {
-			addStep("heapfull");
-			v.unmark();
-			removeFromScene(v);
-			return;
-		}
-		DaryHeapNode w;
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("insert", v.getKey());
+        addToScene(v);
+        v.mark();
+        if ((H.root != null) && (H.root.nnodes == 1000)) {
+            addStep("heapfull");
+            v.unmark();
+            removeFromScene(v);
+            return;
+        }
+        DaryHeapNode w;
 
-		if (H.minHeap) {
-			addStep("minheapbubbleup");
-		} else {
-			addStep("maxheapbubbleup");
-		}
+        if (H.minHeap) {
+            addStep("minheapbubbleup");
+        } else {
+            addStep("maxheapbubbleup");
+        }
 
-		// int n = H.root.nnodes - 1;
-		if (H.root == null) {
-			H.root = w = v;
-			v.goToRoot();
-			H.last = H.root;
-			pause();
-		} else { // najdeme miesto pre v
-			w = H.last.nextNeighbour();
-			w.linkNewSon(v);
-			H.reposition();
-			pause();
-		}
-		removeFromScene(v);
+        // int n = H.root.nnodes - 1;
+        if (H.root == null) {
+            H.root = w = v;
+            v.goToRoot();
+            H.last = H.root;
+            pause();
+        } else { // najdeme miesto pre v
+            w = H.last.nextNeighbour();
+            w.linkNewSon(v);
+            H.reposition();
+            pause();
+        }
+        removeFromScene(v);
 
-		++H.root.nnodes;
-		// pause();
-		v.unmark();
-		bubbleup(v);
-	}
+        ++H.root.nnodes;
+        // pause();
+        v.unmark();
+        bubbleup(v);
+    }
 }

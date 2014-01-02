@@ -23,61 +23,61 @@ import algvis.ui.Fonts;
 import algvis.ui.view.View;
 
 public class AANode extends BSTNode {
-	private AANode(DataStructure D, int key, int x, int y, int zDepth) {
-		super(D, key, x, y, zDepth);
-		setLevel(1);
-	}
+    private AANode(DataStructure D, int key, int x, int y, int zDepth) {
+        super(D, key, x, y, zDepth);
+        setLevel(1);
+    }
 
-	public AANode(DataStructure D, int key, int zDepth) {
-		this(D, key, 0, Node.UPY, zDepth);
-	}
+    public AANode(DataStructure D, int key, int zDepth) {
+        this(D, key, 0, Node.UPY, zDepth);
+    }
 
-	@Override
-	public AANode getLeft() {
-		return (AANode) super.getLeft();
-	}
+    @Override
+    public AANode getLeft() {
+        return (AANode) super.getLeft();
+    }
 
-	@Override
-	public AANode getRight() {
-		return (AANode) super.getRight();
-	}
+    @Override
+    public AANode getRight() {
+        return (AANode) super.getRight();
+    }
 
-	@Override
-	public AANode getParent() {
-		return (AANode) super.getParent();
-	}
+    @Override
+    public AANode getParent() {
+        return (AANode) super.getParent();
+    }
 
-	@Override
-	public void draw(View v) {
-		if (state == Node.INVISIBLE || getKey() == NULL) {
-			return;
-		}
-		drawBg(v);
-		drawKey(v);
-		drawArrow(v);
-		drawArc(v);
-		final String str = "" + getLevel();
-		v.drawString(str, x + Node.RADIUS, y - Node.RADIUS, Fonts.SMALL);
-	}
+    @Override
+    public void draw(View v) {
+        if (state == Node.INVISIBLE || getKey() == NULL) {
+            return;
+        }
+        drawBg(v);
+        drawKey(v);
+        drawArrow(v);
+        drawArc(v);
+        final String str = "" + getLevel();
+        v.drawString(str, x + Node.RADIUS, y - Node.RADIUS, Fonts.SMALL);
+    }
 
-	void drawBigNodes(View v) {
-		if (getLeft() != null) {
-			getLeft().drawBigNodes(v);
-		}
-		if (getRight() != null) {
-			getRight().drawBigNodes(v);
-		}
-		if (getParent() != null && getParent().getLevel() == getLevel()) {
-			v.drawWideLine(x, y, getParent().x, getParent().y);
-		} else {
-			v.drawWideLine(x - 1, y, x + 1, y);
-		}
-	}
+    void drawBigNodes(View v) {
+        if (getLeft() != null) {
+            getLeft().drawBigNodes(v);
+        }
+        if (getRight() != null) {
+            getRight().drawBigNodes(v);
+        }
+        if (getParent() != null && getParent().getLevel() == getLevel()) {
+            v.drawWideLine(x, y, getParent().x, getParent().y);
+        } else {
+            v.drawWideLine(x - 1, y, x + 1, y);
+        }
+    }
 
-	public void drawTree2(View v) {
-		if (((AA) D).mode23) {
-			drawBigNodes(v);
-		}
-		drawTree(v);
-	}
+    public void drawTree2(View v) {
+        if (((AA) D).mode23) {
+            drawBigNodes(v);
+        }
+        drawTree(v);
+    }
 }

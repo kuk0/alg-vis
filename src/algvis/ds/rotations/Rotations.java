@@ -32,171 +32,171 @@ import algvis.ui.view.Layout;
 import algvis.ui.view.View;
 
 public class Rotations extends DataStructure implements ClickListener {
-	public static String adtName = "dictionary";
-	public static String dsName = "rotations";
-	public final BST T;
-	public boolean subtrees = false;
+    public static String adtName = "dictionary";
+    public static String dsName = "rotations";
+    public final BST T;
+    public boolean subtrees = false;
 
-	@Override
-	public String getName() {
-		return "rotations";
-	}
+    @Override
+    public String getName() {
+        return "rotations";
+    }
 
-	/*
-	 * Algorithm.D != Buttons.D (T != this)
-	 */
-	public Rotations(VisPanel M) {
-		super(M);
-		T = new BST(M);
-		M.screen.V.setDS(this);
-		M.screen.V.align = Alignment.LEFT;
-	}
+    /*
+     * Algorithm.D != Buttons.D (T != this)
+     */
+    public Rotations(VisPanel M) {
+        super(M);
+        T = new BST(M);
+        M.screen.V.setDS(this);
+        M.screen.V.align = Alignment.LEFT;
+    }
 
-	public void rotate(int x) {
-		BSTNode v = T.getRoot();
-		while (v != null && v.getKey() != x) {
-			if (v.getKey() < x) {
-				v = v.getRight();
-			} else {
-				v = v.getLeft();
-			}
-		}
-		if (v == null) {
-			// vypis ze taky vrchol neexistuje
-			return;
-		} else {
-			start(new Rotate(this, v));
-		}
-	}
+    public void rotate(int x) {
+        BSTNode v = T.getRoot();
+        while (v != null && v.getKey() != x) {
+            if (v.getKey() < x) {
+                v = v.getRight();
+            } else {
+                v = v.getLeft();
+            }
+        }
+        if (v == null) {
+            // vypis ze taky vrchol neexistuje
+            return;
+        } else {
+            start(new Rotate(this, v));
+        }
+    }
 
-	@Override
-	public void insert(int x) {
-		final BSTNode v = new BSTNode(T, x, ZDepth.NODE);
-		BSTNode w = T.getRoot();
-		if (w == null) {
-			T.setRoot(v);
-		} else {
-			while (true) {
-				if (w.getKey() == x) {
-					break;
-				} else if (w.getKey() < x) {
-					if (w.getRight() == null) {
-						w.linkRight(v);
-						break;
-					} else {
-						w = w.getRight();
-					}
-				} else {
-					if (w.getLeft() == null) {
-						w.linkLeft(v);
-						break;
-					} else {
-						w = w.getLeft();
-					}
-				}
-			}
-		}
-		reposition();
-	}
+    @Override
+    public void insert(int x) {
+        final BSTNode v = new BSTNode(T, x, ZDepth.NODE);
+        BSTNode w = T.getRoot();
+        if (w == null) {
+            T.setRoot(v);
+        } else {
+            while (true) {
+                if (w.getKey() == x) {
+                    break;
+                } else if (w.getKey() < x) {
+                    if (w.getRight() == null) {
+                        w.linkRight(v);
+                        break;
+                    } else {
+                        w = w.getRight();
+                    }
+                } else {
+                    if (w.getLeft() == null) {
+                        w.linkLeft(v);
+                        break;
+                    } else {
+                        w = w.getLeft();
+                    }
+                }
+            }
+        }
+        reposition();
+    }
 
-	@Override
-	public void clear() {
-		T.setRoot(null);
-	}
+    @Override
+    public void clear() {
+        T.setRoot(null);
+    }
 
-	@Override
-	public void draw(View V) {
-		if (T.getRoot() != null) {
-			T.getRoot().drawTree(V);
-		}
-	}
+    @Override
+    public void draw(View V) {
+        if (T.getRoot() != null) {
+            T.getRoot().drawTree(V);
+        }
+    }
 
-	@Override
-	protected void move() {
-		if (T.getRoot() != null) {
-			T.getRoot().moveTree();
-		}
-	}
+    @Override
+    protected void move() {
+        if (T.getRoot() != null) {
+            T.getRoot().moveTree();
+        }
+    }
 
-	@Override
-	protected Rectangle2D getBoundingBox() {
-		return T.getBoundingBox();
-	}
+    @Override
+    protected Rectangle2D getBoundingBox() {
+        return T.getBoundingBox();
+    }
 
-	@Override
-	protected void endAnimation() {
-		T.endAnimation();
-	}
+    @Override
+    protected void endAnimation() {
+        T.endAnimation();
+    }
 
-	@Override
-	protected boolean isAnimationDone() {
-		return T.isAnimationDone();
-	}
+    @Override
+    protected boolean isAnimationDone() {
+        return T.isAnimationDone();
+    }
 
-	public void reposition() {
-		T.reposition();
-		T.getRoot().repos(T.getRoot().leftw, 0);
-		panel.screen.V.setBounds(T.x1, T.y1, T.x2, T.y2);
-	}
+    public void reposition() {
+        T.reposition();
+        T.getRoot().repos(T.getRoot().leftw, 0);
+        panel.screen.V.setBounds(T.x1, T.y1, T.x2, T.y2);
+    }
 
-	@Override
-	public String stats() {
-		return T.stats();
-	}
+    @Override
+    public String stats() {
+        return T.stats();
+    }
 
-	@Override
-	public void random(int n) {
-		final boolean p = panel.pauses;
-		for (int i = 0; i < n; ++i) {
-			insert(MyRandom.Int(InputField.MAX + 1));
-		}
-		start(new Runnable() {
-			@Override
-			public void run() {
-				T.getRoot().calcTree();
-				setStats();
-				panel.pauses = p;
-			}
-		});
-		// panel.screen.V.resetView();
-	}
+    @Override
+    public void random(int n) {
+        final boolean p = panel.pauses;
+        for (int i = 0; i < n; ++i) {
+            insert(MyRandom.Int(InputField.MAX + 1));
+        }
+        start(new Runnable() {
+            @Override
+            public void run() {
+                T.getRoot().calcTree();
+                setStats();
+                panel.pauses = p;
+            }
+        });
+        // panel.screen.V.resetView();
+    }
 
-	@Override
-	public void mouseClicked(int x, int y) {
-		if (T.getRoot() == null) {
-			return;
-		}
-		final BSTNode v = T.getRoot().find(x, y);
-		if (v != null) {
-			if (v.marked) {
-				v.unmark();
-				chosen = null;
-				panel.buttons.I.setText("");
-			} else {
-				if (chosen != null) {
-					chosen.unmark();
-				}
-				v.mark();
-				chosen = v;
-				panel.buttons.I.setText("" + chosen.getKey());
-			}
-		}
-	}
+    @Override
+    public void mouseClicked(int x, int y) {
+        if (T.getRoot() == null) {
+            return;
+        }
+        final BSTNode v = T.getRoot().find(x, y);
+        if (v != null) {
+            if (v.marked) {
+                v.unmark();
+                chosen = null;
+                panel.buttons.I.setText("");
+            } else {
+                if (chosen != null) {
+                    chosen.unmark();
+                }
+                v.mark();
+                chosen = v;
+                panel.buttons.I.setText("" + chosen.getKey());
+            }
+        }
+    }
 
-	@Override
-	public Layout getLayout() {
-		return Layout.SIMPLE;
-	}
+    @Override
+    public Layout getLayout() {
+        return Layout.SIMPLE;
+    }
 
-	@Override
-	public void storeState(Hashtable<Object, Object> state) {
-		super.storeState(state);
-		T.storeState(state);
-	}
+    @Override
+    public void storeState(Hashtable<Object, Object> state) {
+        super.storeState(state);
+        T.storeState(state);
+    }
 
-	@Override
-	public void restoreState(Hashtable<?, ?> state) {
-		super.restoreState(state);
-		T.restoreState(state);
-	}
+    @Override
+    public void restoreState(Hashtable<?, ?> state) {
+        super.restoreState(state);
+        T.restoreState(state);
+    }
 }

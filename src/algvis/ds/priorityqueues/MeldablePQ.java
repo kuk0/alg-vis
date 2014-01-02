@@ -23,33 +23,33 @@ import algvis.ui.VisPanel;
 import algvis.ui.view.Highlighting;
 
 abstract public class MeldablePQ extends PriorityQueue implements Highlighting {
-	public static String adtName = "meldable-pq";
+    public static String adtName = "meldable-pq";
 
-	public static final int numHeaps = 10;
-	public int active = 1;
+    public static final int numHeaps = 10;
+    public int active = 1;
 
-	protected MeldablePQ(VisPanel M) {
-		super(M);
-	}
+    protected MeldablePQ(VisPanel M) {
+        super(M);
+    }
 
-	abstract public void meld(int i, int j);
+    abstract public void meld(int i, int j);
 
-	@Override
-	public void storeState(Hashtable<Object, Object> state) {
-		super.storeState(state);
-		HashtableStoreSupport.store(state, hash + "active", active);
-	}
+    @Override
+    public void storeState(Hashtable<Object, Object> state) {
+        super.storeState(state);
+        HashtableStoreSupport.store(state, hash + "active", active);
+    }
 
-	@Override
-	public void restoreState(Hashtable<?, ?> state) {
-		super.restoreState(state);
-		final Object active = state.get(hash + "active");
-		if (active != null) {
-			this.active = (Integer) HashtableStoreSupport.restore(active);
-			final MeldablePQButtons buttons = ((MeldablePQButtons) panel.buttons);
-			buttons.activeHeap.removeChangeListener(buttons);
-			buttons.activeHeap.setValue(HashtableStoreSupport.restore(active));
-			buttons.activeHeap.addChangeListener(buttons);
-		}
-	}
+    @Override
+    public void restoreState(Hashtable<?, ?> state) {
+        super.restoreState(state);
+        final Object active = state.get(hash + "active");
+        if (active != null) {
+            this.active = (Integer) HashtableStoreSupport.restore(active);
+            final MeldablePQButtons buttons = ((MeldablePQButtons) panel.buttons);
+            buttons.activeHeap.removeChangeListener(buttons);
+            buttons.activeHeap.setValue(HashtableStoreSupport.restore(active));
+            buttons.activeHeap.addChangeListener(buttons);
+        }
+    }
 }

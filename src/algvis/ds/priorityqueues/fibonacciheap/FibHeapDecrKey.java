@@ -22,51 +22,51 @@ import algvis.ds.priorityqueues.binomialheap.BinomialHeap;
 import algvis.ui.InputField;
 
 public class FibHeapDecrKey extends Algorithm {
-	private final int delta;
-	private final BinomialHeap H;
-	private BinHeapNode v;
+    private final int delta;
+    private final BinomialHeap H;
+    private BinHeapNode v;
 
-	public FibHeapDecrKey(BinomialHeap H, BinHeapNode v, int delta) {
-		super(H.panel);
-		this.H = H;
-		this.v = v;
-		this.delta = delta;
-	}
+    public FibHeapDecrKey(BinomialHeap H, BinHeapNode v, int delta) {
+        super(H.panel);
+        this.H = H;
+        this.v = v;
+        this.delta = delta;
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader(H.minHeap ? "decreasekey" : "increasekey");
-		final int i = H.active;
-		if (H.minHeap) {
-			v.setKey(v.getKey() - delta);
-			if (v.getKey() < 1) {
-				v.setKey(1);
-			}
-		} else {
-			v.setKey(v.getKey() + delta);
-			if (v.getKey() > InputField.MAX) {
-				v.setKey(InputField.MAX);
-			}
-		}
-		BinHeapNode w = v.parent;
-		// if (w == null) return;
-		while (w != null) {
-			v.unlink();
-			v.unmarkCut();
-			H.root[i].linkLeft(v);
-			if (v.prec(H.min[i])) {
-				H.min[i] = v;
-			}
-			H.reposition();
-			pause();
-			if (w.cut) {
-				v = w;
-				w = v.parent;
-			} else {
-				w.markCut();
-				H.reposition();
-				break;
-			}
-		}
-	}
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader(H.minHeap ? "decreasekey" : "increasekey");
+        final int i = H.active;
+        if (H.minHeap) {
+            v.setKey(v.getKey() - delta);
+            if (v.getKey() < 1) {
+                v.setKey(1);
+            }
+        } else {
+            v.setKey(v.getKey() + delta);
+            if (v.getKey() > InputField.MAX) {
+                v.setKey(InputField.MAX);
+            }
+        }
+        BinHeapNode w = v.parent;
+        // if (w == null) return;
+        while (w != null) {
+            v.unlink();
+            v.unmarkCut();
+            H.root[i].linkLeft(v);
+            if (v.prec(H.min[i])) {
+                H.min[i] = v;
+            }
+            H.reposition();
+            pause();
+            if (w.cut) {
+                v = w;
+                w = v.parent;
+            } else {
+                w.markCut();
+                H.reposition();
+                break;
+            }
+        }
+    }
 }

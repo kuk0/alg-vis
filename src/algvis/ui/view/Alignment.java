@@ -17,5 +17,5 @@
 package algvis.ui.view;
 
 public enum Alignment {
-	CENTER, LEFT
+    CENTER, LEFT
 }

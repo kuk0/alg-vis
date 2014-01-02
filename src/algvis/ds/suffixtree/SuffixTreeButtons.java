@@ -28,74 +28,74 @@ import algvis.ui.Buttons;
 import algvis.ui.VisPanel;
 
 public class SuffixTreeButtons extends Buttons {
-	private static final long serialVersionUID = -368670840648549217L;
-	private IButton insertB;
-	private IButton findB;
-	private ICheckBox implicitB;
+    private static final long serialVersionUID = -368670840648549217L;
+    private IButton insertB;
+    private IButton findB;
+    private ICheckBox implicitB;
 
-	public SuffixTreeButtons(VisPanel M) {
-		super(M);
-	}
+    public SuffixTreeButtons(VisPanel M) {
+        super(M);
+    }
 
-	// no random
-	@Override
-	protected void initRandom() {
-		random = null;
-	}
+    // no random
+    @Override
+    protected void initRandom() {
+        random = null;
+    }
 
-	@Override
-	public void actionButtons(JPanel P) {
-		insertB = new IButton("button-create-st");
-		insertB.setMnemonic(KeyEvent.VK_I);
-		insertB.addActionListener(this);
+    @Override
+    public void actionButtons(JPanel P) {
+        insertB = new IButton("button-create-st");
+        insertB.setMnemonic(KeyEvent.VK_I);
+        insertB.addActionListener(this);
 
-		findB = new IButton("button-find");
-		findB.setMnemonic(KeyEvent.VK_F);
-		findB.addActionListener(this);
+        findB = new IButton("button-find");
+        findB.setMnemonic(KeyEvent.VK_F);
+        findB.addActionListener(this);
 
-		P.add(insertB);
-		P.add(findB);
-	}
+        P.add(insertB);
+        P.add(findB);
+    }
 
-	@Override
-	public void otherButtons(JPanel P) {
-		implicitB = new ICheckBox("implicit", false);
-		implicitB.setMnemonic(KeyEvent.VK_I);
-		implicitB.addActionListener(this);
-		P.add(implicitB);
-	}
+    @Override
+    public void otherButtons(JPanel P) {
+        implicitB = new ICheckBox("implicit", false);
+        implicitB.setMnemonic(KeyEvent.VK_I);
+        implicitB.addActionListener(this);
+        P.add(implicitB);
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		super.actionPerformed(evt);
-		if (evt.getSource() == insertB) {
-			if (panel.history.canRedo()) {
-				panel.newAlgorithmPool();
-			}
-			final Vector<String> args = I.getVABS();
-			for (final String s : args) {
-				((SuffixTree) D).insert(s);
-			}
-		} else if (evt.getSource() == findB) {
-			if (panel.history.canRedo()) {
-				panel.newAlgorithmPool();
-			}
-			final Vector<String> args = I.getVABS(3);
-			if (args.size() > 0) {
-				for (final String s : args) {
-					((SuffixTree) D).find(s);
-				}
-			}
-		} else if (evt.getSource() == implicitB) {
-			SuffixTreeNode.implicitNodes = implicitB.isSelected();
-		}
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        super.actionPerformed(evt);
+        if (evt.getSource() == insertB) {
+            if (panel.history.canRedo()) {
+                panel.newAlgorithmPool();
+            }
+            final Vector<String> args = I.getVABS();
+            for (final String s : args) {
+                ((SuffixTree) D).insert(s);
+            }
+        } else if (evt.getSource() == findB) {
+            if (panel.history.canRedo()) {
+                panel.newAlgorithmPool();
+            }
+            final Vector<String> args = I.getVABS(3);
+            if (args.size() > 0) {
+                for (final String s : args) {
+                    ((SuffixTree) D).find(s);
+                }
+            }
+        } else if (evt.getSource() == implicitB) {
+            SuffixTreeNode.implicitNodes = implicitB.isSelected();
+        }
 
-	}
+    }
 
-	@Override
-	public void setOtherEnabled(boolean enabled) {
-		super.setOtherEnabled(enabled);
-		insertB.setEnabled(enabled);
-		findB.setEnabled(enabled);
-	}
+    @Override
+    public void setOtherEnabled(boolean enabled) {
+        super.setOtherEnabled(enabled);
+        insertB.setEnabled(enabled);
+        findB.setEnabled(enabled);
+    }
 }

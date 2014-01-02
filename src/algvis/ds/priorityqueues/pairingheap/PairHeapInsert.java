@@ -19,55 +19,55 @@ package algvis.ds.priorityqueues.pairingheap;
 import algvis.core.visual.ZDepth;
 
 public class PairHeapInsert extends PairHeapAlg {
-	private final int x;
+    private final int x;
 
-	public PairHeapInsert(PairingHeap H, int x) {
-		super(H);
-		this.x = x;
-	}
+    public PairHeapInsert(PairingHeap H, int x) {
+        super(H);
+        this.x = x;
+    }
 
-	@Override
-	public void runAlgorithm() throws InterruptedException {
-		setHeader("insert", x);
-		final int i = H.active;
-		H.root[0] = new PairHeapNode(H, x, ZDepth.ACTIONNODE);
-		H.reposition();
+    @Override
+    public void runAlgorithm() throws InterruptedException {
+        setHeader("insert", x);
+        final int i = H.active;
+        H.root[0] = new PairHeapNode(H, x, ZDepth.ACTIONNODE);
+        H.reposition();
 
-		if (H.root[i] == null) {
-			H.root[i] = H.root[0];
-			if (H.root[i] != null) {
-				addStep("newroot");
-				H.root[i].highlightTree();
-			}
-		} else {
-			H.root[i].highlightTree();
-			H.root[i].mark();
-			// kedze je <cislo> viac/menej ako <cislo> tak to prilinkujeme k
-			// tomu
-			if (H.root[i].getKey() < H.root[0].getKey()) {
-				if (H.minHeap) {
-					addStep("pairlinkmin", H.root[i].getKey(),
-							H.root[0].getKey());
-				} else {
-					addStep("pairlinkmax", H.root[i].getKey(),
-							H.root[0].getKey());
-				}
-			} else {
-				if (H.minHeap) {
-					addStep("pairlinkmin", H.root[0].getKey(),
-							H.root[i].getKey());
-				} else {
-					addStep("pairlinkmax", H.root[0].getKey(),
-							H.root[i].getKey());
-				}
-			}
-			pause();
-			H.root[i].unmark();
-			link(i, 0);
-			H.reposition();
-		}
-		H.root[0] = null;
-		H.reposition();
-		addNote("done");
-	}
+        if (H.root[i] == null) {
+            H.root[i] = H.root[0];
+            if (H.root[i] != null) {
+                addStep("newroot");
+                H.root[i].highlightTree();
+            }
+        } else {
+            H.root[i].highlightTree();
+            H.root[i].mark();
+            // kedze je <cislo> viac/menej ako <cislo> tak to prilinkujeme k
+            // tomu
+            if (H.root[i].getKey() < H.root[0].getKey()) {
+                if (H.minHeap) {
+                    addStep("pairlinkmin", H.root[i].getKey(),
+                        H.root[0].getKey());
+                } else {
+                    addStep("pairlinkmax", H.root[i].getKey(),
+                        H.root[0].getKey());
+                }
+            } else {
+                if (H.minHeap) {
+                    addStep("pairlinkmin", H.root[0].getKey(),
+                        H.root[i].getKey());
+                } else {
+                    addStep("pairlinkmax", H.root[0].getKey(),
+                        H.root[i].getKey());
+                }
+            }
+            pause();
+            H.root[i].unmark();
+            link(i, 0);
+            H.reposition();
+        }
+        H.root[0] = null;
+        H.reposition();
+        addNote("done");
+    }
 }

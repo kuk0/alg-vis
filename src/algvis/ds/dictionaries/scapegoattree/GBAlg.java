@@ -19,36 +19,36 @@ package algvis.ds.dictionaries.scapegoattree;
 import algvis.core.Algorithm;
 
 abstract class GBAlg extends Algorithm {
-	final GBTree T;
-	GBNode v;
-	final int K;
+    final GBTree T;
+    GBNode v;
+    final int K;
 
-	GBAlg(GBTree T, int x) {
-		super(T.panel);
-		this.T = T;
-		K = x;
-	}
+    GBAlg(GBTree T, int x) {
+        super(T.panel);
+        this.T = T;
+        K = x;
+    }
 
-	GBNode compr(GBNode r, int c) throws InterruptedException {
-		GBNode w = r;
-		final GBNode x = (c > 0) ? r.getRight() : r;
-		w.mark();
-		pause();
-		for (int i = 0; i < c; ++i) {
-			assert w != null;
-			w.unmark();
-			w = w.getRight();
-			T.rotate(w);
-			w = w.getRight();
-			if (w != null) {
-				w.mark();
-			}
-			pause();
-		}
-		if (w != null) {
-			w.unmark();
-		}
-		return x;
-	}
+    GBNode compr(GBNode r, int c) throws InterruptedException {
+        GBNode w = r;
+        final GBNode x = (c > 0) ? r.getRight() : r;
+        w.mark();
+        pause();
+        for (int i = 0; i < c; ++i) {
+            assert w != null;
+            w.unmark();
+            w = w.getRight();
+            T.rotate(w);
+            w = w.getRight();
+            if (w != null) {
+                w.mark();
+            }
+            pause();
+        }
+        if (w != null) {
+            w.unmark();
+        }
+        return x;
+    }
 
 }

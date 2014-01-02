@@ -22,24 +22,24 @@ import algvis.ui.NewVisPanel;
 import algvis.ui.view.LayoutListener;
 
 public class BSTPanel extends NewVisPanel {
-	private static final long serialVersionUID = 2619694930536571557L;
-	public static Class<? extends DataStructure> DS = BST.class;
+    private static final long serialVersionUID = 2619694930536571557L;
+    public static Class<? extends DataStructure> DS = BST.class;
 
-	public BSTPanel(Settings S) {
-		super(S);
-	}
+    public BSTPanel(Settings S) {
+        super(S);
+    }
 
-	@Override
-	public void initDS() {
-		D = new BST(this);
-		scene.add(D);
-		buttons = new BSTButtons(this);
-		S.addLayoutListener((LayoutListener) D);
-	}
+    @Override
+    public void initDS() {
+        D = new BST(this);
+        scene.add(D);
+        buttons = new BSTButtons(this);
+        S.addLayoutListener((LayoutListener) D);
+    }
 
-	@Override
-	public void start() {
-		super.start();
-		D.random(20);
-	}
+    @Override
+    public void start() {
+        super.start();
+        D.random(20);
+    }
 }

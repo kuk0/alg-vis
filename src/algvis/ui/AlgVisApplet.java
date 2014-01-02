@@ -29,61 +29,61 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.TitledBorder;
 
 public class AlgVisApplet extends JApplet {
-	private static final long serialVersionUID = -76009301274562874L;
-	private static final int WIDTH = 900;
-	private static final int HEIGHT = 650;
+    private static final long serialVersionUID = -76009301274562874L;
+    private static final int WIDTH = 900;
+    private static final int HEIGHT = 650;
 
-	@Override
-	public void init() {
-		MyParserDelegator.workaround();
-		Fonts.init(getGraphics());
-		try {
-			for (final LookAndFeelInfo info : UIManager
-					.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					UIManager.put("nimbusBase", new Color(0xBB, 0xC3, 0xFF));
-					UIManager.put("TitledBorder.position", TitledBorder.CENTER);
-					UIManager
-							.put("nimbusBlueGrey", new Color(0xD1, 0xD1, 0xD1));
-					UIManager.put("control", new Color(0xFA, 0xFA, 0xFA));
-					UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (final Exception e) {
-			// If Nimbus is not available, you can set the GUI to another look
-			// and feel.
-		}
+    @Override
+    public void init() {
+        MyParserDelegator.workaround();
+        Fonts.init(getGraphics());
+        try {
+            for (final LookAndFeelInfo info : UIManager
+                .getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.put("nimbusBase", new Color(0xBB, 0xC3, 0xFF));
+                    UIManager.put("TitledBorder.position", TitledBorder.CENTER);
+                    UIManager
+                        .put("nimbusBlueGrey", new Color(0xD1, 0xD1, 0xD1));
+                    UIManager.put("control", new Color(0xFA, 0xFA, 0xFA));
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (final Exception e) {
+            // If Nimbus is not available, you can set the GUI to another look
+            // and feel.
+        }
 
-		/**
-		 * choose data structure depending on the "ds" parameter in the <applet>
-		 * tag if ds is a number from 0 to N-1, we will have an applet with just
-		 * a single data structure, otherwise, include all of them
-		 */
-		int ds = -1;
-		final String dsp = getParameter("ds");
-		try {
-			ds = Integer.parseInt(dsp);
-			if (ds < 0 || ds >= DataStructures.N) {
-				ds = -1;
-			}
-		} catch (final NumberFormatException e) {
-			ds = DataStructures.getIndex(dsp);
-		}
-		if (ds == -1) {
-			// all data structures
-			final AlgVis A = new AlgVis(getContentPane(), getParameter("lang"));
-			A.setSize(WIDTH, HEIGHT); // same size as defined in the HTML APPLET
-			add(A);
-			A.init();
-		} else {
-			// data structure ds
-			Languages.selectLanguage(getParameter("lang"));
-			final Settings S = new Settings();
-			final VisPanel P = DataStructures.createPanel(ds, S);
-			P.setSize(WIDTH, HEIGHT); // same size as defined in the HTML APPLET
-			add(P);
-			P.setOnAir(true);
-		}
-	}
+        /**
+         * choose data structure depending on the "ds" parameter in the <applet>
+         * tag if ds is a number from 0 to N-1, we will have an applet with just
+         * a single data structure, otherwise, include all of them
+         */
+        int ds = -1;
+        final String dsp = getParameter("ds");
+        try {
+            ds = Integer.parseInt(dsp);
+            if (ds < 0 || ds >= DataStructures.N) {
+                ds = -1;
+            }
+        } catch (final NumberFormatException e) {
+            ds = DataStructures.getIndex(dsp);
+        }
+        if (ds == -1) {
+            // all data structures
+            final AlgVis A = new AlgVis(getContentPane(), getParameter("lang"));
+            A.setSize(WIDTH, HEIGHT); // same size as defined in the HTML APPLET
+            add(A);
+            A.init();
+        } else {
+            // data structure ds
+            Languages.selectLanguage(getParameter("lang"));
+            final Settings S = new Settings();
+            final VisPanel P = DataStructures.createPanel(ds, S);
+            P.setSize(WIDTH, HEIGHT); // same size as defined in the HTML APPLET
+            add(P);
+            P.setOnAir(true);
+        }
+    }
 }
