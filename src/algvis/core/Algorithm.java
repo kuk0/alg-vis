@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * Copyright (c) 2012-present Jakub Kováč, Jozef Brandýs, Katarína Kotrlová,
+ * Pavol Lukča, Ladislav Pápay, Viktor Tomkovič, Tatiana Tóthová
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -124,7 +125,9 @@ abstract public class Algorithm implements Runnable {
     }
 
     protected void setHeader(String s) {
-        if (!wrapped && !(panel instanceof NewVisPanel)) { // TODO: just until we get rid of the old VisPanel
+        if (!wrapped && !(panel instanceof NewVisPanel)) { // TODO: just until
+                                                           // we get rid of the
+                                                           // old VisPanel
             panel.commentary.setHeader(s);
         }
     }

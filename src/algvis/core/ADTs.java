@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kováč, Katarína Kotrlová, Pavol Lukča, Viktor Tomkovič, Tatiana Tóthová
+ * Copyright (c) 2012-present Jakub Kováč, Jozef Brandýs, Katarína Kotrlová,
+ * Pavol Lukča, Ladislav Pápay, Viktor Tomkovič, Tatiana Tóthová
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,15 +34,13 @@ public class ADTs {
      */
     @SuppressWarnings("rawtypes")
     private static final Class[] ADT = {
-        Dictionary.class, // insert, find,
-                          // delete
+        Dictionary.class,    // insert, find, delete
         PriorityQueue.class, // insert, decrease-key, delete-min
         MeldablePQ.class, // insert, decrease-key, delete-min, meld
         UnionFind.class, // make-set, union, find
         Trie.class, // insert, find, delete
         IntervalTrees.class
-    // insert, find sum/min/max of interval,
-    // decrease-key
+    // insert, find sum/min/max of interval, decrease-key
     };
     public static final int N = ADT.length;
 

@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2012 Jakub Kov��, Katar�na Kotrlov�, Pavol Luk�a, Viktor Tomkovi�, Tatiana T�thov�
+ * Copyright (c) 2012-present Jakub Kováč, Jozef Brandýs, Katarína Kotrlová,
+ * Pavol Lukča, Ladislav Pápay, Viktor Tomkovič, Tatiana Tóthová
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
