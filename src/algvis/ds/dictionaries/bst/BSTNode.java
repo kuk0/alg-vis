@@ -17,10 +17,6 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.bst;
 
-import java.awt.Color;
-import java.awt.geom.Rectangle2D;
-import java.util.Hashtable;
-
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
@@ -29,6 +25,11 @@ import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.Fonts;
 import algvis.ui.view.Layout;
 import algvis.ui.view.View;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
+import java.util.Vector;
 
 public class BSTNode extends Node {
     private BSTNode left = null, right = null, parent = null;
@@ -187,6 +188,54 @@ public class BSTNode extends Node {
         setLeft(setRight(setParent(null)));
     }
 
+    private void _preorder(Vector<BSTNode> acc) {
+        acc.add(this);
+        if (getLeft() != null) {
+            getLeft()._preorder(acc);
+        }
+        if (getRight() != null) {
+            getRight()._preorder(acc);
+        }
+    }
+
+    private void _inorder(Vector<BSTNode> acc) {
+        if (getLeft() != null) {
+            getLeft()._inorder(acc);
+        }
+        acc.add(this);
+        if (getRight() != null) {
+            getRight()._inorder(acc);
+        }
+    }
+
+    private void _postorder(Vector<BSTNode> acc) {
+        if (getLeft() != null) {
+            getLeft()._postorder(acc);
+        }
+        if (getRight() != null) {
+            getRight()._postorder(acc);
+        }
+        acc.add(this);
+    }
+
+    public Vector<BSTNode> preorder() {
+        Vector<BSTNode> acc = new Vector<BSTNode>();
+        this._preorder(acc);
+        return acc;
+    }
+
+    public Vector<BSTNode> inorder() {
+        Vector<BSTNode> acc = new Vector<BSTNode>();
+        this._inorder(acc);
+        return acc;
+    }
+
+    public Vector<BSTNode> postorder() {
+        Vector<BSTNode> acc = new Vector<BSTNode>();
+        this._postorder(acc);
+        return acc;
+    }
+
     /**
      * Calculate the height, size, and sum of heights of this node, assuming
      * that this was already calculated for its children.
@@ -213,77 +262,51 @@ public class BSTNode extends Node {
      * subtree (recursively bottom-up).
      */
     public void calcTree() {
-        if (getLeft() != null) {
-            getLeft().calcTree();
+        for (BSTNode v : postorder()) {
+            v.calc();
         }
-        if (getRight() != null) {
-            getRight().calcTree();
-        }
-        calc();
     }
 
     public void setArc() {
         setArc(getParent());
     }
 
-    private static int i;
+    // private static int i;
 
     public void drawTree(View v) {
-        i = 0;
-        drawTree2(v);
-    }
-
-    private void drawTree2(View v) {
-        if (state != INVISIBLE && parent != null) {
-            v.setColor(Color.black);
-            v.drawLine(x, y, parent.x, parent.y);
-        }
-        if (getLeft() != null) {
-            // System.out.println("kreslim lavy " + getLeft().key + " " +
-            // this.key);
-            getLeft().drawTree2(v);
-        }
-        if (D instanceof BST && ((BST) D).order) { // && D.panel.S.layout ==
-                                                   // Layout.SIMPLE
+        if (D instanceof BST && ((BST) D).order) {
+            int i = 0;
             v.setColor(Color.LIGHT_GRAY);
-            ++i;
-            if (i % 10 == 0) {
-                v.drawLine(x, y, x, -22);
-            } else {
-                v.drawLine(x, y, x, -20);
-            }
-            if (i % 10 == 0) {
-                v.drawString("" + i, x, -29, Fonts.NORMAL);
-            } else if (i % 10 == 5) {
-                v.drawString("5", x, -27, Fonts.NORMAL);
-            } else {
-                v.drawString("" + i % 10, x, -27, Fonts.SMALL);
+            for (BSTNode w : inorder()) {
+                ++i;
+                if (i % 10 == 0) {
+                    v.drawLine(w.x, w.y, w.x, -22);
+                    v.drawString("" + i, w.x, -29, Fonts.NORMAL);
+                } else {
+                    v.drawLine(w.x, w.y, w.x, -20);
+                    v.drawString("" + i % 10, w.x, -27, (i % 10 == 5) ? Fonts.NORMAL : Fonts.SMALL);
+                }
             }
         }
-        if (getRight() != null) {
-            getRight().drawTree2(v);
+        for (BSTNode w : postorder()) {
+            if (w.state != INVISIBLE && !w.isRoot()) {
+                v.setColor(Color.black);
+                v.drawLine(w.x, w.y, w.getParent().x, w.getParent().y);
+            }
+            w.draw(v);
         }
-        draw(v);
     }
 
     public void moveTree() {
-        if (getLeft() != null) {
-            getLeft().moveTree();
+        for (BSTNode v : postorder()) {
+            v.move();
         }
-        if (getRight() != null) {
-            getRight().moveTree();
-        }
-        move();
     }
 
     public void shiftTree(int dx, int dy) {
-        if (getLeft() != null) {
-            getLeft().shiftTree(dx, dy);
+        for (BSTNode v : postorder()) {
+            v.goTo(v.tox + dx, v.toy + dy);
         }
-        if (getRight() != null) {
-            getRight().shiftTree(dx, dy);
-        }
-        goTo(tox + dx, toy + dy);
     }
 
     @Override
@@ -336,16 +359,12 @@ public class BSTNode extends Node {
     }
 
     /**
-     * Rebox the whole subtree calculating the widths recursively bottom-up.
+     * Rebox the whole subtree calculating the widths in postorder.
      */
     public void reboxTree() {
-        if (getLeft() != null) {
-            getLeft().reboxTree();
+        for (BSTNode v : postorder()) {
+            v.rebox();
         }
-        if (getRight() != null) {
-            getRight().reboxTree();
-        }
-        rebox();
     }
 
     /**
@@ -443,13 +462,13 @@ public class BSTNode extends Node {
     /**
      * Set up the threads with the help of extreme nodes. A node is "extreme"
      * when it is the leftmost/rightmost in the lowest level.
-     * 
+     * <p/>
      * 1. work out left and right subtree 2. get extreme nodes from the left and
      * right subtree 3. calculate the offset from parent & set a new thread if
      * required
-     * 
+     *
      * @return the leftmost and the rightmost node on the deepest level of the
-     *         subtree rooted at this node
+     * subtree rooted at this node
      */
     private NodePair<BSTNode> RTPreposition() {
         final NodePair<BSTNode> result = new NodePair<BSTNode>();
@@ -492,9 +511,9 @@ public class BSTNode extends Node {
 
             // Calculate offsets for the left and the right son.
             int loffset = 0; // offset of this node from the right contour of
-                             // the left subtree.
+            // the left subtree.
             int roffset = 0; // offset of this node from the left contour of the
-                             // right subtree.
+            // right subtree.
             BSTNode L = getLeft();
             BSTNode R = getRight();
             /*
@@ -569,20 +588,20 @@ public class BSTNode extends Node {
              */
 
             if ((R != null) && (L == null)) { // the right subtree is deeper
-                                              // than the left subtree
+                // than the left subtree
                 fromLeftSubtree.left.thread = true;
                 fromLeftSubtree.left.right = R;
                 result.left = fromRightSubtree.left;
                 result.right = fromRightSubtree.right;
             } else if ((L != null) && (R == null)) { // the left subtree is
-                                                     // deeper than the right
-                                                     // subtree
+                // deeper than the right
+                // subtree
                 fromRightSubtree.right.thread = true;
                 fromRightSubtree.right.left = L;
                 result.left = fromLeftSubtree.left;
                 result.right = fromLeftSubtree.right;
             } else if ((L == null) && (R == null)) { // both subtrees have the
-                                                     // same height
+                // same height
                 result.left = fromLeftSubtree.left;
                 result.right = fromRightSubtree.right;
             }
@@ -594,9 +613,8 @@ public class BSTNode extends Node {
     /**
      * Calculate the absolute coordinates from the relative ones and dispose the
      * threads.
-     * 
-     * @param x
-     *            real x coordinate of parent node
+     *
+     * @param x real x coordinate of parent node
      */
     private void RTPetrification(int x, int y) {
         goTo(x + offset, y);
@@ -629,16 +647,12 @@ public class BSTNode extends Node {
 
     /**
      * Set color to this subtree.
-     * 
+     *
      * @param color
      */
     public void subtreeColor(NodeColor color) {
-        setColor(color);
-        if (getLeft() != null) {
-            getLeft().subtreeColor(color);
-        }
-        if (getRight() != null) {
-            getRight().subtreeColor(color);
+        for (BSTNode v : postorder()) {
+            v.setColor(color);
         }
     }
 
@@ -698,5 +712,27 @@ public class BSTNode extends Node {
         if (this.right != null) {
             this.right.restoreState(state);
         }
+    }
+
+    public boolean testStructure() {
+        for (BSTNode v : postorder()) {
+            if (v.getLeft() != null && v.getLeft().getParent() != v) {
+                return false;
+            }
+            if (v.getRight() != null && v.getRight().getParent() != v) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean testOrder() {
+        Vector<BSTNode> order = inorder();
+        for (int i = 0; i < order.size() - 1; ++i) {
+            if (order.get(i).getKey() >= order.get(i + 1).getKey()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

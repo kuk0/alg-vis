@@ -18,13 +18,12 @@
 
 package algvis.core.visual;
 
+import algvis.ui.view.View;
+
+import javax.swing.undo.StateEditable;
 import java.awt.geom.Rectangle2D;
 import java.util.ConcurrentModificationException;
 import java.util.Hashtable;
-
-import javax.swing.undo.StateEditable;
-
-import algvis.ui.view.View;
 
 public abstract class VisualElement implements StateEditable {
     protected int zDepth;

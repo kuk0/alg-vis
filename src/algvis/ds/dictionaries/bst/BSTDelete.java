@@ -17,12 +17,12 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.bst;
 
-import java.util.HashMap;
-
 import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
+
+import java.util.HashMap;
 
 public class BSTDelete extends Algorithm {
     private final BST T;
@@ -174,6 +174,8 @@ public class BSTDelete extends Algorithm {
         } else {
             result.put("deleted", false);
         }
+
+        assert (T.getRoot() == null || (T.getRoot().testStructure() && T.getRoot().testStructure()));
     }
 
     @Override

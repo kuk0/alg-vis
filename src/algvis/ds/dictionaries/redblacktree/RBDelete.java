@@ -51,8 +51,8 @@ public class RBDelete extends Algorithm {
             addToScene(d);
             // d.setColor(NodeColor.DELETE);
             d.setColor(NodeColor.FOUND); // TODO aj tak je to jedno, lebo
-                                         // metoda draw zmeni kazdy RBNode
-                                         // na cerveny alebo cierny
+            // metoda draw zmeni kazdy RBNode
+            // na cerveny alebo cierny
 
             RBNode u = d, w = (u.getLeft() != null) ? u.getLeft() : u
                 .getRight2();
@@ -203,5 +203,6 @@ public class RBDelete extends Algorithm {
             T.reposition();
             addNote("done");
         }
+        assert (T.getRoot() == null || (((RBNode) T.getRoot()).testStructure() && ((RBNode) T.getRoot()).testStructure() && ((RBNode) T.getRoot()).testRedBlack()));
     }
 }

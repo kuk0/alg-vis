@@ -17,18 +17,18 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.bst;
 
-import java.util.HashMap;
-
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
+
+import java.util.HashMap;
 
 public class BSTInsert extends Algorithm {
     private final BST T;
     private final int K;
     private final BSTNode v;
     private final HashMap<String, Object> result = new HashMap<String, Object>(); // "inserted",
-                                                                                  // "w",
-                                                                                  // "v"
+    // "w",
+    // "v"
 
     public BSTInsert(BST T, BSTNode v) {
         this(T, v, null);
@@ -108,6 +108,8 @@ public class BSTInsert extends Algorithm {
         v.setColor(NodeColor.NORMAL);
         removeFromScene(v);
         // v.setZDepth(ZDepth.DS);
+
+        assert (T.getRoot().testStructure() && T.getRoot().testStructure());
     }
 
     @Override
