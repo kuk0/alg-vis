@@ -19,6 +19,7 @@ package algvis.ds.trie;
 
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
+import algvis.ui.view.REL;
 
 public class TrieFind extends Algorithm {
     private final Trie T;
@@ -46,7 +47,7 @@ public class TrieFind extends Algorithm {
 
         TrieNode v = T.getRoot();
         addNote("triefindnote");
-        addStep("trierootstart");
+        addStep(v, REL.TOP, "trierootstart");
         v.mark();
         pause();
         v.unmark();
@@ -71,12 +72,12 @@ public class TrieFind extends Algorithm {
                     wd.setColor(NodeColor.NORMAL);
                     wd = wd.getRight();
                 }
-                addStep("triefindending1", "" + ch);
+                addStep(v, REL.TOP, "triefindending1", "" + ch);
                 pause();
                 beforeReturn();
                 return;
             }
-            addStep("triefindmovedown", "" + ch);
+            addStep(v, REL.TOP, "triefindmovedown", "" + ch);
             pause();
             while (wd != null) {
                 wd.setColor(NodeColor.NORMAL);
@@ -89,9 +90,9 @@ public class TrieFind extends Algorithm {
         hw.setAndGoNextTo(s, v);
         final TrieNode w = v.getChildWithCH('$');
         if (w == null) {
-            addStep("triefindending2");
+            addStep(v, REL.TOP, "triefindending2");
         } else {
-            addStep("triefindsucc");
+            addStep(v, REL.TOP, "triefindsucc");
         }
         pause();
         beforeReturn();

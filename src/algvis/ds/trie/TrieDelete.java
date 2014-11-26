@@ -19,6 +19,7 @@ package algvis.ds.trie;
 
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
+import algvis.ui.view.REL;
 
 public class TrieDelete extends Algorithm {
     private final Trie T;
@@ -46,7 +47,7 @@ public class TrieDelete extends Algorithm {
 
         TrieNode v = T.getRoot();
         addNote("triedeletenote1");
-        addStep("trierootstart");
+        addStep(v, REL.TOP, "trierootstart");
         v.mark();
         pause();
         v.unmark();
@@ -71,14 +72,14 @@ public class TrieDelete extends Algorithm {
                     vd.setColor(NodeColor.NORMAL);
                     vd = vd.getRight();
                 }
-                addStep("triefindending1", "" + ch);
+                addStep(v, REL.TOP, "triefindending1", "" + ch);
                 pause();
-                addStep("triedeletefindunsu");
+                addStep(v, REL.TOP, "triedeletefindunsu");
                 pause();
                 beforeReturn();
                 return;
             }
-            addStep("triefindmovedown", "" + ch);
+            addStep(v, REL.TOP, "triefindmovedown", "" + ch);
             pause();
             while (vd != null) {
                 vd.setColor(NodeColor.NORMAL);
@@ -92,14 +93,14 @@ public class TrieDelete extends Algorithm {
         hw.setAndGoNextTo(s, v);
         TrieNode w = v.getChildWithCH('$');
         if (w == null) {
-            addStep("triefindending2");
+            addStep(v, REL.TOP, "triefindending2");
             pause();
             v.setColor(NodeColor.NORMAL);
-            addStep("triedeletefindunsu");
+            addStep(v, REL.TOP, "triedeletefindunsu");
             beforeReturn();
             return;
         } else {
-            addStep("triefindsucc");
+            addStep(v, REL.TOP, "triefindsucc");
         }
         pause();
         removeFromScene(hw);
@@ -108,7 +109,7 @@ public class TrieDelete extends Algorithm {
         v.deleteChild(w);
         T.reposition();
         if (v.getChild() != null) {
-            addStep("triedeletewodb");
+            addStep(v, REL.TOP, "triedeletewodb");
             pause();
             beforeReturn();
             return;
@@ -129,14 +130,14 @@ public class TrieDelete extends Algorithm {
         pause();
         w = v;
         do {
-            addStep("triedeletedbdb");
+            addStep(v, REL.TOP, "triedeletedbdb");
             pause();
             w = v.getParent();
             w.deleteChild(v);
             T.reposition();
             v = w;
         } while ((v.getParent() != null) && (v.getChild() == null));
-        addStep("triedeletedbend");
+        addStep(v, REL.TOP, "triedeletedbend");
         addNote("done");
     }
 }
