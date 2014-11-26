@@ -19,6 +19,7 @@ package algvis.ds.dictionaries.skiplist;
 
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
+import algvis.ui.view.REL;
 
 public class SkipFind extends SkipAlg {
     public SkipFind(SkipList L, int x) {
@@ -32,16 +33,21 @@ public class SkipFind extends SkipAlg {
         v = new SkipNode(L, K, ZDepth.ACTIONNODE);
         v.setColor(NodeColor.FIND);
         addToScene(v);
+        
         addStep("skipfindstart");
+        addStep(L.getRoot(),REL.TOP, "skipfindstart");
+       
         final SkipNode w = find();
-
         if (w.getKey() == v.getKey()) {
             addNote("found");
+            addStep(w, REL.BOTTOM, "found", K);
             v.setColor(NodeColor.FOUND);
             pause();
             addNote("done");
         } else {
             addNote("notfound");
+            addStep(w, REL.BOTTOM, "notfound", K);
+            pause();
             v.setColor(NodeColor.NOTFOUND);
             v.goDown();
         }
