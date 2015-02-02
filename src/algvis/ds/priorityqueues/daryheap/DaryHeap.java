@@ -20,7 +20,7 @@ package algvis.ds.priorityqueues.daryheap;
 import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
 
-import algvis.core.AlgorithmAdapter;
+import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.priorityqueues.PriorityQueue;
@@ -112,9 +112,9 @@ public class DaryHeap extends PriorityQueue implements ClickListener {
 
     public void setOrder(final Integer order) {
         if (root != null || this.order != order) {
-            start(new AlgorithmAdapter(panel) {
+            start(new Algorithm(panel) {
                 @Override
-                public void runAlgorithm() throws InterruptedException {
+                public void runAlgorithm() {
                     DaryHeap.this.order = order;
                     clear();
                 }

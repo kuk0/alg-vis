@@ -23,7 +23,7 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
-import algvis.core.AlgorithmAdapter;
+import algvis.core.Algorithm;
 import algvis.core.MyRandom;
 import algvis.internationalization.IButton;
 import algvis.internationalization.IComboBox;
@@ -99,19 +99,13 @@ public class UnionFindButtons extends Buttons {
         super.actionPerformed(evt);
         final UnionFind D = (UnionFind) this.D;
         if (evt.getSource() == makesetB) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
-            }
-            D.start(new AlgorithmAdapter(panel) {
+            D.start(new Algorithm(panel) {
                 @Override
-                public void runAlgorithm() throws InterruptedException {
+                public void runAlgorithm() {
                     D.makeSet(I.getInt(10, 1, 1000));
                 }
             });
         } else if (evt.getSource() == findB) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
-            }
             final int count = D.count;
             final Vector<Integer> args = I.getVI(1, count);
             if (D.firstSelected != null) {
@@ -126,11 +120,12 @@ public class UnionFindButtons extends Buttons {
             if (args.size() == 0) {
                 args.add(MyRandom.Int(count));
             }
+            panel.history.saveEditId();
             D.find(D.at(args.elementAt(0)));
-        } else if (evt.getSource() == unionB) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
+            if (panel.pauses){
+                panel.history.rewind();
             }
+        } else if (evt.getSource() == unionB) {
             final int count = D.count;
             final Vector<Integer> args = I.getVI(1, count);
             if (D.firstSelected != null) {
@@ -154,7 +149,11 @@ public class UnionFindButtons extends Buttons {
                 } while (i == ii);
                 args.add(i);
             }
+            panel.history.saveEditId();
             D.union(D.at(args.elementAt(0)), D.at(args.elementAt(1)));
+            if (panel.pauses){
+                panel.history.rewind();
+            }
         } else if (evt.getSource() == unionHeuristicCB) {
             final int i = unionHeuristicCB.getSelectedIndex();
             if (i == 0 || i == 1) {

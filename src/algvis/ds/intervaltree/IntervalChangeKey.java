@@ -30,7 +30,7 @@ public class IntervalChangeKey extends IntervalAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("changekey");
         // addStep("changekeyv");
 

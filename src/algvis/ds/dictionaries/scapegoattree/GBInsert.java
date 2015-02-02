@@ -26,7 +26,7 @@ public class GBInsert extends GBAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("insert", K);
         v = new GBNode(T, K, ZDepth.ACTIONNODE);
         v.setColor(NodeColor.INSERT);

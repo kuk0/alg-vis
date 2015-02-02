@@ -30,7 +30,7 @@ public class SplayDelete extends SplayAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("delete", K);
         SplayNode s = new SplayNode(T, K, ZDepth.ACTIONNODE);
         s.setColor(NodeColor.DELETE);

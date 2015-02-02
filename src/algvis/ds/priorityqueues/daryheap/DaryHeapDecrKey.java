@@ -30,7 +30,7 @@ public class DaryHeapDecrKey extends DaryHeapAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         if (H.minHeap) {
             setHeader("decreasekey");
             addStep("decrkeymin");

@@ -32,7 +32,7 @@ public class LazyBinHeapMeld extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("meld", i, j);
         if (i == j) {
             return;

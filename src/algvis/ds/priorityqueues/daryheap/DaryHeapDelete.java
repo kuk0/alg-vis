@@ -25,7 +25,7 @@ public class DaryHeapDelete extends DaryHeapAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader(H.minHeap ? "delete-min" : "delete-max");
         if (H.root == null) {
             addStep("heapempty");

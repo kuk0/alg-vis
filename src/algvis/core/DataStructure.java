@@ -57,24 +57,7 @@ abstract public class DataStructure extends VisualElement {
 
     public void start(Runnable runnable) {
         unmark();
-        final Future result = panel.algorithmPool.submit(runnable);
-        // TODO only for debugging purposes:
-        // mozno to trochu spomali vkladanie vrcholov, ale bez tohto by sa nedal
-        // najst bug v algoritmoch (nevypisal
-        // by sa ziadny exception)
-        final Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    result.get();
-                } catch (final InterruptedException e) {
-                    e.printStackTrace();
-                } catch (final ExecutionException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        t.start();
+        runnable.run();
     }
 
     public void setStats() {
@@ -90,17 +73,9 @@ abstract public class DataStructure extends VisualElement {
     }
 
     public void random(final int n) {
-        final boolean p = panel.pauses;
-        panel.pauses = false;
         for (int i = 0; i < n; ++i) {
             insert(MyRandom.Int(InputField.MAX + 1));
         }
-        start(new Runnable() {
-            @Override
-            public void run() {
-                panel.pauses = p;
-            }
-        });
     }
 
     void unmark() {

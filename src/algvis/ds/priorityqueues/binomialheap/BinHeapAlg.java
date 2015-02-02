@@ -27,7 +27,7 @@ abstract class BinHeapAlg extends Algorithm {
         this.H = H;
     }
 
-    void meld(int i) throws InterruptedException {
+    void meld(int i) {
         BinHeapNode v = H.root[i];
         v.mark();
         if ((H.min[0]).prec(H.min[i])) {

@@ -28,7 +28,7 @@ public class BinHeapInsert extends BinHeapAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("insert", x);
         addNote("binheap-insert");
         final int i = H.active;

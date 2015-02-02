@@ -25,7 +25,7 @@ public class HeapDelete extends HeapAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader(H.minHeap ? "delete-min" : "delete-max");
         if (H.getN() == 0) {
             addStep("heapempty");

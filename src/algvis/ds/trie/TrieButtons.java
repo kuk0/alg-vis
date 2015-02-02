@@ -60,31 +60,34 @@ public class TrieButtons extends Buttons {
     public void actionPerformed(ActionEvent evt) {
         super.actionPerformed(evt);
         if (evt.getSource() == insertB) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
-            }
             final Vector<String> args = I.getVS();
+            panel.history.saveEditId();
             for (final String s : args) {
                 ((Trie) D).insert(s);
             }
-        } else if (evt.getSource() == findB) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
+            if (panel.pauses && !args.isEmpty()){
+                panel.history.rewind();
             }
+        } else if (evt.getSource() == findB) {
             final Vector<String> args = I.getVS();
             if (args.size() > 0) {
+                panel.history.saveEditId();
                 for (final String s : args) {
                     ((Trie) D).find(s);
                 }
+                if (panel.pauses){
+                    panel.history.rewind();
+                }
             }
         } else if (evt.getSource() == deleteB) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
-            }
             final Vector<String> args = I.getVS();
             if (args.size() > 0) {
+                panel.history.saveEditId();
                 for (final String s : args) {
                     ((Trie) D).delete(s);
+                }
+                if (panel.pauses){
+                    panel.history.rewind();
                 }
             }
         }

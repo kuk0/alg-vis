@@ -34,7 +34,7 @@ public class BinHeapDecrKey extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         //TODO: buggy
         setHeader(H.minHeap ? "decreasekey" : "increasekey");
         if (H.minHeap) {

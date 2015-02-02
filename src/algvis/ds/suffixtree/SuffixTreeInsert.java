@@ -43,7 +43,7 @@ public class SuffixTreeInsert extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         T.text = s;
         T.str = new StringElem(T.text, 0, SuffixTree.textpos);
 

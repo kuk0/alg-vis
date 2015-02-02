@@ -34,7 +34,7 @@ public class RBInsert extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("insert", K);
         final BSTInsert insert = new BSTInsert(T, new RBNode(T, K,
             ZDepth.ACTIONNODE), this);

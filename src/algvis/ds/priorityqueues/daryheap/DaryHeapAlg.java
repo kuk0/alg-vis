@@ -28,7 +28,7 @@ abstract class DaryHeapAlg extends Algorithm {
         this.H = H;
     }
 
-    void bubbleup(DaryHeapNode v) throws InterruptedException {
+    void bubbleup(DaryHeapNode v) {
         DaryHeapNode w = v.getParent();
         while (w != null && v.prec(w)) {
             final DaryHeapNode v1 = new DaryHeapNode(v);
@@ -55,7 +55,7 @@ abstract class DaryHeapAlg extends Algorithm {
         addNote("done");
     }
 
-    void bubbledown(DaryHeapNode v) throws InterruptedException {
+    void bubbledown(DaryHeapNode v) {
         DaryHeapNode w;
 
         while (true) {

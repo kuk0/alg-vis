@@ -46,14 +46,14 @@ public class UnionFindFind extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("uffind");
         final UnionFindNode v = find(u);
         v.setColor(NodeColor.NORMAL);
         addNote("done");
     }
 
-    UnionFindNode find(UnionFindNode u) throws InterruptedException {
+    UnionFindNode find(UnionFindNode u) {
         switch (findState) {
         case NONE:
             return findSimple(u);
@@ -68,8 +68,7 @@ public class UnionFindFind extends Algorithm {
         }
     }
 
-    private Stack<UnionFindNode> findRoot(UnionFindNode u)
-        throws InterruptedException {
+    private Stack<UnionFindNode> findRoot(UnionFindNode u) {
         final Stack<UnionFindNode> S = new Stack<UnionFindNode>();
         UnionFindNode v = null;
 
@@ -97,7 +96,7 @@ public class UnionFindFind extends Algorithm {
         return S;
     }
 
-    UnionFindNode findSimple(UnionFindNode u) throws InterruptedException {
+    UnionFindNode findSimple(UnionFindNode u) {
         Stack<UnionFindNode> S = findRoot(u);
         final UnionFindNode result = S.pop();
         // traveling back; set color back to normal
@@ -109,8 +108,7 @@ public class UnionFindFind extends Algorithm {
         return result;
     }
 
-    UnionFindNode findWithCompression(UnionFindNode u)
-        throws InterruptedException {
+    UnionFindNode findWithCompression(UnionFindNode u) {
         Stack<UnionFindNode> S = findRoot(u);
         final UnionFindNode result = S.pop();
 
@@ -141,7 +139,7 @@ public class UnionFindFind extends Algorithm {
         return result;
     }
 
-    private void greyPathToRoot(UnionFindNode u) throws InterruptedException {
+    private void greyPathToRoot(UnionFindNode u) {
         u.setColor(NodeColor.FIND);
         u.mark();
         addStep("uf-find-start", u.getKey());
@@ -155,8 +153,7 @@ public class UnionFindFind extends Algorithm {
         pause();
     }
 
-    UnionFindNode findHalvingOrSplitting(UnionFindNode u, boolean halving)
-        throws InterruptedException {
+    UnionFindNode findHalvingOrSplitting(UnionFindNode u, boolean halving) {
         greyPathToRoot(u);
         UnionFindNode v = u, p, pp;
 

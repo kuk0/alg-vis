@@ -30,7 +30,7 @@ public class HeapDecrKey extends HeapAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader(H.minHeap ? "decreasekey" : "increasekey");
         if (H.minHeap) {
             v.setKey(v.getKey() - delta);

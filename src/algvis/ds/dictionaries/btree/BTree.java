@@ -19,7 +19,7 @@ package algvis.ds.dictionaries.btree;
 
 import java.util.Hashtable;
 
-import algvis.core.AlgorithmAdapter;
+import algvis.core.Algorithm;
 import algvis.core.Dictionary;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.internationalization.Languages;
@@ -108,9 +108,9 @@ public class BTree extends Dictionary {
 
     public void setOrder(final Integer order) {
         if (root != null || this.order != order) {
-            start(new AlgorithmAdapter(panel) {
+            start(new Algorithm(panel) {
                 @Override
-                public void runAlgorithm() throws InterruptedException {
+                public void runAlgorithm() {
                     BTree.this.order = order;
                     clear();
                 }

@@ -19,6 +19,7 @@ package algvis.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.sql.Savepoint;
 import java.util.Vector;
 
 import javax.swing.JPanel;
@@ -63,28 +64,31 @@ public class DictButtons extends Buttons {
     public void actionPerformed(ActionEvent evt) {
         super.actionPerformed(evt);
         if (evt.getSource() == insertB) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
-            }
             final Vector<Integer> args = I.getNonEmptyVI();
+            panel.history.saveEditId();
             for (final int x : args) {
                 D.insert(x);
             }
-        } else if (evt.getSource() == findB) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
+            if (panel.pauses && !args.isEmpty()) {
+                panel.history.rewind();
             }
+        } else if (evt.getSource() == findB) {
             final Vector<Integer> args = I.getVI();
+            panel.history.saveEditId();
             for (final int x : args) {
                 ((Dictionary) D).find(x);
             }
-        } else if (evt.getSource() == deleteB) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
+            if (panel.pauses && !args.isEmpty()){
+                panel.history.rewind();
             }
+        } else if (evt.getSource() == deleteB) {
             final Vector<Integer> args = I.getVI();
+            panel.history.saveEditId();
             for (final int x : args) {
                 ((Dictionary) D).delete(x);
+            }
+            if (panel.pauses && !args.isEmpty()){
+                panel.history.rewind();
             }
         }
     }

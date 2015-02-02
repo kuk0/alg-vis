@@ -28,7 +28,7 @@ public class SkewHeapInsert extends SkewHeapAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("insert", x);
         final int i = H.active;
         H.root[0] = new SkewHeapNode(H, x, ZDepth.ACTIONNODE);

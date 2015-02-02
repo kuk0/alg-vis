@@ -27,7 +27,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import algvis.core.AlgorithmAdapter;
+import algvis.core.Algorithm;
 import algvis.internationalization.IButton;
 import algvis.internationalization.ILabel;
 import algvis.ui.VisPanel;
@@ -70,7 +70,11 @@ public class MeldablePQButtons extends PQButtons implements ChangeListener {
             final Vector<Integer> args = I.getVI();
             args.add(-1);
             args.add(-1);
+            panel.history.saveEditId();
             ((MeldablePQ) D).meld(args.get(0), args.get(1));
+            if (panel.pauses){
+                panel.history.rewind();
+            }
         }
     }
 
@@ -88,12 +92,9 @@ public class MeldablePQButtons extends PQButtons implements ChangeListener {
 
             // ak pouzivatel zmenil activeHeap
             if (panel.history.isBetweenAlgorithms()) {
-                if (panel.history.canRedo()) {
-                    panel.newAlgorithmPool();
-                }
-                D.start(new AlgorithmAdapter(panel) {
+                D.start(new Algorithm(panel) {
                     @Override
-                    public void runAlgorithm() throws InterruptedException {
+                    public void runAlgorithm() {
                         H.lowlight();
                         H.highlight((Integer) activeHeap.getValue());
                     }

@@ -68,12 +68,13 @@ public class RotButtons extends Buttons {
         super.actionPerformed(evt);
         final Rotations R = (Rotations) D;
         if (evt.getSource() == rotB) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
-            }
             final Vector<Integer> args = I.getNonEmptyVI();
+            panel.history.saveEditId();
             for (final int x : args) {
                 R.rotate(x);
+            }
+            if (panel.pauses && !args.isEmpty()){
+                panel.history.rewind();
             }
         } else if (evt.getSource() == order) {
             R.T.order = order.isSelected();

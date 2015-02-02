@@ -104,8 +104,6 @@ public class Trie extends DataStructure {
 
     @Override
     public void random(int n) {
-        final boolean p = panel.pauses;
-        panel.pauses = false;
         for (int i = 0; i < n; i++) {
             if (panel.S == null) {
                 insert(WordGenerator.getSkWord());
@@ -113,12 +111,6 @@ public class Trie extends DataStructure {
                 insert(WordGenerator.getWord(panel.S));
             }
         }
-        start(new Runnable() {
-            @Override
-            public void run() {
-                panel.pauses = p;
-            }
-        });
     }
 
     public void insert(String s) {

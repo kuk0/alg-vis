@@ -40,15 +40,7 @@ public class SuffixTreePanel extends VisPanel {
     @Override
     public void start() {
         super.start();
-        final boolean p = pauses;
-        pauses = false;
         ((SuffixTree) D).insert(WordGenerator.getABWord());
-        D.start(new Runnable() {
-            @Override
-            public void run() {
-                pauses = p;
-            }
-        });
         screen.V.miny = -70;
         screen.V.resetView();
     }

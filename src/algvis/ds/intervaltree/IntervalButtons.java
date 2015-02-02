@@ -25,7 +25,7 @@ import java.util.Vector;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 
-import algvis.core.AlgorithmAdapter;
+import algvis.core.Algorithm;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ds.intervaltree.IntervalTrees.mimasuType;
 import algvis.internationalization.IButton;
@@ -106,63 +106,57 @@ public class IntervalButtons extends Buttons {
     public void actionPerformed(ActionEvent evt) {
         super.actionPerformed(evt);
         if (evt.getSource() == insertB) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
-            }
             final Vector<Integer> args = I.getNonEmptyVI();
+            panel.history.saveEditId();
             for (final int x : args) {
                 D.insert(x);
             }
-        } else if (evt.getSource() == findsumB) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
+            if (panel.pauses){
+                panel.history.rewind();
             }
+        } else if (evt.getSource() == findsumB) {
             final Vector<Integer> args = I.getVI();
+            panel.history.saveEditId();
             if (args.size() > 1) {
                 ((IntervalTrees) D).ofinterval(args.elementAt(0),
                     args.elementAt(1));
             } else {
                 ((IntervalTrees) D).ofinterval(1, ((IntervalTree) D).numLeafs);
             }
-        } else if (evt.getSource() == changeKeyB) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
+            if (panel.pauses){
+                panel.history.rewind();
             }
+        } else if (evt.getSource() == changeKeyB) {
             final int delta = Math.abs(I.getInt(1));
             final BSTNode w = ((BSTNode) ((IntervalTrees) D).chosen);
+            panel.history.saveEditId();
             ((IntervalTrees) D).changeKey(w, delta);
+            if (panel.pauses && w != null){
+                panel.history.rewind();
+            }
         } else if (evt.getSource() == minB
             && ((IntervalTrees) D).minTree != mimasuType.MIN) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
-            }
-            D.start(new AlgorithmAdapter(panel) {
+            D.start(new Algorithm(panel) {
                 @Override
-                public void runAlgorithm() throws InterruptedException {
+                public void runAlgorithm() {
                     D.clear();
                     ((IntervalTrees) D).minTree = mimasuType.MIN;
                 }
             });
         } else if (evt.getSource() == maxB
             && ((IntervalTrees) D).minTree != mimasuType.MAX) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
-            }
-            D.start(new AlgorithmAdapter(panel) {
+            D.start(new Algorithm(panel) {
                 @Override
-                public void runAlgorithm() throws InterruptedException {
+                public void runAlgorithm() {
                     D.clear();
                     ((IntervalTrees) D).minTree = mimasuType.MAX;
                 }
             });
         } else if (evt.getSource() == sumB
             && ((IntervalTrees) D).minTree != mimasuType.SUM) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
-            }
-            D.start(new AlgorithmAdapter(panel) {
+            D.start(new Algorithm(panel) {
                 @Override
-                public void runAlgorithm() throws InterruptedException {
+                public void runAlgorithm() {
                     D.clear();
                     ((IntervalTrees) D).minTree = mimasuType.SUM;
                 }

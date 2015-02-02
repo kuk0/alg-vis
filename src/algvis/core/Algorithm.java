@@ -47,7 +47,6 @@ import java.util.concurrent.Semaphore;
  */
 abstract public class Algorithm implements Runnable {
     private final VisPanel panel;
-    private final Semaphore gate = new Semaphore(1);
     private volatile boolean done = false;
     private UpdatableStateEdit panelState;
     private boolean wrapped = false;
@@ -57,11 +56,6 @@ abstract public class Algorithm implements Runnable {
         this.panel = panel;
         wrapperAlg = null;
         wrapped = false;
-        try {
-            gate.acquire();
-        } catch (final InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     protected Algorithm(VisPanel panel, Algorithm a) {
@@ -74,53 +68,24 @@ abstract public class Algorithm implements Runnable {
     public void run() {
         panel.D.A = this;
         begin();
-        try {
-            runAlgorithm();
-        } catch (final InterruptedException e) {
-            this.done = true;
-            panel.history.trimToEnd();
-            EventQueue.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    panel.refresh();
-                }
-            });
-            // e.printStackTrace();
-            return;
-        }
+        runAlgorithm();
         end();
+
     }
 
-    public abstract void runAlgorithm() throws InterruptedException;
+    public abstract void runAlgorithm();
 
-    protected void pause() throws InterruptedException {
+    protected void pause() {
         if (wrapped) {
             wrapperAlg.pause();
         } else {
             //System.out.println("panel state end");
             panelState.end();
-            if (panel.pauses) {
-                EventQueue.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        panel.refresh();
-                    }
-                });
-                gate.acquire();
-            }
             //System.out.println("new panel state");
             panelState = new UpdatableStateEdit(panel,
                 panel.history.getNextId());
             panel.history.addEdit(panelState);
             panel.scene.next();
-        }
-    }
-
-    public void resume() {
-        if (wrapped) {
-            wrapperAlg.resume();
-        } else {
-            gate.release();
         }
     }
 
@@ -214,13 +179,6 @@ abstract public class Algorithm implements Runnable {
         if (wrapped) {
             wrapperAlg.addToScene(element);
         } else {
-            if (!panel.pauses
-                && (element instanceof ShadeSubtree
-                    || element instanceof ShadePair
-                    || element instanceof ShadeTriple
-                    || element instanceof DoubleArrow
-                    || element instanceof Edge || element instanceof TextBubble))
-                return;
             panel.scene.add(element);
             panelState.addToPreState(element);
         }
@@ -230,13 +188,6 @@ abstract public class Algorithm implements Runnable {
         if (wrapped) {
             wrapperAlg.addToSceneUntilNext(element);
         } else {
-            if (!panel.pauses
-                && (element instanceof ShadeSubtree
-                    || element instanceof ShadePair
-                    || element instanceof ShadeTriple
-                    || element instanceof DoubleArrow
-                    || element instanceof Edge || element instanceof TextBubble))
-                return;
             panel.scene.addUntilNext(element);
             panelState.addToPreState(element);
         }
@@ -244,11 +195,6 @@ abstract public class Algorithm implements Runnable {
 
     protected void removeFromScene(VisualElement element) {
         if (element == null)
-            return;
-        if (!panel.pauses
-            && (element instanceof ShadeSubtree || element instanceof ShadePair
-                || element instanceof ShadeTriple
-                || element instanceof DoubleArrow || element instanceof Edge || element instanceof TextBubble))
             return;
         // if (panel.pauses) {
         panel.scene.remove(element);

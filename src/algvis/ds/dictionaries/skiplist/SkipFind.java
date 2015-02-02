@@ -27,7 +27,7 @@ public class SkipFind extends SkipAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("find", K);
         p = new SkipNode[L.height];
         v = new SkipNode(L, K, ZDepth.ACTIONNODE);

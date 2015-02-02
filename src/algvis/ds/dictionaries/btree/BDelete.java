@@ -32,7 +32,7 @@ public class BDelete extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         BNode v = new BNode(T, K);
         v.setColor(NodeColor.DELETE);
         addToScene(v);

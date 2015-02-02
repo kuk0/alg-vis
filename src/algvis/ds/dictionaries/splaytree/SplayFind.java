@@ -27,7 +27,7 @@ public class SplayFind extends SplayAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("find", K);
         final SplayNode v = new SplayNode(T, K, ZDepth.ACTIONNODE);
         v.setColor(NodeColor.FIND);

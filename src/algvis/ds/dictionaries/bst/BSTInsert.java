@@ -42,7 +42,7 @@ public class BSTInsert extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("insert", K);
         addToScene(v);
 

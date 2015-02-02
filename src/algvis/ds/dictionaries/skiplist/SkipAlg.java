@@ -33,7 +33,7 @@ abstract class SkipAlg extends Algorithm {
         K = x;
     }
 
-    SkipNode find() throws InterruptedException {
+    SkipNode find() {
         SkipNode w = L.getRoot();
         v.goToRoot();
         pause();

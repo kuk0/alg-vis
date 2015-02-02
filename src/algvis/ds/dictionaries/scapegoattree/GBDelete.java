@@ -26,7 +26,7 @@ public class GBDelete extends GBAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("delete", K);
         v = new GBNode(T, K, ZDepth.ACTIONNODE);
         v.setColor(NodeColor.DELETE);

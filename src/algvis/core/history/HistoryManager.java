@@ -31,6 +31,8 @@ public class HistoryManager extends UndoManager {
     private final Map<UndoableEdit, Boolean> algorithmEnds = new WeakHashMap<UndoableEdit, Boolean>();
     private long id = -1;
     private final Scene scene;
+    private long savedEditId;
+
 
     public HistoryManager(Scene scene) {
         super();
@@ -49,6 +51,13 @@ public class HistoryManager extends UndoManager {
 
     public long getLastEditId() {
         return id;
+    }
+    
+    public long getEditId(){
+        if (canUndo())
+            return editToBeUndone().getId();
+        else
+            return -1;
     }
 
     public synchronized void putAlgorithmEnd() {
@@ -71,7 +80,7 @@ public class HistoryManager extends UndoManager {
     }
 
     public synchronized void goTo(long id) {
-        if (id <= editToBeUndone().getId()) {
+        if (id <= editToBeUndone().getId()) {       // can throw NullPointerException
             while (canUndo() && editToBeUndone().getId() >= id) {
                 undo();
             }
@@ -83,6 +92,17 @@ public class HistoryManager extends UndoManager {
             }
             redo();
         }
+    }
+    
+    public void saveEditId(){
+        savedEditId = getEditId();
+    }
+    
+    public void rewind(){
+        while (canUndo() && editToBeUndone().getId() != savedEditId){
+            undo();
+        }
+        redo();
     }
 
     public synchronized boolean isBetweenAlgorithms() {
