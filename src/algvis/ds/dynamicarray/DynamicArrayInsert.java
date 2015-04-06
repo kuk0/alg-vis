@@ -11,7 +11,7 @@ public class DynamicArrayInsert extends DynamicArrayAlg {
     this.x = x;
   }
   @Override
-  public void runAlgorithm() throws InterruptedException {
+  public void runAlgorithm() {
     D.newCoins.clear();
     setHeader("insert");
     for(int i=0; i < 5; i++) {

@@ -13,7 +13,7 @@ abstract class DynamicArrayAlg extends Algorithm {
     this.D = D;
   }
 
-  public void createNewArray(int capacity) throws InterruptedException {
+  public void createNewArray(int capacity) {
     for(DynamicArrayCoin coin : D.coinsForArray) coin.setColor(NodeColor.RED);
     addStep((Node)D.coinsForArray.get(D.coinsForArray.size()/2), REL.TOP, "dynamicarray-use-coin");
     pause();

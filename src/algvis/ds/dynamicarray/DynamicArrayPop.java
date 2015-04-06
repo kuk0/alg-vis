@@ -13,7 +13,7 @@ public class DynamicArrayPop extends DynamicArrayAlg {
     this.D = D;
   }
   @Override
-  public void runAlgorithm() throws InterruptedException {
+  public void runAlgorithm() {
     D.newCoins.clear();
     setHeader("pop");
     for(int i=0; i < 3; i++) {
