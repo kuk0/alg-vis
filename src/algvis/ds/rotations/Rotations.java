@@ -147,7 +147,6 @@ public class Rotations extends DataStructure implements ClickListener {
 
     @Override
     public void random(int n) {
-        final boolean p = panel.pauses;
         for (int i = 0; i < n; ++i) {
             insert(MyRandom.Int(InputField.MAX + 1));
         }
@@ -156,7 +155,6 @@ public class Rotations extends DataStructure implements ClickListener {
             public void run() {
                 T.getRoot().calcTree();
                 setStats();
-                panel.pauses = p;
             }
         });
         // panel.screen.V.resetView();

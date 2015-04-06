@@ -29,7 +29,7 @@ public class LeftHeapDecrKey extends LeftHeapAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader(H.minHeap ? "decreasekey" : "increasekey");
         if (H.minHeap) {
             v.setKey(v.getKey() - delta);

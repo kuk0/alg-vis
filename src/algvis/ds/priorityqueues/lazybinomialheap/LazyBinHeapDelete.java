@@ -33,7 +33,7 @@ public class LazyBinHeapDelete extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader(H.minHeap ? "delete-min" : "delete-max");
         final int i = H.active;
         H.cleanup = new BinHeapNode[lg(H.size(i) + 1) + 1]; // TODO: change to

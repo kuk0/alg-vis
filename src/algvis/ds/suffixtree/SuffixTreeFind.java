@@ -42,7 +42,7 @@ public class SuffixTreeFind extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("triefind", s);
         if (s.length() == 0) {
             // addNote("badword");

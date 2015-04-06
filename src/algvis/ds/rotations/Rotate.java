@@ -41,7 +41,7 @@ public class Rotate extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("rotate-header", v.getKey());
         if (v == T.getRoot()) {
             addStep(v, REL.BOTTOM, "rotate-root", v.getKey());

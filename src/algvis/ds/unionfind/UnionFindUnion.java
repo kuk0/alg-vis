@@ -39,7 +39,7 @@ public class UnionFindUnion extends UnionFindFind {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("ufunion");
         u.mark();
         v.mark();
@@ -55,8 +55,7 @@ public class UnionFindUnion extends UnionFindFind {
         }
     }
 
-    private void unionSimple(UnionFindNode V, UnionFindNode W)
-        throws InterruptedException {
+    private void unionSimple(UnionFindNode V, UnionFindNode W) {
         final UnionFindNode r1 = find(V);
         final UnionFindNode r2 = find(W);
         if (r1 == r2) {
@@ -81,8 +80,7 @@ public class UnionFindUnion extends UnionFindFind {
         // be some correction.
     }
 
-    private void unionByRank(UnionFindNode V, UnionFindNode W)
-        throws InterruptedException {
+    private void unionByRank(UnionFindNode V, UnionFindNode W) {
         final UnionFindNode r1 = find(V);
         final UnionFindNode r2 = find(W);
         if (r1 == r2) {

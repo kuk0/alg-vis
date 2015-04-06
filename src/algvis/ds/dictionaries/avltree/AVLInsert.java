@@ -39,7 +39,7 @@ public class AVLInsert extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("insert", K);
         final BSTInsert insert = new BSTInsert(T, new AVLNode(T, K,
             ZDepth.ACTIONNODE), this);

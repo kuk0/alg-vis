@@ -34,7 +34,7 @@ public class AAInsert extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("insert", K);
         final BSTInsert insert = new BSTInsert(T, new AANode(T, K,
             ZDepth.ACTIONNODE), this);

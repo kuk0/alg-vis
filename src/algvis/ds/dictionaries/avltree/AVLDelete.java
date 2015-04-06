@@ -39,7 +39,7 @@ public class AVLDelete extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("delete", K);
         addNote("bstdeletestart");
         //final BSTFind find = new BSTFind(T, K, this);

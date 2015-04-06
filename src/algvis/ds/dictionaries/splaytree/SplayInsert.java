@@ -26,7 +26,7 @@ public class SplayInsert extends SplayAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("insert", K);
         final SplayNode v = new SplayNode(T, K, ZDepth.ACTIONNODE);
         v.setColor(NodeColor.INSERT);

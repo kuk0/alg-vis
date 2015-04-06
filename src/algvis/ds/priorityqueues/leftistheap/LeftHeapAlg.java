@@ -30,7 +30,7 @@ abstract class LeftHeapAlg extends Algorithm {
         this.H = H;
     }
 
-    void meld(int i) throws InterruptedException {
+    void meld(int i) {
         LeftHeapNode w = H.root[i];
         H.root[0].mark();
         w.mark();
@@ -147,7 +147,7 @@ abstract class LeftHeapAlg extends Algorithm {
         addNote("done");
     }
 
-    void bubbleup(LeftHeapNode v) throws InterruptedException {
+    void bubbleup(LeftHeapNode v) {
         if (H.minHeap) {
             addStep("minheapbubbleup");
         } else {

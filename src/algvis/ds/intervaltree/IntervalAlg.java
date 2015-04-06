@@ -31,7 +31,7 @@ abstract class IntervalAlg extends Algorithm {
         this.T = T;
     }
 
-    void adjustValues(IntervalNode w) throws InterruptedException {
+    void adjustValues(IntervalNode w) {
         while (w != null) {
             w.mark();
             if ((w.getRight() != null) && (w.getLeft() != null)) {

@@ -39,7 +39,7 @@ public class TrieInsert extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("trieinsert", s.substring(0, s.length() - 1));
         if (s.compareTo("$") == 0) {
             addNote("badword");

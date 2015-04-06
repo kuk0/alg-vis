@@ -35,7 +35,7 @@ public class FibHeapDecrKey extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader(H.minHeap ? "decreasekey" : "increasekey");
         final int i = H.active;
         if (H.minHeap) {

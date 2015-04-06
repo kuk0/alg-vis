@@ -27,7 +27,7 @@ public class GBFind extends GBAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("find", K);
         v = new GBNode(T, K, ZDepth.ACTIONNODE);
         v.setColor(NodeColor.FIND);

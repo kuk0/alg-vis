@@ -40,7 +40,7 @@ public class BSTFind extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("find", K);
         result.put("node", null);
         final BSTNode v = new BSTNode(T, K, ZDepth.ACTIONNODE);

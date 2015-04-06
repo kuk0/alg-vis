@@ -24,7 +24,7 @@ import java.util.Vector;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 
-import algvis.core.AlgorithmAdapter;
+import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.internationalization.IButton;
 import algvis.internationalization.IRadioButton;
@@ -93,47 +93,44 @@ public class PQButtons extends Buttons {
     public void actionPerformed(ActionEvent evt) {
         super.actionPerformed(evt);
         if (evt.getSource() == insertB) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
-            }
             final Vector<Integer> args = I.getNonEmptyVI();
+            panel.history.saveEditId();
             for (final int x : args) {
                 D.insert(x);
             }
+            if (panel.pauses && !args.isEmpty()){
+                panel.history.rewind();
+            }
         } else if (evt.getSource() == deleteB) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
-            }
+            panel.history.saveEditId();
             ((PriorityQueue) D).delete();
-        } else if (evt.getSource() == decrKeyB) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
+            if (panel.pauses){
+                panel.history.rewind();
             }
+        } else if (evt.getSource() == decrKeyB) {
             final int delta = Math.abs(I.getInt(1));
             final Node w = ((PriorityQueue) D).chosen;
             if (w != null) {
                 // TODO vypisat, ze ziadny vrchol nie je vybraty
                 // nesedi hlaska "using the default value 1"
+                panel.history.saveEditId();
                 ((PriorityQueue) D).decreaseKey(w, delta);
+                if (panel.pauses){
+                    panel.history.rewind();
+                }
             }
         } else if (evt.getSource() == minB && !((PriorityQueue) D).minHeap) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
-            }
-            D.start(new AlgorithmAdapter(panel) {
+            D.start(new Algorithm(panel) {
                 @Override
-                public void runAlgorithm() throws InterruptedException {
+                public void runAlgorithm() {
                     D.clear();
                     ((PriorityQueue) D).minHeap = true;
                 }
             });
         } else if (evt.getSource() == maxB && ((PriorityQueue) D).minHeap) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
-            }
-            D.start(new AlgorithmAdapter(panel) {
+            D.start(new Algorithm(panel) {
                 @Override
-                public void runAlgorithm() throws InterruptedException {
+                public void runAlgorithm() {
                     D.clear();
                     ((PriorityQueue) D).minHeap = false;
                 }

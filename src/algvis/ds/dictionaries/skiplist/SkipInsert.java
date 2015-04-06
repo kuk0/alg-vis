@@ -21,6 +21,7 @@ import algvis.core.MyRandom;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
+import algvis.ui.view.REL;
 
 public class SkipInsert extends SkipAlg {
 
@@ -29,21 +30,24 @@ public class SkipInsert extends SkipAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("insert", K);
         p = new SkipNode[L.height];
         v = new SkipNode(L, K, ZDepth.ACTIONNODE);
         v.setColor(NodeColor.INSERT);
         addToScene(v);
         addStep("skipinsertstart");
+        addStep(L.getRoot(), REL.TOP, "skipinsertstart");
         SkipNode w = find();
+
 
         if (w.getKey() == v.getKey()) {
             addStep("alreadythere");
+            addStep(v, REL.BOTTOM, "alreadythere");
+            pause();
             v.setColor(NodeColor.NOTFOUND);
             v.goDown();
             removeFromScene(v);
-            pause();
             addNote("done");
             return;
         }
@@ -51,13 +55,17 @@ public class SkipInsert extends SkipAlg {
 
         L.n++;
         addStep("skipinsertafter");
+        addStep(v, REL.BOTTOM, "skipinsertafter");
         pause();
         SkipNode z, oldv = null;
+        addStep(v, REL.BOTTOM, "skiplist-tossing");
         addNote("skiplist-tossing");
         int i = 0;
         do {
             if (i > 0) {
+                addStep(oldv, REL.TOP, "skiplist-head", i);
                 addStep("skiplist-head", i);
+                pause();
                 L.e++;
             }
             addToScene(v);
@@ -90,6 +98,7 @@ public class SkipInsert extends SkipAlg {
         } while (MyRandom.heads());
 
         addStep("skiplist-tail", i);
+        addStep(oldv, REL.TOP, "skiplist-tail", i);
         pause();
         addNote("done");
 

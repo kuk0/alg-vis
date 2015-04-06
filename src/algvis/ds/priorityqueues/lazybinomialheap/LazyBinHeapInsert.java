@@ -32,7 +32,7 @@ public class LazyBinHeapInsert extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("insert", x);
         final int i = H.active;
         final BinHeapNode v = new BinHeapNode(H, x, ZDepth.ACTIONNODE);

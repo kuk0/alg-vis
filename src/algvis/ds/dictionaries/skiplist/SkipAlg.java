@@ -19,6 +19,7 @@ package algvis.ds.dictionaries.skiplist;
 
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
+import algvis.ui.view.REL;
 
 abstract class SkipAlg extends Algorithm {
     final SkipList L;
@@ -32,7 +33,7 @@ abstract class SkipAlg extends Algorithm {
         K = x;
     }
 
-    SkipNode find() throws InterruptedException {
+    SkipNode find() {
         SkipNode w = L.getRoot();
         v.goToRoot();
         pause();
@@ -40,6 +41,8 @@ abstract class SkipAlg extends Algorithm {
         for (int i = L.height - 1;; --i) {
             while (w.getRight().getKey() <= K) {
                 addStep("skiplist-next", K);
+                addStep(v, REL.TOP, "skiplist-next", K);
+                pause();
                 w = w.getRight();
                 w.colorBefore(NodeColor.DARKER);
                 v.goTo(w);
@@ -53,6 +56,8 @@ abstract class SkipAlg extends Algorithm {
                 break;
             }
             addStep("skiplist-down", K);
+            addStep(v, REL.TOP, "skiplist-down", K);
+            pause();
             w = w.getDown();
             v.goTo(w);
             pause();

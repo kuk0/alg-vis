@@ -28,7 +28,7 @@ abstract class HeapAlg extends Algorithm {
         this.H = H;
     }
 
-    void bubbleup(HeapNode v) throws InterruptedException {
+    void bubbleup(HeapNode v) {
         addStep(H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
         HeapNode w = v.getParent();
         while (w != null && v.prec(w)) {

@@ -30,7 +30,7 @@ abstract class SkewHeapAlg extends Algorithm {
         this.H = H;
     }
 
-    void meld(int i) throws InterruptedException {
+    void meld(int i) {
         SkewHeapNode w = H.root[i];
         H.root[0].mark();
         w.mark();
@@ -133,7 +133,7 @@ abstract class SkewHeapAlg extends Algorithm {
         addNote("done");
     }
 
-    void bubbleup(SkewHeapNode v) throws InterruptedException {
+    void bubbleup(SkewHeapNode v) {
         if (H.minHeap) {
             addStep("minheapbubbleup");
         } else {

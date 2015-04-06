@@ -20,6 +20,7 @@ package algvis.ds.dictionaries.skiplist;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
+import algvis.ui.view.REL;
 
 public class SkipDelete extends SkipAlg {
     public SkipDelete(SkipList L, int x) {
@@ -27,28 +28,35 @@ public class SkipDelete extends SkipAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("delete", K);
         v = new SkipNode(L, K, ZDepth.ACTIONNODE);
         v.setColor(NodeColor.DELETE);
         addToScene(v);
         p = new SkipNode[L.height];
         addStep("bstdeletestart");
+        addStep(L.getRoot(), REL.TOP, "bstdeletestart");
         SkipNode w = find();
 
         if (w.getKey() != K) {
             addStep("notfound");
+            addStep(w, REL.BOTTOM, "notfound");
+            pause();
             v.setColor(NodeColor.NOTFOUND);
             v.goDown();
             removeFromScene(v);
             return;
         }
+        addStep(w, REL.BOTTOM, "skiplist-delete-found");
+        pause();
         removeFromScene(v);
 
         addNote("skiplist-delete-found");
+        
         L.n--;
         L.e++;
         addStep("skipdelete");
+        addStep(w, REL.BOTTOM, "skipdelete");
         for (int i = 0; i < L.height; ++i) {
             if (w == null || w.getKey() != K) {
                 break;

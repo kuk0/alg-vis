@@ -17,14 +17,6 @@
  ******************************************************************************/
 package algvis.ui;
 
-import algvis.core.Algorithm;
-import algvis.core.AlgorithmAdapter;
-import algvis.core.DataStructure;
-import algvis.core.history.HashtableStoreSupport;
-import algvis.internationalization.ChLabel;
-import algvis.internationalization.IButton;
-import algvis.internationalization.ICheckBox;
-
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -38,6 +30,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.undo.StateEditable;
+
+import algvis.core.Algorithm;
+import algvis.core.DataStructure;
+import algvis.core.history.HashtableStoreSupport;
+import algvis.internationalization.ChLabel;
+import algvis.internationalization.IButton;
+import algvis.internationalization.ICheckBox;
 
 /**
  * The Class Buttons. This is a panel with standard buttons such as input field,
@@ -219,9 +218,7 @@ abstract public class Buttons extends JPanel implements ActionListener,
             }
         } else if (evt.getSource() == next) {
             final Algorithm a = panel.D.getA();
-            if (a != null && !a.isDone() && !panel.history.canRedo()) {
-                a.resume();
-            } else if (panel.history.canRedo()) {
+            if (panel.history.canRedo()) {
                 if (panel.pauses) {
                     panel.history.redo();
                 } else {
@@ -230,19 +227,13 @@ abstract public class Buttons extends JPanel implements ActionListener,
                 panel.refresh();
             }
         } else if (evt.getSource() == clear) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
-            }
-            D.start(new AlgorithmAdapter(panel) {
+            D.start(new Algorithm(panel) {
                 @Override
-                public void runAlgorithm() throws InterruptedException {
+                public void runAlgorithm() {
                     D.clear();
                 }
             });
         } else if (evt.getSource() == random) {
-            if (panel.history.canRedo()) {
-                panel.newAlgorithmPool();
-            }
             D.random(I.getInt(10));
         } else if (evt.getSource() == pause) {
             panel.pauses = pause.isSelected();

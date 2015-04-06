@@ -55,7 +55,6 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
 
     public volatile boolean pauses = true;
     public boolean small = false;
-    public ExecutorService algorithmPool = Executors.newSingleThreadExecutor();
     public final HistoryManager history = new HistoryManager(scene);
     private boolean started = false;
 
@@ -170,10 +169,5 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
         buttons.restoreState(state);
         commentary.restoreState(state);
         scene.restoreState(state);
-    }
-
-    public void newAlgorithmPool() {
-        algorithmPool.shutdownNow();
-        algorithmPool = Executors.newSingleThreadExecutor();
     }
 }

@@ -33,7 +33,7 @@ public class IntervalInsert extends IntervalAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("insert", K);
         v = new IntervalNode(T, K, ZDepth.ACTIONNODE);
         v.setInterval(T.numLeafs + 1, T.numLeafs + 1);

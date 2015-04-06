@@ -38,7 +38,7 @@ public class IntervalFindMin extends IntervalAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         if (i > j) {
             final int tmp = j;
             j = i;
@@ -97,7 +97,7 @@ public class IntervalFindMin extends IntervalAlg {
         }
     }
 
-    void find(IntervalNode w, int b, int e) throws InterruptedException {
+    void find(IntervalNode w, int b, int e) {
 
         w.mark();
         // w.markSubtree = true;

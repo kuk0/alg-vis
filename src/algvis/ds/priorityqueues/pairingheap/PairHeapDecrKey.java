@@ -29,7 +29,7 @@ public class PairHeapDecrKey extends PairHeapAlg {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader(H.minHeap ? "decreasekey" : "increasekey");
         if (H.minHeap) {
             v.setKey(v.getKey() - delta);

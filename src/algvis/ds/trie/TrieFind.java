@@ -39,7 +39,7 @@ public class TrieFind extends Algorithm {
     }
 
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("triefind", s.substring(0, s.length() - 1));
         if (s.compareTo("$") == 0) {
             addNote("badword");

@@ -36,7 +36,7 @@ public class AADelete extends Algorithm {
 
     // TODO niektore kroky ("This node is OK) nemaju pauzy
     @Override
-    public void runAlgorithm() throws InterruptedException {
+    public void runAlgorithm() {
         setHeader("delete", K);
         addNote("bstdeletestart");
         final BSTFind find = new BSTFind(T, K, this);
