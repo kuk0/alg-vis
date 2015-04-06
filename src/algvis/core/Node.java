@@ -17,15 +17,15 @@
  ******************************************************************************/
 package algvis.core;
 
-import java.awt.Color;
-import java.awt.geom.Rectangle2D;
-import java.util.Hashtable;
-
 import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.VisualElement;
 import algvis.core.visual.ZDepth;
 import algvis.ui.Fonts;
 import algvis.ui.view.View;
+
+import java.awt.Color;
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
 
 /**
  * The Class Node. This is a basic element of the visualization. Nodes can be
@@ -100,10 +100,6 @@ public class Node extends VisualElement {
 
     public Node(Node v) {
         this(v.D, v.getKey(), v.x, v.y);
-    }
-
-    public Node(DataStructure D) {
-        super(ZDepth.DS);
     }
 
     public void setState(int s) {

@@ -17,12 +17,12 @@
  ******************************************************************************/
 package algvis.ds.suffixtree;
 
-import java.util.Vector;
-
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.core.StringElem;
 import algvis.ds.trie.TrieWordNode;
+
+import java.util.Vector;
 
 public class SuffixTreeInsert extends Algorithm {
     private final SuffixTree T;
@@ -45,7 +45,7 @@ public class SuffixTreeInsert extends Algorithm {
     @Override
     public void runAlgorithm() throws InterruptedException {
         T.text = s;
-        T.str = new StringElem(T, T.text, 0, SuffixTree.textpos);
+        T.str = new StringElem(T.text, 0, SuffixTree.textpos);
 
         setHeader("trieinsert", s.substring(0, s.length() - 1));
         if (s.compareTo("$") == 0) {
@@ -166,14 +166,12 @@ public class SuffixTreeInsert extends Algorithm {
                     // T.reposition();
                     // pause();
                     // in real implementation this is O(1) both time and space
-                    final SuffixTreeNode u = null;
                     do {
                         caching = caching
                             .getChildWithCH(cachedUpWalk.charAt(0));
                         cachedUpWalk = cachedUpWalk.substring(1);
                         downWalk.add(caching);
-                    } while ((!cachedUpWalk.equals("")) && (u != null)
-                        && (caching.isPacked()));
+                    } while (!cachedUpWalk.equals("") && caching.isPacked());
                 }
                 for (final SuffixTreeNode u : downWalk) {
                     u.setColor(NodeColor.NORMAL);

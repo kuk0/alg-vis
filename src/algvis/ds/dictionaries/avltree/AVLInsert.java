@@ -1,17 +1,17 @@
 /*******************************************************************************
  * Copyright (c) 2012-present Jakub Kováč, Jozef Brandýs, Katarína Kotrlová,
  * Pavol Lukča, Ladislav Pápay, Viktor Tomkovič, Tatiana Tóthová
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -21,10 +21,12 @@ import java.util.HashMap;
 
 import algvis.core.Algorithm;
 import algvis.core.DataStructure;
+import algvis.core.StringUtils;
 import algvis.core.visual.DoubleArrow;
 import algvis.core.visual.ShadeSubtree;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTInsert;
+import algvis.ui.view.REL;
 
 public class AVLInsert extends Algorithm {
     private final AVL T;
@@ -46,15 +48,16 @@ public class AVLInsert extends Algorithm {
         final boolean inserted = (Boolean) insertResult.get("inserted");
 
         if (inserted) {
-            AVLNode w = (AVLNode) insertResult.get("w");
-            addNote("avlinsertbal");
+            AVLNode w = (AVLNode) insertResult.get("v");
+            addStep(w, REL.TOP, "avlinsertbal");
             pause();
 
-            // bubleme nahor
+            // update balance on the path up
             while (w != null) {
                 w.mark();
                 w.calc();
-                addStep("avlupdatebal");
+                addStep(w, REL.TOP, "avlupdatebal",
+                    StringUtils.signedInt(w.balance()));
                 ShadeSubtree ul = null, um = null, ur = null;
                 if (w.getLeft() != null) {
                     addToScene(ul = new ShadeSubtree(w.getLeft()));
@@ -71,7 +74,7 @@ public class AVLInsert extends Algorithm {
                 pause();
                 if (w.balance() == -2) {
                     if (w.getLeft().balance() != +1) { // R-rot
-                        addStep("avlr");
+                        addStep(w, REL.TOP, "avlr");
                         w.unmark();
                         w = w.getLeft();
                         w.mark();
@@ -87,7 +90,7 @@ public class AVLInsert extends Algorithm {
                                 .getLeft()));
                         }
                         addToScene(um = new ShadeSubtree(w.getLeft().getRight()));
-                        addStep("avllr");
+                        addStep(w, REL.TOP, "avllr");
                         w.unmark();
                         w = w.getLeft().getRight();
                         w.mark();
@@ -104,7 +107,7 @@ public class AVLInsert extends Algorithm {
                     pause();
                 } else if (w.balance() == +2) {
                     if (w.getRight().balance() != -1) { // L-rot
-                        addStep("avll");
+                        addStep(w, REL.TOP, "avll");
                         w.unmark();
                         w = w.getRight();
                         w.mark();
@@ -120,7 +123,7 @@ public class AVLInsert extends Algorithm {
                                 .getRight()));
                         }
                         addToScene(um = new ShadeSubtree(w.getRight().getLeft()));
-                        addStep("avlrl");
+                        addStep(w, REL.TOP, "avlrl");
                         w.unmark();
                         w = w.getRight().getLeft();
                         w.mark();
@@ -140,15 +143,9 @@ public class AVLInsert extends Algorithm {
                 }
                 w.unmark();
                 w = w.getParent();
-                if (ul != null) {
-                    removeFromScene(ul);
-                }
-                if (um != null) {
-                    removeFromScene(um);
-                }
-                if (ur != null) {
-                    removeFromScene(ur);
-                }
+                removeFromScene(ul);
+                removeFromScene(um);
+                removeFromScene(ur);
             }
         }
         T.reposition();

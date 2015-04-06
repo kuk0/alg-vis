@@ -17,10 +17,6 @@
  ******************************************************************************/
 package algvis.ds.trie;
 
-import java.awt.Color;
-import java.awt.FontMetrics;
-import java.util.Hashtable;
-
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
@@ -28,14 +24,16 @@ import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.Fonts;
 import algvis.ui.view.View;
 
+import java.awt.Color;
+import java.awt.FontMetrics;
+import java.util.Hashtable;
+
 public class TrieWordNode extends Node {
     private String s = "";
 
     public TrieWordNode(DataStructure D, String s, int x, int y, NodeColor c) {
-        super(D);
+        super(D, 0, x, y);
         setS(s);
-        this.x = x;
-        this.y = y;
         setColor(c);
         this.D = D;
     }

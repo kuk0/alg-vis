@@ -24,8 +24,8 @@ public class HashtableStoreSupport {
     private static final Object nullObject = new Object();
 
     /**
-     * Stores the (key, value) pair in the state.
-     * Value may be null and it is stored only if state contains the key.
+     * Stores the (key, value) pair in the state. Value may be null and it is
+     * stored only if state contains the key.
      * 
      * @param state
      * @param key

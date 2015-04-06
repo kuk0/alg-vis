@@ -59,13 +59,9 @@ public abstract class VisualElement implements StateEditable {
 
     @Override
     public void storeState(Hashtable<Object, Object> state) {
-        // HashtableStoreSupport.store(state, hash + "zDepth", zDepth);
     }
 
     @Override
     public void restoreState(Hashtable<?, ?> state) {
-        // Object zDepth = state.get(hash + "zDepth");
-        // if (zDepth != null) setZDepth((Integer)
-        // HashtableStoreSupport.restore(zDepth));
     }
 }

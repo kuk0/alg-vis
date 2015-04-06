@@ -17,14 +17,10 @@
  ******************************************************************************/
 package algvis.ui;
 
-import java.awt.Color;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
+import java.awt.*;
 
 public class AlgVisStandalone {
     public static void main(String[] args) {
@@ -59,9 +55,6 @@ public class AlgVisStandalone {
 }
 
 class MainFrame extends JFrame {
-    /**
-	 *
-	 */
     private static final long serialVersionUID = -1045189076645432320L;
     private static final int WIDTH = 900;
     private static final int HEIGHT = 650;

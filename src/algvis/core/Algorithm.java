@@ -19,6 +19,7 @@ package algvis.core;
 
 import algvis.core.history.UpdatableStateEdit;
 import algvis.core.visual.DoubleArrow;
+import algvis.core.visual.Edge;
 import algvis.core.visual.ShadePair;
 import algvis.core.visual.ShadeSubtree;
 import algvis.core.visual.ShadeTriple;
@@ -29,7 +30,7 @@ import algvis.internationalization.IParamString;
 import algvis.internationalization.IString;
 import algvis.ui.NewVisPanel;
 import algvis.ui.VisPanel;
-import algvis.ui.view.CornerEnum;
+import algvis.ui.view.REL;
 
 import java.awt.EventQueue;
 import java.util.HashMap;
@@ -96,6 +97,7 @@ abstract public class Algorithm implements Runnable {
         if (wrapped) {
             wrapperAlg.pause();
         } else {
+            //System.out.println("panel state end");
             panelState.end();
             if (panel.pauses) {
                 EventQueue.invokeLater(new Runnable() {
@@ -106,8 +108,11 @@ abstract public class Algorithm implements Runnable {
                 });
                 gate.acquire();
             }
-            panel.history.addEdit(panelState = new UpdatableStateEdit(panel,
-                panel.history.getNextId()));
+            //System.out.println("new panel state");
+            panelState = new UpdatableStateEdit(panel,
+                panel.history.getNextId());
+            panel.history.addEdit(panelState);
+            panel.scene.next();
         }
     }
 
@@ -116,7 +121,6 @@ abstract public class Algorithm implements Runnable {
             wrapperAlg.resume();
         } else {
             gate.release();
-            panel.scene.next();
         }
     }
 
@@ -158,20 +162,34 @@ abstract public class Algorithm implements Runnable {
         }
     }
 
-    protected void addStep(int x, int y, int w, CornerEnum pos, String s) {
+    protected void addStep(int x, int y, int w, REL pos, String s) {
         addToSceneUntilNext(new TextBubble(new IString(s), x, y, w, pos));
     }
 
-    protected void addStep(int x, int y, int w, CornerEnum pos, String s,
+    protected void addStep(int x, int y, int w, REL pos, String s,
         String... par) {
         addToSceneUntilNext(new TextBubble(new IParamString(s, par), x, y, w,
             pos));
     }
 
-    protected void addStep(int x, int y, int w, CornerEnum pos, String s,
-        int... par) {
+    protected void addStep(int x, int y, int w, REL pos, String s, int... par) {
         addToSceneUntilNext(new TextBubble(new IIntParamString(s, par), x, y,
             w, pos));
+    }
+
+    protected void addStep(Node v, REL pos, String s) {
+        addToSceneUntilNext(new TextBubble(new IString(s), v.tox, v.toy, 200,
+            pos));
+    }
+
+    protected void addStep(Node v, REL pos, String s, String... par) {
+        addToSceneUntilNext(new TextBubble(new IParamString(s, par), v.tox,
+            v.toy, 200, pos));
+    }
+
+    protected void addStep(Node v, REL pos, String s, int... par) {
+        addToSceneUntilNext(new TextBubble(new IIntParamString(s, par), v.tox,
+            v.toy, 200, pos));
     }
 
     protected void addStep(String s) {
@@ -200,7 +218,8 @@ abstract public class Algorithm implements Runnable {
                 && (element instanceof ShadeSubtree
                     || element instanceof ShadePair
                     || element instanceof ShadeTriple
-                    || element instanceof DoubleArrow || element instanceof TextBubble))
+                    || element instanceof DoubleArrow
+                    || element instanceof Edge || element instanceof TextBubble))
                 return;
             panel.scene.add(element);
             panelState.addToPreState(element);
@@ -209,13 +228,14 @@ abstract public class Algorithm implements Runnable {
 
     protected void addToSceneUntilNext(VisualElement element) {
         if (wrapped) {
-            wrapperAlg.addToScene(element);
+            wrapperAlg.addToSceneUntilNext(element);
         } else {
             if (!panel.pauses
                 && (element instanceof ShadeSubtree
                     || element instanceof ShadePair
                     || element instanceof ShadeTriple
-                    || element instanceof DoubleArrow || element instanceof TextBubble))
+                    || element instanceof DoubleArrow
+                    || element instanceof Edge || element instanceof TextBubble))
                 return;
             panel.scene.addUntilNext(element);
             panelState.addToPreState(element);
@@ -223,10 +243,12 @@ abstract public class Algorithm implements Runnable {
     }
 
     protected void removeFromScene(VisualElement element) {
+        if (element == null)
+            return;
         if (!panel.pauses
             && (element instanceof ShadeSubtree || element instanceof ShadePair
                 || element instanceof ShadeTriple
-                || element instanceof DoubleArrow || element instanceof TextBubble))
+                || element instanceof DoubleArrow || element instanceof Edge || element instanceof TextBubble))
             return;
         // if (panel.pauses) {
         panel.scene.remove(element);
@@ -236,8 +258,8 @@ abstract public class Algorithm implements Runnable {
     }
 
     void begin() {
-        panel.history.addEdit(panelState = new UpdatableStateEdit(panel,
-            panel.history.getNextId()));
+        panelState = new UpdatableStateEdit(panel, panel.history.getNextId());
+        panel.history.addEdit(panelState);
         if (!(panel instanceof NewVisPanel)) {
             panel.commentary.clear();
         }

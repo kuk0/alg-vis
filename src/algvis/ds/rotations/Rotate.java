@@ -18,11 +18,15 @@
 package algvis.ds.rotations;
 
 import algvis.core.Algorithm;
+import algvis.core.DataStructure;
+import algvis.core.Node;
 import algvis.core.NodeColor;
+import algvis.core.visual.Edge;
 import algvis.core.visual.ShadePair;
 import algvis.core.visual.ShadeSubtree;
 import algvis.ds.dictionaries.bst.BST;
 import algvis.ds.dictionaries.bst.BSTNode;
+import algvis.ui.view.REL;
 
 public class Rotate extends Algorithm {
     private final Rotations R;
@@ -40,11 +44,12 @@ public class Rotate extends Algorithm {
     public void runAlgorithm() throws InterruptedException {
         setHeader("rotate-header", v.getKey());
         if (v == T.getRoot()) {
-            addNote("rotate-root", v.getKey());
+            addStep(v, REL.BOTTOM, "rotate-root", v.getKey());
+            pause();
             return;
         }
         final BSTNode u = v.getParent();
-        BSTNode a, b, c;
+        BSTNode a, b, c, p = u.getParent();
         final ShadePair shade = new ShadePair(v, u);
         addToScene(shade);
         final boolean rotR = v.isLeft();
@@ -63,6 +68,8 @@ public class Rotate extends Algorithm {
                 a.subtreeColor(NodeColor.RED);
                 shadeA = new ShadeSubtree(a);
                 addToScene(shadeA);
+                addStep(shadeA.getRight(), shadeA.getBottom(), 100,
+                    REL.BOTTOMLEFT, rotR ? "rotate-rise" : "rotate-fall");
             }
             if (b != null) {
                 b.subtreeColor(NodeColor.GREEN);
@@ -73,12 +80,43 @@ public class Rotate extends Algorithm {
                 c.subtreeColor(NodeColor.BLUE);
                 shadeC = new ShadeSubtree(c);
                 addToScene(shadeC);
+                addStep(shadeC.getLeft(), shadeC.getBottom(), 100,
+                    REL.BOTTOMRIGHT, rotR ? "rotate-fall" : "rotate-rise");
             }
         }
+        pause();
+        addStep(u.x, (u.y + v.y) / 2, 200, v.isLeft() ? REL.RIGHT : REL.LEFT,
+            "rotate-change", u.getKey(), v.getKey());
+        addToSceneUntilNext(new Edge(v, u));
+        pause();
+        if (p != null) {
+            if (u.isLeft() == v.isLeft()) {
+                addToSceneUntilNext(new Edge(p, u, v));
+            } else {
+                addToSceneUntilNext(new Edge(p, v));
+            }
+            addStep(p, REL.TOP, "rotate-change-parent", p.getKey(), v.getKey());
+        } else {
+            addToSceneUntilNext(new Edge(u.x, u.y - DataStructure.minsepy, v.x,
+                v.y));
+            addStep(v.x, (u.y + v.y) / 2, 200, v.isLeft() ? REL.LEFT
+                : REL.RIGHT, "rotate-newroot", v.getKey());
+        }
+        pause();
+        if (b != null) {
+            addToSceneUntilNext(new Edge(u, b));
+            addStep(b, REL.BOTTOM, "rotate-change-b", b.getKey(), u.getKey());
+        } else {
+            addToSceneUntilNext(new Edge(u.x, u.y, v.x + (rotR ? +1 : -1)
+                * Node.RADIUS, v.y + DataStructure.minsepy));
+            addStep(v, v.isLeft() ? REL.BOTTOMRIGHT : REL.BOTTOMLEFT,
+                "rotate-change-nullb", v.getKey(), u.getKey());
+        }
+        pause();
 
         if (u == T.getRoot()) {
             if (b != null) {
-                addStep("rotate-newroot", v.getKey(), b.getKey(), u.getKey());
+
             } else {
                 addStep("rotate-newroot-bnull", v.getKey(), u.getKey());
             }
@@ -91,12 +129,11 @@ public class Rotate extends Algorithm {
                     .getParent().getKey());
             }
         }
-        if (R.T.order) {
-            addNote("rotate-preserves-order");
-        }
-        if (R.subtrees) {
-            addNote("rotate-heights");
-        }
+        /*
+         * if (R.T.order) {
+         * addNote("rotate-preserves-order");
+         * }
+         */
         pause();
 
         T.rotate(v);
@@ -106,15 +143,9 @@ public class Rotate extends Algorithm {
 
         v.subtreeColor(NodeColor.NORMAL);
         removeFromScene(shade);
-        if (shadeA != null) {
-            removeFromScene(shadeA);
-        }
-        if (shadeB != null) {
-            removeFromScene(shadeB);
-        }
-        if (shadeC != null) {
-            removeFromScene(shadeC);
-        }
+        removeFromScene(shadeA);
+        removeFromScene(shadeB);
+        removeFromScene(shadeC);
 
         T.getRoot().calcTree();
     }

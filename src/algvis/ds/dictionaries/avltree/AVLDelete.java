@@ -20,8 +20,13 @@ package algvis.ds.dictionaries.avltree;
 import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.core.NodeColor;
+import algvis.core.StringUtils;
+import algvis.core.visual.Edge;
 import algvis.core.visual.ZDepth;
-import algvis.ds.dictionaries.bst.BSTFind;
+import algvis.ds.dictionaries.bst.BSTDelete;
+import algvis.ui.view.REL;
+
+import java.util.HashMap;
 
 public class AVLDelete extends Algorithm {
     private final AVL T;
@@ -37,98 +42,30 @@ public class AVLDelete extends Algorithm {
     public void runAlgorithm() throws InterruptedException {
         setHeader("delete", K);
         addNote("bstdeletestart");
-        final BSTFind find = new BSTFind(T, K, this);
-        find.runAlgorithm();
-        final AVLNode d = (AVLNode) find.getResult().get("node");
+        //final BSTFind find = new BSTFind(T, K, this);
+        //find.runAlgorithm();
+        final BSTDelete delete = new BSTDelete(T, K, this);
+        delete.runAlgorithm();
 
-        if (d != null) {
-            setHeader("delete", K);
-            addToScene(d);
-            d.setColor(NodeColor.DELETE);
+        final HashMap<String, Object> deleteResult = delete.getResult();
+        final boolean deleted = (Boolean) deleteResult.get("deleted");
 
-            AVLNode w = d.getParent();
-            if (d.isLeaf()) { // case I - list
-                addStep("bst-delete-case1");
-                pause();
-                if (d.isRoot()) {
-                    T.setRoot(null);
-                } else if (d.isLeft()) {
-                    d.getParent().unlinkLeft();
-                } else {
-                    d.getParent().unlinkRight();
-                }
-            } else if (d.getLeft() == null || d.getRight() == null) { // case
-                // IIa -
-                // 1 syn
-                addStep("bst-delete-case2");
-                pause();
-                final AVLNode s = (d.getLeft() == null) ? d.getRight() : d
-                    .getLeft();
-                if (d.isRoot()) {
-                    T.setRoot(s);
-                } else {
-                    if (d.isLeft()) {
-                        d.getParent().linkLeft(s);
-                    } else {
-                        d.getParent().linkRight(s);
-                    }
-                }
-            } else { // case III - 2 synovia
-                addStep("bst-delete-case3");
-                AVLNode s = d.getRight();
-                AVLNode v = new AVLNode(T, -Node.INF, ZDepth.ACTIONNODE);
-                v.setColor(NodeColor.FIND);
-                addToScene(v);
-                v.goTo(s);
-                pause();
-                while (s.getLeft() != null) {
-                    s = s.getLeft();
-                    v.goTo(s);
-                    pause();
-                }
-                w = s.getParent();
-                if (w == d) {
-                    w = s;
-                }
-                removeFromScene(v);
-                v = s;
-                addToScene(v);
-                if (s.isLeft()) {
-                    s.getParent().linkLeft(s.getRight());
-                } else {
-                    s.getParent().linkRight(s.getRight());
-                }
-                v.goNextTo(d);
-                pause();
-                if (d.getParent() == null) {
-                    T.setRoot(v);
-                } else {
-                    if (d.isLeft()) {
-                        d.getParent().linkLeft(v);
-                    } else {
-                        d.getParent().linkRight(v);
-                    }
-                }
-                removeFromScene(v);
-                v.linkLeft(d.getLeft());
-                v.linkRight(d.getRight());
-                v.goTo(d);
-                v.calc();
-            } // end case III
-            d.goDown();
-            removeFromScene(d);
-
+        if (deleted) {
+            AVLNode w = (AVLNode) deleteResult.get("parent");
             addStep("avldeletebal");
             pause();
-            // bubleme nahor
+
+            // update balance on the path up
+            // TODO: deduplicate
             while (w != null) {
                 w.mark();
                 w.calc();
-                addStep("avlupdatebal");
+                addStep(w, REL.TOP, "avlupdatebal",
+                    StringUtils.signedInt(w.balance()));
                 pause();
                 if (w.balance() == -2) {
                     if (w.getLeft().balance() != +1) { // R-rot
-                        addStep("avlr");
+                        addStep(w, REL.TOP, "avlr");
                         w.unmark();
                         w = w.getLeft();
                         w.mark();
@@ -137,7 +74,7 @@ public class AVLDelete extends Algorithm {
                         w.noArc();
                         T.rotate(w);
                     } else { // LR-rot
-                        addStep("avllr");
+                        addStep(w, REL.TOP, "avllr");
                         w.unmark();
                         w = w.getLeft().getRight();
                         w.mark();
@@ -153,7 +90,7 @@ public class AVLDelete extends Algorithm {
                     pause();
                 } else if (w.balance() == +2) {
                     if (w.getRight().balance() != -1) { // L-rot
-                        addStep("avll");
+                        addStep(w, REL.TOP, "avll");
                         w.unmark();
                         w = w.getRight();
                         w.mark();
@@ -162,7 +99,7 @@ public class AVLDelete extends Algorithm {
                         w.noArc();
                         T.rotate(w);
                     } else { // RL-rot
-                        addStep("avlrl");
+                        addStep(w, REL.TOP, "avlrl");
                         w.unmark();
                         w = w.getRight().getLeft();
                         w.mark();

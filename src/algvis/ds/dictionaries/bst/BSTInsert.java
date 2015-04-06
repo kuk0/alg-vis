@@ -19,6 +19,9 @@ package algvis.ds.dictionaries.bst;
 
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
+import algvis.ui.view.REL;
+
+import java.util.HashMap;
 
 import java.util.HashMap;
 
@@ -26,9 +29,7 @@ public class BSTInsert extends Algorithm {
     private final BST T;
     private final int K;
     private final BSTNode v;
-    private final HashMap<String, Object> result = new HashMap<String, Object>(); // "inserted",
-    // "w",
-    // "v"
+    private final HashMap<String, Object> result = new HashMap<String, Object>(); // "inserted", "w", "v"
 
     public BSTInsert(BST T, BSTNode v) {
         this(T, v, null);
@@ -46,23 +47,25 @@ public class BSTInsert extends Algorithm {
     public void runAlgorithm() throws InterruptedException {
         setHeader("insert", K);
         addToScene(v);
+
         if (T.getRoot() == null) {
             T.setRoot(v);
             v.goToRoot();
-            addStep("newroot");
+            addStep(v, REL.BOTTOM, "newroot");
         } else {
             BSTNode w = T.getRoot();
             v.goAboveRoot();
-            addStep("bst-insert-start");
+            addStep(w, REL.BOTTOM, "bst-insert-start");
             pause();
 
             while (true) {
                 if (w.getKey() == K) {
-                    addStep("alreadythere");
+                    addStep(w, REL.BOTTOM, "alreadythere");
                     v.setColor(NodeColor.NOTFOUND);
                     v.goDown();
                     removeFromScene(v);
                     result.put("inserted", false);
+                    pause();
                     return;
                 } else if (w.getKey() < K) {
                     if (w.getRight() == null) {
@@ -70,7 +73,7 @@ public class BSTInsert extends Algorithm {
                     } else {
                         v.pointAbove(w.getRight());
                     }
-                    addStep("bst-insert-right", K, w.getKey());
+                    addStep(v, REL.LEFT, "bst-insert-right", K, w.getKey());
                     pause();
                     v.noArrow();
                     if (w.getRight() != null) {
@@ -85,7 +88,7 @@ public class BSTInsert extends Algorithm {
                     } else {
                         v.pointAbove(w.getLeft());
                     }
-                    addStep("bst-insert-left", K, w.getKey());
+                    addStep(v, REL.RIGHT, "bst-insert-left", K, w.getKey());
                     pause();
                     v.noArrow();
                     if (w.getLeft() != null) {
