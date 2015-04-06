@@ -12,3 +12,4 @@ src/out
 !algvis-format.xml
 !algvis-profile.xml
 *.iml
+/bin/

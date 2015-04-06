@@ -19,6 +19,7 @@ package algvis.ds.trie;
 
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
+import algvis.ui.view.REL;
 
 public class TrieInsert extends Algorithm {
     private final Trie T;
@@ -47,7 +48,7 @@ public class TrieInsert extends Algorithm {
         TrieNode v = T.getRoot();
         v.mark();
         addNote("trieinsertnote");
-        addStep("trierootstart");
+        addStep(v, REL.TOP, "trierootstart");
         pause();
         v.unmark();
         hw = new TrieWordNode(T, s);
@@ -60,9 +61,9 @@ public class TrieInsert extends Algorithm {
             hw.setAndGoNextTo(s, v);
             TrieNode w = v.getChildWithCH(ch);
             if (w != null) {
-                addStep("trieinsertwch", "" + ch);
+                addStep(v, REL.TOP, "trieinsertwch", "" + ch);
             } else {
-                addStep("trieinsertwoch", "" + ch);
+                addStep(v, REL.TOP, "trieinsertwoch", "" + ch);
                 w = v.addChild(ch, hw.x, hw.y);
             }
             w.setColor(NodeColor.CACHED);
@@ -76,9 +77,9 @@ public class TrieInsert extends Algorithm {
         hw.setAndGoNextTo(s, v);
         final TrieNode w = v.getChildWithCH('$');
         if (w == null) {
-            addStep("trieinserteow");
+            addStep(v, REL.TOP, "trieinserteow");
         } else {
-            addStep("trieinsertneow");
+            addStep(v, REL.TOP, "trieinsertneow");
         }
         pause();
         v.setColor(NodeColor.NORMAL);
