@@ -76,6 +76,7 @@ public class Node extends VisualElement {
     public static final int LEFT = 3;
     public static final int RIGHT = 4;
     public static final int OUT = 5;
+    public static final int UP = 6;    
     public static final int NOARROW = -10000;
     public static final int DIRARROW = -10001;
     public static final int TOARROW = -10002;
@@ -298,7 +299,7 @@ public class Node extends VisualElement {
 
     @Override
     public void draw(View v) {
-        if (state == Node.INVISIBLE || getKey() == NULL) {
+        if (state == Node.INVISIBLE || getKey() == NULL || state == Node.OUT) {
             return;
         }
         drawBg(v);
@@ -415,7 +416,10 @@ public class Node extends VisualElement {
                 state = OUT;
             }
             break;
-        }
+        case Node.UP:
+            y -= 20;
+            break;
+        }        
     }
 
     @Override
@@ -482,8 +486,8 @@ public class Node extends VisualElement {
         if (stat != null) {
             stat = HashtableStoreSupport.restore(stat);
             // tu nechcem mat invisible (inak spravit)
-            if ((this.state == OUT || this.state == DOWN || this.state == LEFT || this.state == RIGHT)
-                && stat.equals(ALIVE)) {
+            if ((this.state == OUT || this.state == DOWN || this.state == LEFT
+                || this.state == RIGHT || this.state == UP) && stat.equals(ALIVE)) {
                 goTo(tox, toy);
             }
             this.state = (Integer) stat;

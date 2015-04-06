@@ -17,17 +17,14 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.bst;
 
+import java.util.HashMap;
+
 import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.visual.Edge;
 import algvis.core.visual.ZDepth;
-import algvis.ds.dictionaries.avltree.AVLNode;
 import algvis.ui.view.REL;
-
-import java.util.HashMap;
-
-import java.util.HashMap;
 
 public class BSTDelete extends Algorithm {
     private final BST T;
