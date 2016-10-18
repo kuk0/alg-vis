@@ -40,7 +40,11 @@ test {
         destinationFile = file("$projectDir/build/jacoco/jacocoTest.exec")
         classDumpFile = file("$projectDir/build/jacoco/classpathdumps")
     }
-    
+
+    // Enable test log as mentioned in http://stackoverflow.com/questions/9356543/logging-while-testing-through-gradle
+    testLogging.showStandardStreams = true
+    testLogging.exceptionFormat = 'full'
+
     finalizedBy jacocoTestReport
 }
 
@@ -52,8 +56,11 @@ jacocoTestReport {
             destination "${projectDir}/build/reports/jacoco/test/jacocoTestReport.xml"
         }
     }
+    
+    def testFileFilter = ['**/*Test.*']                      
     classDirectories = fileTree(
-            dir: "${projectDir}/build/classes"
+            dir: "${projectDir}/build/classes",
+            excludes: testFileFilter
     )
 }
 

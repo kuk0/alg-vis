@@ -42,13 +42,21 @@ public enum Fonts {
             f = f.deriveFont(10.0f);
         } catch (final Exception e) {
             e.printStackTrace();
+        } finally {
+            if (f == null) {
+                f = Fonts.NORMAL.font;
+            }
         }
         return f;
     }
 
     public static void init(Graphics g) {
         for (final Fonts f : Fonts.values()) {
-            f.fm = g.getFontMetrics(f.font);
+            try {
+                f.fm = g.getFontMetrics(f.font);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
