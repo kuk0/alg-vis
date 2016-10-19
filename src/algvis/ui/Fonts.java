@@ -23,7 +23,8 @@ import java.awt.Graphics;
 
 public enum Fonts {
     NORMAL(new Font(Font.SANS_SERIF, Font.PLAIN, 9)), SMALL(new Font(
-        Font.SANS_SERIF, Font.PLAIN, 7)), TYPEWRITER(initTT());
+        Font.SANS_SERIF, Font.PLAIN, 7)), EXTRA_SMALL(new Font(
+        Font.SANS_SERIF, Font.PLAIN, 5)),TYPEWRITER(initTT());
     // new Font("FreeMono", Font.BOLD, 10));
 
     public final Font font;

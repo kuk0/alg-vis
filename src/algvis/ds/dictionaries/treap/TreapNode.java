@@ -23,6 +23,8 @@ import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.ds.dictionaries.bst.BSTNode;
+import algvis.ui.Fonts;
+import algvis.ui.view.View;
 
 public class TreapNode extends BSTNode {
     final double p;
@@ -50,6 +52,30 @@ public class TreapNode extends BSTNode {
     @Override
     public TreapNode getParent() {
         return (TreapNode) super.getParent();
+    }
+
+    @Override
+    public void draw(View v) {
+        if (state == Node.INVISIBLE || getKey() == NULL || state == Node.OUT) {
+            return;
+        }
+        drawBg(v);
+        drawKey(v);
+        drawArrow(v);
+        drawArc(v);
+        final String str = String.valueOf(Math.round(100 * p) / 100.0);
+
+        Color currentViewColor = null;
+        if (!Color.black.equals(v.getColor())) {
+            currentViewColor = v.getColor();
+            v.setColor(Color.black);
+        }
+
+        v.drawString(str, x, y - Node.RADIUS * 1.5, Fonts.EXTRA_SMALL);
+
+        if (currentViewColor != null) {
+            v.setColor(currentViewColor);
+        }
     }
 
     void bgPColor() {
