@@ -1,0 +1,11 @@
+machine:
+  environment:
+    APP_HOME: /home/ubuntu/alg-vis
+  java:
+    version: openjdk7
+test:
+  override:
+    - ./gradlew test coveralls --stacktrace
+  post:
+    - cp -r $APP_HOME/* $CIRCLE_ARTIFACTS
+    

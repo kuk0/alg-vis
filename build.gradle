@@ -1,0 +1,66 @@
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'application'
+apply plugin: "jacoco"
+apply plugin: 'com.github.kt3k.coveralls'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {   
+        classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3"
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+    reportsDir = file("$projectDir/build/jacocoReportDir")
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+    testRuntime "org.slf4j:slf4j-api:1.7.10"
+}
+
+// create Gradle wrapper with command line `gradle wrapper` in terminal
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.9'
+}
+
+test {
+    dependsOn cleanTest
+    
+    jacoco {
+        append = false
+        destinationFile = file("$projectDir/build/jacoco/jacocoTest.exec")
+        classDumpFile = file("$projectDir/build/jacoco/classpathdumps")
+    }
+    
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    group = "Reporting"
+    reports {
+        xml {
+            enabled true
+            destination "${projectDir}/build/reports/jacoco/test/jacocoTestReport.xml"
+        }
+    }
+    classDirectories = fileTree(
+            dir: "${projectDir}/build/classes"
+    )
+}
+
+// Reference: https://github.com/spring-projects/spring-boot/issues/2679
+mainClassName = 'algvis.ui.AlgVisStandalone'
+
+tasks.coveralls {
+    onlyIf { System.getenv("COVERALLS_REPO_TOKEN") }
+}
+

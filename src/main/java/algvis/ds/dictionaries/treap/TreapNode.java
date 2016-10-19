@@ -56,14 +56,14 @@ public class TreapNode extends BSTNode {
 
     @Override
     public void draw(View v) {
-        if (state == Node.INVISIBLE || getKey() == NULL || state == Node.OUT) {
+        if (state == Node.INVISIBLE || getKey() == NULL || state == Node.OUT || v == null) {
             return;
         }
         drawBg(v);
         drawKey(v);
         drawArrow(v);
         drawArc(v);
-        final String str = String.valueOf(Math.round(100 * p) / 100.0);
+        final String str = getPriorityString();
 
         Color currentViewColor = null;
         if (!Color.black.equals(v.getColor())) {
@@ -76,6 +76,10 @@ public class TreapNode extends BSTNode {
         if (currentViewColor != null) {
             v.setColor(currentViewColor);
         }
+    }
+    
+    public String getPriorityString() {
+        return String.valueOf(Math.round(100 * p) / 100.0);
     }
 
     void bgPColor() {
