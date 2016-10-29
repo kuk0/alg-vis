@@ -41,10 +41,6 @@ test {
         classDumpFile = file("$projectDir/build/jacoco/classpathdumps")
     }
 
-    // Enable test log as mentioned in http://stackoverflow.com/questions/9356543/logging-while-testing-through-gradle
-    testLogging.showStandardStreams = true
-    testLogging.exceptionFormat = 'full'
-
     finalizedBy jacocoTestReport
 }
 

@@ -59,9 +59,11 @@ class MainFrame extends JFrame {
     private static final int WIDTH = 900;
     private static final int HEIGHT = 650;
 
+    private final AlgVis A;
+
     public MainFrame() {
         setTitle("Gnarley Trees");
-        final AlgVis A = new AlgVis(getContentPane());
+        A = new AlgVis(getContentPane());
         add(A);
         pack();
         A.init();

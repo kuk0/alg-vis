@@ -50,9 +50,9 @@ public class Node extends VisualElement {
     private NodeColor color = NodeColor.NORMAL;
     public boolean marked = false;
     protected Node dir = null;
-    private int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S,
+    protected int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S,
                                       // 135=SW, 180=W)
-    private boolean arc = false;
+    protected boolean arc = false;
 
     public static final int STEPS = 10;
     public static final int RADIUS = 10;
