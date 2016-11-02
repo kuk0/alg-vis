@@ -1,5 +1,6 @@
 package algvis.ds.dictionaries.bst;
 
+import static algvis.helper.ReflectionHelper.getFieldValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertFalse;
@@ -7,21 +8,27 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Vector;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import algvis.internationalization.ICheckBox;
 import algvis.ui.BaseIntegrationTest;
+import algvis.ui.Buttons;
+import algvis.ui.VisPanel;
 
 public class BSTTest extends BaseIntegrationTest {
 
     BST bst;
     int rootKeyValue, leftKeyValue, rightKeyValue;
-    
+
     @Before
     public void setUp() throws Exception {
         super.setUp();
         selectDsMenuByName(BST.dsName);
         bst = (BST) getActiveDataStructure();
+        turnOnOrder();
         clearActivePanel();
 
         keys = new int[] {100, 25, 125, 200, 45, 115, 15};
@@ -29,7 +36,7 @@ public class BSTTest extends BaseIntegrationTest {
         leftKeyValue = keys[1];
         rightKeyValue = keys[2];
     }
-    
+
     @Test
     public void testInsertRoot() throws Exception {
         insert(rootKeyValue);
@@ -43,7 +50,7 @@ public class BSTTest extends BaseIntegrationTest {
         assertTrue(rootNode.isLeaf());
         assertFalse(rootNode.isLeft());
     }
-    
+
     @Test
     public void testInsertRootAndLeft() throws Exception {
         insert(rootKeyValue);
@@ -61,7 +68,7 @@ public class BSTTest extends BaseIntegrationTest {
 
         assertNull(rootNode.getRight());
     }
-    
+
     @Test
     public void testInsertRootAndRight() throws Exception {
         insert(rootKeyValue);
@@ -79,7 +86,7 @@ public class BSTTest extends BaseIntegrationTest {
 
         assertNull(rootNode.getLeft());
     }
-    
+
     @Test
     public void testInsertRootLeftRight() throws Exception {
         insert(rootKeyValue);
@@ -102,7 +109,7 @@ public class BSTTest extends BaseIntegrationTest {
         assertTrue(rightNode.isLeaf());
         assertFalse(rightNode.isLeft());
     }
-    
+
     @Test
     public void testStructureAndOrder() throws Exception {
         insert(rootKeyValue);
@@ -176,7 +183,7 @@ public class BSTTest extends BaseIntegrationTest {
         // delete anything when being null
         delete(keys[0]);
     }
-    
+
     @Test
     public void testDeleteRightNodeWithOnlyLeftChild() throws Exception {
         keys = new int[] {10, 5, 20, 15};
@@ -188,7 +195,7 @@ public class BSTTest extends BaseIntegrationTest {
         assertTrue(rightNode.isLeaf());
         assertEquals(keys[3], rightNode.getKey());
     }
-    
+
     @Test
     public void testDeleteRightNodeWithOnlyRightChild() throws Exception {
         keys = new int[] {10, 5, 15, 20};
@@ -200,7 +207,7 @@ public class BSTTest extends BaseIntegrationTest {
         assertTrue(rightNode.isLeaf());
         assertEquals(keys[3], rightNode.getKey());
     }
-    
+
     @Test
     public void testDeleteRightNodeWithBothChildrenCase01() throws Exception {
         // rightNode has both left and right children
@@ -217,7 +224,7 @@ public class BSTTest extends BaseIntegrationTest {
         assertEquals(keys[3], rrNode.getKey());
         assertEquals(keys[5], rrLeftNode.getKey());
     }
-    
+
     @Test
     public void testDeleteRightNodeWithBothChildrenCase02() throws Exception {
         // rightNode has both left and right children
@@ -233,7 +240,7 @@ public class BSTTest extends BaseIntegrationTest {
         assertEquals(keys[4], rrNode.getKey());
         assertTrue(rrNode.isLeaf());
     }
-    
+
     @Test
     public void deleteNonExistentKey() throws Exception {
         keys = new int[] {10, 5, 8};
@@ -252,5 +259,55 @@ public class BSTTest extends BaseIntegrationTest {
         BSTNode leftNode = rootNode.getLeft();
         assertNull(leftNode.getLeft());
         assertNotNull(leftNode.getRight());
+    }
+
+    @Test
+    public void testMouseClicked() throws Exception {
+        VisPanel activeVisPanel = getActiveVisPanel(algVis);
+        Buttons buttons = activeVisPanel.buttons;
+        insertArray(0, 2);
+        BSTNode rootNode = bst.getRoot();
+        BSTNode leftNode = rootNode.getLeft();
+        BSTNode rightNode = rootNode.getRight();
+
+        bst.mouseClicked(rootNode.x, rootNode.y);
+        assertEquals(keys[0], Integer.parseInt(buttons.I.getText()));
+
+        bst.mouseClicked(leftNode.x, leftNode.y);
+        assertEquals(keys[1], Integer.parseInt(buttons.I.getText()));
+
+        bst.mouseClicked(rightNode.x, rightNode.y);
+        assertEquals(keys[2], Integer.parseInt(buttons.I.getText()));
+    }
+
+    @Test
+    public void testPreOrder() throws Exception {
+        insertArray(0, keys.length - 1);
+
+        int[] preOrderKeysExpect = new int[] {100, 25, 15, 45, 125, 115, 200};
+        Vector<BSTNode> preOrderNodes = bst.getRoot().preorder();
+
+        assertEquals(preOrderKeysExpect.length, preOrderNodes.size());
+        for (int i = 0; i < preOrderKeysExpect.length; i++) {
+            assertEquals(preOrderKeysExpect[i], preOrderNodes.get(i).getKey());
+        }
+    }
+
+    private void turnOnOrder() {
+        boolean orderClicked = false;
+
+        VisPanel activeVisPanel = getActiveVisPanel(algVis);
+        if (activeVisPanel != null) {
+            Buttons buttons = activeVisPanel.buttons;
+            ICheckBox order = (ICheckBox) getFieldValue(buttons, "order");
+            if (order != null) {
+                order.doClick();
+                orderClicked = true;
+            }
+        }
+
+        if (!orderClicked) {
+            bst.order = true;
+        }
     }
 }

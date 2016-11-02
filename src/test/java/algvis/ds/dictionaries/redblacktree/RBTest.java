@@ -1,8 +1,9 @@
 package algvis.ds.dictionaries.redblacktree;
 
+import static algvis.helper.ReflectionHelper.getFieldValue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -13,22 +14,26 @@ import org.junit.Before;
 import org.junit.Test;
 
 import algvis.ds.dictionaries.bst.BSTFind;
+import algvis.internationalization.ICheckBox;
 import algvis.ui.BaseIntegrationTest;
+import algvis.ui.Buttons;
+import algvis.ui.VisPanel;
 
 public class RBTest extends BaseIntegrationTest {
-    
+
     RB rb;
     RBNode rootNode, leftNode, rightNode;
-    
+
     @Before
     public void setUp() throws Exception {
         super.setUp();
         selectDsMenuByName(RB.dsName);
         rb = (RB) getActiveDataStructure();
+        turnOnMode24();
         clearActivePanel();
         keys = new int[] {4, 7, 12, 15, 3, 5, 14, 18, 16, 17};
     }
-    
+
     @Test
     public void testInsertRoot() throws Exception {
         insertArray(0, 0);
@@ -71,7 +76,7 @@ public class RBTest extends BaseIntegrationTest {
         assertEquals(keys[1], rootNode.getKey());
         assertNotEquals(rb.NULL, rootNode.getLeft2());
         assertNotEquals(rb.NULL, rootNode.getRight2());
-        
+
         assertNotNull(leftNode);
         assertTrue(leftNode.isRed());
         assertTrue(leftNode.isLeaf());
@@ -82,7 +87,7 @@ public class RBTest extends BaseIntegrationTest {
         assertTrue(rightNode.isLeaf());
         assertEquals(keys[2], rightNode.getKey());
     }
-    
+
     @Test
     public void testRecolor() throws Exception {
         // recolor new node's parent after inserting keys[3]
@@ -100,7 +105,7 @@ public class RBTest extends BaseIntegrationTest {
         assertTrue(rrNode.isRed());
         assertEquals(keys[3], rrNode.getKey());
     }
-    
+
     @Test
     public void testDelete() throws Exception {
         insertArray(0, keys.length - 1);
@@ -159,7 +164,7 @@ public class RBTest extends BaseIntegrationTest {
         // delete anything when being null
         delete(keys[0]);
     }
-    
+
     @Test
     public void testDeleteALeftChildOnPath() throws Exception {
         // the node to be deleted is not a leaf, not root and is a left child
@@ -169,7 +174,7 @@ public class RBTest extends BaseIntegrationTest {
         updateRootNodes();
         assertEquals(keys[3], leftNode.getKey());
     }
-    
+
     @Test
     public void testDeleteMinorCase01() throws Exception {
         // delete at rootNode
@@ -234,7 +239,60 @@ public class RBTest extends BaseIntegrationTest {
         assertEquals(keys[6], rightNode.getKey());
         assertEquals(keys[2], rightNode.getLeft().getKey());
     }
-    
+
+    @Test
+    public void testDeleteMinorCase03() throws Exception {
+        keys = new int[] {100, 80, 150, 76, 88, 140, 200, 75, 130, 145, 175, 202, 203};
+        insertArray(0, keys.length - 1);
+
+        // modify color but keep the tree a Red-Black tree
+        boolean red = true;
+        setRedByKey(keys[2], red);
+        setRedByKey(keys[8], !red);
+        setRedByKey(keys[9], !red);
+        setRedByKey(keys[6], !red);
+
+        updateRootNodes();
+        assertTrue(rootNode.testStructure());
+
+        delete(keys[2]);
+        updateRootNodes();
+        assertEquals(keys[10], rightNode.getKey());
+        assertTrue(rightNode.isRed());
+    }
+
+    @Test
+    public void testDeleteMinorCase04() throws Exception {
+        keys = new int[] {100, 80, 150, 76, 88, 140, 200, 75, 130, 145, 175, 202, 201};
+        insertArray(0, keys.length - 1);
+
+        // modify color but keep the tree a Red-Black tree
+        boolean red = true;
+        setRedByKey(keys[2], red);
+        setRedByKey(keys[8], !red);
+        setRedByKey(keys[9], !red);
+        setRedByKey(keys[6], !red);
+
+        updateRootNodes();
+        assertTrue(rootNode.testStructure());
+
+        delete(keys[2]);
+        updateRootNodes();
+        assertEquals(keys[10], rightNode.getKey());
+        assertTrue(rightNode.isRed());
+    }
+
+    @Test
+    public void testDeleteMinorCase05() throws Exception {
+        keys = new int[] {4, 7, 12, 15, 5, 14, 18, 16, 17};
+        insertArray(0, keys.length - 1);
+        delete(keys[1]);
+        updateRootNodes();
+        assertEquals(keys[5], rootNode.getKey());
+        assertEquals(keys[4], leftNode.getKey());
+        assertEquals(keys[7], rightNode.getKey());
+    }
+
     @Test
     public void testColorCharater() throws Exception {
         insertArray(0, keys.length - 1);
@@ -258,7 +316,7 @@ public class RBTest extends BaseIntegrationTest {
             }
         }
     }
-    
+
     private void setRedByKey(int key, boolean red) {
         BSTFind find = new BSTFind(rb, key, rb.A);
         find.runAlgorithm();
@@ -269,6 +327,24 @@ public class RBTest extends BaseIntegrationTest {
             if (rbNode != null) {
                 rbNode.setRed(red);
             }
+        }
+    }
+
+    private void turnOnMode24() {
+        boolean b24Clicked = false;
+
+        VisPanel activeVisPanel = getActiveVisPanel(algVis);
+        if (activeVisPanel != null) {
+            Buttons buttons = activeVisPanel.buttons;
+            ICheckBox b24 = (ICheckBox) getFieldValue(buttons, "B24");
+            if (b24 != null) {
+                b24.doClick();
+                b24Clicked = true;
+            }
+        }
+
+        if (!b24Clicked) {
+            rb.mode24 = true;
         }
     }
 }

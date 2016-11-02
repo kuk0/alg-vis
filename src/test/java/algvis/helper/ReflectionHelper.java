@@ -5,24 +5,24 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class ReflectionHelper {    
+public class ReflectionHelper {
     static Class<?> getClass(String classFullName) {
         Class<?> cls = null;
         try {
             cls = Class.forName(classFullName);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }        
+        }
         return cls;
     }
-    
+
     public static Object getFieldValue(Object object, String fieldName) {
         if (object == null) {
             return null;
         }
-        
+
         Field field = null;
-        
+
         try {
             field = object.getClass().getDeclaredField(fieldName);
         } catch (SecurityException e) {
@@ -33,7 +33,7 @@ public class ReflectionHelper {
 
         if (field == null) {
             Class<?> superClass = object.getClass().getSuperclass();
-            
+
             while (superClass != null) {
                 try {
                     field = superClass.getDeclaredField(fieldName);
@@ -42,7 +42,7 @@ public class ReflectionHelper {
                 } catch (NoSuchFieldException e) {
                     e.printStackTrace();
                 }
-                
+
                 if (field != null) {
                     break;
                 }
@@ -53,10 +53,10 @@ public class ReflectionHelper {
         if (field == null) {
             return null;
         }
-        
+
         boolean isAccessible = field.isAccessible();
         field.setAccessible(true);
-        
+
         Object value = null;
         try {
             value = field.get(object);
@@ -65,19 +65,19 @@ public class ReflectionHelper {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        
+
         field.setAccessible(isAccessible);
-        
+
         return value;
     }
-    
+
     public static Object createObject(String classFullName) {
         Class<?> cls = getClass(classFullName);
-        
+
         if (cls == null) {
             return null;
         }
-        
+
         Constructor<?> constructor = null;
         try {
             constructor = cls.getConstructor();
@@ -88,7 +88,7 @@ public class ReflectionHelper {
         }
 
         Object object = null;
-        
+
         if (constructor == null) {
             try {
                 object = cls.newInstance();
@@ -113,19 +113,19 @@ public class ReflectionHelper {
             }
             constructor.setAccessible(constructorIsAccessible);
         }
-        
+
         return object;
     }
-    
+
     public static Method getMethod(String classFullName, String methodName, Class<?>... parameterTypes) {
         Class<?> cls = getClass(classFullName);
-        
+
         if (cls == null || "".equals(methodName)) {
             return null;
         }
-        
+
         Method method = null;
-        
+
         try {
             method = cls.getDeclaredMethod(methodName, parameterTypes);
         } catch (SecurityException e) {
@@ -133,7 +133,7 @@ public class ReflectionHelper {
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
-        
+
         return method; 
     }
 }

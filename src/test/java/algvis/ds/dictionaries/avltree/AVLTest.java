@@ -15,7 +15,7 @@ public class AVLTest extends BaseIntegrationTest {
 
     AVL avl;
     AVLNode rootNode, leftNode, rightNode;
-    
+
     @Before
     public void setUp() throws Exception {
         super.setUp();
@@ -24,7 +24,7 @@ public class AVLTest extends BaseIntegrationTest {
         clearActivePanel();
         keys = new int[] {4, 2, 1, 5, 6, 9, 14, 20, 25};
     }
-    
+
     @Test
     public void testInsertRoot() throws Exception {
         insertArray(0, 0);
@@ -34,7 +34,7 @@ public class AVLTest extends BaseIntegrationTest {
         assertEquals(keys[0], rootNode.getKey());
         assertFalse(rootNode.isLeft());
     }
-    
+
     @Test
     public void testInsertRootLeft() throws Exception {
         insertArray(0, 1);
@@ -44,7 +44,7 @@ public class AVLTest extends BaseIntegrationTest {
         assertEquals(keys[1], leftNode.getKey());
         assertNull(rightNode);
     }
-    
+
     @Test
     public void testInsertRootLeftRight() throws Exception {
         insertArray(0, 2);
@@ -72,10 +72,10 @@ public class AVLTest extends BaseIntegrationTest {
         // left rotate at root
         insert(keys[5]);
         updateRootNodes();
-        assertEquals(keys[3], rootNode.getKey());    
+        assertEquals(keys[3], rootNode.getKey());
         assertNotNull(leftNode);
         assertEquals(keys[1], leftNode.getKey());
-        assertNotNull(leftNode.getLeft());    
+        assertNotNull(leftNode.getLeft());
         assertEquals(keys[2], leftNode.getLeft().getKey());
         assertNotNull(leftNode.getRight());
         assertEquals(keys[0], leftNode.getRight().getKey());
@@ -84,7 +84,7 @@ public class AVLTest extends BaseIntegrationTest {
         insert(keys[6]);
         updateRootNodes();
         assertEquals(keys[5], rightNode.getKey());
-        assertNotNull(rightNode.getLeft());    
+        assertNotNull(rightNode.getLeft());
         assertEquals(keys[4], rightNode.getLeft().getKey());
         assertNotNull(leftNode.getRight());
         assertEquals(keys[6], rightNode.getRight().getKey());
@@ -96,7 +96,7 @@ public class AVLTest extends BaseIntegrationTest {
         assertNotNull(rightNode.getRight());
         AVLNode rrNode = rightNode.getRight();
         assertEquals(keys[7], rrNode.getKey());
-        assertNotNull(rrNode.getLeft());    
+        assertNotNull(rrNode.getLeft());
         assertEquals(keys[6], rrNode.getLeft().getKey());
         assertNotNull(leftNode.getRight());
         assertEquals(keys[8], rrNode.getRight().getKey());
@@ -148,6 +148,17 @@ public class AVLTest extends BaseIntegrationTest {
 
         // delete anything when being null
         delete(keys[0]);
+    }
+
+    @Test
+    public void testRLRotateAfterDeleting() throws Exception {
+        keys = new int[] {10, 5, 20, 15};
+        insertArray(0, keys.length - 1);
+        delete(keys[1]);
+        updateRootNodes();
+        assertEquals(keys[3], rootNode.getKey());
+        assertEquals(keys[0], leftNode.getKey());
+        assertEquals(keys[2], rightNode.getKey());
     }
 
     private void updateRootNodes() {
