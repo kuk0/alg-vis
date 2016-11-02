@@ -69,6 +69,7 @@ public class AADelete extends Algorithm {
                     .getRight() : toDelete.getLeft();
                 if (toDelete.isRoot()) {
                     T.setRoot(s);
+                    s.setParent(null);
                 } else {
                     if (toDelete.isLeft()) {
                         toDelete.getParent().linkLeft(s);
