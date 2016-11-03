@@ -103,6 +103,10 @@ public abstract class BaseIntegrationTest extends BaseTest {
         clickButton("insertB", key);
     }
 
+    protected void find(int key) throws Exception {
+        clickButton("findB", key);
+    }
+
     protected void insertArray(int startIndex, int endIndex) throws Exception {
         startIndex = Math.max(startIndex, 0);
         endIndex = Math.min(endIndex, keys.length - 1);

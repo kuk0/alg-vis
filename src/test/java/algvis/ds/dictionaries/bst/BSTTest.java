@@ -8,6 +8,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashMap;
 import java.util.Vector;
 
 import org.junit.Before;
@@ -291,6 +292,18 @@ public class BSTTest extends BaseIntegrationTest {
         for (int i = 0; i < preOrderKeysExpect.length; i++) {
             assertEquals(preOrderKeysExpect[i], preOrderNodes.get(i).getKey());
         }
+    }
+
+    @Test
+    public void testFind() throws Exception {
+        insertArray(0, 0);
+        find(keys[0]);
+        HashMap<String, Object> result = ((BSTFind) bst.A).getResult();
+        assertNotNull(result);
+
+        BSTNode foundNode = (BSTNode) result.get("node");
+        assertNotNull(foundNode);
+        assertEquals(keys[0], foundNode.getKey());
     }
 
     private void turnOnOrder() {

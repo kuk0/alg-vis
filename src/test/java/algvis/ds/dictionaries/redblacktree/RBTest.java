@@ -307,6 +307,14 @@ public class RBTest extends BaseIntegrationTest {
         assertFalse(rootNode.testRedBlack());
     }
 
+    @Test
+    public void testConstructor() throws Exception {
+        RBNode newNode = new RBNode(rb, keys[0], 0, 0);
+        assertTrue(newNode.isRed());
+        assertTrue(newNode.isLeaf());
+        assertEquals(keys[0], newNode.getKey());
+    }
+
     private void updateRootNodes() {
         if (rb != null) {
             rootNode = (RBNode) rb.getRoot();

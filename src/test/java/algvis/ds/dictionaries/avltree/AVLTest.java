@@ -6,9 +6,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashMap;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import algvis.ds.dictionaries.bst.BSTFind;
 import algvis.ui.BaseIntegrationTest;
 
 public class AVLTest extends BaseIntegrationTest {
@@ -159,6 +162,18 @@ public class AVLTest extends BaseIntegrationTest {
         assertEquals(keys[3], rootNode.getKey());
         assertEquals(keys[0], leftNode.getKey());
         assertEquals(keys[2], rightNode.getKey());
+    }
+
+    @Test
+    public void testFind() throws Exception {
+        insertArray(0, 0);
+        find(keys[0]);
+        HashMap<String, Object> result = ((BSTFind) avl.A).getResult();
+        assertNotNull(result);
+
+        AVLNode foundNode = (AVLNode) result.get("node");
+        assertNotNull(foundNode);
+        assertEquals(keys[0], foundNode.getKey());
     }
 
     private void updateRootNodes() {

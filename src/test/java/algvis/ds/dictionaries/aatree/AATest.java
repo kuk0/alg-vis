@@ -7,9 +7,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashMap;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import algvis.ds.dictionaries.bst.BSTFind;
 import algvis.internationalization.ICheckBox;
 import algvis.ui.BaseIntegrationTest;
 import algvis.ui.Buttons;
@@ -169,6 +172,27 @@ public class AATest extends BaseIntegrationTest {
         updateRootNodes();
         assertEquals(keys[4], rightNode.getKey());
         assertNull(rightNode.getLeft());
+    }
+
+    @Test
+    public void testDeleteNodeWithTwoChildrenMinorCase03() throws Exception {
+        keys = new int[] {200, 100, 300, 150, 125, 50, 75, 25};
+        insertArray(0, keys.length - 1);
+
+        // right rotate at leftNode after deleting
+        delete(keys[6]);
+    }
+
+    @Test
+    public void testFind() throws Exception {
+        insertArray(0, 0);
+        find(keys[0]);
+        HashMap<String, Object> result = ((BSTFind) aa.A).getResult();
+        assertNotNull(result);
+
+        AANode foundNode = (AANode) result.get("node");
+        assertNotNull(foundNode);
+        assertEquals(keys[0], foundNode.getKey());
     }
 
     private void updateRootNodes() {
