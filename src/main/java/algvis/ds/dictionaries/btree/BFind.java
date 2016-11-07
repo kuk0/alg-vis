@@ -17,12 +17,15 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.btree;
 
+import java.util.HashMap;
+
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 
 public class BFind extends Algorithm {
     private final BTree T;
     private final int K;
+    private final HashMap<String, Object> result = new HashMap<String, Object>();
 
     public BFind(BTree T, int x) {
         super(T.panel);
@@ -36,6 +39,7 @@ public class BFind extends Algorithm {
         v.setColor(NodeColor.FIND);
         addToScene(v);
         setHeader("search");
+        result.put("node", null);
         if (T.getRoot() == null) {
             v.goToRoot();
             addStep("empty");
@@ -55,6 +59,7 @@ public class BFind extends Algorithm {
                     addStep("found");
                     v.goDown();
                     v.setColor(NodeColor.FOUND);
+                    result.put("node", w);
                     break;
                 }
                 if (w.isLeaf()) {
@@ -69,5 +74,10 @@ public class BFind extends Algorithm {
             }
         }
         removeFromScene(v);
+    }
+
+    @Override
+    public HashMap<String, Object> getResult() {
+        return result;
     }
 }
