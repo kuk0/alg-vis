@@ -7,7 +7,7 @@ machine:
 test:
   override:
     - ./gradlew test:
-        timeout: 1800
+        timeout: 5400
     - ./gradlew coveralls
   post:
     - cp -r $APP_HOME/* $CIRCLE_ARTIFACTS

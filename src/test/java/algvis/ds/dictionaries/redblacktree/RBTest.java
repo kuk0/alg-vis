@@ -26,7 +26,6 @@ public class RBTest extends BaseIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        super.setUp();
         selectDsMenuByName(RB.dsName);
         rb = (RB) getActiveDataStructure();
         turnOnMode24();

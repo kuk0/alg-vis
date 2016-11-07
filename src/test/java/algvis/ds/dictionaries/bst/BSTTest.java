@@ -26,7 +26,6 @@ public class BSTTest extends BaseIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        super.setUp();
         selectDsMenuByName(BST.dsName);
         bst = (BST) getActiveDataStructure();
         turnOnOrder();

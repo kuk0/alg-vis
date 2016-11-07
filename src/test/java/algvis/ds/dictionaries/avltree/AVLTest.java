@@ -21,7 +21,6 @@ public class AVLTest extends BaseIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        super.setUp();
         selectDsMenuByName(AVL.dsName);
         avl = (AVL) getActiveDataStructure();
         clearActivePanel();

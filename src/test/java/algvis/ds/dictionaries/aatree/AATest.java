@@ -24,7 +24,6 @@ public class AATest extends BaseIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        super.setUp();
         selectDsMenuByName(AA.dsName);
         aa = (AA) getActiveDataStructure();
         turnOnMode23();

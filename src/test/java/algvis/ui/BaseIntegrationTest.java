@@ -4,9 +4,7 @@ import static algvis.helper.ReflectionHelper.getFieldValue;
 
 import javax.swing.JFrame;
 
-import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 
 import algvis.BaseTest;
@@ -20,18 +18,10 @@ public abstract class BaseIntegrationTest extends BaseTest {
     protected static AlgVis algVis;
     protected int[] keys;
 
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
-
     @BeforeClass
     public static void setUpTestSuite() throws Exception {
-        mainFrame = showMainFrame(); 
-        algVis = getAlgVis(mainFrame);   
+        mainFrame = showMainFrame();
+        algVis = getAlgVis(mainFrame);
     }
 
     @AfterClass
@@ -112,6 +102,16 @@ public abstract class BaseIntegrationTest extends BaseTest {
         endIndex = Math.min(endIndex, keys.length - 1);
 
         for (int i = startIndex; i <= endIndex; i++) {
+            insert(keys[i]);
+        }
+    }
+
+    protected void batchInsert(int... keys) throws Exception {
+        if (keys == null) {
+            return;
+        }
+
+        for (int i = 0; i < keys.length; i++) {
             insert(keys[i]);
         }
     }
