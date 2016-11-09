@@ -18,6 +18,7 @@
 package algvis.ds.dictionaries.treap;
 
 import java.awt.Color;
+import java.util.Random;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -31,7 +32,7 @@ public class TreapNode extends BSTNode {
 
     private TreapNode(DataStructure D, int key, int x, int y, int zDepth) {
         super(D, key, x, y, zDepth);
-        p = Math.random();
+        p = (new Random(key)).nextDouble();
         bgPColor();
     }
 
@@ -77,7 +78,7 @@ public class TreapNode extends BSTNode {
             v.setColor(currentViewColor);
         }
     }
-    
+
     public String getPriorityString() {
         return String.valueOf(Math.round(100 * p) / 100.0);
     }
