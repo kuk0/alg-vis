@@ -17,11 +17,15 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.scapegoattree;
 
+import java.util.HashMap;
+
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTNode;
 
 public class GBFind extends GBAlg {
+    private final HashMap<String, Object> result = new HashMap<String, Object>();
+
     public GBFind(GBTree T, int x) {
         super(T, x);
     }
@@ -29,6 +33,7 @@ public class GBFind extends GBAlg {
     @Override
     public void runAlgorithm() {
         setHeader("find", K);
+        result.put("node", null);
         v = new GBNode(T, K, ZDepth.ACTIONNODE);
         v.setColor(NodeColor.FIND);
         addToScene(v);
@@ -56,6 +61,7 @@ public class GBFind extends GBAlg {
                         v.setColor(NodeColor.FOUND);
                         pause();
                         addNote("done");
+                        result.put("node", w);
                     }
                     break;
                 } else if (w.getKey() < K) {
@@ -85,5 +91,10 @@ public class GBFind extends GBAlg {
             }
             removeFromScene(v);
         }
+    }
+
+    @Override
+    public HashMap<String, Object> getResult() {
+        return result;
     }
 }
