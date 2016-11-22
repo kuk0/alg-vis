@@ -90,9 +90,12 @@ public class DaryHeapNode extends HeapNode {
      */
 
     public int order() {
-        for (int i = 0; i < parent.c.size(); ++i) {
-            if (getParent().c.get(i) == this) {
-                return i;
+        if (parent != null) {
+            int parentChildCount = parent.c.size();
+            for (int i = 0; i < parentChildCount; ++i) {
+                if (this == parent.c.get(i)) {
+                    return i;
+                }
             }
         }
         return -5; // TODO: vypindat exception
@@ -326,8 +329,9 @@ public class DaryHeapNode extends HeapNode {
             v = v.getParent().c.get(v.nson - 2);
         }
 
-        while ((v.c.get(((DaryHeap) D).getOrder() - 1) != null)) { // !v.isLeaf()
-            v = v.c.get(((DaryHeap) D).getOrder() - 1);
+        int daryHeapOrder = ((DaryHeap) D).getOrder();
+        while (v.c.size() >= daryHeapOrder && (v.c.get(daryHeapOrder - 1) != null)) { // !v.isLeaf()
+            v = v.c.get(daryHeapOrder - 1);
         }
 
         return v;
