@@ -17,11 +17,15 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.skiplist;
 
+import java.util.HashMap;
+
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 import algvis.ui.view.REL;
 
 public class SkipFind extends SkipAlg {
+    private final HashMap<String, Object> result = new HashMap<String, Object>();
+
     public SkipFind(SkipList L, int x) {
         super(L, x);
     }
@@ -29,19 +33,21 @@ public class SkipFind extends SkipAlg {
     @Override
     public void runAlgorithm() {
         setHeader("find", K);
+        result.put("node", null);
         p = new SkipNode[L.height];
         v = new SkipNode(L, K, ZDepth.ACTIONNODE);
         v.setColor(NodeColor.FIND);
         addToScene(v);
-        
+
         addStep("skipfindstart");
         addStep(L.getRoot(),REL.TOP, "skipfindstart");
-       
+   
         final SkipNode w = find();
         if (w.getKey() == v.getKey()) {
             addNote("found");
             addStep(w, REL.BOTTOM, "found", K);
             v.setColor(NodeColor.FOUND);
+            result.put("node", w);
             pause();
             addNote("done");
         } else {
@@ -52,5 +58,10 @@ public class SkipFind extends SkipAlg {
             v.goDown();
         }
         removeFromScene(v);
+    }
+
+    @Override
+    public HashMap<String, Object> getResult() {
+        return result;
     }
 }

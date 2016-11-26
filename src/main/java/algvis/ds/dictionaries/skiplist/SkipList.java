@@ -111,11 +111,9 @@ public class SkipList extends Dictionary implements ClickListener {
 
     @Override
     public void mouseClicked(int x, int y) {
-        if (getRoot() != null) {
-            final Node w = getRoot().find(x, y);
-            if (w != null) {
-                panel.buttons.I.setText("" + w.getKey());
-            }
+        chosen = getRoot() != null ? getRoot().find(x, y) : null;
+        if (chosen != null) {
+            panel.buttons.I.setText("" + chosen.getKey());
         }
     }
 

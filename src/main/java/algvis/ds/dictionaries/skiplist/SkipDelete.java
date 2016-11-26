@@ -52,7 +52,7 @@ public class SkipDelete extends SkipAlg {
         removeFromScene(v);
 
         addNote("skiplist-delete-found");
-        
+
         L.n--;
         L.e++;
         addStep("skipdelete");
