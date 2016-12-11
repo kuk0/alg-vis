@@ -68,14 +68,20 @@ public class SplayDelete extends SplayAlg {
         removeFromScene(w);
         if (w.getLeft() == null) {
             addStep("splaydeleteright");
-            T.setRoot(w.getRight());
-            T.getRoot().setParent(null);
+            SplayNode newRoot = w.getRight(); 
+            T.setRoot(newRoot);
+            if (newRoot != null) {
+                newRoot.setParent(null);
+            }
             T.reposition();
             pause();
         } else if (w.getRight() == null) {
             addStep("splaydeleteleft");
-            T.setRoot(w.getLeft());
-            T.getRoot().setParent(null);
+            SplayNode newRoot = w.getLeft(); 
+            T.setRoot(newRoot);
+            if (newRoot != null) {
+                newRoot.setParent(null);
+            }
             T.reposition();
             pause();
         } else {

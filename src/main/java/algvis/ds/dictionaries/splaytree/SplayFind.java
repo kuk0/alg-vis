@@ -17,10 +17,13 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.splaytree;
 
+import java.util.HashMap;
+
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 
 public class SplayFind extends SplayAlg {
+    private final HashMap<String, Object> result = new HashMap<String, Object>();
 
     public SplayFind(SplayTree T, int x) {
         super(T, x);
@@ -29,6 +32,7 @@ public class SplayFind extends SplayAlg {
     @Override
     public void runAlgorithm() {
         setHeader("find", K);
+        result.put("node", null);
         final SplayNode v = new SplayNode(T, K, ZDepth.ACTIONNODE);
         v.setColor(NodeColor.FIND);
         addToScene(v);
@@ -52,6 +56,7 @@ public class SplayFind extends SplayAlg {
             if (w.getKey() == v.getKey()) {
                 addStep("found");
                 v.setColor(NodeColor.FOUND);
+                result.put("node", w);
             } else {
                 addStep("notfound");
                 v.setColor(NodeColor.NOTFOUND);
@@ -60,5 +65,10 @@ public class SplayFind extends SplayAlg {
             pause();
         }
         removeFromScene(v);
+    }
+
+    @Override
+    public HashMap<String, Object> getResult() {
+        return result;
     }
 }
