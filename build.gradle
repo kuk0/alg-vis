@@ -64,6 +64,7 @@ jacocoTestReport {
 mainClassName = 'algvis.ui.AlgVisStandalone'
 
 tasks.coveralls {
+    dependsOn test
     onlyIf { System.getenv("COVERALLS_REPO_TOKEN") }
 }
 
