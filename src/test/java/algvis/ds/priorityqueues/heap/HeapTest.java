@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import algvis.core.Node;
 import algvis.ds.priorityqueues.HeapBaseTest;
 import algvis.ui.InputField;
 
@@ -136,6 +137,33 @@ public class HeapTest extends HeapBaseTest {
         decrKey(200);
         updateRootNodes();
         assertEquals(1, rootNode.getKey());
+    }
+
+    @Test
+    public void testEndAnimation() throws Exception {
+        insertArray(0, 2);
+        updateRootNodes();
+
+        leftNode.setState(Node.LEFT);
+        rightNode.setState(Node.RIGHT);
+        heap.endAnimation();
+        assertEquals(Node.OUT, leftNode.state);
+        assertEquals(Node.OUT, rightNode.state);
+    }
+
+    @Test
+    public void testGetBoundingBox() throws Exception {
+        assertNull(heap.getBoundingBox());
+        insert(keys[0]);
+        assertEquals(heap.getRoot().getBoundingBox(), heap.getBoundingBox());
+    }
+
+    @Test
+    public void testIsAnimationDone() throws Exception {
+        insert(keys[0]);
+        rootNode = (HeapNode) heap.getRoot();
+        rootNode.setState(Node.INVISIBLE);
+        assertTrue(heap.isAnimationDone());
     }
 
     private void updateRootNodes() {

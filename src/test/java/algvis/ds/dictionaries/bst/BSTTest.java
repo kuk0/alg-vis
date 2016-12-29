@@ -2,18 +2,22 @@ package algvis.ds.dictionaries.bst;
 
 import static algvis.helper.ReflectionHelper.getFieldValue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.awt.geom.Rectangle2D;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Vector;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import algvis.core.Node;
+import algvis.helper.ReflectionHelper;
 import algvis.internationalization.ICheckBox;
 import algvis.ui.BaseIntegrationTest;
 import algvis.ui.Buttons;
@@ -303,6 +307,77 @@ public class BSTTest extends BaseIntegrationTest {
         BSTNode foundNode = (BSTNode) result.get("node");
         assertNotNull(foundNode);
         assertEquals(keys[0], foundNode.getKey());
+    }
+
+    @Test
+    public void testChangeLayout() throws Exception {
+        bst.changeLayout();
+        assertEquals(-50, bst.panel.screen.V.miny);
+    }
+        @Test
+    public void testIsolate() throws Exception {
+        insertArray(0, 2);
+        BSTNode rootNode = bst.getRoot();
+        rootNode.isolate();
+        assertNull(rootNode.getLeft());
+        assertNull(rootNode.getRight());
+    }
+
+    @Test
+    public void testRepos() throws Exception {
+        insertArray(0, 1);
+        BSTNode leftNode = bst.getRoot().getLeft();
+        bst.y2 = 50;
+        leftNode.repos(200, 200);
+        assertEquals(200, bst.y2);
+    }
+
+    @Test
+    public void testGetBoundingBox() throws Exception {
+        Rectangle2D expected = new Rectangle2D.Double(-1.0, 39.0, 112.0, 72.0);
+
+        insertArray(0, 2);
+        BSTNode rootNode = bst.getRoot();
+        BSTNode leftNode = rootNode.getLeft();
+        BSTNode rightNode = rootNode.getRight();
+        int xroot = 50, yroot = 50;
+        int xleft = 10, yleft = 100;
+        int xright = 100, yright = 100;
+        rootNode.x = xroot;
+        rootNode.y = yroot;
+        leftNode.x = xleft;
+        leftNode.y = yleft;
+        rightNode.x = xright;
+        rightNode.y = yright;
+
+        assertEquals(expected, rootNode.getBoundingBox());
+    }
+
+    @Test
+    public void testRTPetrification() throws Exception {
+        insert(keys[0]);
+        BSTNode rootNode = bst.getRoot();
+        bst.y1 = 200;
+        Method RTPetrification = ReflectionHelper.getMethod("algvis.ds.dictionaries.bst.BSTNode", "RTPetrification", int.class, int.class);
+        RTPetrification.setAccessible(true);
+        RTPetrification.invoke(rootNode, rootNode.x, 50);
+        RTPetrification.setAccessible(false);
+
+        assertEquals(50, bst.y1);
+    }
+
+    @Test
+    public void testEndAnimation() throws Exception {
+        insertArray(0, 2);
+        BSTNode rootNode = bst.getRoot();
+        BSTNode leftNode = rootNode.getLeft();
+        BSTNode rightNode = rootNode.getRight();
+
+        leftNode.setState(Node.LEFT);
+        rightNode.setState(Node.RIGHT);
+        rootNode.endAnimation();
+        assertEquals(Node.OUT, leftNode.state);
+        assertEquals(Node.OUT, rightNode.state);
     }
 
     private void turnOnOrder() {

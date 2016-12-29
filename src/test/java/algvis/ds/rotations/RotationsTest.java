@@ -12,6 +12,7 @@ import javax.swing.undo.CannotRedoException;
 import org.junit.Before;
 import org.junit.Test;
 
+import algvis.core.Node;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.internationalization.ICheckBox;
 import algvis.ui.BaseIntegrationTest;
@@ -134,6 +135,20 @@ public class RotationsTest extends BaseIntegrationTest {
         doClickCheckbox("subtrees");
     }
 
+    @Test
+    public void testEndAnimation() throws Exception {
+        doInsert(keys[0]);
+        doInsert(keys[1]);
+        doInsert(keys[2]);
+        updateRootNodes();
+
+        leftNode.setState(Node.LEFT);
+        rightNode.setState(Node.RIGHT);
+        rotations.endAnimation();
+        assertEquals(Node.OUT, leftNode.state);
+        assertEquals(Node.OUT, rightNode.state);
+    }
+
     private void updateRootNodes() {
         if (rotations != null && rotations.T != null) {
             rootNode = rotations.T.getRoot();
@@ -170,9 +185,9 @@ public class RotationsTest extends BaseIntegrationTest {
             }
         }
     }
-    
+
     private void doMouseClick(int x, int y) throws Exception {
-    	rotations.mouseClicked(x, y);
+        rotations.mouseClicked(x, y);
         Thread.sleep(buttonClickSleepTime);
     }
 }

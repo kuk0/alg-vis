@@ -6,13 +6,16 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.awt.Color;
 import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import algvis.core.Node;
 import algvis.ds.dictionaries.bst.BSTFind;
 import algvis.ui.BaseIntegrationTest;
+import algvis.ui.view.View;
 
 public class AVLTest extends BaseIntegrationTest {
 
@@ -173,6 +176,17 @@ public class AVLTest extends BaseIntegrationTest {
         AVLNode foundNode = (AVLNode) result.get("node");
         assertNotNull(foundNode);
         assertEquals(keys[0], foundNode.getKey());
+    }
+
+    @Test
+    public void testDrawInvisibleNode() throws Exception {
+        insert(keys[0]);
+        updateRootNodes();
+        rootNode.setState(Node.INVISIBLE);
+        View v = getActiveVisPanel(algVis).screen.V;
+        v.setColor(Color.ORANGE);
+        rootNode.draw(v);
+        assertEquals(Color.ORANGE, v.getColor());
     }
 
     private void updateRootNodes() {

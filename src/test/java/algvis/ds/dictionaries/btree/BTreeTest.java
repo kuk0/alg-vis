@@ -12,6 +12,7 @@ import javax.swing.JSpinner;
 import org.junit.Before;
 import org.junit.Test;
 
+import algvis.core.Node;
 import algvis.ui.VisPanel;
 
 public class BTreeTest extends BTreeBaseTest {
@@ -53,6 +54,25 @@ public class BTreeTest extends BTreeBaseTest {
         find(keys[0]);
         result = ((BFind) tree.A).getResult();
         assertNull(result.get("node"));
+    }
+
+    @Test
+    public void testNodeOrderNotFound() throws Exception {
+        setOrder(3);
+        insertArray(0, 2);
+        updateRootNodes();
+        assertEquals(1, childNode2.order());
+
+        rootNode.c[1] = null;
+        assertEquals(-5, childNode2.order());
+    }
+
+    @Test
+    public void testNodeWithINFKey() throws Exception {
+        insert(keys[0]);
+        updateRootNodes();
+        rootNode.keys[0] = Node.INF;
+        assertEquals("\u221e", rootNode.toString());
     }
 
     private void setOrder(int order) throws Exception {

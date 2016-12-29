@@ -8,16 +8,20 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.awt.Color;
 import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import algvis.core.Node;
+import algvis.core.NodeColor;
 import algvis.ds.dictionaries.bst.BSTFind;
 import algvis.internationalization.ICheckBox;
 import algvis.ui.BaseIntegrationTest;
 import algvis.ui.Buttons;
 import algvis.ui.VisPanel;
+import algvis.ui.view.View;
 
 public class RBTest extends BaseIntegrationTest {
 
@@ -312,6 +316,24 @@ public class RBTest extends BaseIntegrationTest {
         assertTrue(newNode.isRed());
         assertTrue(newNode.isLeaf());
         assertEquals(keys[0], newNode.getKey());
+    }
+
+    @Test
+    public void testDrawInvisibleNode() throws Exception {
+        RBNode newNode = new RBNode(rb, keys[0], 0, 0);
+        newNode.setState(Node.INVISIBLE);
+        View v = getActiveVisPanel(algVis).screen.V;
+        newNode.draw(v);
+        assertEquals(NodeColor.NORMAL, newNode.getColor());
+    }
+
+    @Test
+    public void testDrawBigNode() throws Exception {
+        RBNode newNode = new RBNode(rb, Node.NULL, 0, 0);
+        View v = getActiveVisPanel(algVis).screen.V;
+        v.setColor(Color.ORANGE);
+        newNode.drawBigNodes(v);
+        assertEquals(Color.ORANGE, v.getColor());
     }
 
     private void updateRootNodes() {

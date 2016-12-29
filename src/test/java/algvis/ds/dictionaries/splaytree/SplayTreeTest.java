@@ -100,7 +100,7 @@ public class SplayTreeTest extends BaseIntegrationTest {
         splayTree.setW1(rootNode);
         splayTree.setW2(leftNode);
         assertEquals(keys[4], splayTree.getW1().getKey());
-        assertEquals(keys[2], splayTree.getW2().getKey());    	
+        assertEquals(keys[2], splayTree.getW2().getKey());
     }
 
     private void updateRootNodes() {

@@ -11,6 +11,7 @@ import javax.swing.JSpinner;
 import org.junit.Before;
 import org.junit.Test;
 
+import algvis.core.Node;
 import algvis.ds.priorityqueues.HeapBaseTest;
 import algvis.ui.InputField;
 import algvis.ui.VisPanel;
@@ -184,6 +185,22 @@ public class DaryHeapTest extends HeapBaseTest {
 
         insert(keys[0]);
         assertEquals(daryHeap.root.getBoundingBox(), daryHeap.getBoundingBox());
+    }
+
+    @Test
+    public void testEndAnimation() throws Exception {
+        insert(keys[0]);
+        daryHeap.root.setState(Node.DOWN);
+        daryHeap.endAnimation();
+        assertEquals(Node.OUT, daryHeap.root.state);
+    }
+
+    @Test
+    public void testIsAnimationDone() throws Exception {
+        insert(keys[0]);
+        rootNode = daryHeap.root;
+        rootNode.setState(Node.INVISIBLE);
+        assertTrue(daryHeap.isAnimationDone());
     }
 
     private void updateRootNodes() {

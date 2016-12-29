@@ -4,15 +4,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import algvis.core.Node;
 import algvis.ds.dictionaries.bst.BSTFind;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.BaseIntegrationTest;
+import algvis.ui.view.View;
 
 public class TreapTest extends BaseIntegrationTest {
 
@@ -82,6 +85,17 @@ public class TreapTest extends BaseIntegrationTest {
         BSTNode foundNode = (BSTNode) result.get("node");
         assertNotNull(foundNode);
         assertEquals(keys[0], foundNode.getKey());
+    }
+
+    @Test
+    public void testDrawInvisibleNode() throws Exception {
+        insert(keys[0]);
+        updateRootNodes();
+        rootNode.setState(Node.INVISIBLE);
+        View v = getActiveVisPanel(algVis).screen.V;
+        v.setColor(Color.ORANGE);
+        rootNode.draw(v);
+        assertEquals(Color.ORANGE, v.getColor());
     }
 
     private void updateRootNodes() {
