@@ -1,0 +1,12 @@
+machine:
+  environment:
+    GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
+    _JAVA_OPTIONS: "-Xms512m -Xmx1024m"
+    APP_HOME: /home/ubuntu/alg-vis
+test:
+  override:
+    - ./gradlew coveralls:
+        timeout: 5400
+  post:
+    - cp -r $APP_HOME/* $CIRCLE_ARTIFACTS
+
