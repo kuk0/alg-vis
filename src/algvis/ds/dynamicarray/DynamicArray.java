@@ -1,20 +1,22 @@
 package algvis.ds.dynamicarray;
 
-import algvis.core.*;
+import java.awt.Color;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Hashtable;
+
+import algvis.core.Array;
+import algvis.core.ArrayNode;
+import algvis.core.DataStructure;
+import algvis.core.Node;
+import algvis.core.NodeColor;
 import algvis.core.history.HashtableStoreSupport;
-import algvis.core.visual.TextBubble;
 import algvis.internationalization.IString;
 import algvis.internationalization.Languages;
 import algvis.ui.VisPanel;
 import algvis.ui.view.ClickListener;
 import algvis.ui.view.REL;
 import algvis.ui.view.View;
-
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-import java.util.Hashtable;
 
 public class DynamicArray extends DataStructure implements ClickListener {
   public static final String dsName = "dynamicarray";

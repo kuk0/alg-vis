@@ -2,7 +2,6 @@ package algvis.ds.dynamicarray;
 
 import algvis.core.DataStructure;
 import algvis.core.Settings;
-import algvis.ds.intervaltree.IntervalTree;
 import algvis.ui.NewVisPanel;
 
 public class DynamicArrayPanel extends NewVisPanel{

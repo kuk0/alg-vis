@@ -1,12 +1,11 @@
 package algvis.ds.dynamicarray;
 
+import java.awt.Color;
+
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.RelativeNode;
-import algvis.ui.Fonts;
 import algvis.ui.view.View;
-
-import java.awt.*;
 
 public class DynamicArrayCoin extends RelativeNode {
   public DynamicArrayCoin(DataStructure D, Node relative, int sepx, int sepy) {

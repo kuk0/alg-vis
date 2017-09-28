@@ -17,6 +17,17 @@
  ******************************************************************************/
 package algvis.ui;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.util.Hashtable;
+
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.TitledBorder;
+import javax.swing.undo.StateEditable;
+
 import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.core.history.HistoryManager;
@@ -24,19 +35,6 @@ import algvis.core.visual.Scene;
 import algvis.internationalization.ILabel;
 import algvis.internationalization.LanguageListener;
 import algvis.internationalization.Languages;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.util.Hashtable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.border.TitledBorder;
-import javax.swing.undo.StateEditable;
 
 public abstract class VisPanel extends JPanel implements LanguageListener,
     StateEditable {

@@ -17,13 +17,11 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.bst;
 
+import java.util.HashMap;
+
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.ui.view.REL;
-
-import java.util.HashMap;
-
-import java.util.HashMap;
 
 public class BSTInsert extends Algorithm {
     private final BST T;

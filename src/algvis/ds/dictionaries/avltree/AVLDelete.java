@@ -17,16 +17,12 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.avltree;
 
+import java.util.HashMap;
+
 import algvis.core.Algorithm;
-import algvis.core.Node;
-import algvis.core.NodeColor;
 import algvis.core.StringUtils;
-import algvis.core.visual.Edge;
-import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTDelete;
 import algvis.ui.view.REL;
-
-import java.util.HashMap;
 
 public class AVLDelete extends Algorithm {
     private final AVL T;
