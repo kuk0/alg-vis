@@ -137,7 +137,7 @@ public class DaryHeap extends PriorityQueue implements ClickListener {
     }
 
     @Override
-    protected Rectangle2D getBoundingBox() {
+    public Rectangle2D getBoundingBox() {
         return root == null ? null : root.getBoundingBox();
     }
 

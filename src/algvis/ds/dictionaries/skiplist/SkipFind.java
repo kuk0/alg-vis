@@ -40,13 +40,13 @@ public class SkipFind extends SkipAlg {
         final SkipNode w = find();
         if (w.getKey() == v.getKey()) {
             addNote("found");
-            addStep(w, REL.BOTTOM, "found", K);
+            addStep(w, REL.BOTTOM, "found", "" + K);
             v.setColor(NodeColor.FOUND);
             pause();
             addNote("done");
         } else {
             addNote("notfound");
-            addStep(w, REL.BOTTOM, "notfound", K);
+            addStep(w, REL.BOTTOM, "notfound", "" + K);
             pause();
             v.setColor(NodeColor.NOTFOUND);
             v.goDown();

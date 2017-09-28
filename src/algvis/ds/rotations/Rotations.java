@@ -120,7 +120,7 @@ public class Rotations extends DataStructure implements ClickListener {
     }
 
     @Override
-    protected Rectangle2D getBoundingBox() {
+    public Rectangle2D getBoundingBox() {
         return T.getBoundingBox();
     }
 

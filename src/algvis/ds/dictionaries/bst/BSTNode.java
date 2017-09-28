@@ -308,15 +308,19 @@ public class BSTNode extends Node {
             v.goTo(v.tox + dx, v.toy + dy);
         }
     }
+    
+    public Rectangle2D getNodeBoundingBox() {
+        return super.getBoundingBox();
+    }
 
     @Override
     public Rectangle2D getBoundingBox() {
         Rectangle2D retVal = super.getBoundingBox();
         if (left != null) {
-            retVal = retVal.createUnion(left.getBoundingBox());
+            retVal.add(left.getBoundingBox());
         }
         if (right != null) {
-            retVal = retVal.createUnion(right.getBoundingBox());
+            retVal.add(right.getBoundingBox());
         }
         return retVal;
     }

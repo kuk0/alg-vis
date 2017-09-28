@@ -83,7 +83,7 @@ public class Edge extends VisualElement {
     }
 
     @Override
-    protected Rectangle2D getBoundingBox() {
+    public Rectangle2D getBoundingBox() {
         return new Rectangle2D.Double(x1, y1, x2, y2);
     }
 }

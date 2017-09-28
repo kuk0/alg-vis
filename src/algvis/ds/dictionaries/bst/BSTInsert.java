@@ -71,7 +71,7 @@ public class BSTInsert extends Algorithm {
                     } else {
                         v.pointAbove(w.getRight());
                     }
-                    addStep(v, REL.LEFT, "bst-insert-right", K, w.getKey());
+                    addStep(v, REL.LEFT, "bst-insert-right", "" + K, w.getKeyS());
                     pause();
                     v.noArrow();
                     if (w.getRight() != null) {
@@ -86,7 +86,7 @@ public class BSTInsert extends Algorithm {
                     } else {
                         v.pointAbove(w.getLeft());
                     }
-                    addStep(v, REL.RIGHT, "bst-insert-left", K, w.getKey());
+                    addStep(v, REL.RIGHT, "bst-insert-left", "" + K, w.getKeyS());
                     pause();
                     v.noArrow();
                     if (w.getLeft() != null) {

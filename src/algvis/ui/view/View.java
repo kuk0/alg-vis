@@ -395,11 +395,11 @@ public class View implements MouseListener, MouseMotionListener,
             arch));
     }
 
-    public void drawTextBubble(String s, int x, int y, int w, int alpha, REL pos) {
-        drawTextBubble(s, x, y, w, alpha, pos, 2 * Node.RADIUS, 2 * Node.RADIUS);
+    public void drawTextBubble(String s, double x, double y, int w, int alpha, REL pos) {
+        drawTextBubble(s, x, y, w, alpha, pos, Node.RADIUS, Node.RADIUS);
     }
 
-    public void drawTextBubble(String s, int x, int y, int w, int alpha,
+    public void drawTextBubble(String s, double x, double y, int w, int alpha,
         REL pos, int gapx, int gapy) {
         FontRenderContext frc = g.getFontRenderContext();
         LineBreakMeasurer measurer = new LineBreakMeasurer(
@@ -438,7 +438,7 @@ public class View implements MouseListener, MouseMotionListener,
         g.draw(new RoundRectangle2D.Double(x - 5, y - 5, w + 10, h + 10, 15, 15));
         for (TextLayout l : L) {
             y += l.getAscent();
-            l.draw(g, x, y);
+            l.draw(g, (int)x, (int)y);
             y += l.getDescent() + l.getLeading();
         }
     }

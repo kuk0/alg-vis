@@ -18,14 +18,13 @@
 package algvis.core;
 
 import java.awt.EventQueue;
+import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 
 import algvis.core.history.UpdatableStateEdit;
 import algvis.core.visual.TextBubble;
 import algvis.core.visual.VisualElement;
-import algvis.internationalization.IIntParamString;
 import algvis.internationalization.IParamString;
-import algvis.internationalization.IString;
 import algvis.ui.NewVisPanel;
 import algvis.ui.VisPanel;
 import algvis.ui.view.REL;
@@ -121,34 +120,20 @@ abstract public class Algorithm implements Runnable {
         }
     }
 
-    protected void addStep(int x, int y, int w, REL pos, String s) {
-        addToSceneUntilNext(new TextBubble(new IString(s), x, y, w, pos));
-    }
-
-    protected void addStep(int x, int y, int w, REL pos, String s,
-        String... par) {
-        addToSceneUntilNext(new TextBubble(new IParamString(s, par), x, y, w,
-            pos));
-    }
-
-    protected void addStep(int x, int y, int w, REL pos, String s, int... par) {
-        addToSceneUntilNext(new TextBubble(new IIntParamString(s, par), x, y,
-            w, pos));
-    }
-
-    protected void addStep(Node v, REL pos, String s) {
-        addToSceneUntilNext(new TextBubble(new IString(s), v.tox, v.toy, 200,
-            pos));
-    }
-
     protected void addStep(Node v, REL pos, String s, String... par) {
-        addToSceneUntilNext(new TextBubble(new IParamString(s, par), v.tox,
-            v.toy, 200, pos));
+        addToSceneUntilNext(new TextBubble(new IParamString(s, par),
+            pos.boundaryPoint(v.getDestBoundingBox()), 200, pos));
     }
 
-    protected void addStep(Node v, REL pos, String s, int... par) {
-        addToSceneUntilNext(new TextBubble(new IIntParamString(s, par), v.tox,
-            v.toy, 200, pos));
+    protected void addStep(VisualElement v, int w, REL pos, String s,
+        String... par) {
+        addStep(v.getBoundingBox(), w, pos, s, par);
+    }
+
+    protected void addStep(Rectangle2D v, int w, REL pos, String s,
+        String... par) {
+        addToSceneUntilNext(new TextBubble(new IParamString(s, par),
+            pos.boundaryPoint(v), w, pos));
     }
 
     protected void addStep(String s) {

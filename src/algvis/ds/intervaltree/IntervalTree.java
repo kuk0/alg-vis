@@ -76,7 +76,7 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
     }
 
     @Override
-    protected Rectangle2D getBoundingBox() {
+    public Rectangle2D getBoundingBox() {
         return root == null ? null : root.getBoundingBox();
     }
 

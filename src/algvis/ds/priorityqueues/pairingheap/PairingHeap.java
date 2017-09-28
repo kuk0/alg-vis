@@ -146,7 +146,7 @@ public class PairingHeap extends MeldablePQ implements ClickListener {
     }
 
     @Override
-    protected Rectangle2D getBoundingBox() {
+    public Rectangle2D getBoundingBox() {
         Rectangle2D retVal = null;
         if (root != null) {
             for (int i = 0; i <= numHeaps; ++i) {

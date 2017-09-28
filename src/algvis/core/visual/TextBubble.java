@@ -18,35 +18,37 @@
 
 package algvis.core.visual;
 
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
+
 import algvis.core.StringUtils;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.internationalization.Stringable;
 import algvis.ui.view.REL;
 import algvis.ui.view.View;
 
-import java.awt.geom.Rectangle2D;
-import java.util.Hashtable;
-
 public class TextBubble extends VisualElement {
     Stringable s;
-    int x, y, w, alpha, toalpha;
-    REL pos;
+    Point2D pos;
+    int w, alpha, toalpha;
+    REL rel;
     public static final int DA = 21;
 
-    public TextBubble(Stringable s, int x, int y, int w, REL pos) {
+    public TextBubble(Stringable s, Point2D pos, int w, REL rel) {
         super(0);
         this.s = s;
-        this.x = x;
-        this.y = y;
+        this.pos = pos;
         this.w = w;
         this.alpha = 0;
-        this.toalpha = (256 / DA) * DA;;
-        this.pos = pos;
+        this.toalpha = (256 / DA) * DA;
+        this.rel = rel;
     }
 
     @Override
     public void draw(View V) {
-        V.drawTextBubble(StringUtils.unHtml(s.getString()), x, y, w, alpha, pos);
+        V.drawTextBubble(StringUtils.unHtml(s.getString()), pos.getX(),
+            pos.getY(), w, alpha, rel);
     } // TODO: unHtml only until we get rid of the commentary
 
     @Override
@@ -84,7 +86,6 @@ public class TextBubble extends VisualElement {
         } else {
             HashtableStoreSupport.store(state, hash + "toalpha", toalpha);
         }
-        //System.out.println("hou: " + s.getString() + toalpha);
     }
 
     @Override

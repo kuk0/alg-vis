@@ -63,7 +63,7 @@ public class SkipInsert extends SkipAlg {
         int i = 0;
         do {
             if (i > 0) {
-                addStep(oldv, REL.TOP, "skiplist-head", i);
+                addStep(oldv, REL.TOP, "skiplist-head", "" + i);
                 addStep("skiplist-head", i);
                 pause();
                 L.e++;
@@ -98,7 +98,7 @@ public class SkipInsert extends SkipAlg {
         } while (MyRandom.heads());
 
         addStep("skiplist-tail", i);
-        addStep(oldv, REL.TOP, "skiplist-tail", i);
+        addStep(oldv, REL.TOP, "skiplist-tail", "" + i);
         pause();
         addNote("done");
 

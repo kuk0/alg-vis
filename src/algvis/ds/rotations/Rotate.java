@@ -44,7 +44,7 @@ public class Rotate extends Algorithm {
     public void runAlgorithm() {
         setHeader("rotate-header", v.getKey());
         if (v == T.getRoot()) {
-            addStep(v, REL.BOTTOM, "rotate-root", v.getKey());
+            addStep(v, REL.BOTTOM, "rotate-root", v.getKeyS());
             pause();
             return;
         }
@@ -68,8 +68,8 @@ public class Rotate extends Algorithm {
                 a.subtreeColor(NodeColor.RED);
                 shadeA = new ShadeSubtree(a);
                 addToScene(shadeA);
-                addStep(shadeA.getRight(), shadeA.getBottom(), 100,
-                    REL.BOTTOMLEFT, rotR ? "rotate-rise" : "rotate-fall");
+                addStep(shadeA.getBoundingBox(), 100, REL.BOTTOMLEFT,
+                    rotR ? "rotate-rise" : "rotate-fall");
             }
             if (b != null) {
                 b.subtreeColor(NodeColor.GREEN);
@@ -80,13 +80,15 @@ public class Rotate extends Algorithm {
                 c.subtreeColor(NodeColor.BLUE);
                 shadeC = new ShadeSubtree(c);
                 addToScene(shadeC);
-                addStep(shadeC.getLeft(), shadeC.getBottom(), 100,
-                    REL.BOTTOMRIGHT, rotR ? "rotate-fall" : "rotate-rise");
+                addStep(shadeC.getBoundingBox(), 100, REL.BOTTOMRIGHT,
+                    rotR ? "rotate-fall" : "rotate-rise");
             }
         }
         pause();
-        addStep(u.x, (u.y + v.y) / 2, 200, v.isLeft() ? REL.RIGHT : REL.LEFT,
-            "rotate-change", u.getKey(), v.getKey());
+
+        addStep(u.getNodeBoundingBox().createUnion(v.getNodeBoundingBox()), 200,
+            v.isLeft() ? REL.RIGHT : REL.LEFT, "rotate-change", u.getKeyS(),
+            v.getKeyS());
         addToSceneUntilNext(new Edge(v, u));
         pause();
         if (p != null) {
@@ -95,22 +97,23 @@ public class Rotate extends Algorithm {
             } else {
                 addToSceneUntilNext(new Edge(p, v));
             }
-            addStep(p, REL.TOP, "rotate-change-parent", p.getKey(), v.getKey());
+            addStep(p, REL.TOP, "rotate-change-parent", p.getKeyS(), v.getKeyS());
         } else {
             addToSceneUntilNext(new Edge(u.x, u.y - DataStructure.minsepy, v.x,
                 v.y));
-            addStep(v.x, (u.y + v.y) / 2, 200, v.isLeft() ? REL.LEFT
-                : REL.RIGHT, "rotate-newroot", v.getKey());
+            addStep(u.getNodeBoundingBox().createUnion(v.getNodeBoundingBox()), 200,
+                v.isLeft() ? REL.LEFT : REL.RIGHT, "rotate-newroot",
+                v.getKeyS());
         }
         pause();
         if (b != null) {
             addToSceneUntilNext(new Edge(u, b));
-            addStep(b, REL.BOTTOM, "rotate-change-b", b.getKey(), u.getKey());
+            addStep(b, REL.BOTTOM, "rotate-change-b", b.getKeyS(), u.getKeyS());
         } else {
             addToSceneUntilNext(new Edge(u.x, u.y, v.x + (rotR ? +1 : -1)
                 * Node.RADIUS, v.y + DataStructure.minsepy));
             addStep(v, v.isLeft() ? REL.BOTTOMRIGHT : REL.BOTTOMLEFT,
-                "rotate-change-nullb", v.getKey(), u.getKey());
+                "rotate-change-nullb", v.getKeyS(), u.getKeyS());
         }
         pause();
 
@@ -118,15 +121,15 @@ public class Rotate extends Algorithm {
             if (b != null) {
 
             } else {
-                addStep("rotate-newroot-bnull", v.getKey(), u.getKey());
+                addStep("rotate-newroot-bnull", v.getKeyS(), u.getKeyS());
             }
         } else {
             if (b != null) {
-                addStep("rotate-changes", v.getKey(), b.getKey(), u.getKey(), u
-                    .getParent().getKey());
+                addStep("rotate-changes", v.getKeyS(), b.getKeyS(), u.getKeyS(), u
+                    .getParent().getKeyS());
             } else {
-                addStep("rotate-changes-bnull", v.getKey(), u.getKey(), u
-                    .getParent().getKey());
+                addStep("rotate-changes-bnull", v.getKeyS(), u.getKeyS(), u
+                    .getParent().getKeyS());
             }
         }
         /*

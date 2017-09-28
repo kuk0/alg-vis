@@ -40,8 +40,8 @@ abstract class SkipAlg extends Algorithm {
 
         for (int i = L.height - 1;; --i) {
             while (w.getRight().getKey() <= K) {
-                addStep("skiplist-next", K);
-                addStep(v, REL.TOP, "skiplist-next", K);
+                addStep("skiplist-next", "" + K);
+                addStep(v, REL.TOP, "skiplist-next", "" + K);
                 pause();
                 w = w.getRight();
                 w.colorBefore(NodeColor.DARKER);
@@ -55,8 +55,8 @@ abstract class SkipAlg extends Algorithm {
             if (w.getDown() == null) {
                 break;
             }
-            addStep("skiplist-down", K);
-            addStep(v, REL.TOP, "skiplist-down", K);
+            addStep("skiplist-down", "" + K);
+            addStep(v, REL.TOP, "skiplist-down", "" + K);
             pause();
             w = w.getDown();
             v.goTo(w);

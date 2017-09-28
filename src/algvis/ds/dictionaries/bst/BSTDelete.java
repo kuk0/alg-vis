@@ -78,8 +78,8 @@ public class BSTDelete extends Algorithm {
                     addStep(toDelete, REL.RIGHT, "bst-delete-case2");
                 }
                 if (toDelete.isRoot()) {
-                    addStep(son, REL.BOTTOM, "bst-delete-newroot", K,
-                        son.getKey());
+                    addStep(son, REL.BOTTOM, "bst-delete-newroot", "" + K,
+                        son.getKeyS());
                 } else {
                     if (son.isLeft() == toDelete.isLeft()) {
                         addToSceneUntilNext(new Edge(toDelete.getParent(),
@@ -87,8 +87,8 @@ public class BSTDelete extends Algorithm {
                     } else {
                         addToSceneUntilNext(new Edge(toDelete.getParent(), son));
                     }
-                    addStep(son, REL.BOTTOM, "bst-delete-linkpar", K,
-                        son.getKey(), toDelete.getParent().getKey());
+                    addStep(son, REL.BOTTOM, "bst-delete-linkpar", "" + K,
+                        son.getKeyS(), toDelete.getParent().getKeyS());
                 }
                 pause();
                 if (toDelete.getLeft() == null) {
@@ -106,7 +106,7 @@ public class BSTDelete extends Algorithm {
                     }
                 }
             } else { // case III - 2 children
-                addStep(toDelete, REL.TOP, "bst-delete-case3", K);
+                addStep(toDelete, REL.TOP, "bst-delete-case3", "" + K);
                 BSTNode son = toDelete.getRight();
                 toDelete.setColor(NodeColor.DELETE);
                 BSTNode v = new BSTNode(T, -Node.INF, ZDepth.ACTIONNODE);
@@ -131,13 +131,13 @@ public class BSTDelete extends Algorithm {
 
                 final BSTNode p = son.getParent(), r = son.getRight();
                 v.setColor(NodeColor.FOUND);
-                addStep(v, REL.RIGHT, "bst-delete-succ", K, son.getKey());
+                addStep(v, REL.RIGHT, "bst-delete-succ", "" + K, son.getKeyS());
                 pause();
                 if (r == null) {
                     addStep(v, REL.BOTTOMLEFT, "bst-delete-succ-unlink");
                 } else {
-                    addStep(r, REL.BOTTOM, "bst-delete-succ-link", r.getKey(),
-                        p.getKey());
+                    addStep(r, REL.BOTTOM, "bst-delete-succ-link", r.getKeyS(),
+                        p.getKeyS());
                     if (son.isLeft()) {
                         addToSceneUntilNext(new Edge(p, son, r));
                     } else {
@@ -155,7 +155,7 @@ public class BSTDelete extends Algorithm {
                 }
                 v.goNextTo(toDelete);
                 pause();
-                addStep(v, REL.RIGHT, "bst-delete-replace", K, son.getKey());
+                addStep(v, REL.RIGHT, "bst-delete-replace", "" + K, son.getKeyS());
                 pause();
                 if (toDelete.getParent() == null) {
                     T.setRoot(v);

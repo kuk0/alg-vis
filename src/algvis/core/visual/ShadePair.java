@@ -42,7 +42,7 @@ public class ShadePair extends VisualElement {
     }
 
     @Override
-    protected Rectangle2D getBoundingBox() {
+    public Rectangle2D getBoundingBox() {
         return null;
     }
 }

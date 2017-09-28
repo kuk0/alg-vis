@@ -71,7 +71,7 @@ public class BSTFind extends Algorithm {
                     } else {
                         v.pointAbove(w.getRight());
                     }
-                    addStep(v, REL.LEFT, "bstfindright", K, w.getKey());
+                    addStep(v, REL.LEFT, "bstfindright", "" + K, w.getKeyS());
                     pause();
                     v.noArrow();
                     w.setColor(NodeColor.DARKER);
@@ -93,7 +93,7 @@ public class BSTFind extends Algorithm {
                     } else {
                         v.pointAbove(w.getLeft());
                     }
-                    addStep(v, REL.RIGHT, "bstfindleft", K, w.getKey());
+                    addStep(v, REL.RIGHT, "bstfindleft", "" + K, w.getKeyS());
                     pause();
                     v.noArrow();
                     w.setColor(NodeColor.DARKER);

@@ -74,7 +74,7 @@ public class UnionFindFind extends Algorithm {
 
         u.setColor(NodeColor.FIND);
         u.mark();
-        addStep(u, REL.BOTTOM, "uf-find-start", u.getKey());
+        addStep(u, REL.BOTTOM, "uf-find-start", u.getKeyS());
         pause();
 
         // looking for root
@@ -91,7 +91,7 @@ public class UnionFindFind extends Algorithm {
         // root found
         S.add(v);
         v.setColor(NodeColor.FOUND);
-        addStep(v, REL.TOP, "uf-found-root", u.getKey());
+        addStep(v, REL.TOP, "uf-found-root", u.getKeyS());
         pause();
         return S;
     }
@@ -120,7 +120,7 @@ public class UnionFindFind extends Algorithm {
         //TODO: on the way down, we link nodes directly to the root
         while (!S.empty()) {
             UnionFindNode v = S.pop();
-            addStep(v, REL.BOTTOM, "uf-link", v.getKey(), result.getKey());
+            addStep(v, REL.BOTTOM, "uf-link", v.getKeyS(), result.getKeyS());
             // v.pointTo(result);
             pause();
             // v.noArrow();
@@ -163,7 +163,7 @@ public class UnionFindFind extends Algorithm {
             p = v.getParent();
             pp = p.getParent();
             addToSceneUntilNext(new Edge(v, pp));
-            addStep(v, REL.BOTTOM, "uf-link", v.getKey(), pp.getKey());
+            addStep(v, REL.BOTTOM, "uf-link", v.getKeyS(), pp.getKeyS());
             pause();
             p.deleteChild(v);
             pp.addChild(v);
@@ -187,10 +187,10 @@ public class UnionFindFind extends Algorithm {
         }
         v.unmark();
         v.setColor(NodeColor.FOUND);
-        addStep(v, REL.TOP, "uf-found-root", u.getKey());
+        addStep(v, REL.TOP, "uf-found-root", u.getKeyS());
         pause();
         addStep(v, REL.TOP, halving ? "uf-path-halved" : "uf-path-split",
-            u.getKey());
+            u.getKeyS());
         pause();
 
         u.unmark();

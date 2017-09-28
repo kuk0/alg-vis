@@ -428,6 +428,11 @@ public class Node extends VisualElement {
         return new Rectangle2D.Double(x - r, y - r, 2 * r, 2 * r);
     }
 
+    public Rectangle2D getDestBoundingBox() {
+        final int r = RADIUS + 1;
+        return new Rectangle2D.Double(tox - r, toy - r, 2 * r, 2 * r);
+    }
+
     @Override
     public void endAnimation() {
         if (state == ALIVE || state == INVISIBLE) {
@@ -454,6 +459,10 @@ public class Node extends VisualElement {
 
     public int getKey() {
         return key;
+    }
+
+    public String getKeyS() {
+        return "" + key;
     }
 
     public void setKey(int key) {

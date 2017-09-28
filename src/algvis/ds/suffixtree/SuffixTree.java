@@ -98,7 +98,7 @@ public class SuffixTree extends DataStructure {
     }
 
     @Override
-    protected Rectangle2D getBoundingBox() {
+    public Rectangle2D getBoundingBox() {
         return root == null ? null : new Rectangle2D.Double(-20, -100, 20, 20);
         // root.getBoundingBox();
     }
