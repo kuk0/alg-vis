@@ -17,21 +17,17 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.aatree;
 
-import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTFind;
 import algvis.ds.dictionaries.bst.BSTNode;
+import algvis.ui.view.REL;
 
-public class AADelete extends Algorithm {
-    private final AA T;
-    private final int K;
+public class AADelete extends AAAlg {
 
     public AADelete(AA T, int x) {
-        super(T.panel);
-        this.T = T;
-        K = x;
+        super(T, x);
     }
 
     // TODO niektore kroky ("This node is OK) nemaju pauzy
@@ -50,7 +46,7 @@ public class AADelete extends Algorithm {
 
             AANode w = toDelete.getParent();
             if (toDelete.isLeaf()) { // case I - list
-                addStep("bst-delete-case1");
+                addStep(toDelete, REL.TOP, "bst-delete-case1");
                 pause();
                 if (toDelete.isRoot()) {
                     T.setRoot(null);
@@ -60,10 +56,8 @@ public class AADelete extends Algorithm {
                     toDelete.getParent().unlinkRight();
                 }
             } else if (toDelete.getLeft() == null
-                || toDelete.getRight() == null) { // case
-                // IIa -
-                // 1 syn
-                addStep("bst-delete-case2");
+                || toDelete.getRight() == null) { // case IIa - 1 child
+                addStep(toDelete, REL.TOP, "bst-delete-case2");
                 pause();
                 final AANode s = (toDelete.getLeft() == null) ? toDelete
                     .getRight() : toDelete.getLeft();
@@ -76,8 +70,8 @@ public class AADelete extends Algorithm {
                         toDelete.getParent().linkRight(s);
                     }
                 }
-            } else { // case III - 2 synovia
-                addStep("bst-delete-case3");
+            } else { // case III - 2 children
+                addStep(toDelete, REL.TOP, "bst-delete-case3");
                 final int lev = toDelete.getLevel();
                 AANode s = toDelete.getRight();
                 BSTNode v = new BSTNode(T, -Node.INF, ZDepth.ACTIONNODE);
@@ -131,7 +125,7 @@ public class AADelete extends Algorithm {
                     .getLevel(), rl = (w.getRight() == null) ? 0 : w.getRight()
                     .getLevel();
                 int wl = w.getLevel();
-                addStep("aaok");
+                //addStep("aaok");
                 w.mark();
                 if (ll < wl - 1 || rl < wl - 1) {
                     wl--;
@@ -140,76 +134,31 @@ public class AADelete extends Algorithm {
                         w.getRight().setLevel(wl);
                     }
                     // skew
-                    if (w.getLeft() != null
-                        && w.getLeft().getLevel() == w.getLevel()) {
-                        addStep("aaskew");
-                        pause();
+                    if (w.leftPseudoNode()) {
+                        AANode l = w.getLeft();
+                        skew(w, "aaskew");
                         w.unmark();
-                        w = w.getLeft();
+                        w = l;
                         w.mark();
-                        w.setArc();
-                        pause();
-                        w.noArc();
-                        T.rotate(w);
-                        T.reposition();
                     }
 
                     if (w.getRight() != null) {
-                        T.skew(w.getRight());
-                        AANode r = w.getRight();
-                        if (r.getLeft() != null
-                            && r.getLeft().getLevel() == r.getLevel()) {
-                            addStep("aaskew2");
-                            r.getLeft().setArc(r);
-                            pause();
-                            r.getLeft().noArc();
-                            pause();
-                            T.rotate(r.getLeft());
-                            T.reposition();
-                        }
-                        if (w.getRight().getRight() != null) {
-                            r = w.getRight().getRight();
-                            if (r.getLeft() != null
-                                && r.getLeft().getLevel() == r.getLevel()) {
-                                addStep("aaskew3");
-                                r.getLeft().setArc(r);
-                                pause();
-                                r.getLeft().noArc();
-                                T.rotate(r.getLeft());
-                                T.reposition();
-                            }
-                        }
+                        skew(w.getRight(), "aaskew2");
+                        skew(w.getRight().getRight(), "aaskew3");
                     }
 
-                    AANode r = w.getRight();
-                    if (r != null && r.getRight() != null
-                        && r.getRight().getLevel() == w.getLevel()) {
-                        addStep("aasplit");
-                        r.setArc();
-                        pause();
-                        r.noArc();
+                    if (w.pseudoNodeTooBig()) {
+                        AANode r = w.getRight();
+                        split(w, "aasplit");
                         w.unmark();
                         w = r;
                         w.mark();
-                        T.rotate(w);
-                        w.setLevel(w.getLevel() + 1);
-                        T.reposition();
                     }
 
                     pause();
                     if (w.getRight() != null) {
-                        r = w.getRight().getRight();
-                        if (r != null
-                            && r.getRight() != null
-                            && r.getRight().getLevel() == w.getRight()
-                                .getLevel()) {
-                            addStep("aasplit2");
-                            r.setArc();
-                            pause();
-                            r.noArc();
-                            T.rotate(r);
-                            r.setLevel(r.getLevel() + 1);
-                            T.reposition();
+                        if (w.getRight().pseudoNodeTooBig()) {
+                            split(w.getRight(), "aasplit2");
                         }
                     }
                     pause();
@@ -218,8 +167,8 @@ public class AADelete extends Algorithm {
                 w = w.getParent();
             }
 
-            T.reposition();
-            addNote("done");
+			T.reposition();
+			addNote("done");
         }
     }
 }

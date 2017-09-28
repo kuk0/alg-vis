@@ -19,9 +19,9 @@ package algvis.ds.dictionaries.aatree;
 
 import algvis.core.DataStructure;
 import algvis.core.Settings;
-import algvis.ui.VisPanel;
+import algvis.ui.NewVisPanel;
 
-public class AAPanel extends VisPanel {
+public class AAPanel extends NewVisPanel {
     private static final long serialVersionUID = 7589910312644830227L;
     public static Class<? extends DataStructure> DS = AA.class;
 

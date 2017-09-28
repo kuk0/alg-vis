@@ -58,8 +58,8 @@ public class AA extends BST {
         // reposition();
     }
 
-    public void skew(BSTNode w) {
-        if (w.getLeft() != null && w.getLeft().getLevel() == w.getLevel()) {
+    public void skew(AANode w) {
+        if (w.leftPseudoNode()) {
             w = w.getLeft();
             rotate(w);
             reposition();

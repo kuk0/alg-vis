@@ -19,18 +19,13 @@ package algvis.ds.dictionaries.aatree;
 
 import java.util.HashMap;
 
-import algvis.core.Algorithm;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTInsert;
 
-public class AAInsert extends Algorithm {
-    private final AA T;
-    private final int K;
+public class AAInsert extends AAAlg {
 
     public AAInsert(AA T, int x) {
-        super(T.panel);
-        this.T = T;
-        K = x;
+        super(T, x);
     }
 
     @Override
@@ -49,35 +44,22 @@ public class AAInsert extends Algorithm {
             // bubleme nahor
             while (w != null) {
                 w.mark();
-                addStep("aaok");
+                // addStep(w, REL.BOTTOM, "aaok");
                 // skew
-                if (w.getLeft() != null
-                    && w.getLeft().getLevel() == w.getLevel()) {
-                    addStep("aaskew");
-                    pause();
+                if (w.leftPseudoNode()) {
+                    AANode l = w.getLeft();
+                    skew(w, "aaskew");
                     w.unmark();
-                    w = w.getLeft();
+                    w = l;
                     w.mark();
-                    w.setArc();
-                    pause();
-                    w.noArc();
-                    T.rotate(w);
-                    T.reposition();
                 }
                 // split
-                final AANode r = w.getRight();
-                if (r != null && r.getRight() != null
-                    && r.getRight().getLevel() == w.getLevel()) {
-                    addStep("aasplit");
+                if (w.pseudoNodeTooBig()) {
+                    AANode r = w.getRight();
+                    split(w, "aasplit");
                     w.unmark();
                     w = r;
                     w.mark();
-                    w.setArc();
-                    pause();
-                    w.noArc();
-                    T.rotate(w);
-                    w.setLevel(w.getLevel() + 1);
-                    T.reposition();
                 }
                 pause();
                 w.unmark();

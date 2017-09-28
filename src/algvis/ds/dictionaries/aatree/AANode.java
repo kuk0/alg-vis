@@ -48,6 +48,16 @@ public class AANode extends BSTNode {
         return (AANode) super.getParent();
     }
 
+    public boolean leftPseudoNode() {
+        return this.getLeft() != null
+            && this.getLeft().getLevel() == this.getLevel();
+    }
+
+    public boolean pseudoNodeTooBig() {
+        return this.getRight() != null && this.getRight().getRight() != null
+            && this.getRight().getRight().getLevel() == this.getLevel();
+    }
+
     @Override
     public void draw(View v) {
         if (state == Node.INVISIBLE || getKey() == NULL) {
