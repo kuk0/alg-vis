@@ -5,6 +5,7 @@ import algvis.core.Settings;
 import algvis.ui.NewVisPanel;
 
 public class DynamicArrayPanel extends NewVisPanel{
+  private static final long serialVersionUID = -4098377740442930253L;
   public static Class<? extends DataStructure> DS = DynamicArray.class;
 
   public DynamicArrayPanel(Settings S) {

@@ -217,7 +217,6 @@ abstract public class Buttons extends JPanel implements ActionListener,
                 panel.refresh();
             }
         } else if (evt.getSource() == next) {
-            final Algorithm a = panel.D.getA();
             if (panel.history.canRedo()) {
                 if (panel.pauses) {
                     panel.history.redo();

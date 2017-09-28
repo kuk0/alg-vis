@@ -79,11 +79,6 @@ public class RelativeNode extends Node {
     this.sepy = this.sepToy = sepy;
   }
 
-  private void updatePosition() {
-    this.x = this.tox = relative.x + sepx;
-    this.y = this.toy = relative.y + sepy;
-  }
-
   public void changeRelative(Node v) {
     relative = v;
     this.steps = 10;

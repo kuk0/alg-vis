@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.util.Vector;
 
 public class DynamicArrayButtons extends Buttons {
+  private static final long serialVersionUID = -4820812162669072989L;
   IButton insertB;
   IButton popB;
   public DynamicArrayButtons(VisPanel M) {

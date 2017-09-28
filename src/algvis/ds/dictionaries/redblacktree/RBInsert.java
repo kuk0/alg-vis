@@ -20,6 +20,7 @@ package algvis.ds.dictionaries.redblacktree;
 import algvis.core.Algorithm;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTInsert;
+import algvis.ui.view.REL;
 
 import java.util.HashMap;
 
@@ -60,7 +61,7 @@ public class RBInsert extends Algorithm {
                 }
                 if (y.isRed()) {
                     // case 1
-                    addStep("rbinsertcase1");
+                    addStep(ppw, REL.TOP, "rbinsertcase1");
                     pause();
                     pw.setRed(false);
                     y.setRed(false);
@@ -73,7 +74,7 @@ public class RBInsert extends Algorithm {
                 } else {
                     // case 2
                     if (isleft != w.isLeft()) {
-                        addStep("rbinsertcase2");
+                        addStep(ppw, REL.TOP, "rbinsertcase2");
                         pause();
                         T.rotate(w);
                         pause();
@@ -84,7 +85,7 @@ public class RBInsert extends Algorithm {
                     }
                     pw = w.getParent2();
                     // case 3
-                    addStep("rbinsertcase3");
+                    addStep(y, REL.TOP, "rbinsertcase3");
                     pause();
                     w.setRed(false);
                     pw.setRed(true);
