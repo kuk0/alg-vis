@@ -56,9 +56,9 @@ public class LazyBinomialHeap extends BinomialHeap {
 
     @Override
     public void meld(int i, int j) {
-        final Pair p = chooseHeaps(i, j);
-        i = p.first;
-        j = p.second;
+        final Pair<Integer, Integer> p = chooseHeaps(i, j);
+        i = (int)p.first;
+        j = (int)p.second;
         ((MeldablePQButtons) panel.buttons).activeHeap.setValue(i);
         start(new LazyBinHeapMeld(this, i, j));
     }

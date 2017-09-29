@@ -102,7 +102,7 @@ public class SkewHeap extends MeldablePQ implements ClickListener {
         start(new SkewHeapDelete(this));
     }
 
-    Pair chooseHeaps(int i, int j) {
+    Pair<Integer, Integer> chooseHeaps(int i, int j) {
         if (i < 1 || i > numHeaps) {
             i = -1;
         }
@@ -122,14 +122,14 @@ public class SkewHeap extends MeldablePQ implements ClickListener {
                 }
             }
         }
-        return new Pair(i, j);
+        return new Pair<Integer, Integer>(i, j);
     }
 
     @Override
     public void meld(int i, int j) {
-        final Pair p = chooseHeaps(i, j);
-        i = p.first;
-        j = p.second;
+        final Pair<Integer, Integer> p = chooseHeaps(i, j);
+        i = (int)p.first;
+        j = (int)p.second;
         ((MeldablePQButtonsNoDecr) panel.buttons).activeHeap.setValue(i);
         start(new SkewHeapMeld(this, i, j));
 

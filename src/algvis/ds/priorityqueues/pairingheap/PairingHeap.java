@@ -91,9 +91,9 @@ public class PairingHeap extends MeldablePQ implements ClickListener {
 
     @Override
     public void meld(int i, int j) {
-        final Pair p = chooseHeaps(i, j);
-        i = p.first;
-        j = p.second;
+        final Pair<Integer, Integer> p = chooseHeaps(i, j);
+        i = (int)p.first;
+        j = (int)p.second;
         ((MeldablePQButtons) panel.buttons).activeHeap.setValue(i);
         start(new PairHeapMeld(this, i, j));
     }
@@ -201,7 +201,7 @@ public class PairingHeap extends MeldablePQ implements ClickListener {
         }
     }
 
-    Pair chooseHeaps(int i, int j) {
+    Pair<Integer, Integer> chooseHeaps(int i, int j) {
         if (i < 1 || i > numHeaps) {
             i = -1;
         }
@@ -221,7 +221,7 @@ public class PairingHeap extends MeldablePQ implements ClickListener {
                 }
             }
         }
-        return new Pair(i, j);
+        return new Pair<Integer, Integer>(i, j);
     }
 
     public void reposition() {

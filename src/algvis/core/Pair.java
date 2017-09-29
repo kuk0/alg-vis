@@ -17,20 +17,12 @@
  ******************************************************************************/
 package algvis.core;
 
-public class Pair {
-    public int first, second;
+public class Pair<A, B> {
+    public A first;
+    public B second;
 
-    public Pair() {
-    }
-
-    public Pair(int x, int y) {
+    public Pair(A x, B y) {
         first = x;
         second = y;
     }
-
-    /*
-     * public int first() { return first; }
-     * 
-     * public int second() { return second; }
-     */
 }

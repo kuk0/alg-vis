@@ -88,7 +88,7 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
         start(new BinHeapDecrKey(this, (BinHeapNode) v, delta));
     }
 
-    protected Pair chooseHeaps(int i, int j) {
+    protected Pair<Integer, Integer> chooseHeaps(int i, int j) {
         if (i < 1 || i > numHeaps) {
             i = -1;
         }
@@ -108,12 +108,12 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
                 }
             }
         }
-        return new Pair(i, j);
+        return new Pair<Integer, Integer>(i, j);
     }
 
     @Override
     public void meld(int i, int j) {
-        final Pair p = chooseHeaps(i, j);
+        final Pair<Integer, Integer> p = chooseHeaps(i, j);
         i = p.first;
         j = p.second;
         ((MeldablePQButtons) panel.buttons).activeHeap.setValue(i);
