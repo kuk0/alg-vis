@@ -34,12 +34,10 @@ public class SkipDelete extends SkipAlg {
         v.setColor(NodeColor.DELETE);
         addToScene(v);
         p = new SkipNode[L.height];
-        addStep("bstdeletestart");
         addStep(L.getRoot(), REL.TOP, "bstdeletestart");
         SkipNode w = find();
 
         if (w.getKey() != K) {
-            addStep("notfound");
             addStep(w, REL.BOTTOM, "notfound");
             pause();
             v.setColor(NodeColor.NOTFOUND);
@@ -55,7 +53,6 @@ public class SkipDelete extends SkipAlg {
         
         L.n--;
         L.e++;
-        addStep("skipdelete");
         addStep(w, REL.BOTTOM, "skipdelete");
         for (int i = 0; i < L.height; ++i) {
             if (w == null || w.getKey() != K) {

@@ -36,13 +36,11 @@ public class SkipInsert extends SkipAlg {
         v = new SkipNode(L, K, ZDepth.ACTIONNODE);
         v.setColor(NodeColor.INSERT);
         addToScene(v);
-        addStep("skipinsertstart");
         addStep(L.getRoot(), REL.TOP, "skipinsertstart");
         SkipNode w = find();
 
 
         if (w.getKey() == v.getKey()) {
-            addStep("alreadythere");
             addStep(v, REL.BOTTOM, "alreadythere");
             pause();
             v.setColor(NodeColor.NOTFOUND);
@@ -54,7 +52,6 @@ public class SkipInsert extends SkipAlg {
         final SkipNode inserted = v;
 
         L.n++;
-        addStep("skipinsertafter");
         addStep(v, REL.BOTTOM, "skipinsertafter");
         pause();
         SkipNode z, oldv = null;
@@ -64,7 +61,6 @@ public class SkipInsert extends SkipAlg {
         do {
             if (i > 0) {
                 addStep(oldv, REL.TOP, "skiplist-head", "" + i);
-                addStep("skiplist-head", i);
                 pause();
                 L.e++;
             }
@@ -97,7 +93,6 @@ public class SkipInsert extends SkipAlg {
             pause();
         } while (MyRandom.heads());
 
-        addStep("skiplist-tail", i);
         addStep(oldv, REL.TOP, "skiplist-tail", "" + i);
         pause();
         addNote("done");

@@ -20,9 +20,9 @@ package algvis.ds.dictionaries.skiplist;
 import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.ui.DictButtons;
-import algvis.ui.VisPanel;
+import algvis.ui.NewVisPanel;
 
-public class SkipListPanel extends VisPanel {
+public class SkipListPanel extends NewVisPanel {
     private static final long serialVersionUID = -283805545295164774L;
     public static Class<? extends DataStructure> DS = SkipList.class;
 

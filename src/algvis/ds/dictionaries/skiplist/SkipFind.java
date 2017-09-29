@@ -34,7 +34,6 @@ public class SkipFind extends SkipAlg {
         v.setColor(NodeColor.FIND);
         addToScene(v);
         
-        addStep("skipfindstart");
         addStep(L.getRoot(),REL.TOP, "skipfindstart");
        
         final SkipNode w = find();

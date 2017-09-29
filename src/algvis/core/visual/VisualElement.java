@@ -18,12 +18,14 @@
 
 package algvis.core.visual;
 
-import algvis.ui.view.View;
-
-import javax.swing.undo.StateEditable;
 import java.awt.geom.Rectangle2D;
 import java.util.ConcurrentModificationException;
 import java.util.Hashtable;
+
+import javax.swing.undo.StateEditable;
+
+import algvis.core.U;
+import algvis.ui.view.View;
 
 public abstract class VisualElement implements StateEditable {
     protected int zDepth;
@@ -49,6 +51,10 @@ public abstract class VisualElement implements StateEditable {
     protected abstract void move() throws ConcurrentModificationException;
 
     public abstract Rectangle2D getBoundingBox();
+    
+    public Rectangle2D getBoundingBoxDef() {
+        return U.withDefault(getBoundingBox(), new Rectangle2D.Double(0,0,0,0));
+    }
 
     protected void endAnimation() {
     }
