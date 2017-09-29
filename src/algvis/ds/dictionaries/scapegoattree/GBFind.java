@@ -20,6 +20,7 @@ package algvis.ds.dictionaries.scapegoattree;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTNode;
+import algvis.ui.view.REL;
 
 public class GBFind extends GBAlg {
     public GBFind(GBTree T, int x) {
@@ -34,54 +35,81 @@ public class GBFind extends GBAlg {
         addToScene(v);
         if (T.getRoot() == null) {
             v.goToRoot();
-            addStep("empty");
+            addStep(T.getBoundingBoxDef(), 200, REL.TOP, "empty");
             pause();
             v.goDown();
             v.setColor(NodeColor.NOTFOUND);
-            addStep("notfound");
+            addStep(T.getBoundingBoxDef(), 200, REL.TOP, "notfound");
             removeFromScene(v);
         } else {
             BSTNode w = T.getRoot();
             v.goTo(w);
-            addStep("bstfindstart");
+            addStep(v, REL.TOP, "bstfindstart");
             pause();
             while (true) {
                 if (w.getKey() == K) {
+                    v.goTo(w);
                     if (((GBNode) w).isDeleted()) {
-                        addStep("gbfinddeleted");
+                        addStep(w, REL.BOTTOM, "gbfinddeleted");
                         v.setColor(NodeColor.NOTFOUND);
                         v.goDown();
                     } else {
-                        addStep("found");
+                        addStep(w, REL.BOTTOM, "found");
                         v.setColor(NodeColor.FOUND);
                         pause();
-                        addNote("done");
+                        addStep(w, REL.BOTTOM, "done");
                     }
                     break;
                 } else if (w.getKey() < K) {
-                    addStep("bstfindright", K, w.getKey());
-                    w = w.getRight();
-                    if (w != null) {
-                        v.goTo(w);
-                    } else { // notfound
-                        addStep("notfound");
+                    if (w.getRight() == null) {
+                        v.pointInDir(45);
+                    } else {
+                        v.pointAbove(w.getRight());
+                    }
+                    addStep(v, REL.LEFT, "bstfindright", "" + K, w.getKeyS());
+                    pause();
+                    v.noArrow();
+                    w.setColor(NodeColor.DARKER);
+                    if (w.getLeft() != null) {
+                        w.getLeft().subtreeColor(NodeColor.DARKER);
+                    }
+                    if (w.getRight() != null) {
+                        w = w.getRight();
+                        v.goAbove(w);
+                    } else { // not found
+                        addStep(w, REL.BOTTOMLEFT, "notfound");
                         v.setColor(NodeColor.NOTFOUND);
                         v.goRight();
                         break;
                     }
                 } else {
-                    addStep("bstfindleft", K, w.getKey());
-                    w = w.getLeft();
-                    if (w != null) {
-                        v.goTo(w);
+                    if (w.getLeft() == null) {
+                        v.pointInDir(135);
+                    } else {
+                        v.pointAbove(w.getLeft());
+                    }
+                    addStep(v, REL.RIGHT, "bstfindleft", "" + K, w.getKeyS());
+                    pause();
+                    v.noArrow();
+                    w.setColor(NodeColor.DARKER);
+                    if (w.getRight() != null) {
+                        w.getRight().subtreeColor(NodeColor.DARKER);
+                    }
+                    if (w.getLeft() != null) {
+                        w = w.getLeft();
+                        v.goAbove(w);
                     } else { // notfound
-                        addStep("notfound");
+                        addStep(w, REL.BOTTOMLEFT, "notfound");
                         v.setColor(NodeColor.NOTFOUND);
                         v.goLeft();
                         break;
                     }
                 }
                 pause();
+            }
+            pause();
+            if (T.getRoot() != null) {
+                T.getRoot().subtreeColor(NodeColor.NORMAL);
             }
             removeFromScene(v);
         }

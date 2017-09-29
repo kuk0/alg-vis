@@ -19,6 +19,7 @@ package algvis.ds.dictionaries.scapegoattree;
 
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
+import algvis.ui.view.REL;
 
 public class GBDelete extends GBAlg {
     public GBDelete(GBTree T, int x) {
@@ -33,48 +34,70 @@ public class GBDelete extends GBAlg {
         addToScene(v);
         if (T.getRoot() == null) {
             v.goToRoot();
-            addStep("empty");
+            addStep(T.getBoundingBoxDef(), 200, REL.TOP, "empty");
             pause();
             v.goDown();
             v.setColor(NodeColor.NOTFOUND);
-            addStep("notfound");
+            addStep(T.getBoundingBoxDef(), 200, REL.TOP, "notfound");
             removeFromScene(v);
         } else {
             GBNode w = (GBNode) T.getRoot();
             v.goTo(w);
-            addStep("bstfindstart");
+            addStep(v, REL.TOP, "bstfindstart");
             pause();
             while (true) {
                 if (w.getKey() == K) {
                     if (w.isDeleted()) {
-                        addStep("gbdeletedeleted");
+                        v.goTo(w);
+                        addStep(w, REL.BOTTOM, "gbfinddeleted");
                         v.setColor(NodeColor.NOTFOUND);
                         v.goDown();
                     } else {
-                        addStep("gbdeletemark");
+                        addStep(w, REL.BOTTOM, "gbdeletemark");
                         w.setDeleted(true);
-                        w.setColor(NodeColor.DELETED);
                         T.setDel(T.getDel() + 1);
                     }
                     break;
                 } else if (w.getKey() < K) {
-                    addStep("bstfindright", K, w.getKey());
-                    w = w.getRight();
-                    if (w != null) {
-                        v.goTo(w);
-                    } else { // notfound
-                        addStep("notfound");
+                    if (w.getRight() == null) {
+                        v.pointInDir(45);
+                    } else {
+                        v.pointAbove(w.getRight());
+                    }
+                    addStep(v, REL.LEFT, "bstfindright", "" + K, w.getKeyS());
+                    pause();
+                    v.noArrow();
+                    w.setColor(NodeColor.DARKER);
+                    if (w.getLeft() != null) {
+                        w.getLeft().subtreeColor(NodeColor.DARKER);
+                    }
+                    if (w.getRight() != null) {
+                        w = w.getRight();
+                        v.goAbove(w);
+                    } else { // not found
+                        addStep(w, REL.BOTTOMLEFT, "notfound");
                         v.setColor(NodeColor.NOTFOUND);
                         v.goRight();
                         break;
                     }
                 } else {
-                    addStep("bstfindleft", K, w.getKey());
-                    w = w.getLeft();
-                    if (w != null) {
-                        v.goTo(w);
+                    if (w.getLeft() == null) {
+                        v.pointInDir(135);
+                    } else {
+                        v.pointAbove(w.getLeft());
+                    }
+                    addStep(v, REL.RIGHT, "bstfindleft", "" + K, w.getKeyS());
+                    pause();
+                    v.noArrow();
+                    w.setColor(NodeColor.DARKER);
+                    if (w.getRight() != null) {
+                        w.getRight().subtreeColor(NodeColor.DARKER);
+                    }
+                    if (w.getLeft() != null) {
+                        w = w.getLeft();
+                        v.goAbove(w);
                     } else { // notfound
-                        addStep("notfound");
+                        addStep(w, REL.BOTTOMLEFT, "notfound");
                         v.setColor(NodeColor.NOTFOUND);
                         v.goLeft();
                         break;
@@ -82,18 +105,23 @@ public class GBDelete extends GBAlg {
                 }
                 pause();
             }
+            pause();
+            if (T.getRoot() != null) {
+                T.getRoot().subtreeColor(NodeColor.NORMAL);
+            }
             removeFromScene(v);
 
             // rebuilding
             GBNode b = (GBNode) T.getRoot();
             if (b.size < 2 * T.getDel()) {
-                addStep("gbdeleterebuild");
+                addStep(b, REL.TOP, "gbdeleterebuild");
                 GBNode r = b;
                 int s = 0;
                 r.mark();
                 pause();
                 // to vine
-                addStep("gbrebuild1");
+                addStep(b, REL.TOP, "gbrebuild1");
+                pause();
                 while (r != null) {
                     if (r.getLeft() == null) {
                         r.unmark();
@@ -135,7 +163,7 @@ public class GBDelete extends GBAlg {
                 }
 
                 // to tree
-                addStep("gbrebuild2");
+                addStep(b, REL.TOP, "gbrebuild2");
                 int c = 1;
                 for (int i = 0, l = (int) Math.floor(T.lg(s + 1)); i < l; ++i) {
                     c *= 2;
@@ -149,5 +177,6 @@ public class GBDelete extends GBAlg {
                 }
             }
         }
+        pause();
     }
 }

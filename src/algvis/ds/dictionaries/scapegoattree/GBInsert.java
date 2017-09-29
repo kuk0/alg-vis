@@ -19,6 +19,7 @@ package algvis.ds.dictionaries.scapegoattree;
 
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
+import algvis.ui.view.REL;
 
 public class GBInsert extends GBAlg {
     public GBInsert(GBTree T, int x) {
@@ -34,32 +35,39 @@ public class GBInsert extends GBAlg {
         if (T.getRoot() == null) {
             T.setRoot(v);
             v.goToRoot();
-            addStep("newroot");
+            addStep(v, REL.BOTTOM, "newroot");
             pause();
             v.setColor(NodeColor.NORMAL);
             removeFromScene(v);
         } else {
             GBNode w = (GBNode) T.getRoot();
             v.goAboveRoot();
-            addStep("bst-insert-start");
+            addStep(v, REL.TOP, "bst-insert-start");
             pause();
 
             while (true) {
                 if (w.getKey() == K) {
                     if (w.isDeleted()) {
-                        addStep("gbinsertunmark");
+                        addStep(w, REL.BOTTOM, "gbinsertunmark");
                         w.setDeleted(false);
                         w.setColor(NodeColor.NORMAL);
                         T.setDel(T.getDel() - 1);
                     } else {
-                        addStep("alreadythere");
+                        addStep(w, REL.BOTTOM, "alreadythere");
                         v.goDown();
                         v.setColor(NodeColor.NOTFOUND);
                     }
                     removeFromScene(v);
                     return;
                 } else if (w.getKey() < K) {
-                    addStep("bst-insert-right", K, w.getKey());
+                    if (w.getRight() == null) {
+                        v.pointInDir(45);
+                    } else {
+                        v.pointAbove(w.getRight());
+                    }
+                    addStep(v, REL.LEFT, "bst-insert-right", "" + K, w.getKeyS());
+                    pause();
+                    v.noArrow();
                     if (w.getRight() != null) {
                         w = w.getRight();
                     } else {
@@ -67,7 +75,14 @@ public class GBInsert extends GBAlg {
                         break;
                     }
                 } else {
-                    addStep("bst-insert-left", K, w.getKey());
+                    if (w.getLeft() == null) {
+                        v.pointInDir(135);
+                    } else {
+                        v.pointAbove(w.getLeft());
+                    }
+                    addStep(v, REL.RIGHT, "bst-insert-left", "" + K, w.getKeyS());
+                    pause();
+                    v.noArrow();
                     if (w.getLeft() != null) {
                         w = w.getLeft();
                     } else {
@@ -96,11 +111,11 @@ public class GBInsert extends GBAlg {
             if (b != null) {
                 GBNode r = b;
                 int s = 0;
-                addStep("gbtoohigh");
+                addStep(b, REL.TOP, "gbtoohigh");
                 r.mark();
                 pause();
                 // to vine
-                addStep("gbrebuild1");
+                addStep(b, REL.TOP, "gbrebuild1");
                 while (r != null) {
                     if (r.getLeft() == null) {
                         r.unmark();
@@ -142,7 +157,7 @@ public class GBInsert extends GBAlg {
                 }
 
                 // to tree
-                addStep("gbrebuild2");
+                addStep(b, REL.TOP, "gbrebuild2");
                 int c = 1;
                 for (int i = 0, l = (int) Math.floor(T.lg(s + 1)); i < l; ++i) {
                     c *= 2;

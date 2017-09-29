@@ -17,9 +17,11 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.scapegoattree;
 
+import java.awt.Color;
 import java.util.Hashtable;
 
 import algvis.core.DataStructure;
+import algvis.core.NodeColor;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.dictionaries.bst.BSTNode;
 
@@ -51,6 +53,16 @@ public class GBNode extends BSTNode {
     @Override
     public GBNode getParent() {
         return (GBNode) super.getParent();
+    }
+
+    @Override
+    protected Color getFgColor() {
+        return isDeleted() ? NodeColor.DELETED.fgColor : super.getFgColor();
+    }
+
+    @Override
+    public Color getBgColor() {
+        return isDeleted() ? NodeColor.DELETED.bgColor : super.getBgColor();
     }
 
     @Override

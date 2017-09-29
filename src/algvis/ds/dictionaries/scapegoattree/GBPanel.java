@@ -19,9 +19,9 @@ package algvis.ds.dictionaries.scapegoattree;
 
 import algvis.core.DataStructure;
 import algvis.core.Settings;
-import algvis.ui.VisPanel;
+import algvis.ui.NewVisPanel;
 
-public class GBPanel extends VisPanel {
+public class GBPanel extends NewVisPanel {
     private static final long serialVersionUID = 5223738995380219622L;
     public static Class<? extends DataStructure> DS = GBTree.class;
 
