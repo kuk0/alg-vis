@@ -20,6 +20,7 @@ package algvis.ds.priorityqueues.leftistheap;
 import algvis.core.Algorithm;
 import algvis.core.DataStructure;
 import algvis.core.Node;
+import algvis.ui.view.REL;
 
 abstract class LeftHeapAlg extends Algorithm {
     final LeftHeap H;
@@ -34,24 +35,18 @@ abstract class LeftHeapAlg extends Algorithm {
         LeftHeapNode w = H.root[i];
         H.root[0].mark();
         w.mark();
-        addStep("leftmeldstart");
+        addStep(w, REL.TOP, "leftmeldstart");
         pause();
         while (true) {
             H.root[0].mark();
             w.mark();
             if (w.prec(H.root[0])) {
-                if (!H.minHeap) {
-                    addStep("leftmeldrightg", w.getKey(), H.root[0].getKey());
-                } else {
-                    addStep("leftmeldrightl", w.getKey(), H.root[0].getKey());
-                }
+                addStep(w, REL.TOP, H.minHeap ? "leftmeldrightl"
+                    : "leftmeldrightg", w.getKeyS(), H.root[0].getKeyS());
                 pause();
             } else {
-                if (!H.minHeap) {
-                    addStep("leftmeldswapl", w.getKey(), H.root[0].getKey());
-                } else {
-                    addStep("leftmeldswapg", w.getKey(), H.root[0].getKey());
-                }
+                addStep(w, REL.TOP, H.minHeap ? "leftmeldswapg"
+                    : "leftmeldswapl", w.getKeyS(), H.root[0].getKeyS());
                 w.setDoubleArrow(H.root[0]);
                 pause();
                 w.noDoubleArrow();
@@ -82,7 +77,7 @@ abstract class LeftHeapAlg extends Algorithm {
             w.unmark();
 
             if (w.getRight() == null) {
-                addStep("leftmeldnoson", H.root[0].getKey(), w.getKey());
+                addStep(w, REL.TOP, "leftmeldnoson", H.root[0].getKeyS(), w.getKeyS());
                 pause();
                 w.linkRight(H.root[0]);
                 H.root[0] = null;
@@ -148,11 +143,7 @@ abstract class LeftHeapAlg extends Algorithm {
     }
 
     void bubbleup(LeftHeapNode v) {
-        if (H.minHeap) {
-            addStep("minheapbubbleup");
-        } else {
-            addStep("maxheapbubbleup");
-        }
+        addStep(v, REL.BOTTOM, H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
         v.mark();
         pause();
         v.unmark();

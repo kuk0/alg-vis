@@ -18,6 +18,7 @@
 package algvis.ds.priorityqueues.leftistheap;
 
 import algvis.core.visual.ZDepth;
+import algvis.ui.view.REL;
 
 public class LeftHeapInsert extends LeftHeapAlg {
     private final int x;
@@ -39,7 +40,7 @@ public class LeftHeapInsert extends LeftHeapAlg {
             H.root[i] = H.root[0];
             H.root[0] = null;
             if (H.root[i] != null) {
-                addStep("newroot");
+                addStep(H.root[i], 200, REL.TOP, "newroot");
                 H.root[i].highlightTree();
             }
             H.reposition();

@@ -22,9 +22,9 @@ import algvis.core.Algorithm;
 import algvis.core.Settings;
 import algvis.ds.priorityqueues.MeldablePQButtons;
 import algvis.ds.priorityqueues.MeldablePQButtonsNoDecr;
-import algvis.ui.VisPanel;
+import algvis.ui.NewVisPanel;
 
-public class LeftHeapPanel extends VisPanel {
+public class LeftHeapPanel extends NewVisPanel {
     private static final long serialVersionUID = -6885107230514971633L;
 
     public LeftHeapPanel(Settings S) {

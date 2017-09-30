@@ -18,6 +18,7 @@
 package algvis.ds.priorityqueues.leftistheap;
 
 import algvis.core.DataStructure;
+import algvis.ui.view.REL;
 
 public class LeftHeapDelete extends LeftHeapAlg {
 
@@ -34,12 +35,8 @@ public class LeftHeapDelete extends LeftHeapAlg {
             return;
         }
 
-        if (!H.minHeap) {
-            addStep("maximum", H.root[i].getKey());
-        } else {
-            addStep("minimum", H.root[i].getKey());
-        }
-
+        addStep(H.root[i], 200, REL.TOP, H.minHeap ? "minimum" : "maximum",
+            H.root[i].getKeyS());
         pause();
 
         LeftHeapNode tmp = H.root[i];
@@ -53,10 +50,7 @@ public class LeftHeapDelete extends LeftHeapAlg {
             if (H.root[i] != null) {
                 H.root[i].highlightTree();
                 H.root[i].repos(H.root[i].x, H.root[i].y
-                    - (DataStructure.minsepy));// +
-                // 2
-                // *
-                // LeftHeapNode.RADIUS));
+                    - (DataStructure.minsepy));
             }
             // heap #1 is empty; done;
             return;
@@ -64,19 +58,14 @@ public class LeftHeapDelete extends LeftHeapAlg {
         H.root[i].setParent(null);
 
         if (H.root[0] == null) {
-            H.root[i].repos(H.root[i].x, H.root[i].y - (DataStructure.minsepy));// +
-            // 2
-            // *
-            // LeftHeapNode.RADIUS));
+            H.root[i].repos(H.root[i].x, H.root[i].y - (DataStructure.minsepy));
             // heap #2 is empty; done;
             return;
         }
         H.root[0].setParent(null);
 
-        H.root[i].repos(H.root[i].x, H.root[i].y - (DataStructure.minsepy));// + 2 *
-        // LeftHeapNode.RADIUS));
-        H.root[0].repos(H.root[0].x, H.root[0].y - (DataStructure.minsepy));// + 2 *
-        // H.RADIUS));
+        H.root[i].repos(H.root[i].x, H.root[i].y - (DataStructure.minsepy));
+        H.root[0].repos(H.root[0].x, H.root[0].y - (DataStructure.minsepy));
 
         pause();
         meld(i);
