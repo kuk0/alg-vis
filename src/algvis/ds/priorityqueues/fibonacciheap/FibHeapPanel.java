@@ -18,14 +18,12 @@
 package algvis.ds.priorityqueues.fibonacciheap;
 
 import algvis.core.Algorithm;
-import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.ds.priorityqueues.MeldablePQButtons;
 import algvis.ui.VisPanel;
 
 public class FibHeapPanel extends VisPanel {
     private static final long serialVersionUID = 2755087791754509441L;
-    public static Class<? extends DataStructure> DS = FibonacciHeap.class;
 
     public FibHeapPanel(Settings S) {
         super(S);

@@ -17,13 +17,11 @@
  ******************************************************************************/
 package algvis.ds.trie;
 
-import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.ui.NewVisPanel;
 
 public class TriePanel extends NewVisPanel {
     private static final long serialVersionUID = -8652425842838569507L;
-    public static Class<? extends DataStructure> DS = Trie.class;
 
     public TriePanel(Settings S) {
         super(S);

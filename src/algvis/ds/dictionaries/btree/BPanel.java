@@ -17,13 +17,11 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.btree;
 
-import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.ui.NewVisPanel;
 
 public class BPanel extends NewVisPanel {
     private static final long serialVersionUID = 3849830550882705599L;
-    public static Class<? extends DataStructure> DS = BTree.class;
 
     public BPanel(Settings S) {
         super(S);

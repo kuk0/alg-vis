@@ -17,13 +17,11 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.daryheap;
 
-import algvis.core.DataStructure;
 import algvis.core.Settings;
-import algvis.ui.VisPanel;
+import algvis.ui.NewVisPanel;
 
-public class DaryHeapPanel extends VisPanel {
+public class DaryHeapPanel extends NewVisPanel {
     private static final long serialVersionUID = 5387116424458217311L;
-    public static Class<? extends DataStructure> DS = DaryHeap.class;
 
     public DaryHeapPanel(Settings S) {
         super(S);

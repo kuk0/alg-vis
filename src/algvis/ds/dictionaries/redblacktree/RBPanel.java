@@ -17,13 +17,11 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.redblacktree;
 
-import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.ui.NewVisPanel;
 
 public class RBPanel extends NewVisPanel {
     private static final long serialVersionUID = 8641701120532396725L;
-    public static Class<? extends DataStructure> DS = RB.class;
 
     public RBPanel(Settings S) {
         super(S);

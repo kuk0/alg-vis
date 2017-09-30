@@ -17,17 +17,17 @@
  ******************************************************************************/
 package algvis.ui;
 
-import algvis.core.DataStructures;
-import algvis.core.MyParserDelegator;
-import algvis.core.Settings;
-import algvis.internationalization.Languages;
-
 import java.awt.Color;
 
 import javax.swing.JApplet;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.TitledBorder;
+
+import algvis.core.MyParserDelegator;
+import algvis.core.Settings;
+import algvis.ds.DS;
+import algvis.internationalization.Languages;
 
 public class AlgVisApplet extends JApplet {
     private static final long serialVersionUID = -76009301274562874L;
@@ -61,17 +61,15 @@ public class AlgVisApplet extends JApplet {
          * tag if ds is a number from 0 to N-1, we will have an applet with just
          * a single data structure, otherwise, include all of them
          */
-        int ds = -1;
+        DS s = null;
         final String dsp = getParameter("ds");
-        try {
-            ds = Integer.parseInt(dsp);
-            if (ds < 0 || ds >= DataStructures.N) {
-                ds = -1;
+        for (DS ds : DS.values()) {
+            if (ds.getName().equals(dsp)) {
+                s = ds;
+                break;
             }
-        } catch (final NumberFormatException e) {
-            ds = DataStructures.getIndex(dsp);
         }
-        if (ds == -1) {
+        if (s == null) {
             // all data structures
             final AlgVis A = new AlgVis(getContentPane(), getParameter("lang"));
             A.setSize(WIDTH, HEIGHT); // same size as defined in the HTML APPLET
@@ -81,7 +79,7 @@ public class AlgVisApplet extends JApplet {
             // data structure ds
             Languages.selectLanguage(getParameter("lang"));
             final Settings S = new Settings();
-            final VisPanel P = DataStructures.createPanel(ds, S);
+            final VisPanel P = s.createPanel(S);
             P.setSize(WIDTH, HEIGHT); // same size as defined in the HTML APPLET
             add(P);
             P.setOnAir(true);

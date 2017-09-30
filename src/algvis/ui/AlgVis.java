@@ -17,13 +17,6 @@
  ******************************************************************************/
 package algvis.ui;
 
-import algvis.core.ADTs;
-import algvis.core.DataStructures;
-import algvis.core.Settings;
-import algvis.internationalization.IMenu;
-import algvis.internationalization.IMenuItem;
-import algvis.internationalization.Languages;
-
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -36,33 +29,27 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import algvis.core.Settings;
+import algvis.ds.ADT;
+import algvis.ds.DS;
+import algvis.internationalization.IMenu;
+import algvis.internationalization.IMenuItem;
+import algvis.internationalization.Languages;
+
 public class AlgVis extends JPanel implements ActionListener {
-    /*
-     * set the default panel 0 - BST ("bst") 1 - Rotations ("rotations") 2 - AVL
-     * ("avltree") 3 - 23 tree ("23tree") 4 - 234 tree ("234tree") 5 - B-tree
-     * ("btree") 6 - Red-black tree ("redblack") 7 - AA-tree ("aatree") 8 -
-     * Treap ("treap") 9 - SkipList ("skiplist") 10 - Scapegoat tree
-     * ("scapegoat") 11 - Splay tree ("splaytree") 12 - Heap ("heap") 13 - d-ary
-     * heap ("daryheap") 14 - Leftist heap ("leftheap") 15 - Skew heap
-     * ("skewheap") 16 - Pairing heap ("pairheap") 17 - Binomial heap
-     * ("binheap") 18 - Lazy Binomial heap ("lazybinheap") 19 - Fibonacci heap
-     * ("fibheap") 20 - Union-find ("ufi") 21 - Interval tree ("intervaltree")
-     * 22 - Trie ("trie") 23 - Suffix Tree ("suffixtree")
-     */
-    private final static int DEFAULT_DS = 0;
 
     private static final long serialVersionUID = -5202486006824196688L;
+    private final static DS DEFAULT_DS = DS.BST;
 
     /** Cards with data structures */
     public final JPanel cards;
     private final CardLayout cardlayout;
-    public final VisPanel[] panels; //TODO: private
-    private int activePanel = -1;
+    private DS activePanel = null;
     private final Container container;
     private final Settings S;
 
     private final Map<String, IMenu> adtItems = new HashMap<String, IMenu>();
-    private IMenuItem[] dsItems;
+    private final Map<DS, VisPanel> panels = new HashMap<DS, VisPanel>();
 
     public AlgVis(Container c) {
         this(c, "en");
@@ -73,7 +60,6 @@ public class AlgVis extends JPanel implements ActionListener {
         Languages.selectLanguage(s);
         S = new Settings();
         cards = new JPanel(cardlayout = new CardLayout());
-        panels = new VisPanel[DataStructures.N];
     }
 
     public void init() {
@@ -95,26 +81,22 @@ public class AlgVis extends JPanel implements ActionListener {
          * Create a submenu (IMenu) for each abstract data type listed in the
          * class ADTs.
          */
-        for (int i = 0; i < ADTs.N; ++i) {
-            final String adtName = ADTs.getName(i);
-            adtItems.put(adtName, new IMenu(adtName));
+        for (ADT t : ADT.values()) {
+            final String adtName = t.getName();
+            IMenu m = new IMenu(adtName);
+            adtItems.put(adtName, m);
+            dsMenu.add(m);
         }
         /**
          * Create menu items for each data structure listed in the class
          * DataStructures.
          */
-        dsItems = new IMenuItem[DataStructures.N];
-        for (int i = 0; i < DataStructures.N; ++i) {
-            dsItems[i] = new IMenuItem(DataStructures.getName(i));
-            adtItems.get(DataStructures.getADT(i)).add(dsItems[i]);
-            dsItems[i].setActionCommand("ds-" + DataStructures.getName(i));
-            dsItems[i].addActionListener(this);
-        }
-        /**
-         * Put all the ADT submenus under the all data structures menu.
-         */
-        for (int i = 0; i < ADTs.N; ++i) {
-            dsMenu.add(adtItems.get(ADTs.getName(i)));
+        for (DS s : DS.values()) {
+            IMenuItem itm = new IMenuItem(s.getName());
+            adtItems.get(s.getADT()).add(itm);
+            itm.setActionCommand("ds-" + s.getName());
+            itm.addActionListener(this);
+            dsMenu.add(adtItems.get(s.getADT()));
         }
         menuBar.add(dsMenu);
 
@@ -141,11 +123,9 @@ public class AlgVis extends JPanel implements ActionListener {
          * menuBar.add(layoutMenu);
          */
 
-        for (int i = 0; i < DataStructures.N; ++i) {
-            panels[i] = DataStructures.createPanel(i, S);
-            if (panels[i] != null) {
-                cards.add(panels[i], DataStructures.getName(i));
-            }
+        for (DS s : DS.values()) {
+            panels.put(s, s.createPanel(S));
+            cards.add(s.getName(), panels.get(s));
         }
 
         getRootPane().setJMenuBar(menuBar);
@@ -169,21 +149,21 @@ public class AlgVis extends JPanel implements ActionListener {
 
         // set different data structure
         if ("ds".equals(cmd[0])) {
-            for (int i = 0; i < DataStructures.N; ++i) {
-                if (DataStructures.getName(i).equals(cmd[1])) {
-                    showCard(i);
+            for (DS s : DS.values()) {
+                if (s.getName().equals(cmd[1])) {
+                    showCard(s);
                     break;
                 }
             }
         }
     }
 
-    private void showCard(int i) {
-        if (activePanel != -1) {
-            panels[activePanel].setOnAir(false);
+    private void showCard(DS s) {
+        if (activePanel != null) {
+            panels.get(activePanel).setOnAir(false);
         }
-        activePanel = i;
-        panels[i].setOnAir(true);
-        cardlayout.show(cards, DataStructures.getName(i));
+        activePanel = s;
+        panels.get(s).setOnAir(true);
+        cardlayout.show(cards, s.getName());
     }
 }

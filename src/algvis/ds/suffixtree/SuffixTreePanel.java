@@ -17,14 +17,12 @@
  ******************************************************************************/
 package algvis.ds.suffixtree;
 
-import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.core.WordGenerator;
 import algvis.ui.NewVisPanel;
 
 public class SuffixTreePanel extends NewVisPanel {
     private static final long serialVersionUID = -8652425842838569507L;
-    public static Class<? extends DataStructure> DS = SuffixTree.class;
 
     public SuffixTreePanel(Settings S) {
         super(S);

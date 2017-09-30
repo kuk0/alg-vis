@@ -18,6 +18,7 @@
 package algvis.ds.priorityqueues.daryheap;
 
 import algvis.core.visual.ZDepth;
+import algvis.ui.view.REL;
 
 public class DaryHeapInsert extends DaryHeapAlg {
     private final DaryHeap H; // prepisat na H
@@ -35,18 +36,14 @@ public class DaryHeapInsert extends DaryHeapAlg {
         addToScene(v);
         v.mark();
         if ((H.root != null) && (H.root.nnodes == 1000)) {
-            addStep("heapfull");
+            addStep(H, 200, REL.TOP, "heapfull");
             v.unmark();
             removeFromScene(v);
             return;
         }
         DaryHeapNode w;
 
-        if (H.minHeap) {
-            addStep("minheapbubbleup");
-        } else {
-            addStep("maxheapbubbleup");
-        }
+        addStep(v, REL.BOTTOM, H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
 
         // int n = H.root.nnodes - 1;
         if (H.root == null) {

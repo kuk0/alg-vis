@@ -39,7 +39,6 @@ import algvis.internationalization.Languages;
 public abstract class VisPanel extends JPanel implements LanguageListener,
     StateEditable {
     private static final long serialVersionUID = 5104769085118210624L;
-    public static Class<? extends DataStructure> DS;
 
     // aplet pozostava z piatich zakladnych veci:
     public Buttons buttons; // gombikov (dolu)

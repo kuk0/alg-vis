@@ -18,6 +18,7 @@
 package algvis.ds.priorityqueues.daryheap;
 
 import algvis.ui.InputField;
+import algvis.ui.view.REL;
 
 public class DaryHeapDecrKey extends DaryHeapAlg {
     private final int delta;
@@ -33,11 +34,12 @@ public class DaryHeapDecrKey extends DaryHeapAlg {
     public void runAlgorithm() {
         if (H.minHeap) {
             setHeader("decreasekey");
-            addStep("decrkeymin");
+            addStep(v, REL.BOTTOM, "decrkeymin");
         } else {
             setHeader("increasekey");
-            addStep("incrkeymax");
+            addStep(v, REL.BOTTOM, "incrkeymax");
         }
+        pause();
         if (H.minHeap) {
             v.setKey(v.getKey() - delta);
             if (v.getKey() < 1) {
@@ -50,11 +52,7 @@ public class DaryHeapDecrKey extends DaryHeapAlg {
             }
         }
 
-        if (H.minHeap) {
-            addStep("minheapbubbleup");
-        } else {
-            addStep("maxheapbubbleup");
-        }
+        addStep(v, REL.BOTTOM, H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
         bubbleup(v);
     }
 }

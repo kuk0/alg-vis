@@ -18,6 +18,7 @@
 package algvis.ds.priorityqueues.daryheap;
 
 import algvis.core.Node;
+import algvis.ui.view.REL;
 
 public class DaryHeapDelete extends DaryHeapAlg {
     public DaryHeapDelete(DaryHeap H) {
@@ -28,18 +29,14 @@ public class DaryHeapDelete extends DaryHeapAlg {
     public void runAlgorithm() {
         setHeader(H.minHeap ? "delete-min" : "delete-max");
         if (H.root == null) {
-            addStep("heapempty");
+            addStep(H.getBoundingBoxDef(), 200, REL.TOP, "heapempty");
             H.last = null;
             return;
         }
 
         if (H.root.c.size() == 0) {
             final DaryHeapNode v = H.root;
-            if (H.minHeap) {
-                addStep("minimum", H.root.getKey());
-            } else {
-                addStep("maximum", H.root.getKey());
-            }
+            addStep(H, 200, REL.TOP, H.minHeap ? "minimum" : "maximum", H.root.getKeyS());
             H.root = null;
             addToScene(v);
             v.mark();
@@ -50,15 +47,11 @@ public class DaryHeapDelete extends DaryHeapAlg {
             removeFromScene(v);
             return;
         }
-        if (H.minHeap) {
-            addStep("minimum", H.root.getKey());
-        } else {
-            addStep("maximum", H.root.getKey());
-        }
+        addStep(H, 200, REL.TOP, H.minHeap ? "minimum" : "maximum", H.root.getKeyS());
         H.root.mark();
         pause();
         // H.root.unmark();
-        addStep("heapchange");
+        addStep(H, 200, REL.TOP, "heapchange");
         pause();
         H.root.unmark();
 
@@ -89,11 +82,7 @@ public class DaryHeapDelete extends DaryHeapAlg {
         H.root.mark();
         H.reposition();
 
-        if (H.minHeap) {
-            addStep("mindheapbubbledown");
-        } else {
-            addStep("maxdheapbubbledown");
-        }
+        addStep(v, REL.BOTTOM, H.minHeap ? "mindheapbubbledown" : "maxdheapbubbledown");
         pause();
 
         H.root.unmark();

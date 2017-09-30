@@ -19,7 +19,6 @@
 package algvis.ds.priorityqueues.leftistheap;
 
 import algvis.core.Algorithm;
-import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.ds.priorityqueues.MeldablePQButtons;
 import algvis.ds.priorityqueues.MeldablePQButtonsNoDecr;
@@ -27,7 +26,6 @@ import algvis.ui.VisPanel;
 
 public class LeftHeapPanel extends VisPanel {
     private static final long serialVersionUID = -6885107230514971633L;
-    public static Class<? extends DataStructure> DS = LeftHeap.class;
 
     public LeftHeapPanel(Settings S) {
         super(S);

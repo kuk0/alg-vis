@@ -23,7 +23,6 @@ import algvis.ui.VisPanel;
 
 public class PairHeapPanel extends VisPanel {
     private static final long serialVersionUID = 7766114341156126683L;
-    public static Class<? extends DataStructure> DS = PairingHeap.class;
 
     public PairHeapPanel(Settings S) {
         super(S);
