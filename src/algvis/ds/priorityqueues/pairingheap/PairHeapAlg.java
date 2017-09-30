@@ -19,6 +19,7 @@ package algvis.ds.priorityqueues.pairingheap;
 
 import algvis.core.Algorithm;
 import algvis.core.DataStructure;
+import algvis.ui.view.REL;
 
 public abstract class PairHeapAlg extends Algorithm {
     public enum Pairing {
@@ -69,15 +70,15 @@ public abstract class PairHeapAlg extends Algorithm {
                 H.root[i].setState(0);
                 return;
             }
-            addStep("pairnaive"); // pri naive sa vyberie hocktory a prilinkuju
-                                  // sa k nemu ostatne
+            addStep(H.root[i], REL.TOP, "pairnaive"); // pri naive sa vyberie hocktory a prilinkuju
+            // sa k nemu ostatne
             pause();
 
             H.root[0] = H.root[i];
             H.root[i] = H.root[i].getChild();
             H.root[i].setParent(null);
             H.root[i].setState(0);
-            H.root[0].deleteChild(H.root[0].leftmostChild());// getChild().setParent(null);
+            H.root[0].deleteChild(H.root[0].leftmostChild()); // getChild().setParent(null);
 
             H.reposition();
             pause();
@@ -124,7 +125,7 @@ public abstract class PairHeapAlg extends Algorithm {
              */
 
             H.reposition();
-            addStep("pairlrrl1");
+            addStep(H.root[i], REL.TOP, "pairlrrl1");
             pause();
             PairHeapNode w = H.root[i].getChild();
             PairHeapNode wr = H.root[i].getChild().getRight();
@@ -145,7 +146,7 @@ public abstract class PairHeapAlg extends Algorithm {
             }
 
             H.reposition();
-            addStep("pairlrrl2"); // a teraz sa vyberie jeden vrchol a polinkuju
+            addStep(H.root[i], REL.TOP, "pairlrrl2"); // a teraz sa vyberie jeden vrchol a polinkuju
                                   // sa sprava dolava
             pause();
 

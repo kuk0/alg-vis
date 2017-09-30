@@ -17,7 +17,7 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.pairingheap;
 
-import algvis.ui.InputField;
+import algvis.ui.view.REL;
 
 public class PairHeapDecrKey extends PairHeapAlg {
     private final int delta;
@@ -31,24 +31,10 @@ public class PairHeapDecrKey extends PairHeapAlg {
     @Override
     public void runAlgorithm() {
         setHeader(H.minHeap ? "decreasekey" : "increasekey");
-        if (H.minHeap) {
-            v.setKey(v.getKey() - delta);
-            if (v.getKey() < 1) {
-                v.setKey(1);
-            }
-        } else {
-            v.setKey(v.getKey() + delta);
-            if (v.getKey() > InputField.MAX) {
-                v.setKey(InputField.MAX);
-            }
-        }
+        v.decrKey(delta, H.minHeap);
         if (!v.isRoot()) {
-            if (H.minHeap) {
-                addStep("pairdecr"); // zvysili sme hodnotu, dieta odtrhneme a
-                // prilinkujeme
-            } else {
-                addStep("pairincr");
-            }
+         // zvysili sme hodnotu, dieta odtrhneme a prilinkujeme
+            addStep(v, REL.BOTTOM, H.minHeap ? "pairdecr" : "pairincr"); 
             H.root[0] = v;
             H.root[0].mark();
             pause();

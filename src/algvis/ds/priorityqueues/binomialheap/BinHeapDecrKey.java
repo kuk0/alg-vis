@@ -19,7 +19,6 @@ package algvis.ds.priorityqueues.binomialheap;
 
 import algvis.core.Algorithm;
 import algvis.core.Node;
-import algvis.ui.InputField;
 
 public class BinHeapDecrKey extends Algorithm {
     private final int delta;
@@ -37,17 +36,7 @@ public class BinHeapDecrKey extends Algorithm {
     public void runAlgorithm() {
         //TODO: buggy
         setHeader(H.minHeap ? "decreasekey" : "increasekey");
-        if (H.minHeap) {
-            v.setKey(v.getKey() - delta);
-            if (v.getKey() < 1) {
-                v.setKey(1);
-            }
-        } else {
-            v.setKey(v.getKey() + delta);
-            if (v.getKey() > InputField.MAX) {
-                v.setKey(InputField.MAX);
-            }
-        }
+        v.decrKey(delta, H.minHeap);
         BinHeapNode w = v.parent;
         while (w != null && v.prec(w)) {
             final BinHeapNode v1 = new BinHeapNode(v);

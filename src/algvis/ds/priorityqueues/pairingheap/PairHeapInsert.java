@@ -18,6 +18,7 @@
 package algvis.ds.priorityqueues.pairingheap;
 
 import algvis.core.visual.ZDepth;
+import algvis.ui.view.REL;
 
 public class PairHeapInsert extends PairHeapAlg {
     private final int x;
@@ -37,7 +38,7 @@ public class PairHeapInsert extends PairHeapAlg {
         if (H.root[i] == null) {
             H.root[i] = H.root[0];
             if (H.root[i] != null) {
-                addStep("newroot");
+                addStep(H.root[i], 200, REL.TOP, "newroot");
                 H.root[i].highlightTree();
             }
         } else {
@@ -46,21 +47,11 @@ public class PairHeapInsert extends PairHeapAlg {
             // kedze je <cislo> viac/menej ako <cislo> tak to prilinkujeme k
             // tomu
             if (H.root[i].getKey() < H.root[0].getKey()) {
-                if (H.minHeap) {
-                    addStep("pairlinkmin", H.root[i].getKey(),
-                        H.root[0].getKey());
-                } else {
-                    addStep("pairlinkmax", H.root[i].getKey(),
-                        H.root[0].getKey());
-                }
+                addStep(H.root[i], REL.TOP, H.minHeap ? "pairlinkmin"
+                    : "pairlinkmax", H.root[i].getKeyS(), H.root[0].getKeyS());
             } else {
-                if (H.minHeap) {
-                    addStep("pairlinkmin", H.root[0].getKey(),
-                        H.root[i].getKey());
-                } else {
-                    addStep("pairlinkmax", H.root[0].getKey(),
-                        H.root[i].getKey());
-                }
+                addStep(H.root[0], REL.TOP, H.minHeap ? "pairlinkmin"
+                    : "pairlinkmax", H.root[0].getKeyS(), H.root[i].getKeyS());
             }
             pause();
             H.root[i].unmark();

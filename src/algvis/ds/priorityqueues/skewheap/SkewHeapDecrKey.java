@@ -17,7 +17,6 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.skewheap;
 
-import algvis.ui.InputField;
 
 public class SkewHeapDecrKey extends SkewHeapAlg {
     private final int delta;
@@ -31,17 +30,7 @@ public class SkewHeapDecrKey extends SkewHeapAlg {
     @Override
     public void runAlgorithm() {
         setHeader(H.minHeap ? "decreasekey" : "increasekey");
-        if (H.minHeap) {
-            v.setKey(v.getKey() - delta);
-            if (v.getKey() < 1) {
-                v.setKey(1);
-            }
-        } else {
-            v.setKey(v.getKey() + delta);
-            if (v.getKey() > InputField.MAX) {
-                v.setKey(InputField.MAX);
-            }
-        }
+        v.decrKey(delta, H.minHeap);
         bubbleup(v);
     }
 }

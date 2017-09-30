@@ -20,7 +20,6 @@ package algvis.ds.priorityqueues.fibonacciheap;
 import algvis.core.Algorithm;
 import algvis.ds.priorityqueues.binomialheap.BinHeapNode;
 import algvis.ds.priorityqueues.binomialheap.BinomialHeap;
-import algvis.ui.InputField;
 
 public class FibHeapDecrKey extends Algorithm {
     private final int delta;
@@ -38,17 +37,7 @@ public class FibHeapDecrKey extends Algorithm {
     public void runAlgorithm() {
         setHeader(H.minHeap ? "decreasekey" : "increasekey");
         final int i = H.active;
-        if (H.minHeap) {
-            v.setKey(v.getKey() - delta);
-            if (v.getKey() < 1) {
-                v.setKey(1);
-            }
-        } else {
-            v.setKey(v.getKey() + delta);
-            if (v.getKey() > InputField.MAX) {
-                v.setKey(InputField.MAX);
-            }
-        }
+        v.decrKey(delta, H.minHeap);
         BinHeapNode w = v.parent;
         // if (w == null) return;
         while (w != null) {

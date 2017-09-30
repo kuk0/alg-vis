@@ -21,6 +21,7 @@ import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.VisualElement;
 import algvis.core.visual.ZDepth;
 import algvis.ui.Fonts;
+import algvis.ui.InputField;
 import algvis.ui.view.View;
 
 import java.awt.Color;
@@ -467,6 +468,19 @@ public class Node extends VisualElement {
 
     public void setKey(int key) {
         this.key = key;
+        if (key < 1) {
+            this.key = 1;
+        } else if (key > InputField.MAX) {
+            this.key = InputField.MAX;
+        }
+    }
+    
+    public void decrKey(int delta, boolean minOrder) {
+        if (minOrder) {
+            setKey(key - delta);
+        } else {
+            setKey(key + delta);
+        }
     }
 
     @Override

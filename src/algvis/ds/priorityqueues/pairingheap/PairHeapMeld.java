@@ -18,6 +18,7 @@
 package algvis.ds.priorityqueues.pairingheap;
 
 import algvis.core.DataStructure;
+import algvis.ui.view.REL;
 
 public class PairHeapMeld extends PairHeapAlg {
     private final int i;
@@ -61,17 +62,11 @@ public class PairHeapMeld extends PairHeapAlg {
         H.root[0].mark();
         H.root[i].mark();
         if (H.root[i].getKey() < H.root[0].getKey()) {
-            if (H.minHeap) {
-                addStep("pairlinkmin", H.root[i].getKey(), H.root[0].getKey());
-            } else {
-                addStep("pairlinkmax", H.root[i].getKey(), H.root[0].getKey());
-            }
+            addStep(H.root[i], 200, REL.TOP, H.minHeap ? "pairlinkmin"
+                : "pairlinkmax", H.root[i].getKeyS(), H.root[0].getKeyS());
         } else {
-            if (H.minHeap) {
-                addStep("pairlinkmin", H.root[0].getKey(), H.root[i].getKey());
-            } else {
-                addStep("pairlinkmax", H.root[0].getKey(), H.root[i].getKey());
-            }
+            addStep(H.root[0], 200, REL.TOP, H.minHeap ? "pairlinkmin"
+                : "pairlinkmax", H.root[0].getKeyS(), H.root[i].getKeyS());
         }
         pause();
         H.root[0].unmark();

@@ -18,6 +18,7 @@
 package algvis.ds.priorityqueues.pairingheap;
 
 import algvis.core.DataStructure;
+import algvis.ui.view.REL;
 
 public class PairHeapDelete extends PairHeapAlg {
 
@@ -35,11 +36,8 @@ public class PairHeapDelete extends PairHeapAlg {
             return;
         }
 
-        if (!H.minHeap) {
-            addStep("maximum", H.root[i].getKey());
-        } else {
-            addStep("minimum", H.root[i].getKey());
-        }
+        addStep(H.root[i], REL.TOP, H.minHeap ? "minimum" : "maximum",
+            H.root[i].getKeyS());
 
         final PairHeapNode v = new PairHeapNode(H.root[i]);
         v.mark();
