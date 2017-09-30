@@ -24,13 +24,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import algvis.core.Pair;
 import algvis.core.Settings;
-import algvis.ds.ADT;
 import algvis.ds.DS;
 import algvis.internationalization.IMenu;
 import algvis.internationalization.IMenuItem;
@@ -48,8 +49,22 @@ public class AlgVis extends JPanel implements ActionListener {
     private final Container container;
     private final Settings S;
 
-    private final Map<String, IMenu> adtItems = new HashMap<String, IMenu>();
     private final Map<DS, VisPanel> panels = new HashMap<DS, VisPanel>();
+
+    private final static Vector<Object> DS_MENU = vec(
+        sop("dictionary",
+            vec(DS.BST, DS.ROTATION, DS.AVL_TREE, DS.A23, DS.A234, DS.B_TREE,
+                DS.RB_TREE, DS.AA_TREE, DS.TREAP, DS.SKIPLIST, DS.GB_TREE,
+                DS.SPLAY_TREE)), //
+        sop("pq", vec(DS.HEAP, DS.DARY_HEAP)), //
+        sop("meldable-pq",
+            vec(DS.LEFTIST_HEAP, DS.SKEW_HEAP, DS.PAIRING_HEAP, DS.BIN_HEAP,
+                DS.LAZY_BIN_HEAP, DS.FIB_HEAP)), //
+        sop("ufa", vec(DS.UNION_FIND)), //
+        sop("stringology", vec(DS.TRIE, DS.SUFFIX_TREE)), //
+        sop("intervaltrees", vec(DS.INTERVAL_TREE)), //
+        sop("dynamicarray", vec(DS.DYN_ARRAY)) //
+    );
 
     public AlgVis(Container c) {
         this(c, "en");
@@ -60,6 +75,28 @@ public class AlgVis extends JPanel implements ActionListener {
         Languages.selectLanguage(s);
         S = new Settings();
         cards = new JPanel(cardlayout = new CardLayout());
+    }
+
+    @SuppressWarnings("unchecked")
+    private void menuFactory(IMenu m, Vector<Object> items) {
+        for (Object p : items) {
+            if (p instanceof Pair) {
+                String s = ((Pair<String, Vector<Object>>) p).first;
+                Vector<Object> v = ((Pair<String, Vector<Object>>) p).second;
+                IMenu sub = new IMenu(s);
+                m.add(sub);
+                menuFactory(sub, v);
+            } else if (p instanceof DS) {
+                String n = ((DS) p).getName();
+                IMenuItem itm = new IMenuItem(n);
+                itm.setActionCommand("ds-" + n);
+                itm.addActionListener(this);
+                m.add(itm);
+            } else {
+                // this shouldn't happen
+            }
+        }
+
     }
 
     public void init() {
@@ -75,29 +112,7 @@ public class AlgVis extends JPanel implements ActionListener {
         final IMenu layoutMenu = new IMenu("layout");
         layoutMenu.setMnemonic(KeyEvent.VK_Y);
 
-        // Data structures menu
-        // Dictionaries
-        /**
-         * Create a submenu (IMenu) for each abstract data type listed in the
-         * class ADTs.
-         */
-        for (ADT t : ADT.values()) {
-            final String adtName = t.getName();
-            IMenu m = new IMenu(adtName);
-            adtItems.put(adtName, m);
-            dsMenu.add(m);
-        }
-        /**
-         * Create menu items for each data structure listed in the class
-         * DataStructures.
-         */
-        for (DS s : DS.values()) {
-            IMenuItem itm = new IMenuItem(s.getName());
-            adtItems.get(s.getADT()).add(itm);
-            itm.setActionCommand("ds-" + s.getName());
-            itm.addActionListener(this);
-            dsMenu.add(adtItems.get(s.getADT()));
-        }
+        menuFactory(dsMenu, DS_MENU);
         menuBar.add(dsMenu);
 
         // Language menu
@@ -165,5 +180,18 @@ public class AlgVis extends JPanel implements ActionListener {
         activePanel = s;
         panels.get(s).setOnAir(true);
         cardlayout.show(cards, s.getName());
+    }
+
+    private static Pair<String, Object> sop(String x, Object y) {
+        return new Pair<>(x, y);
+    }
+
+    @SafeVarargs
+    private static Vector<Object> vec(Object... objs) {
+        Vector<Object> v = new Vector<>(objs.length);
+        for (Object o : objs) {
+            v.add(o);
+        }
+        return v;
     }
 }

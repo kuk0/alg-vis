@@ -33,8 +33,7 @@ abstract public class DataStructure extends VisualElement {
         minsepx = 38, minsepy = 30;
     public int x1, x2, y1 = -50, y2;
     public Node chosen = null;
-    public static String adtName = "";
-    public static String dsName = "";
+    public static String dsName = null;
 
     protected DataStructure(VisPanel panel) {
         super(ZDepth.DS);

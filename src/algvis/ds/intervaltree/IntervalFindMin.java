@@ -69,10 +69,8 @@ public class IntervalFindMin extends IntervalAlg {
 
         if (T.root != null) {
             // We have to find the nodes that represent the
-            // interval &lt;#1,#2&gt;. We will search for these nodes with DFS.
-            // Budeme h�ada� vrcholy, ktor� reprezentuj� interval &lt;#1,#2&gt
-            // pomocou DFS.
-            addNote("intervalfind", i, j); // vysvetlenie
+            // interval <i,j>. We will search for these nodes with DFS.
+            addNote("intervalfind", i, j);
             find(T.root, i, j);
             pause();
             if (T.minTree == mimasuType.MAX) {
@@ -104,8 +102,7 @@ public class IntervalFindMin extends IntervalAlg {
 
         if ((w.b > e) || (w.e < b)) {
             if (w.getKey() != Node.NOKEY) {
-                addStep("intervalout", i, j, w.getKey(), w.b, w.e); // mimo
-                                                                    // intervalu
+                addStep("intervalout", i, j, w.getKey(), w.b, w.e); // mimo intervalu
             } else {
                 addStep("intervalempty", w.b, w.e); // prazdny vrchol
             }

@@ -33,7 +33,6 @@ import algvis.ui.view.Layout;
 import algvis.ui.view.View;
 
 public class Rotations extends DataStructure implements ClickListener {
-    public static String adtName = "dictionary";
     public static String dsName = "rotations";
     public final BST T;
     public boolean subtrees = false;

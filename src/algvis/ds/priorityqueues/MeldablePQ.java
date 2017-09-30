@@ -24,7 +24,6 @@ import algvis.ui.VisPanel;
 import algvis.ui.view.Highlighting;
 
 abstract public class MeldablePQ extends PriorityQueue implements Highlighting {
-    public static String adtName = "meldable-pq";
 
     public static final int numHeaps = 10;
     public int active = 1;

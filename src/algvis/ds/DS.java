@@ -114,26 +114,6 @@ public enum DS {
         }
     }
 
-    public String getADT() {
-        try {
-            // find the superclass which has the adtName field set
-            Class<? extends DataStructure> c = s;
-            while (true) {
-                try {
-                    // DEBUG: System.out.println(c);
-                    c.getDeclaredField("adtName");
-                    break;
-                } catch (final NoSuchFieldException e) {
-                    c = (Class<? extends DataStructure>) c.getSuperclass();
-                }
-            }
-            return (String) (c.getDeclaredField("adtName").get(null));
-        } catch (final Exception e) {
-            System.out.println("Unable to get adtName for: " + s);
-            return null;
-        }
-    }
-
     public VisPanel createPanel(Settings S) {
         try {
             final Constructor<? extends VisPanel> ct = p

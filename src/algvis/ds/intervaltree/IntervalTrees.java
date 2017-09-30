@@ -23,7 +23,6 @@ import algvis.core.Node;
 import algvis.ui.VisPanel;
 
 public abstract class IntervalTrees extends DataStructure {
-    public static String adtName = "intervaltrees";
 
     public enum mimasuType {
         MIN, MAX, SUM

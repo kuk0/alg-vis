@@ -25,7 +25,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
 
 abstract public class Dictionary extends DataStructure {
-    public static String adtName = "dictionary";
     protected Node root;
 
     protected Dictionary(VisPanel M) {

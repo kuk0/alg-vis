@@ -28,7 +28,6 @@ import algvis.ui.VisPanel;
 import algvis.ui.view.View;
 
 public class Trie extends DataStructure {
-    public static String adtName = "stringology";
     public static String dsName = "trie";
 
     private TrieNode root = null;

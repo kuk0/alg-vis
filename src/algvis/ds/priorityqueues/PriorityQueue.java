@@ -25,7 +25,6 @@ import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.VisPanel;
 
 abstract public class PriorityQueue extends DataStructure {
-    public static String adtName = "pq";
     public boolean minHeap = false;
 
     protected PriorityQueue(VisPanel M) {

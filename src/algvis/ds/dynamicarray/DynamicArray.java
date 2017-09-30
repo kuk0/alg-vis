@@ -20,7 +20,6 @@ import algvis.ui.view.View;
 
 public class DynamicArray extends DataStructure implements ClickListener {
   public static final String dsName = "dynamicarray";
-  public static final String adtName = "dynamicarray";
 
   Array<ArrayNode> array, newarray;
   ArrayList<DynamicArrayCoin> coinsForCopy, coinsForArray, newCoins;

@@ -33,7 +33,6 @@ import algvis.ui.view.ClickListener;
 import algvis.ui.view.View;
 
 public class UnionFind extends DataStructure implements ClickListener {
-    public static String adtName = "ufa";
     public static String dsName = "ufi";
 
     public int count = 0;

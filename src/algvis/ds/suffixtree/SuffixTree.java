@@ -29,7 +29,6 @@ import java.util.Hashtable;
 
 public class SuffixTree extends DataStructure {
     public static final int textpos = -40;
-    public static String adtName = "stringology";
     public static String dsName = "suffixtree";
 
     private SuffixTreeNode root = null;
