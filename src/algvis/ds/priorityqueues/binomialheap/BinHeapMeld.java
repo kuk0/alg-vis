@@ -17,6 +17,8 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.binomialheap;
 
+import algvis.ui.view.REL;
+
 public class BinHeapMeld extends BinHeapAlg {
     private final int i;
     private final int j;
@@ -41,12 +43,14 @@ public class BinHeapMeld extends BinHeapAlg {
                 H.root[i].highlightTree();
             }
             H.reposition();
-            addStep("binheap-top-empty");
+            addStep(H.root[i].getBoundingBoxDef(), 200, REL.TOP,
+                "binheap-top-empty");
             addNote("done");
             return;
         }
         if (H.root[j] == null) {
-            addStep("binheap-bottom-empty");
+            addStep(H.root[j].getBoundingBoxDef(), 200, REL.TOP,
+                "binheap-bottom-empty");
             addNote("done");
             return;
         }

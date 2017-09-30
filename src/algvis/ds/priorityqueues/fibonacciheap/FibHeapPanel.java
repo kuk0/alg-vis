@@ -20,9 +20,9 @@ package algvis.ds.priorityqueues.fibonacciheap;
 import algvis.core.Algorithm;
 import algvis.core.Settings;
 import algvis.ds.priorityqueues.MeldablePQButtons;
-import algvis.ui.VisPanel;
+import algvis.ui.NewVisPanel;
 
-public class FibHeapPanel extends VisPanel {
+public class FibHeapPanel extends NewVisPanel {
     private static final long serialVersionUID = 2755087791754509441L;
 
     public FibHeapPanel(Settings S) {

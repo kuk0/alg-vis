@@ -18,6 +18,7 @@
 package algvis.ds.priorityqueues.binomialheap;
 
 import algvis.core.Algorithm;
+import algvis.ui.view.REL;
 
 abstract class BinHeapAlg extends Algorithm {
     final BinomialHeap H;
@@ -32,18 +33,18 @@ abstract class BinHeapAlg extends Algorithm {
         v.mark();
         if ((H.min[0]).prec(H.min[i])) {
             H.min[i] = H.min[0];
-            addStep(H.minHeap ? "binheap-newmin" : "binheap-newmax",
-                H.min[i].getKey());
+            addStep(H.min[0], REL.BOTTOM, H.minHeap ? "binheap-newmin" : "binheap-newmax",
+                H.min[i].getKeyS());
         } else {
-            addStep(H.minHeap ? "binheap-oldmin" : "binheap-oldmax",
-                H.min[i].getKey());
+            addStep(H.min[i], REL.TOP, H.minHeap ? "binheap-oldmin" : "binheap-oldmax",
+                H.min[i].getKeyS());
         }
         addNote("binheap-meld-idea");
         H.min[0] = null;
         pause();
         while (true) {
             if (H.root[0] != null && v.rank > H.root[0].rank) {
-                addStep("binheap-add-tree");
+                addStep(H.root[0], REL.TOP, "binheap-add-tree");
                 final BinHeapNode u = H.root[0];
                 if (H.root[0].right == H.root[0]) {
                     removeFromScene(H.root[0]);
@@ -60,8 +61,9 @@ abstract class BinHeapAlg extends Algorithm {
             } else if (H.root[0] != null && v.rank <= H.root[0].rank
                 && (v.right == H.root[i] || H.root[0].rank < v.right.rank)) {
                 // pripojime vpravo
-                addStep("binheap-add-tree");
                 final BinHeapNode u = H.root[0];
+                addStep(u, REL.TOP, "binheap-add-tree");
+                pause();
                 if (H.root[0].right == H.root[0]) {
                     removeFromScene(H.root[0]);
                     H.root[0] = null;
@@ -75,7 +77,7 @@ abstract class BinHeapAlg extends Algorithm {
                 && (v.right == H.root[i] || v.rank < v.right.rank)) {
                 final BinHeapNode u = v.left;
                 if (u.prec(v)) { // napojime v pod u
-                    addStep("binheap-link", v.getKey(), u.getKey());
+                    addStep(v, REL.TOP, "binheap-link", v.getKeyS(), u.getKeyS());
                     pause();
                     v.unlink();
                     u.linkChild(v);
@@ -83,7 +85,7 @@ abstract class BinHeapAlg extends Algorithm {
                     v = u;
                     v.mark();
                 } else { // napojime u pod v
-                    addStep("binheap-link", u.getKey(), v.getKey());
+                    addStep(u, REL.TOP, "binheap-link", u.getKeyS(), v.getKeyS());
                     pause();
                     if (H.root[i] == u) {
                         H.root[i] = v;
@@ -93,7 +95,7 @@ abstract class BinHeapAlg extends Algorithm {
                 }
             } else if (v.right != H.root[i]) {
                 // posunieme sa
-                addStep("binheap-next");
+                addStep(v.right, REL.TOP, "binheap-next");
                 v.unmark();
                 v = v.right;
                 v.mark();

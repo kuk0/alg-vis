@@ -17,47 +17,53 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.binomialheap;
 
+import algvis.ui.view.REL;
+
 public class BinHeapDelete extends BinHeapAlg {
 
     public BinHeapDelete(BinomialHeap H) {
         super(H);
     }
 
+    
+    // TODO: fix deleting the whole Heap
+    // TODO: simplify(?)
+    
     @Override
     public void runAlgorithm() {
         setHeader(H.minHeap ? "delete-min" : "delete-max");
         final int i = H.active;
         if (H.root[i] == null) {
             // empty - done;
-            addStep("heapempty");
+            addStep(H.getBoundingBoxDef(), 200, REL.TOP, "heapempty");
             addNote("done");
+            pause();
             return;
         }
         BinHeapNode v, w;
         final BinHeapNode d = H.min[i];
         if (H.root[i] == d) {
-            if (d.right == d) {
-                H.root[i] = null;
-            } else {
-                H.root[i] = d.right;
-            }
+            H.root[i] = d.right;
+        }
+        if (d.right == d) { // single bin tree
+            H.min[i] = H.root[i] = null;
         }
         d.unlink();
         addToScene(d);
         d.goDown();
         removeFromScene(d);
 
-        // find new min
-        v = w = H.min[i] = H.root[i];
+        // find new min among the remaining bin trees
         if (H.root[i] != null) {
+            w = H.min[i] = H.root[i];
             do {
                 if (w.prec(H.min[i])) {
                     H.min[i] = w;
                 }
                 w = w.right;
-            } while (w != v);
+            } while (w != H.root[i]);
+            addStep(H.min[i], REL.TOP, H.minHeap ? "binheap-findmin" : "binheap-findmax");
         }
-        addStep(H.minHeap ? "binheap-findmin" : "binheap-findmax");
         H.root[0] = v = w = d.child;
         d.child = null;
         pause();
@@ -65,11 +71,12 @@ public class BinHeapDelete extends BinHeapAlg {
         H.reposition();
         if (w == null) {
             // no children - done;
-            addStep("binheap-nochildren");
+            addStep(H.getBoundingBoxDef(), 200, REL.TOP, "binheap-nochildren");
             addNote("done");
             pause();
             return;
         }
+        
         // reverse & find min
         addNote("binheap-meldchildren");
         H.min[0] = w;
@@ -94,8 +101,9 @@ public class BinHeapDelete extends BinHeapAlg {
             H.root[0] = null;
             H.min[0] = null;
             H.reposition();
-            addStep("binheap-top-empty");
+            addStep(H.root[i], REL.TOP, "binheap-top-empty");
             addNote("done");
+            pause();
             return;
         }
 
