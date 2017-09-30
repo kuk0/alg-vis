@@ -18,6 +18,7 @@
 package algvis.ds.priorityqueues.skewheap;
 
 import algvis.core.DataStructure;
+import algvis.ui.view.REL;
 
 public class SkewHeapDelete extends SkewHeapAlg {
 
@@ -34,12 +35,8 @@ public class SkewHeapDelete extends SkewHeapAlg {
             return;
         }
 
-        if (!H.minHeap) {
-            addStep("maximum", H.root[i].getKey());
-        } else {
-            addStep("minimum", H.root[i].getKey());
-        }
-
+        addStep(H.root[i], REL.TOP, H.minHeap ? "minimum" : "maximum",
+            H.root[i].getKeyS());
         pause();
 
         SkewHeapNode tmp = H.root[i];

@@ -18,13 +18,12 @@
 package algvis.ds.priorityqueues.skewheap;
 
 import algvis.core.Algorithm;
-import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.ds.priorityqueues.MeldablePQButtons;
 import algvis.ds.priorityqueues.MeldablePQButtonsNoDecr;
-import algvis.ui.VisPanel;
+import algvis.ui.NewVisPanel;
 
-public class SkewHeapPanel extends VisPanel {
+public class SkewHeapPanel extends NewVisPanel {
     private static final long serialVersionUID = -2947713003292797010L;
 
     public SkewHeapPanel(Settings S) {

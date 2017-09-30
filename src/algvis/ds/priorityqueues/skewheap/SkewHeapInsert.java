@@ -18,6 +18,7 @@
 package algvis.ds.priorityqueues.skewheap;
 
 import algvis.core.visual.ZDepth;
+import algvis.ui.view.REL;
 
 public class SkewHeapInsert extends SkewHeapAlg {
     private final int x;
@@ -39,7 +40,7 @@ public class SkewHeapInsert extends SkewHeapAlg {
             H.root[i] = H.root[0];
             H.root[0] = null;
             if (H.root[i] != null) {
-                addStep("newroot");
+                addStep(H.root[i], REL.TOP, "newroot");
                 H.root[i].highlightTree();
             }
             H.reposition();
