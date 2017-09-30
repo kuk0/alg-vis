@@ -18,6 +18,7 @@
 package algvis.ds.priorityqueues.heap;
 
 import algvis.core.Node;
+import algvis.ui.view.REL;
 
 public class HeapDelete extends HeapAlg {
     public HeapDelete(Heap H) {
@@ -28,12 +29,12 @@ public class HeapDelete extends HeapAlg {
     public void runAlgorithm() {
         setHeader(H.minHeap ? "delete-min" : "delete-max");
         if (H.getN() == 0) {
-            addStep("heapempty");
+            addStep(H.getBoundingBoxDef(), 200, REL.TOP, "heapempty");
             addNote("done");
             return;
         }
         if (H.getN() == 1) {
-            addStep("heap-last");
+            addStep(H, 200, REL.TOP, "heap-last");
             addNote("done");
             final HeapNode v = H.getRoot();
             addToScene(v);
@@ -72,9 +73,9 @@ public class HeapDelete extends HeapAlg {
         H.getRoot().setKey(v.getKey());
         removeFromScene(v);
         if (H.minHeap) {
-            addStep("minheapbubbledown");
+            addStep(H, 200, REL.TOP, "minheapbubbledown");
         } else {
-            addStep("maxheapbubbledown");
+            addStep(H, 200, REL.TOP, "maxheapbubbledown");
         }
         // pause();
 

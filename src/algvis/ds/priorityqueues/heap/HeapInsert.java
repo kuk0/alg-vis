@@ -18,13 +18,16 @@
 package algvis.ds.priorityqueues.heap;
 
 import algvis.core.visual.ZDepth;
+import algvis.ui.view.REL;
 
 public class HeapInsert extends HeapAlg {
     private final int K;
+    private final String KS;
 
     public HeapInsert(Heap H, int x) {
         super(H);
         K = x;
+        KS = "" + K;
     }
 
     @Override
@@ -33,7 +36,7 @@ public class HeapInsert extends HeapAlg {
         final HeapNode v = new HeapNode(H, K, ZDepth.ACTIONNODE);
         addToScene(v);
         if (H.getN() == 1000) {
-            addStep("heapfull");
+            addStep(v, REL.TOP, "heapfull");
             removeFromScene(v);
             return;
         }

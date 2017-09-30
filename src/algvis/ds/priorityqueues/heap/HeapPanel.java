@@ -20,9 +20,9 @@ package algvis.ds.priorityqueues.heap;
 import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.ds.priorityqueues.PQButtons;
-import algvis.ui.VisPanel;
+import algvis.ui.NewVisPanel;
 
-public class HeapPanel extends VisPanel {
+public class HeapPanel extends NewVisPanel {
     private static final long serialVersionUID = -2488725769022251713L;
     public static Class<? extends DataStructure> DS = Heap.class;
 

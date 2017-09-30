@@ -19,6 +19,7 @@ package algvis.ds.priorityqueues.heap;
 
 import algvis.core.Algorithm;
 import algvis.core.Node;
+import algvis.ui.view.REL;
 
 abstract class HeapAlg extends Algorithm {
     final Heap H;
@@ -29,7 +30,8 @@ abstract class HeapAlg extends Algorithm {
     }
 
     void bubbleup(HeapNode v) {
-        addStep(H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
+        addStep(v, REL.BOTTOM, H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
+        pause();
         HeapNode w = v.getParent();
         while (w != null && v.prec(w)) {
             final HeapNode v1 = new HeapNode(v);
