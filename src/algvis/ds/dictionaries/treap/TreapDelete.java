@@ -20,6 +20,7 @@ package algvis.ds.dictionaries.treap;
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.ds.dictionaries.bst.BSTFind;
+import algvis.ui.view.REL;
 
 public class TreapDelete extends Algorithm {
     private final Treap T;
@@ -43,7 +44,7 @@ public class TreapDelete extends Algorithm {
             setHeader("delete", K);
             d.setColor(NodeColor.DELETE);
 
-            addStep("treapbubbledown");
+            addStep(d, REL.TOP, "treapbubbledown");
             pause();
             // prebubleme k listu
             while (!d.isLeaf()) {
@@ -58,7 +59,7 @@ public class TreapDelete extends Algorithm {
                 }
                 pause();
             }
-            addStep("treapdeletecase1");
+            addStep(d, REL.BOTTOM, "treapdeletecase1");
             pause();
             addToScene(d);
             if (d.isRoot()) {

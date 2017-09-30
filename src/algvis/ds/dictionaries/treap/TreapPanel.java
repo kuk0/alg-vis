@@ -20,9 +20,9 @@ package algvis.ds.dictionaries.treap;
 import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.ui.DictButtons;
-import algvis.ui.VisPanel;
+import algvis.ui.NewVisPanel;
 
-public class TreapPanel extends VisPanel {
+public class TreapPanel extends NewVisPanel {
     private static final long serialVersionUID = -6193823024855399059L;
     public static Class<? extends DataStructure> DS = Treap.class;
 

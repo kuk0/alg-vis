@@ -22,6 +22,7 @@ import java.util.HashMap;
 import algvis.core.Algorithm;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTInsert;
+import algvis.ui.view.REL;
 
 public class TreapInsert extends Algorithm {
     private final Treap T;
@@ -45,9 +46,10 @@ public class TreapInsert extends Algorithm {
         if (inserted) {
             pause();
             // bubleme nahor
-            addStep("treapbubbleup");
             final TreapNode v = (TreapNode) insertResult.get("v");
+            addStep(v, REL.BOTTOM, "treapbubbleup");
             v.mark();
+            pause();
             while (!v.isRoot() && v.getParent().p < v.p) {
                 T.rotate(v);
                 pause();
