@@ -17,17 +17,13 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.btree;
 
-import algvis.core.Algorithm;
 import algvis.core.NodeColor;
+import algvis.ui.view.REL;
 
-public class BInsert extends Algorithm {
-    private final BTree T;
-    private final int K;
+public class BInsert extends BAlg {
 
     public BInsert(BTree T, int x) {
-        super(T.panel);
-        this.T = T;
-        K = x;
+        super(T, x);
     }
 
     @Override
@@ -39,19 +35,19 @@ public class BInsert extends Algorithm {
         if (T.getRoot() == null) {
             T.setRoot(v);
             v.goAboveRoot();
-            addStep("newroot");
+            addStep(v, REL.TOP, "newroot");
             pause();
             v.setColor(NodeColor.NORMAL);
             removeFromScene(v);
         } else {
             BNode w = T.getRoot();
             v.goAbove(w);
-            addStep("bst-insert-start");
+            addStep(v, REL.TOP, "bst-insert-start");
             pause();
 
             while (true) {
                 if (w.isIn(K)) {
-                    addStep("alreadythere");
+                    addStep(w, REL.BOTTOM, "alreadythere");
                     v.goDown();
                     removeFromScene(v);
                     return;
@@ -59,20 +55,10 @@ public class BInsert extends Algorithm {
                 if (w.isLeaf()) {
                     break;
                 }
-                final int p = w.search(K);
-                if (p == 0) {
-                    addStep("bfind0", K, w.keys[0]);
-                } else if (p == w.numKeys) {
-                    addStep("bfindn", w.keys[w.numKeys - 1], K, w.numKeys + 1);
-                } else {
-                    addStep("bfind", w.keys[p - 1], K, w.keys[p], p + 1);
-                }
-                w = w.c[p];
-                v.goAbove(w);
-                pause();
+                w = goToChild(w, v);
             }
 
-            addStep("binsertleaf");
+            addStep(w, REL.BOTTOM, "binsertleaf");
             w.addLeaf(K);
             if (w.numKeys >= T.order) {
                 w.setColor(NodeColor.NOTFOUND);
@@ -81,7 +67,7 @@ public class BInsert extends Algorithm {
             pause();
 
             while (w.numKeys >= T.order) {
-                addStep("bsplit");
+                addStep(w, REL.BOTTOM, "bsplit");
                 final int o = (w.parent != null) ? w.order() : -1;
                 w = w.split();
                 if (w.parent == null) {

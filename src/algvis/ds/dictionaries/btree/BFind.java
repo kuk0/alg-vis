@@ -17,17 +17,13 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.btree;
 
-import algvis.core.Algorithm;
 import algvis.core.NodeColor;
+import algvis.ui.view.REL;
 
-public class BFind extends Algorithm {
-    private final BTree T;
-    private final int K;
+public class BFind extends BAlg {
 
     public BFind(BTree T, int x) {
-        super(T.panel);
-        this.T = T;
-        K = x;
+        super(T, x);
     }
 
     @Override
@@ -38,34 +34,32 @@ public class BFind extends Algorithm {
         setHeader("search");
         if (T.getRoot() == null) {
             v.goToRoot();
-            addStep("empty");
+            addStep(T.getBoundingBoxDef(), 200, REL.TOP, "empty");
             pause();
             v.goDown();
             v.setColor(NodeColor.NOTFOUND);
             removeFromScene(v);
-            addStep("notfound");
+            addStep(T.getBoundingBoxDef(), 200, REL.TOP, "notfound");
         } else {
             BNode w = T.getRoot();
             v.goTo(w);
-            addStep("bstfindstart");
+            addStep(v, REL.TOP, "bstfindstart");
             pause();
 
             while (true) {
-                if (w.isIn(v.keys[0])) {
-                    addStep("found");
+                if (w.isIn(K)) {
+                    addStep(w, REL.BOTTOM, "found");
                     v.goDown();
                     v.setColor(NodeColor.FOUND);
                     break;
                 }
                 if (w.isLeaf()) {
-                    addStep("notfound");
+                    addStep(w, REL.BOTTOM, "notfound");
                     v.setColor(NodeColor.NOTFOUND);
                     v.goDown();
                     break;
                 }
-                w = w.way(v.keys[0]);
-                v.goTo(w);
-                pause();
+                w = goToChild(w, v);
             }
         }
         removeFromScene(v);

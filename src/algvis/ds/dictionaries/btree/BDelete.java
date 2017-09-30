@@ -17,18 +17,14 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.btree;
 
-import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.core.NodeColor;
+import algvis.ui.view.REL;
 
-public class BDelete extends Algorithm {
-    private final BTree T;
-    private final int K;
+public class BDelete extends BAlg {
 
     public BDelete(BTree T, int x) {
-        super(T.panel);
-        this.T = T;
-        K = x;
+        super(T, x);
     }
 
     @Override
@@ -39,42 +35,28 @@ public class BDelete extends Algorithm {
         setHeader("delete", K);
         if (T.getRoot() == null) {
             v.goToRoot();
-            addStep("empty");
+            addStep(T.getBoundingBoxDef(), 200, REL.TOP, "empty");
             pause();
             v.goDown();
             v.setColor(NodeColor.NOTFOUND);
-            addStep("notfound");
+            addStep(T.getBoundingBoxDef(), 200, REL.TOP, "notfound");
         } else {
             BNode d = T.getRoot();
             v.goAbove(d);
-            addStep("bstdeletestart");
+            addStep(v, REL.TOP, "bstdeletestart");
             pause();
 
             while (true) {
                 if (d.isIn(K)) {
                     break;
                 }
-                final int p = d.search(K);
-                if (p == 0) {
-                    addStep("bfind0", K, d.keys[0]);
-                } else if (p == d.numKeys) {
-                    addStep("bfindn", d.keys[d.numKeys - 1], K, d.numKeys + 1);
-                } else {
-                    addStep("bfind", d.keys[p - 1], K, d.keys[p], p + 1);
+                if (d.isLeaf()) {
+                    addStep(d, REL.BOTTOM, "notfound");
+                    v.goDown();
+                    removeFromScene(v);
+                    return;
                 }
-                d = d.c[p];
-                if (d == null) {
-                    break;
-                }
-                v.goAbove(d);
-                pause();
-            }
-
-            if (d == null) { // notfound
-                addStep("notfound");
-                v.goDown();
-                removeFromScene(v);
-                return;
+                d = goToChild(d, v);
             }
 
             d.setColor(NodeColor.FOUND);
@@ -82,7 +64,7 @@ public class BDelete extends Algorithm {
             d.setColor(NodeColor.NORMAL);
             removeFromScene(v);
             if (d.isLeaf()) {
-                addStep("bdelete1");
+                addStep(d, REL.BOTTOM, "bdelete1");
                 if (d.isRoot() && d.numKeys == 1) {
                     v = d;
                     T.setRoot(null);
@@ -97,7 +79,7 @@ public class BDelete extends Algorithm {
                 }
                 removeFromScene(v);
             } else {
-                addStep("bdelete2");
+                addStep(d, REL.BOTTOM, "bdelete2");
                 BNode s = d.way(K + 1);
                 v = new BNode(T, -Node.INF, d.tox, d.toy);
                 v.setColor(NodeColor.FIND);
@@ -148,9 +130,9 @@ public class BDelete extends Algorithm {
                     // a p.keys[k] pridat do d
                     // tiez treba prehodit pointer z s ku d
                     if (lefts) {
-                        addStep("bleft");
+                        addStep(d, REL.BOTTOM, "bleft");
                     } else {
-                        addStep("bright");
+                        addStep(d, REL.BOTTOM, "bright");
                     }
                     v = lefts ? s.delMax() : s.delMin();
                     addToScene(v);
@@ -181,7 +163,7 @@ public class BDelete extends Algorithm {
                 } else {
                     // treba spojit vrchol d + p.keys[k] + s
                     // zmenit p.c[k] na novy vrchol a posunut to
-                    addStep("bmerge");
+                    addStep(d, REL.BOTTOM, "bmerge");
                     if (p.isRoot() && p.numKeys == 1) {
                         v = new BNode(T.getRoot());
                         addToScene(v);

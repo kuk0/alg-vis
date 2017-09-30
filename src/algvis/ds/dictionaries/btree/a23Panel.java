@@ -20,9 +20,9 @@ package algvis.ds.dictionaries.btree;
 import algvis.core.DataStructure;
 import algvis.core.Settings;
 import algvis.ui.DictButtons;
-import algvis.ui.VisPanel;
+import algvis.ui.NewVisPanel;
 
-public class a23Panel extends VisPanel {
+public class a23Panel extends NewVisPanel {
     private static final long serialVersionUID = 3849830550882705599L;
     public static Class<? extends DataStructure> DS = a23Tree.class;
 
