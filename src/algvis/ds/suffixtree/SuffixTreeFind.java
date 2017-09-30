@@ -23,6 +23,7 @@ import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.core.TreeNode;
 import algvis.ds.trie.TrieWordNode;
+import algvis.ui.view.REL;
 
 public class SuffixTreeFind extends Algorithm {
     private final SuffixTree T;
@@ -50,7 +51,7 @@ public class SuffixTreeFind extends Algorithm {
 
         SuffixTreeNode v = T.getRoot();
         // addNote("triefindnote");
-        addStep("trierootstart");
+        addStep(v, REL.TOP, "trierootstart");
         v.mark();
         pause();
         v.unmark();
@@ -76,12 +77,12 @@ public class SuffixTreeFind extends Algorithm {
                     wd.setColor(NodeColor.NORMAL);
                     wd = wd.getRight();
                 }
-                addStep("triefindending1", "" + ch);
+                addStep(v, REL.TOP, "triefindending1", "" + ch);
                 pause();
                 beforeReturn();
                 return;
             }
-            addStep("triefindmovedown", "" + ch);
+            addStep(v, REL.TOP, "triefindmovedown", "" + ch);
             pause();
             v = w;
             while (wd != null) {
@@ -101,7 +102,7 @@ public class SuffixTreeFind extends Algorithm {
             T.str.setColor(NodeColor.FOUND.bgColor, p - 1, p - 1 + s.length());
             pos.add(p);
         }
-        addStep("suffixtree-found", s, "" + leaves.size());
+        addStep(v, REL.TOP, "suffixtree-found", s, "" + leaves.size());
 
         pause();
         for (final TreeNode w : leaves) {

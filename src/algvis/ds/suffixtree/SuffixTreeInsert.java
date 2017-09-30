@@ -17,12 +17,13 @@
  ******************************************************************************/
 package algvis.ds.suffixtree;
 
+import java.util.Vector;
+
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.core.StringElem;
 import algvis.ds.trie.TrieWordNode;
-
-import java.util.Vector;
+import algvis.ui.view.REL;
 
 public class SuffixTreeInsert extends Algorithm {
     private final SuffixTree T;
@@ -62,15 +63,15 @@ public class SuffixTreeInsert extends Algorithm {
         SuffixTreeNode setUpSuffixLinkOnThis = T.getRoot();
         final int length = T.text.length();
         for (int i = 0; i < length; i++) {
-            addStep("sxbphase", i + 1);
+            addStep(T, 200, REL.TOP, "sxbphase", "" + (i + 1));
             T.str.setColor(NodeColor.NORMAL.bgColor, i, i + 1);
             T.reposition();
             pause();
             final char ch = T.text.charAt(i);
             if (ch != '$') {
-                addStep("sxbfirstrule", "" + ch);
+                addStep(T, 200, REL.TOP, "sxbfirstrule", "" + ch);
             } else {
-                addStep("sxbfirstrule", "\\$");
+                addStep(T, 200, REL.TOP, "sxbfirstrule", "\\$");
             }
             T.reposition();
             pause();
@@ -89,9 +90,9 @@ public class SuffixTreeInsert extends Algorithm {
             ruleOneBuffer = newRuleOneBuffer;
             starting.setColor(NodeColor.FOUND);
             if (ch != '$') {
-                addStep("sxbcontinue", "" + ch);
+                addStep(T, 200, REL.TOP, "sxbcontinue", "" + ch);
             } else {
-                addStep("sxbcontinue", "\\$");
+                addStep(T, 200, REL.TOP, "sxbcontinue", "\\$");
             }
             T.reposition();
             pause();
@@ -101,7 +102,7 @@ public class SuffixTreeInsert extends Algorithm {
             SuffixTreeNode current = starting;
             boolean pathEnded = false;
             while (!pathEnded) {
-                addStep("sxbupwalk");
+                addStep(current, REL.BOTTOM, "sxbupwalk");
                 T.reposition();
                 pause();
                 SuffixTreeNode caching = current;
@@ -123,14 +124,14 @@ public class SuffixTreeInsert extends Algorithm {
                 }
                 current.unmark();
                 if (!current.isRoot()) {
-                    addStep("sxbslink");
+                    addStep(current, REL.BOTTOM, "sxbslink");
                     T.reposition();
                     pause();
                     current = current.getSuffixLink();
                 }
                 if (current.isRoot()) {
                     cachedUpWalk = T.text.substring(startingJ, i);
-                    addStep("sxbfind", cachedUpWalk);
+                    addStep(current, REL.BOTTOM, "sxbfind", cachedUpWalk);
                     T.reposition();
                     pause();
                 }
@@ -140,9 +141,9 @@ public class SuffixTreeInsert extends Algorithm {
                 }
                 starting.setColor(NodeColor.FOUND);
                 if (ch != '$') {
-                    addStep("sxbdownwalk", "" + ch);
+                    addStep(current, REL.BOTTOM, "sxbdownwalk", "" + ch);
                 } else {
-                    addStep("sxbdownwalk", "\\$");
+                    addStep(current, REL.BOTTOM, "sxbdownwalk", "\\$");
                 }
                 hw = new TrieWordNode(T, cachedUpWalk, current.x, current.y,
                     NodeColor.INSERT);
@@ -187,7 +188,7 @@ public class SuffixTreeInsert extends Algorithm {
                     if (setUpSuffixLinkOnThis != T.getRoot()) {
                         setUpSuffixLinkOnThis.setSuffixLink(current);
                     }
-                    addStep("sxbthirdrule");
+                    addStep(current, REL.BOTTOM, "sxbthirdrule");
                     T.reposition();
                     pause();
                     current.unmark();
@@ -197,9 +198,9 @@ public class SuffixTreeInsert extends Algorithm {
                         setUpSuffixLinkOnThis.setSuffixLink(current);
                     }
                     if (ch != '$') {
-                        addStep("sxbsecondrule", "" + ch);
+                        addStep(current, REL.BOTTOM, "sxbsecondrule", "" + ch);
                     } else {
-                        addStep("sxbsecondrule", "\\$");
+                        addStep(current, REL.BOTTOM, "sxbsecondrule", "\\$");
                     }
                     T.reposition();
                     pause();
@@ -219,7 +220,7 @@ public class SuffixTreeInsert extends Algorithm {
                     starting = u;
                     startingJ++;
                     starting.setColor(NodeColor.FOUND);
-                    addStep("sxbaftersecondrule", "" + ch);
+                    addStep(current, REL.BOTTOM, "sxbaftersecondrule", "" + ch);
                     T.reposition();
                     pause();
                     current.unmark();
@@ -239,7 +240,7 @@ public class SuffixTreeInsert extends Algorithm {
          * After Ukkonen's algorithm we need to mark leaves.
          */
 
-        addStep("sxbexplicit");
+        addStep(T, 200, REL.TOP, "sxbexplicit");
         T.reposition();
         pause();
         for (final SuffixTreeNode u : ruleOneBuffer) {
