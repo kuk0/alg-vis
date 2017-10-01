@@ -117,28 +117,6 @@ public class Rotate extends Algorithm {
         }
         pause();
 
-        if (u == T.getRoot()) {
-            if (b != null) {
-
-            } else {
-                addStep("rotate-newroot-bnull", v.getKeyS(), u.getKeyS());
-            }
-        } else {
-            if (b != null) {
-                addStep("rotate-changes", v.getKeyS(), b.getKeyS(), u.getKeyS(), u
-                    .getParent().getKeyS());
-            } else {
-                addStep("rotate-changes-bnull", v.getKeyS(), u.getKeyS(), u
-                    .getParent().getKeyS());
-            }
-        }
-        /*
-         * if (R.T.order) {
-         * addNote("rotate-preserves-order");
-         * }
-         */
-        pause();
-
         T.rotate(v);
         R.reposition();
 
