@@ -19,9 +19,9 @@
 package algvis.ds.intervaltree;
 
 import algvis.core.Settings;
-import algvis.ui.VisPanel;
+import algvis.ui.NewVisPanel;
 
-public class IntervalPanel extends VisPanel {
+public class IntervalPanel extends NewVisPanel {
     private static final long serialVersionUID = -5655533916806349111L;
 
     public IntervalPanel(Settings S) {

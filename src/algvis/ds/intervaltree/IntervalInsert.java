@@ -19,6 +19,7 @@
 package algvis.ds.intervaltree;
 
 import algvis.core.visual.ZDepth;
+import algvis.ui.view.REL;
 
 public class IntervalInsert extends IntervalAlg {
     private final int K;
@@ -46,10 +47,9 @@ public class IntervalInsert extends IntervalAlg {
             v = null;
             if (T.root != null) {
                 T.numLeafs++;
-                addStep("newroot");
+                addStep(T.root, REL.TOP, "newroot");
             }
             T.reposition();
-            // heap #1 is empty; done;
             return;
         }
 
@@ -60,7 +60,7 @@ public class IntervalInsert extends IntervalAlg {
 
         if (tmp == 1) {
             T.extend();
-            addStep("intervalextend");
+            addStep(T, 200, REL.TOP, "intervalextend");
             pause();
         }
         T.reposition();

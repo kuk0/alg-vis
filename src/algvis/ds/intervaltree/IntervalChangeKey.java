@@ -32,7 +32,6 @@ public class IntervalChangeKey extends IntervalAlg {
     @Override
     public void runAlgorithm() {
         setHeader("changekey");
-        // addStep("changekeyv");
 
         v.setKey(value);
         if (v.getKey() < 1) {
@@ -42,7 +41,6 @@ public class IntervalChangeKey extends IntervalAlg {
             v.setKey(InputField.MAX);
         }
 
-        // if (H.minHeap) { //<<------
         addNote("intervalchangev");
         v.mark();
         pause();

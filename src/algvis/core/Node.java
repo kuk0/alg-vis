@@ -468,18 +468,13 @@ public class Node extends VisualElement {
 
     public void setKey(int key) {
         this.key = key;
-        if (key < 1) {
-            this.key = 1;
-        } else if (key > InputField.MAX) {
-            this.key = InputField.MAX;
-        }
     }
     
     public void decrKey(int delta, boolean minOrder) {
         if (minOrder) {
-            setKey(key - delta);
+            setKey(Math.max(key - delta, 1));
         } else {
-            setKey(key + delta);
+            setKey(Math.min(key + delta, InputField.MAX));
         }
     }
 

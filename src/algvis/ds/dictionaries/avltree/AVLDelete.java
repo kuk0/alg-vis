@@ -38,8 +38,6 @@ public class AVLDelete extends Algorithm {
     public void runAlgorithm() {
         setHeader("delete", K);
         addNote("bstdeletestart");
-        //final BSTFind find = new BSTFind(T, K, this);
-        //find.runAlgorithm();
         final BSTDelete delete = new BSTDelete(T, K, this);
         delete.runAlgorithm();
 
@@ -48,7 +46,7 @@ public class AVLDelete extends Algorithm {
 
         if (deleted) {
             AVLNode w = (AVLNode) deleteResult.get("parent");
-            addStep("avldeletebal");
+            addStep(w, REL.BOTTOM, "avldeletebal");
             pause();
 
             // update balance on the path up

@@ -22,6 +22,7 @@ import algvis.core.Node;
 import algvis.core.visual.ZDepth;
 import algvis.ds.intervaltree.IntervalNode.focusType;
 import algvis.ds.intervaltree.IntervalTrees.mimasuType;
+import algvis.ui.view.REL;
 
 public class IntervalFindMin extends IntervalAlg {
     private int i;
@@ -74,11 +75,11 @@ public class IntervalFindMin extends IntervalAlg {
             find(T.root, i, j);
             pause();
             if (T.minTree == mimasuType.MAX) {
-                addStep("maximum", maxi.getKey());
+                addStep(T, 200, REL.TOP, "maximum", maxi.getKeyS());
             } else if (T.minTree == mimasuType.MIN) {
-                addStep("minimum", maxi.getKey());
+                addStep(T, 200, REL.TOP, "minimum", maxi.getKeyS());
             } else if (T.minTree == mimasuType.SUM) {
-                addStep("sumimum", maxi.getKey());
+                addStep(T, 200, REL.TOP, "sumimum", maxi.getKeyS());
             }
             if (T.minTree != mimasuType.SUM) {
                 T.unfocus(T.root);
@@ -86,8 +87,6 @@ public class IntervalFindMin extends IntervalAlg {
                 T.markColor(T.root, i, j);
             }
             pause();
-            // if (T.minTree == mimasuType.SUM){
-            // }
             T.unfocus(T.root);
             addNote("done");
         } else {
@@ -98,13 +97,13 @@ public class IntervalFindMin extends IntervalAlg {
     void find(IntervalNode w, int b, int e) {
 
         w.mark();
-        // w.markSubtree = true;
 
         if ((w.b > e) || (w.e < b)) {
             if (w.getKey() != Node.NOKEY) {
-                addStep("intervalout", i, j, w.getKey(), w.b, w.e); // mimo intervalu
+                addStep(w, REL.TOP, "intervalout", "" + i, "" + j, w.getKeyS(),
+                    "" + w.b, "" + w.e); // mimo intervalu
             } else {
-                addStep("intervalempty", w.b, w.e); // prazdny vrchol
+                addStep(w, REL.TOP, "intervalempty", "" + w.b, "" + w.e); // prazdny vrchol
             }
             w.focused = focusType.TOUT;
             pause();
@@ -121,17 +120,16 @@ public class IntervalFindMin extends IntervalAlg {
             } else {
                 maxi.setKey(maxi.getKey() + w.getKey());
             }
-            addStep("intervalin", i, j, w.getKey(), w.b, w.e); // dnu intervalu
+            addStep(w, REL.TOP, "intervalin", "" + i, "" + j, w.getKeyS(), ""
+                + w.b, "" + w.e); // dnu intervalu
             w.focused = focusType.TIN;
             pause();
-            // w.unmark();
-            // w.unfocus();
             return;
         }
 
         if ((w.b <= b) || (w.e >= e)) {
-            addStep("intervalpart", i, j, w.getKey(), w.b, w.e); // neprazdny
-                                                                 // prienik
+            addStep(w, REL.TOP, "intervalpart", "" + i, "" + j, w.getKeyS(), ""
+                + w.b, "" + w.e); // neprazdny prienik
             w.focused = focusType.TOUT;
             pause();
             w.focused = focusType.TWAIT;

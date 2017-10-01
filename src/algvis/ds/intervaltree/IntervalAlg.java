@@ -21,6 +21,7 @@ package algvis.ds.intervaltree;
 import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.ds.intervaltree.IntervalTrees.mimasuType;
+import algvis.ui.view.REL;
 
 abstract class IntervalAlg extends Algorithm {
     IntervalTree T;
@@ -38,30 +39,30 @@ abstract class IntervalAlg extends Algorithm {
                 if (T.minTree == mimasuType.MIN) {
                     if (w.getRight().getKey() == Node.NOKEY) {
                         w.setKey(w.getLeft().getKey());
-                        addStep("intervalkeyempty", w.getLeft().getKey());
+                        addStep(w, REL.TOP, "intervalkeyempty", w.getLeft().getKeyS());
                     } else {
                         w.setKey(Math.min(w.getRight().getKey(), w.getLeft()
                             .getKey()));
-                        addStep("intervalmin", w.getRight().getKey(), w
-                            .getLeft().getKey());
+                        addStep(w, REL.TOP, "intervalmin", w.getRight().getKeyS(), w
+                            .getLeft().getKeyS());
                     }
                 } else if (T.minTree == mimasuType.MAX) {
                     w.setKey(Math.max(w.getRight().getKey(), w.getLeft()
                         .getKey()));
                     if (w.getRight().getKey() != Node.NOKEY) {
-                        addStep("intervalmax", w.getRight().getKey(), w
-                            .getLeft().getKey());
+                        addStep(w, REL.TOP, "intervalmax", w.getRight().getKeyS(), w
+                            .getLeft().getKeyS());
                     } else {
-                        addStep("intervalkeyempty", w.getLeft().getKey());
+                        addStep(w, REL.TOP, "intervalkeyempty", w.getLeft().getKeyS());
                     }
                 } else if (T.minTree == mimasuType.SUM) {
                     if (w.getRight().getKey() != Node.NOKEY) {
                         w.setKey(w.getRight().getKey() + w.getLeft().getKey());
-                        addStep("intervalsum", w.getRight().getKey(), w
-                            .getLeft().getKey());
+                        addStep(w, REL.TOP, "intervalsum", w.getRight().getKeyS(), w
+                            .getLeft().getKeyS());
                     } else {
                         w.setKey(w.getLeft().getKey());
-                        addStep("intervalkeyempty", w.getLeft().getKey());
+                        addStep(w, REL.TOP, "intervalkeyempty", w.getLeft().getKeyS());
                     }
                 }
                 w.setInterval(w.getLeft().b, w.getRight().e);
