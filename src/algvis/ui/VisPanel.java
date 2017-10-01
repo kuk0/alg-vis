@@ -38,11 +38,10 @@ import algvis.internationalization.Languages;
 
 public abstract class VisPanel extends JPanel implements LanguageListener,
     StateEditable {
-    private static final long serialVersionUID = 5104769085118210624L;
+    private static final long serialVersionUID = -5866649744399813386L;
 
     // aplet pozostava z piatich zakladnych veci:
     public Buttons buttons; // gombikov (dolu)
-    public Commentary commentary; // komentara (vpravo)
     public DataStructure D; // datovej struktury
     public Screen screen; // obrazovky v strede
     public final Scene scene = new Scene();
@@ -63,13 +62,10 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
     protected void init() {
         setLayout(new BorderLayout(0, 0));
         final JPanel screenP = initScreen();
-        final JScrollPane commentary = initCommentary();
         statusBar = new ILabel("EMPTYSTR");
         initDS();
 
         add(screenP, BorderLayout.CENTER);
-        add(commentary, BorderLayout.LINE_END);
-
         JPanel buttonsAndStatusBar = new JPanel(new BorderLayout());
         buttonsAndStatusBar.add(buttons, BorderLayout.CENTER);
         buttonsAndStatusBar.add(statusBar, BorderLayout.PAGE_END);
@@ -99,34 +95,6 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
         return screenP;
     }
 
-    private JScrollPane initCommentary() {
-        // Commentary
-        final JScrollPane SP = new JScrollPane() {
-            private static final long serialVersionUID = -8618469733328277117L;
-
-            @Override
-            public Dimension getMaximumSize() {
-                return new Dimension(400, 680);
-            }
-
-            @Override
-            public Dimension getPreferredSize() {
-                return new Dimension(300, 600);
-            }
-
-            @Override
-            public Dimension getMinimumSize() {
-                return new Dimension(250, 600);
-            }
-        };
-        commentary = new Commentary(this, SP);
-        SP.setViewportView(commentary);
-        // JPanel CP = new JPanel();
-        // CP.add(SP);
-        SP.setBorder(BorderFactory.createTitledBorder(""));
-        return SP;
-    }
-
     protected abstract void initDS();
 
     /*
@@ -151,20 +119,17 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
 
     public void refresh() {
         buttons.refresh();
-        commentary.refresh();
     }
 
     @Override
     public void storeState(Hashtable<Object, Object> state) {
         buttons.storeState(state);
-        commentary.storeState(state);
         scene.storeState(state);
     }
 
     @Override
     public void restoreState(Hashtable<?, ?> state) {
         buttons.restoreState(state);
-        commentary.restoreState(state);
         scene.restoreState(state);
     }
 }

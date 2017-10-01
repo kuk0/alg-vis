@@ -19,9 +19,9 @@ package algvis.ds.suffixtree;
 
 import algvis.core.Settings;
 import algvis.core.WordGenerator;
-import algvis.ui.NewVisPanel;
+import algvis.ui.VisPanel;
 
-public class SuffixTreePanel extends NewVisPanel {
+public class SuffixTreePanel extends VisPanel {
     private static final long serialVersionUID = -8652425842838569507L;
 
     public SuffixTreePanel(Settings S) {

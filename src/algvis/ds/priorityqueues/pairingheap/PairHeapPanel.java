@@ -18,9 +18,9 @@
 package algvis.ds.priorityqueues.pairingheap;
 
 import algvis.core.Settings;
-import algvis.ui.NewVisPanel;
+import algvis.ui.VisPanel;
 
-public class PairHeapPanel extends NewVisPanel {
+public class PairHeapPanel extends VisPanel {
     private static final long serialVersionUID = 7766114341156126683L;
 
     public PairHeapPanel(Settings S) {

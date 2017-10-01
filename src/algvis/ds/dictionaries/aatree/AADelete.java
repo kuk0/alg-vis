@@ -125,7 +125,6 @@ public class AADelete extends AAAlg {
                     .getLevel(), rl = (w.getRight() == null) ? 0 : w.getRight()
                     .getLevel();
                 int wl = w.getLevel();
-                //addStep("aaok");
                 w.mark();
                 if (ll < wl - 1 || rl < wl - 1) {
                     wl--;

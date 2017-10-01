@@ -20,9 +20,9 @@ package algvis.ds.priorityqueues.lazybinomialheap;
 import algvis.core.Algorithm;
 import algvis.core.Settings;
 import algvis.ds.priorityqueues.MeldablePQButtons;
-import algvis.ui.NewVisPanel;
+import algvis.ui.VisPanel;
 
-public class LazyBinHeapPanel extends NewVisPanel {
+public class LazyBinHeapPanel extends VisPanel {
     private static final long serialVersionUID = 1997265264400223983L;
 
     public LazyBinHeapPanel(Settings S) {

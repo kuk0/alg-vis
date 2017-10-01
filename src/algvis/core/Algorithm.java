@@ -25,7 +25,7 @@ import algvis.core.history.UpdatableStateEdit;
 import algvis.core.visual.TextBubble;
 import algvis.core.visual.VisualElement;
 import algvis.internationalization.IParamString;
-import algvis.ui.NewVisPanel;
+import algvis.ui.VisPanel;
 import algvis.ui.VisPanel;
 import algvis.ui.view.REL;
 
@@ -83,41 +83,40 @@ abstract public class Algorithm implements Runnable {
     }
 
     protected void setHeader(String s) {
-        if (!wrapped && !(panel instanceof NewVisPanel)) { // TODO: just until
-                                                           // we get rid of the
-                                                           // old VisPanel
+        /* if (!wrapped && !(panel instanceof VisPanel)) { 
+            // TODO: just until we get rid of the old VisPanel
             panel.commentary.setHeader(s);
-        }
+        } */
     }
 
     protected void setHeader(String s, String... par) {
-        if (!wrapped && !(panel instanceof NewVisPanel)) {
+        /* if (!wrapped && !(panel instanceof VisPanel)) {
             panel.commentary.setHeader(s, par);
-        }
+        } */
     }
 
     protected void setHeader(String s, int... par) {
-        if (!wrapped && !(panel instanceof NewVisPanel)) {
+        /* if (!wrapped && !(panel instanceof VisPanel)) {
             panel.commentary.setHeader(s, par);
-        }
+        }*/
     }
 
     protected void addNote(String s) {
-        if (!(panel instanceof NewVisPanel)) {
+        /*if (!(panel instanceof VisPanel)) {
             panel.commentary.addNote(s);
-        }
+        }*/
     }
 
     public void addNote(String s, String[] par) {
-        if (!(panel instanceof NewVisPanel)) {
+        /* if (!(panel instanceof VisPanel)) {
             panel.commentary.addNote(s, par);
-        }
+        }*/
     }
 
     protected void addNote(String s, int... par) {
-        if (!(panel instanceof NewVisPanel)) {
+        /* if (!(panel instanceof VisPanel)) {
             panel.commentary.addNote(s, par);
-        }
+        }*/
     }
 
     protected void addStep(Node v, REL pos, String s, String... par) {
@@ -134,24 +133,6 @@ abstract public class Algorithm implements Runnable {
         String... par) {
         addToSceneUntilNext(new TextBubble(new IParamString(s, par),
             pos.boundaryPoint(v), w, pos));
-    }
-
-    protected void addStep(String s) {
-        if (!(panel instanceof NewVisPanel)) {
-            panel.commentary.addStep(s);
-        }
-    }
-
-    protected void addStep(String s, String... par) {
-        if (!(panel instanceof NewVisPanel)) {
-            panel.commentary.addStep(s, par);
-        }
-    }
-
-    protected void addStep(String s, int... par) {
-        if (!(panel instanceof NewVisPanel)) {
-            panel.commentary.addStep(s, par);
-        }
     }
 
     protected void addToScene(VisualElement element) {
@@ -185,9 +166,6 @@ abstract public class Algorithm implements Runnable {
     void begin() {
         panelState = new UpdatableStateEdit(panel, panel.history.getNextId());
         panel.history.addEdit(panelState);
-        if (!(panel instanceof NewVisPanel)) {
-            panel.commentary.clear();
-        }
 
         EventQueue.invokeLater(new Runnable() {
             @Override

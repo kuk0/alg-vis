@@ -19,9 +19,9 @@ package algvis.ds.dictionaries.btree;
 
 import algvis.core.Settings;
 import algvis.ui.DictButtons;
-import algvis.ui.NewVisPanel;
+import algvis.ui.VisPanel;
 
-public class a234Panel extends NewVisPanel {
+public class a234Panel extends VisPanel {
     private static final long serialVersionUID = 3849830550882705599L;
 
     public a234Panel(Settings S) {

@@ -18,9 +18,9 @@
 package algvis.ds.unionfind;
 
 import algvis.core.Settings;
-import algvis.ui.NewVisPanel;
+import algvis.ui.VisPanel;
 
-public class UnionFindPanel extends NewVisPanel {
+public class UnionFindPanel extends VisPanel {
     private static final long serialVersionUID = 7399194338521664213L;
 
     public UnionFindPanel(Settings S) {

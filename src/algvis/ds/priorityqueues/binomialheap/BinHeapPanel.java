@@ -20,9 +20,9 @@ package algvis.ds.priorityqueues.binomialheap;
 import algvis.core.Algorithm;
 import algvis.core.Settings;
 import algvis.ds.priorityqueues.MeldablePQButtons;
-import algvis.ui.NewVisPanel;
+import algvis.ui.VisPanel;
 
-public class BinHeapPanel extends NewVisPanel {
+public class BinHeapPanel extends VisPanel {
     private static final long serialVersionUID = 2070258718656241421L;
 
     public BinHeapPanel(Settings S) {

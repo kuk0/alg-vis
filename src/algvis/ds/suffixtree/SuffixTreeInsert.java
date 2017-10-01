@@ -163,7 +163,6 @@ public class SuffixTreeInsert extends Algorithm {
                         u.setColor(NodeColor.INSERT);
                     }
                     hw.setAndGoNextTo(cachedUpWalk, current);
-                    // addStep("sxbdownwalkedge");
                     // T.reposition();
                     // pause();
                     // in real implementation this is O(1) both time and space
