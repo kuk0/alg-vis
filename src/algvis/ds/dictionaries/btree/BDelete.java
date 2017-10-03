@@ -204,8 +204,10 @@ public class BDelete extends Algorithm {
                         } else {
                             p.c[k] = new BNode(d, v, s);
                         }
+                        removeFromScene(v);
                         p.c[k].parent = p;
                         --p.numChildren;
+                        pause();
                         System.arraycopy(p.c, k + 1 + 1, p.c, k + 1,
                             p.numChildren - (k + 1));
                         d = p;
