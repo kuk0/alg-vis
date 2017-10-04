@@ -19,6 +19,7 @@ package algvis.ds.dictionaries.splaytree;
 
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
+import algvis.ui.view.REL;
 
 public class SplayFind extends SplayAlg {
 
@@ -34,26 +35,26 @@ public class SplayFind extends SplayAlg {
         addToScene(v);
         if (T.getRoot() == null) {
             v.goToRoot();
-            addStep("bstfindempty");
+            addStep(v, REL.BOTTOM, "bstfindempty");
             pause();
             v.goDown();
             v.setColor(NodeColor.NOTFOUND);
-            addStep("bstfindnotfound");
+            addStep(v, REL.BOTTOM, "bstfindnotfound");
         } else {
             v.goAboveRoot();
             final SplayNode w = find(K);
             splay(w);
 
-            addStep("splayinroot");
+            addStep(w, REL.BOTTOM, "splayinroot");
             pause();
 
             w.setColor(NodeColor.NORMAL);
             v.goToRoot();
             if (w.getKey() == v.getKey()) {
-                addStep("found");
+                addStep(w, REL.BOTTOM, "found");
                 v.setColor(NodeColor.FOUND);
             } else {
-                addStep("notfound");
+                addStep(w, REL.BOTTOM, "notfound");
                 v.setColor(NodeColor.NOTFOUND);
                 v.goDown();
             }

@@ -19,6 +19,7 @@ package algvis.ds.dictionaries.splaytree;
 
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
+import algvis.ui.view.REL;
 
 public class SplayInsert extends SplayAlg {
     public SplayInsert(SplayTree T, int x) {
@@ -34,7 +35,7 @@ public class SplayInsert extends SplayAlg {
         if (T.getRoot() == null) {
             T.setRoot(v);
             v.goToRoot();
-            addStep("newroot");
+            addStep(v, REL.TOP, "newroot");
             pause();
         } else {
             v.goAboveRoot();
@@ -43,21 +44,21 @@ public class SplayInsert extends SplayAlg {
 
             w.setColor(NodeColor.NORMAL);
             if (w.getKey() == K) {
-                addStep("alreadythere");
+                addStep(w, REL.BOTTOM, "alreadythere");
                 v.goDown();
                 v.setColor(NodeColor.NOTFOUND);
                 removeFromScene(v);
                 return;
             } else if (w.getKey() < K) {
                 addNote("splay-insert-left", K);
-                addStep("splay-insert-left2", K);
+                addStep(w, REL.TOP, "splay-insert-left2", KS);
                 pause();
                 v.linkLeft(w);
                 v.linkRight(w.getRight());
                 w.setRight(null);
             } else {
                 addNote("splay-insert-right", K);
-                addStep("splay-insert-right2", K);
+                addStep(w, REL.TOP, "splay-insert-right2", KS);
                 pause();
                 v.linkRight(w);
                 v.linkLeft(w.getLeft());

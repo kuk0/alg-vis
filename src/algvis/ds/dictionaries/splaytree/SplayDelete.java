@@ -20,6 +20,7 @@ package algvis.ds.dictionaries.splaytree;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
+import algvis.ui.view.REL;
 
 public class SplayDelete extends SplayAlg {
     private final int K;
@@ -37,11 +38,11 @@ public class SplayDelete extends SplayAlg {
         addToScene(s);
         if (T.getRoot() == null) {
             s.goToRoot();
-            addStep("empty");
+            addStep(s, REL.BOTTOM, "empty");
             pause();
             s.goDown();
             s.setColor(NodeColor.NOTFOUND);
-            addStep("notfound");
+            addStep(s, REL.BOTTOM, "notfound");
             removeFromScene(s);
             return;
         }
@@ -50,7 +51,7 @@ public class SplayDelete extends SplayAlg {
         SplayNode w = find(K);
 
         if (w.getKey() != s.getKey()) {
-            addStep("notfound");
+            addStep(w, REL.BOTTOM, "notfound");
             s.setColor(NodeColor.NOTFOUND);
             s.goDown();
             removeFromScene(s);
@@ -67,19 +68,19 @@ public class SplayDelete extends SplayAlg {
         w.goDown();
         removeFromScene(w);
         if (w.getLeft() == null) {
-            addStep("splaydeleteright");
+            addStep(w, REL.TOP, "splaydeleteright");
             T.setRoot(w.getRight());
             T.getRoot().setParent(null);
             T.reposition();
             pause();
         } else if (w.getRight() == null) {
-            addStep("splaydeleteleft");
+            addStep(w, REL.TOP, "splaydeleteleft");
             T.setRoot(w.getLeft());
             T.getRoot().setParent(null);
             T.reposition();
             pause();
         } else {
-            addStep("splaydelete");
+            addStep(w, REL.TOP, "splaydelete");
             T.setRoot2(w.getLeft());
             T.getRoot2().shiftTree(-75, 0);
             T.getRoot2().setParent(null);
@@ -125,7 +126,7 @@ public class SplayDelete extends SplayAlg {
                 }
                 pause();
             }
-            addStep("splaydeletelink");
+            addStep(w, REL.TOP, "splaydeletelink");
             T.setRoot(w);
             w.setColor(NodeColor.NORMAL);
             w.linkLeft(T.getRoot2());

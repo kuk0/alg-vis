@@ -22,15 +22,18 @@ import algvis.core.NodeColor;
 import algvis.core.visual.ShadePair;
 import algvis.core.visual.ShadeTriple;
 import algvis.core.visual.ZDepth;
+import algvis.ui.view.REL;
 
 abstract class SplayAlg extends Algorithm {
     final SplayTree T;
     protected final int K;
+    protected final String KS;
 
     SplayAlg(SplayTree T, int x) {
         super(T.panel, null);
         this.T = T;
         K = x;
+        KS = "" + K;
     }
 
     SplayNode find(int K) {
@@ -50,15 +53,15 @@ abstract class SplayAlg extends Algorithm {
                     addNote("splay-lower", K, w.getKey());
                     break;
                 }
+                addStep(w, REL.TOP, "bstfindright", KS, w.getKeyS());
                 w = w.getRight();
-                addStep("bstfindright", K, w.getKey());
             } else { // left
                 if (w.getLeft() == null) {
                     addNote("splay-higher", K, w.getKey());
                     break;
                 }
+                addStep(w, REL.TOP, "bstfindleft", KS, w.getKeyS());
                 w = w.getLeft();
-                addStep("bstfindleft", K, w.getKey());
             }
             s.goTo(w);
             pause();
@@ -93,13 +96,13 @@ abstract class SplayAlg extends Algorithm {
                         addNote("splay-zig-zig-right", w.getKey(), w
                             .getParent().getKey());
                     }
-                    addStep("rotate", w.getParent().getKey());
+                    addStep(w, REL.BOTTOM, "rotate", w.getParent().getKeyS());
                     w.getParent().setArc(w.getParent().getParent());
                     pause();
                     w.getParent().noArc();
                     T.rotate(w.getParent());
                     w.setArc(w.getParent());
-                    addStep("rotate", w.getKey());
+                    addStep(w, REL.BOTTOM, "rotate", w.getKeyS());
                     pause();
                     w.noArc();
                     T.rotate(w);
@@ -113,12 +116,12 @@ abstract class SplayAlg extends Algorithm {
                             .getParent().getKey());
                     }
                     w.setArc(w.getParent());
-                    addStep("rotate", w.getKey());
+                    addStep(w, REL.BOTTOM, "rotate", w.getKeyS());
                     pause();
                     w.noArc();
                     T.rotate(w);
                     w.setArc(w.getParent());
-                    addStep("rotate", w.getKey());
+                    addStep(w, REL.BOTTOM, "rotate", w.getKeyS());
                     pause();
                     w.noArc();
                     T.rotate(w);
