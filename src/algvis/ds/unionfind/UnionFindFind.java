@@ -142,7 +142,7 @@ public class UnionFindFind extends Algorithm {
     private void greyPathToRoot(UnionFindNode u) {
         u.setColor(NodeColor.FIND);
         u.mark();
-        addStep("uf-find-start", u.getKey());
+        addStep(u, REL.BOTTOM, "uf-find-start", u.getKeyS());
 
         // grey path
         UnionFindNode t = u;

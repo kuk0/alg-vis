@@ -87,19 +87,21 @@ public class UnionFindUnion extends UnionFindFind {
             addStep(r1, REL.TOP, "uf-same-set");
             pause();
         } else {
-            addStep("ufunionbyrank", r1.getRank(), r2.getRank());
             if (r1.getRank() > r2.getRank()) {
-                addStep(r1, REL.TOP, "ufunionfirstsecond");
+                addStep(r1, REL.TOP, "ufunionfirstsecond", "" + r1.getRank(),
+                    "" + r2.getRank());
                 pause();
                 UF.removeFromSets(r2);
                 r1.addChild(r2);
             } else if (r1.getRank() < r2.getRank()) {
-                addStep(r1, REL.TOP, "ufunionsecondfirst");
+                addStep(r2, REL.TOP, "ufunionsecondfirst", "" + r1.getRank(),
+                    "" + r2.getRank());
                 pause();
                 UF.removeFromSets(r1);
                 r2.addChild(r1);
             } else {
-                addStep(r1, REL.TOP, "ufunionsamerank");
+                addStep(r1, REL.TOP, "ufunionsamerank", "" + r1.getRank(),
+                    "" + r2.getRank());
                 pause();
                 UF.removeFromSets(r2);
                 r1.addChild(r2);
