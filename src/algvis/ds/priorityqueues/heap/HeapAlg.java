@@ -25,7 +25,7 @@ abstract class HeapAlg extends Algorithm {
     final Heap H;
 
     HeapAlg(Heap H) {
-        super(H.panel, null);
+        super(H.panel);
         this.H = H;
     }
 

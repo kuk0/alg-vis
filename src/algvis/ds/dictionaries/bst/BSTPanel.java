@@ -17,23 +17,16 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.bst;
 
-import algvis.core.Settings;
 import algvis.ui.VisPanel;
-import algvis.ui.view.LayoutListener;
 
 public class BSTPanel extends VisPanel {
     private static final long serialVersionUID = 2619694930536571557L;
-
-    public BSTPanel(Settings S) {
-        super(S);
-    }
 
     @Override
     public void initDS() {
         D = new BST(this);
         scene.add(D);
         buttons = new BSTButtons(this);
-        S.addLayoutListener((LayoutListener) D);
     }
 
     @Override

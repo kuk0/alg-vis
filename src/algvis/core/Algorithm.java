@@ -19,104 +19,86 @@ package algvis.core;
 
 import java.awt.EventQueue;
 import java.awt.geom.Rectangle2D;
-import java.util.HashMap;
 
-import algvis.core.history.UpdatableStateEdit;
 import algvis.core.visual.TextBubble;
 import algvis.core.visual.VisualElement;
 import algvis.internationalization.IParamString;
 import algvis.ui.VisPanel;
-import algvis.ui.VisPanel;
 import algvis.ui.view.REL;
 
 /**
- * The Class Algorithm. Each visualized data structure consists of data and
+ * Each visualized data structure consists of data and
  * algorithms (such as insert, delete) that update the data. All such algorithms
  * are descendants of the class Algorithm.
- * <p/>
- * A visualized algorithm has its own thread which can be suspended (e.g., after
- * each step of the algorithm; see method pause) and is automatically resumed
- * (method myresume) after pressing the "Next" button.
  */
 abstract public class Algorithm implements Runnable {
     private final VisPanel panel;
-    private volatile boolean done = false;
-    private UpdatableStateEdit panelState;
-    private boolean wrapped = false;
-    private Algorithm wrapperAlg;
 
     protected Algorithm(VisPanel panel) {
         this.panel = panel;
-        wrapperAlg = null;
-        wrapped = false;
-    }
-
-    protected Algorithm(VisPanel panel, Algorithm a) {
-        this(panel);
-        wrapperAlg = a;
-        wrapped = (a != null);
     }
 
     @Override
     public void run() {
-        panel.D.A = this;
         begin();
         runAlgorithm();
         end();
-
     }
 
     public abstract void runAlgorithm();
 
     protected void pause() {
-        if (wrapped) {
-            wrapperAlg.pause();
-        } else {
-            //System.out.println("panel state end");
-            panelState.end();
-            //System.out.println("new panel state");
-            panelState = new UpdatableStateEdit(panel,
-                panel.history.getNextId());
-            panel.history.addEdit(panelState);
-            panel.scene.next();
-        }
+        panel.history.nextEdit(panel);
+        panel.scene.next();
     }
 
     protected void setHeader(String s) {
-        /* if (!wrapped && !(panel instanceof VisPanel)) { 
-            // TODO: just until we get rid of the old VisPanel
-            panel.commentary.setHeader(s);
-        } */
+        /*
+         * if (!wrapped && !(panel instanceof VisPanel)) {
+         * // TODO: just until we get rid of the old VisPanel
+         * panel.commentary.setHeader(s);
+         * }
+         */
     }
 
     protected void setHeader(String s, String... par) {
-        /* if (!wrapped && !(panel instanceof VisPanel)) {
-            panel.commentary.setHeader(s, par);
-        } */
+        /*
+         * if (!wrapped && !(panel instanceof VisPanel)) {
+         * panel.commentary.setHeader(s, par);
+         * }
+         */
     }
 
     protected void setHeader(String s, int... par) {
-        /* if (!wrapped && !(panel instanceof VisPanel)) {
-            panel.commentary.setHeader(s, par);
-        }*/
+        /*
+         * if (!wrapped && !(panel instanceof VisPanel)) {
+         * panel.commentary.setHeader(s, par);
+         * }
+         */
     }
 
     protected void addNote(String s) {
-        /*if (!(panel instanceof VisPanel)) {
-            panel.commentary.addNote(s);
-        }*/
+        /*
+         * if (!(panel instanceof VisPanel)) {
+         * panel.commentary.addNote(s);
+         * }
+         */
     }
 
     public void addNote(String s, String[] par) {
-        /* if (!(panel instanceof VisPanel)) {
-            panel.commentary.addNote(s, par);
-        }*/
+        /*
+         * if (!(panel instanceof VisPanel)) {
+         * panel.commentary.addNote(s, par);
+         * }
+         */
     }
 
     protected void addNote(String s, int... par) {
-        /* if (!(panel instanceof VisPanel)) {
-            panel.commentary.addNote(s, par);
-        }*/
+        /*
+         * if (!(panel instanceof VisPanel)) {
+         * panel.commentary.addNote(s, par);
+         * }
+         */
     }
 
     protected void addStep(Node v, REL pos, String s, String... par) {
@@ -136,21 +118,13 @@ abstract public class Algorithm implements Runnable {
     }
 
     protected void addToScene(VisualElement element) {
-        if (wrapped) {
-            wrapperAlg.addToScene(element);
-        } else {
-            panel.scene.add(element);
-            panelState.addToPreState(element);
-        }
+        panel.scene.add(element);
+        panel.history.addToPreState(element);
     }
 
     protected void addToSceneUntilNext(VisualElement element) {
-        if (wrapped) {
-            wrapperAlg.addToSceneUntilNext(element);
-        } else {
-            panel.scene.addUntilNext(element);
-            panelState.addToPreState(element);
-        }
+        panel.scene.addUntilNext(element);
+        panel.history.addToPreState(element);
     }
 
     protected void removeFromScene(VisualElement element) {
@@ -164,9 +138,7 @@ abstract public class Algorithm implements Runnable {
     }
 
     void begin() {
-        panelState = new UpdatableStateEdit(panel, panel.history.getNextId());
-        panel.history.addEdit(panelState);
-
+        panel.history.firstEdit(panel);
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -177,23 +149,13 @@ abstract public class Algorithm implements Runnable {
 
     void end() {
         panel.D.setStats();
-        panelState.end();
-        panel.history.putAlgorithmEnd();
+        panel.history.finishEdits();
 
-        this.done = true;
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 panel.refresh();
             }
         });
-    }
-
-    public boolean isDone() {
-        return done;
-    }
-
-    public HashMap<String, Object> getResult() {
-        return null;
     }
 }

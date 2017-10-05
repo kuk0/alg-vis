@@ -31,7 +31,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import algvis.core.Pair;
-import algvis.core.Settings;
 import algvis.ds.DS;
 import algvis.internationalization.IMenu;
 import algvis.internationalization.IMenuItem;
@@ -47,7 +46,6 @@ public class AlgVis extends JPanel implements ActionListener {
     private final CardLayout cardlayout;
     private DS activePanel = null;
     private final Container container;
-    private final Settings S;
 
     private final Map<DS, VisPanel> panels = new HashMap<DS, VisPanel>();
 
@@ -73,7 +71,6 @@ public class AlgVis extends JPanel implements ActionListener {
     public AlgVis(Container c, String s) {
         this.container = c;
         Languages.selectLanguage(s);
-        S = new Settings();
         cards = new JPanel(cardlayout = new CardLayout());
     }
 
@@ -139,7 +136,7 @@ public class AlgVis extends JPanel implements ActionListener {
          */
 
         for (DS s : DS.values()) {
-            panels.put(s, s.createPanel(S));
+            panels.put(s, s.createPanel());
             cards.add(s.getName(), panels.get(s));
         }
 
@@ -155,11 +152,6 @@ public class AlgVis extends JPanel implements ActionListener {
         // set language
         if ("lang".equals(cmd[0])) {
             Languages.selectLanguage(cmd[1]);
-        }
-
-        // set layout
-        if ("layout".equals(cmd[0])) {
-            S.setLayout(cmd[1]);
         }
 
         // set different data structure

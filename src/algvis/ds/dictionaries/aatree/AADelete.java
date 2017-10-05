@@ -35,9 +35,7 @@ public class AADelete extends AAAlg {
     public void runAlgorithm() {
         setHeader("delete", K);
         addNote("bstdeletestart");
-        final BSTFind find = new BSTFind(T, K, this);
-        find.runAlgorithm();
-        final AANode toDelete = (AANode) find.getResult().get("node");
+        final AANode toDelete = (AANode) new BSTFind(T, K).find().orElse(null);
 
         if (toDelete != null) {
             setHeader("delete", K);
@@ -59,8 +57,9 @@ public class AADelete extends AAAlg {
                 || toDelete.getRight() == null) { // case IIa - 1 child
                 addStep(toDelete, REL.TOP, "bst-delete-case2");
                 pause();
-                final AANode s = (toDelete.getLeft() == null) ? toDelete
-                    .getRight() : toDelete.getLeft();
+                final AANode s = (toDelete.getLeft() == null)
+                    ? toDelete.getRight()
+                    : toDelete.getLeft();
                 if (toDelete.isRoot()) {
                     T.setRoot(s);
                 } else {
@@ -121,9 +120,9 @@ public class AADelete extends AAAlg {
 
             // bubleme nahor
             while (w != null) {
-                final int ll = (w.getLeft() == null) ? 0 : w.getLeft()
-                    .getLevel(), rl = (w.getRight() == null) ? 0 : w.getRight()
-                    .getLevel();
+                final int ll = (w.getLeft() == null) ? 0
+                    : w.getLeft().getLevel(),
+                    rl = (w.getRight() == null) ? 0 : w.getRight().getLevel();
                 int wl = w.getLevel();
                 w.mark();
                 if (ll < wl - 1 || rl < wl - 1) {
@@ -166,8 +165,8 @@ public class AADelete extends AAAlg {
                 w = w.getParent();
             }
 
-			T.reposition();
-			addNote("done");
+            T.reposition();
+            addNote("done");
         }
     }
 }

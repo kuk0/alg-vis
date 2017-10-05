@@ -95,7 +95,7 @@ abstract public class Buttons extends JPanel implements ActionListener,
         final JPanel first = new JPanel();
         first.setLayout(new FlowLayout());
 
-        I = new InputField(5, panel.statusBar, panel.S);
+        I = new InputField(5, panel.statusBar);
         first.add(I);
         actionButtons(first);
         initPrevious();
@@ -257,8 +257,7 @@ abstract public class Buttons extends JPanel implements ActionListener,
 
     public void refresh() {
         previous.setEnabled(panel.history.canUndo());
-        next.setEnabled(panel.history.canRedo()
-            || (panel.D.getA() != null && !panel.D.getA().isDone()));
+        next.setEnabled(panel.history.canRedo());
         setOtherEnabled(panel.history.isBetweenAlgorithms());
         refreshStats();
     }

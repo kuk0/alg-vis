@@ -17,32 +17,27 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.bst;
 
-import java.util.HashMap;
+import java.util.Optional;
 
-import algvis.core.Algorithm;
 import algvis.core.NodeColor;
+import algvis.core.visual.ZDepth;
 import algvis.ui.view.REL;
 
-public class BSTInsert extends Algorithm {
-    private final BST T;
-    private final int K;
-    private final BSTNode v;
-    private final HashMap<String, Object> result = new HashMap<String, Object>(); // "inserted", "w", "v"
+public class BSTInsert extends BSTAlg {
 
-    public BSTInsert(BST T, BSTNode v) {
-        this(T, v, null);
-    }
-
-    public BSTInsert(BST T, BSTNode v, Algorithm a) {
-        super(T.panel, a);
-        this.T = T;
-        this.v = v;
-        K = v.getKey();
-        v.setColor(NodeColor.INSERT);
+    public BSTInsert(BST T, int K) {
+        super(T, K);
     }
 
     @Override
     public void runAlgorithm() {
+        insert(new BSTNode(T, K, ZDepth.ACTIONNODE));
+    }
+
+    // returns node v if it was inserted, or empty() if a duplicate already existed
+    public Optional<BSTNode> insert(BSTNode v) {
+        this.K = v.getKey();
+        v.setColor(NodeColor.INSERT);
         setHeader("insert", K);
         addToScene(v);
 
@@ -62,16 +57,16 @@ public class BSTInsert extends Algorithm {
                     v.setColor(NodeColor.NOTFOUND);
                     v.goDown();
                     removeFromScene(v);
-                    result.put("inserted", false);
                     pause();
-                    return;
+                    return Optional.empty();
                 } else if (w.getKey() < K) {
                     if (w.getRight() == null) {
                         v.pointInDir(45);
                     } else {
                         v.pointAbove(w.getRight());
                     }
-                    addStep(v, REL.LEFT, "bst-insert-right", "" + K, w.getKeyS());
+                    addStep(v, REL.LEFT, "bst-insert-right", "" + K,
+                        w.getKeyS());
                     pause();
                     v.noArrow();
                     if (w.getRight() != null) {
@@ -86,7 +81,8 @@ public class BSTInsert extends Algorithm {
                     } else {
                         v.pointAbove(w.getLeft());
                     }
-                    addStep(v, REL.RIGHT, "bst-insert-left", "" + K, w.getKeyS());
+                    addStep(v, REL.RIGHT, "bst-insert-left", "" + K,
+                        w.getKeyS());
                     pause();
                     v.noArrow();
                     if (w.getLeft() != null) {
@@ -99,22 +95,14 @@ public class BSTInsert extends Algorithm {
                 v.goAbove(w);
                 pause();
             }
-            result.put("w", w);
         }
-        result.put("inserted", true);
-        result.put("v", v);
         T.reposition();
         pause();
         addNote("done");
         v.setColor(NodeColor.NORMAL);
         removeFromScene(v);
-        // v.setZDepth(ZDepth.DS);
 
         assert (T.getRoot().testStructure() && T.getRoot().testStructure());
-    }
-
-    @Override
-    public HashMap<String, Object> getResult() {
-        return result;
+        return Optional.of(v);
     }
 }

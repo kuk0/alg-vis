@@ -17,41 +17,39 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.bst;
 
-import java.util.HashMap;
+import java.util.Optional;
 
-import algvis.core.Algorithm;
 import algvis.core.Node;
 import algvis.core.NodeColor;
 import algvis.core.visual.Edge;
 import algvis.core.visual.ZDepth;
 import algvis.ui.view.REL;
 
-public class BSTDelete extends Algorithm {
-    private final BST T;
-    private final int K;
-    private final HashMap<String, Object> result = new HashMap<String, Object>(); // "deleted"
+public class BSTDelete extends BSTAlg {
 
-    public BSTDelete(BST T, int x) {
-        this(T, x, null);
-    }
-
-    public BSTDelete(BST T, int x, Algorithm a) {
-        super(T.panel, a);
-        this.T = T;
-        K = x;
+    public BSTDelete(BST T, int K) {
+        super(T, K);
     }
 
     @Override
     public void runAlgorithm() {
+        delete();
+    }
+
+    // returns parent of the deleted node; or empty if key was not in the tree
+    public Optional<BSTNode> delete() {
+        return delete(new BSTNode(T, K, ZDepth.ACTIONNODE));
+    }
+
+    public Optional<BSTNode> delete(BSTNode v) {
+        this.K = v.getKey();
         setHeader("delete", K);
         addNote("bstdeletestart");
-        final BSTFind find = new BSTFind(T, K, this);
-        find.runAlgorithm();
-        final BSTNode toDelete = (BSTNode) find.getResult().get("node");
+        final BSTNode toDelete = new BSTFind(T, K).find().orElse(null);
+        BSTNode parent = null;
 
         if (toDelete != null) {
-            BSTNode parent = toDelete.getParent();
-            result.put("deleted", true);
+            parent = toDelete.getParent();
             addToScene(toDelete);
             toDelete.setColor(NodeColor.DELETE);
 
@@ -82,10 +80,11 @@ public class BSTDelete extends Algorithm {
                         son.getKeyS());
                 } else {
                     if (son.isLeft() == toDelete.isLeft()) {
-                        addToSceneUntilNext(new Edge(toDelete.getParent(),
-                            toDelete, son));
+                        addToSceneUntilNext(
+                            new Edge(toDelete.getParent(), toDelete, son));
                     } else {
-                        addToSceneUntilNext(new Edge(toDelete.getParent(), son));
+                        addToSceneUntilNext(
+                            new Edge(toDelete.getParent(), son));
                     }
                     addStep(son, REL.BOTTOM, "bst-delete-linkpar", "" + K,
                         son.getKeyS(), toDelete.getParent().getKeyS());
@@ -109,32 +108,32 @@ public class BSTDelete extends Algorithm {
                 addStep(toDelete, REL.TOP, "bst-delete-case3", "" + K);
                 BSTNode son = toDelete.getRight();
                 toDelete.setColor(NodeColor.DELETE);
-                BSTNode v = new BSTNode(T, -Node.INF, ZDepth.ACTIONNODE);
-                v.setColor(NodeColor.FIND);
-                addToScene(v);
-                v.goAbove(son);
-                addStep(v, REL.RIGHT, "bst-delete-succ-start");
+                BSTNode s = new BSTNode(T, -Node.INF, ZDepth.ACTIONNODE);
+                s.setColor(NodeColor.FIND);
+                addToScene(s);
+                s.goAbove(son);
+                addStep(s, REL.RIGHT, "bst-delete-succ-start");
                 pause();
                 while (son.getLeft() != null) {
-                    addStep(v, REL.RIGHT, "bst-delete-go-left");
-                    v.pointAbove(son.getLeft());
+                    addStep(s, REL.RIGHT, "bst-delete-go-left");
+                    s.pointAbove(son.getLeft());
                     pause();
-                    v.noArrow();
+                    s.noArrow();
                     son = son.getLeft();
-                    v.goAbove(son);
+                    s.goAbove(son);
                 }
-                v.goTo(son);
+                s.goTo(son);
                 parent = son.getParent();
                 if (parent == toDelete) {
                     parent = son;
                 }
 
                 final BSTNode p = son.getParent(), r = son.getRight();
-                v.setColor(NodeColor.FOUND);
-                addStep(v, REL.RIGHT, "bst-delete-succ", "" + K, son.getKeyS());
+                s.setColor(NodeColor.FOUND);
+                addStep(s, REL.RIGHT, "bst-delete-succ", "" + K, son.getKeyS());
                 pause();
                 if (r == null) {
-                    addStep(v, REL.BOTTOMLEFT, "bst-delete-succ-unlink");
+                    addStep(s, REL.BOTTOMLEFT, "bst-delete-succ-unlink");
                 } else {
                     addStep(r, REL.BOTTOM, "bst-delete-succ-link", r.getKeyS(),
                         p.getKeyS());
@@ -145,47 +144,42 @@ public class BSTDelete extends Algorithm {
                     }
                 }
                 pause();
-                removeFromScene(v);
-                v = son;
-                addToScene(v);
+                removeFromScene(s);
+                s = son;
+                addToScene(s);
                 if (son.isLeft()) {
                     p.linkLeft(r);
                 } else {
                     p.linkRight(r);
                 }
-                v.goNextTo(toDelete);
+                s.goNextTo(toDelete);
                 pause();
-                addStep(v, REL.RIGHT, "bst-delete-replace", "" + K, son.getKeyS());
+                addStep(s, REL.RIGHT, "bst-delete-replace", "" + K,
+                    son.getKeyS());
                 pause();
                 if (toDelete.getParent() == null) {
-                    T.setRoot(v);
+                    T.setRoot(s);
                 } else {
                     if (toDelete.isLeft()) {
-                        toDelete.getParent().linkLeft(v);
+                        toDelete.getParent().linkLeft(s);
                     } else {
-                        toDelete.getParent().linkRight(v);
+                        toDelete.getParent().linkRight(s);
                     }
                 }
-                v.setColor(NodeColor.NORMAL);
-                v.linkLeft(toDelete.getLeft());
-                v.linkRight(toDelete.getRight());
-                v.goTo(toDelete);
-                removeFromScene(v);
+                s.setColor(NodeColor.NORMAL);
+                s.linkLeft(toDelete.getLeft());
+                s.linkRight(toDelete.getRight());
+                s.goTo(toDelete);
+                removeFromScene(s);
             } // end case III
 
             toDelete.goDown();
             removeFromScene(toDelete);
             T.reposition();
             addNote("done");
-            result.put("parent", parent);
-        } else {
-            result.put("deleted", false);
         }
-        assert (T.getRoot() == null || (T.getRoot().testStructure() && T.getRoot().testStructure()));
-    }
-
-    @Override
-    public HashMap<String, Object> getResult() {
-        return result;
+        assert (T.getRoot() == null
+            || (T.getRoot().testStructure() && T.getRoot().testStructure()));
+        return Optional.ofNullable(parent);
     }
 }

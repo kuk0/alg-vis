@@ -36,7 +36,6 @@ public class Screen extends JPanel {
     private static final long serialVersionUID = -8279768206774288161L;
     // obrazovka (ak nie je suspendnuta) neustale vykresluje poziciu
     private final Timer timer;
-    private DataStructure D = null;
     private final VisPanel panel;
 
     private Image I;
@@ -57,7 +56,6 @@ public class Screen extends JPanel {
     }
 
     public void setDS(DataStructure D) {
-        this.D = D;
     }
 
     void check_size() {
@@ -79,18 +77,14 @@ public class Screen extends JPanel {
     public void paintComponent(Graphics g) {
         check_size();
         clear();
-        if (D != null) {
-            V.startDrawing();
-            try {
-                panel.scene.move();
-                panel.scene.draw(V);
-            } catch (final ConcurrentModificationException ignored) {
-            }
-            V.endDrawing();
-            // V.resetView();
-        } else {
-            System.err.println("[DS null !]");
+        V.startDrawing();
+        try {
+            panel.scene.move();
+            panel.scene.draw(V);
+        } catch (final ConcurrentModificationException ignored) {
         }
+        V.endDrawing();
+        // V.resetView();
         g.drawImage(I, 0, 0, null);
     }
 

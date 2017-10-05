@@ -30,7 +30,7 @@ abstract class SplayAlg extends Algorithm {
     protected final String KS;
 
     SplayAlg(SplayTree T, int x) {
-        super(T.panel, null);
+        super(T.panel);
         this.T = T;
         K = x;
         KS = "" + K;

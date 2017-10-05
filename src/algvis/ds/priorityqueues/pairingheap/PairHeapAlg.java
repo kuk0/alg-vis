@@ -30,7 +30,7 @@ public abstract class PairHeapAlg extends Algorithm {
     PairHeapNode v;
 
     PairHeapAlg(DataStructure D) {
-        super(D.panel, null);
+        super(D.panel);
         this.H = (PairingHeap) D;
     }
 

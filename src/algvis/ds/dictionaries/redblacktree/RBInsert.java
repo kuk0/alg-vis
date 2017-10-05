@@ -22,8 +22,6 @@ import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTInsert;
 import algvis.ui.view.REL;
 
-import java.util.HashMap;
-
 public class RBInsert extends Algorithm {
     private final RB T;
     private final int K;
@@ -37,19 +35,15 @@ public class RBInsert extends Algorithm {
     @Override
     public void runAlgorithm() {
         setHeader("insert", K);
-        final BSTInsert insert = new BSTInsert(T, new RBNode(T, K,
-            ZDepth.ACTIONNODE), this);
-        insert.runAlgorithm();
-        final HashMap<String, Object> insertResult = insert.getResult();
-        final boolean inserted = (Boolean) insertResult.get("inserted");
+        RBNode w = (RBNode) new BSTInsert(T, K)
+            .insert(new RBNode(T, K, ZDepth.ACTIONNODE)).orElse(null);
 
-        if (inserted) {
+        if (w != null) {
             // TODO komentar "ideme bublat" (nieco ako pri BSTDelete:
             // "first we have to find a node")
             pause();
 
             // bubleme nahor
-            RBNode w = (RBNode) insertResult.get("v");
             RBNode pw = w.getParent2();
             while (!w.isRoot() && pw.isRed()) {
                 w.mark();
@@ -102,6 +96,8 @@ public class RBInsert extends Algorithm {
             addNote("done");
         }
 
-        assert (((RBNode) T.getRoot()).testStructure() && ((RBNode) T.getRoot()).testStructure() && ((RBNode) T.getRoot()).testRedBlack());
+        assert (((RBNode) T.getRoot()).testStructure()
+            && ((RBNode) T.getRoot()).testStructure()
+            && ((RBNode) T.getRoot()).testRedBlack());
     }
 }

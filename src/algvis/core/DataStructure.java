@@ -27,7 +27,6 @@ import algvis.ui.view.View;
 abstract public class DataStructure extends VisualElement {
     // datova struktura musi vediet gombikom povedat, kolko ich potrebuje,
     // kolko ma vstupov, ake to su a co treba robit
-    public Algorithm A = null;
     public final VisPanel panel;
     public static final int rootx = 0, rooty = 0, sheight = 600, swidth = 400,
         minsepx = 38, minsepy = 30;
@@ -82,10 +81,6 @@ abstract public class DataStructure extends VisualElement {
     }
 
     public Layout getLayout() {
-        return panel.S.layout;
-    }
-
-    public Algorithm getA() {
-        return A;
+        return Layout.COMPACT;
     }
 }

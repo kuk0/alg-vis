@@ -17,8 +17,6 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.treap;
 
-import java.util.HashMap;
-
 import algvis.core.Algorithm;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTInsert;
@@ -37,16 +35,12 @@ public class TreapInsert extends Algorithm {
     @Override
     public void runAlgorithm() {
         setHeader("insert", K);
-        final BSTInsert insert = new BSTInsert(T, new TreapNode(T, K,
-            ZDepth.ACTIONNODE), this);
-        insert.runAlgorithm();
-        final HashMap<String, Object> insertResult = insert.getResult();
-        final boolean inserted = (Boolean) insertResult.get("inserted");
+        TreapNode v = (TreapNode) new BSTInsert(T, K)
+            .insert(new TreapNode(T, K, ZDepth.ACTIONNODE)).orElse(null);
 
-        if (inserted) {
+        if (v != null) {
             pause();
             // bubleme nahor
-            final TreapNode v = (TreapNode) insertResult.get("v");
             addStep(v, REL.BOTTOM, "treapbubbleup");
             v.mark();
             pause();

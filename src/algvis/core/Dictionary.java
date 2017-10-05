@@ -19,8 +19,6 @@ package algvis.core;
 
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.VisPanel;
-import algvis.ui.view.Layout;
-
 import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
 
@@ -49,11 +47,6 @@ abstract public class Dictionary extends DataStructure {
     @Override
     public Rectangle2D getBoundingBox() {
         return root == null ? null : root.getBoundingBox();
-    }
-
-    @Override
-    public Layout getLayout() {
-        return Layout.COMPACT;
     }
 
     @Override

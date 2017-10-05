@@ -18,18 +18,15 @@
 package algvis.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.util.Hashtable;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 import javax.swing.undo.StateEditable;
 
 import algvis.core.DataStructure;
-import algvis.core.Settings;
 import algvis.core.history.HistoryManager;
 import algvis.core.visual.Scene;
 import algvis.internationalization.ILabel;
@@ -46,7 +43,6 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
     public Screen screen; // obrazovky v strede
     public final Scene scene = new Scene();
     public ILabel statusBar; // a status baru
-    public final Settings S;
     private TitledBorder border;
 
     public volatile boolean pauses = true;
@@ -54,8 +50,7 @@ public abstract class VisPanel extends JPanel implements LanguageListener,
     public final HistoryManager history = new HistoryManager(scene);
     private boolean started = false;
 
-    protected VisPanel(Settings S) {
-        this.S = S;
+    protected VisPanel() {
         init();
     }
 

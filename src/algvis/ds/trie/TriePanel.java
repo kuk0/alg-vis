@@ -17,15 +17,10 @@
  ******************************************************************************/
 package algvis.ds.trie;
 
-import algvis.core.Settings;
 import algvis.ui.VisPanel;
 
 public class TriePanel extends VisPanel {
     private static final long serialVersionUID = -8652425842838569507L;
-
-    public TriePanel(Settings S) {
-        super(S);
-    }
 
     @Override
     public void initDS() {

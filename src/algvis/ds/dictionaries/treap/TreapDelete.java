@@ -36,9 +36,7 @@ public class TreapDelete extends Algorithm {
     public void runAlgorithm() {
         setHeader("delete", K);
         addNote("bstdeletestart");
-        final BSTFind find = new BSTFind(T, K, this);
-        find.runAlgorithm();
-        final TreapNode d = (TreapNode) find.getResult().get("node");
+        final TreapNode d = (TreapNode) new BSTFind(T, K).find().orElse(null);
 
         if (d != null) {
             setHeader("delete", K);

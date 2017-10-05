@@ -17,16 +17,11 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.heap;
 
-import algvis.core.Settings;
 import algvis.ds.priorityqueues.PQButtons;
 import algvis.ui.VisPanel;
 
 public class HeapPanel extends VisPanel {
     private static final long serialVersionUID = -2488725769022251713L;
-
-    public HeapPanel(Settings S) {
-        super(S);
-    }
 
     @Override
     public void initDS() {

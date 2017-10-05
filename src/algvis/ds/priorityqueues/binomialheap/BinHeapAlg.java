@@ -24,7 +24,7 @@ abstract class BinHeapAlg extends Algorithm {
     final BinomialHeap H;
 
     BinHeapAlg(BinomialHeap H) {
-        super(H.panel, null);
+        super(H.panel);
         this.H = H;
     }
 

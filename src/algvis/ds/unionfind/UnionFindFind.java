@@ -35,7 +35,7 @@ public class UnionFindFind extends Algorithm {
     private final UnionFind UF;
 
     UnionFindFind(UnionFind UF) {
-        super(UF.panel, null);
+        super(UF.panel);
         this.UF = UF;
         this.findState = UF.pathCompression;
     }

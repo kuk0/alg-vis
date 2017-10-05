@@ -23,6 +23,7 @@ import java.util.Hashtable;
 import algvis.core.DataStructure;
 import algvis.core.WordGenerator;
 import algvis.core.history.HashtableStoreSupport;
+import algvis.internationalization.Languages;
 import algvis.ui.Fonts;
 import algvis.ui.VisPanel;
 import algvis.ui.view.View;
@@ -104,10 +105,10 @@ public class Trie extends DataStructure {
     @Override
     public void random(int n) {
         for (int i = 0; i < n; i++) {
-            if (panel.S == null) {
+            if (Languages.getCurrentLanguage() == 1) {
                 insert(WordGenerator.getSkWord());
             } else {
-                insert(WordGenerator.getWord(panel.S));
+                insert(WordGenerator.getWord());
             }
         }
     }

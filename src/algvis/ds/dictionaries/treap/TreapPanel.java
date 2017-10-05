@@ -17,16 +17,11 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.treap;
 
-import algvis.core.Settings;
 import algvis.ui.DictButtons;
 import algvis.ui.VisPanel;
 
 public class TreapPanel extends VisPanel {
     private static final long serialVersionUID = -6193823024855399059L;
-
-    public TreapPanel(Settings S) {
-        super(S);
-    }
 
     @Override
     public void initDS() {

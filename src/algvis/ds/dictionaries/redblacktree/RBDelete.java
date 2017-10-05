@@ -39,9 +39,7 @@ public class RBDelete extends Algorithm {
     public void runAlgorithm() {
         setHeader("delete", K);
         addNote("bstdeletestart");
-        final BSTFind find = new BSTFind(T, K, this);
-        find.runAlgorithm();
-        final RBNode d = (RBNode) find.getResult().get("node");
+        final RBNode d = (RBNode) new BSTFind(T, K).find().orElse(null);
 
         if (d == null) { // notfound
             addNote("notfound");

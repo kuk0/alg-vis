@@ -17,33 +17,31 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.bst;
 
-import algvis.core.Algorithm;
+import java.util.Optional;
+
 import algvis.core.NodeColor;
 import algvis.core.visual.ZDepth;
 import algvis.ui.view.REL;
 
-import java.util.HashMap;
+public class BSTFind extends BSTAlg {
 
-public class BSTFind extends Algorithm {
-    private final BST T;
-    private final int K;
-    private final HashMap<String, Object> result = new HashMap<String, Object>(); // node
-
-    public BSTFind(BST T, int x) {
-        this(T, x, null);
-    }
-
-    public BSTFind(BST T, int x, Algorithm a) {
-        super(T.panel, a);
-        this.T = T;
-        K = x;
+    public BSTFind(BST T, int K) {
+        super(T, K);
     }
 
     @Override
     public void runAlgorithm() {
+        find();
+    }
+
+    public Optional<BSTNode> find() {
+        return find(new BSTNode(T, K, ZDepth.ACTIONNODE));
+    }
+
+    public Optional<BSTNode> find(BSTNode v) {
+        this.K = v.getKey();
         setHeader("find", K);
-        result.put("node", null);
-        final BSTNode v = new BSTNode(T, K, ZDepth.ACTIONNODE);
+        BSTNode found = null;
         v.setColor(NodeColor.FIND);
         addToScene(v);
         if (T.getRoot() == null) {
@@ -63,7 +61,7 @@ public class BSTFind extends Algorithm {
                     v.goTo(w);
                     addStep(w, REL.BOTTOM, "found");
                     v.setColor(NodeColor.FOUND);
-                    result.put("node", w);
+                    found = w;
                     break;
                 } else if (w.getKey() < K) {
                     if (w.getRight() == null) {
@@ -113,20 +111,16 @@ public class BSTFind extends Algorithm {
                 pause();
             }
         }
-        if (result.get("node") == null) {
+        if (found == null) {
             removeFromScene(v);
         }
         pause();
         if (T.getRoot() != null) {
             T.getRoot().subtreeColor(NodeColor.NORMAL);
         }
-        if (result.get("node") != null) {
+        if (found != null) {
             removeFromScene(v);
         }
-    }
-
-    @Override
-    public HashMap<String, Object> getResult() {
-        return result;
+        return Optional.ofNullable(found);
     }
 }

@@ -17,26 +17,25 @@
  ******************************************************************************/
 package algvis.core.history;
 
-import algvis.core.visual.Scene;
-
 import java.util.Map;
 import java.util.WeakHashMap;
 
 import javax.swing.undo.AbstractUndoableEdit;
+import javax.swing.undo.StateEditable;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
+
+import algvis.core.visual.Scene;
 
 public class HistoryManager extends UndoManager {
     private static final long serialVersionUID = -842354204488084104L;
     private final Map<UndoableEdit, Boolean> algorithmEnds = new WeakHashMap<UndoableEdit, Boolean>();
     private long id = -1;
-    private final Scene scene;
     private long savedEditId;
-
+    private UpdatableStateEdit lastState;
 
     public HistoryManager(Scene scene) {
         super();
-        this.scene = scene;
         setLimit(500);
     }
 
@@ -45,15 +44,7 @@ public class HistoryManager extends UndoManager {
         return anEdit instanceof UpdatableStateEdit && super.addEdit(anEdit);
     }
 
-    public long getNextId() {
-        return ++id;
-    }
-
-    public long getLastEditId() {
-        return id;
-    }
-    
-    public long getEditId(){
+    private long getEditId(){
         if (canUndo())
             return editToBeUndone().getId();
         else
@@ -77,21 +68,6 @@ public class HistoryManager extends UndoManager {
         do {
             redo();
         } while (!algorithmEnds.containsKey(editToBeUndone()) && canRedo());
-    }
-
-    public synchronized void goTo(long id) {
-        if (id <= editToBeUndone().getId()) {       // can throw NullPointerException
-            while (canUndo() && editToBeUndone().getId() >= id) {
-                undo();
-            }
-            scene.endAnimation();
-            redo();
-        } else {
-            while (editToBeRedone().getId() < id) {
-                redo();
-            }
-            redo();
-        }
     }
     
     public void saveEditId(){
@@ -126,5 +102,25 @@ public class HistoryManager extends UndoManager {
             final int lastEditIndex = edits.size() - 1;
             trimEdits(lastEditIndex, lastEditIndex);
         }
+    }
+
+    public void firstEdit(StateEditable panel) {
+        lastState = new UpdatableStateEdit(panel, ++id);
+        addEdit(lastState);
+    }
+    
+    public void nextEdit(StateEditable panel) {
+        lastState.end();
+        lastState = new UpdatableStateEdit(panel, ++id);
+        addEdit(lastState);
+    }
+    
+    public void finishEdits() {
+        lastState.end();
+        putAlgorithmEnd();
+    }
+    
+    public void addToPreState(StateEditable element) {
+        lastState.addToPreState(element);
     }
 }

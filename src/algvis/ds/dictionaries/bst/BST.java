@@ -19,15 +19,13 @@ package algvis.ds.dictionaries.bst;
 
 import algvis.core.Dictionary;
 import algvis.core.StringUtils;
-import algvis.core.visual.ZDepth;
 import algvis.internationalization.Languages;
 import algvis.ui.VisPanel;
 import algvis.ui.view.ClickListener;
 import algvis.ui.view.Layout;
-import algvis.ui.view.LayoutListener;
 import algvis.ui.view.View;
 
-public class BST extends Dictionary implements LayoutListener, ClickListener {
+public class BST extends Dictionary implements ClickListener {
     public static String dsName = "bst";
     public boolean order = false;
 
@@ -53,7 +51,7 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
 
     @Override
     public void insert(int x) {
-        start(new BSTInsert(this, new BSTNode(this, x, ZDepth.ACTIONNODE)));
+        start(new BSTInsert(this, x));
     }
 
     @Override
@@ -87,24 +85,15 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
                 + Languages.getString("avedepth") + ": 0";
         } else {
             getRoot().calcTree();
-            return Languages.getString("size")
-                + ": "
-                + getRoot().size
-                + ";   "
-                + Languages.getString("height")
-                + ": "
-                + getRoot().height
+            return Languages.getString("size") + ": " + getRoot().size + ";   "
+                + Languages.getString("height") + ": " + getRoot().height
                 + " = "
                 + StringUtils.format(
                     getRoot().height / (Math.floor(lg(getRoot().size)) + 1), 2,
                     5)
-                + "\u00b7"
-                + Languages.getString("opt")
-                + ";   "
-                + Languages.getString("avedepth")
-                + ": "
-                + StringUtils.format(getRoot().sumh / (double) getRoot().size,
-                    2, -5);
+                + "\u00b7" + Languages.getString("opt") + ";   "
+                + Languages.getString("avedepth") + ": " + StringUtils
+                    .format(getRoot().sumh / (double) getRoot().size, 2, -5);
         }
     }
 
@@ -194,11 +183,6 @@ public class BST extends Dictionary implements LayoutListener, ClickListener {
             getRoot().reposition();
         }
         panel.screen.V.setBounds(x1, y1, x2, y2);
-    }
-
-    @Override
-    public void changeLayout() {
-        reposition();
     }
 
     @Override

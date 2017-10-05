@@ -22,7 +22,6 @@ import java.util.Vector;
 import javax.swing.JTextField;
 
 import algvis.core.MyRandom;
-import algvis.core.Settings;
 import algvis.core.WordGenerator;
 import algvis.internationalization.ILabel;
 
@@ -36,12 +35,10 @@ public class InputField extends JTextField {
     private static final long serialVersionUID = -1263697952255226926L;
     public final static int MAX = 999;
     final ILabel sb; // status bar
-    private final Settings s;
 
-    public InputField(int cols, ILabel sb, Settings s) {
+    public InputField(int cols, ILabel sb) {
         super(cols);
         this.sb = sb;
-        this.s = s;
     }
 
     /**
@@ -162,8 +159,8 @@ public class InputField extends JTextField {
     public Vector<String> getVS() {
         final String ss = getText();
         Vector<String> result = new Vector<String>();
-        if (ss.compareTo("") == 0) {
-            result.add(WordGenerator.getWord(s));
+        if (ss.isEmpty()) {
+            result.add(WordGenerator.getWord());
         } else {
             result = WordGenerator.parseString(ss);
         }

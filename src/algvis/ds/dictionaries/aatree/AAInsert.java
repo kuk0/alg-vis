@@ -17,8 +17,6 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.aatree;
 
-import java.util.HashMap;
-
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTInsert;
 
@@ -31,14 +29,10 @@ public class AAInsert extends AAAlg {
     @Override
     public void runAlgorithm() {
         setHeader("insert", K);
-        final BSTInsert insert = new BSTInsert(T, new AANode(T, K,
-            ZDepth.ACTIONNODE), this);
-        insert.runAlgorithm();
-        final HashMap<String, Object> insertResult = insert.getResult();
-        final boolean inserted = (Boolean) insertResult.get("inserted");
-        AANode w = (AANode) insertResult.get("w");
+        AANode w = (AANode) new BSTInsert(T, K)
+            .insert(new AANode(T, K, ZDepth.ACTIONNODE)).orElse(null);
 
-        if (inserted && w != null) {
+        if (w != null) {
             pause();
 
             // bubleme nahor

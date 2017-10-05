@@ -17,11 +17,12 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.avltree;
 
-import java.util.HashMap;
+import java.util.Optional;
 
 import algvis.core.Algorithm;
 import algvis.core.StringUtils;
 import algvis.ds.dictionaries.bst.BSTDelete;
+import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ui.view.REL;
 
 public class AVLDelete extends Algorithm {
@@ -38,14 +39,10 @@ public class AVLDelete extends Algorithm {
     public void runAlgorithm() {
         setHeader("delete", K);
         addNote("bstdeletestart");
-        final BSTDelete delete = new BSTDelete(T, K, this);
-        delete.runAlgorithm();
+        final Optional<BSTNode> parent = new BSTDelete(T, K).delete();
 
-        final HashMap<String, Object> deleteResult = delete.getResult();
-        final boolean deleted = (Boolean) deleteResult.get("deleted");
-
-        if (deleted) {
-            AVLNode w = (AVLNode) deleteResult.get("parent");
+        if (parent.isPresent()) {
+            AVLNode w = (AVLNode) parent.get();
             addStep(w, REL.BOTTOM, "avldeletebal");
             pause();
 

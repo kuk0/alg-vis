@@ -3,7 +3,6 @@ package algvis.ds;
 import java.lang.reflect.Constructor;
 
 import algvis.core.DataStructure;
-import algvis.core.Settings;
 import algvis.ds.dictionaries.aatree.AA;
 import algvis.ds.dictionaries.aatree.AAPanel;
 import algvis.ds.dictionaries.avltree.AVL;
@@ -107,18 +106,17 @@ public enum DS {
 
     public String getName() {
         try {
-            return (String)s.getDeclaredField("dsName").get(null);
+            return (String) s.getDeclaredField("dsName").get(null);
         } catch (final Exception e) {
             System.err.println("Unable to get dsName for: " + s);
             return null;
         }
     }
 
-    public VisPanel createPanel(Settings S) {
+    public VisPanel createPanel() {
         try {
-            final Constructor<? extends VisPanel> ct = p
-                .getConstructor(Settings.class);
-            return (VisPanel) ct.newInstance(S);
+            final Constructor<? extends VisPanel> ct = p.getConstructor();
+            return (VisPanel) ct.newInstance();
         } catch (final Exception e) {
             System.out.println("Unable to construct panel: " + p);
             e.printStackTrace();

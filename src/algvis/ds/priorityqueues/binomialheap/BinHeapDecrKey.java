@@ -26,7 +26,7 @@ public class BinHeapDecrKey extends Algorithm {
     private BinHeapNode v;
 
     public BinHeapDecrKey(BinomialHeap H, BinHeapNode v, int delta) {
-        super(H.panel, null);
+        super(H.panel);
         this.H = H;
         this.v = v;
         this.delta = delta;

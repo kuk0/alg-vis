@@ -25,7 +25,6 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.TitledBorder;
 
 import algvis.core.MyParserDelegator;
-import algvis.core.Settings;
 import algvis.ds.DS;
 import algvis.internationalization.Languages;
 
@@ -78,8 +77,7 @@ public class AlgVisApplet extends JApplet {
         } else {
             // data structure ds
             Languages.selectLanguage(getParameter("lang"));
-            final Settings S = new Settings();
-            final VisPanel P = s.createPanel(S);
+            final VisPanel P = s.createPanel();
             P.setSize(WIDTH, HEIGHT); // same size as defined in the HTML APPLET
             add(P);
             P.setOnAir(true);
