@@ -29,7 +29,35 @@ abstract class HeapAlg extends Algorithm {
         this.H = H;
     }
 
-    void bubbleup(HeapNode v) {
+    HeapNode setNode(int n, HeapNode v) {
+        int k = 1 << 10;
+        if (n == 1) {
+            H.setRoot(v);
+            return null;
+        } else {
+            HeapNode w, p;
+            while ((k & n) == 0) {
+                k >>= 1;
+            }
+            k >>= 1;
+            w = H.getRoot();
+            while (k > 1) {
+                w = ((n & k) == 0) ? w.getLeft() : w.getRight();
+                k >>= 1;
+            }
+            
+            if ((n & 1) == 0) {
+                p = w.getLeft();
+                w.linkLeft(v);
+            } else {
+                p = w.getRight();
+                w.linkRight(v);
+            }
+            return p;
+        }
+    }
+    
+    void bubbleUp(HeapNode v) {
         addStep(v, REL.BOTTOM, H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
         pause();
         HeapNode w = v.getParent();
@@ -56,5 +84,36 @@ abstract class HeapAlg extends Algorithm {
         }
         v.unmark();
         addNote("done");
+    }
+    
+    void bubbleDown(HeapNode v) {
+        while (true) {
+            HeapNode w = null;
+            if (v.getLeft() != null) {
+                w = v.getLeft();
+            }
+            if (v.getRight() != null && v.getRight().prec(w)) {
+                w = v.getRight();
+            }
+            if (w == null || v.prec(w)) {
+                break;
+            }
+            final HeapNode v1 = new HeapNode(v);
+            final HeapNode v2 = new HeapNode(w);
+            addToScene(v1);
+            addToScene(v2);
+            v.setKey(Node.NOKEY);
+            w.setKey(Node.NOKEY);
+            v1.goTo(w);
+            v2.goTo(v);
+            pause();
+            v.setKey(v2.getKey());
+            w.setKey(v1.getKey());
+            v.setColor(v2.getColor());
+            w.setColor(v1.getColor());
+            removeFromScene(v1);
+            removeFromScene(v2);
+            v = w;
+        }
     }
 }
