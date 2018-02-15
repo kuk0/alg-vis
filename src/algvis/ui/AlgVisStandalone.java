@@ -17,10 +17,14 @@
  ******************************************************************************/
 package algvis.ui;
 
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
-import java.awt.*;
 
 public class AlgVisStandalone {
     public static void main(String[] args) {

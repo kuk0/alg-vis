@@ -17,6 +17,11 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.bst;
 
+import java.awt.Color;
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
+import java.util.Vector;
+
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.NodeColor;
@@ -25,11 +30,6 @@ import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.Fonts;
 import algvis.ui.view.Layout;
 import algvis.ui.view.View;
-
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.util.Hashtable;
-import java.util.Vector;
 
 public class BSTNode extends Node {
     private BSTNode left = null, right = null, parent = null;

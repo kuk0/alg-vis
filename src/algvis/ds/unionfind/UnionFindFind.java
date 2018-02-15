@@ -17,12 +17,12 @@
  ******************************************************************************/
 package algvis.ds.unionfind;
 
+import java.util.Stack;
+
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
 import algvis.core.visual.Edge;
 import algvis.ui.view.REL;
-
-import java.util.Stack;
 
 public class UnionFindFind extends Algorithm {
     public enum FindHeuristic {

@@ -1,9 +1,13 @@
 package algvis.ds.dynamicarray;
 
-import algvis.core.*;
-import algvis.ui.view.REL;
+import java.awt.Color;
 
-import java.awt.*;
+import algvis.core.Algorithm;
+import algvis.core.Array;
+import algvis.core.ArrayNode;
+import algvis.core.Node;
+import algvis.core.NodeColor;
+import algvis.ui.view.REL;
 
 abstract class DynamicArrayAlg extends Algorithm {
   DynamicArray D;

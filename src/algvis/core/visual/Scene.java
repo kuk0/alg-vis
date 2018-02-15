@@ -18,10 +18,6 @@
 
 package algvis.core.visual;
 
-import algvis.core.Node;
-import algvis.core.history.HashtableStoreSupport;
-import algvis.ui.view.View;
-
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -29,6 +25,10 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import algvis.core.Node;
+import algvis.core.history.HashtableStoreSupport;
+import algvis.ui.view.View;
 
 public class Scene extends VisualElement {
     public static final int MAXZ = 10, MIDZ = 5;

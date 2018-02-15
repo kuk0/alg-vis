@@ -17,10 +17,11 @@
  ******************************************************************************/
 package algvis.core;
 
-import algvis.core.history.HashtableStoreSupport;
-import algvis.ui.VisPanel;
 import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
+
+import algvis.core.history.HashtableStoreSupport;
+import algvis.ui.VisPanel;
 
 abstract public class Dictionary extends DataStructure {
     protected Node root;

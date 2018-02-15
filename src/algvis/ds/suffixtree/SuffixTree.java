@@ -17,15 +17,15 @@
  ******************************************************************************/
 package algvis.ds.suffixtree;
 
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
+
 import algvis.core.DataStructure;
 import algvis.core.StringElem;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.Fonts;
 import algvis.ui.VisPanel;
 import algvis.ui.view.View;
-
-import java.awt.geom.Rectangle2D;
-import java.util.Hashtable;
 
 public class SuffixTree extends DataStructure {
     public static final int textpos = -40;

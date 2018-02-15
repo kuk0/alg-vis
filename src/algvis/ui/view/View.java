@@ -17,9 +17,6 @@
  ******************************************************************************/
 package algvis.ui.view;
 
-import algvis.core.Node;
-import algvis.ui.Fonts;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -46,6 +43,9 @@ import java.text.AttributedString;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
+
+import algvis.core.Node;
+import algvis.ui.Fonts;
 
 public class View implements MouseListener, MouseMotionListener,
     MouseWheelListener {

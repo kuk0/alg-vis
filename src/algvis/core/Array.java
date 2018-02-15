@@ -1,14 +1,15 @@
 package algvis.core;
 
-import algvis.core.history.HashtableStoreSupport;
-import algvis.core.visual.VisualElement;
-import algvis.ui.view.View;
-
-import javax.swing.undo.StateEditable;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Hashtable;
+
+import javax.swing.undo.StateEditable;
+
+import algvis.core.history.HashtableStoreSupport;
+import algvis.core.visual.VisualElement;
+import algvis.ui.view.View;
 
 public class Array<E extends ArrayNode> extends VisualElement implements StateEditable {
   public ArrayList<E> array = new ArrayList<>();

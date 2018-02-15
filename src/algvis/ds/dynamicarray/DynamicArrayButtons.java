@@ -1,13 +1,14 @@
 package algvis.ds.dynamicarray;
 
-import algvis.internationalization.IButton;
-import algvis.ui.Buttons;
-import algvis.ui.VisPanel;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
+
+import javax.swing.JPanel;
+
+import algvis.internationalization.IButton;
+import algvis.ui.Buttons;
+import algvis.ui.VisPanel;
 
 public class DynamicArrayButtons extends Buttons {
   private static final long serialVersionUID = -4820812162669072989L;

@@ -17,16 +17,16 @@
  ******************************************************************************/
 package algvis.core;
 
+import java.awt.Color;
+import java.awt.geom.Rectangle2D;
+import java.util.Hashtable;
+
 import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.VisualElement;
 import algvis.core.visual.ZDepth;
 import algvis.ui.Fonts;
 import algvis.ui.InputField;
 import algvis.ui.view.View;
-
-import java.awt.Color;
-import java.awt.geom.Rectangle2D;
-import java.util.Hashtable;
 
 /**
  * The Class Node. This is a basic element of the visualization. Nodes can be

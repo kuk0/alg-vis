@@ -1,6 +1,7 @@
 package algvis.ds.dynamicarray;
 
-import algvis.core.*;
+import algvis.core.Node;
+import algvis.core.NodeColor;
 import algvis.ui.view.REL;
 
 public class DynamicArrayInsert extends DynamicArrayAlg {
