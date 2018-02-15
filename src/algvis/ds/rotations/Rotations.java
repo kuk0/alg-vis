@@ -149,12 +149,9 @@ public class Rotations extends DataStructure implements ClickListener {
         for (int i = 0; i < n; ++i) {
             insert(MyRandom.Int(InputField.MAX + 1));
         }
-        start(new Runnable() {
-            @Override
-            public void run() {
-                T.getRoot().calcTree();
-                setStats();
-            }
+        start(() -> {
+            T.getRoot().calcTree();
+            setStats();
         });
         // panel.screen.V.resetView();
     }

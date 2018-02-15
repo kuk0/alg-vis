@@ -47,13 +47,10 @@ public class AlgVisStandalone {
             e.printStackTrace();
         }
 
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                final JFrame f = new MainFrame();
-                f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-                f.setVisible(true);
-            }
+        EventQueue.invokeLater(() -> {
+            final JFrame f = new MainFrame();
+            f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            f.setVisible(true);
         });
     }
 }

@@ -140,23 +140,13 @@ abstract public class Algorithm implements Runnable {
 
     void begin() {
         panel.history.firstEdit(panel);
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                panel.buttons.refresh();
-            }
-        });
+        EventQueue.invokeLater(() -> panel.buttons.refresh());
     }
 
     void end() {
         panel.D.setStats();
         panel.history.finishEdits();
 
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                panel.refresh();
-            }
-        });
+        EventQueue.invokeLater(() -> panel.refresh());
     }
 }
