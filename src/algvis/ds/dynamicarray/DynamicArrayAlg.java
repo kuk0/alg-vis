@@ -19,7 +19,7 @@ abstract class DynamicArrayAlg extends Algorithm {
 
   public void createNewArray(int capacity) {
     for(DynamicArrayCoin coin : D.coinsForArray) coin.setColor(NodeColor.RED);
-    addStep((Node)D.coinsForArray.get(D.coinsForArray.size()/2), REL.TOP, "dynamicarray-use-coin");
+    addStep(D.coinsForArray.get(D.coinsForArray.size()/2), REL.TOP, "dynamicarray-use-coin");
     pause();
 
     for(DynamicArrayCoin coin : D.coinsForArray) coin.setState(Node.UP);
@@ -28,7 +28,7 @@ abstract class DynamicArrayAlg extends Algorithm {
     for(int i=0; i < D.capacity; i++) {
       D.newarray.add(new ArrayNode(D, 0));
     }
-    addStep((Node)D.newarray.get(0), REL.TOPRIGHT, "dynamicarray-new");
+    addStep(D.newarray.get(0), REL.TOPRIGHT, "dynamicarray-new");
 
     if(capacity >= 4) {
       D.newdelimiter4 = new DynamicArrayDelimiter(D, D.newarray.get(capacity/4), Color.GREEN );
@@ -36,7 +36,7 @@ abstract class DynamicArrayAlg extends Algorithm {
     }
     pause();
     if(D.size > 0) {
-      addStep((Node) D.newarray.get(0), REL.TOPRIGHT, "dynamicarray-copy");
+      addStep(D.newarray.get(0), REL.TOPRIGHT, "dynamicarray-copy");
     }
     for(int i = 0; i < D.size; i++) {
       D.coinsForCopy.get(i).setColor(NodeColor.RED);

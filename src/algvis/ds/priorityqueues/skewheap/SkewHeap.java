@@ -128,8 +128,8 @@ public class SkewHeap extends MeldablePQ implements ClickListener {
     @Override
     public void meld(int i, int j) {
         final Pair<Integer, Integer> p = chooseHeaps(i, j);
-        i = (int)p.first;
-        j = (int)p.second;
+        i = p.first;
+        j = p.second;
         ((MeldablePQButtonsNoDecr) panel.buttons).activeHeap.setValue(i);
         start(new SkewHeapMeld(this, i, j));
 

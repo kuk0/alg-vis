@@ -19,19 +19,19 @@ public class DynamicArrayInsert extends DynamicArrayAlg {
       D.newCoins.add(new DynamicArrayCoin(D, D.invisible, (int) (i * Node.RADIUS * 2.25), 0));
     } 
     if(D.size + 1 > D.capacity) {
-      addStep((Node)D.array.get(D.capacity-1), REL.TOPRIGHT, "dynamicarray-full");
+      addStep(D.array.get(D.capacity-1), REL.TOPRIGHT, "dynamicarray-full");
       pause();
       createNewArray(D.capacity * 2);
     }
 
-    addStep((Node)D.newCoins.get(4), REL.TOP, "dynamicarray-insert");
+    addStep(D.newCoins.get(4), REL.TOP, "dynamicarray-insert");
     D.newCoins.get(4).setColor(NodeColor.RED);
     pause();
     D.newCoins.get(4).setState(Node.UP);
     D.array.get(D.size).setKey(x);
     D.size++;
     pause();
-    addStep((Node) D.newCoins.get(2), REL.TOP, "dynamicarray-insert-coin");
+    addStep(D.newCoins.get(2), REL.TOP, "dynamicarray-insert-coin");
     pause();
 
     if(D.size > D.capacity/2) {
@@ -47,7 +47,7 @@ public class DynamicArrayInsert extends DynamicArrayAlg {
       D.newCoins.get(3).changeRelative(D.array.get(D.size-1)); D.newCoins.get(3).moveTo(0, D.coinsDist);
       D.newCoins.get(2).changeRelative(D.array.get(D.size-1)); D.newCoins.get(2).moveTo(0, -D.coinsDist);
 
-      addStep((Node) D.newCoins.get(0), REL.TOP, "dynamicarray-insert-coin");
+      addStep(D.newCoins.get(0), REL.TOP, "dynamicarray-insert-coin");
       D.newCoins.get(1).setColor(NodeColor.RED);
       D.newCoins.get(0).setColor(NodeColor.RED);
       pause();
@@ -60,7 +60,7 @@ public class DynamicArrayInsert extends DynamicArrayAlg {
         D.coinsForCopy.set(tween, D.newCoins.get(1));
       }
       else {
-        addStep((Node) D.coinsForCopy.get(tween), REL.BOTTOM, "dynamicarray-insert-enough");
+        addStep(D.coinsForCopy.get(tween), REL.BOTTOM, "dynamicarray-insert-enough");
         stop1= true;
       }
 
@@ -71,7 +71,7 @@ public class DynamicArrayInsert extends DynamicArrayAlg {
       }
       else {
         stop0 = true;
-        addStep((Node) D.coinsForArray.get(tween), REL.TOP, "dynamicarray-insert-enough");
+        addStep(D.coinsForArray.get(tween), REL.TOP, "dynamicarray-insert-enough");
       }
       if(stop0 || stop1) pause();
       if(stop0) D.newCoins.get(0).setState(Node.UP);
@@ -79,7 +79,7 @@ public class DynamicArrayInsert extends DynamicArrayAlg {
     }
     else {
       for(DynamicArrayCoin coin: D.newCoins) coin.setColor(NodeColor.RED);
-      addStep((Node) D.newCoins.get(0), REL.TOP, "dynamicarray-needless-first");
+      addStep(D.newCoins.get(0), REL.TOP, "dynamicarray-needless-first");
       pause();
       for(DynamicArrayCoin coin: D.newCoins) coin.setState(Node.UP);
     }

@@ -116,7 +116,7 @@ public enum DS {
     public VisPanel createPanel() {
         try {
             final Constructor<? extends VisPanel> ct = p.getConstructor();
-            return (VisPanel) ct.newInstance();
+            return ct.newInstance();
         } catch (final Exception e) {
             System.out.println("Unable to construct panel: " + p);
             e.printStackTrace();

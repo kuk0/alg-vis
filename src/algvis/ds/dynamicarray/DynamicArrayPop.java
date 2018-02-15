@@ -20,11 +20,11 @@ public class DynamicArrayPop extends DynamicArrayAlg {
     }
 
     if(D.size == 0) {
-      addStep((Node)D.array.get(0), REL.TOP, "dynamicarray-empty");
+      addStep(D.array.get(0), REL.TOP, "dynamicarray-empty");
     }
     else {
       D.newCoins.get(2).setColor(NodeColor.RED);
-      addStep((Node) D.array.get(D.size - 1), REL.TOPRIGHT, "dynamicarray-pop");
+      addStep(D.array.get(D.size - 1), REL.TOPRIGHT, "dynamicarray-pop");
       pause();
 
       D.newCoins.get(2).setState(Node.UP);
@@ -48,8 +48,8 @@ public class DynamicArrayPop extends DynamicArrayAlg {
       }
 
       if(needless) {
-        if(D.size != 0) addStep((Node) D.newCoins.get(0), REL.TOP, "dynamicarray-needless-second");
-        else addStep((Node) D.newCoins.get(0), REL.TOP, "dynamicarray-needless-empty");
+        if(D.size != 0) addStep(D.newCoins.get(0), REL.TOP, "dynamicarray-needless-second");
+        else addStep(D.newCoins.get(0), REL.TOP, "dynamicarray-needless-empty");
         D.newCoins.get(1).setColor(NodeColor.RED);
         D.newCoins.get(0).setColor(NodeColor.RED);
         pause();
