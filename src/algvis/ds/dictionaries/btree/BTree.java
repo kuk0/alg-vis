@@ -78,9 +78,9 @@ public class BTree extends Dictionary {
             getRoot().calcTree();
             return "#" + Languages.getString("nodes") + ": " + getRoot().nnodes
                 + ";   " + "#" + Languages.getString("keys") + ": "
-                + getRoot().nkeys + " = " + (100 * getRoot().nkeys)
-                / (getRoot().nnodes * (order - 1)) + "% "
-                + Languages.getString("full") + ";   "
+                + getRoot().nkeys + " = "
+                + (100 * getRoot().nkeys) / (getRoot().nnodes * (order - 1))
+                + "% " + Languages.getString("full") + ";   "
                 + Languages.getString("height") + ": " + getRoot().height;
         }
     }

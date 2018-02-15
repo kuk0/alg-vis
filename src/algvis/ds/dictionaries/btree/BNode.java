@@ -174,8 +174,9 @@ public class BNode extends Node {
 
     public BNode split() {
         final int k = numKeys, ku = numKeys / 2; // , kw = numKeys - ku - 1;
-        final BNode u = new BNode(D, keys[0], tox, toy), v = new BNode(D,
-            keys[ku], tox, toy), w = new BNode(D, keys[k - 1], tox, toy);
+        final BNode u = new BNode(D, keys[0], tox, toy),
+            v = new BNode(D, keys[ku], tox, toy),
+            w = new BNode(D, keys[k - 1], tox, toy);
         for (int i = 1; i < ku; ++i) {
             u.addLeaf(keys[i]);
         }
@@ -237,8 +238,8 @@ public class BNode extends Node {
     }
 
     public BNode delMax() {
-        final BNode r = new BNode(D, keys[--numKeys], tox + (numKeys - 1)
-            * Node.RADIUS, toy);
+        final BNode r = new BNode(D, keys[--numKeys],
+            tox + (numKeys - 1) * Node.RADIUS, toy);
         width = _width();
         return r;
     }
@@ -313,12 +314,14 @@ public class BNode extends Node {
 
     int pos(int i) {
         if (i < 0) {
-            return tox - D.panel.screen.V.stringWidth(toString(), Fonts.NORMAL)
-                / 2 - Node.RADIUS;
+            return tox
+                - D.panel.screen.V.stringWidth(toString(), Fonts.NORMAL) / 2
+                - Node.RADIUS;
         }
         if (i >= numKeys) {
-            return tox + D.panel.screen.V.stringWidth(toString(), Fonts.NORMAL)
-                / 2 + Node.RADIUS;
+            return tox
+                + D.panel.screen.V.stringWidth(toString(), Fonts.NORMAL) / 2
+                + Node.RADIUS;
         }
         if (numKeys <= 1) {
             return tox;

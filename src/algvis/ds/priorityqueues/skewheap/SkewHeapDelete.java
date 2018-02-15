@@ -49,8 +49,8 @@ public class SkewHeapDelete extends SkewHeapAlg {
             H.root[0] = null;
             if (H.root[i] != null) {
                 H.root[i].highlightTree();
-                H.root[i].repos(H.root[i].x, H.root[i].y
-                    - (DataStructure.minsepy));// +
+                H.root[i].repos(H.root[i].x,
+                    H.root[i].y - (DataStructure.minsepy));// +
                 // 2
                 // *
                 // SkewHeapNode.RADIUS));

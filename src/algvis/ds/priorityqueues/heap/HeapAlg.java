@@ -30,7 +30,8 @@ abstract class HeapAlg extends Algorithm {
     }
 
     void bubbleup(HeapNode v) {
-        addStep(v, REL.BOTTOM, H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
+        addStep(v, REL.BOTTOM,
+            H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
         pause();
         HeapNode w = v.getParent();
         while (w != null && v.prec(w)) {

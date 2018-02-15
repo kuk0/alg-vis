@@ -49,10 +49,10 @@ public class ShadeSubtree extends VisualElement {
                 p.addPoint(u.x - 7, u.y + 10);
                 p.addPoint(u.x + 7, u.y + 10);
             } else {
-                final int x1 = u.x - u.leftw + DataStructure.minsepx / 2, x2 = u.x
-                    + u.rightw - DataStructure.minsepx / 2, y1 = u.y
-                    + DataStructure.minsepy, y2 = u.y + (u.height - 1)
-                    * DataStructure.minsepy;
+                final int x1 = u.x - u.leftw + DataStructure.minsepx / 2,
+                    x2 = u.x + u.rightw - DataStructure.minsepx / 2,
+                    y1 = u.y + DataStructure.minsepy,
+                    y2 = u.y + (u.height - 1) * DataStructure.minsepy;
                 p.addPoint(x1, y1);
                 p.addPoint(x1, y2);
                 p.addPoint(x2, y2);

@@ -32,9 +32,9 @@ public class LeftHeapNode extends BSTNode {
     int rank = 1;
     private boolean doubleArrow = false;
     boolean dashedRightLine = false; // if true the line leading to the right
-                                     // son is dashed
+                                    // son is dashed
     private boolean dashedLeftLine = false; // if true the line leading to the
-                                            // left son is dashed
+                                           // left son is dashed
 
     private LeftHeapNode(DataStructure D, int key, int x, int y) {
         super(D, key, x, y);
@@ -125,10 +125,13 @@ public class LeftHeapNode extends BSTNode {
         drawDoubleArrow(v);
         final String str = "" + rank;
         if (rank != -1) {
-            if (this.getParent() != null && this.getParent().getLeft() == this) {
-                v.drawString(str, x - Node.RADIUS, y - Node.RADIUS, Fonts.SMALL);
+            if (this.getParent() != null
+                && this.getParent().getLeft() == this) {
+                v.drawString(str, x - Node.RADIUS, y - Node.RADIUS,
+                    Fonts.SMALL);
             } else {
-                v.drawString(str, x + Node.RADIUS, y - Node.RADIUS, Fonts.SMALL);
+                v.drawString(str, x + Node.RADIUS, y - Node.RADIUS,
+                    Fonts.SMALL);
             }
         }
     }

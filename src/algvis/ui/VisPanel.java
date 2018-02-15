@@ -33,8 +33,8 @@ import algvis.internationalization.ILabel;
 import algvis.internationalization.LanguageListener;
 import algvis.internationalization.Languages;
 
-public abstract class VisPanel extends JPanel implements LanguageListener,
-    StateEditable {
+public abstract class VisPanel extends JPanel
+    implements LanguageListener, StateEditable {
     private static final long serialVersionUID = -5866649744399813386L;
 
     // aplet pozostava z piatich zakladnych veci:

@@ -70,8 +70,8 @@ public class InputField extends JTextField {
             }
             sb.setText(" ");
         } catch (final NumberFormatException e) {
-            sb.setText("couldn't parse an integer; using the default value "
-                + def);
+            sb.setText(
+                "couldn't parse an integer; using the default value " + def);
         }
         setText("");
         return n;
@@ -103,11 +103,13 @@ public class InputField extends JTextField {
                     x = Integer.parseInt(t);
                     if (x < min) {
                         x = min;
-                        sb.setText("value too small; using the minimum value instead");
+                        sb.setText(
+                            "value too small; using the minimum value instead");
                     }
                     if (x > max) {
                         x = max;
-                        sb.setText("value too high; using the maximum value instead");
+                        sb.setText(
+                            "value too high; using the maximum value instead");
                     }
                     if (range) {
                         final int a = args.lastElement();

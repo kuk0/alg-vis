@@ -41,12 +41,14 @@ abstract class SkewHeapAlg extends Algorithm {
             H.root[0].mark();
             w.mark();
             if (w.prec(H.root[0])) {
-                addStep(w, REL.TOP, H.minHeap ? "leftmeldrightl" : "leftmeldrightg",
+                addStep(w, REL.TOP,
+                    H.minHeap ? "leftmeldrightl" : "leftmeldrightg",
                     w.getKeyS(), H.root[0].getKeyS());
                 pause();
             } else {
-                addStep(w, REL.TOP, H.minHeap ? "leftmeldswapg" : "leftmeldswapl",
-                    w.getKeyS(), H.root[0].getKeyS());
+                addStep(w, REL.TOP,
+                    H.minHeap ? "leftmeldswapg" : "leftmeldswapl", w.getKeyS(),
+                    H.root[0].getKeyS());
                 w.setDoubleArrow(H.root[0]);
                 pause();
                 w.noDoubleArrow();
@@ -70,15 +72,16 @@ abstract class SkewHeapAlg extends Algorithm {
                 w.getParent().dashedRightLine = false;
             }
 
-            H.root[0].repos(H.root[0].tox, H.root[0].toy
-                + DataStructure.minsepy);// +
-                                         // 2*
-                                         // SkewHeapNode.RADIUS);
+            H.root[0].repos(H.root[0].tox,
+                H.root[0].toy + DataStructure.minsepy);// +
+                                                                                      // 2*
+                                                                                      // SkewHeapNode.RADIUS);
             H.root[0].unmark();
             w.unmark();
 
             if (w.getRight() == null) {
-                addStep(w, REL.TOP, "leftmeldnoson", H.root[0].getKeyS(), w.getKeyS());
+                addStep(w, REL.TOP, "leftmeldnoson", H.root[0].getKeyS(),
+                    w.getKeyS());
                 pause();
                 w.linkRight(H.root[0]);
                 H.root[0] = null;
@@ -129,7 +132,8 @@ abstract class SkewHeapAlg extends Algorithm {
     }
 
     void bubbleup(SkewHeapNode v) {
-        addStep(v, REL.BOTTOM, H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
+        addStep(v, REL.BOTTOM,
+            H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
         v.mark();
         pause();
         v.unmark();

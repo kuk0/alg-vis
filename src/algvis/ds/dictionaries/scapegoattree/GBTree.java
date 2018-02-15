@@ -29,7 +29,7 @@ import algvis.ui.view.Layout;
 public class GBTree extends BST {
     public static String dsName = "scapegoat";
     double alpha = 1.01; // TODO mozno nebude fungovat prepinanie alphy pri
-                         // prehliadani historie
+                        // prehliadani historie
     private int del = 0;
 
     @Override
@@ -80,31 +80,15 @@ public class GBTree extends BST {
                 + Languages.getString("avedepth") + ": 0";
         } else {
             getRoot().calcTree();
-            return "#"
-                + Languages.getString("nodes")
-                + ": "
-                + getRoot().size
-                + ";   #"
-                + Languages.getString("deleted")
-                + ": "
-                + getDel()
-                + ";   "
-                + Languages.getString("height")
-                + ": "
-                + getRoot().height
-                + " = "
-                + StringUtils
-                    .format(
-                        getRoot().height
-                            / (Math.floor(lg(getRoot().size - getDel())) + 1),
-                        2, 5)
-                + "\u00b7"
-                + Languages.getString("opt")
-                + ";   "
-                + Languages.getString("avedepth")
-                + ": "
-                + StringUtils.format(getRoot().sumh / (double) getRoot().size,
-                    2, -5);
+            return "#" + Languages.getString("nodes") + ": " + getRoot().size
+                + ";   #" + Languages.getString("deleted") + ": " + getDel()
+                + ";   " + Languages.getString("height") + ": "
+                + getRoot().height + " = "
+                + StringUtils.format(getRoot().height
+                    / (Math.floor(lg(getRoot().size - getDel())) + 1), 2, 5)
+                + "\u00b7" + Languages.getString("opt") + ";   "
+                + Languages.getString("avedepth") + ": " + StringUtils
+                    .format(getRoot().sumh / (double) getRoot().size, 2, -5);
         }
     }
 

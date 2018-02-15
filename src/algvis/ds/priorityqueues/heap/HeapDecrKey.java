@@ -17,7 +17,6 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.heap;
 
-
 public class HeapDecrKey extends HeapAlg {
     private final int delta;
     private final HeapNode v;

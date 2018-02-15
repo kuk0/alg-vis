@@ -97,12 +97,13 @@ public class Rotate extends Algorithm {
             } else {
                 addToSceneUntilNext(new Edge(p, v));
             }
-            addStep(p, REL.TOP, "rotate-change-parent", p.getKeyS(), v.getKeyS());
+            addStep(p, REL.TOP, "rotate-change-parent", p.getKeyS(),
+                v.getKeyS());
         } else {
-            addToSceneUntilNext(new Edge(u.x, u.y - DataStructure.minsepy, v.x,
-                v.y));
-            addStep(u.getNodeBoundingBox().createUnion(v.getNodeBoundingBox()), 200,
-                v.isLeft() ? REL.LEFT : REL.RIGHT, "rotate-newroot",
+            addToSceneUntilNext(
+                new Edge(u.x, u.y - DataStructure.minsepy, v.x, v.y));
+            addStep(u.getNodeBoundingBox().createUnion(v.getNodeBoundingBox()),
+                200, v.isLeft() ? REL.LEFT : REL.RIGHT, "rotate-newroot",
                 v.getKeyS());
         }
         pause();
@@ -110,8 +111,9 @@ public class Rotate extends Algorithm {
             addToSceneUntilNext(new Edge(u, b));
             addStep(b, REL.BOTTOM, "rotate-change-b", b.getKeyS(), u.getKeyS());
         } else {
-            addToSceneUntilNext(new Edge(u.x, u.y, v.x + (rotR ? +1 : -1)
-                * Node.RADIUS, v.y + DataStructure.minsepy));
+            addToSceneUntilNext(
+                new Edge(u.x, u.y, v.x + (rotR ? +1 : -1) * Node.RADIUS,
+                    v.y + DataStructure.minsepy));
             addStep(v, v.isLeft() ? REL.BOTTOMRIGHT : REL.BOTTOMLEFT,
                 "rotate-change-nullb", v.getKeyS(), u.getKeyS());
         }

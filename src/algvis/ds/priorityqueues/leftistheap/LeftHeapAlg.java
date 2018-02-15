@@ -41,12 +41,14 @@ abstract class LeftHeapAlg extends Algorithm {
             H.root[0].mark();
             w.mark();
             if (w.prec(H.root[0])) {
-                addStep(w, REL.TOP, H.minHeap ? "leftmeldrightl"
-                    : "leftmeldrightg", w.getKeyS(), H.root[0].getKeyS());
+                addStep(w, REL.TOP,
+                    H.minHeap ? "leftmeldrightl" : "leftmeldrightg",
+                    w.getKeyS(), H.root[0].getKeyS());
                 pause();
             } else {
-                addStep(w, REL.TOP, H.minHeap ? "leftmeldswapg"
-                    : "leftmeldswapl", w.getKeyS(), H.root[0].getKeyS());
+                addStep(w, REL.TOP,
+                    H.minHeap ? "leftmeldswapg" : "leftmeldswapl", w.getKeyS(),
+                    H.root[0].getKeyS());
                 w.setDoubleArrow(H.root[0]);
                 pause();
                 w.noDoubleArrow();
@@ -69,15 +71,16 @@ abstract class LeftHeapAlg extends Algorithm {
             if (w.getParent() != null) {
                 w.getParent().dashedRightLine = false;
             }
-            H.root[0].repos(H.root[0].tox, H.root[0].toy
-                + DataStructure.minsepy);// +
-                                         // 2*
-                                         // LeftHeapNode.RADIUS);
+            H.root[0].repos(H.root[0].tox,
+                H.root[0].toy + DataStructure.minsepy);// +
+                                                                                      // 2*
+                                                                                      // LeftHeapNode.RADIUS);
             H.root[0].unmark();
             w.unmark();
 
             if (w.getRight() == null) {
-                addStep(w, REL.TOP, "leftmeldnoson", H.root[0].getKeyS(), w.getKeyS());
+                addStep(w, REL.TOP, "leftmeldnoson", H.root[0].getKeyS(),
+                    w.getKeyS());
                 pause();
                 w.linkRight(H.root[0]);
                 H.root[0] = null;
@@ -96,7 +99,8 @@ abstract class LeftHeapAlg extends Algorithm {
 
         while (tmp != null) {
             if ((tmp.getLeft() != null) && (tmp.getRight() != null)) {
-                tmp.rank = Math.min(tmp.getLeft().rank, tmp.getRight().rank) + 1;
+                tmp.rank = Math.min(tmp.getLeft().rank, tmp.getRight().rank)
+                    + 1;
             } else {
                 tmp.rank = 1;
             }
@@ -143,7 +147,8 @@ abstract class LeftHeapAlg extends Algorithm {
     }
 
     void bubbleup(LeftHeapNode v) {
-        addStep(v, REL.BOTTOM, H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
+        addStep(v, REL.BOTTOM,
+            H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
         v.mark();
         pause();
         v.unmark();

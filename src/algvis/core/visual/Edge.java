@@ -17,8 +17,8 @@ public class Edge extends VisualElement {
     }
 
     private void set(int x1, int y1, int x2, int y2) {
-        double vecX = x2 - x1, vecY = y2 - y1, d = Math.sqrt(vecX * vecX + vecY
-            * vecY);
+        double vecX = x2 - x1, vecY = y2 - y1,
+            d = Math.sqrt(vecX * vecX + vecY * vecY);
         vecX *= Node.RADIUS * 1.5 / d;
         vecY *= Node.RADIUS * 1.5 / d;
 
@@ -39,8 +39,8 @@ public class Edge extends VisualElement {
     }
 
     private void set(int x1, int y1, int mx, int my, int x2, int y2) {
-        double vecX = mx - x1, vecY = my - y1, d = Math.sqrt(vecX * vecX + vecY
-            * vecY);
+        double vecX = mx - x1, vecY = my - y1,
+            d = Math.sqrt(vecX * vecX + vecY * vecY);
         vecX *= Node.RADIUS * 1.5 / d;
         vecY *= Node.RADIUS * 1.5 / d;
         this.x1 = x1 + (int) vecX;
@@ -61,8 +61,8 @@ public class Edge extends VisualElement {
         if ((u.x < m.x) != (m.x < v.x)) {
             set(u.x, u.y, v.x, v.y);
         } else {
-            double vecX = Math.abs(u.x - v.x), vecY = Math.abs(u.y - v.y), d = Math
-                .sqrt(vecX * vecX + vecY * vecY), mx = m.x, my = m.y;
+            double vecX = Math.abs(u.x - v.x), vecY = Math.abs(u.y - v.y),
+                d = Math.sqrt(vecX * vecX + vecY * vecY), mx = m.x, my = m.y;
             mx += (u.x < v.x ? 1 : -1) * vecY * 2 * Node.RADIUS / d;
             my -= vecX * 2 * Node.RADIUS / d;
             set(u.x, u.y, (int) mx, (int) my, v.x, v.y);

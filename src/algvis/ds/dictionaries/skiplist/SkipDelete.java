@@ -50,7 +50,7 @@ public class SkipDelete extends SkipAlg {
         removeFromScene(v);
 
         addNote("skiplist-delete-found");
-        
+
         L.n--;
         L.e++;
         addStep(w, REL.BOTTOM, "skipdelete");
@@ -59,8 +59,8 @@ public class SkipDelete extends SkipAlg {
                 break;
             }
             L.e--;
-            final SkipNode left = w.getLeft(), right = w.getRight(), up = w
-                .getUp();
+            final SkipNode left = w.getLeft(), right = w.getRight(),
+                up = w.getUp();
             left.linkright(right);
             if (up != null) {
                 up.setDown(null);

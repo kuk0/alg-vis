@@ -51,9 +51,10 @@ public abstract class VisualElement implements StateEditable {
     protected abstract void move() throws ConcurrentModificationException;
 
     public abstract Rectangle2D getBoundingBox();
-    
+
     public Rectangle2D getBoundingBoxDef() {
-        return U.withDefault(getBoundingBox(), new Rectangle2D.Double(0,0,0,0));
+        return U.withDefault(getBoundingBox(),
+            new Rectangle2D.Double(0, 0, 0, 0));
     }
 
     protected void endAnimation() {

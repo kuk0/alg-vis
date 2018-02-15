@@ -85,16 +85,16 @@ abstract class SplayAlg extends Algorithm {
                 pause();
                 removeFromScene(shade);
             } else {
-                final ShadeTriple shade = new ShadeTriple(w, w.getParent(), w
-                    .getParent().getParent());
+                final ShadeTriple shade = new ShadeTriple(w, w.getParent(),
+                    w.getParent().getParent());
                 addToScene(shade);
                 if (w.isLeft() == w.getParent().isLeft()) {
                     if (w.isLeft()) {
-                        addNote("splay-zig-zig-left", w.getKey(), w.getParent()
-                            .getKey());
+                        addNote("splay-zig-zig-left", w.getKey(),
+                            w.getParent().getKey());
                     } else {
-                        addNote("splay-zig-zig-right", w.getKey(), w
-                            .getParent().getKey());
+                        addNote("splay-zig-zig-right", w.getKey(),
+                            w.getParent().getKey());
                     }
                     addStep(w, REL.BOTTOM, "rotate", w.getParent().getKeyS());
                     w.getParent().setArc(w.getParent().getParent());
@@ -109,11 +109,11 @@ abstract class SplayAlg extends Algorithm {
                     pause();
                 } else {
                     if (!w.isLeft()) {
-                        addNote("splay-zig-zag-left", w.getKey(), w.getParent()
-                            .getKey());
+                        addNote("splay-zig-zag-left", w.getKey(),
+                            w.getParent().getKey());
                     } else {
-                        addNote("splay-zig-zag-right", w.getKey(), w
-                            .getParent().getKey());
+                        addNote("splay-zig-zag-right", w.getKey(),
+                            w.getParent().getKey());
                     }
                     w.setArc(w.getParent());
                     addStep(w, REL.BOTTOM, "rotate", w.getKeyS());

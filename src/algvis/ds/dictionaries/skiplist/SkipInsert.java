@@ -39,7 +39,6 @@ public class SkipInsert extends SkipAlg {
         addStep(L.getRoot(), REL.TOP, "skipinsertstart");
         SkipNode w = find();
 
-
         if (w.getKey() == v.getKey()) {
             addStep(v, REL.BOTTOM, "alreadythere");
             pause();
@@ -79,7 +78,8 @@ public class SkipInsert extends SkipAlg {
             } else {
                 v.linkdown(oldv);
                 final SkipNode oldr = L.getRoot(), olds = L.sent;
-                v.linkleft(L.setRoot(new SkipNode(L, -Node.INF, L.getZDepth())));
+                v.linkleft(
+                    L.setRoot(new SkipNode(L, -Node.INF, L.getZDepth())));
                 v.linkright(L.sent = new SkipNode(L, Node.INF, L.getZDepth()));
                 L.getRoot().linkdown(oldr);
                 L.sent.linkdown(olds);

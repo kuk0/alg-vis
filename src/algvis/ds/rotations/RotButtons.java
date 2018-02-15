@@ -73,7 +73,7 @@ public class RotButtons extends Buttons {
             for (final int x : args) {
                 R.rotate(x);
             }
-            if (panel.pauses && !args.isEmpty()){
+            if (panel.pauses && !args.isEmpty()) {
                 panel.history.rewind();
             }
         } else if (evt.getSource() == order) {

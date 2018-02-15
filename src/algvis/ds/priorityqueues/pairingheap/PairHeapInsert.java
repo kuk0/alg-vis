@@ -47,11 +47,13 @@ public class PairHeapInsert extends PairHeapAlg {
             // kedze je <cislo> viac/menej ako <cislo> tak to prilinkujeme k
             // tomu
             if (H.root[i].getKey() < H.root[0].getKey()) {
-                addStep(H.root[i], REL.TOP, H.minHeap ? "pairlinkmin"
-                    : "pairlinkmax", H.root[i].getKeyS(), H.root[0].getKeyS());
+                addStep(H.root[i], REL.TOP,
+                    H.minHeap ? "pairlinkmin" : "pairlinkmax",
+                    H.root[i].getKeyS(), H.root[0].getKeyS());
             } else {
-                addStep(H.root[0], REL.TOP, H.minHeap ? "pairlinkmin"
-                    : "pairlinkmax", H.root[0].getKeyS(), H.root[i].getKeyS());
+                addStep(H.root[0], REL.TOP,
+                    H.minHeap ? "pairlinkmin" : "pairlinkmax",
+                    H.root[0].getKeyS(), H.root[i].getKeyS());
             }
             pause();
             H.root[i].unmark();

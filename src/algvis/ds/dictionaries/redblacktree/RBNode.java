@@ -138,7 +138,7 @@ public class RBNode extends BSTNode {
 
     public boolean testRedBlack() {
         for (BSTNode v : postorder()) {
-            RBNode w = (RBNode)v;
+            RBNode w = (RBNode) v;
             if (w.isRed() && (w.isRoot() || w.getParent().isRed())) {
                 return false;
             }

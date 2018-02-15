@@ -238,7 +238,7 @@ public class PairingHeap extends MeldablePQ implements ClickListener {
                     root[i].shift(sumx, 0);
                 }
                 sumx += root[i].rightw + 20; // 20 + minsepx = vzdialenost medzi
-                                             // haldami
+                                            // haldami
             }
             if (i + 1 <= numHeaps) {
                 if (root[i + 1] != null) {

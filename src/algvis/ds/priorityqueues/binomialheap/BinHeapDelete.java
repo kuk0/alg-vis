@@ -25,10 +25,9 @@ public class BinHeapDelete extends BinHeapAlg {
         super(H);
     }
 
-    
     // TODO: fix deleting the whole Heap
     // TODO: simplify(?)
-    
+
     @Override
     public void runAlgorithm() {
         setHeader(H.minHeap ? "delete-min" : "delete-max");
@@ -62,7 +61,8 @@ public class BinHeapDelete extends BinHeapAlg {
                 }
                 w = w.right;
             } while (w != H.root[i]);
-            addStep(H.min[i], REL.TOP, H.minHeap ? "binheap-findmin" : "binheap-findmax");
+            addStep(H.min[i], REL.TOP,
+                H.minHeap ? "binheap-findmin" : "binheap-findmax");
         }
         H.root[0] = v = w = d.child;
         d.child = null;
@@ -76,7 +76,7 @@ public class BinHeapDelete extends BinHeapAlg {
             pause();
             return;
         }
-        
+
         // reverse & find min
         addNote("binheap-meldchildren");
         H.min[0] = w;

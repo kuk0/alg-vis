@@ -34,7 +34,8 @@ public class SuffixTreeNode extends TrieNode {
     private boolean packed;
     static boolean implicitNodes = false;
 
-    public SuffixTreeNode(DataStructure D, int key, int x, int y, boolean packed) {
+    public SuffixTreeNode(DataStructure D, int key, int x, int y,
+        boolean packed) {
         super(D, key, x, y);
         setPacked(packed);
     }
@@ -49,7 +50,8 @@ public class SuffixTreeNode extends TrieNode {
         setPacked(packed);
     }
 
-    public SuffixTreeNode(DataStructure D, char ch, int x, int y, boolean packed) {
+    public SuffixTreeNode(DataStructure D, char ch, int x, int y,
+        boolean packed) {
         super(D, ch, x, y);
         setPacked(packed);
     }
@@ -234,8 +236,8 @@ public class SuffixTreeNode extends TrieNode {
                     col.add(u.getBgColor());
                 }
                 if (u == null) {
-                    System.out.println("Something went wrong at [" + x + ","
-                        + y + "]");
+                    System.out.println(
+                        "Something went wrong at [" + x + "," + y + "]");
                     return;
                 }
                 int py = u.y;
@@ -243,8 +245,8 @@ public class SuffixTreeNode extends TrieNode {
                     py += 30;
                 }
                 s.reverse();
-                final int fonth = Fonts.TYPEWRITER.fm.getHeight(), len = s
-                    .length();
+                final int fonth = Fonts.TYPEWRITER.fm.getHeight(),
+                    len = s.length();
                 final int midy = (py + y) / 2, w = 6, h = len * fonth / 2;
                 final int xx = x;
                 int yy = midy - fonth * len / 2 - 4;

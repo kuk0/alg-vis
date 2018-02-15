@@ -43,7 +43,8 @@ public class DaryHeapInsert extends DaryHeapAlg {
         }
         DaryHeapNode w;
 
-        addStep(v, REL.BOTTOM, H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
+        addStep(v, REL.BOTTOM,
+            H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
 
         // int n = H.root.nnodes - 1;
         if (H.root == null) {

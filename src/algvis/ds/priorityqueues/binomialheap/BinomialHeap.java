@@ -157,9 +157,9 @@ public class BinomialHeap extends MeldablePQ implements ClickListener {
                 root[i].drawTree(V, root[i], null);
                 if (i > 0) {
                     V.setColor(Color.black);
-                    V.drawStringLeft(Languages.getString("heap") + " #" + i
-                        + ":", root[i].x - Node.RADIUS - 5, root[i].y,
-                        Fonts.NORMAL);
+                    V.drawStringLeft(
+                        Languages.getString("heap") + " #" + i + ":",
+                        root[i].x - Node.RADIUS - 5, root[i].y, Fonts.NORMAL);
                 }
                 if (min[i] != null) {
                     if (minHeap) {

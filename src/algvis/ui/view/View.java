@@ -47,8 +47,8 @@ import javax.swing.JPanel;
 import algvis.core.Node;
 import algvis.ui.Fonts;
 
-public class View implements MouseListener, MouseMotionListener,
-    MouseWheelListener {
+public class View
+    implements MouseListener, MouseMotionListener, MouseWheelListener {
     private Graphics2D g;
     private final static double SCALE_FACTOR = 1.1;
     private final static double MIN_ZOOM = 0.16;
@@ -93,8 +93,8 @@ public class View implements MouseListener, MouseMotionListener,
         at.setToIdentity();
         double f = 1, f2 = 1;
         if ((maxx - minx) > W || (maxy - miny) > H) {
-            f2 = Math.min(W / (double) (maxx - minx), H
-                / (double) (maxy - miny));
+            f2 = Math.min(W / (double) (maxx - minx),
+                H / (double) (maxy - miny));
             f = Math.max(f2, MIN_ZOOM);
         }
         if (align == Alignment.CENTER) {
@@ -178,8 +178,8 @@ public class View implements MouseListener, MouseMotionListener,
     @Override
     public void mouseDragged(MouseEvent e) {
         final int x = e.getX(), y = e.getY();
-        at.preConcatenate(AffineTransform.getTranslateInstance(x - mouseX, y
-            - mouseY));
+        at.preConcatenate(
+            AffineTransform.getTranslateInstance(x - mouseX, y - mouseY));
         mouseX = x;
         mouseY = y;
     }
@@ -239,8 +239,8 @@ public class View implements MouseListener, MouseMotionListener,
 
     public Point2D cut(double x, double y, double x2, double y2, double c) {
         final double d = new Point2D.Double(x, y).distance(x2, y2);
-        return new Point2D.Double(x + (x2 - x) * (d - c) / d, y + (y2 - y)
-            * (d - c) / d);
+        return new Point2D.Double(x + (x2 - x) * (d - c) / d,
+            y + (y2 - y) * (d - c) / d);
     }
 
     public void fillRect(double x, double y, double a, double b) {
@@ -395,7 +395,8 @@ public class View implements MouseListener, MouseMotionListener,
             arch));
     }
 
-    public void drawTextBubble(String s, double x, double y, int w, int alpha, REL pos) {
+    public void drawTextBubble(String s, double x, double y, int w, int alpha,
+        REL pos) {
         drawTextBubble(s, x, y, w, alpha, pos, Node.RADIUS, Node.RADIUS);
     }
 
@@ -433,12 +434,14 @@ public class View implements MouseListener, MouseMotionListener,
             y += gapy;
         }
 
-        g.fill(new RoundRectangle2D.Double(x - 5, y - 5, w + 10, h + 10, 10, 10));
+        g.fill(
+            new RoundRectangle2D.Double(x - 5, y - 5, w + 10, h + 10, 10, 10));
         g.setColor(new Color((alpha << 24), true));
-        g.draw(new RoundRectangle2D.Double(x - 5, y - 5, w + 10, h + 10, 15, 15));
+        g.draw(
+            new RoundRectangle2D.Double(x - 5, y - 5, w + 10, h + 10, 15, 15));
         for (TextLayout l : L) {
             y += l.getAscent();
-            l.draw(g, (int)x, (int)y);
+            l.draw(g, (int) x, (int) y);
             y += l.getDescent() + l.getLeading();
         }
     }
@@ -498,7 +501,8 @@ public class View implements MouseListener, MouseMotionListener,
     // x,y,w,h is the bounding rectangle
     // a1,a2 is the starting and ending angle in degrees
     void drawArc(double x, double y, double w, double h, double a1, double a2) {
-        g.drawArc((int) x, (int) y, (int) w, (int) h, (int) a1, (int) (a2 - a1));
+        g.drawArc((int) x, (int) y, (int) w, (int) h, (int) a1,
+            (int) (a2 - a1));
     }
 
     // let A=[x1,y1] and B=[x2,y2]
@@ -534,15 +538,16 @@ public class View implements MouseListener, MouseMotionListener,
     }
 
     public void drawFancyArc(double x1, double y1, double x3, double y3) {
-        g.draw(new CubicCurve2D.Double(x1, y1, x1, y1 + 10, x3, y3 - 40, x3, y3));
+        g.draw(
+            new CubicCurve2D.Double(x1, y1, x1, y1 + 10, x3, y3 - 40, x3, y3));
     }
 
     public void drawArcArrow(double x, double y, double w, double h, double a1,
         double a2) {
         drawArc(x, y, w, h, a1, a2);
         final double a = a2 * Math.PI / 180;
-        final double x2 = x + w / 2.0 * (1 + Math.cos(a)), y2 = y + h / 2.0
-            * (1 - Math.sin(a));
+        final double x2 = x + w / 2.0 * (1 + Math.cos(a)),
+            y2 = y + h / 2.0 * (1 - Math.sin(a));
         final double dx = 128 * Math.sin(a), dy = 128 * Math.cos(a);
         if (a1 <= a2) {
             x = x2 + dx;

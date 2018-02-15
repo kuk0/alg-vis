@@ -51,8 +51,8 @@ public class AVLNode extends BSTNode {
     }
 
     public int balance() {
-        final int l = (getLeft() == null) ? 0 : getLeft().height, r = (getRight() == null) ? 0
-            : getRight().height;
+        final int l = (getLeft() == null) ? 0 : getLeft().height,
+            r = (getRight() == null) ? 0 : getRight().height;
         setBalance(r - l);
         return bal;
     }
@@ -76,7 +76,8 @@ public class AVLNode extends BSTNode {
         drawArrow(V);
         drawArc(V);
 
-        final int xx = x - Node.RADIUS, yy = y - Node.RADIUS, dx = 2 * Node.RADIUS, dy = 2 * Node.RADIUS;
+        final int xx = x - Node.RADIUS, yy = y - Node.RADIUS,
+            dx = 2 * Node.RADIUS, dy = 2 * Node.RADIUS;
         String b = "";
         if (getBgColor() == NodeColor.NORMAL.bgColor) {
             V.setColor(Color.ORANGE);

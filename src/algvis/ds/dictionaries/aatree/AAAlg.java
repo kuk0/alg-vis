@@ -13,7 +13,7 @@ abstract public class AAAlg extends Algorithm {
         K = x;
     }
 
-	public void skew(AANode w, String txt) {
+    public void skew(AANode w, String txt) {
         if (w != null && w.leftPseudoNode()) {
             addStep(w, REL.TOP, txt);
             w.getLeft().setArc(w);
@@ -22,10 +22,10 @@ abstract public class AAAlg extends Algorithm {
             T.rotate(w.getLeft());
             T.reposition();
         }
-	}
-	
-	public void split(AANode w, String txt) {
-		AANode r = w.getRight();
+    }
+
+    public void split(AANode w, String txt) {
+        AANode r = w.getRight();
         addStep(w, REL.TOP, txt);
         r.setArc();
         pause();
@@ -33,5 +33,5 @@ abstract public class AAAlg extends Algorithm {
         T.rotate(r);
         r.setLevel(r.getLevel() + 1);
         T.reposition();
-	}
+    }
 }

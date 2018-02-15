@@ -120,16 +120,16 @@ public class IntervalFindMin extends IntervalAlg {
             } else {
                 maxi.setKey(maxi.getKey() + w.getKey());
             }
-            addStep(w, REL.TOP, "intervalin", "" + i, "" + j, w.getKeyS(), ""
-                + w.b, "" + w.e); // dnu intervalu
+            addStep(w, REL.TOP, "intervalin", "" + i, "" + j, w.getKeyS(),
+                "" + w.b, "" + w.e); // dnu intervalu
             w.focused = focusType.TIN;
             pause();
             return;
         }
 
         if ((w.b <= b) || (w.e >= e)) {
-            addStep(w, REL.TOP, "intervalpart", "" + i, "" + j, w.getKeyS(), ""
-                + w.b, "" + w.e); // neprazdny prienik
+            addStep(w, REL.TOP, "intervalpart", "" + i, "" + j, w.getKeyS(),
+                "" + w.b, "" + w.e); // neprazdny prienik
             w.focused = focusType.TOUT;
             pause();
             w.focused = focusType.TWAIT;

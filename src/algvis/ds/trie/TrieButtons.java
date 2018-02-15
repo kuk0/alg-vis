@@ -65,7 +65,7 @@ public class TrieButtons extends Buttons {
             for (final String s : args) {
                 ((Trie) D).insert(s);
             }
-            if (panel.pauses && !args.isEmpty()){
+            if (panel.pauses && !args.isEmpty()) {
                 panel.history.rewind();
             }
         } else if (evt.getSource() == findB) {
@@ -75,7 +75,7 @@ public class TrieButtons extends Buttons {
                 for (final String s : args) {
                     ((Trie) D).find(s);
                 }
-                if (panel.pauses){
+                if (panel.pauses) {
                     panel.history.rewind();
                 }
             }
@@ -86,7 +86,7 @@ public class TrieButtons extends Buttons {
                 for (final String s : args) {
                     ((Trie) D).delete(s);
                 }
-                if (panel.pauses){
+                if (panel.pauses) {
                     panel.history.rewind();
                 }
             }

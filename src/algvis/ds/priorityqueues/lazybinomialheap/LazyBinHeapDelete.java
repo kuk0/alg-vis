@@ -37,7 +37,7 @@ public class LazyBinHeapDelete extends Algorithm {
         setHeader(H.minHeap ? "delete-min" : "delete-max");
         final int i = H.active;
         H.cleanup = new BinHeapNode[lg(H.size(i) + 1) + 1]; // TODO: change to
-                                                            // rank
+                                                           // rank
         if (H.root[i] == null) {
             // empty
             H.cleanup = null;

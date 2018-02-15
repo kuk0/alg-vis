@@ -256,8 +256,8 @@ public class Scene extends VisualElement {
     @Override
     public synchronized void restoreState(Hashtable<?, ?> state) {
         for (int i = 0; i < MAXZ; ++i) {
-            final Set<VisualElement> setI = (Set<VisualElement>) state.get(hash
-                + "elements" + i);
+            final Set<VisualElement> setI = (Set<VisualElement>) state
+                .get(hash + "elements" + i);
             if (setI != null) {
                 for (final VisualElement e : elements.get(i)) {
                     if (setI.contains(e) && elementsToRemove.contains(e)) {

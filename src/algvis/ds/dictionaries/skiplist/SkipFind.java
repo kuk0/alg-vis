@@ -33,9 +33,9 @@ public class SkipFind extends SkipAlg {
         v = new SkipNode(L, K, ZDepth.ACTIONNODE);
         v.setColor(NodeColor.FIND);
         addToScene(v);
-        
-        addStep(L.getRoot(),REL.TOP, "skipfindstart");
-       
+
+        addStep(L.getRoot(), REL.TOP, "skipfindstart");
+
         final SkipNode w = find();
         if (w.getKey() == v.getKey()) {
             addNote("found");

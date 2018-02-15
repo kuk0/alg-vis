@@ -52,7 +52,8 @@ public class DaryHeapDecrKey extends DaryHeapAlg {
             }
         }
 
-        addStep(v, REL.BOTTOM, H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
+        addStep(v, REL.BOTTOM,
+            H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
         bubbleup(v);
     }
 }

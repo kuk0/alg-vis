@@ -147,7 +147,7 @@ public abstract class PairHeapAlg extends Algorithm {
 
             H.reposition();
             addStep(H.root[i], REL.TOP, "pairlrrl2"); // a teraz sa vyberie jeden vrchol a polinkuju
-                                  // sa sprava dolava
+            // sa sprava dolava
             pause();
 
             j = H.root[i].numChildren();

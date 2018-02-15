@@ -65,7 +65,8 @@ public class GBInsert extends GBAlg {
                     } else {
                         v.pointAbove(w.getRight());
                     }
-                    addStep(v, REL.LEFT, "bst-insert-right", "" + K, w.getKeyS());
+                    addStep(v, REL.LEFT, "bst-insert-right", "" + K,
+                        w.getKeyS());
                     pause();
                     v.noArrow();
                     if (w.getRight() != null) {
@@ -80,7 +81,8 @@ public class GBInsert extends GBAlg {
                     } else {
                         v.pointAbove(w.getLeft());
                     }
-                    addStep(v, REL.RIGHT, "bst-insert-left", "" + K, w.getKeyS());
+                    addStep(v, REL.RIGHT, "bst-insert-left", "" + K,
+                        w.getKeyS());
                     pause();
                     v.noArrow();
                     if (w.getLeft() != null) {

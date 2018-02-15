@@ -27,8 +27,8 @@ import algvis.internationalization.IComboBox;
 import algvis.internationalization.ILabel;
 import algvis.ui.VisPanel;
 
-public class PairHeapButtons extends MeldablePQButtons implements
-    ChangeListener {
+public class PairHeapButtons extends MeldablePQButtons
+    implements ChangeListener {
     private static final long serialVersionUID = -5692673269308125662L;
     public IComboBox pairVariant;
 
@@ -61,7 +61,8 @@ public class PairHeapButtons extends MeldablePQButtons implements
             final int i = pairVariant.getSelectedIndex();
 
             if ((i >= 0) && (i < 2)) { // (i < 6)){
-                ((PairingHeap) D).pairState = PairHeapDelete.Pairing.values()[i];
+                ((PairingHeap) D).pairState = PairHeapDelete.Pairing
+                    .values()[i];
             }
         }
     }

@@ -49,8 +49,8 @@ public class LeftHeapDelete extends LeftHeapAlg {
             H.root[0] = null;
             if (H.root[i] != null) {
                 H.root[i].highlightTree();
-                H.root[i].repos(H.root[i].x, H.root[i].y
-                    - (DataStructure.minsepy));
+                H.root[i].repos(H.root[i].x,
+                    H.root[i].y - (DataStructure.minsepy));
             }
             // heap #1 is empty; done;
             return;

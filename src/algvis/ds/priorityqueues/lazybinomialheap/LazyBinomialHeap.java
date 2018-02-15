@@ -73,11 +73,11 @@ public class LazyBinomialHeap extends BinomialHeap {
                 V.drawSquare(x, y, Node.RADIUS);
                 V.drawStringTop("" + i, x, y - Node.RADIUS + 1, Fonts.NORMAL);
                 if (cleanup[i] == null) {
-                    V.drawLine(x - Node.RADIUS, y + Node.RADIUS, x
-                        + Node.RADIUS, y - Node.RADIUS);
+                    V.drawLine(x - Node.RADIUS, y + Node.RADIUS,
+                        x + Node.RADIUS, y - Node.RADIUS);
                 } else {
-                    V.drawArrow(x, y, cleanup[i].x, cleanup[i].y - minsepy
-                        + Node.RADIUS);
+                    V.drawArrow(x, y, cleanup[i].x,
+                        cleanup[i].y - minsepy + Node.RADIUS);
                 }
                 x += 2 * Node.RADIUS;
             }

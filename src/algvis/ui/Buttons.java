@@ -45,8 +45,8 @@ import algvis.internationalization.ICheckBox;
  * structure-specific buttons (such "Insert" or "Delete") are created by
  * extending this class (see for example classes DictButtons, PQButtons).
  */
-abstract public class Buttons extends JPanel implements ActionListener,
-    StateEditable {
+abstract public class Buttons extends JPanel
+    implements ActionListener, StateEditable {
     private static final long serialVersionUID = 1417759004124906334L;
     protected final VisPanel panel;
     protected final DataStructure D;

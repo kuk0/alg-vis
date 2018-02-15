@@ -53,8 +53,8 @@ public class RBDelete extends Algorithm {
             // metoda draw zmeni kazdy RBNode
             // na cerveny alebo cierny
 
-            RBNode u = d, w = (u.getLeft() != null) ? u.getLeft() : u
-                .getRight2();
+            RBNode u = d,
+                w = (u.getLeft() != null) ? u.getLeft() : u.getRight2();
             T.NULL.setParent(u.getParent2());
             if (d.isLeaf()) { // case I - list
                 addStep(d, REL.BOTTOM, "bst-delete-case1");
@@ -70,8 +70,8 @@ public class RBDelete extends Algorithm {
                 // case IIa - 1 syn
                 addStep(d, REL.BOTTOM, "bst-delete-case2");
                 pause();
-                final BSTNode s = (d.getLeft() == null) ? d.getRight() : d
-                    .getLeft();
+                final BSTNode s = (d.getLeft() == null) ? d.getRight()
+                    : d.getLeft();
                 if (d.isRoot()) {
                     T.setRoot(s);
                     s.setParent(null);
@@ -202,6 +202,8 @@ public class RBDelete extends Algorithm {
             T.reposition();
             addNote("done");
         }
-        assert (T.getRoot() == null || (((RBNode) T.getRoot()).testStructure() && ((RBNode) T.getRoot()).testStructure() && ((RBNode) T.getRoot()).testRedBlack()));
+        assert (T.getRoot() == null || (((RBNode) T.getRoot()).testStructure()
+            && ((RBNode) T.getRoot()).testStructure()
+            && ((RBNode) T.getRoot()).testRedBlack()));
     }
 }

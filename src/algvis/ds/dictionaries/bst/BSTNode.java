@@ -284,7 +284,8 @@ public class BSTNode extends Node {
                     v.drawString("" + i, w.x, -29, Fonts.NORMAL);
                 } else {
                     v.drawLine(w.x, w.y, w.x, -20);
-                    v.drawString("" + i % 10, w.x, -27, (i % 10 == 5) ? Fonts.NORMAL : Fonts.SMALL);
+                    v.drawString("" + i % 10, w.x, -27,
+                        (i % 10 == 5) ? Fonts.NORMAL : Fonts.SMALL);
                 }
             }
         }
@@ -308,7 +309,7 @@ public class BSTNode extends Node {
             v.goTo(v.tox + dx, v.toy + dy);
         }
     }
-    
+
     public Rectangle2D getNodeBoundingBox() {
         return super.getBoundingBox();
     }
@@ -472,7 +473,7 @@ public class BSTNode extends Node {
      * required
      *
      * @return the leftmost and the rightmost node on the deepest level of the
-     * subtree rooted at this node
+     *         subtree rooted at this node
      */
     private NodePair<BSTNode> RTPreposition() {
         final NodePair<BSTNode> result = new NodePair<>();
@@ -536,7 +537,8 @@ public class BSTNode extends Node {
                  * this node. Similarly, right.offset + roffset is the
                  * horizontal distance from R to this node.
                  */
-                final int distance = (loffset + DataStructure.minsepx - roffset);
+                final int distance = (loffset + DataStructure.minsepx
+                    - roffset);
                 if (distance > 0) {
                     getRight().offset += distance;
                     roffset += distance;
@@ -618,7 +620,8 @@ public class BSTNode extends Node {
      * Calculate the absolute coordinates from the relative ones and dispose the
      * threads.
      *
-     * @param x real x coordinate of parent node
+     * @param x
+     *            real x coordinate of parent node
      */
     private void RTPetrification(int x, int y) {
         goTo(x + offset, y);

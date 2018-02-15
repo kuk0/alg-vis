@@ -17,7 +17,6 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.skewheap;
 
-
 public class SkewHeapDecrKey extends SkewHeapAlg {
     private final int delta;
 

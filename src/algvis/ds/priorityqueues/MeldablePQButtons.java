@@ -54,8 +54,8 @@ public class MeldablePQButtons extends PQButtons implements ChangeListener {
 
     @Override
     public void otherButtons(JPanel P) {
-        activeHeap = new JSpinner(new SpinnerNumberModel(1, 1,
-            MeldablePQ.numHeaps, 1));
+        activeHeap = new JSpinner(
+            new SpinnerNumberModel(1, 1, MeldablePQ.numHeaps, 1));
         activeHeap.addChangeListener(this);
         activeLabel = new ILabel("activeheap");
         P.add(activeLabel);
@@ -72,7 +72,7 @@ public class MeldablePQButtons extends PQButtons implements ChangeListener {
             args.add(-1);
             panel.history.saveEditId();
             ((MeldablePQ) D).meld(args.get(0), args.get(1));
-            if (panel.pauses){
+            if (panel.pauses) {
                 panel.history.rewind();
             }
         }

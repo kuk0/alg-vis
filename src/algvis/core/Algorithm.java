@@ -128,8 +128,9 @@ abstract public class Algorithm implements Runnable {
     }
 
     protected void removeFromScene(VisualElement element) {
-        if (element == null)
+        if (element == null) {
             return;
+        }
         // if (panel.pauses) {
         panel.scene.remove(element);
         // } else {

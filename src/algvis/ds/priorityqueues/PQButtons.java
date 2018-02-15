@@ -98,13 +98,13 @@ public class PQButtons extends Buttons {
             for (final int x : args) {
                 D.insert(x);
             }
-            if (panel.pauses && !args.isEmpty()){
+            if (panel.pauses && !args.isEmpty()) {
                 panel.history.rewind();
             }
         } else if (evt.getSource() == deleteB) {
             panel.history.saveEditId();
             ((PriorityQueue) D).delete();
-            if (panel.pauses){
+            if (panel.pauses) {
                 panel.history.rewind();
             }
         } else if (evt.getSource() == decrKeyB) {
@@ -115,7 +115,7 @@ public class PQButtons extends Buttons {
                 // nesedi hlaska "using the default value 1"
                 panel.history.saveEditId();
                 ((PriorityQueue) D).decreaseKey(w, delta);
-                if (panel.pauses){
+                if (panel.pauses) {
                     panel.history.rewind();
                 }
             }

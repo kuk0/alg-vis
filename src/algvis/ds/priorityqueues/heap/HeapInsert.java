@@ -22,12 +22,10 @@ import algvis.ui.view.REL;
 
 public class HeapInsert extends HeapAlg {
     private final int K;
-    private final String KS;
 
     public HeapInsert(Heap H, int x) {
         super(H);
         K = x;
-        KS = "" + K;
     }
 
     @Override

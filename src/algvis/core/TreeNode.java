@@ -339,7 +339,8 @@ public class TreeNode extends Node {
             int roffset = RightSubtree.offset = LeftSubtree.offset;
 
             while ((L != null) && (R != null)) {
-                final int distance = (loffset + DataStructure.minsepx - roffset);
+                final int distance = (loffset + DataStructure.minsepx
+                    - roffset);
                 if (distance > 0) {
                     RightSubtree.offset += distance;
                     roffset += distance;

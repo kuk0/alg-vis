@@ -36,7 +36,8 @@ public class DaryHeapDelete extends DaryHeapAlg {
 
         if (H.root.c.size() == 0) {
             final DaryHeapNode v = H.root;
-            addStep(H, 200, REL.TOP, H.minHeap ? "minimum" : "maximum", H.root.getKeyS());
+            addStep(H, 200, REL.TOP, H.minHeap ? "minimum" : "maximum",
+                H.root.getKeyS());
             H.root = null;
             addToScene(v);
             v.mark();
@@ -47,7 +48,8 @@ public class DaryHeapDelete extends DaryHeapAlg {
             removeFromScene(v);
             return;
         }
-        addStep(H, 200, REL.TOP, H.minHeap ? "minimum" : "maximum", H.root.getKeyS());
+        addStep(H, 200, REL.TOP, H.minHeap ? "minimum" : "maximum",
+            H.root.getKeyS());
         H.root.mark();
         pause();
         // H.root.unmark();
@@ -82,7 +84,8 @@ public class DaryHeapDelete extends DaryHeapAlg {
         H.root.mark();
         H.reposition();
 
-        addStep(v, REL.BOTTOM, H.minHeap ? "mindheapbubbledown" : "maxdheapbubbledown");
+        addStep(v, REL.BOTTOM,
+            H.minHeap ? "mindheapbubbledown" : "maxdheapbubbledown");
         pause();
 
         H.root.unmark();

@@ -62,11 +62,13 @@ public class PairHeapMeld extends PairHeapAlg {
         H.root[0].mark();
         H.root[i].mark();
         if (H.root[i].getKey() < H.root[0].getKey()) {
-            addStep(H.root[i], 200, REL.TOP, H.minHeap ? "pairlinkmin"
-                : "pairlinkmax", H.root[i].getKeyS(), H.root[0].getKeyS());
+            addStep(H.root[i], 200, REL.TOP,
+                H.minHeap ? "pairlinkmin" : "pairlinkmax", H.root[i].getKeyS(),
+                H.root[0].getKeyS());
         } else {
-            addStep(H.root[0], 200, REL.TOP, H.minHeap ? "pairlinkmin"
-                : "pairlinkmax", H.root[0].getKeyS(), H.root[i].getKeyS());
+            addStep(H.root[0], 200, REL.TOP,
+                H.minHeap ? "pairlinkmin" : "pairlinkmax", H.root[0].getKeyS(),
+                H.root[i].getKeyS());
         }
         pause();
         H.root[0].unmark();

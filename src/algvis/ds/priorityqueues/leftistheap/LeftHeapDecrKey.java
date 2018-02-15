@@ -17,7 +17,6 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.leftistheap;
 
-
 public class LeftHeapDecrKey extends LeftHeapAlg {
     private final int delta;
 

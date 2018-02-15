@@ -33,8 +33,8 @@ public class BinHeapNode extends Node {
     private int leftw;
     public int height;
     public int rank; // TODO: size -> rank (treba ale
-                     // zmenit aj pomocne upratovacie
-                     // pole....)
+                    // zmenit aj pomocne upratovacie
+                    // pole....)
     public BinHeapNode parent, left, right, child;
     public boolean cut; // TODO hm?
 

@@ -185,9 +185,9 @@ public class IntervalTree extends IntervalTrees implements ClickListener {
 
     public void extend() {
         final IntervalNode w = new IntervalNode(this, 0, ZDepth.NODE); // pre suctovy
-                                                                       // strom je
-                                                                       // 0,
-        // min je +inf, max je -inf
+                                                                      // strom je
+                                                                      // 0,
+                                                                      // min je +inf, max je -inf
         w.setKey(Node.NOKEY);
         final IntervalNode w2 = root;
         w.setLeft(w2);

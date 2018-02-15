@@ -77,7 +77,7 @@ public class DictButtons extends Buttons {
             for (final int x : args) {
                 ((Dictionary) D).find(x);
             }
-            if (panel.pauses && !args.isEmpty()){
+            if (panel.pauses && !args.isEmpty()) {
                 panel.history.rewind();
             }
         } else if (evt.getSource() == deleteB) {
@@ -86,7 +86,7 @@ public class DictButtons extends Buttons {
             for (final int x : args) {
                 ((Dictionary) D).delete(x);
             }
-            if (panel.pauses && !args.isEmpty()){
+            if (panel.pauses && !args.isEmpty()) {
                 panel.history.rewind();
             }
         }

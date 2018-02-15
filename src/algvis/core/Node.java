@@ -52,7 +52,7 @@ public class Node extends VisualElement {
     public boolean marked = false;
     protected Node dir = null;
     private int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S,
-                                      // 135=SW, 180=W)
+                                     // 135=SW, 180=W)
     private boolean arc = false;
 
     public static final int STEPS = 10;
@@ -77,7 +77,7 @@ public class Node extends VisualElement {
     public static final int LEFT = 3;
     public static final int RIGHT = 4;
     public static final int OUT = 5;
-    public static final int UP = 6;    
+    public static final int UP = 6;
     public static final int NOARROW = -10000;
     public static final int DIRARROW = -10001;
     public static final int TOARROW = -10002;
@@ -288,8 +288,8 @@ public class Node extends VisualElement {
         if (!arc || dir == null) {
             return;
         }
-        final int x = dir.x, y = this.y - DataStructure.minsepy + Node.RADIUS, a = Math
-            .abs(this.x - dir.x), b = Math.abs(this.y - dir.y);
+        final int x = dir.x, y = this.y - DataStructure.minsepy + Node.RADIUS,
+            a = Math.abs(this.x - dir.x), b = Math.abs(this.y - dir.y);
         v.setColor(Color.BLACK);
         if (this.x > dir.x) {
             v.drawArcArrow(x - a, y - b, 2 * a, 2 * b, 0, 90);
@@ -314,8 +314,8 @@ public class Node extends VisualElement {
      * clicked at the node.)
      */
     protected boolean inside(int x, int y) {
-        return (this.x - x) * (this.x - x) + (this.y - y) * (this.y - y) <= Node.RADIUS
-            * Node.RADIUS;
+        return (this.x - x) * (this.x - x)
+            + (this.y - y) * (this.y - y) <= Node.RADIUS * Node.RADIUS;
     }
 
     /**
@@ -420,7 +420,7 @@ public class Node extends VisualElement {
         case Node.UP:
             y -= 20;
             break;
-        }        
+        }
     }
 
     @Override
@@ -455,7 +455,8 @@ public class Node extends VisualElement {
 
     @Override
     public boolean isAnimationDone() {
-        return ((steps == 0 && state == ALIVE) || state == INVISIBLE || state == OUT);
+        return ((steps == 0 && state == ALIVE) || state == INVISIBLE
+            || state == OUT);
     }
 
     public int getKey() {
@@ -469,7 +470,7 @@ public class Node extends VisualElement {
     public void setKey(int key) {
         this.key = key;
     }
-    
+
     public void decrKey(int delta, boolean minOrder) {
         if (minOrder) {
             setKey(Math.max(key - delta, 1));
@@ -505,7 +506,8 @@ public class Node extends VisualElement {
             stat = HashtableStoreSupport.restore(stat);
             // tu nechcem mat invisible (inak spravit)
             if ((this.state == OUT || this.state == DOWN || this.state == LEFT
-                || this.state == RIGHT || this.state == UP) && stat.equals(ALIVE)) {
+                || this.state == RIGHT || this.state == UP)
+                && stat.equals(ALIVE)) {
                 goTo(tox, toy);
             }
             this.state = (Integer) stat;

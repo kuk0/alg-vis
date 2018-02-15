@@ -8,14 +8,16 @@ import algvis.core.RelativeNode;
 import algvis.ui.view.View;
 
 public class DynamicArrayDelimiter extends RelativeNode {
-  Color C;
-  public DynamicArrayDelimiter(DataStructure D, Node relative, Color C) {
-    super(D, relative, Node.NOKEY, -Node.RADIUS, 0, 0);
-    this.C = C;
-  }
+    Color C;
 
-  @Override
-  public void draw(View v) {
-    v.drawLine(x-1.5, y - Node.RADIUS*2, x-1.5, y + Node.RADIUS*2, 3, C);
-  }
+    public DynamicArrayDelimiter(DataStructure D, Node relative, Color C) {
+        super(D, relative, Node.NOKEY, -Node.RADIUS, 0, 0);
+        this.C = C;
+    }
+
+    @Override
+    public void draw(View v) {
+        v.drawLine(x - 1.5, y - Node.RADIUS * 2, x - 1.5, y + Node.RADIUS * 2,
+            3, C);
+    }
 }

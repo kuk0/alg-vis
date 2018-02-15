@@ -30,9 +30,9 @@ import algvis.ui.view.View;
 public class SkewHeapNode extends BSTNode {
     private boolean doubleArrow = false;
     boolean dashedRightLine = false; // if true the line leading to the right
-                                     // son is dashed
+                                    // son is dashed
     private boolean dashedLeftLine = false; // if true the line leading to the
-                                            // left son is dashed
+                                           // left son is dashed
 
     private SkewHeapNode(DataStructure D, int key, int x, int y) {
         super(D, key, x, y);

@@ -67,18 +67,18 @@ public class IntervalNode extends BSTNode {
         }
 
         if (!isLeaf()) {
-            v.drawStringLeft(Integer.toString(b), x - Node.RADIUS, y
-                - Node.RADIUS, Fonts.SMALL);
-            v.drawStringRight(Integer.toString(e), x + Node.RADIUS, y
-                - Node.RADIUS, Fonts.SMALL);
+            v.drawStringLeft(Integer.toString(b), x - Node.RADIUS,
+                y - Node.RADIUS, Fonts.SMALL);
+            v.drawStringRight(Integer.toString(e), x + Node.RADIUS,
+                y - Node.RADIUS, Fonts.SMALL);
         } else {
             v.drawString(Integer.toString(e), x, y + Node.RADIUS + 5,
                 Fonts.SMALL);
         }
     }
 
-    private static final NodeColor TREE = new NodeColor(Color.BLACK, new Color(
-        0xFDFF9A));// 0xFEFFC3));
+    private static final NodeColor TREE = new NodeColor(Color.BLACK,
+        new Color(0xFDFF9A));// 0xFEFFC3));
     private static final NodeColor EMPTY = new NodeColor(Color.BLACK,
         new Color(0xF0F0F0));
 
@@ -129,12 +129,12 @@ public class IntervalNode extends BSTNode {
         drawTree2(v);
     }
 
-    private static final NodeColor IN = new NodeColor(Color.BLACK, new Color(
-        0xAAFF95));
-    private static final NodeColor OUT = new NodeColor(Color.BLACK, new Color(
-        0xFC9A79));
-    private static final NodeColor WAIT = new NodeColor(Color.BLACK, new Color(
-        0xFFFFFF));
+    private static final NodeColor IN = new NodeColor(Color.BLACK,
+        new Color(0xAAFF95));
+    private static final NodeColor OUT = new NodeColor(Color.BLACK,
+        new Color(0xFC9A79));
+    private static final NodeColor WAIT = new NodeColor(Color.BLACK,
+        new Color(0xFFFFFF));
 
     private void drawTree2(View v) {
         switch (focused) {
@@ -160,13 +160,13 @@ public class IntervalNode extends BSTNode {
             // System.out.println(d + " =vyska-1, minsepy= "
             // + IntervalTree.minsepy);
             final int width = (c) * IntervalTree.minsepx;
-            final int height = (d) * DataStructure.minsepy + 4 + 2
-                * Node.RADIUS;
-            v.drawRoundRectangle(x, y + height / 2 - Node.RADIUS - 3,
-                width / 2, height / 2, 8, 8);
+            final int height = (d) * DataStructure.minsepy + 4
+                + 2 * Node.RADIUS;
+            v.drawRoundRectangle(x, y + height / 2 - Node.RADIUS - 3, width / 2,
+                height / 2, 8, 8);
             v.setColor(this.getBgColor());
-            v.fillRoundRectangle(x, y + height / 2 - Node.RADIUS - 3,
-                width / 2, height / 2, 8, 8);
+            v.fillRoundRectangle(x, y + height / 2 - Node.RADIUS - 3, width / 2,
+                height / 2, 8, 8);
         default:
             break;
         }
@@ -180,7 +180,7 @@ public class IntervalNode extends BSTNode {
             getLeft().drawTree2(v);
         }
         if (D instanceof BST && ((BST) D).order) { // && D.panel.S.layout ==
-                                                   // Layout.SIMPLE
+                                                  // Layout.SIMPLE
             v.setColor(Color.LIGHT_GRAY);
             ++i;
             if (i % 10 == 0) {

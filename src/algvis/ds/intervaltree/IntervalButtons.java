@@ -111,7 +111,7 @@ public class IntervalButtons extends Buttons {
             for (final int x : args) {
                 D.insert(x);
             }
-            if (panel.pauses){
+            if (panel.pauses) {
                 panel.history.rewind();
             }
         } else if (evt.getSource() == findsumB) {
@@ -123,7 +123,7 @@ public class IntervalButtons extends Buttons {
             } else {
                 ((IntervalTrees) D).ofinterval(1, ((IntervalTree) D).numLeafs);
             }
-            if (panel.pauses){
+            if (panel.pauses) {
                 panel.history.rewind();
             }
         } else if (evt.getSource() == changeKeyB) {
@@ -131,7 +131,7 @@ public class IntervalButtons extends Buttons {
             final BSTNode w = ((BSTNode) ((IntervalTrees) D).chosen);
             panel.history.saveEditId();
             ((IntervalTrees) D).changeKey(w, delta);
-            if (panel.pauses && w != null){
+            if (panel.pauses && w != null) {
                 panel.history.rewind();
             }
         } else if (evt.getSource() == minB

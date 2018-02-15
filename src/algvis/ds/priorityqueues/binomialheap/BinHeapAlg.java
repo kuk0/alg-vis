@@ -33,10 +33,12 @@ abstract class BinHeapAlg extends Algorithm {
         v.mark();
         if ((H.min[0]).prec(H.min[i])) {
             H.min[i] = H.min[0];
-            addStep(H.min[0], REL.BOTTOM, H.minHeap ? "binheap-newmin" : "binheap-newmax",
+            addStep(H.min[0], REL.BOTTOM,
+                H.minHeap ? "binheap-newmin" : "binheap-newmax",
                 H.min[i].getKeyS());
         } else {
-            addStep(H.min[i], REL.TOP, H.minHeap ? "binheap-oldmin" : "binheap-oldmax",
+            addStep(H.min[i], REL.TOP,
+                H.minHeap ? "binheap-oldmin" : "binheap-oldmax",
                 H.min[i].getKeyS());
         }
         addNote("binheap-meld-idea");
@@ -77,7 +79,8 @@ abstract class BinHeapAlg extends Algorithm {
                 && (v.right == H.root[i] || v.rank < v.right.rank)) {
                 final BinHeapNode u = v.left;
                 if (u.prec(v)) { // napojime v pod u
-                    addStep(v, REL.TOP, "binheap-link", v.getKeyS(), u.getKeyS());
+                    addStep(v, REL.TOP, "binheap-link", v.getKeyS(),
+                        u.getKeyS());
                     pause();
                     v.unlink();
                     u.linkChild(v);
@@ -85,7 +88,8 @@ abstract class BinHeapAlg extends Algorithm {
                     v = u;
                     v.mark();
                 } else { // napojime u pod v
-                    addStep(u, REL.TOP, "binheap-link", u.getKeyS(), v.getKeyS());
+                    addStep(u, REL.TOP, "binheap-link", u.getKeyS(),
+                        v.getKeyS());
                     pause();
                     if (H.root[i] == u) {
                         H.root[i] = v;

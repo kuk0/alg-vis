@@ -75,7 +75,7 @@ public class SuffixTreeButtons extends Buttons {
             for (final String s : args) {
                 ((SuffixTree) D).insert(s);
             }
-            if (panel.pauses && !args.isEmpty()){
+            if (panel.pauses && !args.isEmpty()) {
                 panel.history.rewind();
             }
         } else if (evt.getSource() == findB) {
@@ -85,7 +85,7 @@ public class SuffixTreeButtons extends Buttons {
                 for (final String s : args) {
                     ((SuffixTree) D).find(s);
                 }
-                if (panel.pauses){
+                if (panel.pauses) {
                     panel.history.rewind();
                 }
             }

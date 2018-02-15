@@ -44,11 +44,12 @@ public class HistoryManager extends UndoManager {
         return anEdit instanceof UpdatableStateEdit && super.addEdit(anEdit);
     }
 
-    private long getEditId(){
-        if (canUndo())
+    private long getEditId() {
+        if (canUndo()) {
             return editToBeUndone().getId();
-        else
+        } else {
             return -1;
+        }
     }
 
     public synchronized void putAlgorithmEnd() {
@@ -69,13 +70,13 @@ public class HistoryManager extends UndoManager {
             redo();
         } while (!algorithmEnds.containsKey(editToBeUndone()) && canRedo());
     }
-    
-    public void saveEditId(){
+
+    public void saveEditId() {
         savedEditId = getEditId();
     }
-    
-    public void rewind(){
-        while (canUndo() && editToBeUndone().getId() != savedEditId){
+
+    public void rewind() {
+        while (canUndo() && editToBeUndone().getId() != savedEditId) {
             undo();
         }
         redo();
@@ -108,18 +109,18 @@ public class HistoryManager extends UndoManager {
         lastState = new UpdatableStateEdit(panel, ++id);
         addEdit(lastState);
     }
-    
+
     public void nextEdit(StateEditable panel) {
         lastState.end();
         lastState = new UpdatableStateEdit(panel, ++id);
         addEdit(lastState);
     }
-    
+
     public void finishEdits() {
         lastState.end();
         putAlgorithmEnd();
     }
-    
+
     public void addToPreState(StateEditable element) {
         lastState.addToPreState(element);
     }

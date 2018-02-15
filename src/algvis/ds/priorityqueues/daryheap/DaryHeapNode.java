@@ -174,8 +174,8 @@ public class DaryHeapNode extends HeapNode {
                 leftw += (DaryHeap.minsepx / 2);
             }
             if (c.size() > ((DaryHeap) D).getOrder() / 2) {
-                rightw = leftw - (((DaryHeap) D).getOrder() - c.size())
-                    * DaryHeap.minsepx;
+                rightw = leftw
+                    - (((DaryHeap) D).getOrder() - c.size()) * DaryHeap.minsepx;
             } else {
                 rightw = DaryHeap.minsepx / 2;
             }
@@ -272,11 +272,11 @@ public class DaryHeapNode extends HeapNode {
         }
 
         if (getParent().c.size() < ((DaryHeap) D).getOrder()) { // pre root
-                                                                // nson ==
-                                                                // -1
-            // System.out.print("malo synov kluca " + getParent().key +
-            // ", konkretne " + getParent().numChildren + " a order mame prave "
-            // + ((DaryHeap) D).getOrder() + "\n" );
+                                                               // nson ==
+                                                               // -1
+                                                               // System.out.print("malo synov kluca " + getParent().key +
+                                                               // ", konkretne " + getParent().numChildren + " a order mame prave "
+                                                               // + ((DaryHeap) D).getOrder() + "\n" );
             return getParent();
         }
 
@@ -294,7 +294,7 @@ public class DaryHeapNode extends HeapNode {
         }
 
         v = v.getParent().c.get(v.nson); // v poli je n-ty syn na mieste (nson -
-                                         // 1)
+                                        // 1)
         while (!v.c.isEmpty()) {
             v = v.c.firstElement();
         }

@@ -33,8 +33,8 @@ public class PairHeapDecrKey extends PairHeapAlg {
         setHeader(H.minHeap ? "decreasekey" : "increasekey");
         v.decrKey(delta, H.minHeap);
         if (!v.isRoot()) {
-         // zvysili sme hodnotu, dieta odtrhneme a prilinkujeme
-            addStep(v, REL.BOTTOM, H.minHeap ? "pairdecr" : "pairincr"); 
+            // zvysili sme hodnotu, dieta odtrhneme a prilinkujeme
+            addStep(v, REL.BOTTOM, H.minHeap ? "pairdecr" : "pairincr");
             H.root[0] = v;
             H.root[0].mark();
             pause();

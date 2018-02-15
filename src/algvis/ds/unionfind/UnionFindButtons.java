@@ -76,8 +76,8 @@ public class UnionFindButtons extends Buttons {
     @Override
     public JPanel initThirdRow() {
         final JPanel P = new JPanel();
-        final ILabel uhLabel = new ILabel("uf-union-heuristic"), fhLabel = new ILabel(
-            "uf-find-heuristic");
+        final ILabel uhLabel = new ILabel("uf-union-heuristic"),
+            fhLabel = new ILabel("uf-find-heuristic");
         final String[] uh = {
             "uf-none", "uf-byrank"
         }, fh = {
@@ -122,7 +122,7 @@ public class UnionFindButtons extends Buttons {
             }
             panel.history.saveEditId();
             D.find(D.at(args.elementAt(0)));
-            if (panel.pauses){
+            if (panel.pauses) {
                 panel.history.rewind();
             }
         } else if (evt.getSource() == unionB) {
@@ -151,7 +151,7 @@ public class UnionFindButtons extends Buttons {
             }
             panel.history.saveEditId();
             D.union(D.at(args.elementAt(0)), D.at(args.elementAt(1)));
-            if (panel.pauses){
+            if (panel.pauses) {
                 panel.history.rewind();
             }
         } else if (evt.getSource() == unionHeuristicCB) {
