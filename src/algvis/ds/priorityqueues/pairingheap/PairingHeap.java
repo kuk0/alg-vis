@@ -221,7 +221,7 @@ public class PairingHeap extends MeldablePQ implements ClickListener {
                 }
             }
         }
-        return new Pair<Integer, Integer>(i, j);
+        return new Pair<>(i, j);
     }
 
     public void reposition() {

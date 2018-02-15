@@ -30,7 +30,7 @@ public class Languages {
     private static final ResourceBundle[] all_msgs = new ResourceBundle[N];
     // private static Locale locale;
     // private static ResourceBundle msg;
-    private static final List<LanguageListener> listeners = new LinkedList<LanguageListener>();
+    private static final List<LanguageListener> listeners = new LinkedList<>();
 
     static {
         all_locales[0] = new Locale("en");

@@ -41,7 +41,7 @@ public class DaryHeapNode extends HeapNode {
     private DaryHeapNode(DaryHeap D, int key, int x, int y, int zDepth) {
         super(D, key, x, y, zDepth);
         bgKeyColor();
-        c = new Vector<DaryHeapNode>(D.getOrder());
+        c = new Vector<>(D.getOrder());
         // setColor(NodeColor.NORMAL);
         width = DaryHeap.minsepx;
         // mark();

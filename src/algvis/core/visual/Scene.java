@@ -32,9 +32,9 @@ import algvis.ui.view.View;
 
 public class Scene extends VisualElement {
     public static final int MAXZ = 10, MIDZ = 5;
-    private final List<HashSet<VisualElement>> elements = new ArrayList<HashSet<VisualElement>>();
-    public final Set<VisualElement> elementsToRemove = new HashSet<VisualElement>();
-    private final List<VisualElement> temporaryElements = new ArrayList<VisualElement>();
+    private final List<HashSet<VisualElement>> elements = new ArrayList<>();
+    public final Set<VisualElement> elementsToRemove = new HashSet<>();
+    private final List<VisualElement> temporaryElements = new ArrayList<>();
 
     public Scene() {
         super(0);
@@ -234,7 +234,7 @@ public class Scene extends VisualElement {
          * }
          * }
          */
-        final List<Set<VisualElement>> elementsClone = new ArrayList<Set<VisualElement>>();
+        final List<Set<VisualElement>> elementsClone = new ArrayList<>();
         for (final HashSet<VisualElement> set : elements) {
             elementsClone.add((Set<VisualElement>) set.clone());
         }

@@ -53,7 +53,7 @@ public class SuffixTreeInsert extends Algorithm {
             addNote("badword");
         }
 
-        Vector<SuffixTreeNode> ruleOneBuffer = new Vector<SuffixTreeNode>();
+        Vector<SuffixTreeNode> ruleOneBuffer = new Vector<>();
 
         T.getRoot().ch = ':';
         T.text = s;
@@ -76,7 +76,7 @@ public class SuffixTreeInsert extends Algorithm {
             T.reposition();
             pause();
             // in real implementation this is done in O(1) both time & space
-            final Vector<SuffixTreeNode> newRuleOneBuffer = new Vector<SuffixTreeNode>();
+            final Vector<SuffixTreeNode> newRuleOneBuffer = new Vector<>();
             for (final SuffixTreeNode u : ruleOneBuffer) {
                 u.setColor(NodeColor.NORMAL);
                 final SuffixTreeNode w = new SuffixTreeNode(T, ch, u.x, u.y,
@@ -96,7 +96,7 @@ public class SuffixTreeInsert extends Algorithm {
             }
             T.reposition();
             pause();
-            final Vector<SuffixTreeNode> upWalk = new Vector<SuffixTreeNode>();
+            final Vector<SuffixTreeNode> upWalk = new Vector<>();
             String cachedUpWalk = "";
             setUpSuffixLinkOnThis = T.getRoot();
             SuffixTreeNode current = starting;
@@ -151,7 +151,7 @@ public class SuffixTreeInsert extends Algorithm {
                 hw.goNextTo(current);
                 T.reposition();
                 pause();
-                final Vector<SuffixTreeNode> downWalk = new Vector<SuffixTreeNode>();
+                final Vector<SuffixTreeNode> downWalk = new Vector<>();
                 caching = current;
                 while (!cachedUpWalk.equals("")) {
                     if (!caching.isPacked()) {

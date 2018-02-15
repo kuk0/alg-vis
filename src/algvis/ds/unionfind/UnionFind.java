@@ -36,8 +36,8 @@ public class UnionFind extends DataStructure implements ClickListener {
     public static String dsName = "ufi";
 
     public int count = 0;
-    private ArrayList<UnionFindNode> sets = new ArrayList<UnionFindNode>();
-    private ArrayList<UnionFindNode> vertices = new ArrayList<UnionFindNode>();
+    private ArrayList<UnionFindNode> sets = new ArrayList<>();
+    private ArrayList<UnionFindNode> vertices = new ArrayList<>();
 
     public FindHeuristic pathCompression = FindHeuristic.NONE;
     public UnionHeuristic unionState = UnionHeuristic.NONE;
@@ -102,8 +102,8 @@ public class UnionFind extends DataStructure implements ClickListener {
     @Override
     public void clear() {
         count = 0;
-        sets = new ArrayList<UnionFindNode>();
-        vertices = new ArrayList<UnionFindNode>();
+        sets = new ArrayList<>();
+        vertices = new ArrayList<>();
         makeSet(10);
         setStats();
     }

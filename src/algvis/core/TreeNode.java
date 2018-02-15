@@ -307,7 +307,7 @@ public class TreeNode extends Node {
      * @return Leftmost and rightmost nodes on the last level of subtree
      */
     private NodePair<TreeNode> fTRPrePosition() {
-        NodePair<TreeNode> result = new NodePair<TreeNode>();
+        NodePair<TreeNode> result = new NodePair<>();
 
         if (isLeaf()) {
             offset = 0;
@@ -422,9 +422,9 @@ public class TreeNode extends Node {
         int distance = 0;
         int change = 0;
         TreeNode w = getChild();
-        final Stack<TreeNode> stack = new Stack<TreeNode>();
+        final Stack<TreeNode> stack = new Stack<>();
         while (w != null) {
-            final NodePair<TreeNode> N = new NodePair<TreeNode>();
+            final NodePair<TreeNode> N = new NodePair<>();
             N.left = w;
             stack.push(w);
             w = w.getRight();
@@ -576,7 +576,7 @@ public class TreeNode extends Node {
     }
 
     public Vector<TreeNode> getLeaves() {
-        final Vector<TreeNode> result = new Vector<TreeNode>();
+        final Vector<TreeNode> result = new Vector<>();
         if (isLeaf()) {
             result.add(this);
             return result;

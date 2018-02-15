@@ -90,9 +90,9 @@ public class WordGenerator {
     }
 
     public static Vector<String> parseString(String ss) {
-        final Vector<String> ll = new Vector<String>(Arrays.asList(ss
+        final Vector<String> ll = new Vector<>(Arrays.asList(ss
             .replaceAll("'", " ").split("(\\s|,)+")));
-        final Vector<String> result = new Vector<String>();
+        final Vector<String> result = new Vector<>();
         final Pattern p = Pattern
             .compile("[\\p{InCombiningDiacriticalMarks}\\p{IsLm}\\p{IsSk}]+");
         for (String s : ll) {

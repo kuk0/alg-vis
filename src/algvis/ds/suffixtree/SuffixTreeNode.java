@@ -221,7 +221,7 @@ public class SuffixTreeNode extends TrieNode {
             }
             TrieNode u = this;
             final StringBuilder s = new StringBuilder("");
-            final Stack<Color> col = new Stack<Color>();
+            final Stack<Color> col = new Stack<>();
             if (getChild() == null || getChild().getRight() != null) {
                 while (u != null && u.getParent() != null
                     && u.getParent().getChild() == u && u.getRight() == null) {

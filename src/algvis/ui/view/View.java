@@ -404,7 +404,7 @@ public class View implements MouseListener, MouseMotionListener,
         FontRenderContext frc = g.getFontRenderContext();
         LineBreakMeasurer measurer = new LineBreakMeasurer(
             new AttributedString(s).getIterator(), frc);
-        ArrayList<TextLayout> L = new ArrayList<TextLayout>();
+        ArrayList<TextLayout> L = new ArrayList<>();
         double h = 0;
         while (measurer.getPosition() < s.length()) {
             TextLayout l = measurer.nextLayout(w);

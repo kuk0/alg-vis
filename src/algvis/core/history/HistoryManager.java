@@ -29,7 +29,7 @@ import algvis.core.visual.Scene;
 
 public class HistoryManager extends UndoManager {
     private static final long serialVersionUID = -842354204488084104L;
-    private final Map<UndoableEdit, Boolean> algorithmEnds = new WeakHashMap<UndoableEdit, Boolean>();
+    private final Map<UndoableEdit, Boolean> algorithmEnds = new WeakHashMap<>();
     private long id = -1;
     private long savedEditId;
     private UpdatableStateEdit lastState;

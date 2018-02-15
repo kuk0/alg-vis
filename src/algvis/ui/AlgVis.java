@@ -47,7 +47,7 @@ public class AlgVis extends JPanel implements ActionListener {
     private DS activePanel = null;
     private final Container container;
 
-    private final Map<DS, VisPanel> panels = new HashMap<DS, VisPanel>();
+    private final Map<DS, VisPanel> panels = new HashMap<>();
 
     private final static Vector<Object> DS_MENU = vec(
         sop("dictionary",

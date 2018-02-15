@@ -43,8 +43,8 @@ public class StringElem implements StateEditable {
         this.x = x;
         this.y = y;
         len = s.length();
-        col = new ArrayList<Color>();
-        marked = new ArrayList<Boolean>();
+        col = new ArrayList<>();
+        marked = new ArrayList<>();
         for (int i = 0; i < len; ++i) {
             col.add(NodeColor.DARKER.bgColor);
             marked.add(false);

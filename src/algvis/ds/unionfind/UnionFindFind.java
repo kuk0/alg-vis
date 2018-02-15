@@ -69,7 +69,7 @@ public class UnionFindFind extends Algorithm {
     }
 
     private Stack<UnionFindNode> findRoot(UnionFindNode u) {
-        final Stack<UnionFindNode> S = new Stack<UnionFindNode>();
+        final Stack<UnionFindNode> S = new Stack<>();
         UnionFindNode v = null;
 
         u.setColor(NodeColor.FIND);

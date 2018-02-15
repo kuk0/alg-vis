@@ -61,7 +61,7 @@ public class ShadeSubtree extends VisualElement {
         } else {
             // TODO: BST needs to expose threads
             BSTNode w = u;
-            final Stack<BSTNode> tmp = new Stack<BSTNode>();
+            final Stack<BSTNode> tmp = new Stack<>();
             while (u != null && w != null) {
                 p.addPoint(u.x - 1, u.y);
                 tmp.add(w);

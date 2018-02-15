@@ -122,7 +122,7 @@ public class SkewHeap extends MeldablePQ implements ClickListener {
                 }
             }
         }
-        return new Pair<Integer, Integer>(i, j);
+        return new Pair<>(i, j);
     }
 
     @Override
