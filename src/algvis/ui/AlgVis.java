@@ -52,8 +52,8 @@ public class AlgVis extends JPanel implements ActionListener {
     private final static Vector<Object> DS_MENU = vec(
         sop("dictionary",
             vec(DS.BST, DS.ROTATION, DS.AVL_TREE, DS.A23, DS.A234, DS.B_TREE,
-                DS.RB_TREE, DS.AA_TREE, DS.TREAP, DS.SKIPLIST, DS.GB_TREE,
-                DS.SPLAY_TREE)), //
+                DS.BPLUS_TREE, DS.RB_TREE, DS.AA_TREE, DS.TREAP, DS.SKIPLIST,
+                DS.GB_TREE, DS.SPLAY_TREE)), //
         sop("pq", vec(DS.HEAP, DS.DARY_HEAP)), //
         sop("meldable-pq",
             vec(DS.LEFTIST_HEAP, DS.SKEW_HEAP, DS.PAIRING_HEAP, DS.BIN_HEAP,

@@ -105,6 +105,21 @@ abstract public class Algorithm implements Runnable {
         addToSceneUntilNext(new TextBubble(new IParamString(s, par),
             pos.boundaryPoint(v.getDestBoundingBox()), 200, pos));
     }
+    
+    /*
+    protected void addStep(String s) {
+        // TO FIX
+    }
+    protected void addStep(String s, int x, int y) {
+        // TO FIX
+    }
+    protected void addStep(String s, int x, int y, int z) {
+        // TO FIX
+    }
+    protected void addStep(String s, int x, int y, int z, int w) {
+        // TO FIX
+    }*/
+
 
     protected void addStep(VisualElement v, int w, REL pos, String s,
         String... par) {

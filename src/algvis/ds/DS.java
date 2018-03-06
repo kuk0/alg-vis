@@ -10,6 +10,8 @@ import algvis.ds.dictionaries.avltree.AVLPanel;
 import algvis.ds.dictionaries.bst.BST;
 import algvis.ds.dictionaries.bst.BSTPanel;
 import algvis.ds.dictionaries.btree.BPanel;
+import algvis.ds.dictionaries.btree.BPlusPanel;
+import algvis.ds.dictionaries.btree.BPlusTree;
 import algvis.ds.dictionaries.btree.BTree;
 import algvis.ds.dictionaries.btree.a234Panel;
 import algvis.ds.dictionaries.btree.a234Tree;
@@ -64,6 +66,7 @@ public enum DS {
     A23(a23Tree.class, a23Panel.class), // 2-3-tree
     A234(a234Tree.class, a234Panel.class), // 2-3-4-tree
     B_TREE(BTree.class, BPanel.class), // B-tree
+    BPLUS_TREE(BPlusTree.class, BPlusPanel.class), // B+-tree
     RB_TREE(RB.class, RBPanel.class), // red-black tree
     AA_TREE(AA.class, AAPanel.class), // AA-tree
     TREAP(Treap.class, TreapPanel.class), // treap

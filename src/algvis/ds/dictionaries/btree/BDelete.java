@@ -66,13 +66,11 @@ public class BDelete extends BAlg {
             if (d.isLeaf()) {
                 addStep(d, REL.BOTTOM, "bdelete1");
                 if (d.isRoot() && d.numKeys == 1) {
-                    v = d;
+                    addToScene(v = d);
                     T.setRoot(null);
-                    addToScene(v);
                     v.goDown();
                 } else {
-                    v = d.del(K);
-                    addToScene(v);
+                    addToScene(v = d.del(K));
                     T.reposition();
                     v.goDown();
                     pause();
@@ -81,9 +79,8 @@ public class BDelete extends BAlg {
             } else {
                 addStep(d, REL.BOTTOM, "bdelete2");
                 BNode s = d.way(K + 1);
-                v = new BNode(T, -Node.INF, d.tox, d.toy);
+                addToScene(v = new BNode(T, -Node.INF, d.tox, d.toy));
                 v.setColor(NodeColor.FIND);
-                addToScene(v);
                 v.goAbove(s);
                 pause();
                 while (!s.isLeaf()) {
@@ -92,8 +89,7 @@ public class BDelete extends BAlg {
                     pause();
                 }
                 removeFromScene(v);
-                v = s.delMin();
-                addToScene(v);
+                addToScene(v = s.delMin());
                 v.goTo(d);
                 pause();
                 d.replace(K, v.keys[0]);
@@ -129,13 +125,8 @@ public class BDelete extends BAlg {
                     // treba zobrat prvok z s, nahradit nim p.keys[k]
                     // a p.keys[k] pridat do d
                     // tiez treba prehodit pointer z s ku d
-                    if (lefts) {
-                        addStep(d, REL.BOTTOM, "bleft");
-                    } else {
-                        addStep(d, REL.BOTTOM, "bright");
-                    }
-                    v = lefts ? s.delMax() : s.delMin();
-                    addToScene(v);
+                    addStep(d, REL.BOTTOM, lefts ? "bleft" : "bright");
+                    addToScene(v = lefts ? s.delMax() : s.delMin());
                     v.goTo(p);
                     pause();
                     final int pkey = p.keys[k];
@@ -175,10 +166,10 @@ public class BDelete extends BAlg {
                         } else {
                             T.setRoot(new BNode(d, v, s));
                         }
+                        removeFromScene(v);
                         break;
                     } else {
-                        v = p.del(p.keys[k]);
-                        addToScene(v);
+                        addToScene(v = p.del(p.keys[k]));
                         v.goTo((d.tox + s.tox) / 2, d.y);
                         pause();
                         if (lefts) {

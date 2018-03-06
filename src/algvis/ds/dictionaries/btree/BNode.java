@@ -27,14 +27,13 @@ import algvis.ui.Fonts;
 import algvis.ui.view.View;
 
 public class BNode extends Node {
-    private int width;
+    protected int width;
     private int leftw;
     private int rightw;
     BNode parent = null;
     int numKeys = 1, numChildren = 0;
     int[] keys;
     BNode[] c;
-    // View V;
 
     // statistics
     int nkeys = 1, nnodes = 1, height = 1;
@@ -45,7 +44,6 @@ public class BNode extends Node {
         c = new BNode[((BTree) D).order + 5];
         this.keys[0] = key;
         numKeys = 1;
-        // this.V = D.panel.S.V;
         width = _width();
     }
 
@@ -77,6 +75,15 @@ public class BNode extends Node {
         width = _width();
     }
 
+    // allow overriding
+    public BNode newNode(DataStructure D, int key, int x, int y) {
+        return new BNode(D, key, x, y);
+    }
+
+    public BNode newNode(BNode u, BNode v, BNode w) {
+        return new BNode(u, v, w);
+    }
+
     public boolean isRoot() {
         return parent == null;
     }
@@ -84,13 +91,6 @@ public class BNode extends Node {
     public boolean isLeaf() {
         return numChildren == 0;
     }
-
-    /*
-     * public boolean isLeft() { return parent.left==this; } public void
-     * linkleft(BSTNode v) { left = v; v.parent = this; } public void
-     * linkright(BSTNode v) { right = v; v.parent = this; } public void
-     * isolate() { left = right = parent = null; }
-     */
 
     public void calcTree() {
         nkeys = numKeys;
@@ -121,7 +121,7 @@ public class BNode extends Node {
                 return i;
             }
         }
-        return -5; // TODO: vypindat exception
+        return -5; // this shouldn't happen
     }
 
     public void add(int k, BNode v) {
@@ -173,10 +173,10 @@ public class BNode extends Node {
     }
 
     public BNode split() {
-        final int k = numKeys, ku = numKeys / 2; // , kw = numKeys - ku - 1;
-        final BNode u = new BNode(D, keys[0], tox, toy),
-            v = new BNode(D, keys[ku], tox, toy),
-            w = new BNode(D, keys[k - 1], tox, toy);
+        final int k = numKeys, ku = numKeys / 2;
+        final BNode u = newNode(D, keys[0], tox, toy),
+            v = newNode(D, keys[ku], tox, toy),
+            w = newNode(D, keys[k - 1], tox, toy);
         for (int i = 1; i < ku; ++i) {
             u.addLeaf(keys[i]);
         }
@@ -218,7 +218,7 @@ public class BNode extends Node {
             keys[i] = keys[i + 1];
         }
         width = _width();
-        return new BNode(D, k, tox - (numKeys + 1 - 2 * p) * Node.RADIUS, toy);
+        return newNode(D, k, tox - (numKeys + 1 - 2 * p) * Node.RADIUS, toy);
     }
 
     public BNode delMin() {
@@ -226,7 +226,7 @@ public class BNode extends Node {
         --numKeys;
         System.arraycopy(keys, 1, keys, 0, numKeys);
         width = _width();
-        return new BNode(D, r, tox - (numKeys - 1) * Node.RADIUS, toy);
+        return newNode(D, r, tox - (numKeys - 1) * Node.RADIUS, toy);
     }
 
     public BNode delMinCh() {
@@ -238,7 +238,7 @@ public class BNode extends Node {
     }
 
     public BNode delMax() {
-        final BNode r = new BNode(D, keys[--numKeys],
+        final BNode r = newNode(D, keys[--numKeys],
             tox + (numKeys - 1) * Node.RADIUS, toy);
         width = _width();
         return r;
@@ -346,7 +346,6 @@ public class BNode extends Node {
         V.setColor(getFgColor());
         V.drawRoundRectangle(x, y, width / 2, Node.RADIUS, 2 * Node.RADIUS,
             2 * Node.RADIUS);
-        // g.drawLine (x-leftw, y+2, x+rightw, y-2);
     }
 
     @Override
@@ -359,10 +358,6 @@ public class BNode extends Node {
     public void drawTree(View v) {
         for (int i = 0; i < numChildren; ++i) {
             v.setColor(Color.black);
-            /*
-             * int xx, yy; if (i==0 || i==numChildren-1) { xx = x; yy = y; }
-             * else { xx = (pos(i-1)+pos(i))/2; yy = y+D.RADIUS; }
-             */
             v.drawLine(x, y, c[i].x, c[i].y - Node.RADIUS);
             c[i].drawTree(v);
         }
@@ -378,9 +373,7 @@ public class BNode extends Node {
 
     void rebox() {
         if (numChildren == 0) {
-            leftw = rightw = width / 2 + ((BTree) D).xspan; // numKeys *
-            // D.RADIUS +
-            // D.xspan;
+            leftw = rightw = width / 2 + ((BTree) D).xspan;
         } else {
             if (numChildren % 2 == 0) {
                 leftw = rightw = 0;
@@ -473,15 +466,6 @@ public class BNode extends Node {
     public void goBelow(BNode v) {
         goTo(_goToX(v), v.toy + 2 * Node.RADIUS - 2);
     }
-
-    /*
-     * public void goToRoot() { if (((BTree)D).root == null) { goTo (D.rootx,
-     * D.rooty); } else { goTo(_goToX(((BTree)D).root), D.rooty); } }
-     * 
-     * public void goAboveRoot() { if (((BTree)D).root == null) { goTo (D.rootx,
-     * D.rooty - 2*D.RADIUS); } else { goTo(_goToX(((BTree)D).root),
-     * D.rooty-2*D.RADIUS); } }
-     */
 
     @Override
     public void storeState(Hashtable<Object, Object> state) {
