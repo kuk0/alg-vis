@@ -44,22 +44,18 @@ public class FibHeapDecrKey extends Algorithm {
         if (v.isRoot() || v.parent.prec(v)) {
             return;
         }
-        BinHeapNode w = v.parent;
-        // if (w == null) return;
-        while (w != null) {
+        do {
+            BinHeapNode p = v.parent;
             v.unlink();
             v.unmarkCut();
             H.root[i].linkLeft(v);
             H.reposition();
             pause();
-            if (w.cut) {
-                v = w;
-                w = v.parent;
-            } else {
-                w.markCut();
-                H.reposition();
-                break;
-            }
+            v = p;
+        } while (v.cut);
+        if (!v.isRoot()) {
+            v.markCut();
+            H.reposition();
         }
     }
 }

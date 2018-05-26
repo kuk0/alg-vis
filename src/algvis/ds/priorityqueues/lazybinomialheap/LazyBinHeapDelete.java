@@ -70,6 +70,7 @@ public class LazyBinHeapDelete extends Algorithm {
                 w.left = tr;
                 w.right = tl;
                 w = tr;
+                w.unmarkCut(); // root nodes in Fibonacci heap are never marked
             } while (w != v);
             w = w.right;
             // link
