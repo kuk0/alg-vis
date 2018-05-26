@@ -41,6 +41,9 @@ public class FibHeapDecrKey extends Algorithm {
         if (v.prec(H.min[i])) {
             H.min[i] = v;
         }
+        if (v.parent.prec(v)) {
+            return;
+        }
         BinHeapNode w = v.parent;
         // if (w == null) return;
         while (w != null) {
