@@ -38,25 +38,24 @@ public class FibHeapDecrKey extends Algorithm {
         setHeader(H.minHeap ? "decreasekey" : "increasekey");
         final int i = H.active;
         v.decrKey(delta, H.minHeap);
-        BinHeapNode w = v.parent;
-        // if (w == null) return;
-        while (w != null) {
+        if (v.prec(H.min[i])) {
+            H.min[i] = v;
+        }
+        if (v.isRoot() || v.parent.prec(v)) {
+            return;
+        }
+        do {
+            BinHeapNode p = v.parent;
             v.unlink();
             v.unmarkCut();
             H.root[i].linkLeft(v);
-            if (v.prec(H.min[i])) {
-                H.min[i] = v;
-            }
             H.reposition();
             pause();
-            if (w.cut) {
-                v = w;
-                w = v.parent;
-            } else {
-                w.markCut();
-                H.reposition();
-                break;
-            }
+            v = p;
+        } while (v.cut);
+        if (!v.isRoot()) {
+            v.markCut();
+            H.reposition();
         }
     }
 }
