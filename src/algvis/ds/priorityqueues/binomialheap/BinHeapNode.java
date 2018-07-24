@@ -297,6 +297,7 @@ public class BinHeapNode extends Node {
         HashtableStoreSupport.store(state, hash + "leftw", leftw);
         HashtableStoreSupport.store(state, hash + "height", height);
         HashtableStoreSupport.store(state, hash + "rank", rank);
+        HashtableStoreSupport.store(state, hash + "cut", cut);
     }
 
     public void storeTreeState(Hashtable<Object, Object> state) {
@@ -344,6 +345,10 @@ public class BinHeapNode extends Node {
         final Object rank = state.get(hash + "rank");
         if (rank != null) {
             this.rank = (Integer) HashtableStoreSupport.restore(rank);
+        }
+        final Object cut = state.get(hash + "cut");
+        if (cut != null) {
+            this.cut = (boolean) HashtableStoreSupport.restore(cut);
         }
     }
 
