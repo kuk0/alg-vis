@@ -31,6 +31,6 @@ public class HeapDecrKey extends HeapAlg {
     public void runAlgorithm() {
         setHeader(H.minHeap ? "decreasekey" : "increasekey");
         v.decrKey(delta, H.minHeap);
-        bubbleup(v);
+        bubbleUp(v);
     }
 }

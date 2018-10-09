@@ -46,69 +46,23 @@ public class HeapDelete extends HeapAlg {
         }
         HeapNode v, w;
 
-        final int n = H.getN();
-        int k = 1 << 10;
-        while ((k & n) == 0) {
-            k >>= 1;
-        }
-        k >>= 1;
-        w = H.getRoot();
-        while (k > 0) {
-            w = ((n & k) == 0) ? w.getLeft() : w.getRight();
-            k >>= 1;
-        }
-        v = w;
+        v = setNode(H.getN(), null);
         addToScene(v);
         H.setN(H.getN() - 1);
-        if ((n & 1) == 0) {
-            w.getParent().setLeft(null);
-        } else {
-            w.getParent().setRight(null);
-        }
+        addStep(v, REL.BOTTOM, "heap-replace-root");
+        H.getRoot().setKey(Node.NOKEY);
+        pause();
+        
         v.goToRoot();
         H.reposition();
         pause();
 
-        // TODO Takto asi nie (a mozno hej)
         H.getRoot().setKey(v.getKey());
         removeFromScene(v);
-        if (H.minHeap) {
-            addStep(H, 200, REL.TOP, "minheapbubbledown");
-        } else {
-            addStep(H, 200, REL.TOP, "maxheapbubbledown");
-        }
-        // pause();
+        String bubbleDownText = (H.minHeap ? "min" : "max") + "heapbubbledown";
+        addStep(H, 200, REL.TOP, bubbleDownText);
 
-        v = H.getRoot();
-        while (true) {
-            w = null;
-            if (v.getLeft() != null) {
-                w = v.getLeft();
-            }
-            if (v.getRight() != null && v.getRight().prec(w)) {
-                w = v.getRight();
-            }
-            if (w == null || v.prec(w)) {
-                break;
-            }
-            final HeapNode v1 = new HeapNode(v);
-            final HeapNode v2 = new HeapNode(w);
-            addToScene(v1);
-            addToScene(v2);
-            v.setKey(Node.NOKEY);
-            w.setKey(Node.NOKEY);
-            v1.goTo(w);
-            v2.goTo(v);
-            pause();
-            v.setKey(v2.getKey());
-            w.setKey(v1.getKey());
-            v.setColor(v2.getColor());
-            w.setColor(v1.getColor());
-            removeFromScene(v1);
-            removeFromScene(v2);
-            v = w;
-        }
-
+        bubbleDown(H.getRoot());
         addNote("done");
     }
 }
