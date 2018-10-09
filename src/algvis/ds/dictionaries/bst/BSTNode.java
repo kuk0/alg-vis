@@ -290,9 +290,19 @@ public class BSTNode extends Node {
             }
         }
         for (BSTNode w : postorder()) {
-            if (w.state != INVISIBLE && !w.isRoot()) {
-                v.setColor(Color.black);
-                v.drawLine(w.x, w.y, w.getParent().x, w.getParent().y);
+            v.setColor(Color.black);
+            if (w.state != INVISIBLE) {
+                if (!w.isRoot()) {
+                    v.drawLine(w.x, w.y, w.getParent().x, w.getParent().y);
+                }
+                if (w.left == null) {
+                    v.drawLine(w.x, w.y, w.x - 10, w.y + 18);
+                    v.fillCircle(w.x - 10, w.y + 18, 3);
+                }
+                if (w.right == null) {
+                    v.drawLine(w.x, w.y, w.x + 10, w.y + 18);
+                    v.fillCircle(w.x + 10, w.y + 18, 3);
+                }
             }
             w.draw(v);
         }

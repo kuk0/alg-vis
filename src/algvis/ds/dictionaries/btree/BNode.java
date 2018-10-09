@@ -362,6 +362,13 @@ public class BNode extends Node {
             v.drawLine(x, y, c[i].x, c[i].y - Node.RADIUS);
             c[i].drawTree(v);
         }
+        if (numChildren == 0) {
+            for (int i = 0; i < numKeys+1; ++i) {
+                v.drawLine(x - (width-10)/2 + (width-10)*i/numKeys, y,
+                    x - (width-4)/2 + (width-4)*i/numKeys, y+18);
+                v.fillCircle(x - (width-4)/2 + (width-4)*i/numKeys, y+18, 3);
+            }
+        }
         draw(v);
     }
 
