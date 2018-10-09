@@ -17,17 +17,17 @@
  ******************************************************************************/
 package algvis.ds.priorityqueues.heap;
 
+import java.awt.Color;
+
 import algvis.core.DataStructure;
 import algvis.core.Node;
 import algvis.core.visual.ZDepth;
 import algvis.ds.dictionaries.bst.BSTNode;
 import algvis.ds.priorityqueues.PriorityQueue;
+import algvis.ui.Fonts;
+import algvis.ui.view.View;
 
 public class HeapNode extends BSTNode {
-    // TODO not needed?
-    // HeapNode left, right, parent;
-    // Color color = Color.yellow;
-    // int height = 1;
 
     protected HeapNode(DataStructure D, int key, int x, int y, int zDepth) {
         super(D, key, x, y, zDepth);
@@ -81,4 +81,26 @@ public class HeapNode extends BSTNode {
             return this.getKey() >= v.getKey();
         }
     }
+
+    public void drawTree(int n, int k, View v) {
+        if (getLeft() != null) {
+            getLeft().drawTree(n, 2 * k, v);
+        }
+        if (getRight() != null) {
+            getRight().drawTree(n, 2 * k + 1, v);
+        }
+        if (!isRoot()) {
+            v.setColor(Color.BLACK);
+            v.drawLine(x, y, getParent().x, getParent().y);
+        }
+        draw(v);
+        int ax = (2 * k - n) * Node.RADIUS, ay = -50;
+        v.setColor(Color.YELLOW);
+        v.fillSqr(ax, ay, Node.RADIUS);
+        v.setColor(Color.BLACK);
+        v.drawSqr(ax, ay, Node.RADIUS);
+        v.drawString(getKeyS(), ax, ay, Fonts.NORMAL);
+        v.drawString("" + k, ax, ay - Node.RADIUS - 5, Fonts.SMALL);
+    }
+
 }

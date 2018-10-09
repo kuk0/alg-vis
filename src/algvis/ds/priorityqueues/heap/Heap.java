@@ -86,9 +86,9 @@ public class Heap extends PriorityQueue implements ClickListener {
     }
 
     @Override
-    public void draw(View V) {
+    public void draw(View v) {
         if (getRoot() != null) {
-            getRoot().drawTree(V);
+            getRoot().drawTree(this.getN(), 1, v);
         }
     }
 

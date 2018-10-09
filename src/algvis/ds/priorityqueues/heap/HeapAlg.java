@@ -18,7 +18,6 @@
 package algvis.ds.priorityqueues.heap;
 
 import algvis.core.Algorithm;
-import algvis.core.Node;
 import algvis.ui.view.REL;
 
 abstract class HeapAlg extends Algorithm {
@@ -35,17 +34,16 @@ abstract class HeapAlg extends Algorithm {
             H.setRoot(v);
             return null;
         } else {
-            HeapNode w, p;
             while ((k & n) == 0) {
                 k >>= 1;
             }
             k >>= 1;
-            w = H.getRoot();
+            HeapNode w = H.getRoot(), p;
             while (k > 1) {
                 w = ((n & k) == 0) ? w.getLeft() : w.getRight();
                 k >>= 1;
             }
-            
+
             if ((n & 1) == 0) {
                 p = w.getLeft();
                 w.linkLeft(v);
@@ -56,9 +54,10 @@ abstract class HeapAlg extends Algorithm {
             return p;
         }
     }
-    
+
     void bubbleUp(HeapNode v) {
-        addStep(v, REL.BOTTOM, H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
+        addStep(v, REL.BOTTOM,
+            H.minHeap ? "minheapbubbleup" : "maxheapbubbleup");
         pause();
         HeapNode w = v.getParent();
         while (w != null && v.prec(w)) {
@@ -67,13 +66,11 @@ abstract class HeapAlg extends Algorithm {
             v1.mark();
             addToScene(v1);
             addToScene(v2);
-            v.setKey(Node.NOKEY);
-            w.setKey(Node.NOKEY);
+            v.setKey(v2.getKey());
+            w.setKey(v1.getKey());
             v1.goTo(w);
             v2.goTo(v);
             pause();
-            v.setKey(v2.getKey());
-            w.setKey(v1.getKey());
             v.setColor(v2.getColor());
             w.setColor(v1.getColor());
             v1.unmark();
@@ -85,7 +82,7 @@ abstract class HeapAlg extends Algorithm {
         v.unmark();
         addNote("done");
     }
-    
+
     void bubbleDown(HeapNode v) {
         while (true) {
             HeapNode w = null;
@@ -102,13 +99,11 @@ abstract class HeapAlg extends Algorithm {
             final HeapNode v2 = new HeapNode(w);
             addToScene(v1);
             addToScene(v2);
-            v.setKey(Node.NOKEY);
-            w.setKey(Node.NOKEY);
+            v.setKey(v2.getKey());
+            w.setKey(v1.getKey());
             v1.goTo(w);
             v2.goTo(v);
             pause();
-            v.setKey(v2.getKey());
-            w.setKey(v1.getKey());
             v.setColor(v2.getColor());
             w.setColor(v1.getColor());
             removeFromScene(v1);

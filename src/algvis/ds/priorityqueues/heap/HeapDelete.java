@@ -44,15 +44,13 @@ public class HeapDelete extends HeapAlg {
             removeFromScene(v);
             return;
         }
-        HeapNode v, w;
-
-        v = setNode(H.getN(), null);
+        HeapNode v = setNode(H.getN(), null);
         addToScene(v);
         H.setN(H.getN() - 1);
         addStep(v, REL.BOTTOM, "heap-replace-root");
         H.getRoot().setKey(Node.NOKEY);
         pause();
-        
+
         v.goToRoot();
         H.reposition();
         pause();
