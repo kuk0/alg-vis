@@ -49,7 +49,7 @@ public class RotButtons extends Buttons {
     @Override
     public void otherButtons(JPanel P) {
         order = new ICheckBox("show-order", true);
-        order.setMnemonic(KeyEvent.VK_O);
+        order.setMnemonic(KeyEvent.VK_D);
         order.addActionListener(this);
         P.add(order);
 
