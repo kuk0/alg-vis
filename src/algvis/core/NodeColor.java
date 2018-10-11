@@ -25,7 +25,7 @@ public class NodeColor {
     public static final NodeColor BLUE = new NodeColor(Color.WHITE, Color.BLUE);
     public static final NodeColor GREEN = new NodeColor(Color.BLACK,
         Color.GREEN);
-    public static final NodeColor RED = new NodeColor(Color.BLACK, Color.RED);
+    public static final NodeColor RED = new NodeColor(Color.BLACK, new Color(255, 100, 30));
 
     public static final NodeColor NORMAL = new NodeColor(Color.BLACK,
         Color.YELLOW);

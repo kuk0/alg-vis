@@ -293,11 +293,11 @@ public class View
 
     public void drawWideLine(double x1, double y1, double x2, double y2,
         float width) {
-        drawLine(x1, y1, x2, y2, width, new Color(230, 230, 230));
+        drawLine(x1, y1, x2, y2, width, Color.GRAY);
     }
 
     public void drawWideLine(double x1, double y1, double x2, double y2) {
-        drawLine(x1, y1, x2, y2, 27.0f, new Color(230, 230, 230));
+        drawLine(x1, y1, x2, y2, 27.0f, Color.GRAY);
     }
 
     public void drawDashedLine(double x1, double y1, double x2, double y2,
@@ -593,7 +593,7 @@ public class View
         final Stroke old = g.getStroke(), wide = new BasicStroke(27.0f,
             BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         final Color c = g.getColor();
-        g.setColor(new Color(230, 230, 230));
+        g.setColor(Color.LIGHT_GRAY);
         g.setStroke(wide);
         g.fillPolygon(p);
         g.drawPolygon(p);
