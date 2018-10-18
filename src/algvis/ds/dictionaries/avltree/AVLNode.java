@@ -91,7 +91,7 @@ public class AVLNode extends BSTNode {
                 V.fillArc(xx, yy, dx, dy, 210, 180);
                 break;
             case 0:
-                b = "\u00b7";
+                b = "\u2022";
                 V.fillArc(xx, yy, dx, dy, 180, 180);
                 break;
             case -1:

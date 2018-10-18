@@ -271,7 +271,16 @@ public class BSTNode extends Node {
         setArc(getParent());
     }
 
-    // private static int i;
+    public void drawExtNodes(View v) {
+        if (getLeft() == null) {
+            v.drawLine(x, y, x - 10, y + 18);
+            v.fillCircle(x - 10, y + 18, 3);
+        }
+        if (getRight() == null) {
+            v.drawLine(x, y, x + 10, y + 18);
+            v.fillCircle(x + 10, y + 18, 3);
+        }
+    }
 
     public void drawTree(View v) {
         if (D instanceof BST && ((BST) D).order) {
@@ -295,14 +304,7 @@ public class BSTNode extends Node {
                 if (!w.isRoot()) {
                     v.drawLine(w.x, w.y, w.getParent().x, w.getParent().y);
                 }
-                if (w.left == null) {
-                    v.drawLine(w.x, w.y, w.x - 10, w.y + 18);
-                    v.fillCircle(w.x - 10, w.y + 18, 3);
-                }
-                if (w.right == null) {
-                    v.drawLine(w.x, w.y, w.x + 10, w.y + 18);
-                    v.fillCircle(w.x + 10, w.y + 18, 3);
-                }
+                w.drawExtNodes(v);
             }
             w.draw(v);
         }

@@ -71,6 +71,10 @@ public class AANode extends BSTNode {
         v.drawString(str, x + Node.RADIUS, y - Node.RADIUS, Fonts.SMALL);
     }
 
+    @Override
+    public void drawExtNodes(View v) {
+    }
+
     void drawBigNodes(View v) {
         if (getLeft() != null) {
             getLeft().drawBigNodes(v);

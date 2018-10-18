@@ -24,6 +24,7 @@ import algvis.core.DataStructure;
 import algvis.core.NodeColor;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.dictionaries.bst.BSTNode;
+import algvis.ui.view.View;
 
 public class GBNode extends BSTNode {
     private boolean deleted = false;
@@ -63,6 +64,10 @@ public class GBNode extends BSTNode {
     @Override
     public Color getBgColor() {
         return isDeleted() ? NodeColor.DELETED.bgColor : super.getBgColor();
+    }
+
+    @Override
+    public void drawExtNodes(View v) {
     }
 
     @Override

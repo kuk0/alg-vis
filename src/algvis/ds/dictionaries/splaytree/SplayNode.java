@@ -17,11 +17,17 @@
  ******************************************************************************/
 package algvis.ds.dictionaries.splaytree;
 
+import java.util.Hashtable;
+
 import algvis.core.DataStructure;
+import algvis.core.Node;
+import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.dictionaries.bst.BSTNode;
+import algvis.ui.Fonts;
+import algvis.ui.view.View;
 
 public class SplayNode extends BSTNode {
-    private int pot = 0;
+    private int rank = 0;
 
     public SplayNode(DataStructure D, int key, int zDepth) {
         super(D, key, zDepth);
@@ -47,22 +53,36 @@ public class SplayNode extends BSTNode {
         super.calc();
         int lp = 0, rp = 0;
         if (getLeft() != null) {
-            lp = getLeft().pot;
+            lp = getLeft().rank;
         }
         if (getRight() != null) {
-            rp = getRight().pot;
+            rp = getRight().rank;
         }
-        pot = (int) Math.floor(D.lg(size)) + lp + rp;
+        rank = (int) Math.floor(D.lg(size));
     }
 
     @Override
-    public void calcTree() {
-        if (getLeft() != null) {
-            getLeft().calcTree();
+    public void draw(View v) {
+        super.draw(v);
+        v.drawString("" + rank, x + Node.RADIUS, y - Node.RADIUS, Fonts.SMALL);
+    }
+
+    @Override
+    public void drawExtNodes(View v) {
+    }
+
+    @Override
+    public void storeState(Hashtable<Object, Object> state) {
+        super.storeState(state);
+        HashtableStoreSupport.store(state, hash + "rank", rank);
+    }
+
+    @Override
+    public void restoreState(Hashtable<?, ?> state) {
+        super.restoreState(state);
+        final Object r = state.get(hash + "rank");
+        if (r != null) {
+            this.rank = (Integer) HashtableStoreSupport.restore(r);
         }
-        if (getRight() != null) {
-            getRight().calcTree();
-        }
-        calc();
     }
 }
