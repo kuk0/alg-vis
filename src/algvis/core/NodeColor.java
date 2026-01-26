@@ -22,18 +22,19 @@ import java.awt.Color;
 public class NodeColor {
     public static final NodeColor BLACK = new NodeColor(Color.WHITE,
         Color.BLACK);
-    public static final NodeColor BLUE = new NodeColor(Color.WHITE, Color.BLUE);
+    public static final NodeColor BLUE = new NodeColor(Color.WHITE, new Color(0x6395EE));
     public static final NodeColor GREEN = new NodeColor(Color.BLACK,
-        Color.GREEN);
-    public static final NodeColor RED = new NodeColor(Color.BLACK, new Color(255, 100, 30));
+        new Color(0x7CFC00));
+    public static final NodeColor RED = new NodeColor(Color.BLACK,
+        new Color(0xFF746C)); // 255, 100, 30
 
     public static final NodeColor NORMAL = new NodeColor(Color.BLACK,
-        Color.YELLOW);
+        new Color(0xFFEE8C)); // YELLOW
     public static final NodeColor DARKER = new NodeColor(Color.BLACK,
         new Color(0xCDCD00));
 
     public static final NodeColor INSERT = new NodeColor(Color.WHITE,
-        new Color(0x3366ff));
+        new Color(0x6395EE)); // 0x3366ff
     public static final NodeColor FIND = new NodeColor(Color.BLACK,
         Color.LIGHT_GRAY);
     public static final NodeColor FOUND = GREEN;

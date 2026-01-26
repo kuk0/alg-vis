@@ -143,7 +143,7 @@ public class Node extends VisualElement {
      * the color).
      */
     protected void bgKeyColor() {
-        bgColor(new Color(255, 255 - getKey() / 20, 0));
+        bgColor(new Color(255, 255 - getKey() / 7, 0));
     }
 
     public void mark() {
