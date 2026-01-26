@@ -47,9 +47,9 @@ public class TextBubble extends VisualElement {
 
     @Override
     public void draw(View V) {
-        V.drawTextBubble(StringUtils.unHtml(s.getString()), pos.getX(),
+        V.drawTextBubble(s.getString(), pos.getX(),
             pos.getY(), w, alpha, rel);
-    } // TODO: unHtml only until we get rid of the commentary
+    }
 
     @Override
     public void move() {

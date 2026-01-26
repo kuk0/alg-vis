@@ -46,7 +46,7 @@ public class Screen extends JPanel {
         V = new View(this);
         timer = new Timer(50, evt -> repaint());
     }
-    
+
     void check_size() {
         final Dimension d = getSize();
         if (I == null || d.width != size.width || d.height != size.height) {
