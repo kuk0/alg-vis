@@ -27,7 +27,6 @@ import java.util.ConcurrentModificationException;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import algvis.core.DataStructure;
 import algvis.ui.view.View;
 
 public class Screen extends JPanel {

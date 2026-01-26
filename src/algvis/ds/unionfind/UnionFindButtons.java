@@ -19,7 +19,7 @@ package algvis.ds.unionfind;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.Vector;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -107,13 +107,13 @@ public class UnionFindButtons extends Buttons {
             });
         } else if (evt.getSource() == findB) {
             final int count = D.count;
-            final Vector<Integer> args = I.getVI(1, count);
+            final List<Integer> args = I.getVI(1, count);
             if (D.firstSelected != null) {
-                args.insertElementAt(D.firstSelected.getKey(), 0);
+                args.add(0, D.firstSelected.getKey());
                 D.firstSelected = null;
             }
             if (D.secondSelected != null) {
-                args.insertElementAt(D.secondSelected.getKey(), 1);
+                args.add(1, D.secondSelected.getKey());
                 D.secondSelected.unmark();
                 D.secondSelected = null;
             }
@@ -121,20 +121,20 @@ public class UnionFindButtons extends Buttons {
                 args.add(MyRandom.Int(count));
             }
             panel.history.saveEditId();
-            D.find(D.at(args.elementAt(0)));
+            D.find(D.at(args.get(0)));
             if (panel.pauses) {
                 panel.history.rewind();
             }
         } else if (evt.getSource() == unionB) {
             final int count = D.count;
-            final Vector<Integer> args = I.getVI(1, count);
+            final List<Integer> args = I.getVI(1, count);
             if (D.firstSelected != null) {
-                args.insertElementAt(D.firstSelected.getKey(), 0);
+                args.add(0, D.firstSelected.getKey());
                 D.firstSelected.unmark();
                 D.firstSelected = null;
             }
             if (D.secondSelected != null) {
-                args.insertElementAt(D.secondSelected.getKey(), 1);
+                args.add(1, D.secondSelected.getKey());
                 D.secondSelected.unmark();
                 D.secondSelected = null;
             }
@@ -143,14 +143,14 @@ public class UnionFindButtons extends Buttons {
                 args.add(MyRandom.Int(count));
             case 1:
                 int i;
-                final int ii = args.elementAt(0);
+                final int ii = args.get(0);
                 do {
                     i = MyRandom.Int(count);
                 } while (i == ii);
                 args.add(i);
             }
             panel.history.saveEditId();
-            D.union(D.at(args.elementAt(0)), D.at(args.elementAt(1)));
+            D.union(D.at(args.get(0)), D.at(args.get(1)));
             if (panel.pauses) {
                 panel.history.rewind();
             }

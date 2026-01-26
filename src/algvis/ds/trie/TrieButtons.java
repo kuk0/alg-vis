@@ -19,7 +19,7 @@ package algvis.ds.trie;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.Vector;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -60,7 +60,7 @@ public class TrieButtons extends Buttons {
     public void actionPerformed(ActionEvent evt) {
         super.actionPerformed(evt);
         if (evt.getSource() == insertB) {
-            final Vector<String> args = I.getVS();
+            final List<String> args = I.getVS();
             panel.history.saveEditId();
             for (final String s : args) {
                 ((Trie) D).insert(s);
@@ -69,7 +69,7 @@ public class TrieButtons extends Buttons {
                 panel.history.rewind();
             }
         } else if (evt.getSource() == findB) {
-            final Vector<String> args = I.getVS();
+            final List<String> args = I.getVS();
             if (args.size() > 0) {
                 panel.history.saveEditId();
                 for (final String s : args) {
@@ -80,7 +80,7 @@ public class TrieButtons extends Buttons {
                 }
             }
         } else if (evt.getSource() == deleteB) {
-            final Vector<String> args = I.getVS();
+            final List<String> args = I.getVS();
             if (args.size() > 0) {
                 panel.history.saveEditId();
                 for (final String s : args) {

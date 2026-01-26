@@ -79,8 +79,7 @@ public class DaryHeapDelete extends DaryHeapAlg {
         H.last = H.last.prevneighbour();
         v.goDown();
         removeFromScene(v);
-        v.getParent().c.set(v.nson - 1, null);
-        v.getParent().c.setSize(v.getParent().c.size() - 1);
+        v.getParent().c.remove(v.nson - 1);
         H.root.mark();
         H.reposition();
 

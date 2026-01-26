@@ -20,7 +20,7 @@ package algvis.ds.intervaltree;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.Vector;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
@@ -106,7 +106,7 @@ public class IntervalButtons extends Buttons {
     public void actionPerformed(ActionEvent evt) {
         super.actionPerformed(evt);
         if (evt.getSource() == insertB) {
-            final Vector<Integer> args = I.getNonEmptyVI();
+            final List<Integer> args = I.getNonEmptyVI();
             panel.history.saveEditId();
             for (final int x : args) {
                 D.insert(x);
@@ -115,11 +115,11 @@ public class IntervalButtons extends Buttons {
                 panel.history.rewind();
             }
         } else if (evt.getSource() == findsumB) {
-            final Vector<Integer> args = I.getVI();
+            final List<Integer> args = I.getVI();
             panel.history.saveEditId();
             if (args.size() > 1) {
-                ((IntervalTrees) D).ofinterval(args.elementAt(0),
-                    args.elementAt(1));
+                ((IntervalTrees) D).ofinterval(args.get(0),
+                    args.get(1));
             } else {
                 ((IntervalTrees) D).ofinterval(1, ((IntervalTree) D).numLeafs);
             }

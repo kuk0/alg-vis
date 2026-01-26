@@ -24,13 +24,34 @@ import algvis.ui.VisPanel;
 import algvis.ui.view.Layout;
 import algvis.ui.view.View;
 
-abstract public class DataStructure extends VisualElement {
-    // datova struktura musi vediet gombikom povedat, kolko ich potrebuje,
-    // kolko ma vstupov, ake to su a co treba robit
+/**
+ * Abstract base class for all data structure visualizations.
+ * 
+ * <p>This class provides the common infrastructure for visualizing data structures,
+ * including boundary management, node selection, statistics tracking, and basic
+ * operations like insertion and clearing. Each concrete data structure implementation
+ * must provide its own drawing logic and specific operation implementations.</p>
+ * 
+ * <p>The class maintains layout constants for positioning (root position, dimensions,
+ * minimum separations) and tracks the visual boundaries of the structure as it grows.</p>
+ */
+public abstract class DataStructure extends VisualElement {
+    // Visual panel associated with this data structure
     public final VisPanel panel;
-    public static final int rootx = 0, rooty = 0, sheight = 600, swidth = 400,
-        minsepx = 38, minsepy = 30;
-    public int x1, x2, y1 = -50, y2;
+    
+    public static final int rootx = 0;
+    public static final int rooty = 0;
+    public static final int sheight = 600;
+    public static final int swidth = 400;
+    public static final int minsepx = 38;
+    public static final int minsepy = 30;
+    
+    // Boundary coordinates of the data structure
+    public int x1; // left boundary
+    public int x2; // right boundary
+    public int y1 = -50; // top boundary
+    public int y2; // bottom boundary
+    
     public Node chosen = null;
     public static String dsName = null;
 
@@ -59,10 +80,6 @@ abstract public class DataStructure extends VisualElement {
         panel.buttons.setStats(stats());
     }
 
-    /*
-     * protected void showStatus(String t) { panel.showStatus(t); }
-     */
-
     public double lg(int x) { // log_2
         return Math.log(x) / Math.log(2);
     }
@@ -73,7 +90,7 @@ abstract public class DataStructure extends VisualElement {
         }
     }
 
-    void unmark() {
+    protected void unmark() {
         if (chosen != null) {
             chosen.unmark();
             chosen = null;

@@ -18,8 +18,9 @@
 package algvis.ds.priorityqueues.daryheap;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.List;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -33,7 +34,7 @@ public class DaryHeapNode extends HeapNode {
     private int width;// , leftw, rightw;
     private DaryHeapNode parent = null;
     int nson = -1; // kolky je to syn svojho otca
-    protected Vector<DaryHeapNode> c;
+    protected List<DaryHeapNode> c;
 
     int nnodes = 1;
     private int height = 1; // pre setStats
@@ -41,7 +42,7 @@ public class DaryHeapNode extends HeapNode {
     private DaryHeapNode(DaryHeap D, int key, int x, int y, int zDepth) {
         super(D, key, x, y, zDepth);
         bgKeyColor();
-        c = new Vector<>(D.getOrder());
+        c = new ArrayList<>(D.getOrder());
         // setColor(NodeColor.NORMAL);
         width = DaryHeap.minsepx;
         // mark();
@@ -219,8 +220,8 @@ public class DaryHeapNode extends HeapNode {
 
         for (int i = 0; i < c.size(); i++) {
             if (i == 0) {
-                c.firstElement().goTo(
-                    this.tox - (this.leftw) + c.firstElement().leftw,
+                c.get(0).goTo(
+                    this.tox - (this.leftw) + c.get(0).leftw,
                     this.toy + DataStructure.minsepy);
             } else {
                 c.get(i).goTo(
@@ -288,7 +289,7 @@ public class DaryHeapNode extends HeapNode {
 
         if (v.isRoot()) {
             while (!v.c.isEmpty()) {
-                v = v.c.firstElement();
+                v = v.c.get(0);
             }
             return v;
         }
@@ -296,7 +297,7 @@ public class DaryHeapNode extends HeapNode {
         v = v.getParent().c.get(v.nson); // v poli je n-ty syn na mieste (nson -
                                         // 1)
         while (!v.c.isEmpty()) {
-            v = v.c.firstElement();
+            v = v.c.get(0);
         }
         return v;
         // }
@@ -357,7 +358,7 @@ public class DaryHeapNode extends HeapNode {
     }
 
     public DaryHeapNode findMaxSon() {
-        DaryHeapNode v = c.firstElement();
+        DaryHeapNode v = c.get(0);
         for (final DaryHeapNode node : c) {
             if (node.prec(v)) {
                 v = node;
@@ -371,7 +372,7 @@ public class DaryHeapNode extends HeapNode {
     public void storeState(Hashtable<Object, Object> state) {
         super.storeState(state);
         HashtableStoreSupport.store(state, hash + "parent", parent);
-        HashtableStoreSupport.store(state, hash + "c", c.clone());
+        HashtableStoreSupport.store(state, hash + "c", new ArrayList<>(c));
         for (final DaryHeapNode node : c) {
             node.storeState(state);
         }
@@ -388,7 +389,7 @@ public class DaryHeapNode extends HeapNode {
 
         final Object c = state.get(hash + "c");
         if (c != null) {
-            this.c = (Vector<DaryHeapNode>) HashtableStoreSupport.restore(c);
+            this.c = (List<DaryHeapNode>) HashtableStoreSupport.restore(c);
         }
         for (final DaryHeapNode node : this.c) {
             node.restoreState(state);

@@ -18,17 +18,18 @@
 package algvis.core;
 
 import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
-import java.util.Vector;
 import java.util.regex.Pattern;
 
 import algvis.internationalization.Languages;
 
 public class WordGenerator {
     private final static WordGenerator INSTANCE = new WordGenerator();
-    private Vector<String> enWords;
-    private Vector<String> skWords;
+    private List<String> enWords;
+    private List<String> skWords;
 
     private WordGenerator() {
         initRandomEnText();
@@ -43,11 +44,11 @@ public class WordGenerator {
         return this;
     }
 
-    private Vector<String> getEnWords() {
+    private List<String> getEnWords() {
         return enWords;
     }
 
-    private Vector<String> getSkWords() {
+    private List<String> getSkWords() {
         return skWords;
     }
 
@@ -89,10 +90,10 @@ public class WordGenerator {
         return null;
     }
 
-    public static Vector<String> parseString(String ss) {
-        final Vector<String> ll = new Vector<>(
+    public static List<String> parseString(String ss) {
+        final List<String> ll = new ArrayList<>(
             Arrays.asList(ss.replaceAll("'", " ").split("(\\s|,)+")));
-        final Vector<String> result = new Vector<>();
+        final List<String> result = new ArrayList<>();
         final Pattern p = Pattern
             .compile("[\\p{InCombiningDiacriticalMarks}\\p{IsLm}\\p{IsSk}]+");
         for (String s : ll) {
