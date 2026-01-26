@@ -66,7 +66,6 @@ public abstract class VisPanel extends JPanel
         buttonsAndStatusBar.add(statusBar, BorderLayout.PAGE_END);
         add(buttonsAndStatusBar, BorderLayout.PAGE_END);
 
-        screen.setDS(D);
         languageChanged();
     }
 
@@ -108,7 +107,7 @@ public abstract class VisPanel extends JPanel
             if (!started) {
                 start();
             }
-            screen.resume();
+            screen.start();
         }
     }
 

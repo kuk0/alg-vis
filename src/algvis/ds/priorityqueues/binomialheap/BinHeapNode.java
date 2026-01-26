@@ -195,7 +195,7 @@ public class BinHeapNode extends Node {
     }
 
     void lowlight() {
-        bgColor(new Color(200, 200 - getKey() / 10, 0));
+        bgColor(new Color(220 - getKey() / 15, 200 - getKey() / 7, 40));
     }
 
     void highlight() {

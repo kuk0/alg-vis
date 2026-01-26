@@ -11,4 +11,10 @@ public class DynamicArrayPanel extends VisPanel {
         scene.add(D);
         buttons = new DynamicArrayButtons(this);
     }
+
+    @Override
+    public void start() {
+        super.start();
+        D.random(9);
+    }
 }

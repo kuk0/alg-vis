@@ -37,29 +37,24 @@ public class DynamicArrayPop extends DynamicArrayAlg {
             if (D.coinsForArray.get(D.size).state != Node.INVISIBLE) {
                 D.coinsForArray.get(D.size).setState(Node.UP);
             }
+            pause();
 
             boolean needless = true;
 
-            if (D.size >= D.capacity / 4 && D.size < D.capacity / 2) {
-                if (D.coinsForArray
-                    .get(D.size - D.capacity / 4).state == Node.INVISIBLE) {
-                    needless = false;
-                    D.newCoins.get(1).setColor(NodeColor.GREEN);
-                    D.newCoins.get(0).setColor(NodeColor.GREEN);
-                    D.newCoins.get(1)
-                        .changeRelative(D.array.get(D.size - D.capacity / 4));
-                    D.newCoins.get(0).moveTo(0, -D.coinsDist);
-                    D.newCoins.get(0)
-                        .changeRelative(D.array.get(D.size - D.capacity / 4));
-                    D.newCoins.get(1).moveTo(0, D.coinsDist);
-                    D.coinsForArray.set(D.size - D.capacity / 4,
-                        D.newCoins.get(0));
-                    D.coinsForCopy.set(D.size - D.capacity / 4,
-                        D.newCoins.get(1));
-                }
-            }
-
-            if (needless) {
+            if ((D.size >= D.capacity / 4 && D.size < D.capacity / 2)
+                && (D.coinsForArray
+                    .get(D.size - D.capacity / 4).state == Node.INVISIBLE)) {
+                D.newCoins.get(1).setColor(NodeColor.GREEN);
+                D.newCoins.get(0).setColor(NodeColor.GREEN);
+                D.newCoins.get(1)
+                    .changeRelative(D.array.get(D.size - D.capacity / 4));
+                D.newCoins.get(0).moveTo(0, -D.coinsDist);
+                D.newCoins.get(0)
+                    .changeRelative(D.array.get(D.size - D.capacity / 4));
+                D.newCoins.get(1).moveTo(0, D.coinsDist);
+                D.coinsForArray.set(D.size - D.capacity / 4, D.newCoins.get(0));
+                D.coinsForCopy.set(D.size - D.capacity / 4, D.newCoins.get(1));
+            } else {
                 if (D.size != 0) {
                     addStep(D.newCoins.get(0), REL.TOP,
                         "dynamicarray-needless-second");
@@ -81,7 +76,6 @@ public class DynamicArrayPop extends DynamicArrayAlg {
                     D.array.get(i).setColor(NodeColor.RED);
                 }
                 createNewArray(D.capacity / 2);
-                needless = true;
             }
         }
     }

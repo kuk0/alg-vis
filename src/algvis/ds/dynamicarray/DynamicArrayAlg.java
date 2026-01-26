@@ -49,25 +49,23 @@ abstract class DynamicArrayAlg extends Algorithm {
             D.coinsForCopy.get(i).setColor(NodeColor.RED);
             D.newarray.get(i).setKey(D.array.get(i).getKey());
             D.array.get(i).setKey(Node.NOKEY);
-            pause();
             D.coinsForCopy.get(i).setState(Node.UP);
+            pause();
         }
         addStep(D.array.get(0), REL.TOPRIGHT, "dynamicarray-erase");
         pause();
 
-        D.newarray.moveTo(D.newarray.x, D.newarray.y - 150);
+        D.newarray.moveTo(D.array.tox, D.array.toy);
+        D.array = null;
+        pause();
         D.array = D.newarray;
+        D.newarray = null;
         D.delimiter4 = D.newdelimiter4;
+        D.newdelimiter4 = null;
         D.delimiter2 = D.newdelimiter2;
+        D.newdelimiter2 = null;
 
-        D.coinsForArray.clear();
-        D.coinsForCopy.clear();
-        for (int i = 0; i < capacity; i++) {
-            D.coinsForArray.add(new DynamicArrayCoin(D, D.invisible, 0, 0));
-            D.coinsForArray.get(i).setState(Node.INVISIBLE);
-            D.coinsForCopy.add(new DynamicArrayCoin(D, D.invisible, 0, 0));
-            D.coinsForCopy.get(i).setState(Node.INVISIBLE);
-        }
+        D.clearArrayCoins();
         return;
     }
 }
