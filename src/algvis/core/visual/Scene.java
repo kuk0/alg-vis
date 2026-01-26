@@ -26,7 +26,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import algvis.core.Node;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ui.view.View;
 
@@ -41,54 +40,22 @@ public class Scene extends VisualElement {
         for (int i = 0; i < MAXZ; ++i) {
             elements.add(new HashSet<VisualElement>());
         }
-        initRemoverThread();
     }
 
-    private void initRemoverThread() {
-        // this thread waits until an element ends its animation and then
-        // removes it from the scene
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    synchronized (Scene.this) {
-                        // int poc = 0;
-                        // for(Set<VisualElement> set : elements) poc +=
-                        // set.size();
-                        // System.out.println(elementsToRemove.size());
-                        // System.out.println("elemSIZE: " + poc);
-                        // System.out.println("elemSIZE2: " +
-                        // elements.get(5).size());
-                        final Iterator<VisualElement> iterator = elementsToRemove
-                            .iterator();
-                        while (iterator.hasNext()) {
-                            final VisualElement element = iterator.next();
-                            if (element.isAnimationDone()) {
-                                iterator.remove();
-                                if (element instanceof Node) {
-                                    // System.out.println("removed: " +
-                                    // ((Node) element).getKey());
-                                    // System.out.println("removed: " +
-                                    // element.getZDepth());
-                                    // System.out.println("removed: " +
-                                    // ((Node) element).state);
-                                }
-                                final Set<VisualElement> set = elements
-                                    .get(element.getZDepth());
-                                set.remove(element);
-                            }
-                        }
-                    }
-                    synchronized (this) {
-                        try {
-                            wait(500);
-                        } catch (final InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
+    /**
+     * Remove elements that have finished their animations.
+     * This should be called periodically by the animation loop.
+     */
+    public synchronized void cleanupFinishedAnimations() {
+        final Iterator<VisualElement> iterator = elementsToRemove.iterator();
+        while (iterator.hasNext()) {
+            final VisualElement element = iterator.next();
+            if (element.isAnimationDone()) {
+                iterator.remove();
+                final Set<VisualElement> set = elements.get(element.getZDepth());
+                set.remove(element);
             }
-        }).start();
+        }
     }
 
     private Set<VisualElement> elementsAtDepth(int z) {
@@ -178,6 +145,7 @@ public class Scene extends VisualElement {
                 e.move();
             }
         }
+        cleanupFinishedAnimations();
     }
 
     @Override
@@ -236,7 +204,7 @@ public class Scene extends VisualElement {
          */
         final List<Set<VisualElement>> elementsClone = new ArrayList<>();
         for (final HashSet<VisualElement> set : elements) {
-            elementsClone.add((Set<VisualElement>) set.clone());
+            elementsClone.add(new HashSet<>(set));
         }
         for (final VisualElement element : elementsToRemove) {
             elementsClone.get(element.getZDepth()).remove(element);

@@ -22,9 +22,10 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -49,7 +50,7 @@ public class AlgVis extends JPanel implements ActionListener {
 
     private final Map<DS, VisPanel> panels = new HashMap<>();
 
-    private final static Vector<Object> DS_MENU = vec(
+    private final static List<Object> DS_MENU = vec(
         sop("dictionary",
             vec(DS.BST, DS.ROTATION, DS.AVL_TREE, DS.A23, DS.A234, DS.B_TREE,
                 DS.BPLUS_TREE, DS.RB_TREE, DS.AA_TREE, DS.TREAP, DS.SKIPLIST,
@@ -75,11 +76,11 @@ public class AlgVis extends JPanel implements ActionListener {
     }
 
     @SuppressWarnings("unchecked")
-    private void menuFactory(IMenu m, Vector<Object> items) {
+    private void menuFactory(IMenu m, List<Object> items) {
         for (Object p : items) {
             if (p instanceof Pair) {
-                String s = ((Pair<String, Vector<Object>>) p).first;
-                Vector<Object> v = ((Pair<String, Vector<Object>>) p).second;
+                String s = ((Pair<String, List<Object>>) p).first;
+                List<Object> v = ((Pair<String, List<Object>>) p).second;
                 IMenu sub = new IMenu(s);
                 m.add(sub);
                 menuFactory(sub, v);
@@ -179,8 +180,8 @@ public class AlgVis extends JPanel implements ActionListener {
     }
 
     @SafeVarargs
-    private static Vector<Object> vec(Object... objs) {
-        Vector<Object> v = new Vector<>(objs.length);
+    private static List<Object> vec(Object... objs) {
+        List<Object> v = new ArrayList<>(objs.length);
         for (Object o : objs) {
             v.add(o);
         }

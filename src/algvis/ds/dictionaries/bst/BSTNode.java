@@ -19,8 +19,9 @@ package algvis.ds.dictionaries.bst;
 
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.List;
 
 import algvis.core.DataStructure;
 import algvis.core.Node;
@@ -188,7 +189,7 @@ public class BSTNode extends Node {
         setLeft(setRight(setParent(null)));
     }
 
-    private void _preorder(Vector<BSTNode> acc) {
+    private void _preorder(List<BSTNode> acc) {
         acc.add(this);
         if (getLeft() != null) {
             getLeft()._preorder(acc);
@@ -198,7 +199,7 @@ public class BSTNode extends Node {
         }
     }
 
-    private void _inorder(Vector<BSTNode> acc) {
+    private void _inorder(List<BSTNode> acc) {
         if (getLeft() != null) {
             getLeft()._inorder(acc);
         }
@@ -208,7 +209,7 @@ public class BSTNode extends Node {
         }
     }
 
-    private void _postorder(Vector<BSTNode> acc) {
+    private void _postorder(List<BSTNode> acc) {
         if (getLeft() != null) {
             getLeft()._postorder(acc);
         }
@@ -218,20 +219,20 @@ public class BSTNode extends Node {
         acc.add(this);
     }
 
-    public Vector<BSTNode> preorder() {
-        Vector<BSTNode> acc = new Vector<>();
+    public List<BSTNode> preorder() {
+        List<BSTNode> acc = new ArrayList<>();
         this._preorder(acc);
         return acc;
     }
 
-    public Vector<BSTNode> inorder() {
-        Vector<BSTNode> acc = new Vector<>();
+    public List<BSTNode> inorder() {
+        List<BSTNode> acc = new ArrayList<>();
         this._inorder(acc);
         return acc;
     }
 
-    public Vector<BSTNode> postorder() {
-        Vector<BSTNode> acc = new Vector<>();
+    public List<BSTNode> postorder() {
+        List<BSTNode> acc = new ArrayList<>();
         this._postorder(acc);
         return acc;
     }
@@ -746,7 +747,7 @@ public class BSTNode extends Node {
     }
 
     public boolean testOrder() {
-        Vector<BSTNode> order = inorder();
+        List<BSTNode> order = inorder();
         for (int i = 0; i < order.size() - 1; ++i) {
             if (order.get(i).getKey() >= order.get(i + 1).getKey()) {
                 return false;

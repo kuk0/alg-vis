@@ -17,7 +17,8 @@
  ******************************************************************************/
 package algvis.ui;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JTextField;
 
@@ -27,8 +28,8 @@ import algvis.internationalization.ILabel;
 
 /**
  * The Class InputField. This is a smart version of JTextField with methods that
- * parse the input. The input field may be asked for an integer, a vector of
- * integers, or a non-empty vector of integers (if no input is given a random
+ * parse the input. The input field may be asked for an integer, a list of
+ * integers, or a non-empty list of integers (if no input is given a random
  * value is generated).
  */
 public class InputField extends JTextField {
@@ -78,20 +79,20 @@ public class InputField extends JTextField {
     }
 
     /**
-     * Returns a vector of integers in the range 1..MAX. Numbers in the input
+     * Returns a list of integers in the range 1..MAX. Numbers in the input
      * may be delimited by whitespaces and/or commas.
      */
-    public Vector<Integer> getVI() {
+    public List<Integer> getVI() {
         return getVI(1, MAX);
     }
 
     /**
-     * Returns a vector of integers in the range min..max. Numbers in the input
+     * Returns a list of integers in the range min..max. Numbers in the input
      * may be delimited by whitespaces and/or commas.
      */
-    public Vector<Integer> getVI(int min, int max) {
+    public List<Integer> getVI(int min, int max) {
         boolean range = false;
-        final Vector<Integer> args = new Vector<>();
+        final List<Integer> args = new ArrayList<>();
         final String[] tokens = this.getText().replaceAll("\\.{2,}", " .. ")
             .split("(\\s|,)+");
         for (final String t : tokens) {
@@ -112,7 +113,7 @@ public class InputField extends JTextField {
                             "value too high; using the maximum value instead");
                     }
                     if (range) {
-                        final int a = args.lastElement();
+                        final int a = args.get(args.size() - 1);
                         for (int i = a + 1; i < x; ++i) {
                             args.add(i);
                         }
@@ -132,21 +133,21 @@ public class InputField extends JTextField {
     }
 
     /**
-     * Returns a non-empty vector of integers in the range 1..MAX. Numbers in
+     * Returns a non-empty list of integers in the range 1..MAX. Numbers in
      * the input may be delimited by whitespaces and/or commas. If no input is
-     * given, a vector with 1 random value in the range 1..MAX is returned.
+     * given, a list with 1 random value in the range 1..MAX is returned.
      */
-    public Vector<Integer> getNonEmptyVI() {
+    public List<Integer> getNonEmptyVI() {
         return getNonEmptyVI(1, MAX);
     }
 
     /**
-     * Returns a non-empty vector of integers in the range min..max. Numbers in
+     * Returns a non-empty list of integers in the range min..max. Numbers in
      * the input may be delimited by whitespaces and/or commas. If no input is
-     * given, a vector with 1 random value in the range min..max is returned.
+     * given, a list with 1 random value in the range min..max is returned.
      */
-    Vector<Integer> getNonEmptyVI(int min, int max) {
-        final Vector<Integer> args = getVI();
+    List<Integer> getNonEmptyVI(int min, int max) {
+        final List<Integer> args = getVI();
         if (args.size() == 0) {
             args.add(MyRandom.Int(min, max));
             sb.setText("no input; using random value");
@@ -155,12 +156,12 @@ public class InputField extends JTextField {
     }
 
     /**
-     * Returns a vector of strings parsed from input line delimited by spaces.
+     * Returns a list of strings parsed from input line delimited by spaces.
      * [a-z] -> [A-Z], All chars except [A-Z] are lost.
      */
-    public Vector<String> getVS() {
+    public List<String> getVS() {
         final String ss = getText();
-        Vector<String> result = new Vector<>();
+        List<String> result = new ArrayList<>();
         if (ss.isEmpty()) {
             result.add(WordGenerator.getWord());
         } else {
@@ -170,13 +171,13 @@ public class InputField extends JTextField {
         return result;
     }
 
-    public Vector<String> getVABS() {
+    public List<String> getVABS() {
         return getVABS(10);
     }
 
-    public Vector<String> getVABS(int n) {
+    public List<String> getVABS(int n) {
         final String ss = getText();
-        Vector<String> result = new Vector<>();
+        List<String> result = new ArrayList<>();
         if (ss.compareTo("") == 0) {
             result.add(WordGenerator.getABWord(n));
         } else {

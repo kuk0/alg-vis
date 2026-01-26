@@ -19,7 +19,7 @@ package algvis.ds.suffixtree;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.Vector;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -70,7 +70,7 @@ public class SuffixTreeButtons extends Buttons {
     public void actionPerformed(ActionEvent evt) {
         super.actionPerformed(evt);
         if (evt.getSource() == insertB) {
-            final Vector<String> args = I.getVABS();
+            final List<String> args = I.getVABS();
             panel.history.saveEditId();
             for (final String s : args) {
                 ((SuffixTree) D).insert(s);
@@ -79,7 +79,7 @@ public class SuffixTreeButtons extends Buttons {
                 panel.history.rewind();
             }
         } else if (evt.getSource() == findB) {
-            final Vector<String> args = I.getVABS(3);
+            final List<String> args = I.getVABS(3);
             if (args.size() > 0) {
                 panel.history.saveEditId();
                 for (final String s : args) {

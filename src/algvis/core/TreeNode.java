@@ -18,9 +18,11 @@
 package algvis.core;
 
 import java.awt.Color;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
 import java.util.Hashtable;
-import java.util.Stack;
-import java.util.Vector;
+import java.util.List;
 
 import algvis.core.history.HashtableStoreSupport;
 import algvis.core.visual.ZDepth;
@@ -37,18 +39,16 @@ public class TreeNode extends Node {
 
     private int toExtremeSon = 0; // offset from the leftmost son
     private int toBaseline = 0; // distance to child's baseline
-    private int tmpx = 0;
-    private int tmpy = 0; // temporary coordinates of the node
+    private int tempX = 0;
+    private int tempY = 0; // temporary coordinates of the node
     private int number = 1;
 
     private int change = 0;
     private int shift = 0; // for evenly spaced smaller subtrees
-    // TreeNode ancestor = this; // unused variable for now
 
     // statistics
     private int size = 1;
     private int height = 1;
-    public int nos = 0; // number of sons, probably useless
 
     // from binary node
     public int leftw, rightw;
@@ -74,7 +74,7 @@ public class TreeNode extends Node {
      * Calculate height and size of "this" node assuming these were calculated
      * (properly) in its children.
      */
-    void calc() {
+    protected void calc() {
         size = 1;
         height = 1;
         if (!isLeaf()) {
@@ -92,7 +92,7 @@ public class TreeNode extends Node {
     /**
      * Calculate height and size of subtree rooted by "this" node bottom-up
      */
-    void calcTree() {
+    public void calcTree() {
         if (!isLeaf()) {
             TreeNode w = getChild();
             while (w != null) {
@@ -202,7 +202,7 @@ public class TreeNode extends Node {
         rightw = re;
     }
 
-    void addRight(TreeNode w) {
+    protected void addRight(TreeNode w) {
         if (getRight() == null) {
             setRight(w);
             w.setParent(parent);
@@ -251,7 +251,7 @@ public class TreeNode extends Node {
         return w;
     }
 
-    void append(int x, int j) {
+    protected void append(int x, int j) {
         if (getKey() == x) {
             addChild(new TreeNode(D, j, ZDepth.NODE));
         } else {
@@ -268,12 +268,8 @@ public class TreeNode extends Node {
         fTRPrePosition();
         fTRDisposeThreads();
         fTRPetrification(0);
-        fTRBounding(-tmpx);
+        fTRBounding(-tempX);
         reboxTree();
-        /*
-         * D.x1 -= D.minsepx; D.x2 += D.xspan + D.radius; D.y1 -= D.yspan +
-         * D.radius; D.y2 += D.yspan + D.radius;
-         */
     }
 
     /**
@@ -423,15 +419,13 @@ public class TreeNode extends Node {
         int distance = 0;
         int change = 0;
         TreeNode w = getChild();
-        final Stack<TreeNode> stack = new Stack<>();
+        final Deque<TreeNode> stack = new ArrayDeque<>();
         while (w != null) {
-            final NodePair<TreeNode> N = new NodePair<>();
-            N.left = w;
             stack.push(w);
             w = w.getRight();
         }
 
-        while (!stack.empty()) {
+        while (!stack.isEmpty()) {
             w = stack.pop();
             w.offset += distance;
             change += w.change;
@@ -451,7 +445,7 @@ public class TreeNode extends Node {
     /**
      * Disposes threads. Useful as stand-alone only for testing.
      */
-    void fTRDisposeThreads() {
+    protected void fTRDisposeThreads() {
         if (thread) {
             thread = false;
             setChild(null);
@@ -472,12 +466,12 @@ public class TreeNode extends Node {
      *            x-coordinate of the baseline
      */
     private void fTRPetrification(int baseline) {
-        tmpx = baseline + offset;
-        tmpy = level * (DataStructure.minsepy);
+        tempX = baseline + offset;
+        tempY = level * (DataStructure.minsepy);
 
         TreeNode w = getChild();
         while (w != null) {
-            w.fTRPetrification(tmpx - toBaseline);
+            w.fTRPetrification(tempX - toBaseline);
             w = w.getRight();
         }
     }
@@ -490,7 +484,7 @@ public class TreeNode extends Node {
      *            Useful when you want make root rooted at [0,0]
      */
     private void fTRBounding(int correction) {
-        goTo(tmpx + correction, tmpy);
+        goTo(tempX + correction, tempY);
 
         if (tox < D.x1) {
             D.x1 = tox;
@@ -554,16 +548,7 @@ public class TreeNode extends Node {
         this.parent = parent;
     }
 
-    // private void fTRGetInfo(int phase, int variable) {
-    // System.out
-    // .println("Node: " + key + " fakex: " + fakex + " mod: "
-    // + modifier + " change: " + change + " shift: " + shift
-    // + " offset: " + offset + " toE: " + toExtremeSon
-    // + " toB: " + toBaseline + " thread: " + thread + " ("
-    // + phase + ")");
-    // }
-
-    private Vector<TreeNode> _getLeaves(Vector<TreeNode> result) {
+    private List<TreeNode> _getLeaves(List<TreeNode> result) {
         if (isLeaf()) {
             result.add(this);
             return result;
@@ -576,8 +561,8 @@ public class TreeNode extends Node {
         }
     }
 
-    public Vector<TreeNode> getLeaves() {
-        final Vector<TreeNode> result = new Vector<>();
+    public List<TreeNode> getLeaves() {
+        final List<TreeNode> result = new ArrayList<>();
         if (isLeaf()) {
             result.add(this);
             return result;
@@ -604,17 +589,17 @@ public class TreeNode extends Node {
     @Override
     public void restoreState(Hashtable<?, ?> state) {
         super.restoreState(state);
-        final Object child = state.get(hash + "child");
-        if (child != null) {
-            this.child = (TreeNode) HashtableStoreSupport.restore(child);
+        final Object childObj = state.get(hash + "child");
+        if (childObj != null) {
+            this.child = (TreeNode) HashtableStoreSupport.restore(childObj);
         }
-        final Object right = state.get(hash + "right");
-        if (right != null) {
-            this.right = (TreeNode) HashtableStoreSupport.restore(right);
+        final Object rightObj = state.get(hash + "right");
+        if (rightObj != null) {
+            this.right = (TreeNode) HashtableStoreSupport.restore(rightObj);
         }
-        final Object parent = state.get(hash + "parent");
-        if (parent != null) {
-            this.parent = (TreeNode) HashtableStoreSupport.restore(parent);
+        final Object parentObj = state.get(hash + "parent");
+        if (parentObj != null) {
+            this.parent = (TreeNode) HashtableStoreSupport.restore(parentObj);
         }
 
         if (this.child != null) {

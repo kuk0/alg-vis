@@ -17,7 +17,8 @@
  ******************************************************************************/
 package algvis.ds.suffixtree;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import algvis.core.Algorithm;
 import algvis.core.NodeColor;
@@ -93,8 +94,8 @@ public class SuffixTreeFind extends Algorithm {
             ++i;
         }
         hw.setAndGoNextTo("", v);
-        final Vector<TreeNode> leaves = v.getLeaves();
-        final Vector<Integer> pos = new Vector<>();
+        final List<TreeNode> leaves = v.getLeaves();
+        final List<Integer> pos = new ArrayList<>();
         for (final TreeNode w : leaves) {
             final int p = w.getKey();
             w.mark();

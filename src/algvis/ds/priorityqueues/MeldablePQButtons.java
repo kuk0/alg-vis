@@ -19,7 +19,7 @@ package algvis.ds.priorityqueues;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.Vector;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -67,7 +67,7 @@ public class MeldablePQButtons extends PQButtons implements ChangeListener {
     public void actionPerformed(ActionEvent evt) {
         super.actionPerformed(evt);
         if (evt.getSource() == meldB) {
-            final Vector<Integer> args = I.getVI();
+            final List<Integer> args = I.getVI();
             args.add(-1);
             args.add(-1);
             panel.history.saveEditId();

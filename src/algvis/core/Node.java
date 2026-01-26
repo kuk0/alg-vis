@@ -38,11 +38,12 @@ public class Node extends VisualElement {
     public DataStructure D;
     protected int key;
     /**
-     * x, y - node position tox, toy - the position, where the node is heading
+     * x, y - node position
+     * tox, toy - the position, where the node is heading
      * steps - the number of steps to reach the destination
      */
-    public volatile int x;
-    public volatile int y;
+    public int x;
+    public int y;
     public int tox;
     public int toy;
     protected int steps;
@@ -51,12 +52,17 @@ public class Node extends VisualElement {
     private NodeColor color = NodeColor.NORMAL;
     public boolean marked = false;
     protected Node dir = null;
-    private int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S,
-                                     // 135=SW, 180=W)
+    private int arrow = Node.NOARROW; // NOARROW or angle (0=E, 45=SE, 90=S, 135=SW, 180=W)
     private boolean arc = false;
 
     public static final int STEPS = 10;
     public static final int RADIUS = 10;
+    
+    // Animation and rendering constants
+    private static final int EXIT_SPEED = 20; // Speed when moving off screen
+    private static final double ARROW_START_DISTANCE = 1.5; // Distance from node center to arrow start (in radii)
+    private static final double ARROW_LENGTH = 2.0; // Arrow length (in radii)
+    private static final int MARKED_CIRCLE_OFFSET = 2; // Offset for marked circle
 
     /**
      * the key values are generally integers from 1 to 999 (inclusive) special
@@ -104,6 +110,11 @@ public class Node extends VisualElement {
         this(v.D, v.getKey(), v.x, v.y);
     }
 
+    /**
+     * Sets the state of this node.
+     * 
+     * @param s the new state (INVISIBLE, ALIVE, DOWN, LEFT, RIGHT, OUT, or UP)
+     */
     public void setState(int s) {
         state = s;
     }
@@ -222,7 +233,7 @@ public class Node extends VisualElement {
         v.setColor(Color.BLACK); // fgcolor);
         v.drawCircle(x, y, Node.RADIUS);
         if (marked) {
-            v.drawCircle(x, y, Node.RADIUS + 2);
+            v.drawCircle(x, y, Node.RADIUS + MARKED_CIRCLE_OFFSET);
         }
     }
 
@@ -259,7 +270,7 @@ public class Node extends VisualElement {
             } else if (arrow == TOARROW) {
                 dy = dir.y - y;
             } else {
-                // vypindaj
+                // Invalid arrow type
                 return;
             }
             final double d = Math.sqrt(dx * dx + dy * dy);
@@ -270,14 +281,14 @@ public class Node extends VisualElement {
             dy = Math.sin(arrow * Math.PI / 180);
         }
         double x1, y1, x2, y2;
-        x1 = x + 1.5 * Node.RADIUS * dx;
-        y1 = y + 1.5 * Node.RADIUS * dy;
+        x1 = x + ARROW_START_DISTANCE * Node.RADIUS * dx;
+        y1 = y + ARROW_START_DISTANCE * Node.RADIUS * dy;
         if (arrow == TOARROW) {
-            x2 = dir.x - 1.5 * Node.RADIUS * dx;
-            y2 = dir.y - 1.5 * Node.RADIUS * dy;
+            x2 = dir.x - ARROW_START_DISTANCE * Node.RADIUS * dx;
+            y2 = dir.y - ARROW_START_DISTANCE * Node.RADIUS * dy;
         } else {
-            x2 = x1 + 2 * Node.RADIUS * dx;
-            y2 = y1 + 2 * Node.RADIUS * dy;
+            x2 = x1 + ARROW_LENGTH * Node.RADIUS * dx;
+            y2 = y1 + ARROW_LENGTH * Node.RADIUS * dy;
         }
         v.setColor(Color.BLACK);
         v.drawArrow((int) x1, (int) y1, (int) x2, (int) y2);
@@ -334,8 +345,6 @@ public class Node extends VisualElement {
         goTo(v.tox, v.toy);
     }
 
-    // public void goAbove (int tox, int toy) { goTo (tox, toy - 2*D.RADIUS -
-    // D.yspan); }
     /**
      * Go above node v (or more precisely: above the position where v is going).
      */
@@ -343,8 +352,6 @@ public class Node extends VisualElement {
         goTo(v.tox, v.toy - DataStructure.minsepy);
     }
 
-    // public void goNextTo (int tox, int toy) { goTo (tox + 2*D.RADIUS +
-    // D.xspan, toy); }
     /**
      * Go next to node v (precisely to the right of where v is going).
      */
@@ -406,19 +413,19 @@ public class Node extends VisualElement {
         case Node.DOWN:
         case Node.LEFT:
         case Node.RIGHT:
-            y += 20;
+            y += EXIT_SPEED;
             if (state == Node.LEFT) {
-                x -= 20;
+                x -= EXIT_SPEED;
             } else if (state == Node.RIGHT) {
-                x += 20;
+                x += EXIT_SPEED;
             }
-            // robi problem, ked rychlo dozadu a potom rychlo dopredu
+            // Check if node has moved outside visible area
             if (!D.panel.screen.V.inside(x, y - Node.RADIUS)) {
                 state = OUT;
             }
             break;
         case Node.UP:
-            y -= 20;
+            y -= EXIT_SPEED;
             break;
         }
     }
@@ -442,11 +449,11 @@ public class Node extends VisualElement {
             y = toy;
         } else if (state == DOWN || state == LEFT || state == RIGHT) {
             while (D.panel.screen.V.inside(x, y - Node.RADIUS)) {
-                y += 20;
+                y += EXIT_SPEED;
                 if (state == Node.LEFT) {
-                    x -= 20;
+                    x -= EXIT_SPEED;
                 } else if (state == Node.RIGHT) {
-                    x += 20;
+                    x += EXIT_SPEED;
                 }
             }
             state = OUT;
@@ -463,14 +470,31 @@ public class Node extends VisualElement {
         return key;
     }
 
+    /**
+     * Returns the key as a string.
+     * 
+     * @return the key as a string
+     */
     public String getKeyS() {
         return "" + key;
     }
 
+    /**
+     * Sets the key value for this node.
+     * 
+     * @param key the new key value
+     */
     public void setKey(int key) {
         this.key = key;
     }
 
+    /**
+     * Adjusts the key value by a delta, respecting minimum/maximum constraints.
+     * 
+     * @param delta the amount to adjust the key by
+     * @param minOrder if true, decreases key (respecting minimum of 1);
+     *                 if false, increases key (respecting maximum from InputField.MAX)
+     */
     public void decrKey(int delta, boolean minOrder) {
         if (minOrder) {
             setKey(Math.max(key - delta, 1));
@@ -496,59 +520,59 @@ public class Node extends VisualElement {
     @Override
     public void restoreState(Hashtable<?, ?> state) {
         super.restoreState(state);
-        final Object key = state.get(hash + "key");
-        if (key != null) {
-            this.key = (Integer) HashtableStoreSupport.restore(key);
+        final Object keyObj = state.get(hash + "key");
+        if (keyObj != null) {
+            this.key = (Integer) HashtableStoreSupport.restore(keyObj);
         }
 
-        Object stat = state.get(hash + "state");
-        if (stat != null) {
-            stat = HashtableStoreSupport.restore(stat);
-            // tu nechcem mat invisible (inak spravit)
+        Object stateObj = state.get(hash + "state");
+        if (stateObj != null) {
+            stateObj = HashtableStoreSupport.restore(stateObj);
+            // Restore state, handling transitions from exit states
             if ((this.state == OUT || this.state == DOWN || this.state == LEFT
                 || this.state == RIGHT || this.state == UP)
-                && stat.equals(ALIVE)) {
+                && stateObj.equals(ALIVE)) {
                 goTo(tox, toy);
             }
-            this.state = (Integer) stat;
+            this.state = (Integer) stateObj;
         }
 
         boolean isMoved = false;
-        Object tox = state.get(hash + "tox");
-        Object toy = state.get(hash + "toy");
-        if (tox != null) {
+        Object toxObj = state.get(hash + "tox");
+        Object toyObj = state.get(hash + "toy");
+        if (toxObj != null) {
             isMoved = true;
         } else {
-            tox = this.tox;
+            toxObj = this.tox;
         }
-        if (toy != null) {
+        if (toyObj != null) {
             isMoved = true;
         } else {
-            toy = this.toy;
+            toyObj = this.toy;
         }
         if (isMoved) {
-            goTo((Integer) tox, (Integer) toy);
+            goTo((Integer) toxObj, (Integer) toyObj);
         }
 
-        final Object color = state.get(hash + "color");
-        if (color != null) {
-            this.color = (NodeColor) HashtableStoreSupport.restore(color);
+        final Object colorObj = state.get(hash + "color");
+        if (colorObj != null) {
+            this.color = (NodeColor) HashtableStoreSupport.restore(colorObj);
         }
-        final Object marked = state.get(hash + "marked");
-        if (marked != null) {
-            this.marked = (Boolean) HashtableStoreSupport.restore(marked);
+        final Object markedObj = state.get(hash + "marked");
+        if (markedObj != null) {
+            this.marked = (Boolean) HashtableStoreSupport.restore(markedObj);
         }
-        final Object dir = state.get(hash + "dir");
-        if (dir != null) {
-            this.dir = (Node) HashtableStoreSupport.restore(dir);
+        final Object dirObj = state.get(hash + "dir");
+        if (dirObj != null) {
+            this.dir = (Node) HashtableStoreSupport.restore(dirObj);
         }
-        final Object arrow = state.get(hash + "arrow");
-        if (arrow != null) {
-            this.arrow = (Integer) HashtableStoreSupport.restore(arrow);
+        final Object arrowObj = state.get(hash + "arrow");
+        if (arrowObj != null) {
+            this.arrow = (Integer) HashtableStoreSupport.restore(arrowObj);
         }
-        final Object arc = state.get(hash + "arc");
-        if (arc != null) {
-            this.arc = (Boolean) HashtableStoreSupport.restore(arc);
+        final Object arcObj = state.get(hash + "arc");
+        if (arcObj != null) {
+            this.arc = (Boolean) HashtableStoreSupport.restore(arcObj);
         }
     }
 }

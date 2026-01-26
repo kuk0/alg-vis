@@ -19,7 +19,7 @@ package algvis.ds.priorityqueues;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.Vector;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
@@ -93,7 +93,7 @@ public class PQButtons extends Buttons {
     public void actionPerformed(ActionEvent evt) {
         super.actionPerformed(evt);
         if (evt.getSource() == insertB) {
-            final Vector<Integer> args = I.getNonEmptyVI();
+            final List<Integer> args = I.getNonEmptyVI();
             panel.history.saveEditId();
             for (final int x : args) {
                 D.insert(x);

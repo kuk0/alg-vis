@@ -19,7 +19,7 @@ package algvis.ds.rotations;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.Vector;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -68,7 +68,7 @@ public class RotButtons extends Buttons {
         super.actionPerformed(evt);
         final Rotations R = (Rotations) D;
         if (evt.getSource() == rotB) {
-            final Vector<Integer> args = I.getVI();
+            final List<Integer> args = I.getVI();
             if (!args.isEmpty()) {
                 panel.history.saveEditId();
                 for (final int x : args) {
