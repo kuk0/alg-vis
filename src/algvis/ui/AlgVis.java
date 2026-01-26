@@ -39,7 +39,7 @@ import algvis.internationalization.Languages;
 public class AlgVis extends JPanel implements ActionListener {
 
     private static final long serialVersionUID = -5202486006824196688L;
-    private final static DS DEFAULT_DS = DS.BST;
+    private final static DS DEFAULT_DS = DS.HEAP;
 
     /** Cards with data structures */
     public final JPanel cards;

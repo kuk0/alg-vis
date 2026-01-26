@@ -38,11 +38,19 @@ public class DynamicArrayButtons extends Buttons {
         super.actionPerformed(evt);
         if (evt.getSource() == insertB) {
             final Vector<Integer> args = I.getNonEmptyVI();
+            panel.history.saveEditId();
             for (final int x : args) {
                 D.insert(x);
             }
+            if (panel.pauses && !args.isEmpty()) {
+                panel.history.rewind();
+            }
         } else if (evt.getSource() == popB) {
+            panel.history.saveEditId();
             ((DynamicArray) D).pop();
+            if (panel.pauses) {
+                panel.history.rewind();
+            }
         }
     }
 

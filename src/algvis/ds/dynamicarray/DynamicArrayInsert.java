@@ -19,6 +19,7 @@ public class DynamicArrayInsert extends DynamicArrayAlg {
         for (int i = 0; i < 5; i++) {
             D.newCoins.add(new DynamicArrayCoin(D, D.invisible,
                 (int) (i * Node.RADIUS * 2.25), 0));
+            D.newCoins.get(i).setState(Node.ALIVE);
         }
         if (D.size + 1 > D.capacity) {
             addStep(D.array.get(D.capacity - 1), REL.TOPRIGHT,
@@ -99,5 +100,9 @@ public class DynamicArrayInsert extends DynamicArrayAlg {
                 coin.setState(Node.UP);
             }
         }
+
+        pause();
+        addNote("done");
+
     }
 }

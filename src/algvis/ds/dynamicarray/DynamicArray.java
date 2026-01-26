@@ -72,19 +72,25 @@ public class DynamicArray extends DataStructure implements ClickListener {
         size = 0;
         capacity = 2;
 
-        newarray = array = new Array<>(0, -250, 100);
+        newarray = null;
+        newdelimiter2 = null;
+        newdelimiter4 = null;
+        
+        array = new Array<>(0, -250, 100);
         array.add(new ArrayNode(this, 0));
         array.add(new ArrayNode(this, 0));
 
-        newdelimiter2 = delimiter2 = new DynamicArrayDelimiter(this,
-            array.get(1), Color.GREEN);
-        newdelimiter4 = delimiter4 = new DynamicArrayDelimiter(this,
-            array.get(1), Color.GREEN);
+        delimiter2 = new DynamicArrayDelimiter(this, array.get(1), Color.GREEN);
+        delimiter4 = new DynamicArrayDelimiter(this, array.get(1), Color.GREEN);
         delimiter4.setState(Node.INVISIBLE);
 
+        newCoins = new ArrayList<>();
+        clearArrayCoins();
+    }
+
+    public void clearArrayCoins() {
         coinsForCopy = new ArrayList<>();
         coinsForArray = new ArrayList<>();
-        newCoins = new ArrayList<>();
 
         for (int i = 0; i < capacity; i++) {
             coinsForArray.add(new DynamicArrayCoin(this, array.get(i), -20, 0));
@@ -95,11 +101,13 @@ public class DynamicArray extends DataStructure implements ClickListener {
             coinsForArray.get(i).setColor(NodeColor.GREEN);
         }
     }
-
+    
     @Override
     public void draw(View v) {
-        array.draw(v);
-        if (newarray != null && newarray != array) {
+        if (array != null) {
+            array.draw(v);
+        }
+        if (newarray != null) {
             newarray.draw(v);
         }
         for (DynamicArrayCoin coin : coinsForCopy) {
@@ -118,10 +126,10 @@ public class DynamicArray extends DataStructure implements ClickListener {
         if (delimiter4 != null) {
             delimiter4.draw(v);
         }
-        if (newdelimiter2 != null && newdelimiter2 != delimiter2) {
+        if (newdelimiter2 != null) {
             newdelimiter2.draw(v);
         }
-        if (newdelimiter4 != null && newdelimiter4 != delimiter4) {
+        if (newdelimiter4 != null) {
             newdelimiter4.draw(v);
         }
 
@@ -133,7 +141,12 @@ public class DynamicArray extends DataStructure implements ClickListener {
 
     @Override
     public void move() {
-        array.move();
+        if (array != null) {
+            array.move();
+        }
+        if (newarray != null) {
+            newarray.move();
+        }
         for (DynamicArrayCoin coin : coinsForCopy) {
             coin.move();
         }
@@ -183,7 +196,9 @@ public class DynamicArray extends DataStructure implements ClickListener {
             newdelimiter4);
         HashtableStoreSupport.store(state, hash + "invisible", invisible);
 
-        this.array.storeState(state);
+        if (this.array != null) {
+            this.array.storeState(state);
+        }
         if (this.newarray != null) {
             this.newarray.storeState(state);
         }
@@ -227,7 +242,7 @@ public class DynamicArray extends DataStructure implements ClickListener {
         final Object newarray = state.get(hash + "newarray");
         if (newarray != null) {
             this.newarray = (Array<ArrayNode>) HashtableStoreSupport
-                .restore(array);
+                .restore(newarray);
         }
         if (this.newarray != null) {
             this.newarray.restoreState(state);
