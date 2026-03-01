@@ -51,13 +51,6 @@ public class SplayNode extends BSTNode {
     @Override
     public void calc() {
         super.calc();
-        int lp = 0, rp = 0;
-        if (getLeft() != null) {
-            lp = getLeft().rank;
-        }
-        if (getRight() != null) {
-            rp = getRight().rank;
-        }
         rank = (int) Math.floor(D.lg(size));
     }
 

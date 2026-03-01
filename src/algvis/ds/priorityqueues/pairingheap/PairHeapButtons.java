@@ -20,15 +20,13 @@ package algvis.ds.priorityqueues.pairingheap;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JPanel;
-import javax.swing.event.ChangeListener;
 
 import algvis.ds.priorityqueues.MeldablePQButtons;
 import algvis.internationalization.IComboBox;
 import algvis.internationalization.ILabel;
 import algvis.ui.VisPanel;
 
-public class PairHeapButtons extends MeldablePQButtons
-    implements ChangeListener {
+public class PairHeapButtons extends MeldablePQButtons {
     private static final long serialVersionUID = -5692673269308125662L;
     public IComboBox pairVariant;
 

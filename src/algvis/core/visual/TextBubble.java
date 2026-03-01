@@ -22,7 +22,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
 
-import algvis.core.StringUtils;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.internationalization.Stringable;
 import algvis.ui.view.REL;
