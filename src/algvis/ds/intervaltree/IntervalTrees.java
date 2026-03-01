@@ -24,11 +24,11 @@ import algvis.ui.VisPanel;
 
 public abstract class IntervalTrees extends DataStructure {
 
-    public enum mimasuType {
+    public enum AggregationType {
         MIN, MAX, SUM
     }
 
-    public mimasuType minTree = mimasuType.MAX;
+    public AggregationType aggregationType = AggregationType.MAX;
 
     IntervalTrees(VisPanel M) {
         super(M);

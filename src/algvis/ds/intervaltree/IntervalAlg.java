@@ -20,7 +20,7 @@ package algvis.ds.intervaltree;
 
 import algvis.core.Algorithm;
 import algvis.core.Node;
-import algvis.ds.intervaltree.IntervalTrees.mimasuType;
+import algvis.ds.intervaltree.IntervalTrees.AggregationType;
 import algvis.ui.view.REL;
 
 abstract class IntervalAlg extends Algorithm {
@@ -36,7 +36,7 @@ abstract class IntervalAlg extends Algorithm {
         while (w != null) {
             w.mark();
             if ((w.getRight() != null) && (w.getLeft() != null)) {
-                if (T.minTree == mimasuType.MIN) {
+                if (T.aggregationType == AggregationType.MIN) {
                     if (w.getRight().getKey() == Node.NOKEY) {
                         w.setKey(w.getLeft().getKey());
                         addStep(w, REL.TOP, "intervalkeyempty",
@@ -47,7 +47,7 @@ abstract class IntervalAlg extends Algorithm {
                         addStep(w, REL.TOP, "intervalmin",
                             w.getRight().getKeyS(), w.getLeft().getKeyS());
                     }
-                } else if (T.minTree == mimasuType.MAX) {
+                } else if (T.aggregationType == AggregationType.MAX) {
                     w.setKey(
                         Math.max(w.getRight().getKey(), w.getLeft().getKey()));
                     if (w.getRight().getKey() != Node.NOKEY) {
@@ -57,7 +57,7 @@ abstract class IntervalAlg extends Algorithm {
                         addStep(w, REL.TOP, "intervalkeyempty",
                             w.getLeft().getKeyS());
                     }
-                } else if (T.minTree == mimasuType.SUM) {
+                } else if (T.aggregationType == AggregationType.SUM) {
                     if (w.getRight().getKey() != Node.NOKEY) {
                         w.setKey(w.getRight().getKey() + w.getLeft().getKey());
                         addStep(w, REL.TOP, "intervalsum",

@@ -21,7 +21,7 @@ package algvis.ds.intervaltree;
 import algvis.core.Node;
 import algvis.core.visual.ZDepth;
 import algvis.ds.intervaltree.IntervalNode.focusType;
-import algvis.ds.intervaltree.IntervalTrees.mimasuType;
+import algvis.ds.intervaltree.IntervalTrees.AggregationType;
 import algvis.ui.view.REL;
 
 public class IntervalFindMin extends IntervalAlg {
@@ -53,10 +53,10 @@ public class IntervalFindMin extends IntervalAlg {
         }
         // Initialize the aggregation accumulator node according to the
         // configured aggregation type (max/min/sum).
-        if (T.minTree == mimasuType.MAX) {
+        if (T.aggregationType == AggregationType.MAX) {
             aggregate = new IntervalNode(T, Integer.MIN_VALUE, ZDepth.NODE);
             setHeader("findmax", i, j);
-        } else if (T.minTree == mimasuType.MIN) {
+        } else if (T.aggregationType == AggregationType.MIN) {
             aggregate = new IntervalNode(T, Integer.MAX_VALUE, ZDepth.NODE);
             setHeader("findmin", i, j);
         } else {
@@ -74,14 +74,14 @@ public class IntervalFindMin extends IntervalAlg {
             addNote("intervalfind", i, j);
             find(T.root, i, j);
             pause();
-            if (T.minTree == mimasuType.MAX) {
+            if (T.aggregationType == AggregationType.MAX) {
                 addStep(T, 200, REL.TOP, "maximum", aggregate.getKeyS());
-            } else if (T.minTree == mimasuType.MIN) {
+            } else if (T.aggregationType == AggregationType.MIN) {
                 addStep(T, 200, REL.TOP, "minimum", aggregate.getKeyS());
-            } else if (T.minTree == mimasuType.SUM) {
+            } else if (T.aggregationType == AggregationType.SUM) {
                 addStep(T, 200, REL.TOP, "sum", aggregate.getKeyS());
             }
-            if (T.minTree != mimasuType.SUM) {
+            if (T.aggregationType != AggregationType.SUM) {
                 T.unfocus(T.root);
                 aggregate.mark();
                 T.markColor(T.root, i, j);
@@ -115,7 +115,7 @@ public class IntervalFindMin extends IntervalAlg {
 
         // Case 2: contained (node interval is fully inside query)
         else if ((w.b >= b) && (w.e <= e)) {
-            if (T.minTree != mimasuType.SUM) {
+            if (T.aggregationType != AggregationType.SUM) {
                 if (w.prec(aggregate)) {
                     aggregate = w;
                 }

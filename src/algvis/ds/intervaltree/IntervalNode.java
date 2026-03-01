@@ -27,7 +27,7 @@ import algvis.core.NodeColor;
 import algvis.core.history.HashtableStoreSupport;
 import algvis.ds.dictionaries.bst.BST;
 import algvis.ds.dictionaries.bst.BSTNode;
-import algvis.ds.intervaltree.IntervalTrees.mimasuType;
+import algvis.ds.intervaltree.IntervalTrees.AggregationType;
 import algvis.ui.Fonts;
 import algvis.ui.view.View;
 
@@ -217,7 +217,7 @@ public class IntervalNode extends BSTNode {
     }
 
     public boolean prec(IntervalNode v) {
-        if (((IntervalTree) D).minTree == mimasuType.MIN) {
+        if (((IntervalTree) D).aggregationType == AggregationType.MIN) {
             return getKey() < v.getKey();
         } else {
             return getKey() > v.getKey();
@@ -228,7 +228,7 @@ public class IntervalNode extends BSTNode {
      * Precedes or equals (see prec).
      */
     public boolean preceq(IntervalNode v) {
-        if (((IntervalTree) D).minTree == mimasuType.MIN) {
+        if (((IntervalTree) D).aggregationType == AggregationType.MIN) {
             return getKey() <= v.getKey();
         } else {
             return getKey() >= v.getKey();

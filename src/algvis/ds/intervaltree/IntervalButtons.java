@@ -27,7 +27,7 @@ import javax.swing.JPanel;
 
 import algvis.core.Algorithm;
 import algvis.ds.dictionaries.bst.BSTNode;
-import algvis.ds.intervaltree.IntervalTrees.mimasuType;
+import algvis.ds.intervaltree.IntervalTrees.AggregationType;
 import algvis.internationalization.IButton;
 import algvis.internationalization.IRadioButton;
 import algvis.ui.Buttons;
@@ -44,7 +44,7 @@ public class IntervalButtons extends Buttons {
     private IRadioButton sumB;
     private ButtonGroup minMaxSumGroup;
 
-    private mimasuType lastMinTree = ((IntervalTrees) D).minTree;
+    private AggregationType lastAggregationType = ((IntervalTrees) D).aggregationType;
 
     public IntervalButtons(VisPanel M) {
         super(M);
@@ -56,14 +56,9 @@ public class IntervalButtons extends Buttons {
         insertB.setMnemonic(KeyEvent.VK_I);
         insertB.addActionListener(this);
 
-        /*
-         * deleteB = new IButton("button-deletemax");
-         * deleteB.setMnemonic(KeyEvent.VK_D); deleteB.addActionListener(this);
-         */
-
-        if (((IntervalTrees) D).minTree == mimasuType.MIN) {
+        if (((IntervalTrees) D).aggregationType == AggregationType.MIN) {
             findsumB = new IButton("button-findmin");
-        } else if (((IntervalTrees) D).minTree == mimasuType.MAX) {
+        } else if (((IntervalTrees) D).aggregationType == AggregationType.MAX) {
             findsumB = new IButton("button-findmax");
         } else {
             findsumB = new IButton("button-findsum");
@@ -134,31 +129,28 @@ public class IntervalButtons extends Buttons {
             if (panel.pauses && w != null) {
                 panel.history.rewind();
             }
-        } else if (evt.getSource() == minB
-            && ((IntervalTrees) D).minTree != mimasuType.MIN) {
+        } else if (evt.getSource() == minB && ((IntervalTrees) D).aggregationType != AggregationType.MIN) {
             D.start(new Algorithm(panel) {
                 @Override
                 public void runAlgorithm() {
                     D.clear();
-                    ((IntervalTrees) D).minTree = mimasuType.MIN;
+                    ((IntervalTrees) D).aggregationType = AggregationType.MIN;
                 }
             });
-        } else if (evt.getSource() == maxB
-            && ((IntervalTrees) D).minTree != mimasuType.MAX) {
+        } else if (evt.getSource() == maxB && ((IntervalTrees) D).aggregationType != AggregationType.MAX) {
             D.start(new Algorithm(panel) {
                 @Override
                 public void runAlgorithm() {
                     D.clear();
-                    ((IntervalTrees) D).minTree = mimasuType.MAX;
+                    ((IntervalTrees) D).aggregationType = AggregationType.MAX;
                 }
             });
-        } else if (evt.getSource() == sumB
-            && ((IntervalTrees) D).minTree != mimasuType.SUM) {
+        } else if (evt.getSource() == sumB && ((IntervalTrees) D).aggregationType != AggregationType.SUM) {
             D.start(new Algorithm(panel) {
                 @Override
                 public void runAlgorithm() {
                     D.clear();
-                    ((IntervalTrees) D).minTree = mimasuType.SUM;
+                    ((IntervalTrees) D).aggregationType = AggregationType.SUM;
                 }
             });
         }
@@ -176,13 +168,13 @@ public class IntervalButtons extends Buttons {
     @Override
     public void refresh() {
         super.refresh();
-        if (lastMinTree != ((IntervalTrees) D).minTree) {
-            lastMinTree = ((IntervalTrees) D).minTree;
-            if (lastMinTree == mimasuType.MIN) {
+        if (lastAggregationType != ((IntervalTrees) D).aggregationType) {
+            lastAggregationType = ((IntervalTrees) D).aggregationType;
+            if (lastAggregationType == AggregationType.MIN) {
                 findsumB.setT("button-findmin");
-            } else if (lastMinTree == mimasuType.MAX) {
+            } else if (lastAggregationType == AggregationType.MAX) {
                 findsumB.setT("button-findmax");
-            } else if (lastMinTree == mimasuType.SUM) {
+            } else if (lastAggregationType == AggregationType.SUM) {
                 findsumB.setT("button-findsum");
             }
         }
