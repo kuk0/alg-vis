@@ -22,7 +22,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.util.ConcurrentModificationException;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -67,11 +66,8 @@ public class Screen extends JPanel {
         check_size();
         clear();
         V.startDrawing();
-        try {
-            panel.scene.move();
-            panel.scene.draw(V);
-        } catch (final ConcurrentModificationException ignored) {
-        }
+        panel.scene.move();
+        panel.scene.draw(V);
         V.endDrawing();
         // V.resetView();
         g.drawImage(I, 0, 0, null);

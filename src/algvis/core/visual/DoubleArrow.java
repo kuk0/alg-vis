@@ -19,7 +19,6 @@
 package algvis.core.visual;
 
 import java.awt.geom.Rectangle2D;
-import java.util.ConcurrentModificationException;
 
 import algvis.ui.view.View;
 
@@ -35,12 +34,12 @@ public class DoubleArrow extends VisualElement {
     }
 
     @Override
-    protected void draw(View v) throws ConcurrentModificationException {
+    protected void draw(View v) {
         v.drawDoubleArrow(x1, y1, x2, y2);
     }
 
     @Override
-    protected void move() throws ConcurrentModificationException {
+    protected void move() {
     }
 
     @Override

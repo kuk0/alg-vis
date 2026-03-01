@@ -19,7 +19,6 @@
 package algvis.core.visual;
 
 import java.awt.geom.Rectangle2D;
-import java.util.ConcurrentModificationException;
 import java.util.Hashtable;
 
 import javax.swing.undo.StateEditable;
@@ -46,9 +45,9 @@ public abstract class VisualElement implements StateEditable {
     // }
     // }
 
-    protected abstract void draw(View v) throws ConcurrentModificationException;
+    protected abstract void draw(View v);
 
-    protected abstract void move() throws ConcurrentModificationException;
+    protected abstract void move();
 
     public abstract Rectangle2D getBoundingBox();
 

@@ -2,7 +2,6 @@ package algvis.core;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.Hashtable;
 
 import algvis.core.history.HashtableStoreSupport;
@@ -50,7 +49,7 @@ public class Array<E extends ArrayNode> extends VisualElement {
     }
 
     @Override
-    public void draw(View v) throws ConcurrentModificationException {
+    public void draw(View v) {
         int lastx = x;
         for (ArrayNode N : array) {
             N.x = lastx + Node.RADIUS;
@@ -61,7 +60,7 @@ public class Array<E extends ArrayNode> extends VisualElement {
     }
 
     @Override
-    public void move() throws ConcurrentModificationException {
+    public void move() {
         for (ArrayNode N : array) {
             N.move();
         }
