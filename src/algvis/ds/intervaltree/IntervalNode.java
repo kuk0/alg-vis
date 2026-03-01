@@ -156,17 +156,16 @@ public class IntervalNode extends BSTNode {
         case TWAIT:
             v.setColor(this.getFgColor());
             final int c = (e - b + 1);
-            final int d = (int) (Math.log10(c) / Math.log10(2));
-            // System.out.println(d + " =vyska-1, minsepy= "
-            // + IntervalTree.minsepy);
-            final int width = (c) * IntervalTree.minsepx;
-            final int height = (d) * DataStructure.minsepy + 4
-                + 2 * Node.RADIUS;
-            v.drawRoundRectangle(x, y + height / 2 - Node.RADIUS - 3, width / 2,
-                height / 2, 8, 8);
+            // floor(log2(c)) using bit operations (safer and faster than Math.log)
+            final int d = (c > 0) ? (31 - Integer.numberOfLeadingZeros(c)) : 0;
+            // width: horizontal span proportional to number of leaves represented
+            final int width = c * (IntervalTree.minsepx - 4 + 2 * Node.RADIUS) / 2 - 4;
+            // height: proportional to tree level (d), plus padding for the node
+            final int height = (d + 1) * (DataStructure.minsepy) / 2 + Node.RADIUS / 2;
+            // draw using full width/height (drawRoundRectangle accepts full extents)
+            v.drawRoundRectangle(x, y + height - (Node.RADIUS + DataStructure.minsepy) / 2, width, height, 8, 8);
             v.setColor(this.getBgColor());
-            v.fillRoundRectangle(x, y + height / 2 - Node.RADIUS - 3, width / 2,
-                height / 2, 8, 8);
+            v.fillRoundRectangle(x, y + height - (Node.RADIUS + DataStructure.minsepy) / 2, width, height, 8, 8);
         default:
             break;
         }
