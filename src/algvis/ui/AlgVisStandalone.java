@@ -43,10 +43,9 @@ public class AlgVisStandalone {
                     break;
                 }
             }
-        } catch (final Exception e) {
-            // If Nimbus is not available, you can set the GUI to another look
-            // and feel.
-            e.printStackTrace();
+        } catch (final Throwable t) {
+            // Nimbus not available, or native calls fail (e.g. under CheerpJ).
+            // Fall through with the default look-and-feel.
         }
 
         if (args.length > 0 && "help".equalsIgnoreCase(args[0])) {
@@ -61,43 +60,60 @@ public class AlgVisStandalone {
             return;
         }
 
-        EventQueue.invokeLater(() -> {
-            final JFrame f = new MainFrame(args);
+        boolean undecorated = false;
+        for (String arg : args) {
+            if ("--undecorated".equalsIgnoreCase(arg)) {
+                undecorated = true;
+            }
+        }
+
+        final boolean undec = undecorated;
+        final Runnable showFrame = () -> {
+            DS ds = null;
+            if (args.length > 0) {
+                for (DS d : DS.values()) {
+                    if (d.getName().equals(args[0])) {
+                        ds = d;
+                        break;
+                    }
+                }
+            }
+            final JFrame f = new MainFrame(ds, undec);
             f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             f.setVisible(true);
-        });
+        };
+
+        try {
+            EventQueue.invokeLater(showFrame);
+        } catch (final Throwable t) {
+            // EventQueue may fail under CheerpJ; try direct invocation.
+            showFrame.run();
+        }
     }
 }
 
 class MainFrame extends JFrame {
     private static final long serialVersionUID = -1045189076645432320L;
-    private static final int WIDTH = 900;
-    private static final int HEIGHT = 650;
 
-    public MainFrame(String[] args) {
-        setTitle("Gnarley Trees");
-        DS ds = null;
-        if (args.length > 0) {
-            for (DS d : DS.values()) {
-                if (d.getName().equals(args[0])) {
-                    ds = d;
-                    break;
-                }
-            }
+    public MainFrame(DS ds, boolean undecorated) {
+        if (undecorated) {
+            setUndecorated(true);
+        } else {
+            setTitle("Gnarley Trees");
         }
+
         if (ds != null) {
             final algvis.ui.VisPanel P = ds.createPanel();
             add(P);
             pack();
             Fonts.init(getGraphics());
-            setSize(WIDTH, HEIGHT + 20); // add 20 for the frame title
             P.setOnAir(true);
         } else {
             final AlgVis A = new AlgVis(getContentPane());
             add(A);
             pack();
             A.init();
-            setSize(WIDTH, HEIGHT + 20); // add 20 for the frame title
         }
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 }
