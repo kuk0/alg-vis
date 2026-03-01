@@ -21,6 +21,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+
+import algvis.ds.DS;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.WindowConstants;
@@ -47,8 +49,20 @@ public class AlgVisStandalone {
             e.printStackTrace();
         }
 
+        if (args.length > 0 && "help".equalsIgnoreCase(args[0])) {
+            System.out.println("Available data structures:");
+            for (DS d : DS.values()) {
+                String name = d.getName();
+                if (name == null) {
+                    name = d.name().toLowerCase();
+                }
+                System.out.println(" - " + name);
+            }
+            return;
+        }
+
         EventQueue.invokeLater(() -> {
-            final JFrame f = new MainFrame();
+            final JFrame f = new MainFrame(args);
             f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             f.setVisible(true);
         });
@@ -60,12 +74,30 @@ class MainFrame extends JFrame {
     private static final int WIDTH = 900;
     private static final int HEIGHT = 650;
 
-    public MainFrame() {
+    public MainFrame(String[] args) {
         setTitle("Gnarley Trees");
-        final AlgVis A = new AlgVis(getContentPane());
-        add(A);
-        pack();
-        A.init();
-        setSize(WIDTH, HEIGHT + 20); // add 20 for the frame title
+        DS ds = null;
+        if (args.length > 0) {
+            for (DS d : DS.values()) {
+                if (d.getName().equals(args[0])) {
+                    ds = d;
+                    break;
+                }
+            }
+        }
+        if (ds != null) {
+            final algvis.ui.VisPanel P = ds.createPanel();
+            add(P);
+            pack();
+            Fonts.init(getGraphics());
+            setSize(WIDTH, HEIGHT + 20); // add 20 for the frame title
+            P.setOnAir(true);
+        } else {
+            final AlgVis A = new AlgVis(getContentPane());
+            add(A);
+            pack();
+            A.init();
+            setSize(WIDTH, HEIGHT + 20); // add 20 for the frame title
+        }
     }
 }
