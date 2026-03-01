@@ -63,7 +63,15 @@ public class IntervalNode extends BSTNode {
     public void drawKey(View v) {
         v.setColor(getFgColor());
         if (getKey() != NOKEY) {
-            v.drawString(toString(), x, y, Fonts.NORMAL);
+            // NOTE: internal nodes may contain SUM of all the leaf keys, which can be large
+            // so we use smaller font / smaller precision for large values to avoid cluttering the visualization
+            if (key >= 10000) {
+                v.drawString("" + (key / 1000) + "k", x, y, Fonts.NORMAL);
+            } else if (key >= 1000) {
+                v.drawString(toString(), x, y, Fonts.SMALL);
+            } else {
+                v.drawString(toString(), x, y, Fonts.NORMAL);
+            }
         }
 
         if (!isLeaf()) {
@@ -159,13 +167,19 @@ public class IntervalNode extends BSTNode {
             // floor(log2(c)) using bit operations (safer and faster than Math.log)
             final int d = (c > 0) ? (31 - Integer.numberOfLeadingZeros(c)) : 0;
             // width: horizontal span proportional to number of leaves represented
-            final int width = c * (IntervalTree.minsepx - 4 + 2 * Node.RADIUS) / 2 - 4;
+            final int width = c * (IntervalTree.minsepx - 4 + 2 * Node.RADIUS)
+                / 2 - 4;
             // height: proportional to tree level (d), plus padding for the node
-            final int height = (d + 1) * (DataStructure.minsepy) / 2 + Node.RADIUS / 2;
+            final int height = (d + 1) * (DataStructure.minsepy) / 2
+                + Node.RADIUS / 2;
             // draw using full width/height (drawRoundRectangle accepts full extents)
-            v.drawRoundRectangle(x, y + height - (Node.RADIUS + DataStructure.minsepy) / 2, width, height, 8, 8);
+            v.drawRoundRectangle(x,
+                y + height - (Node.RADIUS + DataStructure.minsepy) / 2, width,
+                height, 8, 8);
             v.setColor(this.getBgColor());
-            v.fillRoundRectangle(x, y + height - (Node.RADIUS + DataStructure.minsepy) / 2, width, height, 8, 8);
+            v.fillRoundRectangle(x,
+                y + height - (Node.RADIUS + DataStructure.minsepy) / 2, width,
+                height, 8, 8);
         default:
             break;
         }

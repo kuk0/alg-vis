@@ -27,9 +27,6 @@ public class IntervalInsert extends IntervalAlg {
     public IntervalInsert(IntervalTree T, int x) {
         super(T);
         this.T = T;
-        if (x > 333) {
-            x = x / 3;
-        }
         K = x;
     }
 
