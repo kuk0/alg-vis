@@ -2,7 +2,6 @@ package algvis.core.visual;
 
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
-import java.util.ConcurrentModificationException;
 
 import algvis.core.Node;
 import algvis.ui.view.View;
@@ -70,7 +69,7 @@ public class Edge extends VisualElement {
     }
 
     @Override
-    protected void draw(View v) throws ConcurrentModificationException {
+    protected void draw(View v) {
         if (mx == x1) {
             v.drawArrow(x1, y1, x2, y2, 2.0f, Color.RED);
         } else {
@@ -79,7 +78,7 @@ public class Edge extends VisualElement {
     }
 
     @Override
-    protected void move() throws ConcurrentModificationException {
+    protected void move() {
     }
 
     @Override

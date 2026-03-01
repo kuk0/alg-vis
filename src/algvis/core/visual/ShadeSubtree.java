@@ -20,7 +20,6 @@ package algvis.core.visual;
 
 import java.awt.Polygon;
 import java.awt.geom.Rectangle2D;
-import java.util.ConcurrentModificationException;
 import java.util.Stack;
 
 import algvis.core.DataStructure;
@@ -77,7 +76,7 @@ public class ShadeSubtree extends VisualElement {
     }
 
     @Override
-    protected void draw(View v) throws ConcurrentModificationException {
+    protected void draw(View v) {
         if (u.x != x || u.y != y) {
             recompute();
         }
