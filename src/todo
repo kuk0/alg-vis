@@ -17,34 +17,13 @@ reusovat procedury.. nechceme 100x find ...
 opravit statusy (tri bodky - to su tusim labely?)
 subpackage?
 
-
-
-stav:
-BST
-Rotations
-AVL
-B
-RB
-AA
-Treap
-Skiplist
-Scapegoat
-Splay
-Heap
-Binheap
-lazy
-
 co dalej:
 > Priority Queues
-  * Fibonacci heap
   * Relaxed heap (a ine: Brodal - worst case efficient pq.s)
-  * Leftist heap (a mozno ine heapy; B-heap?)
   * Lazy leftist heap
-> Union find
 > String DS
-  * Trie
   * Suffix array
-  * Suffix tree
+  * FM index
 > Interval trees
   * Fenwick trees
 > Linking and cutting trees
@@ -73,8 +52,6 @@ Euler tours, ordered list maintenance, virtual scapegoat trees
 
 Retroactive data structures:
 changing the past, rollback, lower bounds, querying the past, dynamic vertical ray shooting
-
-
 
 Fun with Pointers
 Other balanced binary trees: AVL trees, balanced binary B-trees (aka half-balanced trees, aka red-black trees), AA-trees (aka left-leaving red-black trees), brother trees, (a,b)-trees, BB(α)-trees, rank-balanced trees, treaps, randomized binary search trees, skip lists, deterministic skip lists, ...
