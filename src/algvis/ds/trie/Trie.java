@@ -105,7 +105,7 @@ public class Trie extends DataStructure {
     @Override
     public void random(int n) {
         for (int i = 0; i < n; i++) {
-            if (Languages.getCurrentLanguage() == 1) {
+            if ("sk".equals(Languages.getCurrentLanguageTag())) {
                 insert(WordGenerator.getSkWord());
             } else {
                 insert(WordGenerator.getWord());

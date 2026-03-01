@@ -17,65 +17,63 @@
  ******************************************************************************/
 package algvis.internationalization;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 import java.util.MissingResourceException;
+import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 public class Languages {
-    private static final int N = 2;
-    private static int current_lang;
-    private static final Locale[] all_locales = new Locale[N];
-    private static final ResourceBundle[] all_msgs = new ResourceBundle[N];
-    // private static Locale locale;
-    // private static ResourceBundle msg;
+    private static final Map<String, ResourceBundle> BUNDLES = new LinkedHashMap<>();
+    private static String current_tag = "en";
     private static final List<LanguageListener> listeners = new LinkedList<>();
 
+    private static ResourceBundle loadBundle(String path) {
+        try (InputStream is = Languages.class.getResourceAsStream(path)) {
+            if (is == null) {
+                throw new MissingResourceException(
+                    "Resource not found: " + path, Languages.class.getName(), path);
+            }
+            return new PropertyResourceBundle(is);
+        } catch (IOException e) {
+            throw new MissingResourceException(
+                "Failed to load: " + path, Languages.class.getName(), path);
+        }
+    }
+
     static {
-        all_locales[0] = new Locale("en");
-        all_msgs[0] = ResourceBundle.getBundle("Messages", all_locales[0]);
-        all_locales[1] = new Locale("sk");
-        all_msgs[1] = ResourceBundle.getBundle("Messages", all_locales[1]);
+        BUNDLES.put("en", loadBundle("/Messages_en.properties"));
+        BUNDLES.put("sk", loadBundle("/Messages_sk.properties"));
     }
 
     public static void addListener(LanguageListener l) {
-        Languages.listeners.add(l);
+        listeners.add(l);
     }
 
-    static void selectLanguage(int i) {
-        if (i < 0 || i >= N) {
-            i = 0;
+    public static void selectLanguage(String tag) {
+        if (!BUNDLES.containsKey(tag)) {
+            tag = "en";
         }
-        current_lang = i;
-        // locale = all_locales[current_lang];
-        // msg = all_msgs[current_lang];
-        // notify all listeners
+        current_tag = tag;
         for (final LanguageListener l : listeners) {
             l.languageChanged();
         }
     }
 
-    public static void selectLanguage(String s) {
-        int i;
-        if ("sk".equals(s)) {
-            i = 1;
-        } else {
-            i = 0;
-        }
-        selectLanguage(i);
+    public static String getCurrentLanguageTag() {
+        return current_tag;
     }
 
     public static String getString(String s) {
         try {
-            return all_msgs[current_lang].getString(s);
+            return BUNDLES.get(current_tag).getString(s);
         } catch (final MissingResourceException e) {
             System.err.println(e.getMessage() + ": " + s);
             return "???";
         }
-    }
-
-    public static int getCurrentLanguage() {
-        return current_lang;
     }
 }
