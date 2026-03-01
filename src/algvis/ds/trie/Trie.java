@@ -74,7 +74,7 @@ public class Trie extends DataStructure {
         final TrieNode v = getRoot();
         if (v != null) {
             v.drawTree(V);
-            V.drawString("\u025B", v.x, v.y - 8, Fonts.NORMAL);
+            V.drawString("ε", v.x, v.y - 8, Fonts.NORMAL);
         }
     }
 

@@ -22,15 +22,27 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 
 public enum Fonts {
-    NORMAL(new Font(Font.SANS_SERIF, Font.PLAIN, 9)), SMALL(
-        new Font(Font.SANS_SERIF, Font.PLAIN, 7)), TYPEWRITER(initTT());
-    // new Font("FreeMono", Font.BOLD, 10));
+    NORMAL(initSourceSans(9.0f)), SMALL(initSourceSans(7.0f)), TYPEWRITER(
+        initTT());
 
     public final Font font;
     public FontMetrics fm;
 
     private Fonts(Font f) {
         font = f;
+    }
+
+    private static Font initSourceSans(float size) {
+        Font f = null;
+        try {
+            f = Font.createFont(Font.TRUETYPE_FONT,
+                Fonts.class.getResourceAsStream("SourceSansPro-Regular.otf"));
+            f = f.deriveFont(size);
+        } catch (final Exception e) {
+            e.printStackTrace();
+            f = new Font(Font.SANS_SERIF, Font.PLAIN, (int) size);
+        }
+        return f;
     }
 
     private static Font initTT() {
