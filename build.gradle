@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+application {
+    mainClass = 'algvis.ui.AlgVisStandalone'
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ['src']
+        resources {
+            srcDirs = ['src']
+            excludes = ['**/*.java']
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'algvis.ui.AlgVisStandalone'
+    }
+}
