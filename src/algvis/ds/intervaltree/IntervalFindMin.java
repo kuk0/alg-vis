@@ -98,8 +98,9 @@ public class IntervalFindMin extends IntervalAlg {
 
         w.mark();
 
-        // Case 1: disjoint (node interval is completely outside query)
         if ((w.b > e) || (w.e < b)) {
+            // Case 1: disjoint (node interval is completely outside query)
+
             if (w.getKey() != Node.NOKEY) {
                 addStep(w, REL.TOP, "intervalout", "" + i, "" + j, w.getKeyS(),
                     "" + w.b, "" + w.e);
@@ -111,10 +112,9 @@ public class IntervalFindMin extends IntervalAlg {
             w.unmark();
             w.focused = focusType.FALSE;
             return;
-        }
+        } else if ((w.b >= b) && (w.e <= e)) {
+            // Case 2: contained (node interval is fully inside query)
 
-        // Case 2: contained (node interval is fully inside query)
-        else if ((w.b >= b) && (w.e <= e)) {
             if (T.aggregationType != AggregationType.SUM) {
                 if (w.prec(aggregate)) {
                     aggregate = w;
@@ -127,10 +127,9 @@ public class IntervalFindMin extends IntervalAlg {
             w.focused = focusType.TIN;
             pause();
             return;
-        }
+        } else {
+            // Case 3: partial intersection (node interval overlaps query but is not contained)
 
-        // Case 3: partial intersection (node interval overlaps query but is not contained)
-        else {
             addStep(w, REL.TOP, "intervalpart", "" + i, "" + j, w.getKeyS(),
                 "" + w.b, "" + w.e);
             w.focused = focusType.TOUT;

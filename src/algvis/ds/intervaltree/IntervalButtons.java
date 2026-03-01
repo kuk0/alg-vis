@@ -113,8 +113,7 @@ public class IntervalButtons extends Buttons {
             final List<Integer> args = I.getVI();
             panel.history.saveEditId();
             if (args.size() > 1) {
-                ((IntervalTrees) D).ofinterval(args.get(0),
-                    args.get(1));
+                ((IntervalTrees) D).ofinterval(args.get(0), args.get(1));
             } else {
                 ((IntervalTrees) D).ofinterval(1, ((IntervalTree) D).numLeafs);
             }
@@ -129,7 +128,8 @@ public class IntervalButtons extends Buttons {
             if (panel.pauses && w != null) {
                 panel.history.rewind();
             }
-        } else if (evt.getSource() == minB && ((IntervalTrees) D).aggregationType != AggregationType.MIN) {
+        } else if (evt.getSource() == minB
+            && ((IntervalTrees) D).aggregationType != AggregationType.MIN) {
             D.start(new Algorithm(panel) {
                 @Override
                 public void runAlgorithm() {
@@ -137,7 +137,8 @@ public class IntervalButtons extends Buttons {
                     ((IntervalTrees) D).aggregationType = AggregationType.MIN;
                 }
             });
-        } else if (evt.getSource() == maxB && ((IntervalTrees) D).aggregationType != AggregationType.MAX) {
+        } else if (evt.getSource() == maxB
+            && ((IntervalTrees) D).aggregationType != AggregationType.MAX) {
             D.start(new Algorithm(panel) {
                 @Override
                 public void runAlgorithm() {
@@ -145,7 +146,8 @@ public class IntervalButtons extends Buttons {
                     ((IntervalTrees) D).aggregationType = AggregationType.MAX;
                 }
             });
-        } else if (evt.getSource() == sumB && ((IntervalTrees) D).aggregationType != AggregationType.SUM) {
+        } else if (evt.getSource() == sumB
+            && ((IntervalTrees) D).aggregationType != AggregationType.SUM) {
             D.start(new Algorithm(panel) {
                 @Override
                 public void runAlgorithm() {
