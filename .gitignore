@@ -13,3 +13,8 @@ src/out
 !algvis-profile.xml
 *.iml
 /bin/
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
