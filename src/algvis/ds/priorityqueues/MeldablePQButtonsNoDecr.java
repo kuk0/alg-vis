@@ -18,12 +18,10 @@
 package algvis.ds.priorityqueues;
 
 import javax.swing.JPanel;
-import javax.swing.event.ChangeListener;
 
 import algvis.ui.VisPanel;
 
-public class MeldablePQButtonsNoDecr extends MeldablePQButtons
-    implements ChangeListener {
+public class MeldablePQButtonsNoDecr extends MeldablePQButtons {
     private static final long serialVersionUID = 1242711038059609653L;
 
     public MeldablePQButtonsNoDecr(VisPanel M) {

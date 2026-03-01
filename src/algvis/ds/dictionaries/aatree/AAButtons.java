@@ -18,7 +18,6 @@
 package algvis.ds.dictionaries.aatree;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JPanel;
@@ -27,7 +26,7 @@ import algvis.internationalization.ICheckBox;
 import algvis.ui.DictButtons;
 import algvis.ui.VisPanel;
 
-public class AAButtons extends DictButtons implements ActionListener {
+public class AAButtons extends DictButtons {
     private static final long serialVersionUID = 5326663225787843118L;
     private ICheckBox B23;
 

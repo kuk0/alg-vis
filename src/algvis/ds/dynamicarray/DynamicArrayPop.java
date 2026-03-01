@@ -39,8 +39,6 @@ public class DynamicArrayPop extends DynamicArrayAlg {
             }
             pause();
 
-            boolean needless = true;
-
             if ((D.size >= D.capacity / 4 && D.size < D.capacity / 2)
                 && (D.coinsForArray
                     .get(D.size - D.capacity / 4).state == Node.INVISIBLE)) {
