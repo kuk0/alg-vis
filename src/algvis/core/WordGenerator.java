@@ -80,14 +80,10 @@ public class WordGenerator {
     }
 
     public static String getWord() {
-        final int current_language = Languages.getCurrentLanguage();
-        switch (current_language) {
-        case 0:
-            return getEnWord();
-        case 1:
+        if ("sk".equals(Languages.getCurrentLanguageTag())) {
             return getSkWord();
         }
-        return null;
+        return getEnWord();
     }
 
     public static List<String> parseString(String ss) {
