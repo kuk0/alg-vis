@@ -82,7 +82,7 @@ public abstract class VisPanel extends JPanel
 
         border = BorderFactory.createTitledBorder("");
         border.setTitleJustification(TitledBorder.CENTER);
-        border.setTitleFont(new Font("Sans-serif", Font.ITALIC, 12));
+        border.setTitleFont(Fonts.getSourceSansItalic(12.0f));
         Languages.addListener(this);
         screenP.setBorder(BorderFactory.createCompoundBorder(border,
             BorderFactory.createEmptyBorder(0, 5, 5, 5)));
