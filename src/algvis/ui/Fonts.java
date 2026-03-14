@@ -32,17 +32,43 @@ public enum Fonts {
         font = f;
     }
 
+    private static Font sourceSansBase;
+
     private static Font initSourceSans(float size) {
         Font f = null;
         try {
-            f = Font.createFont(Font.TRUETYPE_FONT,
-                Fonts.class.getResourceAsStream("SourceSansPro-Regular.otf"));
-            f = f.deriveFont(size);
+            if (sourceSansBase == null) {
+                sourceSansBase = Font.createFont(Font.TRUETYPE_FONT, Fonts.class
+                    .getResourceAsStream("SourceSansPro-Regular.otf"));
+            }
+            f = sourceSansBase.deriveFont(size);
         } catch (final Exception e) {
             e.printStackTrace();
+            // Last resort: use a logical font (may trigger remapping under
+            // CheerpJ)
             f = new Font(Font.SANS_SERIF, Font.PLAIN, (int) size);
         }
         return f;
+    }
+
+    /** Return SourceSansPro at the given size, for use outside this enum. */
+    public static Font getSourceSans(float size) {
+        if (sourceSansBase != null) {
+            return sourceSansBase.deriveFont(size);
+        }
+        return new Font(Font.SANS_SERIF, Font.PLAIN, (int) size);
+    }
+
+    /** Return SourceSansPro-Italic at the given size. */
+    public static Font getSourceSansItalic(float size) {
+        try {
+            Font f = Font.createFont(Font.TRUETYPE_FONT,
+                Fonts.class.getResourceAsStream("SourceSansPro-It.otf"));
+            return f.deriveFont(size);
+        } catch (final Exception e) {
+            e.printStackTrace();
+            return getSourceSans(size).deriveFont(Font.ITALIC);
+        }
     }
 
     private static Font initTT() {
